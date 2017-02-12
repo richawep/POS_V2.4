@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText" >
+
+    <EditText
+        android:id="@+id/txtDineInTenderTableNumber"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="Table Number"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/txtDineInTenderTableSplitNo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="Table Split No"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/txtDineInTenderSubUdfNumber"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="Sub Number"
+        android:visibility="invisible"
+        android:inputType="number" />
+
+</LinearLayout>

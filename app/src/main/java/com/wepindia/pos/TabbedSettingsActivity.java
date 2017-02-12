@@ -1,0 +1,203 @@
+package com.wepindia.pos;
+
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.wep.common.app.Database.DatabaseHandler;
+import com.wep.common.app.WepBaseActivity;
+import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.fragments.FragmentSettingsHeaderFooter;
+import com.wepindia.pos.fragments.FragmentSettingsMachine;
+import com.wepindia.pos.fragments.FragmentSettingsMiscellaneous;
+import com.wepindia.pos.fragments.FragmentSettingsOther;
+import com.wepindia.pos.fragments.FragmentSettingsPrice;
+import com.wepindia.pos.fragments.FragmentSettingsPrint;
+import com.wepindia.pos.utils.ActionBarUtils;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class TabbedSettingsActivity extends WepBaseActivity{
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    Context myContext;
+    String strUserName = "";
+    DatabaseHandler dbReportTab;
+    MessageDialog MsgBox;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tabbed_report);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        init();
+        setupViewPager(viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void init() {
+        dbReportTab = new DatabaseHandler(TabbedSettingsActivity.this);
+        myContext = this;
+        MsgBox = new MessageDialog(myContext);
+        strUserName = getIntent().getStringExtra("USER_NAME");
+        Date d = new Date();
+        CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
+        com.wep.common.app.ActionBarUtils.setupToolbar(TabbedSettingsActivity.this,toolbar,getSupportActionBar(),"Settings",strUserName," Date:"+s.toString());
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        Bundle bundle1=new Bundle();
+        bundle1.putString("REPORT_TYPE", "1");
+        FragmentSettingsHeaderFooter reportFragment1 = new FragmentSettingsHeaderFooter();
+        reportFragment1.setArguments(bundle1);
+        adapter.addFragment(reportFragment1, "Header Footer");
+
+        Bundle bundle2=new Bundle();
+        bundle2.putString("REPORT_TYPE", "2");
+        FragmentSettingsPrice reportFragment2 = new FragmentSettingsPrice();
+        reportFragment2.setArguments(bundle2);
+        adapter.addFragment(reportFragment2, "Price");
+
+        Bundle bundle3=new Bundle();
+        bundle3.putString("REPORT_TYPE", "3");
+        FragmentSettingsMiscellaneous reportFragment3 = new FragmentSettingsMiscellaneous();
+        reportFragment3.setArguments(bundle3);
+        adapter.addFragment(reportFragment3, "Miscellaneous");
+
+        Bundle bundle4=new Bundle();
+        bundle4.putString("REPORT_TYPE", "4");
+        FragmentSettingsOther reportFragment4 = new FragmentSettingsOther();
+        reportFragment1.setArguments(bundle4);
+        adapter.addFragment(reportFragment4, "Other");
+
+        Bundle bundle5=new Bundle();
+        bundle5.putString("REPORT_TYPE", "5");
+        FragmentSettingsMachine reportFragment5 = new FragmentSettingsMachine();
+        reportFragment5.setArguments(bundle5);
+        adapter.addFragment(reportFragment5, "Machine");
+
+        Bundle bundle6=new Bundle();
+        bundle6.putString("REPORT_TYPE", "6");
+        FragmentSettingsPrint reportFragment6 = new FragmentSettingsPrint();
+        reportFragment6.setArguments(bundle6);
+        adapter.addFragment(reportFragment6, "Print");
+
+        viewPager.setAdapter(adapter);
+    }
+
+
+    class ViewPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
+        private final List<android.support.v4.app.Fragment> mFragmentList = new ArrayList<android.support.v4.app.Fragment>();
+        private final List<String> mFragmentTitleList = new ArrayList<String>();
+
+        public ViewPagerAdapter(android.support.v4.app.FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(android.support.v4.app.Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
+            LayoutInflater UserAuthorization = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
+            final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
+            final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
+            final TextView tvAuthorizationUserId = (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserId);
+            final TextView tvAuthorizationUserPassword = (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserPassword);
+            tvAuthorizationUserId.setVisibility(View.GONE);
+            tvAuthorizationUserPassword.setVisibility(View.GONE);
+            txtUserId.setVisibility(View.GONE);
+            txtPassword.setVisibility(View.GONE);
+            AuthorizationDialog
+                    .setTitle("Are you sure you want to exit ?")
+                    .setView(vwAuthorization)
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            /*Intent returnIntent = new Intent();
+                            setResult(Activity.RESULT_OK, returnIntent);*/
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(com.wep.common.app.R.menu.menu_main, menu);
+        for (int j = 0; j < menu.size(); j++) {
+            MenuItem item = menu.getItem(j);
+            item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return true;
+    }
+
+    @Override
+    public void onHomePressed() {
+        ActionBarUtils.navigateHome(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == android.R.id.home) {
+            finish();
+        }else if (id == com.wep.common.app.R.id.action_home) {
+
+        }else if (id == com.wep.common.app.R.id.action_screen_shot) {
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
