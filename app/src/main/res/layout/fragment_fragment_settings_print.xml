@@ -47,7 +47,8 @@
                             android:id="@+id/spnr1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp" />
+                            android:layout_marginTop="5dp"
+                            style="@android:style/Widget.Holo.Light.Spinner"/>
 
                         <Button
                             android:id="@+id/saveKotPrint"
@@ -96,7 +97,8 @@
                             android:id="@+id/spnr2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp" />
+                            android:layout_marginTop="5dp"
+                            style="@android:style/Widget.Holo.Light.Spinner"/>
 
                         <Button
                             android:id="@+id/saveBillPrint"
@@ -145,7 +147,8 @@
                             android:id="@+id/spnr3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp" />
+                            android:layout_marginTop="5dp"
+                            style="@android:style/Widget.Holo.Light.Spinner"/>
 
                         <Button
                             android:id="@+id/saveReportPrint"
@@ -194,7 +197,8 @@
                             android:id="@+id/spnr4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp" />
+                            android:layout_marginTop="5dp"
+                            style="@android:style/Widget.Holo.Light.Spinner"/>
 
                         <Button
                             android:id="@+id/saveReceiptPrint"

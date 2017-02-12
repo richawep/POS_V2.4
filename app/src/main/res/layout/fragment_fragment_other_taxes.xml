@@ -100,13 +100,13 @@
                     android:text="Charges Modes"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:id="@+id/spnrModes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:ms_background_color="@color/colorGreyBackground" />
+                    style="@android:style/Widget.Holo.Light.Spinner" />
             </LinearLayout>
 
         </LinearLayout>

@@ -44,10 +44,9 @@ public class FragmentOtherTaxes extends Fragment {
     EditText txtModifierDesc, txtModifierAmount;
     CheckBox chkChargeable;
     TableLayout tblKOTModifier;
-    MaterialSpinner spinnerModes;
+    Spinner spinnerModes;
     String strModifierId, strModifierDesc, strModifierAmount, strIsChargeable, strModifierModes;
-    WepButton btnAddModifier, btnEditModifier,btnClearModifier,btnCloseModifier;
-    private ArrayList<String> listModes;
+    Button btnAddModifier, btnEditModifier,btnClearModifier,btnCloseModifier;
 
 
     public FragmentOtherTaxes() {
@@ -75,31 +74,31 @@ public class FragmentOtherTaxes extends Fragment {
         txtModifierAmount = (EditText)view.findViewById(R.id.etModifierAmount);
         etInputValidate.ValidateDecimalInput(txtModifierAmount);
         chkChargeable = (CheckBox)view.findViewById(R.id.chkIsChargeable);
-        spinnerModes = (MaterialSpinner) view.findViewById(R.id.spnrModes);
+        spinnerModes = (Spinner) view.findViewById(R.id.spnrModes);
         tblKOTModifier = (TableLayout)view.findViewById(R.id.tblKOTModifier);
 
-        btnAddModifier = (WepButton) view.findViewById(R.id.btnAddModifier);
+        btnAddModifier = (Button)view.findViewById(R.id.btnAddModifier);
         btnAddModifier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddKOTModifier();
             }
         });
-        btnEditModifier = (WepButton) view.findViewById(R.id.btnEditModifier);
+        btnEditModifier = (Button)view.findViewById(R.id.btnEditModifier);
         btnEditModifier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditKOTModifier();
             }
         });
-        btnClearModifier = (WepButton) view.findViewById(R.id.btnClearModifier);
+        btnClearModifier = (Button)view.findViewById(R.id.btnClearModifier);
         btnClearModifier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClearKOTModifier();
             }
         });
-        btnCloseModifier = (WepButton) view.findViewById(R.id.btnCloseModifier);
+        btnCloseModifier = (Button)view.findViewById(R.id.btnCloseModifier);
         btnCloseModifier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +121,7 @@ public class FragmentOtherTaxes extends Fragment {
 
     private void loadSpinnerData()
     {
-        listModes = new ArrayList<String>();
+        List<String> listModes = new ArrayList<String>();
         listModes.add("Select");
         /*listModes.add("DineIn");
         listModes.add("CounterSales");
@@ -143,15 +142,14 @@ public class FragmentOtherTaxes extends Fragment {
             listModes.add(TakeAwayCaption);
             listModes.add(HomeDeliveryCaption);
         }
-        /*// Creating adapter for spinner
+        // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, listModes);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        spinnerModes.setAdapter(dataAdapter);*/
-        spinnerModes.setItems(listModes);
+        spinnerModes.setAdapter(dataAdapter);
     }
 
     @SuppressWarnings("deprecation")
@@ -238,9 +236,11 @@ public class FragmentOtherTaxes extends Fragment {
                             else{
                                 chkChargeable.setChecked(false);
                             }
-                            spinnerModes.setSelectedIndex(getIndex(spinnerModes, spinner.getText().toString()));
-                            btnAddModifier.setEnabled(false);
-                            btnEditModifier.setEnabled(true);
+                            spinnerModes.setSelection(getIndex(spinnerModes, spinner.getText().toString()));
+                            btnAddModifier.setClickable(false);
+                            btnEditModifier.setClickable(true);
+                            btnAddModifier.setTextColor(Color.GRAY);
+                            btnEditModifier.setTextColor(Color.BLACK);
                         }
                     }
                 });
@@ -257,10 +257,10 @@ public class FragmentOtherTaxes extends Fragment {
 
     }
 
-    private int getIndex(MaterialSpinner s1, String prefNameCurGOV) {
+    private int getIndex(Spinner s1, String prefNameCurGOV) {
         int index = 0;
-        for (int i = 0; i < spinnerModes.getItems().size(); i++) {
-            if (spinnerModes.getItems().get(i).equals(prefNameCurGOV)) {
+        for (int i = 0; i < s1.getCount(); i++) {
+            if (s1.getItemAtPosition(i).equals(prefNameCurGOV)) {
                 index = i;
             }
         }
@@ -354,15 +354,17 @@ public class FragmentOtherTaxes extends Fragment {
         txtModifierAmount.setText("");
         chkChargeable.setChecked(false);
         loadSpinnerData();
-        btnAddModifier.setEnabled(true);
-        btnEditModifier.setEnabled(false);
+        btnAddModifier.setClickable(true);
+        btnEditModifier.setClickable(false);
+        btnAddModifier.setTextColor(Color.BLACK);
+        btnEditModifier.setTextColor(Color.GRAY);
     }
 
     public void AddKOTModifier(){
         int iModifierId, iIsChargeable;
         String strModifierDescription = txtModifierDesc.getText().toString();
         String strModifierAmount = txtModifierAmount.getText().toString();
-        String spnrModes = listModes.get(spinnerModes.getSelectedIndex());
+        String spnrModes = spinnerModes.getSelectedItem().toString();
         if(chkChargeable.isChecked() == true){
             iIsChargeable = 1;
         }
@@ -394,7 +396,7 @@ public class FragmentOtherTaxes extends Fragment {
     public void EditKOTModifier(){
         strModifierDesc = txtModifierDesc.getText().toString();
         strModifierAmount = txtModifierAmount.getText().toString();
-        strModifierModes = listModes.get(spinnerModes.getSelectedIndex());
+        strModifierModes = spinnerModes.getSelectedItem().toString();
         if(chkChargeable.isChecked() == true){
             strIsChargeable = "1";
         }

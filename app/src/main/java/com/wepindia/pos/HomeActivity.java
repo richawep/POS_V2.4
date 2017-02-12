@@ -426,8 +426,8 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             // Launch Billing screen activity in dine in billing mode
             Intent intentDineIn = new Intent(myContext, TableActivity.class);
             intentDineIn.putExtra("BILLING_MODE", DINEIN);
-            intentDineIn.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            intentDineIn.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+            //intentDineIn.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+            //intentDineIn.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
             intentDineIn.putExtra("CUST_ID", 0);
             startActivity(intentDineIn);
 
@@ -445,8 +445,8 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 //			Intent intentPickUp = new Intent(myContext,CustomerOrdersActivity.class);
             Intent intentPickUp = new Intent(myContext, BillingScreenActivity.class);
             intentPickUp.putExtra("BILLING_MODE", PICKUP);
-            intentPickUp.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            intentPickUp.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+            //intentPickUp.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+            //intentPickUp.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
             intentPickUp.putExtra("CUST_ID", 0);
             startActivity(intentPickUp);
 
@@ -455,8 +455,8 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 
             Intent intentDelivery = new Intent(myContext, BillingScreenActivity.class);
             intentDelivery.putExtra("BILLING_MODE", DELIVERY);
-            intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+            //intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+            //intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
             intentDelivery.putExtra("CUST_ID", 0);
             startActivity(intentDelivery);
 
