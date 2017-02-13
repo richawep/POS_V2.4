@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -192,8 +193,9 @@ public class ReportHelper{
 			TotalItems.setText("Items");
 			
 			TextView Amount = new TextView(activityContext);
-			Amount.setWidth(100);
+			Amount.setWidth(135);
 			Amount.setTextSize(15);
+			Amount.setGravity(Gravity.CENTER);
 			Amount.setTextColor(Color.WHITE);
 			Amount.setText("Bill Amount");
 			
@@ -210,7 +212,7 @@ public class ReportHelper{
 			Card.setText("Card Payment");
 			
 			TextView Coupon = new TextView(activityContext);
-			Coupon.setWidth(135);
+			Coupon.setWidth(120);
 			Coupon.setTextSize(15);
 			Coupon.setTextColor(Color.WHITE);
 			Coupon.setText("Coupon Payment");
@@ -218,14 +220,15 @@ public class ReportHelper{
             TextView PettyCash = new TextView(activityContext);
             PettyCash.setWidth(135);
             PettyCash.setTextSize(15);
+            PettyCash.setGravity(Gravity.CENTER);
             PettyCash.setTextColor(Color.WHITE);
-            PettyCash.setText("Petty Cash");
+            PettyCash.setText("PettyCash Payment");
 
             TextView eWallet = new TextView(activityContext);
-            eWallet.setWidth(135);
+            eWallet.setWidth(120);
             eWallet.setTextSize(15);
             eWallet.setTextColor(Color.WHITE);
-            eWallet.setText("Wallet");
+            eWallet.setText("Wallet Payment");
 
 			
 			// Add views to row
@@ -259,12 +262,14 @@ public class ReportHelper{
 			TextView Tax = new TextView(activityContext);
 			Tax.setWidth(135);
 			Tax.setTextSize(15);
+			Tax.setGravity(Gravity.CENTER);
 			Tax.setTextColor(Color.WHITE);
 			Tax.setText("Tax Amount");
 			
 			TextView Amount = new TextView(activityContext);
-			Amount.setWidth(100);
+			Amount.setWidth(135);
 			Amount.setTextSize(15);
+			Amount.setGravity(Gravity.CENTER);
 			Amount.setTextColor(Color.WHITE);
 			Amount.setText("Total Amount");
 									
@@ -340,7 +345,7 @@ public class ReportHelper{
 			Number.setWidth(100);
 			Number.setTextSize(15);
 			Number.setTextColor(Color.WHITE);
-			Number.setText("SNo");
+			Number.setText("Item No");
 			
 			TextView Name = new TextView(activityContext);
 			Name.setWidth(180);
@@ -425,13 +430,13 @@ public class ReportHelper{
 			Amount.setText("Bill Amount");
 			
 			TextView SalesTax = new TextView(activityContext);
-			SalesTax.setWidth(110);
+			SalesTax.setWidth(100);
 			SalesTax.setTextSize(15);
 			SalesTax.setTextColor(Color.WHITE);
 			SalesTax.setText("Sales Tax");
 			
 			TextView ServiceTax = new TextView(activityContext);
-			ServiceTax.setWidth(115);
+			ServiceTax.setWidth(100);
 			ServiceTax.setTextSize(15);
 			ServiceTax.setTextColor(Color.WHITE);
 			ServiceTax.setText("Service Tax");
@@ -629,7 +634,7 @@ public class ReportHelper{
 			SNo.setWidth(50);
 			SNo.setTextSize(15);
 			SNo.setTextColor(Color.WHITE);
-			SNo.setText("Item Number");
+			SNo.setText("SNo");
 
 			TextView DeptName = new TextView(activityContext);
 			DeptName.setWidth(120);
@@ -650,15 +655,16 @@ public class ReportHelper{
 			ItemName.setText("Item Name");
 
 			TextView Qty = new TextView(activityContext);
-			Qty.setWidth(50);
+			Qty.setWidth(100);
 			Qty.setTextSize(15);
 			Qty.setPadding(5,0,0,0);
 			Qty.setTextColor(Color.WHITE);
 			Qty.setText("Qty");
 
 			TextView Rate = new TextView(activityContext);
-			Rate.setWidth(90);
+			Rate.setWidth(120);
 			Rate.setTextSize(15);
+            Rate.setGravity(Gravity.CENTER);
 			Rate.setTextColor(Color.WHITE);
 			Rate.setText("Total Price");
 

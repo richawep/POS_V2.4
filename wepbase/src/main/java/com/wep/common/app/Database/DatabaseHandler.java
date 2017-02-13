@@ -4617,11 +4617,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Waiter detailed Report-----
     public Cursor getWaiterDetailedReport(int WaiterId, String StartDate, String EndDate) {
-        return dbFNB.rawQuery(
-                "SELECT * FROM " + TBL_BILLDETAIL + " , "+TBL_USERS+" WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
-                        + TBL_BILLDETAIL + ".EmployeeId= "+TBL_USERS+".UserId AND  " + TBL_BILLDETAIL + ".EmployeeId=" + WaiterId + " AND "
-                        + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'",
-                null);
+        Cursor cursor = null;
+        try
+        {
+            if(!dbFNB.isOpen())
+                dbFNB = this.getReadableDatabase();
+            cursor = dbFNB.rawQuery(
+                    "SELECT * FROM " + TBL_BILLDETAIL + " , "+TBL_USERS+" WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
+                            + TBL_BILLDETAIL + ".EmployeeId= "+TBL_USERS+".UserId AND  " + TBL_BILLDETAIL + ".EmployeeId=" + WaiterId + " AND "
+                            + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'",
+                    null);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return cursor;
     }
 
     // -----Rider wise Report-----
@@ -4634,11 +4644,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Rider detailed Report-----
     public Cursor getRiderDetailedReport(int RiderId, String StartDate, String EndDate) {
-        return dbFNB.rawQuery(
-                "SELECT * FROM " + TBL_BILLDETAIL + " , "+TBL_USERS+" WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
-                        + TBL_BILLDETAIL + ".EmployeeId = "+TBL_USERS+".UserId AND " + TBL_BILLDETAIL + ".EmployeeId=" + RiderId + " AND "
-                        + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'",
-                null);
+        Cursor cursor = null;
+        try {
+            if(!dbFNB.isOpen())
+                dbFNB = this.getReadableDatabase();
+            cursor = dbFNB.rawQuery(
+                    "SELECT * FROM " + TBL_BILLDETAIL + " , "+TBL_USERS+" WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
+                            + TBL_BILLDETAIL + ".EmployeeId = "+TBL_USERS+".UserId AND " + TBL_BILLDETAIL + ".EmployeeId=" + RiderId + " AND "
+                            + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'",
+                    null);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return cursor;
     }
 
     // -----User wise Report-----
@@ -4650,9 +4670,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----User detailed Report-----
     public Cursor getUserDetailedReport(String UserId, String StartDate, String EndDate) {
-        return dbFNB.rawQuery("SELECT * FROM " + TBL_BILLDETAIL + ", Users WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
-                + TBL_BILLDETAIL + ".UserId='" + UserId + "' AND " + TBL_BILLDETAIL + ".UserId=Users.UserId AND "
-                + TBL_BILLDETAIL + "." + KEY_InvoiceDate + "  BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null);
+        Cursor cursor = null;
+        try
+        {
+            if(!dbFNB.isOpen())
+                dbFNB = this.getReadableDatabase();
+            cursor = dbFNB.rawQuery("SELECT * FROM " + TBL_BILLDETAIL + ", Users WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
+                    + TBL_BILLDETAIL + ".UserId='" + UserId + "' AND " + TBL_BILLDETAIL + ".UserId=Users.UserId AND "
+                    + TBL_BILLDETAIL + "." + KEY_InvoiceDate + "  BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return cursor;
     }
 
     // -----Customer wise Report-----
@@ -4664,9 +4694,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Customer Detailed Report-----
     public Cursor getCustomerDetailedReport(int CustId, String StartDate, String EndDate) {
-        return dbFNB.rawQuery("SELECT * FROM OutwardSuppyItemsDetails, Customer WHERE OutwardSuppyItemsDetails.BillStatus=1 AND "
-                + "OutwardSuppyItemsDetails.CustId=" + CustId + " AND Customer.CustId=" + CustId + " AND "
-                + "OutwardSuppyItemsDetails.InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null);
+        Cursor cursor = null;
+        try{
+            if (!dbFNB.isOpen())
+                dbFNB = this.getReadableDatabase();
+            cursor =  dbFNB.rawQuery("SELECT * FROM OutwardSuppyItemsDetails, Customer WHERE OutwardSuppyItemsDetails.BillStatus=1 AND "
+                    + "OutwardSuppyItemsDetails.CustId=" + CustId + " AND Customer.CustId=" + CustId + " AND "
+                    + "OutwardSuppyItemsDetails.InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return cursor;
     }
 
     // -----Payment Report-----
