@@ -55,6 +55,7 @@
 
             <Spinner
                 android:id="@+id/spnrDeptName"
+                style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content" />
         </TableRow>
@@ -141,10 +142,10 @@
                 android:layout_width="100dp"
                 android:layout_height="45dp"
                 android:background="@drawable/background_btn"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin"
                 android:onClick="AddCateg"
-                android:text="Add" />
+                android:text="Add"
+                android:textColor="@android:color/white"
+                android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnEditCateg"
@@ -152,10 +153,10 @@
                 android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/background_btn"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin"
                 android:onClick="EditCateg"
-                android:text="Update" />
+                android:text="Update"
+                android:textColor="@android:color/white"
+                android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnClearCateg"
@@ -163,10 +164,10 @@
                 android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/background_btn"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin"
                 android:onClick="ClearCateg"
-                android:text="Clear" />
+                android:text="Clear"
+                android:textColor="@android:color/white"
+                android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnCloseCateg"
@@ -174,10 +175,10 @@
                 android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/background_btn"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin"
                 android:onClick="CloseCateg"
-                android:text="Close" />
+                android:text="Close"
+                android:textColor="@android:color/white"
+                android:theme="@style/WepButtonWithMarigin" />
         </TableRow>
 
     </RelativeLayout>

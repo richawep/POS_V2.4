@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mswipetech.wisepad.sdktest.view.ApplicationData;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.ImageAdapter;
@@ -99,10 +100,12 @@ public class TableActivity extends WepBaseActivity {
         tvTitleText.setText("Table - Waiter");*/
 
         myContext = this;
-        strUserName = getIntent().getStringExtra("USER_NAME");
+        strUserId = ApplicationData.getUserId(this);//ApplicationData.USER_ID;
+        strUserName = ApplicationData.getUserName(this);//ApplicationData.USER_NAME;
+        //strUserName = getIntent().getStringExtra("USER_NAME");
         strBillMode = getIntent().getStringExtra("BILLING_MODE");
         //jBillingMode = Byte.parseByte(strBillMode);
-        strUserId = getIntent().getStringExtra("USER_ID");
+        //strUserId = getIntent().getStringExtra("USER_ID");
         iCustId = getIntent().getIntExtra("CUST_ID", 0);
 
         //tvTitleUserName.setText(strUserName.toUpperCase());

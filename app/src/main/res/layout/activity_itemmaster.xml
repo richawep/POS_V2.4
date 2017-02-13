@@ -335,6 +335,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    style="@android:style/Widget.Holo.Light.Spinner"
                                     android:gravity="center_vertical" />
 
                             </LinearLayout>
@@ -367,6 +368,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    style="@android:style/Widget.Holo.Light.Spinner"
                                     android:gravity="center" />
                             </LinearLayout>
                         </FrameLayout>
@@ -398,6 +400,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="10dp"
                                     android:layout_weight="1"
+                                    style="@android:style/Widget.Holo.Light.Spinner"
                                     android:gravity="center" />
                             </LinearLayout>
                         </FrameLayout>
@@ -590,6 +593,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="10dp"
                                     android:layout_weight="1"
+                                    style="@android:style/Widget.Holo.Light.Spinner"
                                     android:entries="@array/UOM"
                                     android:gravity="center" />
 
