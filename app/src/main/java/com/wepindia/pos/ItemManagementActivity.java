@@ -646,6 +646,7 @@ public class ItemManagementActivity extends WepBaseActivity {
             }
         });
 
+
         spnrCategory = (Spinner) findViewById(R.id.spnrItemCategCode);
         spnrCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -1662,6 +1663,7 @@ public class ItemManagementActivity extends WepBaseActivity {
             iMenuCode++;
         } else {
             iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
+
         }
 
         if (fgsttax >= 0 && fquantity >= 0) {
@@ -1811,6 +1813,20 @@ public class ItemManagementActivity extends WepBaseActivity {
                 MsgBox.Show("Warning", "Please Enter Item Code");
                 return;
             }
+            else {
+                iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
+                Cursor itemcrsr = dbItems.getItem(iMenuCode);
+                if(itemcrsr.moveToNext())
+                {
+                    String name = itemcrsr.getString(itemcrsr.getColumnIndex("ItemName"));
+                    if(!name.equalsIgnoreCase(txtLongName.getText().toString()))
+                    {
+                        MsgBox = new MessageDialog(myContext);
+                        MsgBox.Show("Inconsistent"," Menu Code "+iMenuCode+" already present for item "+name );
+                        return;
+                    }
+                }
+            }
         }
 
         /*if (spnrDepartment.getSelectedItem().toString().equals("Select")) {
@@ -1916,6 +1932,20 @@ public class ItemManagementActivity extends WepBaseActivity {
             if (edtMenuCode.getText().toString().equalsIgnoreCase("")) {
                 MsgBox.Show("Warning", "Please Enter Item Code");
                 return;
+            }
+            else {
+                iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
+                Cursor itemcrsr = dbItems.getItem(iMenuCode);
+                if(itemcrsr.moveToNext())
+                {
+                    String name = itemcrsr.getString(itemcrsr.getColumnIndex("ItemName"));
+                    if(!name.equalsIgnoreCase(txtLongName.getText().toString()))
+                    {
+                        MsgBox = new MessageDialog(myContext);
+                        MsgBox.Show("Inconsistent"," Menu Code "+iMenuCode+" already present for item "+name );
+                        return;
+                    }
+                }
             }
         }
 

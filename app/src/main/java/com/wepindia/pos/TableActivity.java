@@ -412,10 +412,9 @@ public class TableActivity extends WepBaseActivity {
                     return;
                 }
             }
-            /*if (!strWaiterNumber.equalsIgnoreCase("") && SelectTable == true) {
-                // finish the activity
+            if (TableSplitEnable == 0 && !(strTableNumber.equalsIgnoreCase("_") || strWaiterNumber.equalsIgnoreCase(""))) {
                 OK(v);
-            }*/
+            }
         }
 
     };
@@ -427,7 +426,8 @@ public class TableActivity extends WepBaseActivity {
             // TODO Auto-generated method stub
             if (v.getTag() != null) {
                 strWaiterNumber = String.valueOf(v.getTag());
-                tvSelectedWaiter.setText("Selected Waiter #: " + strWaiterNumber);
+                //tvSelectedWaiter.setText("Selected Waiter #: " + strWaiterNumber);
+                InitializeWaiterGrid1(strWaiterNumber);
                 if (!strTableNumber.equalsIgnoreCase("-") && SelectTableSplit != -1) {
                     // finish the activity
                     OK(v);
@@ -533,7 +533,7 @@ public class TableActivity extends WepBaseActivity {
             for (int i = 0; i < Limit; i++) {
                 mapWaiters = lstWaiters.get(i);
                 WaiterText[i] = mapWaiters.get("Name");
-                WaiterImage[i] = String.valueOf(R.drawable.img_waiter);
+                WaiterImage[i] = String.valueOf(R.drawable.img_waiter_idle);
                 WaiterId[i] = Integer.parseInt(mapWaiters.get("Id"));
             }
 
@@ -541,6 +541,31 @@ public class TableActivity extends WepBaseActivity {
         grdWaiter.setAdapter(new WaiterAdapter(myContext, WaiterText, WaiterId, WaiterImage, Byte.parseByte("2")));
     }
 
+    private void InitializeWaiterGrid1(String selectedWaiter ) {
+
+        String[] WaiterText = new String[iMaxWaiters];
+        String[] WaiterImage = new String[iMaxWaiters];
+        int[] WaiterId = new int[iMaxWaiters];
+
+        if (iMaxWaiters > 0) {
+            Map<String, String> mapWaiters = new HashMap<String, String>(2);
+            for (int i = 0; i < iMaxWaiters; i++) {
+                mapWaiters = lstWaiters.get(i);
+                WaiterText[i] = mapWaiters.get("Name");
+                String id = mapWaiters.get("Id");
+
+                if(id.equalsIgnoreCase(selectedWaiter)) {
+                    WaiterImage[i] = String.valueOf(R.drawable.img_waiter_selected);
+                    tvSelectedWaiter.setText("Selected Waiter #: " + WaiterText[i]);
+                }
+                else
+                    WaiterImage[i] = String.valueOf(R.drawable.img_waiter_idle);
+                WaiterId[i] = Integer.parseInt(mapWaiters.get("Id"));
+            }
+
+        }
+        grdWaiter.setAdapter(new WaiterAdapter(myContext, WaiterText, WaiterId, WaiterImage, Byte.parseByte("2")));
+    }
     public void OK(View v) {
         if (SelectTableSplit == -1 || strTableNumber.equalsIgnoreCase("_") || strWaiterNumber.equalsIgnoreCase("")) {
             MsgBox.Show("Warning", "Select Table Number, Waiter Number");

@@ -4255,7 +4255,61 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
     }
 
 
+    /*************************************************************************************************************************************
+     * Delete Bill Button Click event, calls delte bill function
+     *
+     * @param v : Clicked Button
+     *************************************************************************************************************************************/
+    public void DeleteBill(View v) {
 
+        //DeleteVoid(Byte.parseByte("1"));
+        tblOrderItems.removeAllViews();
+
+        AlertDialog.Builder DineInTenderDialog = new AlertDialog.Builder(myContext);
+
+        LayoutInflater UserAuthorization = (LayoutInflater) myContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View vwAuthorization = UserAuthorization.inflate(R.layout.dinein_reprint, null);
+
+        final EditText txtReprintBillNo = (EditText) vwAuthorization.findViewById(R.id.txtDineInReprintBillNumber);
+
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill").setMessage("Enter Bill Number")
+                .setView(vwAuthorization).setNegativeButton("Cancel", null)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+
+                        if (txtReprintBillNo.getText().toString().equalsIgnoreCase("")) {
+                            MsgBox.Show("Warning", "Please enter Bill Number");
+                            return;
+                        } else {
+                            String InvoiceNo = txtReprintBillNo.getText().toString();
+                            Cursor result = dbBillScreen.getBillDetail(Integer.parseInt(InvoiceNo));
+
+                            if (result.moveToFirst()) {
+                                if (result.getInt(result.getColumnIndex("BillStatus")) != 0) {
+                                    VoidBill(Integer.parseInt(InvoiceNo));
+                                } else {
+
+                                    Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
+                                    String msg = "Bill Number "+InvoiceNo+ " is already voided";
+                                    //MsgBox.Show("VoidBill",msg);
+                                    Log.d("VoidBill",msg);
+                                }
+                            } else {
+                                Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
+                                String msg = "No bill found with bill number " + InvoiceNo;
+                                //MsgBox.Show("VoidBill",msg);
+                                Log.d("VoidBill",msg);
+                            }
+                            ClearAll();
+
+                        }
+                    }
+                }).show();
+    }
 
     /*************************************************************************************************************************************
      * Reprint Bill Button Click event, calls reprint bill function
@@ -4989,7 +5043,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
     public void printBILL(View view) {
         int proceed =1;
         if (tblOrderItems.getChildCount() < 1){
-            MsgBox.Show("Warning", "Add Item before Saving KOT");
+            MsgBox.Show("Warning", "Add Item before Printing Bill");
             proceed =0;
         }
         else if (jBillingMode==4 )
@@ -5496,6 +5550,10 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
         btndepart.setEnabled(true);
         btncateg.setEnabled(true);
         btnitem.setEnabled(true);
+        if(jBillingMode==2) {
+            btnPrintBill.setEnabled(true);
+            btnPayBill.setEnabled(true);
+        }
 
     }
 
@@ -5523,6 +5581,10 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
         btndepart.setEnabled(false);
         btncateg.setEnabled(false);
         btnitem.setEnabled(false);
+        if(jBillingMode==2) {
+            btnPrintBill.setEnabled(true);
+            btnPayBill.setEnabled(true);
+        }
     }
 
     @Override
