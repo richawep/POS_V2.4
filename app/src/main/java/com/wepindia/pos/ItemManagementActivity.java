@@ -13,7 +13,6 @@
  ****************************************************************************/
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,9 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,15 +32,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -54,13 +50,13 @@ import android.widget.Toast;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.Item;
 import com.wep.common.app.WepBaseActivity;
+import com.wep.common.app.models.ItemOutward;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
-import com.wepindia.pos.GenericClasses.SpinnerObject;
+import com.wepindia.pos.adapters.ItemOutwardAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 
-import org.apache.poi.ss.usermodel.Color;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -96,7 +92,6 @@ public class ItemManagementActivity extends WepBaseActivity {
     ArrayAdapter<String> adapDeptCode, adapCategCode, adapKitCode, adapTax, adapDiscount;
     ArrayAdapter<CharSequence> supplytypeAdapter,MOUAdapter, taxationtypeAdapter;
     String strItemId, strImageUri = "";
-    SQLiteDatabase db;
     String strUploadFilepath = "", strUserName = "";
     private List<String> labelsDept;
     private List<String> labelsCateg;
@@ -105,35 +100,28 @@ public class ItemManagementActivity extends WepBaseActivity {
     Cursor crsrSettings = null;
     private Toolbar toolbar;
 
+    ItemOutwardAdapter itemListAdapter = null;
+    private ListView listViewItems;
+    ArrayList<ItemOutward> dataList = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemmaster);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        /*TextView tvTitleText = (TextView) findViewById(R.id.tvTitleBarCaption);
-        TextView tvTitleUserName = (TextView) findViewById(R.id.tvTitleBarUserName);
-        TextView tvTitleDate = (TextView) findViewById(R.id.tvTitleBarDate);
-        ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
-        ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.lnrItemMaster));
-        tvTitleText.setText("Item Master");*/
-
 
         myContext = this;
         MsgBox = new MessageDialog(myContext);
 
         strUserName = getIntent().getStringExtra("USER_NAME");
-        //tvTitleUserName.setText(strUserName.toUpperCase());
         Date d = new Date();
         CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-        //tvTitleDate.setText("Date : " + s);
         com.wep.common.app.ActionBarUtils.setupToolbar(ItemManagementActivity.this,toolbar,getSupportActionBar(),"Item Master",strUserName," Date:"+s.toString());
         try {
 
             InitializeViewVariables();
             ResetItem();
-            db = dbItems.getWritableDatabase();
             dbItems.CreateDatabase();
             dbItems.OpenDatabase();
             crsrSettings = dbItems.getBillSetting();
@@ -218,61 +206,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                             String path = strUploadFilepath;
                             FileInputStream inputStream = new FileInputStream(path);
                             buffer = new BufferedReader(new InputStreamReader(inputStream));
-                            /*if (tblItems.getChildCount()>0)
-                            {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
-                                        .setTitle("Replace Item")
-                                        .setMessage(" Are you sure you want to Replace all the existing Items, if any")
-                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                int deleted = dbItems.clearOutwardItemdatabase();
-                                                Log.d("ItemManagement"," Items deleted before uploading excel :"+deleted);
-                                                String line = "";
-                                                int iteration = 0;
-                                                try
-                                                {
-                                                    while ((line = buffer.readLine()) != null) {
-                                                        final String[] colums = line.split(",");
-                                                        if (colums.length != 9) {
-                                                            Log.d("CSVParser", "Skipping Bad CSV Row");
-                                                            //Toast.makeText(myContext, "Skipping Bad CSV Row", Toast.LENGTH_LONG).show();
-                                                            continue;
-                                                        }
-                                                        if (iteration == 0) {
-                                                            iteration++;
-                                                            continue;
-                                                        }
-                                                        InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
-                                                                Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
-                                                                0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-                                                                2, 0, 0, 0, "", "",0f,0f,"",0f,"",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
-                                                                Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
-                                                    }
-                                                }
-                                                catch (Exception e)
-                                                {
-                                                    Log.d("ItemManagement", e.getMessage());
-                                                }
 
-
-                                                dialog.dismiss();
-                                                ClearItemTable();
-                                                DisplayItems();
-                                                tvFileName.setText("");
-                                                Toast.makeText(getApplicationContext(), "Items Imported Successfully", Toast.LENGTH_LONG).show();
-                                            }
-                                        })
-                                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                                ClearItemTable();
-                                                DisplayItems();
-                                            }
-                                        });
-                                AlertDialog alert = builder.create();
-                                alert.show();
-                            }*/
-                            if (tblItems.getChildCount()>0)
+                            if (dataList.size()>0)
                             {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
                                         .setTitle("Replace Item")
@@ -329,9 +264,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                         super.onPostExecute(aVoid);
                                                         try{
                                                             ResetItem();
-                                                            ClearItemTable();
-                                                            DisplayItems();
-                                                            tvFileName.setText("");
+                                                            //ClearItemTable();
+                                                            DisplayItemList();
                                                             Toast.makeText(getApplicationContext(), "Items Imported Successfully", Toast.LENGTH_LONG).show();
                                                             pd.dismiss();
                                                         }catch (Exception e){
@@ -348,8 +282,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 dialog.dismiss();
-                                                ClearItemTable();
-                                                DisplayItems();
+                                                //ClearItemTable();
+                                                DisplayItemList();
                                             }
                                         });
                                 AlertDialog alert = builder.create();
@@ -376,23 +310,23 @@ public class ItemManagementActivity extends WepBaseActivity {
                                             String line = "";
                                             int iteration = 0;
 
-                                                while ((line = buffer.readLine()) != null) {
-                                                    final String[] colums = line.split(",");
-                                                    if (colums.length != 9) {
-                                                        Log.d("CSVParser", "Skipping Bad CSV Row");
-                                                        //Toast.makeText(myContext, "Skipping Bad CSV Row", Toast.LENGTH_LONG).show();
-                                                        continue;
-                                                    }
-                                                    if (iteration == 0) {
-                                                        iteration++;
-                                                        continue;
-                                                    }
-                                                    InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
-                                                            Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
-                                                            0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-                                                            2, 0, 0, 0, "", "",0f,0f,"",0f,"",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
-                                                            Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
+                                            while ((line = buffer.readLine()) != null) {
+                                                final String[] colums = line.split(",");
+                                                if (colums.length != 9) {
+                                                    Log.d("CSVParser", "Skipping Bad CSV Row");
+                                                    //Toast.makeText(myContext, "Skipping Bad CSV Row", Toast.LENGTH_LONG).show();
+                                                    continue;
                                                 }
+                                                if (iteration == 0) {
+                                                    iteration++;
+                                                    continue;
+                                                }
+                                                InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
+                                                        Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
+                                                        0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
+                                                        2, 0, 0, 0, "", "",0f,0f,"",0f,"",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
+                                                        Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
+                                            }
 
                                         } catch (Exception exp) {
                                             Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
@@ -405,9 +339,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                                         super.onPostExecute(aVoid);
                                         try{
                                             ResetItem();
-                                            ClearItemTable();
-                                            DisplayItems();
-                                            tvFileName.setText("");
+                                            //ClearItemTable();
+                                            DisplayItemList();
                                             Toast.makeText(myContext, "Items Imported Successfully", Toast.LENGTH_SHORT).show();
                                             pd.dismiss();
                                         }catch (Exception e){
@@ -417,69 +350,6 @@ public class ItemManagementActivity extends WepBaseActivity {
                                 }.execute();
 
                             }
-
-
-                            /*while ((line = buffer.readLine()) != null) {
-                                final String[] colums = line.split(",");
-                                if (colums.length != 9) {
-                                    Log.d("CSVParser", "Skipping Bad CSV Row");
-                                    //Toast.makeText(myContext, "Skipping Bad CSV Row", Toast.LENGTH_LONG).show();
-                                    continue;
-                                }
-                                if (iteration == 0) {
-                                    iteration++;
-                                    continue;
-                                }
-
-
-
-                                if (IsItemExists(colums[1].trim().toUpperCase(), colums[0].trim())) {
-                                    //MsgBox.Show("Warning", "Item already present");
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
-                                            .setTitle("Replace Item")
-                                            .setMessage(colums[0].trim().toUpperCase() + "\nAre you sure you want to Replace this Item")
-                                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                    Cursor crsrItem = dbItems.getbyItemName(colums[1].trim().toUpperCase());
-                                                    if (crsrItem.moveToFirst()) {
-                                                        //MsgBox.Show("", colums[0].trim() + " - " + crsrItem.getString(0));
-                                                        int iRowId = dbItems.updateItem(Integer.parseInt(colums[0].trim()),
-                                                                colums[1].trim(), colums[1].trim(), "", 0, 0, 0,
-                                                                Float.parseFloat(colums[2].trim()), Float.parseFloat(colums[3].trim()),
-                                                                Float.parseFloat(colums[4].trim()), 0, 0, 0,0, 1,
-                                                                2, 0, 0, Float.parseFloat(colums[5].trim()), 0,0, 0, "",
-                                                                0,0,"","",colums[8].trim(), "", 0, 0, 0, Float.parseFloat(colums[6].trim()),
-                                                                Float.parseFloat(colums[7].trim()), crsrItem.getColumnIndex("ItemId"));
-                                                        Log.d("updateItem", "Updated Rows: " + String.valueOf(iRowId));
-                                                        //Toast.makeText(getApplicationContext(), "Please wait... Importing Items...", Toast.LENGTH_LONG).show();
-                                                    }
-                                                    dialog.dismiss();
-                                                    ClearItemTable();
-                                                    DisplayItems();
-                                                }
-                                            })
-                                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
-                                                    ClearItemTable();
-                                                    DisplayItems();
-                                                }
-                                            });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
-                                } else {
-                                    InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
-                                            Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
-                                            0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-                                            2, 0, 0, 0, "", "",0f,0f,"",0f,"",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
-                                            Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
-                                    //Toast.makeText(getApplicationContext(), "Please wait... Importing Items...", Toast.LENGTH_LONG).show();
-                                }
-                            }*/
-                            /*Toast.makeText(getApplicationContext(), "Items Imported Successfully", Toast.LENGTH_LONG).show();
-                            ClearItemTable();
-                            DisplayItems();*/
                         }
                     } catch (IOException e) {
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -487,13 +357,13 @@ public class ItemManagementActivity extends WepBaseActivity {
                     }
                     finally {
                         tvFileName.setText("");
+                        strUploadFilepath="";
                     }
                 }
             });
 
             SetGSTView();
-            ClearItemTable();
-            DisplayItems();
+            DisplayItemList();
 
             tvFileName.setPaintFlags(tvFileName.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
@@ -506,6 +376,8 @@ public class ItemManagementActivity extends WepBaseActivity {
             Toast.makeText(myContext, "OnCreate:" + exp.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     private void SetGSTView()
     {
@@ -599,7 +471,6 @@ public class ItemManagementActivity extends WepBaseActivity {
         EditTextInputHandler etInputValidate = new EditTextInputHandler();
 
         txtLongName = (EditText) findViewById(R.id.etItemLongName);
-        //txtShortName = (EditText) findViewById(R.id.etItemShortName);
         txtBarcode = (EditText) findViewById(R.id.etItemBarcode);
         txtDineIn1 = (EditText) findViewById(R.id.etItemDineInPrice1);
         etInputValidate.ValidateDecimalInput(txtDineIn1);
@@ -667,9 +538,9 @@ public class ItemManagementActivity extends WepBaseActivity {
         spnrOptionalTax2 = (Spinner) findViewById(R.id.spnrItemOptionalTax2);
         spnrDiscount = (Spinner) findViewById(R.id.spnrItemDiscount);
 
-        chkPriceChange = (CheckBox) findViewById(R.id.chkPriceChange);
-        chkDiscountEnable = (CheckBox) findViewById(R.id.chkDiscount);
-        chkBillWithStock = (CheckBox) findViewById(R.id.chkBillwithStock);
+        //chkPriceChange = (CheckBox) findViewById(R.id.chkPriceChange);
+        //chkDiscountEnable = (CheckBox) findViewById(R.id.chkDiscount);
+        //chkBillWithStock = (CheckBox) findViewById(R.id.chkBillwithStock);
 
         rbForwardTax = (RadioButton) findViewById(R.id.rbForwardTax);
         rbReverseTax =
@@ -715,8 +586,88 @@ public class ItemManagementActivity extends WepBaseActivity {
         edtMenuCode = (EditText) findViewById(R.id.edtMenuCode);
         edtItemSalesTax = (EditText) findViewById(R.id.edtItemSalesTax);
         edtItemServiceTax = (EditText) findViewById(R.id.edtItemServiceTax);
+
+        listViewItems = (ListView) findViewById(R.id.listViewItems);
+        listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listItemClickEvent(itemListAdapter.getItems(position));
+            }});
     }
 
+    private void listItemClickEvent(ItemOutward item) {
+        edtMenuCode.setText(String.valueOf(item.getMenuCode()));
+        txtLongName.setText(item.getLongName());
+
+        txtBarcode.setText(item.getBarCode());
+        txtDineIn1.setText(String.valueOf(item.getDineIn1()));
+        txtDineIn2.setText(String.valueOf(item.getDineIn2()));
+        txtDineIn3.setText(String.valueOf(item.getDineIn3()));
+        txtStock.setText(String.valueOf(item.getStock()));
+
+        strImageUri = item.getImageUri();
+
+        Cursor crsrDept = dbItems.getDepartment(Integer.valueOf(item.getDeptCode()));
+        String deptName = "Select";
+        int deptid = 0;
+        if (crsrDept.moveToFirst()) {
+            deptName = crsrDept.getString(crsrDept.getColumnIndex("DeptName"));
+            deptid = getIndexDept(deptName + "");
+            spnrDepartment.setSelection(deptid);
+        } else {
+
+            deptid = getIndexDept(deptName + "");
+            spnrDepartment.setSelection(deptid);
+        }
+
+        ArrayList<String> listCateg = dbItems.getCategoryNameByDeptCode(String.valueOf(deptid));
+        loadSpinnerData_cat(listCateg);
+        if (deptid ==0) {
+            spnrCategory.setSelection(0);
+        }else {
+            Cursor crsrCateg = dbItems.getCategory(Integer.valueOf(item.getCategCode()));
+            String categName = "";
+            if (crsrCateg.moveToFirst()) {
+                categName = crsrCateg.getString(crsrCateg.getColumnIndex("CategName"));
+            }
+            boolean bool = false;
+            int i =0;
+            for( i =0; !categName.equals("")&&bool == false && i<listCateg.size();i++)
+            {
+                if(categName.equalsIgnoreCase(listCateg.get(i)))
+                    bool = true;
+            }
+            if(bool) // true
+            {
+                spnrCategory.setSelection(i-1);
+            }
+            else
+                spnrCategory.setSelection(0);
+        }
+
+        spnrKitchen.setSelection((item.getKitchenCode()) );
+
+
+        imgItemImage.setImageURI(null);
+        if (!strImageUri.equalsIgnoreCase("")) { // &&
+            // strImageUri.contains("\\")){
+            imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
+        } else {
+            imgItemImage.setImageResource(R.drawable.img_noimage);
+        }
+        edtItemSalesTax.setText(String.format("%.2f",item.getSalesTaxPercent()));
+        edtItemServiceTax.setText(String.format("%.2f",item.getServiceTaxPercent()));
+
+        String uom_temp = item.getUOM();
+        String uom = "("+uom_temp+")";
+        int index = getIndex(uom);
+        spnrMOU.setSelection(index);
+        strItemId = String.valueOf(item.getItemId());
+        btnAdd.setEnabled(false);
+        btnEdit.setEnabled(true);
+
+
+        //spinnerRole
+    }
     private void InitializeAdapters() {
         Log.d("Functions", "InitializeAdapters");
         // Cursor variable
@@ -796,6 +747,39 @@ public class ItemManagementActivity extends WepBaseActivity {
     }
 
 
+    void DisplayItemList()
+    {
+        dataList = new ArrayList<ItemOutward>();
+        Cursor cursorItem = dbItems.getAllItems();
+
+        while(cursorItem!=null && cursorItem.moveToNext())
+        {
+            ItemOutward item = new ItemOutward();
+            item.setMenuCode(cursorItem.getInt(cursorItem.getColumnIndex("MenuCode")));
+            item.setLongName(cursorItem.getString(cursorItem.getColumnIndex("ItemName")));
+            item.setDineIn1(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice1")));
+            item.setDineIn2(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice2")));
+            item.setDineIn3(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice3")));
+            item.setStock(cursorItem.getFloat(cursorItem.getColumnIndex("Quantity")));
+            item.setDeptCode(cursorItem.getInt(cursorItem.getColumnIndex("DeptCode")));
+            item.setCategCode(cursorItem.getInt(cursorItem.getColumnIndex("CategCode")));
+            item.setKitchenCode(cursorItem.getInt(cursorItem.getColumnIndex("KitchenCode")));
+            item.setBarCode(cursorItem.getString(cursorItem.getColumnIndex("ItemBarcode")));
+            item.setImageUri(cursorItem.getString(cursorItem.getColumnIndex("ImageUri")));
+            item.setUOM(cursorItem.getString(cursorItem.getColumnIndex("UOM")));
+            item.setSalesTaxPercent(cursorItem.getFloat(cursorItem.getColumnIndex("SalesTaxPercent")));
+            item.setServiceTaxPercent(cursorItem.getFloat(cursorItem.getColumnIndex("ServiceTaxPercent")));
+            item.setItemId(cursorItem.getInt(cursorItem.getColumnIndex("ItemId")));
+
+            dataList.add(item);
+        }
+        if (itemListAdapter == null) {
+            itemListAdapter = new ItemOutwardAdapter(ItemManagementActivity.this, dataList,dbItems);
+            listViewItems.setAdapter(itemListAdapter);
+        } else {
+            itemListAdapter.notifyNewDataAdded(dataList);
+        }
+    }
 
     @SuppressWarnings("deprecation")
     private void DisplayItems() {
@@ -840,14 +824,10 @@ public class ItemManagementActivity extends WepBaseActivity {
                 tvLongName.setWidth(360);
                 //tvLongName.setTypeface(Typeface.DEFAULT_BOLD);
                 tvLongName.setTextColor(getResources().getColor(R.color.black));
-                tvLongName.setText(crsrItems.getString(crsrItems.getColumnIndex("ItemName")).toUpperCase());
+                tvLongName.setText(crsrItems.getString(crsrItems.getColumnIndex("ItemName")));
                 //rowItems.addView(tvLongName);
 
-                tvShortName = new TextView(myContext);
-                tvShortName.setTextSize(18);
-                tvShortName.setWidth(0);
-                //tvShortName.setText(crsrItems.getString(crsrItems.getColumnIndex("ShortName")));
-                //rowItems.addView(tvShortName);
+
 
                 tvDineIn1 = new TextView(myContext);
                 //tvDineIn1.setGravity(1);
@@ -872,23 +852,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                 tvDineIn3.setText(crsrItems.getString(crsrItems.getColumnIndex("DineInPrice3")));
                 //rowItems.addView(tvDineIn3);
 
-                tvTakeAway = new TextView(myContext);
-                tvTakeAway.setGravity(1);
-                tvTakeAway.setWidth(110);
-                tvTakeAway.setText(crsrItems.getString(crsrItems.getColumnIndex("TakeAwayPrice")));
-                //rowItems.addView(tvTakeAway);
 
-                tvPickUp = new TextView(myContext);
-                tvPickUp.setGravity(1);
-                tvPickUp.setWidth(110);
-                tvPickUp.setText(crsrItems.getString(crsrItems.getColumnIndex("PickUpPrice")));
-                //rowItems.addView(tvPickUp);
-
-                tvDelivery = new TextView(myContext);
-                tvDelivery.setGravity(1);
-                tvDelivery.setWidth(110);
-                tvDelivery.setText(crsrItems.getString(crsrItems.getColumnIndex("DeliveryPrice")));
-                //rowItems.addView(tvDelivery);
 
                 tvStock = new TextView(myContext);
                 tvStock.setGravity(1);
@@ -900,35 +864,9 @@ public class ItemManagementActivity extends WepBaseActivity {
                 tvStock.setText(crsrItems.getString(crsrItems.getColumnIndex("Quantity")));
                 //rowItems.addView(tvStock);
 
-                TextView tvStock1 = new TextView(myContext);
-                tvStock1.setGravity(1);
-                tvStock1.setWidth(110);
-                tvStock1.setTextSize(15);
-                tvStock1.setTextColor(getResources().getColor(R.color.black));
-                tvStock1.setText(crsrItems.getString(crsrItems.getColumnIndex("Quantity")));
 
 
-                tvPriceChange = new TextView(myContext);
-                tvPriceChange.setText(crsrItems.getString(crsrItems.getColumnIndex("PriceChange")).equalsIgnoreCase("1")
-                        ? "Yes" : "No");
-                //rowItems.addView(tvPriceChange);
 
-                tvDiscountEnable = new TextView(myContext);
-                tvDiscountEnable
-                        .setText(crsrItems.getString(crsrItems.getColumnIndex("DiscountEnable")).equalsIgnoreCase("1")
-                                ? "Yes" : "No");
-                //rowItems.addView(tvDiscountEnable);
-
-                tvBillWithStock = new TextView(myContext);
-                tvBillWithStock
-                        .setText(crsrItems.getString(crsrItems.getColumnIndex("BillWithStock")).equalsIgnoreCase("1")
-                                ? "Yes" : "No");
-                //rowItems.addView(tvBillWithStock);
-
-                tvTaxType = new TextView(myContext);
-                tvTaxType.setText(crsrItems.getString(crsrItems.getColumnIndex("TaxType")).equalsIgnoreCase("1")
-                        ? "Forward Tax" : "Reverse Tax");
-                //rowItems.addView(tvTaxType);
 
                 tvDeptCode = new TextView(myContext);
                 tvDeptCode.setText(crsrItems.getString(crsrItems.getColumnIndex("DeptCode")));
@@ -942,26 +880,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                 tvKitchenCode.setText(crsrItems.getString(crsrItems.getColumnIndex("KitchenCode")));
                 //rowItems.addView(tvKitchenCode);
 
-                tvSalesTaxId = new TextView(myContext);
-                tvSalesTaxId.setText(crsrItems.getString(crsrItems.getColumnIndex("SalesTaxId")));
-                //rowItems.addView(tvSalesTaxId);
 
-                tvAdditionalTaxId = new TextView(myContext);
-                tvAdditionalTaxId.setText(crsrItems.getString(crsrItems.getColumnIndex("AdditionalTaxId")));
-                //rowItems.addView(tvAdditionalTaxId);
-
-                tvOptionalTaxId1 = new TextView(myContext);
-                tvOptionalTaxId1.setText(crsrItems.getString(crsrItems.getColumnIndex("OptionalTaxId1")));
-                //rowItems.addView(tvOptionalTaxId1);
-
-                tvOptionalTaxId2 = new TextView(myContext);
-                tvOptionalTaxId2.setText(crsrItems.getString(crsrItems.getColumnIndex("OptionalTaxId2")));
-                //rowItems.addView(tvOptionalTaxId2);
-
-                tvDiscountId = new TextView(myContext);
-                tvDiscountId.setText(crsrItems.getString(crsrItems.getColumnIndex("DiscId")));
-                tvDiscountId.setWidth(80);
-                //rowItems.addView(tvDiscountId);
 
                 tvItemBarcode = new TextView(myContext);
                 tvItemBarcode.setText(crsrItems.getString(crsrItems.getColumnIndex("ItemBarcode")));
@@ -992,34 +911,6 @@ public class ItemManagementActivity extends WepBaseActivity {
                 tvSupplyType.setText(crsrItems.getString(crsrItems.getColumnIndex("SupplyType")));
                 //rowItems.addView(tvSupplyType);
 
-                tvGSTRate = new TextView(myContext);
-                tvGSTRate.setGravity(Gravity.RIGHT|Gravity.END);
-                tvGSTRate.setWidth(100);
-                tvGSTRate.setTextSize(15);
-                //tvGSTRate.setTypeface(Typeface.DEFAULT_BOLD);
-                tvGSTRate.setTextColor(getResources().getColor(R.color.black));
-                //tvGSTRate.setBackgroundResource(R.drawable.border);
-                Float fGSTRate = 0.0f;
-                String IGSTRate_str = crsrItems.getString(crsrItems.getColumnIndex("IGSTRate"));
-                if (Float.parseFloat(IGSTRate_str) == 0) {
-                    String CGSTRate_str = crsrItems.getString(crsrItems.getColumnIndex("CGSTRate"));
-                    Float fCgst = Float.parseFloat(CGSTRate_str);
-                    fGSTRate = 2 * fCgst;
-                } else {
-                    fGSTRate = Float.parseFloat(IGSTRate_str);
-                }
-                tvGSTRate.setText(fGSTRate.toString());
-                //rowItems.addView(tvGSTRate);
-
-                tvRate = new TextView(myContext);
-                tvRate.setGravity(Gravity.RIGHT|Gravity.END);
-                tvRate.setWidth(130);
-                tvRate.setTextSize(15);
-                //tvRate.setTypeface(Typeface.DEFAULT_BOLD);
-                tvRate.setTextColor(getResources().getColor(R.color.black));
-                //tvRate.setBackgroundResource(R.drawable.border);
-                tvRate.setText(crsrItems.getString(crsrItems.getColumnIndex("Rate")));
-                //rowItems.addView(tvRate);
 
                 tvMOU = new TextView(myContext);
                 tvMOU.setGravity(Gravity.RIGHT|Gravity.END);
@@ -1031,11 +922,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                 tvMOU.setText(crsrItems.getString(crsrItems.getColumnIndex("UOM")));
                 //rowItems.addView(tvMOU);
 
-                tvHSNCode_out = new TextView(myContext);
-                tvHSNCode_out.setGravity(1);
-                tvHSNCode_out.setWidth(110);
-                tvHSNCode_out.setText(crsrItems.getString(crsrItems.getColumnIndex("HSNCode")));
-                //rowItems.addView(tvHSNCode_out);
+
 
                 // For Space purpose
                 tvSpace = new TextView(myContext);
@@ -1051,16 +938,14 @@ public class ItemManagementActivity extends WepBaseActivity {
                 // Delete
                 int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
                 btnItemDelete = new ImageButton(myContext);
-               // btnItemDelete.setImageResource(res);
-                //btnItemDelete.setBackgroundResource(R.drawable.border);
-                //TableRow.LayoutParams rowparams1 = new TableRow.LayoutParams(70, 40);
+
                 TableRow.LayoutParams rowparams1 = new TableRow.LayoutParams(40, 35);
                 rowparams1.gravity = Gravity.CENTER;
                 btnItemDelete.setBackground(getResources().getDrawable(R.drawable.delete_icon_border));
                 //btnItemDelete.setLayoutParams(rowparams1);
                 btnItemDelete.setLayoutParams(new TableRow.LayoutParams(40, 35));
-                btnItemDelete.setOnClickListener(mListener);
-                //rowItems.addView(btnItemDelete);
+                //btnItemDelete.setOnClickListener(mListener);
+
 
 
 
@@ -1078,46 +963,32 @@ public class ItemManagementActivity extends WepBaseActivity {
 
                 if(GSTEnable.equals("0")) {
 
-                    rowItems.addView(tvSno);
-                    rowItems.addView(tvMenuCode);
-                    rowItems.addView(tvLongName);
-                    rowItems.addView(tvShortName);
-                    rowItems.addView(tvDineIn1);
-                    rowItems.addView(tvDineIn2);
-                    rowItems.addView(tvDineIn3);
-                    rowItems.addView(tvTakeAway);
-                    rowItems.addView(tvPickUp);
-                    rowItems.addView(tvDelivery);
-                    rowItems.addView(tvStock);
-                    rowItems.addView(tvPriceChange);
-                    rowItems.addView(tvDiscountEnable);
-                    rowItems.addView(tvBillWithStock);
-                    rowItems.addView(tvTaxType);
-                    rowItems.addView(tvDeptCode);
-                    rowItems.addView(tvCategCode);
-                    rowItems.addView(tvKitchenCode);
-                    rowItems.addView(tvSalesTaxId);
-                    rowItems.addView(tvAdditionalTaxId);
-                    rowItems.addView(tvOptionalTaxId1);
-                    rowItems.addView(tvOptionalTaxId2);
-                    rowItems.addView(tvDiscountId);
-                    rowItems.addView(tvItemBarcode);
-                    rowItems.addView(tvImageUri);
-                    rowItems.addView(tvSpace1);//25
-                    rowItems.addView(imgIcon);
-                    rowItems.addView(tvSpace);
-                    rowItems.addView(btnItemDelete);
-                    /*rowItems.addView(tvSpace1);//28
-                    rowItems.addView(tvHSNCode_out);//29
-                    rowItems.addView(tvSupplyType);*/
-                    // For Space purpose
-                    tvSpace = new TextView(myContext);
-                    tvSpace.setText("              ");
-                    rowItems.addView(tvSpace);
-                    rowItems.addView(tvItemId);
-                    rowItems.addView(tvSalesTaxPercent);
-                    rowItems.addView(tvServiceTaxPercent);
-                    rowItems.addView(tvMOU);
+                    rowItems.addView(tvSno);//0
+                    rowItems.addView(tvMenuCode);//1
+                    rowItems.addView(tvLongName);//2
+
+                    rowItems.addView(tvDineIn1);//3
+                    rowItems.addView(tvDineIn2);//4
+                    rowItems.addView(tvDineIn3);//5
+
+                    rowItems.addView(tvStock);//6
+
+                    rowItems.addView(tvDeptCode);//7
+                    rowItems.addView(tvCategCode);//8
+                    rowItems.addView(tvKitchenCode);//9
+
+                    rowItems.addView(tvItemBarcode);//10
+                    rowItems.addView(tvImageUri);//11
+                    rowItems.addView(tvSpace1);//12
+                    rowItems.addView(imgIcon);//13
+                    rowItems.addView(tvSpace);//14
+                    rowItems.addView(btnItemDelete);//15
+
+
+                    rowItems.addView(tvItemId);//16
+                    rowItems.addView(tvSalesTaxPercent);//17
+                    rowItems.addView(tvServiceTaxPercent);//18
+                    rowItems.addView(tvMOU);//19
 
                     rowItems.setOnClickListener(new View.OnClickListener() {
 
@@ -1129,32 +1000,19 @@ public class ItemManagementActivity extends WepBaseActivity {
                                 ROWCLICKEVENT = 1;
                                 TextView MenuCode = (TextView) Row.getChildAt(1);
                                 TextView LongName = (TextView) Row.getChildAt(2);
-                                TextView ShortName = (TextView) Row.getChildAt(3);
-                                TextView DineIn1 = (TextView) Row.getChildAt(4);
-                                TextView DineIn2 = (TextView) Row.getChildAt(5);
-                                TextView DineIn3 = (TextView) Row.getChildAt(6);
-                                TextView TakeAway = (TextView) Row.getChildAt(7);
-                                TextView PickUp = (TextView) Row.getChildAt(8);
-                                TextView Delivery = (TextView) Row.getChildAt(9);
-                                TextView Stock = (TextView) Row.getChildAt(10);
-                                TextView PriceChange = (TextView) Row.getChildAt(11);
-                                TextView DiscountEnable = (TextView) Row.getChildAt(12);
-                                TextView BillWithStock = (TextView) Row.getChildAt(13);
-                                TextView TaxType = (TextView) Row.getChildAt(14);
-                                TextView DeptCode = (TextView) Row.getChildAt(15);
-                                TextView CategCode = (TextView) Row.getChildAt(16);
-                                TextView KitchenCode = (TextView) Row.getChildAt(17);
-                                TextView SalesTaxId = (TextView) Row.getChildAt(18);
-                                TextView AdditionalTaxId = (TextView) Row.getChildAt(19);
-                                TextView OptionalTaxId1 = (TextView) Row.getChildAt(20);
-                                TextView OptionalTaxId2 = (TextView) Row.getChildAt(21);
-                                TextView DiscountId = (TextView) Row.getChildAt(22);
-                                TextView Barcode = (TextView) Row.getChildAt(23);
-                                TextView ImageUri = (TextView) Row.getChildAt(24);
-                                TextView ItemId = (TextView) Row.getChildAt(30);
-                                TextView SalesTaxPercent = (TextView) Row.getChildAt(31);
-                                TextView ServiceTaxPercent = (TextView) Row.getChildAt(32);
-                                TextView MOU = (TextView) Row.getChildAt(33);
+                                TextView DineIn1 = (TextView) Row.getChildAt(3);
+                                TextView DineIn2 = (TextView) Row.getChildAt(4);
+                                TextView DineIn3 = (TextView) Row.getChildAt(5);
+                                TextView Stock = (TextView) Row.getChildAt(6);
+                                TextView DeptCode = (TextView) Row.getChildAt(7);
+                                TextView CategCode = (TextView) Row.getChildAt(8);
+                                TextView KitchenCode = (TextView) Row.getChildAt(9);
+                                TextView Barcode = (TextView) Row.getChildAt(10);
+                                TextView ImageUri = (TextView) Row.getChildAt(11);
+                                TextView ItemId = (TextView) Row.getChildAt(16);
+                                TextView SalesTaxPercent = (TextView) Row.getChildAt(17);
+                                TextView ServiceTaxPercent = (TextView) Row.getChildAt(18);
+                                TextView MOU = (TextView) Row.getChildAt(19);
 
                                 strItemId = ItemId.getText().toString();
                                 edtMenuCode.setText(MenuCode.getText().toString());
@@ -1206,48 +1064,13 @@ public class ItemManagementActivity extends WepBaseActivity {
                                     }
                                     else
                                         spnrCategory.setSelection(0);
-                                    }
+                                }
 
-                                /*Cursor crsrCateg = dbItems.getCategory(Integer.valueOf(CategCode.getText().toString()));
-                                if (crsrCateg.moveToFirst()) {
-                                    String categName = crsrCateg.getString(crsrCateg.getColumnIndex("CategName"));
-                                    int categid = getIndexCateg(categName + "");
-                                    spnrCategory.setSelection(categid);
-                                } else {
-                                    String categName = "Select";
-                                    int categid = getIndexCateg(categName + "");
-                                    spnrCategory.setSelection(categid);
-                                }*/
 
-                                //spnrCategory.setSelection(Integer.parseInt(CategCode.getText().toString()));
+
+
                                 spnrKitchen.setSelection(Integer.parseInt(KitchenCode.getText().toString()) );
-                                spnrSalesTax.setSelection(Integer.parseInt(SalesTaxId.getText().toString()) - 1);
-                                spnrAdditionalTax.setSelection(Integer.parseInt(AdditionalTaxId.getText().toString()) - 1);
-                                spnrOptionalTax1.setSelection(Integer.parseInt(OptionalTaxId1.getText().toString()) - 1);
-                                spnrOptionalTax2.setSelection(Integer.parseInt(OptionalTaxId2.getText().toString()) - 1);
-                                spnrDiscount.setSelection(Integer.parseInt(DiscountId.getText().toString()) - 1);
 
-                                if (PriceChange.getText().toString().equalsIgnoreCase("Yes")) {
-                                    chkPriceChange.setChecked(true);
-                                } else {
-                                    chkPriceChange.setChecked(false);
-                                }
-                                if (DiscountEnable.getText().toString().equalsIgnoreCase("Yes")) {
-                                    chkDiscountEnable.setChecked(true);
-                                } else {
-                                    chkDiscountEnable.setChecked(false);
-                                }
-                                if (BillWithStock.getText().toString().equalsIgnoreCase("Yes")) {
-                                    chkBillWithStock.setChecked(true);
-                                } else {
-                                    chkBillWithStock.setChecked(false);
-                                }
-
-                                if (TaxType.getText().toString().equalsIgnoreCase("Forward Tax")) {
-                                    rbForwardTax.setChecked(true);
-                                } else if (TaxType.getText().toString().equalsIgnoreCase("Reverse Tax")) {
-                                    rbReverseTax.setChecked(true);
-                                }
 
                                 imgItemImage.setImageURI(null);
                                 if (!strImageUri.equalsIgnoreCase("")) { // &&
@@ -1277,7 +1100,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                 {
                     // gst enabled
 
-                    rowItems.addView(tvSno);
+                    /*rowItems.addView(tvSno);
                     rowItems.addView(tvMenuCode);
                     rowItems.addView(tvLongName);
                     rowItems.addView(tvShortName);
@@ -1362,10 +1185,10 @@ public class ItemManagementActivity extends WepBaseActivity {
                                 txtLongName.setText(LongName.getText());
                                 //txtShortName.setText(ShortName.getText());
                                 txtBarcode.setText(Barcode.getText());
-                                /*txtDineIn1.setText(DineIn1.getText());
+                                *//*txtDineIn1.setText(DineIn1.getText());
                                 txtDineIn2.setText(DineIn2.getText());
                                 txtDineIn3.setText(DineIn3.getText());
-                                txtStock.setText(Stock.getText());*/
+                                txtStock.setText(Stock.getText());*//*
                                 strImageUri = ImageUri.getText().toString();
 
                                 // gst
@@ -1450,7 +1273,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
 
                     tblItems.addView(rowItems, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-                    i++;
+                    i++;*/
                 }
             } while (crsrItems.moveToNext());
         } else {
@@ -1500,62 +1323,17 @@ public class ItemManagementActivity extends WepBaseActivity {
         return -1;
     }
 
-    private View.OnClickListener mListener = new View.OnClickListener() {
-        public void onClick(final View v) {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
-                    .setTitle("Delete")
-                    .setMessage("Are you sure you want to Delete this Item")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            TableRow tr = (TableRow) v.getParent();
-                            TextView ItemNumber = (TextView) tr.getChildAt(1);
-                            long lResult = dbItems.DeleteItem(ItemNumber.getText().toString());
-                            //MsgBox.Show("", "Item Deleted Successfully");
-                            Toast.makeText(myContext, "Item Deleted Successfully", Toast.LENGTH_SHORT).show();
-
-                            ClearItemTable();
-                            DisplayItems();
-
-                            dialog.dismiss();
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
-    };
 
     private boolean IsItemExists(String ItemFullName, String MenuCode) {
         boolean isItemExists = false;
-        String strItem = "", strItemCode = "";
-        TextView Item, ItemCode;
 
-        for (int i = 0; i < tblItems.getChildCount(); i++) {
-
-            TableRow Row = (TableRow) tblItems.getChildAt(i);
-
-            if (Row.getChildAt(0) != null) {
-                ItemCode = (TextView) Row.getChildAt(1);
-                Item = (TextView) Row.getChildAt(2);
-
-                strItemCode = ItemCode.getText().toString();
-                strItem = Item.getText().toString();
-
-                Log.v("ItemActivity", "Item:" + strItem.toUpperCase() + " New Item:" + ItemFullName.toUpperCase());
-
-                if (strItem.toUpperCase().equalsIgnoreCase(ItemFullName.toUpperCase()) || strItemCode.equalsIgnoreCase(MenuCode)) {
-                    isItemExists = true;
-                    break;
-                }
+        for (ItemOutward item : dataList) {
+            if (item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase()) || item.getItemId() == Integer.parseInt(MenuCode)) {
+                isItemExists = true;
+                break;
             }
         }
-
         return isItemExists;
     }
 
@@ -1590,7 +1368,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                 DeliveryPrice, DineInPrice1, DineInPrice2, DineInPrice3, PickUpPrice, Stock, TakeAwayPrice, ImageUri,hsnCode,
                 fgsttax,0,cgsttax, 0,sgsttax, 0 ,MOU_str, taxationtype,frate,g_s, SalesTaxPercent, ServiceTaxPercent, MenuCode);
 
-            lRowId = dbItems.addItem(objItem);
+        lRowId = dbItems.addItem(objItem);
 
         Log.d("Item", "Row Id:" + String.valueOf(lRowId));
     }
@@ -1604,36 +1382,21 @@ public class ItemManagementActivity extends WepBaseActivity {
 
         strMenuCode = edtMenuCode.getText().toString();
         strLongName = txtLongName.getText().toString().toUpperCase();
-        strShortName ="";// txtShortName.getText().toString().toUpperCase();
         strBarcode = txtBarcode.getText().toString();
 
         fDineIn1 = Float.parseFloat(txtDineIn1.getText().toString());
         fDineIn2 = Float.parseFloat(txtDineIn2.getText().toString());
         fDineIn3 = Float.parseFloat(txtDineIn3.getText().toString());
-        /*fPickUp = Float.parseFloat("0.00");
-        fTakeAway = Float.parseFloat("0.00");
-        fDelivery = Float.parseFloat("0.00");*/
         fPickUp = 0.00f;
         fTakeAway = 0.00f;
         fDelivery = 0.00f;
         fStock = Float.parseFloat(txtStock.getText().toString());
 
-        //iDeptCode = spnrDepartment.getSelectedItemPosition();
         if(!spnrDepartment.getSelectedItem().toString().equalsIgnoreCase("Select"))
-                 iDeptCode = dbItems.getDepartmentIdByName(labelsDept.get(spnrDepartment.getSelectedItemPosition()));
-        //iCategCode = ((SpinnerObject) spnrCategory.getSelectedItem()).getId();
+            iDeptCode = dbItems.getDepartmentIdByName(labelsDept.get(spnrDepartment.getSelectedItemPosition()));
         if(!spnrCategory.getSelectedItem().toString().equalsIgnoreCase("Select department"))
             iCategCode = dbItems.getCategoryIdByName(String.valueOf(spnrCategory.getSelectedItem()));
         iKitchenCode = spnrKitchen.getSelectedItemPosition() ;
-        iSalesTaxId = spnrSalesTax.getSelectedItemPosition() ;
-        iAdditionalTaxId = spnrAdditionalTax.getSelectedItemPosition() + 1;
-        iOptionalTaxId1 = 0;
-        iOptionalTaxId2 = 0;
-       // iDiscountId = spnrDiscount.getSelectedItemPosition() + 1;
-        iPriceChange = 0;
-        iDiscountEnable = 0;
-        iBillWithStock = 0;
-        iTaxType = 0;
 
         // richa - gst
 
@@ -1725,7 +1488,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         btnAdd.setEnabled(true);
         btnEdit.setEnabled(false);
         tvFileName.setText("");
-
+        strUploadFilepath="";
         edtItemSalesTax.setText("0.00");
         edtItemServiceTax.setText("0.00");
         edtMenuCode.setText("");
@@ -1746,6 +1509,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         txtHSNCode = "";
         fGSTTax = 0;
         fDiscount = 0;
+        imgItemImage.setImageResource(R.drawable.img_noimage);
 
 
     }
@@ -1888,9 +1652,9 @@ public class ItemManagementActivity extends WepBaseActivity {
 
                 try {
                     ReadData(1); // 2 - updateItem
-                    /*ResetItem();
-                    ClearItemTable();
-                    DisplayItems();*/
+                    //ResetItem();
+                    //ClearItemTable();
+                    //DisplayItems();
                 } catch (Exception exp) {
                     //Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -1902,8 +1666,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                 super.onPostExecute(aVoid);
                 try{
                     ResetItem();
-                    ClearItemTable();
-                    DisplayItems();
+                    //ClearItemTable();
+                    DisplayItemList();
                     Toast.makeText(myContext, "Item Added Successfully", Toast.LENGTH_LONG).show();
                     pd.dismiss();
                 }catch (Exception e){
@@ -1911,7 +1675,6 @@ public class ItemManagementActivity extends WepBaseActivity {
                 }
             }
         }.execute();
-
 
     }
 
@@ -2004,9 +1767,9 @@ public class ItemManagementActivity extends WepBaseActivity {
 
                 try {
                     ReadData(2); // 2 - updateItem
-                    /*ResetItem();
-                    ClearItemTable();
-                    DisplayItems();*/
+                    //ResetItem();
+//                    ClearItemTable();
+//                    DisplayItems();
                 } catch (Exception exp) {
                     //Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -2018,8 +1781,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                 super.onPostExecute(aVoid);
                 try{
                     ResetItem();
-                    ClearItemTable();
-                    DisplayItems();
+                    //ClearItemTable();
+                    DisplayItemList();
                     Toast.makeText(myContext, "Item Updated Successfully", Toast.LENGTH_LONG).show();
                     pd.dismiss();
 
@@ -2028,7 +1791,6 @@ public class ItemManagementActivity extends WepBaseActivity {
                 }
             }
         }.execute();
-
     }
 
     public void ClearItem(View v) {
@@ -2308,7 +2070,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                 btnItemDelete = new ImageButton(myContext);
                 btnItemDelete.setImageResource(res);
                 btnItemDelete.setLayoutParams(new TableRow.LayoutParams(60, 40));
-                btnItemDelete.setOnClickListener(mListener);
+                //btnItemDelete.setOnClickListener(mListener);
                 rowItems.addView(btnItemDelete);
 
                 // For Space purpose
@@ -2356,7 +2118,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
                             edtMenuCode.setText(MenuCode.getText().toString());
                             txtLongName.setText(LongName.getText());
-                           // txtShortName.setText(ShortName.getText());
+                            // txtShortName.setText(ShortName.getText());
                             txtBarcode.setText(Barcode.getText());
                             txtDineIn1.setText(DineIn1.getText());
                             txtDineIn2.setText(DineIn2.getText());
@@ -2371,8 +2133,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                             spnrG_S.setSelection(Integer.parseInt(SupplyType.getText().toString()));
                             //spnrMOU.
 
-                                    // gst end
-                                    Cursor crsrDept = dbItems.getDepartment(Integer.valueOf(DeptCode.getText().toString()));
+                            // gst end
+                            Cursor crsrDept = dbItems.getDepartment(Integer.valueOf(DeptCode.getText().toString()));
                             if(crsrDept.moveToFirst()) {
                                 String deptName = crsrDept.getString(crsrDept.getColumnIndex("DeptName"));
                                 int deptid = getIndexDept(deptName + "");
