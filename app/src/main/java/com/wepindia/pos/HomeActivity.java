@@ -417,30 +417,20 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 
 
     public void LaunchActivity(View v) {
-        //SharedPreferences spUser = getSharedPreferences(FILE_SHARED_PREFERENCE, Context.MODE_MULTI_PROCESS |
-        //		Context.CONTEXT_IGNORE_SECURITY);
-        //SharedPreferences spUser = PreferenceManager.getDefaultSharedPreferences(myContext);
-        //int strUserRole = Integer.parseInt(spUser.getString("ACCESS_LEVEL", "1"));
-
-        if (v.getContentDescription().toString().equalsIgnoreCase("DineIn")) {
-            // Launch Billing screen activity in dine in billing mode
+        if (v.getContentDescription().toString().equalsIgnoreCase("DineIn"))
+        {
             Intent intentDineIn = new Intent(myContext, TableActivity.class);
             intentDineIn.putExtra("BILLING_MODE", DINEIN);
-            //intentDineIn.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            //intentDineIn.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
             intentDineIn.putExtra("CUST_ID", 0);
             startActivity(intentDineIn);
-
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("CounterSales")) {
-            // Launch Billing screen activity in TakeAway billing mode
-            Intent intentTakeAway = new Intent(myContext, BillingScreenActivity.class);
-            intentTakeAway.putExtra("BILLING_MODE", TAKEAWAY);
-            //intentTakeAway.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            //intentTakeAway.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
-            //intentTakeAway.putExtra("CUST_ID", 0);
+        }
+        else if (v.getContentDescription().toString().equalsIgnoreCase("CounterSales"))
+        {
+            Intent intentTakeAway = new Intent(myContext, BillingCounterSalesActivity.class);
             startActivity(intentTakeAway);
-
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("PickUp")) {
+        }
+        else if (v.getContentDescription().toString().equalsIgnoreCase("PickUp"))
+        {
             // Launch Billing screen activity in PickUp billing mode
 //			Intent intentPickUp = new Intent(myContext,CustomerOrdersActivity.class);
             Intent intentPickUp = new Intent(myContext, BillingScreenActivity.class);
