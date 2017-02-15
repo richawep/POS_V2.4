@@ -3749,7 +3749,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // -----Delete Items from Item Table-----
-    public int DeleteItem(int MenuCode) {
+    public int DeleteItemByMenuCode(int MenuCode) {
 
         return dbFNB.delete(TBL_ITEM_Outward, "MenuCode=" + MenuCode, null);
     }
@@ -4735,7 +4735,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String> getAllItemsName() {
         List<String> list = new ArrayList<String>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TBL_ITEM_Outward;
+        String selectQuery = "SELECT  ItemName FROM " + TBL_ITEM_Outward;
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArguments
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
@@ -5228,7 +5228,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String> getAllMenuCode() {
         List<String> list = new ArrayList<String>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TBL_ITEM_Outward;
+        String selectQuery = "SELECT  MenuCode FROM " + TBL_ITEM_Outward;
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArguments
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {

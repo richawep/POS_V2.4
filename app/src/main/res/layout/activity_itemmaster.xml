@@ -893,7 +893,7 @@
                                     android:layout_marginLeft="15dp"
                                     android:layout_weight="1"
                                     android:gravity="left|center_vertical"
-                                    android:text="Sales Tax"
+                                    android:text="Sales Tax(%)"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <Spinner
@@ -937,7 +937,7 @@
                                     android:layout_marginLeft="15dp"
                                     android:layout_weight="1"
                                     android:gravity="left|center_vertical"
-                                    android:text="Service Tax"
+                                    android:text="Service Tax(%)"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <Spinner

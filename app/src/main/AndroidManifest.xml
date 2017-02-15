@@ -148,6 +148,12 @@
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
+            android:name=".HomeDeliveryBillingActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeWep"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
             android:name=".TableActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
@@ -314,13 +320,15 @@
         <activity
             android:name=".TabbedReportActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".TabbedSettingsActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name="com.mswipetech.wisepad.sdktest.view.TransactionActivity" />
-        <activity android:name=".BillingCounterSalesActivity"></activity>
+        <activity android:name=".BillingCounterSalesActivity" />
+
+
     </application>
 
 </manifest>
