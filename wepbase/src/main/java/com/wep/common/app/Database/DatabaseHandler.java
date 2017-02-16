@@ -6461,4 +6461,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             //db.close();
         }
     }
+    public int UpdateBillNoResetInvoiceNos(int invno) {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            cvDbValues = new ContentValues();
+            cvDbValues.put("InvoiceNo", invno);
+            return db.update("BillNoConfiguration", cvDbValues, null, null);
+        }catch (Exception e){
+            return 1;
+        }finally {
+            //db.close();
+        }
+    }
 }
