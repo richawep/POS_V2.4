@@ -163,19 +163,32 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     {
         super.onClick(v);
         int id = v.getId();
-
         if(id == R.id.btn_Clear)
         {
-            ClearAll();
+            if(isValidCustmerid())
+                ClearAll();
         }
         else if(id == R.id.btn_DineInAddCustomer)
         {
-            addCustomer();
+            if(isValidCustmerid())
+                addCustomer();
         }
         else if(id == R.id.btn_PrintBill)
         {
-            printBILL();
+            if(isValidCustmerid())
+                printBILL();
         }
+        else if(id == R.id.btn_PayBill)
+        {
+            Tender1();
+        }
+    }
+
+    public boolean isValidCustmerid(){
+        if(customerId==null)
+            return false;
+        else
+            return true;
     }
 
     public void addCustomer()
@@ -1322,6 +1335,24 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             intTender.putExtra("USER_NAME", userName);
             startActivityForResult(intTender, 1);
 
+        }
+    }
+
+    public void Tender1() {
+
+        if (tvBillAmount.getText().toString().equals("") || tvBillAmount.getText().toString().equals("0.00"))
+        {
+            messageDialog.Show("Warning", "Please add item to make bill");
+        }
+
+        else
+        {
+            Intent intentTender = new Intent(getApplicationContext(), PayBillActivity.class);
+            intentTender.putExtra("TotalAmount", tvBillAmount.getText().toString());
+            intentTender.putExtra("CustId", customerId);
+            intentTender.putExtra("phone", editTextMobile.getText().toString());
+            intentTender.putExtra("USER_NAME", userName);
+            startActivityForResult(intentTender, 1);
         }
     }
 
