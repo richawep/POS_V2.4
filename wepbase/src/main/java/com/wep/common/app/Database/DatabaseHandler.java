@@ -3774,7 +3774,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // -----Delete Items from Item Table-----
-    public int DeleteItem(String MenuCode) {
+    public int DeleteItem(int MenuCode) {
 
         return dbFNB.delete(TBL_ITEM_Outward, "MenuCode=" + MenuCode, null);
     }
