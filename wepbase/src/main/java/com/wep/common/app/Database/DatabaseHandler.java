@@ -6375,43 +6375,50 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      **********************************************************/
     /************************************************************************************************************************************/
     // -----Insert Bill-----
-    public long addBill(BillDetail objBillDetail, String gstin) {
-        cvDbValues = new ContentValues();
-        cvDbValues.put(KEY_BillingMode, objBillDetail.getBillingMode()); // richa_2012
-        cvDbValues.put(KEY_InvoiceNo, objBillDetail.getBillNumber());
-        cvDbValues.put("Time", objBillDetail.getTime());
-        cvDbValues.put(KEY_GSTIN, gstin);
-        cvDbValues.put(KEY_InvoiceDate, objBillDetail.getDate());
-        cvDbValues.put(KEY_GrandTotal, objBillDetail.getBillAmount());
-        cvDbValues.put("TotalItems", objBillDetail.getTotalItems());
-        cvDbValues.put("BillAmount", objBillDetail.getBillAmount());
-        cvDbValues.put("TotalDiscountAmount", objBillDetail.getTotalDiscountAmount());
-        cvDbValues.put("TotalServiceTaxAmount", objBillDetail.getTotalServiceTaxAmount());
-        cvDbValues.put("TotalTaxAmount", objBillDetail.getTotalTaxAmount());
-        cvDbValues.put("CashPayment", objBillDetail.getCashPayment());
-        cvDbValues.put("CardPayment", objBillDetail.getCardPayment());
-        cvDbValues.put("CouponPayment", objBillDetail.getCouponPayment());
-        cvDbValues.put("BillStatus", objBillDetail.getBillStatus());
-        cvDbValues.put("ReprintCount", objBillDetail.getReprintCount());
-        cvDbValues.put("DeliveryCharge", objBillDetail.getDeliveryCharge());
-        cvDbValues.put("EmployeeId", objBillDetail.getEmployeeId());
-        cvDbValues.put("UserId", objBillDetail.getUserId());
-        cvDbValues.put("CustId", objBillDetail.getCustId());
-        cvDbValues.put("PettyCashPayment", objBillDetail.getPettyCashPayment());
-        cvDbValues.put(KEY_WalletPayment, objBillDetail.getWalletAmount());
-        cvDbValues.put("PaidTotalPayment", objBillDetail.getPaidTotalPayment());
-        cvDbValues.put("ChangePayment", objBillDetail.getChangePayment());
-        cvDbValues.put(KEY_CustName, objBillDetail.getCustname());
-        cvDbValues.put(KEY_CustStateCode, objBillDetail.getCustStateCode());
-        cvDbValues.put(KEY_POS, objBillDetail.getPOS());
-        cvDbValues.put(KEY_BusinessType, objBillDetail.getBusinessType());
-        cvDbValues.put(KEY_TaxableValue, objBillDetail.getAmount());
-        cvDbValues.put(KEY_IGSTAmount, objBillDetail.getIGSTAmount());
-        cvDbValues.put(KEY_CGSTAmount, objBillDetail.getCGSTAmount());
-        cvDbValues.put(KEY_SGSTAmount, objBillDetail.getSGSTAmount());
-        cvDbValues.put(KEY_SubTotal, objBillDetail.getSubTotal());
+    public long addBilll(BillDetail objBillDetail, String gstin) {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            ContentValues cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_BillingMode, objBillDetail.getBillingMode()); // richa_2012
+            cvDbValues.put(KEY_InvoiceNo, objBillDetail.getBillNumber());
+            cvDbValues.put("Time", objBillDetail.getTime());
+            cvDbValues.put(KEY_GSTIN, gstin);
+            cvDbValues.put(KEY_InvoiceDate, objBillDetail.getDate());
+            cvDbValues.put(KEY_GrandTotal, objBillDetail.getBillAmount());
+            cvDbValues.put("TotalItems", objBillDetail.getTotalItems());
+            cvDbValues.put("BillAmount", objBillDetail.getBillAmount());
+            cvDbValues.put("TotalDiscountAmount", objBillDetail.getTotalDiscountAmount());
+            cvDbValues.put("TotalServiceTaxAmount", objBillDetail.getTotalServiceTaxAmount());
+            cvDbValues.put("TotalTaxAmount", objBillDetail.getTotalTaxAmount());
+            cvDbValues.put("CashPayment", objBillDetail.getCashPayment());
+            cvDbValues.put("CardPayment", objBillDetail.getCardPayment());
+            cvDbValues.put("CouponPayment", objBillDetail.getCouponPayment());
+            cvDbValues.put("BillStatus", objBillDetail.getBillStatus());
+            cvDbValues.put("ReprintCount", objBillDetail.getReprintCount());
+            cvDbValues.put("DeliveryCharge", objBillDetail.getDeliveryCharge());
+            cvDbValues.put("EmployeeId", objBillDetail.getEmployeeId());
+            cvDbValues.put("UserId", objBillDetail.getUserId());
+            cvDbValues.put("CustId", objBillDetail.getCustId());
+            cvDbValues.put("PettyCashPayment", objBillDetail.getPettyCashPayment());
+            cvDbValues.put(KEY_WalletPayment, objBillDetail.getWalletAmount());
+            cvDbValues.put("PaidTotalPayment", objBillDetail.getPaidTotalPayment());
+            cvDbValues.put("ChangePayment", objBillDetail.getChangePayment());
+            cvDbValues.put(KEY_CustName, objBillDetail.getCustname());
+            cvDbValues.put(KEY_CustStateCode, objBillDetail.getCustStateCode());
+            cvDbValues.put(KEY_POS, objBillDetail.getPOS());
+            cvDbValues.put(KEY_BusinessType, objBillDetail.getBusinessType());
+            cvDbValues.put(KEY_TaxableValue, objBillDetail.getAmount());
+            cvDbValues.put(KEY_IGSTAmount, objBillDetail.getIGSTAmount());
+            cvDbValues.put(KEY_CGSTAmount, objBillDetail.getCGSTAmount());
+            cvDbValues.put(KEY_SGSTAmount, objBillDetail.getSGSTAmount());
+            cvDbValues.put(KEY_SubTotal, objBillDetail.getSubTotal());
 
-        return dbFNB.insert(TBL_BILLDETAIL, null, cvDbValues);
+            return db.insert(TBL_BILLDETAIL, null, cvDbValues);
+        }catch (Exception e){
+            return -1;
+        }finally {
+            //db.close();
+        }
     }
 
     /*public long updateBill(BillDetail objBillDetail) {
