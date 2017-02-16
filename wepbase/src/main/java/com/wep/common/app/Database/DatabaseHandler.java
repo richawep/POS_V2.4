@@ -3527,7 +3527,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int clearOutwardItemdatabase() {
         return dbFNB.delete(TBL_ITEM_Outward, null, null);
     }
-    
+
  public int deleteItem_inward(String suppliertype, String supplier_gstin, String suppliername_str, String invno, String invodate) {
       /*int result = dbFNB.delete (TBL_INWARD_SUPPLY_LEDGER, KEY_SUPPLIERNAME+" LIKE '"+suppliername_str +"' AND "+
                         KEY_GSTIN +" LIKE '"+supplier_gstin+
@@ -6433,4 +6433,69 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             //db.close();
         }
     }
+
+    public Cursor getItemLists(String Name) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("SELECT * FROM " + TBL_ITEM_Outward + "  WHERE ItemName LIKE '" + Name + "%'", null);
+        }catch (Exception e){
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
+    public List<String> getAllItemsNames() {
+        SQLiteDatabase db = getWritableDatabase();
+        List<String> list = new ArrayList<String>();
+        try{
+            // Select All Query
+            String selectQuery = "SELECT  ItemName FROM " + TBL_ITEM_Outward;
+            Cursor cursor = db.rawQuery(selectQuery, null);// selectQuery,selectedArguments
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    list.add(cursor.getString(cursor.getColumnIndex(KEY_ItemName)));// adding
+                    // 2nd
+                    // column
+                    // data
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception e){
+            list = null;
+        }finally {
+            //db.close();
+        }
+        // returning lables
+        return list;
+    }
+
+    public List<String> getAllMenuCodes() {
+        SQLiteDatabase db = getWritableDatabase();
+        List<String> list = new ArrayList<String>();
+
+        try{
+            // Select All Query
+            String selectQuery = "SELECT  MenuCode FROM " + TBL_ITEM_Outward;
+            Cursor cursor = db.rawQuery(selectQuery, null);// selectQuery,selectedArguments
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    list.add(cursor.getString(cursor.getColumnIndex("MenuCode")));// adding
+                    // 2nd
+                    // column
+                    // data
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception e){
+            list = null;
+        }finally {
+            //db.close();
+        }
+        // returning lables
+        return list;
+    }
+
 }
