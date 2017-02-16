@@ -620,13 +620,15 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             {
                 TableRow rowReport1 = new TableRow(myContext);
                 rowReport1.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                rowReport1.setBackgroundColor(getResources().getColor(R.color.khadiyelow));
+                rowReport1.setBackgroundColor(getResources().getColor(R.color.wheat));
                 TextView Type = new TextView(myContext);
                 Type.setWidth(100);
                 Type.setTextSize(15);
                 Type.setTextColor(Color.BLACK);
                 Type.setText(HomeCaption1);
-                Type.setGravity(Gravity.CENTER);
+                Type.setHeight(30);
+                Type.setGravity(Gravity.CENTER_VERTICAL);
+                Type.setPadding(15,0,0,0);
                 rowReport1.addView(Type);
                 tblReport.addView(rowReport1);
                 CummulativeBillingCaption();
@@ -635,13 +637,15 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                 TableRow rowReport2 = new TableRow(myContext);
                 rowReport2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                rowReport2.setBackgroundColor(getResources().getColor(R.color.khadiyelow));
+                rowReport2.setBackgroundColor(getResources().getColor(R.color.wheat));
                 TextView Type2 = new TextView(myContext);
                 Type2.setWidth(100);
                 Type2.setTextSize(15);
+                Type2.setHeight(30);
+                Type2.setGravity(Gravity.CENTER_VERTICAL);
                 Type2.setTextColor(Color.BLACK);
                 Type2.setText(HomeCaption2);
-                Type2.setGravity(Gravity.CENTER);
+                Type2.setPadding(15,0,0,0);
                 rowReport2.addView(Type2);
                 tblReport.addView(rowReport2);
                 CummulativeBillingCaption();
@@ -649,13 +653,15 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                 TableRow rowReport3 = new TableRow(myContext);
                 rowReport3.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                rowReport3.setBackgroundColor(getResources().getColor(R.color.khadiyelow));
+                rowReport3.setBackgroundColor(getResources().getColor(R.color.wheat));
                 TextView Type3 = new TextView(myContext);
                 Type3.setWidth(100);
                 Type3.setTextSize(15);
+                Type3.setHeight(30);
+                Type3.setGravity(Gravity.CENTER_VERTICAL);
                 Type3.setTextColor(Color.BLACK);
                 Type3.setText(HomeCaption3);
-                Type3.setGravity(Gravity.CENTER);
+                Type3.setPadding(15,0,0,0);
                 rowReport3.addView(Type3);
                 tblReport.addView(rowReport3);
                 CummulativeBillingCaption();
@@ -663,13 +669,15 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                 TableRow rowReport4 = new TableRow(myContext);
                 rowReport4.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                rowReport4.setBackgroundColor(getResources().getColor(R.color.khadiyelow));
+                rowReport4.setBackgroundColor(getResources().getColor(R.color.wheat));
                 TextView Type4 = new TextView(myContext);
                 Type4.setWidth(100);
+                Type4.setHeight(30);
+                Type4.setGravity(Gravity.CENTER_VERTICAL);
                 Type4.setTextSize(15);
                 Type4.setTextColor(Color.BLACK);
                 Type4.setText(HomeCaption4);
-                Type4.setGravity(Gravity.CENTER);
+                Type4.setPadding(15,0,0,0);
                 rowReport4.addView(Type4);
                 tblReport.addView(rowReport4);
                 CummulativeBillingCaption();
@@ -721,7 +729,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         Amount.setWidth(100);
         Amount.setTextSize(15);
         Amount.setTextColor(Color.WHITE);
-        Amount.setText("Amount");
+        Amount.setText("Bill Amount");
 
         TextView SalesTax = new TextView(myContext);
         SalesTax.setWidth(100);
@@ -784,19 +792,35 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 TotalItems.setText(Report.getString(Report.getColumnIndex("TotalItems")));
 
                 Amount = new TextView(myContext);
-                Amount.setText(Report.getString(Report.getColumnIndex("BillAmount")));
+                float amt_f = (Report.getFloat(Report.getColumnIndex("BillAmount")));
+                String amt_str = String.format("%.2f",amt_f);
+                Amount.setText(amt_str);
+                Amount.setGravity(Gravity.END);
+                Amount.setPadding(0,0,30,0);
                 totbillAmt += Float.parseFloat(Amount.getText().toString());
 
                 SalesTax = new TextView(myContext);
-                SalesTax.setText(Report.getString(Report.getColumnIndex("TotalTaxAmount")));
+                //SalesTax.setText(Report.getString(Report.getColumnIndex("TotalTaxAmount")));
+                String sales_s =(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                SalesTax.setText(sales_s);
+                SalesTax.setGravity(Gravity.END);
+                SalesTax.setPadding(0,0,45,0);
                 totSalesTax += Float.parseFloat(SalesTax.getText().toString());
 
                 ServiceTax = new TextView(myContext);
-                ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                //ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                String service_s =(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                ServiceTax.setText(service_s);
+                ServiceTax.setGravity(Gravity.END);
+                ServiceTax.setPadding(0,0,35,0);
                 totServiceTax += Float.parseFloat(ServiceTax.getText().toString());
 
                 Discount = new TextView(myContext);
-                Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+               // Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+                String disc_s =(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
+                Discount.setText(disc_s);
+                Discount.setGravity(Gravity.END);
+                Discount.setPadding(0,0,45,0);
                 totDisc += Float.parseFloat(Discount.getText().toString());
 
                 rowReport.addView(Date);
@@ -830,24 +854,32 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TotalItems = new TextView(myContext);
 
             Amount = new TextView(myContext);
-            Amount.setText(String.valueOf(totbillAmt));
+            Amount.setText(String.format("%.2f",totbillAmt));
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,30,0);
             Amount.setTextColor(Color.WHITE);
             Amount.setTextSize(15);
 
 
             SalesTax = new TextView(myContext);
-            SalesTax.setText(String.valueOf(totSalesTax));
+            SalesTax.setText(String.format("%.2f",totSalesTax));
+            SalesTax.setGravity(Gravity.END);
+            SalesTax.setPadding(0,0,45,0);
             SalesTax.setTextColor(Color.WHITE);
             SalesTax.setTextSize(15);
 
 
             ServiceTax = new TextView(myContext);
-            ServiceTax.setText(String.valueOf(totServiceTax));
+            ServiceTax.setText(String.format("%.2f",totServiceTax));
+            ServiceTax.setGravity(Gravity.END);
+            ServiceTax.setPadding(0,0,35,0);
             ServiceTax.setTextColor(Color.WHITE);
             ServiceTax.setTextSize(15);
 
             Discount = new TextView(myContext);
-            Discount.setText(String.valueOf(totDisc));
+            Discount.setText(String.format("%.2f",totDisc));
+            Discount.setGravity(Gravity.END);
+            Discount.setPadding(0,0,45,0);
             Discount.setTextColor(Color.WHITE);
             Discount.setTextSize(15);
 
@@ -881,7 +913,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TableRow rowReport1 = new TableRow(myContext);
             rowReport1.setLayoutParams(new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            rowReport1.setBackgroundColor(getResources().getColor(R.color.khadiyelow));
+            rowReport1.setBackgroundColor(getResources().getColor(R.color.wheat));
             TextView Type = new TextView(myContext);
             Type.setWidth(100);
             Type.setTextSize(15);
@@ -893,7 +925,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TableRow rowReport = new TableRow(myContext);
             rowReport.setLayoutParams(new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            rowReport.setBackgroundColor(getResources().getColor(R.color.black));
+            rowReport.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
             TextView Date = new TextView(myContext);
             Date.setWidth(120);
             Date.setTextSize(15);
@@ -916,7 +948,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             Amount.setWidth(100);
             Amount.setTextSize(15);
             Amount.setTextColor(Color.WHITE);
-            Amount.setText("Amount");
+            Amount.setText("Bill Amount");
 
             // Add views to row
             rowReport.addView(Date);
@@ -932,7 +964,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TableRow rowReport1 = new TableRow(myContext);
             rowReport1.setLayoutParams(new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            rowReport1.setBackgroundColor(getResources().getColor(R.color.khadiyelow));
+            rowReport1.setBackgroundColor(getResources().getColor(R.color.wheat));
             TextView Type = new TextView(myContext);
             Type.setWidth(100);
             Type.setTextSize(15);
@@ -945,7 +977,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             rowReport.setLayoutParams(new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            rowReport.setBackgroundColor(getResources().getColor(R.color.black));
+            rowReport.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
 
 
             TextView Date = new TextView(myContext);
@@ -970,7 +1002,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             Amount.setWidth(100);
             Amount.setTextSize(15);
             Amount.setTextColor(Color.WHITE);
-            Amount.setText("Amount");
+            Amount.setText("Bill Amount");
 
             // Add views to row
             rowReport.addView(Date);
@@ -986,7 +1018,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TableRow rowReport1 = new TableRow(myContext);
             rowReport1.setLayoutParams(new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            rowReport1.setBackgroundColor(getResources().getColor(R.color.khadiyelow));
+            rowReport1.setBackgroundColor(getResources().getColor(R.color.wheat));
             TextView Type = new TextView(myContext);
             Type.setWidth(100);
             Type.setTextSize(15);
@@ -999,7 +1031,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             rowReport.setLayoutParams(new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            rowReport.setBackgroundColor(getResources().getColor(R.color.black));
+            rowReport.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
 
             TextView Date = new TextView(myContext);
             Date.setWidth(120);
@@ -1017,11 +1049,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             Amount.setWidth(100);
             Amount.setTextSize(15);
             Amount.setTextColor(Color.WHITE);
-            Amount.setText("Amount");
+            Amount.setText("Bill Amount");
 
             TextView SalesTax = new TextView(myContext);
             SalesTax.setWidth(100);
             SalesTax.setTextSize(15);
+            SalesTax.setGravity(Gravity.CENTER);
             SalesTax.setTextColor(Color.WHITE);
             SalesTax.setText("Sales Tax");
 
@@ -1037,11 +1070,11 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             Discount.setTextColor(Color.WHITE);
             Discount.setText("Discount");
 
-            TextView ReprintCount = new TextView(myContext);
+            /*TextView ReprintCount = new TextView(myContext);
             ReprintCount.setWidth(100);
             ReprintCount.setTextSize(15);
             ReprintCount.setTextColor(Color.WHITE);
-            ReprintCount.setText("Reprint Count");
+            ReprintCount.setText("Reprint Count");*/
 
             // Add views to row
             rowReport.addView(Date);
@@ -1090,20 +1123,30 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                 Amount = new TextView(myContext);
                 double amt_s = (Report.getDouble(Report.getColumnIndex("BillAmount")));
-                String amt_str = getFormatedCharacterForPrint_init(String.format("%.2f",amt_s),8,1);
+                String amt_str =(String.format("%.2f",amt_s));
                 Amount.setText(amt_str);
+                Amount.setGravity(Gravity.END);
+                Amount.setPadding(0,0,30,0);
                 totbillAmt+= Float.parseFloat(Amount.getText().toString());
 
                 SalesTax = new TextView(myContext);
-                SalesTax.setText(Report.getString(Report.getColumnIndex("TotalTaxAmount")));
+                SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                SalesTax.setGravity(Gravity.END);
+                SalesTax.setPadding(0,0,45,0);
                 totSalesTax+= Float.parseFloat(SalesTax.getText().toString());
 
                 ServiceTax = new TextView(myContext);
-                ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                //ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                ServiceTax.setGravity(Gravity.END);
+                ServiceTax.setPadding(0,0,35,0);
                 totServiceTax+= Float.parseFloat(ServiceTax.getText().toString());
 
                 Discount = new TextView(myContext);
-                Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+                //Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+                Discount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
+                Discount.setGravity(Gravity.END);
+                Discount.setPadding(0,0,50,0);
                 totDisc+= Float.parseFloat(Discount.getText().toString());
 
                 rowReport.addView(Date);
@@ -1136,24 +1179,32 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TotalItems = new TextView(myContext);
 
             Amount = new TextView(myContext);
-            Amount.setText(String.valueOf(totbillAmt));
+            Amount.setText(String.format("%.2f",totbillAmt));
             Amount.setTextColor(Color.WHITE);
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,30,0);
             Amount.setTextSize(15);
 
 
             SalesTax = new TextView(myContext);
-            SalesTax.setText(String.valueOf(totSalesTax));
             SalesTax.setTextColor(Color.WHITE);
             SalesTax.setTextSize(15);
+            SalesTax.setText(String.format("%.2f",totSalesTax));
+            SalesTax.setGravity(Gravity.END);
+            SalesTax.setPadding(0,0,45,0);
 
 
             ServiceTax = new TextView(myContext);
-            ServiceTax.setText(String.valueOf(totServiceTax));
+            ServiceTax.setText(String.format("%.2f",totServiceTax));
+            ServiceTax.setGravity(Gravity.END);
+            ServiceTax.setPadding(0,0,35,0);
             ServiceTax.setTextColor(Color.WHITE);
             ServiceTax.setTextSize(15);
 
             Discount = new TextView(myContext);
-            Discount.setText(String.valueOf(totDisc));
+            Discount.setText(String.format("%.2f",totDisc));
+            Discount.setGravity(Gravity.END);
+            Discount.setPadding(0,0,50,0);
             Discount.setTextColor(Color.WHITE);
             Discount.setTextSize(15);
 
@@ -1211,27 +1262,39 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 TotalItems.setText(Report.getString(Report.getColumnIndex("TotalItems")));
 
                 Amount = new TextView(myContext);
-                Amount.setText(Report.getString(Report.getColumnIndex("BillAmount")));
+                Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                Amount.setGravity(Gravity.END);
+                Amount.setPadding(0,0,25,0);
                 totAmt += Float.parseFloat(Amount.getText().toString());
 
                 Cash = new TextView(myContext);
-                Cash.setText(Report.getString(Report.getColumnIndex("CashPayment")));
+                Cash.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CashPayment"))));
+                Cash.setGravity(Gravity.END);
+                Cash.setPadding(0,0,25,0);
                 totCash += Float.parseFloat(Cash.getText().toString());
 
                 Card = new TextView(myContext);
-                Card.setText(Report.getString(Report.getColumnIndex("CardPayment")));
+                Card.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CardPayment"))));
+                Card.setGravity(Gravity.END);
+                Card.setPadding(0,0,25,0);
                 totCard += Float.parseFloat(Card.getText().toString());
 
                 Coupon = new TextView(myContext);
-                Coupon.setText(Report.getString(Report.getColumnIndex("CouponPayment")));
+                Coupon.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CouponPayment"))));
+                Coupon.setGravity(Gravity.END);
+                Coupon.setPadding(0,0,25,0);
                 totCoupon += Float.parseFloat(Coupon.getText().toString());
 
                 PettyCash = new TextView(myContext);
-                PettyCash.setText(Report.getString(Report.getColumnIndex("PettyCashPayment")));
+                PettyCash.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("PettyCashPayment"))));
+                PettyCash.setGravity(Gravity.END);
+                PettyCash.setPadding(0,0,35,0);
                 totPetty += Float.parseFloat(PettyCash.getText().toString());
 
                 Wallet = new TextView(myContext);
-                Wallet.setText(Report.getString(Report.getColumnIndex("WalletPayment")));
+                Wallet.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("WalletPayment"))));
+                Wallet.setGravity(Gravity.END);
+                Wallet.setPadding(0,0,25,0);
                 totWallet += Float.parseFloat(Wallet.getText().toString());
 
                 rowReport.addView(Date);
@@ -1265,32 +1328,44 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TotalItems = new TextView(myContext);
 
             Amount = new TextView(myContext);
-            Amount.setText(String.valueOf(totAmt));
+            Amount.setText(String.format("%.2f",totAmt));
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,25,0);
             Amount.setTextColor(Color.WHITE);
             Amount.setTextSize(15);
 
             Cash = new TextView(myContext);
-            Cash.setText(String.valueOf(totCash));
+            Cash.setText(String.format("%.2f",totCash));
+            Cash.setGravity(Gravity.END);
+            Cash.setPadding(0,0,25,0);
             Cash.setTextColor(Color.WHITE);
             Cash.setTextSize(15);
 
             Coupon = new TextView(myContext);
-            Coupon.setText(String.valueOf(totCoupon));
+            Coupon.setText(String.format("%.2f",totCoupon));
+            Coupon.setGravity(Gravity.END);
+            Coupon.setPadding(0,0,25,0);
             Coupon.setTextColor(Color.WHITE);
             Coupon.setTextSize(15);
 
             Card = new TextView(myContext);
-            Card.setText(String.valueOf(totCard));
+            Card.setText(String.format("%.2f",totCard));
+            Card.setGravity(Gravity.END);
+            Card.setPadding(0,0,25,0);
             Card.setTextColor(Color.WHITE);
             Card.setTextSize(15);
 
             PettyCash = new TextView(myContext);
-            PettyCash.setText(String.valueOf(totPetty));
+            PettyCash.setText(String.format("%.2f",totPetty));
+            PettyCash.setGravity(Gravity.END);
+            PettyCash.setPadding(0,0,35,0);
             PettyCash.setTextColor(Color.WHITE);
             PettyCash.setTextSize(15);
 
             Wallet = new TextView(myContext);
-            Wallet.setText(String.valueOf(totWallet));
+            Wallet.setText(String.format("%.2f",totWallet));
+            Wallet.setGravity(Gravity.END);
+            Wallet.setPadding(0,0,25,0);
             Wallet.setTextColor(Color.WHITE);
             Wallet.setTextSize(15);
 
@@ -1351,12 +1426,16 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                 Tax.setText(String.format("%.2f",
                                         Double.parseDouble(Tax.getText().toString()) +
                                                 Report.getDouble(Report.getColumnIndex("TaxAmount"))));
+                                Tax.setGravity(Gravity.END);
+                                Tax.setPadding(0,0,30,0);
 
                                 // Amount
                                 TextView Amt = (TextView) rowItem.getChildAt(3);
                                 Amt.setText(String.format("%.2f",
                                         Double.parseDouble(Amt.getText().toString()) +
                                                 Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                                Amt.setGravity(Gravity.END);
+                                Amt.setPadding(0,0,25,0);
                                 isTaxExists = true;
                                 break;
                             }
@@ -1412,10 +1491,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TaxAmount = new TextView(myContext);
                     TaxAmount.setText(String.format("%.2f",Float.parseFloat(Report.getString(Report
                             .getColumnIndex("TaxAmount")))));
+                    TaxAmount.setGravity(Gravity.END);
+                    TaxAmount.setPadding(0,0,30,0);
 
                     TotalAmount = new TextView(myContext);
-                    TotalAmount.setText(Report.getString(Report
-                            .getColumnIndex("BillAmount")));
+                    TotalAmount.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("BillAmount"))));
+                    TotalAmount.setGravity(Gravity.END);
+                    TotalAmount.setPadding(0,0,25,0);
 
                     rowReport.addView(Percent);
                     rowReport.addView(Description);
@@ -1467,15 +1550,19 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TextView Description = new TextView(myContext);
 
             TextView TotalAmount = new TextView(myContext);
-            TotalAmount.setText(String.valueOf(totAmt));
+            TotalAmount.setText(String.format("%.2f",totAmt));
             TotalAmount.setTextColor(Color.WHITE);
             TotalAmount.setTextSize(15);
+            TotalAmount.setGravity(Gravity.END);
+            TotalAmount.setPadding(0,0,25,0);
 
 
             TextView TaxAmount = new TextView(myContext);
-            TaxAmount.setText(String.valueOf(totTax));
+            TaxAmount.setText(String.format("%.2f",totTax));
             TaxAmount.setTextColor(Color.WHITE);
             TaxAmount.setTextSize(15);
+            TaxAmount.setGravity(Gravity.END);
+            TaxAmount.setPadding(0,0,30,0);
 
 
             rowReport.addView(Percent);
@@ -1524,12 +1611,16 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                 Tax.setText(String.format("%.2f",
                                         Double.parseDouble(Tax.getText().toString()) +
                                                 Report.getDouble(Report.getColumnIndex("ServiceTaxAmount"))));
+                                Tax.setGravity(Gravity.END);
+                                Tax.setPadding(0,0,30,0);
 
                                 // Amount
                                 TextView Amt = (TextView) rowItem.getChildAt(3);
                                 Amt.setText(String.format("%.2f",
                                         Double.parseDouble(Amt.getText().toString()) +
                                                 Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                                Amt.setGravity(Gravity.END);
+                                Amt.setPadding(0,0,25,0);
                                 isTaxExists = true;
                                 break;
                             }
@@ -1566,10 +1657,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TaxAmount = new TextView(myContext);
                     TaxAmount.setText(String.format("%.2f",Float.parseFloat(Report.getString(Report
                             .getColumnIndex("ServiceTaxAmount")))));
+                    TaxAmount.setGravity(Gravity.END);
+                    TaxAmount.setPadding(0,0,30,0);
 
                     TotalAmount = new TextView(myContext);
-                    TotalAmount.setText(Report.getString(Report
-                            .getColumnIndex("BillAmount")));
+                    TotalAmount.setText(String.format("%.2f",Float.parseFloat(Report.getString(Report
+                            .getColumnIndex("BillAmount")))));
+                    TotalAmount.setGravity(Gravity.END);
+                    TotalAmount.setPadding(0,0,25,0);
 
                     rowReport.addView(Percent);
                     rowReport.addView(Description);
@@ -1812,19 +1907,27 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 TotalItems.setText(Report.getString(Report.getColumnIndex("TotalItems")));
 
                 Amount = new TextView(myContext);
-                Amount.setText(Report.getString(Report.getColumnIndex("BillAmount")));
+                Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                Amount.setGravity(Gravity.END);
+                Amount.setPadding(0,0,30,0);
                 totbillAmt += Float.parseFloat(Amount.getText().toString());
 
                 SalesTax = new TextView(myContext);
-                SalesTax.setText(Report.getString(Report.getColumnIndex("TotalTaxAmount")));
+                SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                SalesTax.setGravity(Gravity.END);
+                SalesTax.setPadding(0,0,45,0);
                 totSalesTax += Float.parseFloat(SalesTax.getText().toString());
 
                 ServiceTax = new TextView(myContext);
-                ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                ServiceTax.setGravity(Gravity.END);
+                ServiceTax.setPadding(0,0,35,0);
                 totServiceTax += Float.parseFloat(ServiceTax.getText().toString());
 
                 Discount = new TextView(myContext);
-                Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+                Discount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
+                Discount.setGravity(Gravity.END);
+                Discount.setPadding(0,0,50,0);
                 totDisc += Float.parseFloat(Discount.getText().toString());
 
                 rowReport.addView(Date);
@@ -1856,24 +1959,32 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TotalItems = new TextView(myContext);
 
             Amount = new TextView(myContext);
-            Amount.setText(String.valueOf(totbillAmt));
+            Amount.setText(String.format("%.2f",totbillAmt));
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,30,0);
             Amount.setTextColor(Color.WHITE);
             Amount.setTextSize(15);
 
 
             SalesTax = new TextView(myContext);
-            SalesTax.setText(String.valueOf(totSalesTax));
+            SalesTax.setText(String.format("%.2f",totSalesTax));
+            SalesTax.setGravity(Gravity.END);
+            SalesTax.setPadding(0,0,45,0);
             SalesTax.setTextColor(Color.WHITE);
             SalesTax.setTextSize(15);
 
 
             ServiceTax = new TextView(myContext);
-            ServiceTax.setText(String.valueOf(totServiceTax));
+            ServiceTax.setText(String.format("%.2f",totServiceTax));
+            ServiceTax.setGravity(Gravity.END);
+            ServiceTax.setPadding(0,0,35,0);
             ServiceTax.setTextColor(Color.WHITE);
             ServiceTax.setTextSize(15);
 
             Discount = new TextView(myContext);
-            Discount.setText(String.valueOf(totDisc));
+            Discount.setText(String.format("%.2f",totDisc));
+            Discount.setGravity(Gravity.END);
+            Discount.setPadding(0,0,50,0);
             Discount.setTextColor(Color.WHITE);
             Discount.setTextSize(15);
 
@@ -1932,23 +2043,32 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 TotalItems.setText(Report.getString(Report.getColumnIndex("TotalItems")));
 
                 Amount = new TextView(myContext);
-                Amount.setText(Report.getString(Report.getColumnIndex("BillAmount")));
+                Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                Amount.setGravity(Gravity.END);
+                Amount.setPadding(0,0,30,0);
                 totbillAmt += Float.parseFloat(Amount.getText().toString());
 
                 SalesTax = new TextView(myContext);
-                SalesTax.setText(Report.getString(Report.getColumnIndex("TotalTaxAmount")));
+                SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                SalesTax.setGravity(Gravity.END);
+                SalesTax.setPadding(0,0,45,0);
                 totSalesTax += Float.parseFloat(SalesTax.getText().toString());
 
                 ServiceTax = new TextView(myContext);
-                ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                ServiceTax.setGravity(Gravity.END);
+                ServiceTax.setPadding(0,0,35,0);
                 totServiceTax += Float.parseFloat(ServiceTax.getText().toString());
 
                 Discount = new TextView(myContext);
-                Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+                Discount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
+                Discount.setGravity(Gravity.END);
+                Discount.setPadding(0,0,50,0);
                 totDis += Float.parseFloat(Discount.getText().toString());
 
                 ReprintCount = new TextView(myContext);
                 ReprintCount.setText(Report.getString(Report.getColumnIndex("ReprintCount")));
+
 
                 rowReport.addView(Date);
                 rowReport.addView(BillNumber);
@@ -1980,23 +2100,31 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             ReprintCount = new TextView(myContext);
 
             Discount = new TextView(myContext);
-            Discount.setText(String.valueOf(totDis));
+            Discount.setText(String.format("%.2f",totDis));
             Discount.setTextColor(Color.WHITE);
+            Discount.setGravity(Gravity.END);
+            Discount.setPadding(0,0,50,0);
             Discount.setTextSize(15);
 
 
             SalesTax = new TextView(myContext);
-            SalesTax.setText(String.valueOf(totSalesTax));
+            SalesTax.setText(String.format("%.2f",totSalesTax));
+            SalesTax.setGravity(Gravity.END);
+            SalesTax.setPadding(0,0,45,0);
             SalesTax.setTextColor(Color.WHITE);
             SalesTax.setTextSize(15);
 
             ServiceTax = new TextView(myContext);
-            ServiceTax.setText(String.valueOf(totServiceTax));
+            ServiceTax.setText(String.format("%.2f",totServiceTax));
             ServiceTax.setTextColor(Color.WHITE);
+            ServiceTax.setGravity(Gravity.END);
+            ServiceTax.setPadding(0,0,35,0);
             ServiceTax.setTextSize(15);
 
             Amount = new TextView(myContext);
-            Amount.setText(String.valueOf(totbillAmt));
+            Amount.setText(String.format("%.2f",totbillAmt));
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,30,0);
             Amount.setTextColor(Color.WHITE);
             Amount.setTextSize(15);
 
@@ -2189,10 +2317,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                             // Quantity
                             TextView Qty = (TextView) rowItem.getChildAt(2);
-                            Qty.setText(String.format("%.2f",
+                            Qty.setText(String.valueOf(Integer.parseInt(Qty.getText().toString()) +
+                                    Report.getInt(Report.getColumnIndex("Quantity"))));
+                            /*Qty.setText(String.format("%.2f",
                                     Double.parseDouble(Qty.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("Quantity"))));
-
+*/
                             // Amount
                             TextView Amt = (TextView) rowItem.getChildAt(6);
                             /*Amt.setText(String.format("%.2f",
@@ -2203,30 +2333,40 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             float quant_f = Float.parseFloat(Report.getString(Report.getColumnIndex("Quantity")));
                             amt_f += (rate_f*quant_f);
                             Amt.setText(String.format("%.2f", amt_f));
+                            Amt.setGravity(Gravity.END);
+                            Amt.setPadding(0,0,30,0);
 
                             // Sales Tax
                             TextView Tax = (TextView) rowItem.getChildAt(4);
                             Tax.setText(String.format("%.2f",
                                     Double.parseDouble(Tax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TaxAmount"))));
+                            Tax.setGravity(Gravity.END);
+                            Tax.setPadding(0,0,45,0);
 
                             // Service Tax
                             TextView ServTax = (TextView) rowItem.getChildAt(5);
                             ServTax.setText(String.format("%.2f",
                                     Double.parseDouble(ServTax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("ServiceTaxAmount"))));
+                            ServTax.setGravity(Gravity.END);
+                            ServTax.setPadding(0,0,35,0);
 
                             // Discount
                             TextView Disc = (TextView) rowItem.getChildAt(3);
                             Disc.setText(String.format("%.2f",
                                     Double.parseDouble(Disc.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("DiscountAmount"))));
+                            Disc.setGravity(Gravity.END);
+                            Disc.setPadding(0,0,50,0);
 
                             // Modifier Amount
                             TextView ModAmt = (TextView) rowItem.getChildAt(7);
                             ModAmt.setText(String.format("%.2f",
                                     Double.parseDouble(ModAmt.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("ModifierAmount"))));
+                            ModAmt.setGravity(Gravity.END);
+                            ModAmt.setPadding(0,0,30,0);
 
                             isItemExists = true;
                             break;
@@ -2250,8 +2390,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             .getColumnIndex("ItemName")));
 
                     SoldQty = new TextView(myContext);
-                    SoldQty.setText(String.format("%.2f", Report.getDouble(Report
-                            .getColumnIndex("Quantity"))));
+                    /*SoldQty.setText(String.format("%.2f", Report.getDouble(Report
+                            .getColumnIndex("Quantity"))));*/
+                    SoldQty.setText(Report.getString(Report
+                            .getColumnIndex("Quantity")));
 
                     Amount = new TextView(myContext);
                     /*Amount.setText(String.format("%.2f", Report.getDouble(Report
@@ -2260,22 +2402,33 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     float rate_f = Float.parseFloat(Report.getString(Report.getColumnIndex("Value")));
                     float quant_f = Float.parseFloat(Report.getString(Report.getColumnIndex("Quantity")));
                     Amount.setText(String.format("%.2f", rate_f*quant_f));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
                     SalesTax = new TextView(myContext);
                     SalesTax.setText(String.format("%.2f", Report.getDouble(Report
                             .getColumnIndex("TaxAmount"))));
+                    SalesTax.setGravity(Gravity.END);
+                    SalesTax.setPadding(0,0,45,0);
 
                     ServiceTax = new TextView(myContext);
                     ServiceTax.setText(String.format("%.2f", Report.getDouble(Report
                             .getColumnIndex("ServiceTaxAmount"))));
+                    ServiceTax.setGravity(Gravity.END);
+                    ServiceTax.setPadding(0,0,35,0);
 
                     Discount = new TextView(myContext);
                     Discount.setText(String.format("%.2f", Report.getDouble(Report
                             .getColumnIndex("DiscountAmount"))));
+                    Discount.setGravity(Gravity.END);
+                    Discount.setPadding(0,0,50,0);
 
                     ModifierAmount = new TextView(myContext);
                     ModifierAmount.setText(String.format("%.2f", Report.getDouble(Report
                             .getColumnIndex("ModifierAmount"))));
+                    ModifierAmount.setGravity(Gravity.END);
+                    ModifierAmount.setPadding(0,0,30,0);
+
 
                     rowReport.addView(Number);
                     rowReport.addView(Name);
@@ -2302,7 +2455,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             MsgBox.Show("Warning", "No transaction has been done");
         }
     }
-
     private void DaywiseReport(int count) {
         /*Cursor Report = dbReport.getDaywiseReport(
                 txtReportDateStart.getText().toString(), txtReportDateEnd.getText().toString());*/
@@ -2342,24 +2494,32 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             Amt.setText(String.format("%.2f",
                                     Double.parseDouble(Amt.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                            Amt.setGravity(Gravity.END);
+                            Amt.setPadding(0,0,30,0);
 
                             // Sales Tax
                             TextView Tax = (TextView) rowItem.getChildAt(3);
                             Tax.setText(String.format("%.2f",
                                     Double.parseDouble(Tax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                            Tax.setGravity(Gravity.END);
+                            Tax.setPadding(0,0,45,0);
 
                             // Service Tax
                             TextView ServTax = (TextView) rowItem.getChildAt(4);
                             ServTax.setText(String.format("%.2f",
                                     Double.parseDouble(ServTax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                            ServTax.setGravity(Gravity.END);
+                            ServTax.setPadding(0,0,35,0);
 
                             // Discount
                             TextView Disc = (TextView) rowItem.getChildAt(2);
                             Disc.setText(String.format("%.2f",
                                     Double.parseDouble(Disc.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
+                            Disc.setGravity(Gravity.END);
+                            Disc.setPadding(0,0,50,0);
 
 
                             isItemExists = true;
@@ -2385,23 +2545,31 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TotalBills.setText("1");
 
                     Amount = new TextView(myContext);
-                    Amount.setText(Report.getString(Report
-                            .getColumnIndex("BillAmount")));
+                    Amount.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("BillAmount"))));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(Report.getString(Report
-                            .getColumnIndex("TotalTaxAmount")));
+                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("TotalTaxAmount"))));
+                    SalesTax.setGravity(Gravity.END);
+                    SalesTax.setPadding(0,0,45,0);
 
 
                     ServiceTax = new TextView(myContext);
-                    ServiceTax.setText(Report.getString(Report
-                            .getColumnIndex("TotalServiceTaxAmount")));
+                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("TotalServiceTaxAmount"))));
+                    ServiceTax.setGravity(Gravity.END);
+                    ServiceTax.setPadding(0,0,35,0);
 
 
                     Discount = new TextView(myContext);
-                    Discount.setText(Report.getString(Report
-                            .getColumnIndex("TotalDiscountAmount")));
+                    Discount.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("TotalDiscountAmount"))));
+                    Discount.setGravity(Gravity.END);
+                    Discount.setPadding(0,0,50,0);
 
 
                     rowReport.addView(BillDate);//0
@@ -2446,24 +2614,32 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TotalBills = new TextView(myContext);
 
             Discount = new TextView(myContext);
-            Discount.setText(String.valueOf(totDis));
+            Discount.setText(String.format("%.2f",totDis));
+            Discount.setGravity(Gravity.END);
+            Discount.setPadding(0,0,50,0);
             Discount.setTextColor(Color.WHITE);
             Discount.setTextSize(15);
 
 
             SalesTax = new TextView(myContext);
-            SalesTax.setText(String.valueOf(totSalesTax));
+            SalesTax.setText(String.format("%.2f",totSalesTax));
+            SalesTax.setGravity(Gravity.END);
+            SalesTax.setPadding(0,0,45,0);
             SalesTax.setTextColor(Color.WHITE);
             SalesTax.setTextSize(15);
 
             ServiceTax = new TextView(myContext);
-            ServiceTax.setText(String.valueOf(totServiceTax));
+            ServiceTax.setText(String.format("%.2f",totServiceTax));
+            ServiceTax.setGravity(Gravity.END);
+            ServiceTax.setPadding(0,0,35,0);
             ServiceTax.setTextColor(Color.WHITE);
             ServiceTax.setTextSize(15);
 
             Amount = new TextView(myContext);
-            Amount.setText(String.valueOf(totbillAmt));
+            Amount.setText(String.format("%.2f",totbillAmt));
             Amount.setTextColor(Color.WHITE);
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,30,0);
             Amount.setTextSize(15);
 
             rowReport.addView(Date);
@@ -2504,7 +2680,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
 
 
-        Log.d("DaywiseReport", "Rows Count:" + Report.getCount());
+        Log.d("MonthwiseReport", "Rows Count:" + Report.getCount());
 
         if (Report.moveToFirst()) {
             boolean isItemExists = false;
@@ -2546,26 +2722,32 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             Amt.setText(String.format("%.2f",
                                     Double.parseDouble(Amt.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("BillAmount"))));
-
+                            Amt.setGravity(Gravity.END);
+                            Amt.setPadding(0,0,30,0);
 
                             // Sales Tax
                             TextView Tax = (TextView) rowItem.getChildAt(3);
                             Tax.setText(String.format("%.2f",
                                     Double.parseDouble(Tax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                            Tax.setGravity(Gravity.END);
+                            Tax.setPadding(0,0,45,0);
 
                             // Service Tax
                             TextView ServTax = (TextView) rowItem.getChildAt(4);
                             ServTax.setText(String.format("%.2f",
                                     Double.parseDouble(ServTax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                            ServTax.setGravity(Gravity.END);
+                            ServTax.setPadding(0,0,35,0);
 
                             // Discount
                             TextView Disc = (TextView) rowItem.getChildAt(2);
                             Disc.setText(String.format("%.2f",
                                     Double.parseDouble(Disc.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
-
+                            Disc.setGravity(Gravity.END);
+                            Disc.setPadding(0,0,50,0);
                             isItemExists = true;
                             break;
                         }
@@ -2592,20 +2774,28 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TotalBills.setText("1");
 
                     Amount = new TextView(myContext);
-                    Amount.setText(Report.getString(Report
-                            .getColumnIndex("BillAmount")));
+                    Amount.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("BillAmount"))));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(Report.getString(Report
-                            .getColumnIndex("TotalTaxAmount")));
+                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("TotalTaxAmount"))));
+                    SalesTax.setGravity(Gravity.END);
+                    SalesTax.setPadding(0,0,45,0);
 
                     ServiceTax = new TextView(myContext);
-                    ServiceTax.setText(Report.getString(Report
-                            .getColumnIndex("TotalServiceTaxAmount")));
+                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("TotalServiceTaxAmount"))));
+                    ServiceTax.setGravity(Gravity.END);
+                    ServiceTax.setPadding(0,0,35,0);
 
                     Discount = new TextView(myContext);
-                    Discount.setText(Report.getString(Report
-                            .getColumnIndex("TotalDiscountAmount")));
+                    Discount.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("TotalDiscountAmount"))));
+                    Discount.setGravity(Gravity.END);
+                    Discount.setPadding(0,0,50,0);
 
                     rowReport.addView(BillDate);
                     rowReport.addView(TotalBills);
@@ -2654,25 +2844,34 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
             Discount = new TextView(myContext);
-            Discount.setText(String.valueOf(totDis));
+            Discount.setText(String.format("%.2f",totDis));
+            Discount.setGravity(Gravity.END);
+            Discount.setPadding(0,0,50,0);
             Discount.setTextColor(Color.WHITE);
             Discount.setTextSize(15);
 
 
+
             SalesTax = new TextView(myContext);
-            SalesTax.setText(String.valueOf(totSalesTax));
+            SalesTax.setText(String.format("%.2f",totSalesTax));
+            SalesTax.setGravity(Gravity.END);
+            SalesTax.setPadding(0,0,45,0);
             SalesTax.setTextColor(Color.WHITE);
             SalesTax.setTextSize(15);
 
             ServiceTax = new TextView(myContext);
-            ServiceTax.setText(String.valueOf(totServiceTax));
+            ServiceTax.setText(String.format("%.2f",totServiceTax));
+            ServiceTax.setGravity(Gravity.END);
+            ServiceTax.setPadding(0,0,35,0);
             ServiceTax.setTextColor(Color.WHITE);
             ServiceTax.setTextSize(15);
 
             Amount = new TextView(myContext);
-            Amount.setText(String.valueOf(totbillAmt));
+            Amount.setText(String.format("%.2f",totbillAmt));
             Amount.setTextColor(Color.WHITE);
             Amount.setTextSize(15);
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,30,0);
 
             rowReport.addView(BillDate);
             rowReport.addView(TotalBills);
@@ -2874,18 +3073,24 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             Disc.setText(String.format("%.2f",
                                     Double.parseDouble(Disc.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("DiscountAmount"))));
+                            Disc.setGravity(Gravity.END);
+                            Disc.setPadding(0,0,50,0);
 
                             // Sales Tax
                             TextView Tax = (TextView) rowItem.getChildAt(4);
                             Tax.setText(String.format("%.2f",
                                     Double.parseDouble(Tax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TaxAmount"))));
+                            Tax.setGravity(Gravity.END);
+                            Tax.setPadding(0,0,45,0);
 
                             // Service Tax
                             TextView ServTax = (TextView) rowItem.getChildAt(5);
                             ServTax.setText(String.format("%.2f",
                                     Double.parseDouble(ServTax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("ServiceTaxAmount"))));
+                            ServTax.setGravity(Gravity.END);
+                            ServTax.setPadding(0,0,35,0);
 
                             // Amount
                             TextView Amt = (TextView) rowItem.getChildAt(6);
@@ -2894,6 +3099,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             float amt = Float.parseFloat(Amt.getText().toString());
                             amt += (rate*quant);
                             Amt.setText(String.format("%.2f",(amt)));
+                            Amt.setGravity(Gravity.END);
+                            Amt.setPadding(0,0,30,0);
                             /*Amt.setText(String.format("%.2f",
                                     Double.parseDouble(Amt.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TaxableValue"))));*/
@@ -2924,21 +3131,29 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             .getColumnIndex("Quantity")));
 
                     Discount = new TextView(myContext);
-                    Discount.setText(Report.getString(Report
-                            .getColumnIndex("DiscountAmount")));
+                    Discount.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("DiscountAmount"))));
+                    Discount.setGravity(Gravity.END);
+                    Discount.setPadding(0,0,50,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(Report.getString(Report
-                            .getColumnIndex("TaxAmount")));
+                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("TaxAmount"))));
+                    SalesTax.setGravity(Gravity.END);
+                    SalesTax.setPadding(0,0,45,0);
 
                     ServiceTax = new TextView(myContext);
-                    ServiceTax.setText(Report.getString(Report
-                            .getColumnIndex("ServiceTaxAmount")));
+                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("ServiceTaxAmount"))));
+                    ServiceTax.setGravity(Gravity.END);
+                    ServiceTax.setPadding(0,0,35,0);
 
                     Amount = new TextView(myContext);
                     float rate = Float.parseFloat(Report.getString(Report.getColumnIndex("Value")));
                     float quant = Float.parseFloat(Report.getString(Report.getColumnIndex("Quantity")));
                     Amount.setText(String.format("%.2f",(rate*quant)));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
                     rowReport.addView(DeptCode);
                     rowReport.addView(DeptName);
@@ -3002,18 +3217,24 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             Disc.setText(String.format("%.2f",
                                     Double.parseDouble(Disc.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("DiscountAmount"))));
+                            Disc.setGravity(Gravity.END);
+                            Disc.setPadding(0,0,50,0);
 
                             // Sales Tax
                             TextView Tax = (TextView) rowItem.getChildAt(4);
                             Tax.setText(String.format("%.2f",
                                     Double.parseDouble(Tax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TaxAmount"))));
+                            Tax.setGravity(Gravity.END);
+                            Tax.setPadding(0,0,45,0);
 
                             // Service Tax
                             TextView ServTax = (TextView) rowItem.getChildAt(5);
                             ServTax.setText(String.format("%.2f",
                                     Double.parseDouble(ServTax.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("ServiceTaxAmount"))));
+                            ServTax.setGravity(Gravity.END);
+                            ServTax.setPadding(0,0,35,0);
 
                             // Amount
                             TextView Amt = (TextView) rowItem.getChildAt(6);
@@ -3022,6 +3243,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             float quant_f = Float.parseFloat(Report.getString(Report.getColumnIndex("Quantity")));
                             amt_f += (rate_f*quant_f);
                             Amt.setText(String.format("%.2f", amt_f));
+                            Amt.setGravity(Gravity.END);
+                            Amt.setPadding(0,0,30,0);
 
                             isCategExists = true;
                             break;
@@ -3049,21 +3272,29 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             .getColumnIndex("Quantity")));
 
                     Discount = new TextView(myContext);
-                    Discount.setText(Report.getString(Report
-                            .getColumnIndex("DiscountAmount")));
+                    Discount.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("DiscountAmount"))));
+                    Discount.setGravity(Gravity.END);
+                    Discount.setPadding(0,0,50,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(Report.getString(Report
-                            .getColumnIndex("TaxAmount")));
+                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("TaxAmount"))));
+                    SalesTax.setGravity(Gravity.END);
+                    SalesTax.setPadding(0,0,45,0);
 
                     ServiceTax = new TextView(myContext);
-                    ServiceTax.setText(Report.getString(Report
-                            .getColumnIndex("ServiceTaxAmount")));
+                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("ServiceTaxAmount"))));
+                    ServiceTax.setGravity(Gravity.END);
+                    ServiceTax.setPadding(0,0,35,0);
 
                     Amount = new TextView(myContext);
                     float rate_f = Float.parseFloat(Report.getString(Report.getColumnIndex("Value")));
                     float quant_f = Float.parseFloat(Report.getString(Report.getColumnIndex("Quantity")));
                     Amount.setText(String.format("%.2f",(rate_f*quant_f)));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
                     rowReport.addView(CategCode);
                     rowReport.addView(CategName);
@@ -3335,6 +3566,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             Amt.setText(String.format("%.2f",
                                     Double.parseDouble(Amt.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                            Amt.setGravity(Gravity.END);
+                            Amt.setPadding(0,0,30,0);
 
                             isWaiterExists = true;
                             break;
@@ -3362,8 +3595,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TotalBills.setText("1");
 
                     Amount = new TextView(myContext);
-                    Amount.setText(Report.getString(Report
-                            .getColumnIndex("BillAmount")));
+                    Amount.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("BillAmount"))));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
                     rowReport.addView(EmpId);
                     rowReport.addView(Name);
@@ -3412,7 +3647,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
 
-            if (Report.moveToFirst()) {
+            if (Report!= null && Report.moveToFirst()) {
 
                 TextView Date, BillNumber, TotalItems, Discount, SalesTax, ServiceTax, Amount;
                 TableRow rowReport;
@@ -3435,16 +3670,26 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TotalItems.setText(Report.getString(Report.getColumnIndex("TotalItems")));
 
                     Discount = new TextView(myContext);
-                    Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+                    Discount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
+                    Discount.setGravity(Gravity.END);
+                    Discount.setPadding(0,0,50,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(Report.getString(Report.getColumnIndex("TotalTaxAmount")));
+                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                    SalesTax.setGravity(Gravity.END);
+                    SalesTax.setPadding(0,0,45,0);
 
                     ServiceTax = new TextView(myContext);
-                    ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                    ServiceTax.setGravity(Gravity.END);
+                    ServiceTax.setPadding(0,0,35,0);
 
                     Amount = new TextView(myContext);
-                    Amount.setText(Report.getString(Report.getColumnIndex("BillAmount")));
+                    Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
+
+
 
                     rowReport.addView(Date);
                     rowReport.addView(BillNumber);
@@ -3562,19 +3807,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         if (txtPersonId.getText().toString().equalsIgnoreCase("")) {
             MsgBox.Show("Warning", "Please Select Rider");
         } else {
-            /*Cursor crsrRiderDetail = dbReport.getEmployee(Integer
-                    .parseInt(txtPersonId.getText().toString()));
-
-            if (crsrRiderDetail.moveToFirst()) {
-                lblPersonName.setText(crsrRiderDetail.getString(crsrRiderDetail.getColumnIndex("EmployeeName")));
-            } else {
-                MsgBox.Show("Warning", "No rider found for above Id");
-                return;
-            }*/
-
-            /*Cursor Report = dbReport.getRiderDetailedReport(Integer
-                            .parseInt(txtPersonId.getText().toString()),
-                    txtReportDateStart.getText().toString(), txtReportDateEnd.getText().toString());*/
 
             Cursor Report = dbReport.getRiderDetailedReport(Integer
                             .parseInt(txtPersonId.getText().toString()),
@@ -3605,16 +3837,24 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TotalItems.setText(Report.getString(Report.getColumnIndex("TotalItems")));
 
                     Discount = new TextView(myContext);
-                    Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+                    Discount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
+                    Discount.setGravity(Gravity.END);
+                    Discount.setPadding(0,0,50,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(Report.getString(Report.getColumnIndex("TotalTaxAmount")));
+                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                    SalesTax.setGravity(Gravity.END);
+                    SalesTax.setPadding(0,0,45,0);
 
                     ServiceTax = new TextView(myContext);
-                    ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                    ServiceTax.setGravity(Gravity.END);
+                    ServiceTax.setPadding(0,0,35,0);
 
                     Amount = new TextView(myContext);
-                    Amount.setText(Report.getString(Report.getColumnIndex("BillAmount")));
+                    Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
                     rowReport.addView(Date);
                     rowReport.addView(BillNumber);
@@ -3677,6 +3917,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             Amt.setText(String.format("%.2f",
                                     Double.parseDouble(Amt.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                            Amt.setGravity(Gravity.END);
+                            Amt.setPadding(0,0,30,0);
 
                             isDeptExists = true;
                             break;
@@ -3705,6 +3947,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     Amount = new TextView(myContext);
                     Amount.setText(Report.getString(Report
                             .getColumnIndex("BillAmount")));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
                     rowReport.addView(UserId);
                     rowReport.addView(Name);
@@ -3773,16 +4017,24 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TotalItems.setText(Report.getString(Report.getColumnIndex("TotalItems")));
 
                     Discount = new TextView(myContext);
-                    Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+                    Discount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
+                    Discount.setGravity(Gravity.END);
+                    Discount.setPadding(0,0,50,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(Report.getString(Report.getColumnIndex("TotalTaxAmount")));
+                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                    SalesTax.setGravity(Gravity.END);
+                    SalesTax.setPadding(0,0,45,0);
 
                     ServiceTax = new TextView(myContext);
-                    ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                    ServiceTax.setGravity(Gravity.END);
+                    ServiceTax.setPadding(0,0,35,0);
 
                     Amount = new TextView(myContext);
-                    Amount.setText(Report.getString(Report.getColumnIndex("BillAmount")));
+                    Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
                     rowReport.addView(Date);
                     rowReport.addView(BillNumber);
@@ -3866,10 +4118,15 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     LastTransaction = new TextView(myContext);
                     LastTransaction.setText(String.format("%.2f", Report.getDouble(Report
                             .getColumnIndex("LastTransaction"))));
+                    LastTransaction.setGravity(Gravity.END);
+                    LastTransaction.setPadding(0,0,30,0);
 
                     TotalTransaction = new TextView(myContext);
                     TotalTransaction.setText(String.format("%.2f", Report.getDouble(Report
                             .getColumnIndex("TotalTransaction"))));
+                    TotalTransaction.setGravity(Gravity.END);
+                    TotalTransaction.setPadding(0,0,30,0);
+
 
                     rowReport.addView(CustId);
                     rowReport.addView(CustName);
@@ -3898,19 +4155,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         if (txtPersonId.getText().toString().equalsIgnoreCase("")) {
             MsgBox.Show("Warning", "Please Select Customer");
         } else {
-            Cursor crsrCustomerDetail = dbReport.getCustomer(Integer
-                    .parseInt(txtPersonId.getText().toString()));
 
-            if (crsrCustomerDetail.moveToFirst()) {
-                lblPersonName.setText(crsrCustomerDetail.getString(crsrCustomerDetail.getColumnIndex("CustName")));
-            } else {
-                MsgBox.Show("Warning", "No customer found for above Id");
-                return;
-            }
-
-            /*Cursor Report = dbReport.getCustomerDetailedReport(Integer
-                            .parseInt(txtPersonId.getText().toString()),
-                    txtReportDateStart.getText().toString(), txtReportDateEnd.getText().toString());*/
             Cursor Report = dbReport.getCustomerDetailedReport(Integer
                             .parseInt(txtPersonId.getText().toString()),
                     String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
@@ -3939,16 +4184,24 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TotalItems.setText(Report.getString(Report.getColumnIndex("TotalItems")));
 
                     Discount = new TextView(myContext);
-                    Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
+                    Discount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
+                    Discount.setGravity(Gravity.END);
+                    Discount.setPadding(0,0,50,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(Report.getString(Report.getColumnIndex("TotalTaxAmount")));
+                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                    SalesTax.setGravity(Gravity.END);
+                    SalesTax.setPadding(0,0,45,0);
 
                     ServiceTax = new TextView(myContext);
-                    ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+                    ServiceTax.setGravity(Gravity.END);
+                    ServiceTax.setPadding(0,0,35,0);
+                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
 
                     Amount = new TextView(myContext);
-                    Amount.setText(Report.getString(Report.getColumnIndex("BillAmount")));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
+                    Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
 
                     rowReport.addView(Date);
                     rowReport.addView(BillNumber);
@@ -4011,8 +4264,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         .getColumnIndex("Reason")));
 
                 Amount = new TextView(myContext);
-                Amount.setText(Report.getString(Report
-                        .getColumnIndex("Amount")));
+                Amount.setText(String.format("%.2f",Report.getDouble(Report
+                        .getColumnIndex("Amount"))));
+                Amount.setGravity(Gravity.END);
+                Amount.setPadding(0,0,30,0);
                 totbillAmt += Float.parseFloat(Amount.getText().toString());
 
                 rowReport.addView(Date);
@@ -4040,7 +4295,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             Reason = new TextView(myContext);
 
             Amount = new TextView(myContext);
-            Amount.setText(String.valueOf(totbillAmt));
+            Amount.setText(String.format("%.2f",totbillAmt));
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,30,0);
             Amount.setTextColor(Color.WHITE);
             Amount.setTextSize(15);
 
@@ -4098,8 +4355,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         .getColumnIndex("Reason")));
 
                 Amount = new TextView(myContext);
-                Amount.setText(Report.getString(Report
-                        .getColumnIndex("Amount")));
+                Amount.setText(String.format("%.2f",Report.getDouble(Report
+                        .getColumnIndex("Amount"))));
+                Amount.setGravity(Gravity.END);
+                Amount.setPadding(0,0,30,0);
                 totbillAmt += Float.parseFloat(Amount.getText().toString());
 
                 rowReport.addView(Date);
@@ -4127,7 +4386,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             Reason = new TextView(myContext);
 
             Amount = new TextView(myContext);
-            Amount.setText(String.valueOf(totbillAmt));
+            Amount.setText(String.format("%.2f",totbillAmt));
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,30,0);
             Amount.setTextColor(Color.WHITE);
             Amount.setTextSize(15);
 
@@ -4209,6 +4470,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 float rate = Float.parseFloat(Report.getString(Report.getColumnIndex("Value")));
                 float quant = Float.parseFloat(SoldQty.getText().toString());
                 Price.setText(String.format("%.2f",rate*quant));
+                Price.setGravity(Gravity.END);
+                Price.setPadding(0,0,20,0);
 
                 rowReport.addView(SNo);
                 rowReport.addView(DeptCode);

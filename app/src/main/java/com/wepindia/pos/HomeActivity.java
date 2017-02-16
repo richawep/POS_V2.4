@@ -51,6 +51,7 @@ import java.util.Date;
 
 public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTTPRequestCompletedListener {
 
+    private static final String TAG = HomeActivity.class.getSimpleName();
     Context myContext;
     Date objDate;
     MessageDialog MsgBox;
@@ -378,7 +379,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     public void GSTR1_upload_forDay(Date date)
     {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        /*SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String startDate = sdf.format(date);
         String gstin_owner = "123wsd_out";
 
@@ -391,14 +392,14 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         }
 
         String paramStr = "gstin="+gstin_owner+"&date="+startDate+"&purchasevalue="+taxval+"";
-        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR1_DAY+paramStr).execute();
+        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR1_DAY+paramStr).execute();*/
 
     }
 
     public void GSTR2_upload_forDay(Date date)
     {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        /*SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String startDate = sdf.format(date);
         String gstin_owner = "123wsd_out";
 
@@ -411,39 +412,30 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         }
 
         String paramStr = "gstin="+gstin_owner+"&date="+startDate+"&salevalue="+taxval+"";
-        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR2_DAY+paramStr).execute();
+        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR2_DAY+paramStr).execute();*/
 
     }
 
 
     public void LaunchActivity(View v) {
-        //SharedPreferences spUser = getSharedPreferences(FILE_SHARED_PREFERENCE, Context.MODE_MULTI_PROCESS |
-        //		Context.CONTEXT_IGNORE_SECURITY);
-        //SharedPreferences spUser = PreferenceManager.getDefaultSharedPreferences(myContext);
-        //int strUserRole = Integer.parseInt(spUser.getString("ACCESS_LEVEL", "1"));
-
-        if (v.getContentDescription().toString().equalsIgnoreCase("DineIn")) {
-            // Launch Billing screen activity in dine in billing mode
+        if (v.getContentDescription().toString().equalsIgnoreCase("DineIn"))
+        {
             Intent intentDineIn = new Intent(myContext, TableActivity.class);
             intentDineIn.putExtra("BILLING_MODE", DINEIN);
-            //intentDineIn.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            //intentDineIn.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
             intentDineIn.putExtra("CUST_ID", 0);
             startActivity(intentDineIn);
-
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("CounterSales")) {
-            // Launch Billing screen activity in TakeAway billing mode
-            Intent intentTakeAway = new Intent(myContext, BillingScreenActivity.class);
-            intentTakeAway.putExtra("BILLING_MODE", TAKEAWAY);
-            //intentTakeAway.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            //intentTakeAway.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
-            //intentTakeAway.putExtra("CUST_ID", 0);
+        }
+        else if (v.getContentDescription().toString().equalsIgnoreCase("CounterSales"))
+        {
+            Intent intentTakeAway = new Intent(myContext, BillingCounterSalesActivity.class);
+            Log.d(TAG,"Opening Activity Started");
             startActivity(intentTakeAway);
-
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("PickUp")) {
+        }
+        else if (v.getContentDescription().toString().equalsIgnoreCase("PickUp"))
+        {
             // Launch Billing screen activity in PickUp billing mode
 //			Intent intentPickUp = new Intent(myContext,CustomerOrdersActivity.class);
-            Intent intentPickUp = new Intent(myContext, BillingScreenActivity.class);
+            Intent intentPickUp = new Intent(myContext, HomeDeliveryBillingActivity.class);
             intentPickUp.putExtra("BILLING_MODE", PICKUP);
             //intentPickUp.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             //intentPickUp.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -453,7 +445,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         } else if (v.getContentDescription().toString().equalsIgnoreCase("Delivery")) {
             // Launch Billing screen activity in Delivery billing mode
 
-            Intent intentDelivery = new Intent(myContext, BillingScreenActivity.class);
+            Intent intentDelivery = new Intent(myContext, HomeDeliveryBillingActivity.class);
             intentDelivery.putExtra("BILLING_MODE", DELIVERY);
             //intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             //intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));

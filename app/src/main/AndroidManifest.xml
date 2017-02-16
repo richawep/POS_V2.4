@@ -38,7 +38,9 @@
         android:label="WePFnB_fragment"
         android:theme="@style/AppThemeWep"
         tools:replace="android:icon,android:label">
-        <!--android:theme="@style/custom_title_theme"-->
+
+        <!-- android:theme="@style/custom_title_theme" -->
+
 
         <!-- Add your API key here -->
         <meta-data
@@ -100,8 +102,7 @@
             android:name=".TableBookingActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".PaymentReceiptActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
@@ -142,6 +143,12 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".BillingScreenActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeWep"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".HomeDeliveryBillingActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
             android:theme="@style/AppThemeWep"
@@ -227,7 +234,6 @@
             android:label="@string/title_activity_tax_config_sub"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-
         <activity android:name=".GST.GSTHomeActivity" />
         <activity android:name=".GST.GSTR1_Activity" />
         <activity android:name=".GST.GSTR1_b2b_Activity" />
@@ -256,25 +262,20 @@
         <activity android:name=".GSTLinkActivity" />
         <activity android:name=".GST.GSTFileActivity" />
         <activity android:name=".GST.CreditDebitActivity" />
-
-
         <activity
             android:name=".Inward_Item_Entry_nonGST_Activity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-
         <activity
             android:name=".IngredientManagementActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-
         <activity
             android:name=".ConvertIngredientActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
-
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".GoodsInwardNoteActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
@@ -316,18 +317,20 @@
 
         <activity android:name=".PaymentConfirmActivity" />
         <activity android:name="com.wepindia.printers.MainActivity" />
-        <activity android:name=".TabbedReportActivity"
+        <activity
+            android:name=".TabbedReportActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
-
-        </activity>
-        <activity android:name=".TabbedSettingsActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+            android:name=".TabbedSettingsActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
-
-        </activity>
-        <activity android:name="com.mswipetech.wisepad.sdktest.view.TransactionActivity"></activity>
-
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name="com.mswipetech.wisepad.sdktest.view.TransactionActivity" />
+        <activity android:name=".BillingCounterSalesActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeWep"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
     </application>
 
 </manifest>
