@@ -72,17 +72,7 @@ public class ImageAdapter extends BaseAdapter{
 		ImageView imgGridImage = (ImageView)convertView.findViewById(R.id.grid_item_image);
 		if(ImageAssignType == Byte.parseByte("1"))
 		{
-			/*if(ImageUri!=null)
-			{
-				if(!ImageUri[position].equalsIgnoreCase(""))
-				{
-					imgGridImage.setImageURI(Uri.fromFile(new File(ImageUri[position])));
-				}
-				else
-				{
-					imgGridImage.setImageResource(R.drawable.img_noimage);
-				}
-			}*/
+
 			try{
 				Picasso.with(contextAdapter)
 						.load(ImageUri[position])
