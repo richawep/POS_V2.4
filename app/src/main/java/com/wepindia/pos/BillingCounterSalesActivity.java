@@ -62,6 +62,7 @@ import com.wepindia.printers.utils.TimeUtil;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -76,14 +77,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private GridView gridViewItems;
     private ListView listViewDept,listViewCat;
     private MessageDialog messageDialog;
-
+    Date d;
+    Calendar Time; // Time variable
     private WepButton btn_PrintBill,btn_PayBill,btn_Clear,btn_DeleteBill,btn_Reprint,btn_DineInAddCustomer;
     private EditText editTextName,editTextMobile,editTextAddress,editTextOrderNo;
     private AutoCompleteTextView autoCompleteTextViewSearchItem, autoCompleteTextViewSearchMenuCode;
     private RelativeLayout boxDept,boxCat,boxItem;
     private Button btnDept,btnCat,btnItems;
 
-    private int iTaxType = 0;
     private byte jBillingMode = 2, jWeighScale = 0;
     private TableLayout tblOrderItems;
     private String GSTEnable = "", HSNEnable_out = "", POSEnable = "";

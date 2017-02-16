@@ -15,14 +15,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c64221d-bd8c-41a4-bb92-8417c19acc06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gstAPI/gstAPI.iml" afterPath="$PROJECT_DIR$/gstAPI/gstAPI.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/mSwipe.iml" afterPath="$PROJECT_DIR$/mSwipe/mSwipe.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
     </list>
     <ignored path="Feb10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,8 +52,8 @@
       <file leaf-file-name="BillingScreenActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="785" column="11" selection-start-line="785" selection-start-column="11" selection-end-line="785" selection-end-column="11" />
+            <state relative-caret-position="425">
+              <caret line="135" column="35" selection-start-line="135" selection-start-column="35" selection-end-line="135" selection-end-column="35" />
               <folding>
                 <element signature="class#35382:37931" expanded="false" />
                 <element signature="class#37991:39930" expanded="false" />
@@ -87,38 +80,38 @@
       <file leaf-file-name="BillingCounterSalesActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-946">
-              <caret line="1733" column="0" selection-start-line="1733" selection-start-column="0" selection-end-line="1733" selection-end-column="0" />
+            <state relative-caret-position="176">
+              <caret line="1593" column="25" selection-start-line="1593" selection-start-column="25" selection-end-line="1593" selection-end-column="25" />
               <folding>
-                <element signature="e#5785#5786#0" expanded="true" />
-                <element signature="e#5837#5838#0" expanded="true" />
-                <element signature="e#5932#5933#0" expanded="true" />
-                <element signature="e#5988#5989#0" expanded="true" />
-                <element signature="class#11111:13315" expanded="false" />
-                <element signature="e#16063#16064#0" expanded="true" />
-                <element signature="e#16104#16105#0" expanded="true" />
-                <element signature="e#16153#16154#0" expanded="true" />
-                <element signature="e#16202#16203#0" expanded="true" />
-                <element signature="e#17157#17532#0" expanded="true" />
-                <element signature="e#17531#17532#0" expanded="true" />
-                <element signature="e#32628#32629#0" expanded="true" />
-                <element signature="e#32699#32700#0" expanded="true" />
-                <element signature="e#42668#44154#0" expanded="true" />
-                <element signature="e#43498#44097#0" expanded="true" />
-                <element signature="e#44096#44097#0" expanded="true" />
-                <element signature="e#44153#44154#0" expanded="true" />
-                <element signature="e#53191#53365#0" expanded="true" />
-                <element signature="e#53364#53365#0" expanded="true" />
-                <element signature="e#53755#54372#0" expanded="true" />
-                <element signature="e#54371#54372#0" expanded="true" />
-                <element signature="e#54422#54423#0" expanded="true" />
-                <element signature="e#54448#54449#0" expanded="true" />
+                <element signature="e#5829#5830#0" expanded="true" />
+                <element signature="e#5881#5882#0" expanded="true" />
+                <element signature="e#5976#5977#0" expanded="true" />
+                <element signature="e#6032#6033#0" expanded="true" />
+                <element signature="class#11155:13359" expanded="false" />
+                <element signature="e#16107#16108#0" expanded="true" />
+                <element signature="e#16148#16149#0" expanded="true" />
+                <element signature="e#16197#16198#0" expanded="true" />
+                <element signature="e#16246#16247#0" expanded="true" />
+                <element signature="e#17201#17576#0" expanded="true" />
+                <element signature="e#17575#17576#0" expanded="true" />
+                <element signature="e#32672#32673#0" expanded="true" />
+                <element signature="e#32743#32744#0" expanded="true" />
+                <element signature="e#42712#44198#0" expanded="true" />
+                <element signature="e#43542#44141#0" expanded="true" />
+                <element signature="e#44140#44141#0" expanded="true" />
+                <element signature="e#44197#44198#0" expanded="true" />
+                <element signature="e#53235#53409#0" expanded="true" />
+                <element signature="e#53408#53409#0" expanded="true" />
+                <element signature="e#53799#54416#0" expanded="true" />
+                <element signature="e#54415#54416#0" expanded="true" />
+                <element signature="e#54466#54467#0" expanded="true" />
+                <element signature="e#54492#54493#0" expanded="true" />
                 <element signature="method#PrintNewBill#0;class#BillingCounterSalesActivity#0" expanded="false" />
-                <element signature="e#97206#97219#0" expanded="true" />
-                <element signature="e#98501#98514#0" expanded="true" />
-                <element signature="e#99402#99415#0" expanded="true" />
-                <element signature="e#100310#100330#0" expanded="true" />
-                <element signature="e#101045#101061#0" expanded="true" />
+                <element signature="e#97250#97263#0" expanded="true" />
+                <element signature="e#98545#98558#0" expanded="true" />
+                <element signature="e#99446#99459#0" expanded="true" />
+                <element signature="e#100354#100374#0" expanded="true" />
+                <element signature="e#101089#101105#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -5788,7 +5781,14 @@
       <option name="project" value="LOCAL" />
       <updated>1487246337969</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="jyhui">
+      <created>1487249121237</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1487249121237</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -5853,50 +5853,51 @@
     <MESSAGE value="r6" />
     <MESSAGE value="adding counter sales screen" />
     <MESSAGE value="adding counter sales screene4f34" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding counter sales screene4f34" />
+    <MESSAGE value="jyhui" />
+    <option name="LAST_COMMIT_MESSAGE" value="jyhui" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
-          <line>937</line>
+          <line>938</line>
           <properties />
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
-          <line>1065</line>
+          <line>1066</line>
           <properties />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
-          <line>731</line>
+          <line>732</line>
           <properties />
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
-          <line>525</line>
+          <line>526</line>
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
-          <line>465</line>
+          <line>466</line>
           <properties />
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
-          <line>468</line>
+          <line>469</line>
           <properties />
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
-          <line>174</line>
+          <line>175</line>
           <properties />
           <option name="timeStamp" value="29" />
         </line-breakpoint>
@@ -6334,46 +6335,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-946">
-          <caret line="1733" column="0" selection-start-line="1733" selection-start-column="0" selection-end-line="1733" selection-end-column="0" />
+        <state relative-caret-position="176">
+          <caret line="1593" column="25" selection-start-line="1593" selection-start-column="25" selection-end-line="1593" selection-end-column="25" />
           <folding>
-            <element signature="e#5785#5786#0" expanded="true" />
-            <element signature="e#5837#5838#0" expanded="true" />
-            <element signature="e#5932#5933#0" expanded="true" />
-            <element signature="e#5988#5989#0" expanded="true" />
-            <element signature="class#11111:13315" expanded="false" />
-            <element signature="e#16063#16064#0" expanded="true" />
-            <element signature="e#16104#16105#0" expanded="true" />
-            <element signature="e#16153#16154#0" expanded="true" />
-            <element signature="e#16202#16203#0" expanded="true" />
-            <element signature="e#17157#17532#0" expanded="true" />
-            <element signature="e#17531#17532#0" expanded="true" />
-            <element signature="e#32628#32629#0" expanded="true" />
-            <element signature="e#32699#32700#0" expanded="true" />
-            <element signature="e#42668#44154#0" expanded="true" />
-            <element signature="e#43498#44097#0" expanded="true" />
-            <element signature="e#44096#44097#0" expanded="true" />
-            <element signature="e#44153#44154#0" expanded="true" />
-            <element signature="e#53191#53365#0" expanded="true" />
-            <element signature="e#53364#53365#0" expanded="true" />
-            <element signature="e#53755#54372#0" expanded="true" />
-            <element signature="e#54371#54372#0" expanded="true" />
-            <element signature="e#54422#54423#0" expanded="true" />
-            <element signature="e#54448#54449#0" expanded="true" />
+            <element signature="e#5829#5830#0" expanded="true" />
+            <element signature="e#5881#5882#0" expanded="true" />
+            <element signature="e#5976#5977#0" expanded="true" />
+            <element signature="e#6032#6033#0" expanded="true" />
+            <element signature="class#11155:13359" expanded="false" />
+            <element signature="e#16107#16108#0" expanded="true" />
+            <element signature="e#16148#16149#0" expanded="true" />
+            <element signature="e#16197#16198#0" expanded="true" />
+            <element signature="e#16246#16247#0" expanded="true" />
+            <element signature="e#17201#17576#0" expanded="true" />
+            <element signature="e#17575#17576#0" expanded="true" />
+            <element signature="e#32672#32673#0" expanded="true" />
+            <element signature="e#32743#32744#0" expanded="true" />
+            <element signature="e#42712#44198#0" expanded="true" />
+            <element signature="e#43542#44141#0" expanded="true" />
+            <element signature="e#44140#44141#0" expanded="true" />
+            <element signature="e#44197#44198#0" expanded="true" />
+            <element signature="e#53235#53409#0" expanded="true" />
+            <element signature="e#53408#53409#0" expanded="true" />
+            <element signature="e#53799#54416#0" expanded="true" />
+            <element signature="e#54415#54416#0" expanded="true" />
+            <element signature="e#54466#54467#0" expanded="true" />
+            <element signature="e#54492#54493#0" expanded="true" />
             <element signature="method#PrintNewBill#0;class#BillingCounterSalesActivity#0" expanded="false" />
-            <element signature="e#97206#97219#0" expanded="true" />
-            <element signature="e#98501#98514#0" expanded="true" />
-            <element signature="e#99402#99415#0" expanded="true" />
-            <element signature="e#100310#100330#0" expanded="true" />
-            <element signature="e#101045#101061#0" expanded="true" />
+            <element signature="e#97250#97263#0" expanded="true" />
+            <element signature="e#98545#98558#0" expanded="true" />
+            <element signature="e#99446#99459#0" expanded="true" />
+            <element signature="e#100354#100374#0" expanded="true" />
+            <element signature="e#101089#101105#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="785" column="11" selection-start-line="785" selection-start-column="11" selection-end-line="785" selection-end-column="11" />
+        <state relative-caret-position="425">
+          <caret line="135" column="35" selection-start-line="135" selection-start-column="35" selection-end-line="135" selection-end-column="35" />
           <folding>
             <element signature="class#35382:37931" expanded="false" />
             <element signature="class#37991:39930" expanded="false" />
