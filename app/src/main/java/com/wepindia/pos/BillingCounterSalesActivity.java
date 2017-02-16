@@ -32,6 +32,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -81,10 +82,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     Calendar Time; // Time variable
     private WepButton btn_PrintBill,btn_PayBill,btn_Clear,btn_DeleteBill,btn_Reprint,btn_DineInAddCustomer;
     private EditText editTextName,editTextMobile,editTextAddress,editTextOrderNo;
+    EditText tvWaiterNumber;
+    EditText edtCustId, edtCustName, edtCustPhoneNo, edtCustAddress, edtCustDineInPhoneNo, etCustGSTIN;
     private AutoCompleteTextView autoCompleteTextViewSearchItem, autoCompleteTextViewSearchMenuCode;
     private RelativeLayout boxDept,boxCat,boxItem;
     private Button btnDept,btnCat,btnItems;
-
+    Spinner spnr_pos;
+    String strUserId = "", strUserName = "", strDate = "";
+    CheckBox chk_interstate = null;
     private byte jBillingMode = 2, jWeighScale = 0;
     private TableLayout tblOrderItems;
     private String GSTEnable = "", HSNEnable_out = "", POSEnable = "";
@@ -97,8 +102,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private int PrintBillPayment = 0;
     private String CounterSalesCaption;
     float fTotalsubTaxPercent = 0;
-    int iCustId = 0;
     int iTaxType = 0, iTotalItems = 0, iCustId = 0, iTokenNumber = 0;
+    float fChangePayment = 0;
+    float fWalletPayment = 0;
     float fTotalDiscount = 0, fCashPayment = 0, fCardPayment = 0, fCouponPayment = 0, fPettCashPayment = 0, fPaidTotalPayment = 0;
 
     @Override
@@ -110,7 +116,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         messageDialog = new MessageDialog(this);
         userId = ApplicationData.getUserId(this);
         userName = ApplicationData.getUserName(this);
-        Date d = new Date();
+        d = new Date();
         CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
         com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Counter Sales",userName," Date:"+s.toString());
         iCustId = getIntent().getIntExtra("CUST_ID", 0);
@@ -247,14 +253,16 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         btn_Reprint.setOnClickListener(this);
         btn_DineInAddCustomer = (WepButton) findViewById(R.id.btn_DineInAddCustomer);
         btn_DineInAddCustomer.setOnClickListener(this);
-
+        chk_interstate = (CheckBox) findViewById(R.id.checkbox_interstate);
         btnDept = (Button) findViewById(R.id.btnLabel1);
         btnCat = (Button) findViewById(R.id.btnLabel2);
         btnItems = (Button) findViewById(R.id.btnLabel3);
-
+        spnr_pos = (Spinner) findViewById(R.id.spnr_pos);
+        edtCustId = (EditText) findViewById(R.id.edtCustId);
         editTextName = (EditText) findViewById(R.id.edtCustName);
         editTextMobile = (EditText) findViewById(R.id.edtCustPhoneNo);
         editTextAddress = (EditText) findViewById(R.id.edtCustAddress);
+        etCustGSTIN = (EditText) findViewById(R.id.etCustGSTIN);
         autoCompleteTextViewSearchItem = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItem);
         autoCompleteTextViewSearchMenuCode = (AutoCompleteTextView) findViewById(R.id.aCTVSearchMenuCode);
         editTextOrderNo = (EditText) findViewById(R.id.tvBillNumberValue);
@@ -262,6 +270,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         boxCat = (RelativeLayout) findViewById(R.id.boxCat);
         boxItem = (RelativeLayout) findViewById(R.id.boxItem);
         tvDate = (TextView) findViewById(R.id.tvBillDateValue);
+        tvWaiterNumber = (EditText) findViewById(R.id.tvWaiterNoValue);
         editTextMobile.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 try {
@@ -656,6 +665,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     chkNumber.setTextSize(0);
                     chkNumber.setTextColor(Color.TRANSPARENT);
                     chkNumber.setText(crsrItem.getString(crsrItem.getColumnIndex("MenuCode")));
+                    Toast.makeText(getApplicationContext(), chkNumber.getText().toString(), Toast.LENGTH_SHORT).show();
 
                     // Item Name
                     tvName = new TextView(BillingCounterSalesActivity.this);
@@ -1614,8 +1624,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             }
 
             // Bill Number
-            objBillItem.setBillNumber(tvBillNumber.getText().toString());
-            Log.d("InsertBillItems", "InvoiceNo:" + tvBillNumber.getText().toString());
+            objBillItem.setBillNumber(editTextOrderNo.getText().toString());
+            Log.d("InsertBillItems", "InvoiceNo:" + editTextOrderNo.getText().toString());
 
             // richa_2012
             //BillingMode
@@ -1628,7 +1638,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 objBillItem.setItemNumber(Integer.parseInt(ItemNumber.getText().toString()));
                 Log.d("InsertBillItems", "Item Number:" + ItemNumber.getText().toString());
 
-                crsrUpdateItemStock = db.getItem(Integer.parseInt(ItemNumber.getText().toString()));
+                crsrUpdateItemStock = db.getItemss(Integer.parseInt(ItemNumber.getText().toString()));
             }
 
             // Item Name
@@ -1653,7 +1663,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 if (crsrUpdateItemStock!=null && crsrUpdateItemStock.moveToFirst()) {
                     // Check if item's bill with stock enabled update the stock
                     // quantity
-                    Cursor billsettingCursor = db.getBillSetting();
+                    Cursor billsettingCursor = db.getBillSettings();
                     if(billsettingCursor!= null && billsettingCursor.moveToFirst())
                     {
                         //String i = billsettingCursor.getString(billsettingCursor.getColumnIndex("BillwithStock"));
@@ -1683,7 +1693,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             if (RowBillItem.getChildAt(6) != null) {
                 TextView SalesTaxPercent = (TextView) RowBillItem.getChildAt(6);
                 if (GSTEnable.equals("1")) {
-                    String taxName = tvSalesTax.getText().toString();
+                    String taxName = tvTaxTotal.getText().toString();
                     if (taxName.equalsIgnoreCase("IGST TAX")) {
                         objBillItem.setIGSTRate((Float.parseFloat(SalesTaxPercent.getText().toString())) * 2);
                         Log.d("InsertBillItems", " IGST Tax %:" + objBillItem.getIGSTRate());
@@ -1702,7 +1712,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             if (RowBillItem.getChildAt(7) != null) {
                 TextView SalesTaxAmount = (TextView) RowBillItem.getChildAt(7);
                 if (GSTEnable.equals("1")) {
-                    String taxName = tvSalesTax.getText().toString();
+                    String taxName = tvTaxTotal.getText().toString();
                     if (taxName.equalsIgnoreCase("IGST TAX")) {
                         objBillItem.setIGSTAmount((Float.parseFloat(SalesTaxAmount.getText().toString()) * 2));
                         Log.d("InsertBillItems", "IGST Amt:" + objBillItem.getIGSTAmount());
@@ -1772,7 +1782,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             if (RowBillItem.getChildAt(15) != null) {
                 TextView ServiceTaxPercent = (TextView) RowBillItem.getChildAt(15);
                 if (GSTEnable.equals("1")) {
-                    String taxName = tvServiceTax.getText().toString();
+                    String taxName = tvServiceTaxTotal.getText().toString();
                     if (taxName.equalsIgnoreCase("SGST TAX")) {
                         objBillItem.setSGSTRate(Float.parseFloat(ServiceTaxPercent.getText().toString()));
                         Log.d("InsertBillItems", "SGST Tax %:" + ServiceTaxPercent.getText().toString());
@@ -1788,7 +1798,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             if (RowBillItem.getChildAt(16) != null) {
                 TextView ServiceTaxAmount = (TextView) RowBillItem.getChildAt(16);
                 if (GSTEnable.equals("1")) {
-                    String taxName = tvServiceTax.getText().toString();
+                    String taxName = tvServiceTaxTotal.getText().toString();
                     if (taxName.equalsIgnoreCase("SGST TAX")) {
                         objBillItem.setSGSTAmount(Float.parseFloat(ServiceTaxAmount.getText().toString()));
                         Log.d("InsertBillItems", "SGST Amount :" + ServiceTaxAmount.getText().toString());
@@ -1828,18 +1838,18 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             objBillItem.setInvoiceDate(String.valueOf(d.getTime()));
 
             // cust name
-            String custname = edtCustName.getText().toString();
+            String custname = editTextName.getText().toString();
             objBillItem.setCustName(custname);
             Log.d("InsertBillDetail", "CustName :" + custname);
 
             // cust StateCode
             //String custStateCode =spnr_pos.getSelectedItem().toString();
-            String str = spnr_pos.getSelectedItem().toString();
-            int length = str.length();
+            //String str = spnr_pos.getSelectedItem().toString();
+            //int length = str.length();
             String custStateCode = "";
-            if (length > 0) {
+            /*if (length > 0) {
                 custStateCode = str.substring(length - 2, length);
-            }
+            }*/
             objBillItem.setCustStateCode(custStateCode);
             Log.d("InsertBillDetail", "CustStateCode :" + custStateCode);
 
@@ -1885,8 +1895,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBillDetail", "Time:" + String.format("%tR", Time));
 
         // Bill Number
-        objBillDetail.setBillNumber(Integer.parseInt(tvBillNumber.getText().toString()));
-        Log.d("InsertBillDetail", "Bill Number:" + tvBillNumber.getText().toString());
+        objBillDetail.setBillNumber(Integer.parseInt(editTextOrderNo.getText().toString()));
+        Log.d("InsertBillDetail", "Bill Number:" + editTextOrderNo.getText().toString());
 
         // richa_2012
         //BillingMode
@@ -1949,7 +1959,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
 
         // Delivery Charge
-        objBillDetail.setDeliveryCharge(Float.parseFloat(txtOthercharges.getText().toString()));
+        objBillDetail.setDeliveryCharge(Float.parseFloat(textViewOtherCharges.getText().toString()));
         Log.d("InsertBillDetail", "Delivery Charge:0");
 
 
@@ -1972,7 +1982,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBillDetail", "Sub Total :" + subtot_f);
 
         // cust name
-        String custname = edtCustName.getText().toString();
+        String custname = editTextName.getText().toString();
         objBillDetail.setCustname(custname);
         Log.d("InsertBillDetail", "CustName :" + custname);
 
@@ -1988,12 +1998,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBillDetail", "CustStateCode :" + custStateCode);
 
         // BusinessType
-        if (etCustGSTIN.getText().toString().equals("")) {
+        /*if (etCustGSTIN.getText().toString().equals("")) {
             objBillDetail.setBusinessType("B2C");
         } else // gstin present means b2b bussiness
         {
             objBillDetail.setBusinessType("B2B");
-        }
+        }*/
+        objBillDetail.setBusinessType("");
         //objBillDetail.setBusinessType("B2C");
         Log.d("InsertBillDetail", "BusinessType : " + objBillDetail.getBusinessType());
         // Payment types
@@ -2111,7 +2122,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         objBillDetail.setUserId(strUserId);
         Log.d("InsertBillDetail", "UserID:" + strUserId);
 
-        lResult = db.addBill(objBillDetail, etCustGSTIN.getText().toString());
+        lResult = db.addBill(objBillDetail, "");
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
@@ -2127,7 +2138,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }
 
         // Bill No Reset Configuration
-        long Result2 = db.UpdateBillNoResetInvoiceNo(Integer.parseInt(tvBillNumber.getText().toString()));
+        long Result2 = db.UpdateBillNoResetInvoiceNo(Integer.parseInt(editTextOrderNo.getText().toString()));
     }
 
     protected void PrintNewBill() {
@@ -2362,4 +2373,22 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         return billSubTaxItems;
     }
     // -----Print Bill Code Ended-----
+
+    private void UpdateItemStock(Cursor crsrUpdateStock, float Quantity) {
+        int iResult = 0;
+        float fCurrentStock = 0, fNewStock = 0;
+
+        // Get current stock of item
+        fCurrentStock = crsrUpdateStock.getFloat(crsrUpdateStock.getColumnIndex("Quantity"));
+
+        // New Stock
+        fNewStock = fCurrentStock - Quantity;
+
+        // Update new stock for item
+        iResult = db.updateItemStock(crsrUpdateStock.getInt(crsrUpdateStock.getColumnIndex("MenuCode")),
+                fNewStock);
+
+        Log.d("UpdateItemStock", "Updated Rows:" + iResult);
+
+    }
 }
