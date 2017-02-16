@@ -51,6 +51,7 @@ import java.util.Date;
 
 public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTTPRequestCompletedListener {
 
+    private static final String TAG = HomeActivity.class.getSimpleName();
     Context myContext;
     Date objDate;
     MessageDialog MsgBox;
@@ -427,6 +428,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         else if (v.getContentDescription().toString().equalsIgnoreCase("CounterSales"))
         {
             Intent intentTakeAway = new Intent(myContext, BillingCounterSalesActivity.class);
+            Log.d(TAG,"Opening Activity Started");
             startActivity(intentTakeAway);
         }
         else if (v.getContentDescription().toString().equalsIgnoreCase("PickUp"))

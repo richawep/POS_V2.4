@@ -320,15 +320,13 @@
         <activity
             android:name=".TabbedReportActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity
             android:name=".TabbedSettingsActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity android:name="com.mswipetech.wisepad.sdktest.view.TransactionActivity" />
-        <activity android:name=".BillingCounterSalesActivity" />
-
-
+        <activity android:name=".BillingCounterSalesActivity"></activity>
     </application>
 
 </manifest>

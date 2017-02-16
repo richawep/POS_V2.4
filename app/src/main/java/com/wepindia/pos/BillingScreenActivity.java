@@ -976,14 +976,16 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
     OnItemClickListener GridItemImageClick = new OnItemClickListener() {
 
         public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
-            // TODO Auto-generated method stub
             Cursor Item = null;
-            if (v.getTag() != null) {
-                if (jBillingMode == Byte.parseByte("1")) {
+            if (v.getTag() != null)
+            {
+                if (jBillingMode == Byte.parseByte("1"))
+                {
                     if (tvTableNumber.getText().toString().equalsIgnoreCase("")
-                            || tvWaiterNumber.getText().toString().equalsIgnoreCase("") ||
-                            tvTableNumber.getText().toString().equalsIgnoreCase("0")
-                            || tvWaiterNumber.getText().toString().equalsIgnoreCase("0")) {
+                            || tvWaiterNumber.getText().toString().equalsIgnoreCase("")
+                            || tvTableNumber.getText().toString().equalsIgnoreCase("0")
+                            || tvWaiterNumber.getText().toString().equalsIgnoreCase("0"))
+                    {
                         MsgBox.Show("Warning", "Select waiter and table before adding item to bill");
                         //Table_Waiter(null);
                         Intent intentDineIn = new Intent(myContext, TableActivity.class);
@@ -994,18 +996,24 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                         startActivity(intentDineIn);
                         finish();
                         return;
-                    } else {
+                    }
+                    else
+                    {
                         Item = dbBillScreen.getItem(Integer.parseInt(v.getTag().toString()));
                         btnClear.setEnabled(true);
                         AddItemToOrderTable(Item);
                     }
-                }else if (jBillingMode == Byte.parseByte("4")) {
+                }
+                else if (jBillingMode == Byte.parseByte("4"))
+                {
                     btnPrintBill.setEnabled(false);
                     btnPayBill.setEnabled(false);
                     Item = dbBillScreen.getItem(Integer.parseInt(v.getTag().toString()));
                     btnClear.setEnabled(true);
                     AddItemToOrderTable(Item);
-                }else {
+                }
+                else
+                {
                     Item = dbBillScreen.getItem(Integer.parseInt(v.getTag().toString()));
                     btnClear.setEnabled(true);
                     AddItemToOrderTable(Item);
