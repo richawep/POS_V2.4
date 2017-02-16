@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbar"
@@ -16,243 +16,61 @@
         android:background="@drawable/home_back">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <!-- Check and Please delete this is not required readded because of serious exception -->
-            <EditText
-                android:id="@+id/tvSubUdfValue"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:inputType="number"
-                android:text="1"
-                android:textSize="11dp"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/boxTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:minHeight="40dp"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:weightSum="7">
+            android:weightSum="4">
 
-            <LinearLayout
-                android:id="@+id/rowbtns"
+            <EditText
+                android:id="@+id/edtCustName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:weightSum="7">
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:hint="Name"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_LoadKOT"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="LoadKOT"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:text="Load KOT" />
-
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_Modifier"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="ModifyKOT"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:text="Modify KOT" />
-
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_ReprintKOT"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="ReprintKOT"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:text="Reprint KOT" />
-
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_DeleteKOT"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="VoidKOT"
-                    android:text="Cancel Order" />
-
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_ShiftTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="ShiftTable"
-                    android:text="Shift Table" />
-
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_MergeTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="MergeTable"
-                    android:text="Merge Table" />
-
-                <EditText
-                    android:id="@+id/edtCustDineInPhoneNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:hint="Phone No"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rowtexts"
+            <EditText
+                android:id="@+id/edtCustPhoneNo"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:visibility="invisible"
-                android:weightSum="8">
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:hint="Mobile No"
+                android:inputType="number"
+                android:maxLength="10"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="Customer Name :" />
+            <EditText
+                android:id="@+id/edtCustAddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:hint="Address"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <EditText
-                    android:id="@+id/edtCustName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:hint="Name"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <!--<ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/img_search"
-                    android:layout_weight="0.5"/>-->
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="Phone No : " />
-
-                <EditText
-                    android:id="@+id/edtCustPhoneNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:hint="Mobile No"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <!--<ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:src="@drawable/img_search"
-                    android:layout_gravity="left"/>-->
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="Address : " />
-
-                <EditText
-                    android:id="@+id/edtCustAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:hint="Address"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_DineInAddCustomer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:minHeight="40dp"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:onClick="AddCustomer"
-                    android:text="Add" />
-
-                <EditText
-                    android:id="@+id/edtCustId"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="0"
-                    android:visibility="invisible" />
-
-            </LinearLayout>
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_DineInAddCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_btn"
+                android:gravity="center"
+                android:onClick="AddCustomer"
+                android:text="Add"
+                android:theme="@style/WepButtonWithMarigin" />
         </LinearLayout>
 
         <RelativeLayout
@@ -262,162 +80,586 @@
             android:layout_above="@+id/boxBtn"
             android:layout_below="@+id/boxTop">
 
-            <include layout="@layout/order_page_content" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/boxBtn"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_alignParentBottom="true">
-
-            <View
-                android:id="@+id/qwd"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="@android:color/background_dark" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/qwd"
-                android:minHeight="48dp"
                 android:orientation="horizontal"
-                android:layout_centerHorizontal="true"
-                android:padding="4dp"
-                >
+                android:padding="2dp"
+                android:weightSum="5">
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_SaveKOT"
+                <RelativeLayout
+                    android:id="@+id/bx1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="SaveKOT"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="Save KOT" />
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:weightSum="7">
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_PrintKOT"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/search_boxes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/aCTVSearchItem"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
+                                android:completionThreshold="1"
+                                android:gravity="center"
+                                android:hint="Search Item Name"
+                                android:imeOptions="flagNoExtractUi"
+                                android:minHeight="40dp"
+                                android:textSize="10sp" />
+
+                            <AutoCompleteTextView
+                                android:id="@+id/aCTVSearchMenuCode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="1"
+                                android:completionThreshold="1"
+                                android:gravity="center"
+                                android:hint="Search Item Code"
+                                android:imeOptions="flagNoExtractUi"
+                                android:inputType="numberSigned"
+                                android:minHeight="40dp"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/boxFields"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/search_boxes"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/textViewLabelOrderNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:text="Order No" />
+
+                            <EditText
+                                android:id="@+id/tvBillNumberValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/textViewLabelOrderNo"
+                                android:enabled="false"
+                                android:minWidth="90dp"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textSize="12dp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_above="@+id/boxTaxInfo"
+                            android:layout_below="@+id/boxFields">
+
+                            <TableRow
+                                android:id="@+id/rowBillColumnCaption"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginRight="1dp"
+                                android:background="@color/colorPrimaryLight">
+
+                                <TextView
+                                    android:id="@+id/tvColItemName"
+                                    android:layout_width="130dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Name"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/txtColorAccent" />
+
+                                <TextView
+                                    android:id="@+id/tvColHSN"
+                                    android:layout_width="80dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="HSN"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/txtColorAccent" />
+
+                                <TextView
+                                    android:id="@+id/tvColItemQty"
+                                    android:layout_width="55dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Qty"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/txtColorAccent" />
+
+                                <TextView
+                                    android:id="@+id/tvColRate"
+                                    android:layout_width="70dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Rate"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/txtColorAccent" />
+
+                                <TextView
+                                    android:id="@+id/tvColAmount"
+                                    android:layout_width="80dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Amount"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/txtColorAccent" />
+
+                                <TextView
+                                    android:id="@+id/tvColDelete"
+                                    android:layout_width="70dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Delete"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/txtColorAccent" />
+                            </TableRow>
+
+                            <ScrollView
+                                android:id="@+id/scrlVertOrderItems"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/rowBillColumnCaption"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="10dp"
+                                android:background="#DDDDDD">
+
+                                <!--<HorizontalScrollView
+                                    android:id="@+id/scrlHrzntlOrderItems"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">-->
+
+                                <TableLayout
+                                    android:id="@+id/tblOrderItems"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:collapseColumns="0,6,7,8,9,10,11,12,13,14,15,16,17,21,22" />
+                                <!--</HorizontalScrollView>-->
+                            </ScrollView>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/boxTaxInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/azure"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/idd2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/idd1"
+                                        android:layout_marginBottom="2.5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:id="@+id/tvTaxTotal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:text="Sales-Tax :"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:textColor="@color/txtColorAccent" />
+
+                                        <TextView
+                                            android:id="@+id/tvTaxTotalValue"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:gravity="right"
+                                            android:text="0.00"
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/idd3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/idd2"
+                                        android:layout_marginBottom="2.5dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:id="@+id/tvServiceTax"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:text="Service-Tax :"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:textColor="@color/txtColorAccent" />
+
+                                        <TextView
+                                            android:id="@+id/tvServiceTaxValue"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:gravity="right"
+                                            android:text="0.00"
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/idd3"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:visibility="invisible"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:id="@+id/tvDateHeading"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="#ffffff"
+                                            android:text="Date :"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:textColor="#000000" />
+
+                                        <TextView
+                                            android:id="@+id/tvBillDateValue"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="#ffffff"
+                                            android:gravity="right"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:textColor="#000000" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/idd1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="2.5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:id="@+id/tvSubTotal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:text="Sub-Total"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:textColor="@color/txtColorAccent" />
+
+                                        <TextView
+                                            android:id="@+id/tvSubTotalValue"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:gravity="right"
+                                            android:text="0.00"
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/idd5"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/idd1"
+                                        android:layout_marginBottom="2.5dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:id="@+id/tvOtherchanrges"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="0.9"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:text="Other Charges"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:textColor="@color/txtColorAccent" />
+
+                                        <TextView
+                                            android:id="@+id/txtOthercharges"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1.1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:gravity="right"
+                                            android:text="0.00"
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/idd4"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/idd3"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_marginTop="2.5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:id="@+id/tvBillTotal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:text="TOTAL :"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:textColor="@color/txtColorAccent" />
+
+                                        <TextView
+                                            android:id="@+id/tvBillTotalValue"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:gravity="right"
+                                            android:text="0.00"
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/bx2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="printKOT"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="Print / Save KOT" />
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_PrintBill"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="printBILL"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="Print Bill" />
+                    <RelativeLayout
+                        android:id="@+id/boxDept"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorCard">
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_PayBill"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="Tender"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="Pay Bill" />
+                        <Button
+                            android:id="@+id/btnLabel1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorPrimaryLight"
+                            android:text="Department"
+                            android:textColor="@color/white" />
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_Clear"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="Clear"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="Clear" />
+                        <ListView
+                            android:id="@+id/listViewFilter1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/btnLabel1" />
+                    </RelativeLayout>
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_SplitBill"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="SplitBill"
-                    android:text="Split Bill"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:visibility="gone" />
+                    <RelativeLayout
+                        android:id="@+id/boxCat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorCard">
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_DeleteBill"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:onClick="DeleteBill"
-                    android:text="Delete Bill"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    />
+                        <Button
+                            android:id="@+id/btnLabel2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorPrimaryLight"
+                            android:text="Category"
+                            android:textColor="@color/white" />
 
+                        <ListView
+                            android:id="@+id/listViewFilter2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/btnLabel2" />
+                    </RelativeLayout>
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_Reprint"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="ReprintBill"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="Reprint Bill" />
+                    <RelativeLayout
+                        android:id="@+id/boxItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorCard">
 
-                <com.wep.common.app.views.WepButton
-                    android:id="@+id/btn_KOTStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_btn"
-                    android:gravity="center"
-                    android:onClick="KOTStatus"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="KOT Status" />
+                        <Button
+                            android:id="@+id/btnLabel3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorPrimaryLight"
+                            android:text="Items"
+                            android:textColor="@color/white" />
+
+                        <GridView
+                            android:id="@+id/listViewFilter3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:numColumns="2"
+                            android:layout_below="@+id/btnLabel3" />
+                    </RelativeLayout>
+
+                </LinearLayout>
             </LinearLayout>
+
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/boxBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_PrintBill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/btn_marigin"
+                android:layout_marginRight="@dimen/btn_marigin"
+                android:layout_weight="1"
+                android:background="@drawable/background_btn"
+                android:gravity="center"
+                android:onClick="printBILL"
+                android:text="Print Bill"
+                android:theme="@style/WepButtonWithMarigin" />
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_PayBill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/btn_marigin"
+                android:layout_marginRight="@dimen/btn_marigin"
+                android:layout_weight="1"
+                android:background="@drawable/background_btn"
+                android:gravity="center"
+                android:onClick="Tender"
+                android:text="Pay Bill"
+                android:theme="@style/WepButtonWithMarigin" />
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_Clear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/btn_marigin"
+                android:layout_marginRight="@dimen/btn_marigin"
+                android:layout_weight="1"
+                android:background="@drawable/background_btn"
+                android:gravity="center"
+                android:onClick="Clear"
+                android:text="Clear"
+                android:theme="@style/WepButtonWithMarigin" />
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_DeleteBill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/btn_marigin"
+                android:layout_marginRight="@dimen/btn_marigin"
+                android:layout_weight="1"
+                android:background="@drawable/background_btn"
+                android:gravity="center"
+                android:onClick="DeleteBill"
+                android:text="Delete Bill"
+                android:theme="@style/WepButtonWithMarigin" />
+
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_Reprint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/btn_marigin"
+                android:layout_marginRight="@dimen/btn_marigin"
+                android:layout_weight="1"
+                android:background="@drawable/background_btn"
+                android:gravity="center"
+                android:onClick="ReprintBill"
+                android:text="Reprint Bill"
+                android:theme="@style/WepButtonWithMarigin" />
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

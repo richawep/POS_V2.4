@@ -320,7 +320,13 @@
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
         <activity android:name="com.mswipetech.wisepad.sdktest.view.TransactionActivity" />
-        <activity android:name=".BillingCounterSalesActivity"></activity>
+
+        <activity
+            android:name=".BillingCounterSalesActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeWep"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
     </application>
 
 </manifest>
