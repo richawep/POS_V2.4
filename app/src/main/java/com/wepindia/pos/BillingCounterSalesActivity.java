@@ -44,6 +44,7 @@ import com.wep.common.app.Database.BillItem;
 import com.wep.common.app.Database.ComplimentaryBillDetail;
 import com.wep.common.app.Database.Customer;
 import com.wep.common.app.Database.DatabaseHandler;
+import com.wep.common.app.Database.Department;
 import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.print.BillKotItem;
@@ -55,6 +56,7 @@ import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.adapters.DepartmentAdapter;
 import com.wepindia.pos.adapters.ItemsAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.printers.HeyDeyBaseActivity;
@@ -76,6 +78,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private String userId, userName;
     private DatabaseHandler db;
     private ItemsAdapter itemsAdapter;
+    private DepartmentAdapter departmentAdapter;
     private GridView gridViewItems;
     private ListView listViewDept,listViewCat;
     private MessageDialog messageDialog;
@@ -180,6 +183,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 printBILL();
         }
         else if(id == R.id.btn_PayBill)
+        {
+            Tender1();
+        }
+        else if(id == R.id.btnLabel1)
         {
             Tender1();
         }
@@ -394,6 +401,17 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }
         else
             itemsAdapter.notifyDataSetChanged(list);
+    }
+
+
+    public void setDepartmentAdapter(ArrayList<Department> list)
+    {
+        if(departmentAdapter==null){
+            departmentAdapter = new DepartmentAdapter(this,list);
+            listViewDept.setAdapter(itemsAdapter);
+        }
+        else
+            departmentAdapter.notifyDataSetChanged(list);
     }
 
     @Override
