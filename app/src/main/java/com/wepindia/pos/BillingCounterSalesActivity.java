@@ -40,8 +40,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mswipetech.wisepad.sdktest.view.ApplicationData;
+import com.mswipetech.wisepad.sdktest.view.VoidTransaction;
 import com.wep.common.app.Database.BillDetail;
 import com.wep.common.app.Database.BillItem;
+import com.wep.common.app.Database.Category;
 import com.wep.common.app.Database.ComplimentaryBillDetail;
 import com.wep.common.app.Database.Customer;
 import com.wep.common.app.Database.DatabaseHandler;
@@ -56,7 +58,9 @@ import com.wep.common.app.print.PrintKotBillItem;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
+import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.adapters.CategoryAdapter;
 import com.wepindia.pos.adapters.DepartmentAdapter;
 import com.wepindia.pos.adapters.ItemsAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
@@ -81,6 +85,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private DatabaseHandler db;
     private ItemsAdapter itemsAdapter;
     private DepartmentAdapter departmentAdapter;
+    private CategoryAdapter categoryAdapter;
     private GridView gridViewItems;
     private ListView listViewDept,listViewCat;
     private MessageDialog messageDialog;
@@ -95,7 +100,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private Button btnDept,btnCat,btnItems;
     Spinner spnr_pos;
     String strUserId = "", strUserName = "", strDate = "";
-    CheckBox chk_interstate = null;
     private byte jBillingMode = 2, jWeighScale = 0;
     private TableLayout tblOrderItems;
     private String GSTEnable = "", HSNEnable_out = "", POSEnable = "";
@@ -129,9 +133,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         db = new DatabaseHandler(this);
         gridViewItems = (GridView) findViewById(R.id.listViewFilter3);
         gridViewItems.setOnItemClickListener(itemsClick);
-        listViewDept = (ListView) findViewById(R.id.listViewFilter2);
+        listViewDept = (ListView) findViewById(R.id.listViewFilter1);
         listViewDept.setOnItemClickListener(deptClick);
-        listViewCat = (ListView) findViewById(R.id.listViewFilter1);
+        listViewCat = (ListView) findViewById(R.id.listViewFilter2);
         listViewCat.setOnItemClickListener(catClick);
         tblOrderItems = (TableLayout) findViewById(R.id.tblOrderItems);
         crsrSettings = db.getBillSettings();
@@ -144,27 +148,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         tvBillAmount = (TextView) findViewById(R.id.tvBillTotalValue);
 
         loadAutoCompleteData();
+        loadItems(0);
 
-        new AsyncTask<Void, Void, ArrayList<Items>>() {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected ArrayList<Items> doInBackground(Void... params) {
-                return db.getItemItems();
-            }
-
-            @Override
-            protected void onPostExecute(ArrayList<Items> list) {
-                super.onPostExecute(list);
-                editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
-                if(list!=null)
-                    setItemsAdapter(list);
-            }
-        }.execute();
     }
 
     @Override
@@ -191,10 +176,98 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         {
             Tender1();
         }
+        else if(id == R.id.btn_DeleteBill)
+        {
+            deleteBill();
+        }
+        else if(id == R.id.btn_Reprint)
+        {
+            reprintBill();
+        }
         else if(id == R.id.btnLabel1)
         {
-            Tender1();
+            loadDepartments();
         }
+        else if(id == R.id.btnLabel2)
+        {
+            loadCategories(0);
+        }
+    }
+
+
+    private void loadItems(final int categcode) {
+        new AsyncTask<Void, Void, ArrayList<Items>>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected ArrayList<Items> doInBackground(Void... params) {
+                if(categcode == 0)
+                    return db.getItemItems();
+                else
+                    return db.getItemItems(categcode);
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Items> list) {
+                super.onPostExecute(list);
+                editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+                if(list!=null)
+                    setItemsAdapter(list);
+            }
+        }.execute();
+    }
+
+    private void loadDepartments() {
+        new AsyncTask<Void, Void, ArrayList<Department>>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected ArrayList<Department> doInBackground(Void... params) {
+                return db.getItemDepartment();
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Department> list) {
+                super.onPostExecute(list);
+                //editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+                if(list!=null)
+                    setDepartmentAdapter(list);
+            }
+        }.execute();
+    }
+
+    private void loadCategories(final int deptCode) {
+        new AsyncTask<Void, Void, ArrayList<Category>>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected ArrayList<Category> doInBackground(Void... params) {
+                if(deptCode == 0)
+                    return db.getAllItemCategory();
+                else
+                    return db.getAllItemCategory(deptCode);
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Category> list) {
+                super.onPostExecute(list);
+                //editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+                if(list!=null)
+                    setCategoryAdapter(list);
+            }
+        }.execute();
     }
 
     public boolean isValidCustmerid(){
@@ -283,10 +356,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         btn_Reprint.setOnClickListener(this);
         btn_DineInAddCustomer = (WepButton) findViewById(R.id.btn_DineInAddCustomer);
         btn_DineInAddCustomer.setOnClickListener(this);
-        chk_interstate = (CheckBox) findViewById(R.id.checkbox_interstate);
         btnDept = (Button) findViewById(R.id.btnLabel1);
+        btnDept.setOnClickListener(this);
         btnCat = (Button) findViewById(R.id.btnLabel2);
+        btnCat.setOnClickListener(this);
         btnItems = (Button) findViewById(R.id.btnLabel3);
+        btnItems.setOnClickListener(this);
         spnr_pos = (Spinner) findViewById(R.id.spnr_pos);
         editTextName = (EditText) findViewById(R.id.edtCustName);
         editTextMobile = (EditText) findViewById(R.id.edtCustPhoneNo);
@@ -467,11 +542,22 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     {
         if(departmentAdapter==null){
             departmentAdapter = new DepartmentAdapter(this,list);
-            listViewDept.setAdapter(itemsAdapter);
+            listViewDept.setAdapter(departmentAdapter);
         }
         else
             departmentAdapter.notifyDataSetChanged(list);
     }
+
+    public void setCategoryAdapter(ArrayList<Category> list)
+    {
+        if(categoryAdapter==null){
+            categoryAdapter = new CategoryAdapter(this,list);
+            listViewCat.setAdapter(categoryAdapter);
+        }
+        else
+            categoryAdapter.notifyDataSetChanged(list);
+    }
+
 
     @Override
     protected void onResume() {
@@ -526,7 +612,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Items items = (Items) itemsAdapter.getItem(position);
             Cursor cursor = db.getItemss(items.getItemCode());
-            //btnClear.setEnabled(true);
+            btn_Clear.setEnabled(true);
             AddItemToOrderTable(cursor);
         }
     };
@@ -534,13 +620,18 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private AdapterView.OnItemClickListener deptClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            Department department = (Department) departmentAdapter.getItem(position);
+            int deptCode = department.getDeptCode();
+            loadCategories(deptCode);
         }
     };
     private AdapterView.OnItemClickListener catClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            Category cat = (Category) categoryAdapter.getItem(position);
+            int categcode = cat.getCategCode();
+            gridViewItems.setVisibility(View.VISIBLE);
+            loadItems(categcode);
         }
     };
 
@@ -755,7 +846,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     chkNumber.setTextSize(0);
                     chkNumber.setTextColor(Color.TRANSPARENT);
                     chkNumber.setText(crsrItem.getString(crsrItem.getColumnIndex("MenuCode")));
-                    Toast.makeText(getApplicationContext(), chkNumber.getText().toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), chkNumber.getText().toString(), Toast.LENGTH_SHORT).show();
 
                     // Item Name
                     tvName = new TextView(BillingCounterSalesActivity.this);
@@ -2045,8 +2136,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBillDetail", "Total Discount:" + fTotalDiscount);
 
         // Sales Tax Amount
-        if (GSTEnable.equals("1")) {
-            if (chk_interstate.isChecked()) {
+        if (false) {
+            /*if (false) {
                 objBillDetail.setIGSTAmount(Float.parseFloat(tvTaxTotal.getText().toString()));
                 objBillDetail.setCGSTAmount(0);
                 objBillDetail.setSGSTAmount(0);
@@ -2054,7 +2145,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 objBillDetail.setIGSTAmount(0);
                 objBillDetail.setCGSTAmount(Float.parseFloat(tvTaxTotal.getText().toString()));
                 objBillDetail.setSGSTAmount(Float.parseFloat(tvServiceTaxTotal.getText().toString()));
-            }
+            }*/
             Log.d("InsertBillDetail", "IGSTAmount : " + objBillDetail.getIGSTAmount());
             Log.d("InsertBillDetail", "CGSTAmount : " + objBillDetail.getCGSTAmount());
             Log.d("InsertBillDetail", "SGSTAmount : " + objBillDetail.getSGSTAmount());
@@ -2690,5 +2781,430 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         /*POS_LIST = ArrayAdapter.createFromResource(this, R.array.poscode, android.R.layout.simple_spinner_item);
         spnr_pos.setAdapter(POS_LIST);*/
 
+    }
+
+    /*************************************************************************************************************************************
+     * Delete Bill Button Click event, calls delte bill function
+     *
+     *************************************************************************************************************************************/
+    public void deleteBill()
+    {
+        tblOrderItems.removeAllViews();
+        AlertDialog.Builder DineInTenderDialog = new AlertDialog.Builder(BillingCounterSalesActivity.this);
+        LayoutInflater UserAuthorization = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View vwAuthorization = UserAuthorization.inflate(R.layout.dinein_reprint, null);
+        final EditText txtReprintBillNo = (EditText) vwAuthorization.findViewById(R.id.txtDineInReprintBillNumber);
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill").setMessage("Enter Bill Number")
+                .setView(vwAuthorization).setNegativeButton("Cancel", null)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if (txtReprintBillNo.getText().toString().equalsIgnoreCase(""))
+                        {
+                            messageDialog.Show("Warning", "Please enter Bill Number");
+                            return;
+                        }
+                        else
+                        {
+                            String InvoiceNo = txtReprintBillNo.getText().toString();
+                            Cursor result = db.getBillDetails(Integer.parseInt(InvoiceNo));
+                            if (result.moveToFirst())
+                            {
+                                if (result.getInt(result.getColumnIndex("BillStatus")) != 0)
+                                {
+                                    VoidBill(Integer.parseInt(InvoiceNo));
+                                }
+                                else
+                                {
+                                    Toast.makeText(getApplicationContext(), "Bill is already voided", Toast.LENGTH_SHORT).show();
+                                    String msg = "Bill Number "+InvoiceNo+ " is already voided";
+                                    Log.d("VoidBill",msg);
+                                }
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(), "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
+                                String msg = "No bill found with bill number " + InvoiceNo;
+                                Log.d("VoidBill",msg);
+                            }
+                            ClearAll();
+                        }
+                    }
+                }).show();
+    }
+
+    /*************************************************************************************************************************************
+     * Void Bill Button Click event, opens a dialog to enter admin user id and
+     * password for voiding bill if user is admin then bill will be voided
+     *
+     *************************************************************************************************************************************/
+    public void VoidBill(final int invoiceno) {
+
+        AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(BillingCounterSalesActivity.this);
+
+        LayoutInflater UserAuthorization = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
+
+        final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
+        final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
+
+        AuthorizationDialog.setTitle("Authorization").setIcon(R.drawable.ic_launcher).setView(vwAuthorization)
+                .setNegativeButton("Cancel", null).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                Cursor User = db.getUserr(txtUserId.getText().toString(),
+                        txtPassword.getText().toString());
+                if (User.moveToFirst()) {
+                    if (User.getInt(User.getColumnIndex("RoleId")) == 1) {
+                        //ReprintVoid(Byte.parseByte("2"));
+                        int result = db.makeBillVoids(invoiceno);
+                        if(result >0)
+                        {
+                            String msg = "Bill Number "+invoiceno+" voided successfully";
+                            // MsgBox.Show("Warning", msg);
+                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                            Log.d("VoidBill", msg);
+                        }
+                    } else {
+                        messageDialog.Show("Warning", "Void Bill failed due to in sufficient access privilage");
+                    }
+                } else {
+                    messageDialog.Show("Warning", "Void Bill failed due to wrong user id or password");
+                }
+            }
+        }).show();
+    }
+
+    /*************************************************************************************************************************************
+     * Reprint Bill Button Click event, calls reprint bill function
+     *
+     *************************************************************************************************************************************/
+    public void reprintBill() {
+
+        //ReprintVoid(Byte.parseByte("1"));
+        tblOrderItems.removeAllViews();
+        AlertDialog.Builder DineInTenderDialog = new AlertDialog.Builder(BillingCounterSalesActivity.this);
+
+        LayoutInflater UserAuthorization = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View vwAuthorization = UserAuthorization.inflate(R.layout.dinein_reprint, null);
+
+        final EditText txtReprintBillNo = (EditText) vwAuthorization.findViewById(R.id.txtDineInReprintBillNumber);
+
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("Print Bill").setMessage("Enter Bill Number")
+                .setView(vwAuthorization).setNegativeButton("Cancel", null)
+                .setPositiveButton("RePrint", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if (txtReprintBillNo.getText().toString().equalsIgnoreCase("")) {
+                            messageDialog.Show("Warning", "Please enter Bill Number");
+                            return;
+                        } else {
+
+                            Cursor LoadItemForReprint = db.getItemsForReprintBills(Integer.valueOf(txtReprintBillNo.getText().toString()));
+                            if (LoadItemForReprint.moveToFirst()) {
+                                editTextOrderNo.setText(txtReprintBillNo.getText().toString());
+                                LoadItemsForReprintBill(LoadItemForReprint);
+                                Cursor crsrBillDetail = db.getBillDetails(Integer.valueOf(txtReprintBillNo.getText().toString()));
+                                if (crsrBillDetail.moveToFirst()) {
+                                    customerId = crsrBillDetail.getString(crsrBillDetail.getColumnIndex("CustId"));
+                                }
+                            } else {
+                                messageDialog.Show("Warning", "No Item is present for the Bill Number " + txtReprintBillNo.getText().toString());
+                            }
+                            strPaymentStatus = "Paid";
+                            PrintNewBill();
+                            // update bill reprint count
+                            int Result = db.updateBillRepintCounts(Integer.parseInt(txtReprintBillNo.getText().toString()));
+                            ClearAll();
+
+                        }
+                    }
+                }).show();
+    }
+
+
+    /*************************************************************************************************************************************
+     * Loads KOT order items to billing table
+     *
+     * @param crsrBillItems : Cursor with KOT order item details
+     *************************************************************************************************************************************/
+    @SuppressWarnings("deprecation")
+    private void LoadItemsForReprintBill(Cursor crsrBillItems) {
+        EditTextInputHandler etInputValidate = new EditTextInputHandler();
+        TableRow rowItem;
+        TextView tvHSn, tvName, tvAmount, tvTaxPercent, tvTaxAmt, tvDiscPercent, tvDiscAmt, // tvQty,
+                // tvRate,
+                tvDeptCode, tvCategCode, tvKitchenCode, tvTaxType, tvModifierCharge, tvServiceTaxPercent,
+                tvServiceTaxAmt;
+        EditText etQty, etRate;
+        CheckBox Number;
+        ImageButton ImgDelete;
+
+        if (crsrBillItems.moveToFirst()) {
+            // Display items in table
+            do {
+                rowItem = new TableRow(BillingCounterSalesActivity.this);
+                rowItem.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                // Item Number
+                Number = new CheckBox(BillingCounterSalesActivity.this);
+                Number.setWidth(40);
+                Number.setTextSize(0);
+                Number.setTextColor(Color.TRANSPARENT);
+                Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemNumber")));
+
+                // Item Name
+                tvName = new TextView(BillingCounterSalesActivity.this);
+                tvName.setWidth(135);
+                tvName.setTextSize(11);
+                tvName.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemName")));
+
+                //hsn code
+                tvHSn = new TextView(BillingCounterSalesActivity.this);
+                tvHSn.setWidth(67); // 154px ~= 230dp
+                tvHSn.setTextSize(11);
+                if (GSTEnable.equalsIgnoreCase("1") && (HSNEnable_out != null) && HSNEnable_out.equals("1")) {
+                    tvHSn.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("HSNCode")));
+                }
+
+                // Quantity
+                etQty = new EditText(BillingCounterSalesActivity.this);
+                etQty.setWidth(55);
+                etQty.setTextSize(11);
+                etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
+                etQty.setOnClickListener(Qty_Rate_Click);
+                etInputValidate.ValidateDecimalInput(etQty);
+
+                // Rate
+                etRate = new EditText(BillingCounterSalesActivity.this);
+                etRate.setWidth(75);
+                etRate.setEnabled(false);
+                etRate.setTextSize(11);
+                etRate.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Value"))));
+
+                // Amount
+                tvAmount = new TextView(BillingCounterSalesActivity.this);
+                tvAmount.setWidth(105);
+                tvAmount.setTextSize(11);
+                tvAmount.setText(
+                        String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("SubTotal"))));
+
+                // Sales Tax%
+                tvTaxPercent = new TextView(BillingCounterSalesActivity.this);
+                tvTaxPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxPercent")));
+
+                // Sales Tax Amount
+                tvTaxAmt = new TextView(BillingCounterSalesActivity.this);
+                tvTaxAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxAmount")));
+
+                // Discount %
+                tvDiscPercent = new TextView(BillingCounterSalesActivity.this);
+                tvDiscPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("DiscountPercent")));
+
+                // Discount Amount
+                tvDiscAmt = new TextView(BillingCounterSalesActivity.this);
+                tvDiscAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("DiscountAmount")));
+
+                // Dept Code
+                tvDeptCode = new TextView(BillingCounterSalesActivity.this);
+                tvDeptCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("DeptCode")));
+
+                // Categ Code
+                tvCategCode = new TextView(BillingCounterSalesActivity.this);
+                tvCategCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("CategCode")));
+
+                // Kitchen Code
+                tvKitchenCode = new TextView(BillingCounterSalesActivity.this);
+                tvKitchenCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("KitchenCode")));
+
+                // Tax Type
+                tvTaxType = new TextView(BillingCounterSalesActivity.this);
+                tvTaxType.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxType")));
+
+                // Modifier Amount
+                tvModifierCharge = new TextView(BillingCounterSalesActivity.this);
+                tvModifierCharge.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ModifierAmount")));
+
+                // Service Tax %
+                tvServiceTaxPercent = new TextView(BillingCounterSalesActivity.this);
+                tvServiceTaxPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ServiceTaxPercent")));
+
+                // Service Tax Amount
+                tvServiceTaxAmt = new TextView(BillingCounterSalesActivity.this);
+                tvServiceTaxAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ServiceTaxAmount")));
+
+                // Delete
+                int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
+                ImgDelete = new ImageButton(BillingCounterSalesActivity.this);
+                ImgDelete.setImageResource(res);
+                ImgDelete.setVisibility(View.INVISIBLE);
+
+                // Add all text views and edit text to Item Row
+                // rowItem.addView(tvNumber);
+                rowItem.addView(Number);
+                rowItem.addView(tvName);
+                rowItem.addView(tvHSn);
+                rowItem.addView(etQty);
+                rowItem.addView(etRate);
+                rowItem.addView(tvAmount);
+                rowItem.addView(tvTaxPercent);
+                rowItem.addView(tvTaxAmt);
+                rowItem.addView(tvDiscPercent);
+                rowItem.addView(tvDiscAmt);
+                rowItem.addView(tvDeptCode);
+                rowItem.addView(tvCategCode);
+                rowItem.addView(tvKitchenCode);
+                rowItem.addView(tvTaxType);
+                rowItem.addView(tvModifierCharge);
+                rowItem.addView(tvServiceTaxPercent);
+                rowItem.addView(tvServiceTaxAmt);
+                rowItem.addView(ImgDelete);
+
+                // Add row to table
+                tblOrderItems.addView(rowItem, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            } while (crsrBillItems.moveToNext());
+
+            CalculateTotalAmountforRePrint();
+
+        } else {
+            Log.d("LoadKOTItems", "No rows in cursor");
+        }
+    }
+
+    private void CalculateTotalAmountforRePrint() {
+
+        double dSubTotal = 0, dTaxTotal = 0, dModifierAmt = 0, dServiceTaxAmt = 0, dOtherCharges = 0, dTaxAmt = 0, dSerTaxAmt = 0;
+        float dTaxPercent = 0, dSerTaxPercent = 0;
+
+        // Item wise tax calculation ----------------------------
+        for (int iRow = 0; iRow < tblOrderItems.getChildCount(); iRow++) {
+
+            TableRow RowItem = (TableRow) tblOrderItems.getChildAt(iRow);
+
+            if (RowItem.getChildAt(0) != null) {
+
+                //TextView ColTaxType = (TextView) RowItem.getChildAt(12);
+                TextView ColAmount = (TextView) RowItem.getChildAt(5);
+                //TextView ColDisc = (TextView) RowItem.getChildAt(8);
+                TextView ColTax = (TextView) RowItem.getChildAt(7);
+                //TextView ColModifierAmount = (TextView) RowItem.getChildAt(13);
+                TextView ColServiceTaxAmount = (TextView) RowItem.getChildAt(16);
+
+                dTaxTotal += Double.parseDouble(ColTax.getText().toString());
+                dServiceTaxAmt += Double.parseDouble(ColServiceTaxAmount.getText().toString());
+
+                dSubTotal += Double.parseDouble(ColAmount.getText().toString());
+            }
+        }
+        // ------------------------------------------
+
+        // Bill wise tax Calculation -------------------------------
+        Cursor crsrtax = db.getTaxConfigs(1);
+        if (crsrtax.moveToFirst()) {
+            dTaxPercent = crsrtax.getFloat(crsrtax.getColumnIndex("TotalPercentage"));
+            dTaxAmt += dSubTotal * (dTaxPercent / 100);
+        }
+        Cursor crsrtax1 = db.getTaxConfigs(2);
+        if (crsrtax1.moveToFirst()) {
+            dSerTaxPercent = crsrtax1.getFloat(crsrtax1.getColumnIndex("TotalPercentage"));
+            dSerTaxAmt += dSubTotal * (dSerTaxPercent / 100);
+        }
+        // -------------------------------------------------
+
+        dOtherCharges = Double.valueOf(textViewOtherCharges.getText().toString());
+        if (crsrSettings.moveToFirst()) {
+            if (crsrSettings.getString(crsrSettings.getColumnIndex("Tax")).equalsIgnoreCase("1")) {
+                if (crsrSettings.getString(crsrSettings.getColumnIndex("TaxType")).equalsIgnoreCase("1")) {
+
+                    if (false) // interstate
+                    {
+                        tvTaxTotal.setText(String.format("%.2f", dTaxTotal + dServiceTaxAmt));
+                        //tvServiceTaxTotal.setText(String.format("%.2f", dServiceTaxAmt));
+                        tvServiceTaxTotal.setText("");
+                    } else {
+                        tvTaxTotal.setText(String.format("%.2f", dTaxTotal));
+                        tvServiceTaxTotal.setText(String.format("%.2f", dServiceTaxAmt));
+                    }
+
+                    tvSubTotal.setText(String.format("%.2f", dSubTotal));
+                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dTaxTotal + dServiceTaxAmt + dOtherCharges));
+                } else {
+
+                    if (false) {
+                        tvTaxTotal.setText(String.format("%.2f", dTaxAmt + dSerTaxAmt));
+                        //tvServiceTaxTotal.setText(String.format("%.2f", dSerTaxAmt));
+                        tvServiceTaxTotal.setText("");
+                    } else {
+                        tvTaxTotal.setText(String.format("%.2f", dTaxAmt));
+                        tvServiceTaxTotal.setText(String.format("%.2f", dSerTaxAmt));
+                    }
+                    tvSubTotal.setText(String.format("%.2f", dSubTotal));
+                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dTaxAmt + dSerTaxAmt + dOtherCharges));
+                }
+            } else {
+                if (crsrSettings.getString(crsrSettings.getColumnIndex("TaxType")).equalsIgnoreCase("1")) {
+                    if (false) {
+                        tvTaxTotal.setText(String.format("%.2f", dTaxTotal + dServiceTaxAmt));
+                        // tvServiceTaxTotal.setText(String.format("%.2f", dServiceTaxAmt));
+                        tvServiceTaxTotal.setText("");
+                    } else {
+                        tvTaxTotal.setText(String.format("%.2f", dTaxTotal));
+                        tvServiceTaxTotal.setText(String.format("%.2f", dServiceTaxAmt));
+                    }
+                    tvSubTotal.setText(String.format("%.2f", dSubTotal));
+                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dOtherCharges));
+
+                } else {
+                    tvSubTotal.setText(String.format("%.2f", dSubTotal));
+                    if (false) {
+                        tvTaxTotal.setText(String.format("%.2f", dTaxAmt + dSerTaxAmt));
+                        // tvServiceTaxTotal.setText(String.format("%.2f", dSerTaxAmt));
+                        tvServiceTaxTotal.setText("");
+                    } else {
+                        tvTaxTotal.setText(String.format("%.2f", dTaxAmt));
+                        tvServiceTaxTotal.setText(String.format("%.2f", dSerTaxAmt));
+                    }
+                    tvTaxTotal.setText(String.format("%.2f", dTaxAmt));
+                    tvServiceTaxTotal.setText(String.format("%.2f", dSerTaxAmt));
+                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dOtherCharges));
+                }
+            }
+        }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(BillingCounterSalesActivity.this);
+            LayoutInflater UserAuthorization = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
+            final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
+            final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
+            final TextView tvAuthorizationUserId= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserId);
+            final TextView tvAuthorizationUserPassword= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserPassword);
+            tvAuthorizationUserId.setVisibility(View.GONE);
+            tvAuthorizationUserPassword.setVisibility(View.GONE);
+            txtUserId.setVisibility(View.GONE);
+            txtPassword.setVisibility(View.GONE);
+            AuthorizationDialog
+                    .setTitle("Are you sure you want to exit ?")
+                    .setView(vwAuthorization)
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            /*Intent returnIntent =new Intent();
+                            setResult(Activity.RESULT_OK,returnIntent);*/
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:text="Title"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
 </LinearLayout>
