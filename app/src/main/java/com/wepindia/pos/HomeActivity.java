@@ -379,7 +379,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     public void GSTR1_upload_forDay(Date date)
     {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        /*SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String startDate = sdf.format(date);
         String gstin_owner = "123wsd_out";
 
@@ -392,14 +392,14 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         }
 
         String paramStr = "gstin="+gstin_owner+"&date="+startDate+"&purchasevalue="+taxval+"";
-        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR1_DAY+paramStr).execute();
+        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR1_DAY+paramStr).execute();*/
 
     }
 
     public void GSTR2_upload_forDay(Date date)
     {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        /*SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String startDate = sdf.format(date);
         String gstin_owner = "123wsd_out";
 
@@ -412,7 +412,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         }
 
         String paramStr = "gstin="+gstin_owner+"&date="+startDate+"&salevalue="+taxval+"";
-        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR2_DAY+paramStr).execute();
+        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR2_DAY+paramStr).execute();*/
 
     }
 
@@ -435,7 +435,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         {
             // Launch Billing screen activity in PickUp billing mode
 //			Intent intentPickUp = new Intent(myContext,CustomerOrdersActivity.class);
-            Intent intentPickUp = new Intent(myContext, BillingScreenActivity.class);
+            Intent intentPickUp = new Intent(myContext, HomeDeliveryBillingActivity.class);
             intentPickUp.putExtra("BILLING_MODE", PICKUP);
             //intentPickUp.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             //intentPickUp.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -445,7 +445,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         } else if (v.getContentDescription().toString().equalsIgnoreCase("Delivery")) {
             // Launch Billing screen activity in Delivery billing mode
 
-            Intent intentDelivery = new Intent(myContext, BillingScreenActivity.class);
+            Intent intentDelivery = new Intent(myContext, HomeDeliveryBillingActivity.class);
             intentDelivery.putExtra("BILLING_MODE", DELIVERY);
             //intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             //intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
