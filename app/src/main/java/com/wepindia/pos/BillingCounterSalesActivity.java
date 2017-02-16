@@ -42,6 +42,7 @@ import android.widget.Toast;
 import com.mswipetech.wisepad.sdktest.view.ApplicationData;
 import com.wep.common.app.Database.BillDetail;
 import com.wep.common.app.Database.BillItem;
+import com.wep.common.app.Database.ComplimentaryBillDetail;
 import com.wep.common.app.Database.Customer;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
@@ -170,12 +171,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         int id = v.getId();
         if(id == R.id.btn_Clear)
         {
-            //if(isValidCustmerid())
+            if(isValidCustmerid())
                 ClearAll();
         }
         else if(id == R.id.btn_DineInAddCustomer)
         {
-            //if(isValidCustmerid())
+            if(isValidCustmerid())
                 addCustomer();
         }
         else if(id == R.id.btn_PrintBill)
@@ -736,6 +737,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     chkNumber.setTextSize(0);
                     chkNumber.setTextColor(Color.TRANSPARENT);
                     chkNumber.setText(crsrItem.getString(crsrItem.getColumnIndex("MenuCode")));
+                    Toast.makeText(getApplicationContext(), chkNumber.getText().toString(), Toast.LENGTH_SHORT).show();
 
                     // Item Name
                     tvName = new TextView(BillingCounterSalesActivity.this);
@@ -1943,8 +1945,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
             // BusinessType
             /*if (etCustGSTIN.getText().toString().equals("")) {
+            if (etCustGSTIN.getText().toString().equals(""))
+            {
                 objBillItem.setBusinessType("B2C");
-            } else // gstin present means b2b bussiness
+            }
+            else // gstin present means b2b bussiness
             {
                 objBillItem.setBusinessType("B2B");
             }*/
@@ -2404,7 +2409,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Cursor crsrTax = db.getItemsForSalesTaxPrints(Integer.valueOf(editTextOrderNo.getText().toString()));
         if (crsrTax.moveToFirst()) {
             do {
-                String taxname = "VAT"; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                String taxname = "Sales Tax"; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
                 String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("TaxPercent"));
                 Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxAmount")));
 
@@ -2478,6 +2483,164 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         Log.d("UpdateItemStock", "Updated Rows:" + iResult);
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+        } catch (Exception e) {
+
+        }
+        if (resultCode == RESULT_OK) {
+            switch (requestCode)
+            {
+                case 1: // PayBill Activity Result
+                    boolean isComplimentaryBill, isDiscounted, isPrintBill = false;
+                    float dDiscPercent;
+                    String strComplimentaryReason = "";
+
+                    isComplimentaryBill = data.getBooleanExtra(PayBillActivity.IS_COMPLIMENTARY_BILL, false);
+                    isDiscounted = data.getBooleanExtra(PayBillActivity.IS_DISCOUNTED, false);
+                    isPrintBill = data.getBooleanExtra(PayBillActivity.IS_PRINT_BILL, true);
+                    strComplimentaryReason = data.getStringExtra(PayBillActivity.COMPLIMENTARY_REASON);
+                    dDiscPercent = data.getFloatExtra(PayBillActivity.DISCOUNT_PERCENT, 0);
+                    fCashPayment = data.getFloatExtra(PayBillActivity.TENDER_CASH_VALUE, 0);
+                    fCardPayment = data.getFloatExtra(PayBillActivity.TENDER_CARD_VALUE, 0);
+                    fCouponPayment = data.getFloatExtra(PayBillActivity.TENDER_COUPON_VALUE, 0);
+                    fTotalDiscount = data.getFloatExtra(PayBillActivity.DISCOUNT_PERCENT, 0);
+
+                    fPettCashPayment = data.getFloatExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
+                    fPaidTotalPayment = data.getFloatExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
+                    fWalletPayment = data.getFloatExtra(PayBillActivity.TENDER_WALLET_VALUE, 0);
+                    fChangePayment = data.getFloatExtra(PayBillActivity.TENDER_CHANGE_AMOUNT, 0);
+
+                    iCustId = data.getIntExtra("CUST_ID", 1);
+
+                    if (isDiscounted == true) {
+                        Log.v("Tender Result", "Discounted:" + isDiscounted);
+                        Log.v("Tender Result", "Discount Percent:" + dDiscPercent);
+                        OverAllDiscount(dDiscPercent);
+                    }
+
+                    l(2, isPrintBill);
+                    Toast.makeText(getApplicationContext(), "Bill saved Successfully", Toast.LENGTH_SHORT).show();
+                    if (isComplimentaryBill == true) {
+                        // Save complimentary bill details
+                        SaveComplimentaryBill(Integer.parseInt(editTextOrderNo.getText().toString()), (fCashPayment + fCardPayment + fCouponPayment), strComplimentaryReason);
+                    }
+                    if (isPrintBill == true) {
+                        strPaymentStatus = "Paid";
+                        PrintNewBill();
+                    }
+                    if (jBillingMode == 2) {
+                        int iResult = db.deleteKOTItem(iCustId, String.valueOf(jBillingMode));
+                        ClearAll();
+                        btn_PrintBill.setEnabled(true);
+                    }
+                    break;
+            }
+        }
+        else if (resultCode == RESULT_CANCELED)
+        {
+            try {
+                if (data.getBooleanExtra("isCancelled", false)) {
+                    finish();
+                }
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    /*************************************************************************************************************************************
+     * Calculates all the amount after giving overall discount in tender window
+     * and updates the new values in text boxes
+     *
+     * @param dDiscountPercent : Discount percent
+     *************************************************************************************************************************************/
+    private void OverAllDiscount(double dDiscountPercent) {
+        double dRate = 0, dTaxPercent = 0, dTaxAmt = 0, dDiscAmt = 0, dTempAmt = 0;
+        TableRow rowItem;
+        TextView DiscAmt, DiscPercent, Qty, Rate, TaxAmt, TaxPercent, TaxType;
+
+        for (int i = 0; i < tblOrderItems.getChildCount(); i++) {
+
+            // Get Item row
+            rowItem = (TableRow) tblOrderItems.getChildAt(i);
+            if (rowItem.getChildAt(0) != null) {
+                // Get Discount percent
+                Qty = (TextView) rowItem.getChildAt(3);
+                Rate = (TextView) rowItem.getChildAt(4);
+                DiscPercent = (TextView) rowItem.getChildAt(8);
+                DiscAmt = (TextView) rowItem.getChildAt(9);
+                TaxPercent = (TextView) rowItem.getChildAt(6);
+                TaxAmt = (TextView) rowItem.getChildAt(7);
+                TaxType = (TextView) rowItem.getChildAt(13);
+                DiscPercent.setText(String.format("%.2f", dDiscountPercent));
+
+                dRate = Double.parseDouble(Rate.getText().toString());
+                dTaxPercent = Double.parseDouble(TaxPercent.getText().toString());
+
+                if (TaxType.getText().toString().equalsIgnoreCase("1")) {
+                    // Discount
+                    dDiscAmt = dRate * (dDiscountPercent / 100);
+                    dTempAmt = dDiscAmt;
+                    dDiscAmt = dDiscAmt * Double.parseDouble(Qty.getText().toString());
+
+                    // Tax
+                    dTaxAmt = (dRate - dTempAmt) * (dTaxPercent / 100);
+                    dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
+
+                    TaxAmt.setText(String.format("%.2f", dTaxAmt));
+                    DiscAmt.setText(String.format("%.2f", dDiscAmt));
+
+                } else {
+                    double dBasePrice = 0;
+                    dBasePrice = dRate / (1 + (dTaxPercent / 100));
+
+                    // Discount
+                    dDiscAmt = dBasePrice * (dDiscountPercent / 100);
+                    dTempAmt = dDiscAmt;
+                    dDiscAmt = dDiscAmt * Double.parseDouble(Qty.getText().toString());
+
+                    // Tax
+                    dTaxAmt = (dBasePrice - dTempAmt) * (dTaxPercent / 100);
+                    dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
+
+                    TaxAmt.setText(String.format("%.2f", dTaxAmt));
+                    DiscAmt.setText(String.format("%.2f", dDiscAmt));
+                }
+            }
+        }
+
+        CalculateTotalAmount();
+    }
+
+    /*************************************************************************************************************************************
+     * Updates complimentary bill details in database
+     *
+     * @param BillNumber          : Complimentary bill number
+     * @param PaidAmount          : Amount paid for the complimentary bill
+     * @param ComplimentaryReason : Reason for giving complimentary bill
+     *************************************************************************************************************************************/
+    private void SaveComplimentaryBill(int BillNumber, float PaidAmount, String ComplimentaryReason) {
+        long lResult = 0;
+
+        ComplimentaryBillDetail objComplimentaryBillDetail = new ComplimentaryBillDetail();
+
+        // Set bill number
+        objComplimentaryBillDetail.setBillNumber(BillNumber);
+
+        // Set complimentary reason
+        objComplimentaryBillDetail.setComplimentaryReason(ComplimentaryReason);
+
+        // Set paid amount
+        objComplimentaryBillDetail.setPaidAmount(PaidAmount);
+
+        lResult = db.addComplimentaryBillDetails(objComplimentaryBillDetail);
+
+        Log.v("SaveComplimentaryBill", "Complimentary Bill inserted at Row:" + lResult);
     }
 
     private void loadAutoCompleteData() {
