@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -68,6 +69,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -84,7 +86,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private MessageDialog messageDialog;
     Date d;
     Calendar Time; // Time variable
-    private WepButton btn_PrintBill,btn_PayBill,btn_Clear,btn_DeleteBill,btn_Reprint,btn_DineInAddCustomer;
+    private WepButton btn_PrintBill,btn_PayBill, btn_Clear, btn_DeleteBill, btn_Reprint,btn_DineInAddCustomer;
     private EditText editTextName,editTextMobile,editTextAddress,editTextOrderNo;
     EditText tvWaiterNumber;
     EditText  edtCustName, edtCustPhoneNo, edtCustAddress, edtCustDineInPhoneNo, etCustGSTIN;
@@ -140,6 +142,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         tvServiceTaxTotal = (TextView) findViewById(R.id.tvServiceTaxValue);
         tvSubTotal = (TextView) findViewById(R.id.tvSubTotalValue);
         tvBillAmount = (TextView) findViewById(R.id.tvBillTotalValue);
+
+        loadAutoCompleteData();
+
         new AsyncTask<Void, Void, ArrayList<Items>>() {
 
             @Override
@@ -251,6 +256,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     private void ClearAll()
     {
+        tvSubTotal.setText("0.00");
+        tvTaxTotal.setText("0.00");
+        tvServiceTaxTotal.setText("0.00");
+        tvBillAmount.setText("0.00");
         editTextName.setText("");
         editTextMobile.setText("");
         editTextAddress.setText("");
@@ -284,7 +293,57 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         editTextAddress = (EditText) findViewById(R.id.edtCustAddress);
         etCustGSTIN = (EditText) findViewById(R.id.etCustGSTIN);
         autoCompleteTextViewSearchItem = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItem);
+        autoCompleteTextViewSearchItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                try {
+                    /*Toast.makeText(BillingScreenActivity.this, aTViewSearchItem.getText().toString(),
+                            Toast.LENGTH_SHORT).show();*/
+                    if ((autoCompleteTextViewSearchItem.getText().toString().equals(""))) {
+                        messageDialog.Show("Warning", "Enter Item Name");
+                    } else {
+                        Cursor MenucodeItem = db.getItemLists(autoCompleteTextViewSearchItem.getText().toString().trim());
+                        if (MenucodeItem.moveToFirst()) {
+                            btn_Clear.setEnabled(true);
+                            AddItemToOrderTable(MenucodeItem);
+                            autoCompleteTextViewSearchItem.setText("");
+                            // ((EditText)v).setText("");
+                        } else {
+                            messageDialog.Show("Warning", "Item not found for Selected Item");
+                        }
+                    }
+                } catch (Exception ex) {
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         autoCompleteTextViewSearchMenuCode = (AutoCompleteTextView) findViewById(R.id.aCTVSearchMenuCode);
+        autoCompleteTextViewSearchMenuCode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    /*Toast.makeText(BillingScreenActivity.this, aTViewSearchMenuCode.getText().toString(),
+                            Toast.LENGTH_SHORT).show();*/
+                    if ((autoCompleteTextViewSearchMenuCode.getText().toString().equals(""))) {
+                        messageDialog.Show("Warning", "Enter Menu Code");
+                    } else {
+                        Cursor MenucodeItem = db
+                                .getItemss(Integer.parseInt(autoCompleteTextViewSearchMenuCode.getText().toString().trim()));
+                        if (MenucodeItem.moveToFirst()) {
+                            btn_Clear.setEnabled(true);
+                            AddItemToOrderTable(MenucodeItem);
+                            autoCompleteTextViewSearchMenuCode.setText("");
+                            // ((EditText)v).setText("");
+                        } else {
+                            messageDialog.Show("Warning", "Item not found for Selected Item Code");
+                        }
+                    }
+                } catch (Exception ex) {
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         editTextOrderNo = (EditText) findViewById(R.id.tvBillNumberValue);
         boxDept = (RelativeLayout) findViewById(R.id.boxDept);
         boxCat = (RelativeLayout) findViewById(R.id.boxCat);
@@ -2600,5 +2659,36 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         lResult = db.addComplimentaryBillDetails(objComplimentaryBillDetail);
 
         Log.v("SaveComplimentaryBill", "Complimentary Bill inserted at Row:" + lResult);
+    }
+
+    private void loadAutoCompleteData() {
+
+        // List - Get Item Name
+        List<String> labelsItemName = db.getAllItemsNames();
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                labelsItemName);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+
+        // attaching data adapter to spinner
+        autoCompleteTextViewSearchItem.setAdapter(dataAdapter);
+
+        // List - Get Menu Code
+        List<String> labelsMenuCode = db.getAllMenuCodes();
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                labelsMenuCode);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter1.setDropDownViewResource(android.R.layout.simple_list_item_1);
+
+        // attaching data adapter to spinner
+        autoCompleteTextViewSearchMenuCode.setAdapter(dataAdapter1);
+
+        /*POS_LIST = ArrayAdapter.createFromResource(this, R.array.poscode, android.R.layout.simple_spinner_item);
+        spnr_pos.setAdapter(POS_LIST);*/
+
     }
 }

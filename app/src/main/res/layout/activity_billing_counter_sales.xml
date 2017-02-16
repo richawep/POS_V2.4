@@ -161,6 +161,7 @@
                                 android:layout_toRightOf="@+id/textViewLabelOrderNo"
                                 android:enabled="false"
                                 android:minWidth="90dp"
+                                android:textAlignment="center"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textSize="12dp" />
 
