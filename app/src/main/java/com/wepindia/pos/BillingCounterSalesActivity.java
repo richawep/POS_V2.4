@@ -83,7 +83,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private WepButton btn_PrintBill,btn_PayBill,btn_Clear,btn_DeleteBill,btn_Reprint,btn_DineInAddCustomer;
     private EditText editTextName,editTextMobile,editTextAddress,editTextOrderNo;
     EditText tvWaiterNumber;
-    EditText edtCustId, edtCustName, edtCustPhoneNo, edtCustAddress, edtCustDineInPhoneNo, etCustGSTIN;
+    EditText  edtCustName, edtCustPhoneNo, edtCustAddress, edtCustDineInPhoneNo, etCustGSTIN;
     private AutoCompleteTextView autoCompleteTextViewSearchItem, autoCompleteTextViewSearchMenuCode;
     private RelativeLayout boxDept,boxCat,boxItem;
     private Button btnDept,btnCat,btnItems;
@@ -96,7 +96,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private Cursor crsrSettings = null;
     private TextView textViewOtherCharges,tvTaxTotal,tvServiceTaxTotal,tvSubTotal,tvBillAmount,tvDate;
     private String fastBillingMode;
-    private String customerId;
+    private String customerId = "0";
     public boolean isPrinterAvailable = false;
     private String strPaymentStatus;
     private int PrintBillPayment = 0;
@@ -165,17 +165,17 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         int id = v.getId();
         if(id == R.id.btn_Clear)
         {
-            if(isValidCustmerid())
+            //if(isValidCustmerid())
                 ClearAll();
         }
         else if(id == R.id.btn_DineInAddCustomer)
         {
-            if(isValidCustmerid())
+            //if(isValidCustmerid())
                 addCustomer();
         }
         else if(id == R.id.btn_PrintBill)
         {
-            if(isValidCustmerid())
+            //if(isValidCustmerid())
                 printBILL();
         }
         else if(id == R.id.btn_PayBill)
@@ -271,7 +271,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         btnCat = (Button) findViewById(R.id.btnLabel2);
         btnItems = (Button) findViewById(R.id.btnLabel3);
         spnr_pos = (Spinner) findViewById(R.id.spnr_pos);
-        edtCustId = (EditText) findViewById(R.id.edtCustId);
         editTextName = (EditText) findViewById(R.id.edtCustName);
         editTextMobile = (EditText) findViewById(R.id.edtCustPhoneNo);
         editTextAddress = (EditText) findViewById(R.id.edtCustAddress);
@@ -1885,18 +1884,18 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             Log.d("InsertBillDetail", "CustStateCode :" + custStateCode);
 
             // BusinessType
-            if (etCustGSTIN.getText().toString().equals("")) {
+            /*if (etCustGSTIN.getText().toString().equals("")) {
                 objBillItem.setBusinessType("B2C");
             } else // gstin present means b2b bussiness
             {
                 objBillItem.setBusinessType("B2B");
-            }
-
+            }*/
+            objBillItem.setBusinessType("B2C");
             Log.d("InsertBillDetail", "BusinessType : " + objBillItem.getBusinessType());
 
             // richa to do - hardcoded b2b bussinies type
             //objBillItem.setBusinessType("B2B");
-            lResult = db.addBillItem(objBillItem);
+            lResult = db.addBillItems(objBillItem);
             Log.d("InsertBillItem", "Bill item inserted at position:" + lResult);
         }
     }
@@ -1936,7 +1935,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
 
         // pos
-        if (chk_interstate.isChecked()) {
+        /*if (chk_interstate.isChecked()) {
             String str = spnr_pos.getSelectedItem().toString();
             int length = str.length();
             String sub = "";
@@ -1948,7 +1947,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         } else {
             objBillDetail.setPOS("");
             Log.d("InsertBillDetail", "POS :");
-        }
+        }*/
 
 
         // Total Items
@@ -2019,14 +2018,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         // cust StateCode
         //String custStateCode =spnr_pos.getSelectedItem().toString();
-        String str = spnr_pos.getSelectedItem().toString();
-        int length = str.length();
+        //String str = spnr_pos.getSelectedItem().toString();
+        /*int length = str.length();
         String custStateCode = "";
         if (length > 0) {
             custStateCode = str.substring(length - 2, length);
         }
         objBillDetail.setCustStateCode(custStateCode);
-        Log.d("InsertBillDetail", "CustStateCode :" + custStateCode);
+        Log.d("InsertBillDetail", "CustStateCode :" + custStateCode);*/
 
         // BusinessType
         /*if (etCustGSTIN.getText().toString().equals("")) {
@@ -2146,14 +2145,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }
 
         // Customer Id
-        objBillDetail.setCustId(Integer.valueOf(edtCustId.getText().toString()));
-        Log.d("InsertBillDetail", "Customer Id:" + Integer.valueOf(edtCustId.getText().toString()));
+        objBillDetail.setCustId(Integer.valueOf(customerId));
+        Log.d("InsertBillDetail", "Customer Id:" + customerId);
 
         // User Id
         objBillDetail.setUserId(strUserId);
         Log.d("InsertBillDetail", "UserID:" + strUserId);
 
-        lResult = db.addBill(objBillDetail, "");
+        lResult = db.addBilll(objBillDetail, "");
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
@@ -2169,7 +2168,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }
 
         // Bill No Reset Configuration
-        long Result2 = db.UpdateBillNoResetInvoiceNo(Integer.parseInt(editTextOrderNo.getText().toString()));
+        long Result2 = db.UpdateBillNoResetInvoiceNos(Integer.parseInt(editTextOrderNo.getText().toString()));
     }
 
     protected void PrintNewBill() {

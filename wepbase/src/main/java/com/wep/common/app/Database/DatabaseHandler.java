@@ -6421,10 +6421,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    /*public long updateBill(BillDetail objBillDetail) {
-        ContentValues cv = new ContentValues();
-        cv.put(KEY_BillAmount,objBillDetail.getBillAmount());
-        return dbFNB.update(TBL_BILLDETAIL,cv,KEY_InvoiceNo+"="+objBillDetail.getBillNumber()+" AND " +KEY_InvoiceDate+"="+objBillDetail.getDate()+" AND "+KEY_CustId+" ="+objBillDetail.getCustId(),null);
-
-    }*/
+    public int UpdateBillNoResetInvoiceNos(int invno) {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            cvDbValues = new ContentValues();
+            cvDbValues.put("InvoiceNo", invno);
+            return db.update("BillNoConfiguration", cvDbValues, null, null);
+        }catch (Exception e){
+            return 1;
+        }finally {
+            //db.close();
+        }
+    }
 }
