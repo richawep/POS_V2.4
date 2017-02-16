@@ -6427,4 +6427,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.update(TBL_BILLDETAIL,cv,KEY_InvoiceNo+"="+objBillDetail.getBillNumber()+" AND " +KEY_InvoiceDate+"="+objBillDetail.getDate()+" AND "+KEY_CustId+" ="+objBillDetail.getCustId(),null);
 
     }*/
+
+    // -----Delete Customer items from Pending KOT table-----
+    public int deleteKOTItem(int CustId, String OrderMode) {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            int result = db.delete(TBL_PENDINGKOT, "CustId=" + CustId + " AND OrderMode=" + OrderMode, null);
+            return result;
+        }catch (Exception e){
+            return 1;
+        }finally {
+            //db.close();
+        }
+    }
+
+    /************************************************************************************************************************************/
+    /***********************************************
+     * Table - ComplimentaryBillDetail
+     ****************************************************/
+    /************************************************************************************************************************************/
+    // -----Insert Complimentary Bill-----
+    public long addComplimentaryBillDetails(ComplimentaryBillDetail objComplimentaryBillDetail) {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            ContentValues cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_InvoiceNo, objComplimentaryBillDetail.getBillNumber());
+            cvDbValues.put("ComplimentaryReason", objComplimentaryBillDetail.getComplimentaryReason());
+            cvDbValues.put("PaidAmount", objComplimentaryBillDetail.getPaidAmount());
+            return db.insert(TBL_COMPLIMENTARYBILLDETAIL, null, cvDbValues);
+        }catch (Exception e){
+            return 1;
+        }finally {
+            //db.close();
+        }
+    }
 }
