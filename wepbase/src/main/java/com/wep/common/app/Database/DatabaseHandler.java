@@ -6216,6 +6216,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
+    // -----Retrieve single Customer-----
+    public Cursor getCustomerById(int iCustId) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.query(TBL_CUSTOMER, new String[]{"*"}, "CustId=" + iCustId, null, null, null, null);
+        }catch (Exception e){
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
     // -----Insert Customer-----
     public long addCustomers(Customer objCustomer) {
         SQLiteDatabase db = getWritableDatabase();
