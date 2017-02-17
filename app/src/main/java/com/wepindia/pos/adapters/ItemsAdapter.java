@@ -3,6 +3,7 @@ package com.wepindia.pos.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.models.Items;
 import com.wepindia.pos.R;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -63,10 +65,11 @@ public class ItemsAdapter extends BaseAdapter {
         Items items = itemsList.get(position);
         String title = items.getItemName();
         String icon = items.getItemImage();
+        Uri uri = Uri.fromFile(new File(icon));
         viewHolder.textView.setText(title+"");
         try{
             Picasso.with(activity)
-                    .load(icon)
+                    .load(uri)
                     .placeholder(R.drawable.img_noimage) //this is optional the image to display while the url image is downloading
                     .error(R.drawable.img_noimage)         //this is also optional if some error has occurred in downloading the image this image would be displayed
                     .into(viewHolder.imageView);
