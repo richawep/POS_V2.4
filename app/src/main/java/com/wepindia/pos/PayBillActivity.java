@@ -113,6 +113,8 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             Intent intentt = getIntent();
             strTotal = intentt.getStringExtra("TotalAmount");
             strCustId = intentt.getStringExtra("CustId");
+            if(strCustId==null)
+                strCustId = "0";
             strUserName = intentt.getStringExtra("USER_NAME");
             phone = intentt.getStringExtra("phone");
             Log.v("Debug", "Total Amount:" + strTotal);

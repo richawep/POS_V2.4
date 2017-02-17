@@ -3527,7 +3527,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int clearOutwardItemdatabase() {
         return dbFNB.delete(TBL_ITEM_Outward, null, null);
     }
-    
+
  public int deleteItem_inward(String suppliertype, String supplier_gstin, String suppliername_str, String invno, String invodate) {
       /*int result = dbFNB.delete (TBL_INWARD_SUPPLY_LEDGER, KEY_SUPPLIERNAME+" LIKE '"+suppliername_str +"' AND "+
                         KEY_GSTIN +" LIKE '"+supplier_gstin+
@@ -3612,8 +3612,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Retrieve Items based on CategCode-----
     public Cursor getCatbyItems(int CategCode) {
-        return dbFNB.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"},
-                "CategCode=" + CategCode, null, null, null, null);
+        return dbFNB.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"}, "CategCode=" + CategCode, null, null, null, null);
     }
 
     // -----Retrieve Items based on CategCode and DeptCode-----
@@ -4284,7 +4283,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----update Reprint Count for duplicate bill print-----
     public int updateBillRepintCount(int InvoiceNo) {
-        Cursor result = getBillDetail(InvoiceNo);
+        Cursor result = getBillDetails(InvoiceNo);
 
         if (result.moveToFirst()) {
             cvDbValues = new ContentValues();
@@ -6159,6 +6158,99 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return list;
     }
 
+    public ArrayList<Items> getItemItems(int CategCode) {
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Items> list = null;
+        try{
+            Cursor cursor = db.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"}, "CategCode=" + CategCode, null, null, null, null);
+            if(cursor!=null)
+            {
+                list = new ArrayList<Items>();
+                while (cursor.moveToNext())
+                {
+                    Items items = new Items(
+                            cursor.getString(cursor.getColumnIndex("ItemName")),
+                            cursor.getString(cursor.getColumnIndex("ImageUri")),
+                            cursor.getInt(cursor.getColumnIndex("MenuCode"))
+                    );
+                    list.add(items);
+                }
+            }
+        }catch (Exception e){
+            list = null;
+        }finally {
+            //db.close();
+        }
+        return list;
+    }
+
+
+    public ArrayList<Department> getItemDepartment() {
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Department> list = null;
+        try{
+            Cursor cursor = db.query(TBL_DEPARTMENT, new String[]{"DeptCode", "DeptName"}, null, null, null, null, null);
+            if(cursor!=null)
+            {
+                list = new ArrayList<Department>();
+                while (cursor.moveToNext())
+                {
+                    Department items = new Department(cursor.getString(cursor.getColumnIndex("DeptName")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
+                    list.add(items);
+                }
+            }
+        }catch (Exception e){
+            list = null;
+        }finally {
+            //db.close();
+        }
+        return list;
+    }
+
+    public ArrayList<Category> getAllItemCategory() {
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Category> list = null;
+        try{
+            Cursor cursor = db.rawQuery("Select * from Category", null);
+            if(cursor!=null)
+            {
+                list = new ArrayList<Category>();
+                while (cursor.moveToNext())
+                {
+                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategName")), cursor.getInt(cursor.getColumnIndex("DeptCode")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
+                    list.add(items);
+                }
+            }
+        }catch (Exception e){
+            list = null;
+        }finally {
+            //db.close();
+        }
+        return list;
+    }
+
+    public ArrayList<Category> getAllItemCategory(int DeptCode) {
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Category> list = null;
+        try{
+            Cursor cursor = db.rawQuery("Select CategCode as _id, CategName, DeptCode from Category where DeptCode=" + DeptCode, null);
+            if(cursor!=null)
+            {
+                list = new ArrayList<Category>();
+                while (cursor.moveToNext())
+                {
+                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategName")), cursor.getInt(cursor.getColumnIndex("DeptCode")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
+                    list.add(items);
+                }
+            }
+        }catch (Exception e){
+            list = null;
+        }finally {
+            //db.close();
+        }
+        return list;
+    }
+
     // -----Retrieve Single Item based on Item MenuCode-----
     public Cursor getItemss(int MenuCode) {
         SQLiteDatabase db = getWritableDatabase();
@@ -6427,4 +6519,194 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.update(TBL_BILLDETAIL,cv,KEY_InvoiceNo+"="+objBillDetail.getBillNumber()+" AND " +KEY_InvoiceDate+"="+objBillDetail.getDate()+" AND "+KEY_CustId+" ="+objBillDetail.getCustId(),null);
 
     }*/
+
+    // -----Delete Customer items from Pending KOT table-----
+    public int deleteKOTItem(int CustId, String OrderMode) {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            int result = db.delete(TBL_PENDINGKOT, "CustId=" + CustId + " AND OrderMode=" + OrderMode, null);
+            return result;
+        }catch (Exception e){
+            return 1;
+        }finally {
+            //db.close();
+        }
+    }
+
+    /************************************************************************************************************************************/
+    /***********************************************
+     * Table - ComplimentaryBillDetail
+     ****************************************************/
+    /************************************************************************************************************************************/
+    // -----Insert Complimentary Bill-----
+    public long addComplimentaryBillDetails(ComplimentaryBillDetail objComplimentaryBillDetail) {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            ContentValues cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_InvoiceNo, objComplimentaryBillDetail.getBillNumber());
+            cvDbValues.put("ComplimentaryReason", objComplimentaryBillDetail.getComplimentaryReason());
+            cvDbValues.put("PaidAmount", objComplimentaryBillDetail.getPaidAmount());
+            return db.insert(TBL_COMPLIMENTARYBILLDETAIL, null, cvDbValues);
+        }catch (Exception e){
+            return 1;
+        }finally {
+            //db.close();
+        }
+    }
+    public int UpdateBillNoResetInvoiceNos(int invno) {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            cvDbValues = new ContentValues();
+            cvDbValues.put("InvoiceNo", invno);
+            return db.update("BillNoConfiguration", cvDbValues, null, null);
+        }catch (Exception e){
+            return 1;
+        }finally {
+            //db.close();
+        }
+    }
+
+    public Cursor getItemLists(String Name) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("SELECT * FROM " + TBL_ITEM_Outward + "  WHERE ItemName LIKE '" + Name + "%'", null);
+        }catch (Exception e){
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
+    public List<String> getAllItemsNames() {
+        SQLiteDatabase db = getWritableDatabase();
+        List<String> list = new ArrayList<String>();
+        try{
+            // Select All Query
+            String selectQuery = "SELECT  ItemName FROM " + TBL_ITEM_Outward;
+            Cursor cursor = db.rawQuery(selectQuery, null);// selectQuery,selectedArguments
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    list.add(cursor.getString(cursor.getColumnIndex(KEY_ItemName)));// adding
+                    // 2nd
+                    // column
+                    // data
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception e){
+            list = null;
+        }finally {
+            //db.close();
+        }
+        // returning lables
+        return list;
+    }
+
+    public List<String> getAllMenuCodes() {
+        SQLiteDatabase db = getWritableDatabase();
+        List<String> list = new ArrayList<String>();
+
+        try{
+            // Select All Query
+            String selectQuery = "SELECT  MenuCode FROM " + TBL_ITEM_Outward;
+            Cursor cursor = db.rawQuery(selectQuery, null);// selectQuery,selectedArguments
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    list.add(cursor.getString(cursor.getColumnIndex("MenuCode")));// adding
+                    // 2nd
+                    // column
+                    // data
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception e){
+            list = null;
+        }finally {
+            //db.close();
+        }
+        // returning lables
+        return list;
+    }
+
+    // -----Retrieve single bill details-----
+    public Cursor getBillDetails(int InvoiceNumber) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber, null, null, null, null);
+        }catch (Exception e){
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+    public Cursor getUserr(String UserId, String Password) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.query(TBL_USERS, new String[]{"*"}, "LoginId ='" + UserId + "' AND Password ='" + Password + "'",
+                    null, null, null, null);
+        }catch (Exception e){
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
+    // -----Void Bill-----
+    public int makeBillVoids(int InvoiceNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            ContentValues cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_BillStatus, 0);
+            return db.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
+        }catch (Exception e){
+            return -1;
+        }finally {
+            //db.close();
+        }
+    }
+
+    // -----Retrieve KOT items for Reprint bill from Bill Detail-----
+    public Cursor getItemsForReprintBills(int InvoiceNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "'", null);
+        }catch (Exception e){
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
+    // -----update Reprint Count for duplicate bill print-----
+    public int updateBillRepintCounts(int InvoiceNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            Cursor result = getBillDetails(InvoiceNo);
+            if (result.moveToFirst()) {
+                cvDbValues = new ContentValues();
+                int iReprintCount = 0;
+                iReprintCount = result.getInt(result.getColumnIndex("ReprintCount"));
+                cvDbValues.put("ReprintCount", iReprintCount + 1);
+                return dbFNB.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
+
+            } else {
+                Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
+                return -1;
+            }
+        }catch (Exception e){
+            return -1;
+        }finally {
+            //db.close();
+        }
+    }
+
 }

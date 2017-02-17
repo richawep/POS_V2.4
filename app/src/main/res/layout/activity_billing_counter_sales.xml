@@ -99,8 +99,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        >
+                        android:layout_alignParentTop="true">
 
                         <LinearLayout
                             android:id="@+id/search_boxes"
@@ -161,6 +160,7 @@
                                 android:layout_toRightOf="@+id/textViewLabelOrderNo"
                                 android:enabled="false"
                                 android:minWidth="90dp"
+                                android:textAlignment="center"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textSize="12dp" />
 
@@ -500,8 +500,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:orientation="horizontal">
 
                     <RelativeLayout
                         android:id="@+id/boxDept"
@@ -572,8 +571,8 @@
                             android:id="@+id/listViewFilter3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:numColumns="2"
-                            android:layout_below="@+id/btnLabel3" />
+                            android:layout_below="@+id/btnLabel3"
+                            android:numColumns="2" />
                     </RelativeLayout>
 
                 </LinearLayout>
