@@ -579,7 +579,6 @@
                                 android:layout_marginTop="20dp"
                                 android:layout_weight="1"
                                 android:background="@color/colorPrimaryLight"
-                                android:onClick="btn_depa"
                                 android:text="Department"
                                 android:textColor="@color/txtColorAccent"
                                 android:textSize="15sp" />
@@ -594,7 +593,6 @@
                                 android:layout_marginTop="20dp"
                                 android:layout_weight="1"
                                 android:background="@color/colorPrimaryLight"
-                                android:onClick="btn_categ"
                                 android:text="Category"
                                 android:textColor="@color/txtColorAccent" />
 
@@ -610,7 +608,6 @@
                                 android:layout_marginTop="20dp"
                                 android:layout_weight="1"
                                 android:background="@color/colorPrimaryLight"
-                                android:onClick="btn_item"
                                 android:text="Item"
                                 android:textColor="@color/txtColorAccent"
                                 android:textSize="15sp" />

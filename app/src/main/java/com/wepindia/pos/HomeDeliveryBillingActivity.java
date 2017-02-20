@@ -254,16 +254,6 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
                 btnitem.setVisibility(View.VISIBLE);
                 loadItems(0);
             }
-            // Display Items
-            if (Name.length > 0) {
-                // Assign item grid to image adapter
-                gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
-                // Make the item grid visible
-                gridViewItems.setVisibility(View.VISIBLE);
-            } else {
-                // Make the item grid invisible
-                gridViewItems.setVisibility(View.INVISIBLE);
-            }
 
             crsrCustomerDetails = db.getCustomerById(iCustId);
             if (crsrCustomerDetails == null || !crsrCustomerDetails.moveToFirst()) {
@@ -680,9 +670,9 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
         btnitem = (Button) findViewById(R.id.btn_item);
         tvdeptline = (TextView) findViewById(R.id.tvdeptline);
         tvcategline = (TextView) findViewById(R.id.tvcategline);
-        listViewDept = (ListView) findViewById(R.id.listViewFilter1);
+        listViewDept = (ListView) findViewById(R.id.lstDepartmentNames);
         listViewDept.setOnItemClickListener(deptClick);
-        listViewCateg = (ListView) findViewById(R.id.listViewFilter2);
+        listViewCateg = (ListView) findViewById(R.id.lstCategoryNames);
         listViewCateg.setOnItemClickListener(catClick);
         gridViewItems = (GridView) findViewById(R.id.gridItems);
         gridViewItems.setOnItemClickListener(itemsClick);
