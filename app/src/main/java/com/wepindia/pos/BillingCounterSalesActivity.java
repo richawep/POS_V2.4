@@ -105,7 +105,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private String GSTEnable = "", HSNEnable_out = "", POSEnable = "";
     private Cursor crsrSettings = null;
     private TextView textViewOtherCharges,tvTaxTotal,tvServiceTaxTotal,tvSubTotal,tvBillAmount,tvDate;
-    private String fastBillingMode;
+    private String fastBillingMode = "1";
     private String customerId = "0";
     public boolean isPrinterAvailable = false;
     private String strPaymentStatus;
@@ -116,6 +116,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     float fChangePayment = 0;
     float fWalletPayment = 0;
     float fTotalDiscount = 0, fCashPayment = 0, fCardPayment = 0, fCouponPayment = 0, fPettCashPayment = 0, fPaidTotalPayment = 0;
+    int BillwithStock = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,7 +129,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         userName = ApplicationData.getUserName(this);
         d = new Date();
         CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-        com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Counter Sales",userName," Date:"+s.toString());
         iCustId = getIntent().getIntExtra("CUST_ID", 0);
         db = new DatabaseHandler(this);
         gridViewItems = (GridView) findViewById(R.id.listViewFilter3);
@@ -141,6 +141,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         crsrSettings = db.getBillSettings();
         initViews();
         init();
+        com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),CounterSalesCaption,userName," Date:"+s.toString());
         textViewOtherCharges = (TextView) findViewById(R.id.txtOthercharges);
         tvTaxTotal = (TextView) findViewById(R.id.tvTaxTotalValue);
         tvServiceTaxTotal = (TextView) findViewById(R.id.tvServiceTaxValue);
@@ -170,7 +171,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         else if(id == R.id.btn_PrintBill)
         {
             //if(isValidCustmerid())
-                printBILL();
+            printBILL();
         }
         else if(id == R.id.btn_PayBill)
         {
@@ -186,14 +187,57 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }
         else if(id == R.id.btnLabel1)
         {
+            if(fastBillingMode.equals("3"))
+                listViewCat.setVisibility(View.INVISIBLE);
+            gridViewItems.setVisibility(View.INVISIBLE);
             loadDepartments();
         }
         else if(id == R.id.btnLabel2)
         {
+            listViewDept.setVisibility(View.INVISIBLE);
+            gridViewItems.setVisibility(View.INVISIBLE);
             loadCategories(0);
+        }
+        else if(id == R.id.btnLabel3)
+        {
+            switch (Integer.parseInt(fastBillingMode))
+            {
+                case 3 : listViewCat.setVisibility(View.INVISIBLE);
+                case 2 : listViewDept.setVisibility(View.INVISIBLE);
+            }
+            loadItems(0);
         }
     }
 
+    private void loadItems_for_dept(final int deptCode) {
+        new AsyncTask<Void, Void, ArrayList<Items>>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected ArrayList<Items> doInBackground(Void... params) {
+                ArrayList<Items> list = null;
+                try {
+                    list =  db.getItemItems_dept(deptCode);
+                } catch (Exception e) {
+                    list = null;
+                }
+                return list;
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Items> list) {
+                super.onPostExecute(list);
+                editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+                if(list!=null)
+                    setItemsAdapter(list);
+                gridViewItems.setVisibility(View.VISIBLE);
+            }
+        }.execute();
+    }
 
     private void loadItems(final int categcode) {
         new AsyncTask<Void, Void, ArrayList<Items>>() {
@@ -217,6 +261,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
                 if(list!=null)
                     setItemsAdapter(list);
+                gridViewItems.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -240,6 +285,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 //editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
                 if(list!=null)
                     setDepartmentAdapter(list);
+                listViewDept.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -258,6 +304,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     return db.getAllItemCategory();
                 else
                     return db.getAllItemCategory(deptCode);
+
             }
 
             @Override
@@ -266,6 +313,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 //editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
                 if(list!=null)
                     setCategoryAdapter(list);
+                listViewCat.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -475,7 +523,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     }
 
     private void init() {
-        if (crsrSettings.moveToFirst())
+        if (crsrSettings!=null && crsrSettings.moveToFirst())
         {
             CounterSalesCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeCounterSalesCaption"));
             if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1)
@@ -503,29 +551,30 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 }
             }
             iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
-        }
-        fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
-        if (fastBillingMode.equalsIgnoreCase("1"))
-        {
-            gridViewItems.setNumColumns(6);
-            //GetItemDetails();
-            boxDept.setVisibility(View.GONE);
-            boxCat.setVisibility(View.GONE);
-        }
-        else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2"))
-        {
-            gridViewItems.setNumColumns(4);
-            //GetItemDetailswithoutDeptCateg();
-            boxCat.setVisibility(View.GONE);
-        }
-        else
-        {
+
+            fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
+            if (fastBillingMode.equalsIgnoreCase("1"))
+            {
+                gridViewItems.setNumColumns(6);
+                //GetItemDetails();
+                boxDept.setVisibility(View.GONE);
+                boxCat.setVisibility(View.GONE);
+            }
+            else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2"))
+            {
+                gridViewItems.setNumColumns(4);
+                //GetItemDetailswithoutDeptCateg();
+                boxCat.setVisibility(View.GONE);
+            }
+            else
+            {
             /*GetItemDetailswithoutDeptCateg();
             lstvwDepartment.setAdapter(null);
             lstvwCategory.setAdapter(null);
             grdItems.setAdapter(null);*/
-        }
-    }
+            }
+            BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
+        }}
 
     public void setItemsAdapter(ArrayList<Items> list)
     {
@@ -622,16 +671,23 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Department department = (Department) departmentAdapter.getItem(position);
             int deptCode = department.getDeptCode();
-            loadCategories(deptCode);
+            if(fastBillingMode.equals("3"))// dept+cat+items
+            {
+                loadCategories(deptCode);
+            }
+            loadItems_for_dept(deptCode);
+
+
         }
     };
+
     private AdapterView.OnItemClickListener catClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Category cat = (Category) categoryAdapter.getItem(position);
             int categcode = cat.getCategCode();
-            gridViewItems.setVisibility(View.VISIBLE);
             loadItems(categcode);
+
         }
     };
 
@@ -649,7 +705,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         EditText etQty, etRate;
         TextView tvHSn;
         CheckBox chkNumber;
-        Cursor crsrSettings = db.getBillSettings();
         int crsrSettingsCount = crsrSettings.getCount();
         int crsrItemCount = crsrItem.getCount();
         TextView HSNCode;
@@ -692,7 +747,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 EditText Qty = (EditText) Row.getChildAt(3);
                                 Qty.setSelectAllOnFocus(true);
                                 strQty = Qty.getText().toString().equalsIgnoreCase("") ? "0" : Qty.getText().toString(); // Temp
-                                int BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
+
                                 if (BillwithStock == 1)
                                 {
                                     String availableqty = crsrItem.getString(crsrItem.getColumnIndex("Quantity"));
@@ -803,42 +858,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         //int rate_dummy = crsrItem.getString(crsrItem.getColumnIndex("Rate"));
                         dRate = crsrItem.getInt(crsrItem.getColumnIndex("Rate"));
                     } else { // gst disable
-                        if (jBillingMode == 1) {
-                            if (DineInRate == 1) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
-                            } else if (DineInRate == 2) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice2"));
-                            } else if (DineInRate == 3) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice3"));
-                            }
+                        if (CounterSalesRate == 1) {
+                            dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
+                        } else if (CounterSalesRate == 2) {
+                            dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice2"));
+                        } else if (CounterSalesRate == 3) {
+                            dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice3"));
                         }
-                        if (jBillingMode == 2) {
-                            if (CounterSalesRate == 1) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
-                            } else if (CounterSalesRate == 2) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice2"));
-                            } else if (CounterSalesRate == 3) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice3"));
-                            }
-                        }
-                        if (jBillingMode == 3) {
-                            if (PickUpRate == 1) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
-                            } else if (PickUpRate == 2) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice2"));
-                            } else if (PickUpRate == 3) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice3"));
-                            }
-                        }
-                        if (jBillingMode == 4) {
-                            if (HomeDeliveryRate == 1) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
-                            } else if (HomeDeliveryRate == 2) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice2"));
-                            } else if (HomeDeliveryRate == 3) {
-                                dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice3"));
-                            }
-                        }
+
                     }
                     // Menu Code
                     chkNumber = new CheckBox(BillingCounterSalesActivity.this);
@@ -893,7 +920,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         }
                     });
 
-                    int BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
                     if (BillwithStock == 1) {
                         if (crsrItem.getFloat(crsrItem.getColumnIndex("Quantity")) < Float.valueOf(etQty.getText().toString())) {
                             String availableQty = crsrItem.getString(crsrItem.getColumnIndex("Quantity")) ;
@@ -1159,26 +1185,22 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     EditText Qty = (EditText) Row.getChildAt(3);
                     Qty.setSelectAllOnFocus(true);
                     strQty = Qty.getText().toString().equalsIgnoreCase("") ? "0" : Qty.getText().toString(); // Temp
-                    Cursor crsrSett = db.getBillSettings();
-                    if(crsrSett!=null && crsrSett.moveToFirst())
-                    {
-                        int BillwithStock = crsrSett.getInt(crsrSett.getColumnIndex("BillwithStock"));
-                        if (BillwithStock == 1) {
-                            Cursor ItemCrsr = db.getItemDetails(ItemName.getText().toString());
-                            if(ItemCrsr!=null && ItemCrsr.moveToFirst())
-                            {
-                                double availableStock = ItemCrsr.getDouble(ItemCrsr.getColumnIndex("Quantity"));
-                                if ( availableStock < Float.valueOf(Qty.getText().toString())) {
-                                    messageDialog.Show("Warning", "Stock is less, present stock quantity is "
-                                            + String.valueOf(availableStock));
-                                    Qty.setText(String.format("%.2f", availableStock));
+                    if (BillwithStock == 1) {
+                        Cursor ItemCrsr = db.getItemDetail(ItemName.getText().toString());
+                        if(ItemCrsr!=null && ItemCrsr.moveToFirst())
+                        {
+                            double availableStock = ItemCrsr.getDouble(ItemCrsr.getColumnIndex("Quantity"));
+                            if ( availableStock < Float.valueOf(Qty.getText().toString())) {
+                                messageDialog.Show("Warning", "Stock is less, present stock quantity is "
+                                        + String.valueOf(availableStock));
+                                Qty.setText(String.format("%.2f", availableStock));
 
-                                    return;
-                                }
+                                return;
                             }
-
                         }
+
                     }
+
 
 
 
@@ -1862,14 +1884,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 if (crsrUpdateItemStock!=null && crsrUpdateItemStock.moveToFirst()) {
                     // Check if item's bill with stock enabled update the stock
                     // quantity
-                    Cursor billsettingCursor = db.getBillSettings();
-                    if(billsettingCursor!= null && billsettingCursor.moveToFirst())
-                    {
-                        //String i = billsettingCursor.getString(billsettingCursor.getColumnIndex("BillwithStock"));
-                        if (billsettingCursor.getInt(billsettingCursor.getColumnIndex("BillwithStock")) == 1) {
-                            UpdateItemStock(crsrUpdateItemStock, Float.parseFloat(Quantity.getText().toString()));
-                        }
+                    if (BillwithStock == 1) {
+                        UpdateItemStock(crsrUpdateItemStock, Float.parseFloat(Quantity.getText().toString()));
                     }
+
 
                 }
             }
@@ -2419,9 +2437,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         tokens[0] = "";
                         tokens[1] = "";
                         tokens[2] = "";
-                        Cursor crsrHeaderFooterSetting = null;
-                        crsrHeaderFooterSetting = db.getBillSettings();
-                        if (crsrHeaderFooterSetting.moveToFirst()) {
+
+                        /*if (crsrHeaderFooterSetting.moveToFirst()) {
                             try {
                                 tokens = crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText")).split(Pattern.quote("|"));
                             } catch (Exception e) {
@@ -2438,7 +2455,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                             item.setFooterLine(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText")));
                         } else {
                             Log.d(TAG, "DisplayHeaderFooterSettings No data in BillSettings table");
-                        }
+                        }*/
 
                         //printSohamsaBILL(item, "BILL");
                     } else if (prf.equalsIgnoreCase("Heyday")) {
@@ -2518,7 +2535,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Cursor crsrTax = db.getItemsForSalesTaxPrints(Integer.valueOf(editTextOrderNo.getText().toString()));
         if (crsrTax.moveToFirst()) {
             do {
-                String taxname = "Sales Tax"; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                String taxname = "VAT "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
                 String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("TaxPercent"));
                 Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxAmount")));
 
