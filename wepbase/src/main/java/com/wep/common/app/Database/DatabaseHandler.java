@@ -524,6 +524,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         } catch (Exception e) {
             status = 0;
+            e.printStackTrace();
             //Log.d(TAG,e.toString());
         }
         return status;
@@ -1143,6 +1144,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             setDefaultTableValues(db);
         } catch (Exception ex) {
             Toast.makeText(myContext, "OnCreate : " + ex.getMessage(), Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
         }
     }
 
@@ -1225,7 +1227,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         } catch (Exception e) {
             l = 0;
-            Log.d(TAG, e.toString());
+            //Log.d(TAG, e.toString());
+            e.printStackTrace();
         }
 
 
@@ -1247,6 +1250,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         } catch (Exception e) {
             status = 0;
             Log.d(TAG, e.toString());
+            e.printStackTrace();
         }
 
         try {
@@ -1986,7 +1990,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         } catch (Exception exp) {
             Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
-
+            Log.d(TAG, exp.toString());
         }
     }
 
@@ -2013,6 +2017,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
         } catch (Exception exp) {
             Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.d(TAG, exp.toString());
         }
     }
 
@@ -2037,7 +2042,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         } catch (Exception exp) {
             Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
-
+            Log.d(TAG, exp.toString());
         }
     }
 
@@ -2455,7 +2460,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 id = 0;
             }
         }catch (Exception e){
-
+            Log.d(TAG, e.toString());
         }
 
         // return contact
@@ -2467,6 +2472,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             return dbFNB.query(TBL_DEPARTMENT, new String[]{"DeptCode", "DeptName"}, "DeptCode=" + DeptCode, null, null, null, null);
         }catch (Exception e){
+            Log.d(TAG, e.toString());
             return null;
         }
     }
@@ -2551,7 +2557,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 id = 0;
             }
         }catch (Exception e){
-
+            Log.d(TAG, e.toString());
         }
         // return contact
         return id;
@@ -2568,7 +2574,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 list.add(cursor.getString(cursor.getColumnIndex("CategName")));
             }
         }catch (Exception e){
-
+            Log.d(TAG, e.toString());
         }
         // return contact
         return list;
@@ -3258,6 +3264,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         } catch (Exception e) {
             tableNo = new StringBuffer();
             list = new LinkedHashSet<String>();
+            Log.d(TAG, e.toString());
             //Log.d(TAG,e.toString());
         }finally {
             db.close();
@@ -3301,14 +3308,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public float getCustomerTotalTransaction(int iCustId) {
-        Cursor result = dbFNB.query(TBL_CUSTOMER, new String[]{"TotalTransaction"}, "CustId=" + iCustId, null, null,
-                null, null);
+        SQLiteDatabase db = getWritableDatabase();
+        float result =0;
+        try{
+            Cursor cursor = db.query(TBL_CUSTOMER, new String[]{"TotalTransaction"}, "CustId=" + iCustId, null, null,
+                    null, null);
 
-        if (result.moveToFirst()) {
-            return result.getFloat(0);
-        } else {
-            return 0;
+            if (cursor.moveToFirst()) {
+                result =  cursor.getFloat(0);
+            } else {
+                result =  0;
+            }}catch(Exception e)
+        {
+            e.printStackTrace();
+            result = 0;
         }
+        return result;
     }
 
     public List<String> getAllCustomerName() {
@@ -3327,14 +3342,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public float getCustomerCreditAmount(int iCustId) {
-        Cursor result = dbFNB.query(TBL_CUSTOMER, new String[]{"CreditAmount"}, "CustId=" + iCustId, null, null,
-                null, null);
+        SQLiteDatabase db = getWritableDatabase();
+        float result =0;
+        try{
+            Cursor cursor = db.query(TBL_CUSTOMER, new String[]{"CreditAmount"}, "CustId=" + iCustId, null, null,
+                    null, null);
 
-        if (result.moveToFirst()) {
-            return result.getFloat(0);
-        } else {
-            return 0;
+            if (cursor.moveToFirst()) {
+                result =  cursor.getFloat(0);
+            } else {
+                result =  0;
+            }}catch(Exception e)
+        {
+            e.printStackTrace();
+            result = 0;
         }
+        return result;
     }
 
     // -----Update Customer table-----
@@ -3355,13 +3378,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Update Customer table-----
     public int updateCustomerTransaction(int iCustId, float fLastTransaction, float fTotalTransaction, float fCreditAmount) {
-        cvDbValues = new ContentValues();
+        SQLiteDatabase db = getWritableDatabase();
+        int result =0;
+        try {
+            cvDbValues = new ContentValues();
 
-        cvDbValues.put("LastTransaction", fLastTransaction);
-        cvDbValues.put("TotalTransaction", fTotalTransaction);
-        cvDbValues.put("CreditAmount", fCreditAmount);
+            cvDbValues.put("LastTransaction", fLastTransaction);
+            cvDbValues.put("TotalTransaction", fTotalTransaction);
+            cvDbValues.put("CreditAmount", fCreditAmount);
 
-        return dbFNB.update(TBL_CUSTOMER, cvDbValues, "CustId=" + iCustId, null);
+            result = db.update(TBL_CUSTOMER, cvDbValues, "CustId=" + iCustId, null);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            result = 0;
+        }
+        return result;
     }
 
     // ----- Delete Customer --------
@@ -3528,7 +3560,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.delete(TBL_ITEM_Outward, null, null);
     }
 
- public int deleteItem_inward(String suppliertype, String supplier_gstin, String suppliername_str, String invno, String invodate) {
+    public int deleteItem_inward(String suppliertype, String supplier_gstin, String suppliername_str, String invno, String invodate) {
       /*int result = dbFNB.delete (TBL_INWARD_SUPPLY_LEDGER, KEY_SUPPLIERNAME+" LIKE '"+suppliername_str +"' AND "+
                         KEY_GSTIN +" LIKE '"+supplier_gstin+
                         "' AND "+KEY_SupplierType +" LIKE ' "+suppliertype+"' AND "+ KEY_InvoiceNo+" LIKE '"+invno+"' AND "+
@@ -3754,11 +3786,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Update Item stock-----
     public int updateItemStock(int MenuCode, float Stock) {
-        cvDbValues = new ContentValues();
+        SQLiteDatabase db = getWritableDatabase();
+        int result =0;
+        try {
+            cvDbValues = new ContentValues();
 
-        cvDbValues.put("Quantity", Stock);
+            cvDbValues.put("Quantity", Stock);
 
-        return dbFNB.update(TBL_ITEM_Outward, cvDbValues, "MenuCode=" + MenuCode, null);
+            result = db.update(TBL_ITEM_Outward, cvDbValues, "MenuCode=" + MenuCode, null);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return  result;
     }
 
     // -----Update Item stock-----
@@ -4106,7 +4146,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public long updateBill(BillDetail objBillDetail) {
-    ContentValues cv = new ContentValues();
+        ContentValues cv = new ContentValues();
         cv.put(KEY_BillAmount,objBillDetail.getBillAmount());
         return dbFNB.update(TBL_BILLDETAIL,cv,KEY_InvoiceNo+"="+objBillDetail.getBillNumber()+" AND "
                 +KEY_InvoiceDate+"="+objBillDetail.getDate()+" AND "+KEY_CustId+" ="+objBillDetail.getCustId(),null);
@@ -4259,7 +4299,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public int getBillDetailByCustomerWithTime1(int CustId, int BillStatus, float BillAmount ,String time) {
 
-       int paid =0;
+        int paid =0;
         Cursor cursor =  dbFNB.query(TBL_BILLDETAIL, new String[]{"*"}, "CustId= '" + CustId + "' AND BillStatus = '" + BillStatus +
                 "'  AND "+KEY_Time +" LIKE '" + time + "' ", null, null, null, null);
         if(cursor !=null && cursor.moveToFirst())
@@ -4509,9 +4549,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
        /* return dbFNB.rawQuery("SELECT * FROM OutwardSuppyItemsDetails ,OutwardSupplyLedger,TaxConfig WHERE OutwardSuppyItemsDetails.BillStatus=1 AND\n" +
                 "OutwardSuppyItemsDetails.InvoiceNo=OutwardSupplyLedger.InvoiceNo AND\n" +
                 "OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);*/
-    return dbFNB.rawQuery("SELECT  TaxPercent,TaxAmount,BillAmount FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
-            " AND OutwardSuppyItemsDetails.InvoiceNo = OutwardSupplyLedger.InvoiceNo " +
-            " AND OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);
+        return dbFNB.rawQuery("SELECT  TaxPercent,TaxAmount,BillAmount FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
+                " AND OutwardSuppyItemsDetails.InvoiceNo = OutwardSupplyLedger.InvoiceNo " +
+                " AND OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);
     }
 
     public Cursor getTaxReport_Service(String StartDate, String EndDate) {
@@ -5303,13 +5343,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.query(TBL_TABLEBOOKING, new String[]{"*"}, "MobileNo=" + MobileNo, null, null,
                 null, null);
     }
- // -----Retrieve single Table Booking-----
+    // -----Retrieve single Table Booking-----
     public Cursor checkBookingStatus(int iTableNo,String bookingtimeStart, String bookingTimeEnd) {
         return dbFNB.query(TBL_TABLEBOOKING, new String[]{"*"}, KEY_TableNo+" = " +iTableNo+" AND "+
-                KEY_TimeForBooking+" Between  '"+bookingtimeStart+"' AND '"+bookingTimeEnd+"'", null, null,
+                        KEY_TimeForBooking+" Between  '"+bookingtimeStart+"' AND '"+bookingTimeEnd+"'", null, null,
                 null, null);
     }
-// -----Retrieve single Table Booking-----
+    // -----Retrieve single Table Booking-----
     public Cursor getBookedTableBetweenTime(String bookingtimeStart, String bookingTimeEnd) {
         return dbFNB.query(TBL_TABLEBOOKING, new String[]{"*"},
                 KEY_TimeForBooking+" Between  '"+bookingtimeStart+"' AND '"+bookingTimeEnd+"'", null, null,
@@ -5438,7 +5478,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             //Log.d(TAG,"Inserted Successfully with code "+status);
         } catch (Exception e) {
             status = 0;
-            //Log.d(TAG,e.toString());
+            Log.d(TAG,e.toString());
         }
         return status;
     }
@@ -5456,7 +5496,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
         } catch (Exception e) {
             str = "";
-            //Log.d(TAG,e.toString());
+            Log.d(TAG,e.toString());
         }
         return str;
     }
@@ -5473,7 +5513,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
         } catch (Exception e) {
             str = "";
-            //Log.d(TAG,e.toString());
+            Log.d(TAG,e.toString());
         }
         return str;
     }
@@ -5518,25 +5558,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 //Log.d(TAG,"Inserted Successfully with code "+status);
             } catch (Exception e) {
                 status = 0;
-                //Log.d(TAG,e.toString());
+                Log.d(TAG,e.toString());
             }
         }
     }
 
     public int  deleteAccessesForRole(String roleName) {
         int status =0;
-            try {
-                status = dbFNB.delete(TBL_USERROLEACCESS, "RoleId" + " = ?", new String[]{String.valueOf(roleName)});
-                //status = dbFNB.insert(TBL_USERROLEACCESS, null, contentValues);
-                //Log.d(TAG,"code "+status);
-                if (status > 0) {
+        try {
+            status = dbFNB.delete(TBL_USERROLEACCESS, "RoleId" + " = ?", new String[]{String.valueOf(roleName)});
+            //status = dbFNB.insert(TBL_USERROLEACCESS, null, contentValues);
+            //Log.d(TAG,"code "+status);
+            if (status > 0) {
 
-                }
-                //Log.d(TAG,"Inserted Successfully with code "+status);
-            } catch (Exception e) {
-                status = 0;
-                //Log.d(TAG,e.toString());
             }
+            //Log.d(TAG,"Inserted Successfully with code "+status);
+        } catch (Exception e) {
+            status = 0;
+            Log.d(TAG,e.toString());
+        }
         return status;
     }
     public void deleteRole(String roleName) {
@@ -5577,7 +5617,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     null, null, null, null);
 
         } catch (Exception e) {
-            Log.d(TAG, e + "");
+            Log.d(TAG, e.getMessage() + "");
         }
         return cursor;
     }
@@ -5602,7 +5642,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         } catch (Exception e) {
             status = 0;
-            //Log.d(TAG,e.toString());
+            Log.d(TAG,e.toString());
         }
         return status;
     }
@@ -5678,6 +5718,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contact.setUserPassword(cursor.getString(cursor.getColumnIndex("Password")));
         } catch (Exception e) {
             contact = null;
+            e.printStackTrace();
         }finally {
             db.close();
         }
@@ -5697,6 +5738,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
             db.close();
         } catch (Exception e) {
+            e.printStackTrace();
             adhatTxt = null;
         }finally {
             db.close();
@@ -5816,7 +5858,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 id = 0;
             }
         }catch (Exception e){
-
+            e.printStackTrace();
         }finally {
             db.close();
         }
@@ -5836,7 +5878,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 id = 0;
             }
         }catch (Exception e){
-
+            e.printStackTrace();
         }finally {
             db.close();
         }
@@ -6124,6 +6166,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.rawQuery("Select DeptCode as _id, DeptName from Department", null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             if(db.isOpen())
@@ -6151,12 +6194,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
             }
         }catch (Exception e){
+            e.printStackTrace();
             list = null;
         }finally {
-                //db.close();
+            //db.close();
         }
         return list;
     }
+
 
     public ArrayList<Items> getItemItems(int CategCode) {
         SQLiteDatabase db = getWritableDatabase();
@@ -6177,6 +6222,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
             }
         }catch (Exception e){
+            e.printStackTrace();
+            list = null;
+        }finally {
+            //db.close();
+        }
+        return list;
+    }
+
+    public ArrayList<Items> getItemItems_dept(int deptCode) {
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Items> list = null;
+        try{
+            Cursor cursor = db.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "ImageUri"},
+                    KEY_DeptCode+"=" + deptCode, null, null, null, null);
+            if(cursor!=null)
+            {
+                list = new ArrayList<Items>();
+                while (cursor.moveToNext())
+                {
+                    Items items = new Items(
+                            cursor.getString(cursor.getColumnIndex("ItemName")),
+                            cursor.getString(cursor.getColumnIndex("ImageUri")),
+                            cursor.getInt(cursor.getColumnIndex("MenuCode"))
+                    );
+                    list.add(items);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
             list = null;
         }finally {
             //db.close();
@@ -6200,6 +6274,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
             }
         }catch (Exception e){
+            e.printStackTrace();
             list = null;
         }finally {
             //db.close();
@@ -6217,11 +6292,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 list = new ArrayList<Category>();
                 while (cursor.moveToNext())
                 {
-                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategName")), cursor.getInt(cursor.getColumnIndex("DeptCode")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
+                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategName")), cursor.getInt(cursor.getColumnIndex("CategCode")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
                     list.add(items);
                 }
             }
         }catch (Exception e){
+            e.printStackTrace();
             list = null;
         }finally {
             //db.close();
@@ -6239,11 +6315,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 list = new ArrayList<Category>();
                 while (cursor.moveToNext())
                 {
-                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategName")), cursor.getInt(cursor.getColumnIndex("DeptCode")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
+                    Category items = new Category(cursor.getString(cursor.getColumnIndex("CategName")), cursor.getInt(cursor.getColumnIndex("_id")), cursor.getInt(cursor.getColumnIndex("DeptCode")));
                     list.add(items);
                 }
             }
         }catch (Exception e){
+            e.printStackTrace();
             list = null;
         }finally {
             //db.close();
@@ -6258,9 +6335,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.query(TBL_ITEM_Outward, new String[]{"*"}, "MenuCode=" + MenuCode, null, null, null, null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
-                //db.close();
+            //db.close();
         }
         return cursor;
     }
@@ -6272,12 +6350,46 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.query(TBL_BILLSETTING, new String[]{"*"}, null, null, null, null, null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
         }
         return cursor;
     }
+
+    public Cursor getKOTModifierByModes_new(String strModes) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.query(TBL_KOTMODIFIER,
+                    new String[]{"ModifierId", "ModifierDescription", "ModifierAmount", "IsChargeable", "ModifierModes"}, "IsChargeable = '1' AND ModifierModes='" + strModes + "'", null,
+                    null, null, null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+
+    }
+    public Cursor getKOTItems_new(int CustId, String OrderMode) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.query(TBL_PENDINGKOT, new String[]{"*"}, "CustId=" + CustId + " AND OrderMode=" + OrderMode,
+                    null, null, null, null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+
+    }
+
 
     // -----Retrieve single TaxConfig-----
     public Cursor getTaxConfigs(int TaxId)
@@ -6287,6 +6399,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.query(TBL_TAXCONFIG, new String[]{"TaxId", "TaxDescription", "TaxPercentage", "TotalPercentage"}, "TaxId=" + TaxId, null, null, null, null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6301,6 +6414,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.query(TBL_CUSTOMER, new String[]{"*"}, "CustContactNumber='" + strCustPhone + "'", null, null, null, null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6316,6 +6430,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.query(TBL_CUSTOMER, new String[]{"*"}, "CustId=" + iCustId, null, null, null, null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6337,6 +6452,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put(KEY_GSTIN, objCustomer.getStrCustGSTIN());
             return db.insert(TBL_CUSTOMER, null, cvDbValues);
         }catch (Exception e){
+            e.printStackTrace();
             return -1;
         }finally {
             //db.close();
@@ -6350,6 +6466,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.query(TBL_SUBTAXCONFIG, new String[]{"SubTaxId", "SubTaxDescription", "SubTaxPercent"}, "TaxId=" + TaxId, null, null, null, null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6363,6 +6480,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.rawQuery("Select * from " + TBL_KOTMODIFIER + " where ModifierModes LIKE '" + jBillingMode+ "'", null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6377,6 +6495,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.rawQuery("Select SUM(TaxAmount) as TaxAmount, TaxPercent from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY TaxPercent", null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6391,6 +6510,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.rawQuery("Select SUM(ServiceTaxAmount) as TaxAmount, ServiceTaxPercent from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY TaxPercent", null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6410,6 +6530,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 return 1;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return 1;
         }finally {
             //db.close();
@@ -6455,6 +6576,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put(KEY_UOM, objBillItem.getUom());
             return db.insert(TBL_BILLITEM, null, cvDbValues);
         }catch (Exception e){
+            e.printStackTrace();
             return -1;
         }finally {
             //db.close();
@@ -6507,6 +6629,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             return db.insert(TBL_BILLDETAIL, null, cvDbValues);
         }catch (Exception e){
+            e.printStackTrace();
             return -1;
         }finally {
             //db.close();
@@ -6527,6 +6650,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             int result = db.delete(TBL_PENDINGKOT, "CustId=" + CustId + " AND OrderMode=" + OrderMode, null);
             return result;
         }catch (Exception e){
+            e.printStackTrace();
             return 1;
         }finally {
             //db.close();
@@ -6548,6 +6672,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put("PaidAmount", objComplimentaryBillDetail.getPaidAmount());
             return db.insert(TBL_COMPLIMENTARYBILLDETAIL, null, cvDbValues);
         }catch (Exception e){
+            e.printStackTrace();
             return 1;
         }finally {
             //db.close();
@@ -6560,6 +6685,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put("InvoiceNo", invno);
             return db.update("BillNoConfiguration", cvDbValues, null, null);
         }catch (Exception e){
+            e.printStackTrace();
             return 1;
         }finally {
             //db.close();
@@ -6572,6 +6698,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.rawQuery("SELECT * FROM " + TBL_ITEM_Outward + "  WHERE ItemName LIKE '" + Name + "%'", null);
         }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+    public Cursor getItemDetail(String Name) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("SELECT * FROM " + TBL_ITEM_Outward + "  WHERE ItemName LIKE '" + Name + "'", null);
+        }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6596,6 +6736,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         }catch (Exception e){
+            e.printStackTrace();
             list = null;
         }finally {
             //db.close();
@@ -6622,6 +6763,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         }catch (Exception e){
+            e.printStackTrace();
             list = null;
         }finally {
             //db.close();
@@ -6637,6 +6779,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber, null, null, null, null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6650,6 +6793,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor = db.query(TBL_USERS, new String[]{"*"}, "LoginId ='" + UserId + "' AND Password ='" + Password + "'",
                     null, null, null, null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6666,6 +6810,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put(KEY_BillStatus, 0);
             return db.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
         }catch (Exception e){
+            e.printStackTrace();
             return -1;
         }finally {
             //db.close();
@@ -6679,6 +6824,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             cursor = db.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "'", null);
         }catch (Exception e){
+            e.printStackTrace();
             cursor = null;
         }finally {
             //db.close();
@@ -6696,14 +6842,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 int iReprintCount = 0;
                 iReprintCount = result.getInt(result.getColumnIndex("ReprintCount"));
                 cvDbValues.put("ReprintCount", iReprintCount + 1);
-                return dbFNB.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
+                return db.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
 
             } else {
                 Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
                 return -1;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return -1;
+
         }finally {
             //db.close();
         }
