@@ -35,6 +35,7 @@ public class PrintKotBillItem implements Serializable {
     private String strTotalSalesTaxAmount = "";
     private String strTotalServiceTaxAmount = "";
     private float fTotalsubTaxPercent = 0;
+    private float fdiscount = 0;
 
     public PrintKotBillItem() {
     }
@@ -43,7 +44,7 @@ public class PrintKotBillItem implements Serializable {
                             String time, double subTotal, double netTotal, String addressLine1, String addressLine2,
                             String addressLine3, String footerLine, ArrayList<BillKotItem> billKotItems, ArrayList<BillTaxItem> billTaxItems,
                             String BillingMode, String PaymentStatus, String TotalSalesTaxAmount, String TotalServiceTaxAmount,
-                            Float TotalsubTaxPercent,  ArrayList<BillTaxItem> otherCharges, String BillingModeName) {
+                            Float TotalsubTaxPercent,  ArrayList<BillTaxItem> otherCharges, String BillingModeName,float fdiscount) {
         this.billNo = billNo;
         this.tableNo = tableNo;
         this.waiterNo = waiterNo;
@@ -66,10 +67,18 @@ public class PrintKotBillItem implements Serializable {
         this.strTotalSalesTaxAmount = TotalSalesTaxAmount;
         this.strTotalServiceTaxAmount = TotalServiceTaxAmount;
         this.fTotalsubTaxPercent = TotalsubTaxPercent;
+        this.fdiscount = fdiscount;
         this.billOtherChargesItems = otherCharges;
         this.strBillingModeName = BillingModeName;
     }
 
+    public float getFdiscount() {
+        return fdiscount;
+    }
+
+    public void setFdiscount(float fdiscount) {
+        this.fdiscount = fdiscount;
+    }
 
     public String getStrBillingModeName() {
         return strBillingModeName;

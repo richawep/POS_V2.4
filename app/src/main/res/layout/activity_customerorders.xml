@@ -290,6 +290,25 @@
                             android:inputType="textPostalAddress"
                             android:maxLength="150" />
                     </LinearLayout>
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/boxx3"
+                        android:visibility="gone"
+                        android:weightSum="6">
+
+                        <EditText
+                            android:id="@+id/etOrderCustomerBillNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:ems="5"
+                            android:focusable="false"
+                            android:text="0"
+                            android:inputType="textPostalAddress"
+                            android:maxLength="150" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/boxx5"
@@ -316,6 +335,31 @@
                             android:focusable="false"
                             android:inputType="textPostalAddress"
                             android:maxLength="150" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/rowCustPaidStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/boxx5"
+                        android:weightSum="6">
+
+                        <TextView
+                            android:id="@+id/tvCustPaidStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:text="Status : "
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/etCustPaidStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:focusable="false"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -408,30 +452,7 @@
                                     android:textAppearance="?android:attr/textAppearanceMedium" />
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:id="@+id/rowCustPaidStatus"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/rowCustAmountDue"
-                                android:weightSum="6">
 
-                                <TextView
-                                    android:id="@+id/tvCustPaidStatus"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="4"
-                                    android:text="Status : "
-                                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                                <EditText
-                                    android:id="@+id/etCustPaidStatus"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="2"
-                                    android:focusable="false"
-                                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                            </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/rowCustSubmit"

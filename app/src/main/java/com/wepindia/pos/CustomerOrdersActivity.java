@@ -72,7 +72,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 	// View handlers
 	TextView lblHeadingOrderDetails;
-	EditText txtCustPhone, txtCustName, txtCustAddress, txtCustId, txtBillAmount,txtTime;
+	EditText txtCustPhone, txtCustName, txtCustAddress, txtCustId, txtBillAmount,txtTime,txtBillNo;
 	Button btnAdd, btnOrder, btnTender, btnDelivery;
 	ListView lstvwOrderCustName;
 	ScrollView scrlOrderDetail;
@@ -86,6 +86,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 	String BILLING_MODE = "";
 	String strUserId = "", strUserName = "", strCustId = "", strPaymentStatus = "", strBillAmt = "";
 	int iAccessLevel = 0;
+    float discountAmount =0;
 	int iServiceTaxType = 0, iRiderCode = 0;
     double dDeliveryCharge = 0, dPettyCash = 0, dServiceTaxPercent = 0;
 
@@ -125,6 +126,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         	BILLING_MODE = getIntent().getStringExtra("BILLING_MODE");
         	strUserId = getIntent().getStringExtra("USER_ID");
         	strUserName = getIntent().getStringExtra("USER_NAME");
+        	discountAmount = getIntent().getFloatExtra("DISCOUNT_AMOUNT",0);
         	iAccessLevel = getIntent().getIntExtra("ACCESS_LEVEL", 1);
 
             //tvTitleUserName.setText(strUserName.toUpperCase());
@@ -170,6 +172,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		txtCustAddress = (EditText)findViewById(R.id.etOrderCustomerAddress);
 		txtCustId = (EditText)findViewById(R.id.etOrderCustomerId);
 		txtTime = (EditText)findViewById(R.id.etOrderCustomerTime);
+		txtBillNo = (EditText)findViewById(R.id.etOrderCustomerBillNo);
 		txtBillAmount = (EditText) findViewById(R.id.etOrderBillAmount);
 		btnAdd = (Button)findViewById(R.id.btn_OrderCustomerAddCustomer);
 		btnOrder = (Button)findViewById(R.id.btn_OrderCustomerOrder);
@@ -251,8 +254,25 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             if(BILLING_MODE.equalsIgnoreCase("4"))
             {
                 lnrboxx6.setVisibility(View.VISIBLE);
-            } else {
+            } else { // counter sales , jBillingMode = 3
                 lnrboxx6.setVisibility(View.INVISIBLE);
+                int paid  = dbCustomerOrder.getBillDetailByCustomerWithTime1(Integer.valueOf(txtCustId.getText().toString()),
+                        1,Double.parseDouble(txtBillAmount.getText().toString()),txtTime.getText().toString());
+                if(paid >0) {
+                    txtPaidStatus.setText("Paid");
+                    strPaymentStatus= "Paid";
+                    txtBillNo.setText(String.valueOf(paid));
+                   // Log.d("BillNo",String.valueOf(paid));
+
+                    //txtAmountDue.setText("0");
+                }
+                else
+                {
+                    txtPaidStatus.setText("Not Paid");
+                    strPaymentStatus= "Not Paid";
+                    txtBillNo.setText("0");
+                    //txtAmountDue.setText(txtBillAmount.getText().toString());
+                }
             }
 
 		}
@@ -409,7 +429,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             }
 
 		}
-        txtBillAmount.setText(String.format("%.2f", dBillTotal));
+        txtBillAmount.setText(String.format("%.2f", dBillTotal-discountAmount));
 	}
 
 	private void ResetCustomerOrder(){
@@ -441,7 +461,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
 		intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
         intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
-        intentBillScreen.putExtra("Payment_Status", strPaymentStatus);
+        intentBillScreen.putExtra("PAYMENT_STATUS", strPaymentStatus);
 		intentBillScreen.putExtra("MAKE_ORDER", "NO");
 		//startActivityForResult(intentBillScreen,1);
 		setResult(RESULT_OK, intentBillScreen);
@@ -527,16 +547,60 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 	public void Order(View v){
 		//LaunchBillScreen();
 
-        Intent intentBillScreen = new Intent(myContext,BillingScreenActivity.class);
-        intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
-        intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-        intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
-        intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
-        intentBillScreen.putExtra("MAKE_ORDER", "YES");
-        intentBillScreen.putExtra("PAYMENT_STATUS",strPaymentStatus);
-        //startActivityForResult(intentBillScreen,1);
-        setResult(RESULT_OK, intentBillScreen);
-        this.finish();
+        if(BILLING_MODE.equalsIgnoreCase("3") && txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))
+        {
+            MsgBox.setTitle("Note")
+                    .setMessage(" Paid Order cannot be modified. Do you want to print bill")
+                    .setNegativeButton("Cancel",null)
+                    .setNeutralButton("Finish", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                            intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
+                            intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+                            intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+                            intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
+                            intentBillScreen.putExtra("MAKE_ORDER", "YES");
+                            intentBillScreen.putExtra("IS_PRINT_BILL", false);
+                            intentBillScreen.putExtra("IS_FINISH", true);
+                            intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
+                            //startActivityForResult(intentBillScreen,1);
+                            setResult(RESULT_OK, intentBillScreen);
+                            finish();
+                        }
+                    })
+                    .setPositiveButton("Print", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                            intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
+                            intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+                            intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+                            intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
+                            intentBillScreen.putExtra("MAKE_ORDER", "YES");
+                            intentBillScreen.putExtra("IS_PRINT_BILL",true);
+                            intentBillScreen.putExtra("BILLNO",txtBillNo.getText().toString());
+                            intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
+                            //startActivityForResult(intentBillScreen,1);
+                            setResult(RESULT_OK, intentBillScreen);
+                            finish();
+                        }
+                    })
+                    .show();
+        }else
+        {
+            Intent intentBillScreen = new Intent(myContext,BillingScreenActivity.class);
+            intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
+            intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+            intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+            intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
+            intentBillScreen.putExtra("MAKE_ORDER", "YES");
+            intentBillScreen.putExtra("PAYMENT_STATUS",strPaymentStatus);
+            //startActivityForResult(intentBillScreen,1);
+            setResult(RESULT_OK, intentBillScreen);
+            this.finish();
+        }
+
 	}
 
 	public void Tender(View v){
@@ -544,16 +608,60 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 			if(tblOrderDetails.getChildCount() <= 1){
 				MsgBox.Show("Warning", "No pick up order is selected to tender");
 			} else {
-				//LaunchBillScreen();
-                Intent intentBillScreen = new Intent(myContext,BillingScreenActivity.class);
-                intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
-                intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-                intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
-                intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
-                intentBillScreen.putExtra("MAKE_ORDER", "NO");
-                //startActivityForResult(intentBillScreen,1);
-                setResult(RESULT_OK, intentBillScreen);
-                this.finish();
+                String msg = "";
+				if (BILLING_MODE.equals("3") && strPaymentStatus.equalsIgnoreCase("PAID"))
+                {
+                    MsgBox.setTitle("Note")
+                            .setMessage(" Bill is already paid. Do you want to go back and print it")
+                            .setNegativeButton("Cancel",null)
+                            .setNeutralButton("Finish", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                                    intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
+                                    intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+                                    intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+                                    intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
+                                    intentBillScreen.putExtra("MAKE_ORDER", "YES");
+                                    intentBillScreen.putExtra("IS_PRINT_BILL", false);
+                                    intentBillScreen.putExtra("IS_FINISH", true);
+                                    intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
+                                    //startActivityForResult(intentBillScreen,1);
+                                    setResult(RESULT_OK, intentBillScreen);
+                                    finish();
+                                }
+                            })
+                            .setPositiveButton("Print", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                                    intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
+                                    intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+                                    intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+                                    intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
+                                    intentBillScreen.putExtra("MAKE_ORDER", "YES");
+                                    intentBillScreen.putExtra("IS_PRINT_BILL",true);
+                                    intentBillScreen.putExtra("BILLNO",txtBillNo.getText().toString());
+                                    intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
+                                    //startActivityForResult(intentBillScreen,1);
+                                    setResult(RESULT_OK, intentBillScreen);
+                                    finish();
+                                }
+                            })
+                            .show();
+                }else {
+                    Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                    intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
+                    intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+                    intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+                    intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
+                    intentBillScreen.putExtra("MAKE_ORDER", "NO");
+                    intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
+                    //startActivityForResult(intentBillScreen,1);
+                    setResult(RESULT_OK, intentBillScreen);
+                    this.finish();
+
+                }
 			}
 
 		} else {
@@ -573,7 +681,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             Intent intentTender = new Intent(myContext, DeliveryActivity.class);
             intentTender.putExtra("CUST_ID", txtCustId.getText().toString());
 			intentTender.putExtra("BILLAMT", txtBillAmount.getText().toString());
-            Cursor crsrBillDetail = dbCustomerOrder.getBillDetailByCustomerWithTime(Integer.valueOf(txtCustId.getText().toString()), 2, Float.parseFloat(txtBillAmount.getText().toString()));
+            Cursor crsrBillDetail = dbCustomerOrder.getBillDetailByCustomerWithTime(Integer.valueOf(txtCustId.getText().toString()),
+                    2, Float.parseFloat(txtBillAmount.getText().toString()));
             if(crsrBillDetail.moveToFirst()) {
                 intentTender.putExtra("DueAmount", "0");
             }
@@ -651,7 +760,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                 intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
                 intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
                 intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
-                intentBillScreen.putExtra("Payment_Status", strPaymentStatus);
+                intentBillScreen.putExtra("PAYMENT_STATUS", strPaymentStatus);
                 intentBillScreen.putExtra("MAKE_ORDER", "NO");
                 //startActivityForResult(intentBillScreen,1);
                 setResult(RESULT_OK, intentBillScreen);
@@ -865,6 +974,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             txtCustId.setText(strCustId);
 
             //LaunchBillScreen();
+
         }
 
         //ResetCustomerOrder();
@@ -875,7 +985,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
         intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
         intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
-        intentBillScreen.putExtra("Payment_Status", strPaymentStatus);
+        intentBillScreen.putExtra("PAYMENT_STATUS", strPaymentStatus);
         intentBillScreen.putExtra("MAKE_ORDER", "NO");
         //startActivityForResult(intentBillScreen,1);
         setResult(RESULT_OK, intentBillScreen);

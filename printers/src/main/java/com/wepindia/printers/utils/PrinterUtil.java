@@ -429,10 +429,10 @@ public class PrinterUtil {
 
     public String getPrintBill(PrintKotBillItem item) {
         EscCommand esc = new EscCommand();
-        esc.addPrintAndFeedLines((byte)3);
+        esc.addPrintAndFeedLines((byte)2);
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);
-        esc.addText("Resturant Bill"+"\n");
+        //esc.addText("Resturant Bill"+"\n");
         esc.addText(item.getAddressLine1()+"\n");
         esc.addPrintAndLineFeed();
 
@@ -445,7 +445,8 @@ public class PrinterUtil {
         esc.addText("===============================================\n");
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addText("Bill no # "+item.getBillNo()+"\n");
-        esc.addText("Table # "+item.getTableNo()+"\n");
+        if(item.getBillingMode().equals("1"))
+            esc.addText("Table # "+item.getTableNo()+"\n");
         esc.addText("Date : "+item.getDate() +" | "+"Time : "+item.getTime()+"\n");
         esc.addText("Cashier   : "+item.getOrderBy()+"\n");
         esc.addText("Customer Name   : "+item.getCustomerName()+"\n");
@@ -496,6 +497,11 @@ public class PrinterUtil {
         }
         esc.addText("==============================================="+"\n");
         esc.addText(getSpaceFormater("Sub-Total",String.format("%.2f",item.getSubTotal()),45,1)+"\n");
+        float discount = item.getFdiscount();
+        if (discount > 0)
+        {
+            esc.addText(getSpaceFormater("Discount Amount",String.format("%.2f",discount),45,1)+"\n");
+        }
         ArrayList<BillTaxItem> billOtherChargesItems = item.getBillOtherChargesItems();
         if(billOtherChargesItems.size()>0)
         {

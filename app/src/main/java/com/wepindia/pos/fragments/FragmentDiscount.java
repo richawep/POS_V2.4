@@ -321,28 +321,35 @@ public class FragmentDiscount extends Fragment {
         strDiscDesc = txtDiscountDesc.getText().toString();
         strDiscPercent = txtDiscountPercent.getText().toString();
         strDiscAmount = txtDiscountAmount.getText().toString();
-        if(strDiscPercent.equalsIgnoreCase("") && strDiscAmount.equals("")) {
+
+        if(strDiscDesc.equalsIgnoreCase("")){
+            MsgBox.Show("Warning", "Please Enter Discount description before adding");
+        } else if(strDiscPercent.equalsIgnoreCase("") && strDiscAmount.equals("")) {
             MsgBox.Show("Warning", "Please enter atleast percent or amount before adding");
-            return;
+        }else if(!strDiscPercent.equalsIgnoreCase("") && !strDiscAmount.equals("")) {
+            MsgBox.Show("Warning", "Please enter any one, percent or amount before adding");
         }
-        if (strDiscAmount== null || strDiscAmount.equals(""))
+        else
         {
-            strDiscAmount="0";
-        }
-        if (strDiscPercent== null || strDiscPercent.equals(""))
-        {
-            strDiscPercent="0";
-        }
-        Log.d("Discount Selection","Id: " + strDiscId + " Description: " + strDiscDesc + " Percent: " + strDiscPercent);
-        int iResult = dbDiscConfig.updateDiscountConfig(strDiscId, strDiscDesc, strDiscPercent, strDiscAmount);
-        Log.d("updateDiscount","Updated Rows: " + String.valueOf(iResult));
-        ResetDiscountConfig();
-        if(iResult > 0){
-            ClearDiscountConfigTable();
-            DisplayDiscountConfig();
-        }
-        else{
-            MsgBox.Show("Warning", "Update failed");
+            if (strDiscAmount== null || strDiscAmount.equals(""))
+            {
+                strDiscAmount="0";
+            }
+            if (strDiscPercent== null || strDiscPercent.equals(""))
+            {
+                strDiscPercent="0";
+            }
+            Log.d("Discount Selection","Id: " + strDiscId + " Description: " + strDiscDesc + " Percent: " + strDiscPercent);
+            int iResult = dbDiscConfig.updateDiscountConfig(strDiscId, strDiscDesc, strDiscPercent, strDiscAmount);
+            Log.d("updateDiscount","Updated Rows: " + String.valueOf(iResult));
+            ResetDiscountConfig();
+            if(iResult > 0){
+                ClearDiscountConfigTable();
+                DisplayDiscountConfig();
+            }
+            else{
+                MsgBox.Show("Warning", "Update failed");
+            }
         }
 		/*if(IsDiscountPercentExists(Double.parseDouble(strDiscPercent))){
 			MsgBox.Show("Warning", "Discount precent is already present");
