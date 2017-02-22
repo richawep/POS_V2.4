@@ -139,16 +139,21 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                     // delete all pending KOTS
                     iResult = 0;
                     iResult = getDb().deleteAllKOTItems();
-                    Log.d("AutoDayEnd", "Items deleted from Pending KOT table:" + iResult);
+                    Log.d("AutoDayEnd", "Items deleted from Pending KOT status:" + iResult);
 
                     iResult =0;
                     iResult = getDb().deleteAllVoidedKOT();
-                    Log.d("AutoDayEnd", "Items deleted from Void KOT table: :" + iResult);
+                    Log.d("AutoDayEnd", "Items deleted from Void KOT status: :" + iResult);
 
                     // delete All reserved tables
                     iResult = 0;
                     iResult = getDb().deleteAllReservedTables();
                     Log.d("AutoDayEnd", "No of Reserved Tables deleted for Past :" + iResult);
+
+                    // reset KOT No
+                    iResult = 0;
+                    long Result = getDb().updateKOTNo(0);
+                    Log.d("AutoDayEnd", "KOT No reset to 0 status :"+Result);
                 }
 
             }
@@ -320,22 +325,27 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                             }
                             strNextDate += String.valueOf(dateNextDate.getYear());
 
-                            int result = getDb().updateBusinessDate(strNextDate);
-                            Log.d("ManualDayEnd", "Bussiness Date updation status :" + result);
-                            result = 0;
+
+                            int result = 0;
                             result = getDb().deleteAllKOTItems();
-                            Log.d("ManualDayEnd", "Items deleted from Pending KOT table: :" + result);
+                            Log.d("ManualDayEnd", "Items deleted from Pending KOT status: :" + result);
                             result =0;
                             result = getDb().deleteAllVoidedKOT();
-                            Log.d("ManualDayEnd", "Items deleted from Void KOT table: :" + result);
+                            Log.d("ManualDayEnd", "Items deleted from Void KOT status: :" + result);
                             result = 0;
                             result = getDb().deleteAllReservedTables();
                             Log.d("ManualDayEnd", "No of Reserved Tables deleted :" + result);
+
+                            // reset KOT No
+
+                            long Result = getDb().updateKOTNo(0);
+                            Log.d("ManualDayEnd", "KOT No reset to 0 status :"+Result);
                             //int iDateAndTime = 0;
                             /*Date d = new Date();
                             CharSequence currentdate = DateFormat.format("dd-MM-yyyy", d.getTime());
 */
                             long iResult = getDb().updateBusinessDate(String.valueOf(strNextDate));
+                            Log.d("ManualDayEnd", "Bussiness Date updation status :" + iResult);
 
                             /*Cursor crsrBillDate = dbHomeScreen.getBillSetting();
                             if (crsrBillDate.moveToFirst()) {
