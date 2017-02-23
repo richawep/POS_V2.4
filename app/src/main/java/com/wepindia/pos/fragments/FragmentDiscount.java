@@ -282,7 +282,7 @@ public class FragmentDiscount extends Fragment {
             MsgBox.Show("Warning", "Please Enter Discount description before adding");
         } else if(strDiscPercent.equalsIgnoreCase("") && strDiscAmount.equals("")) {
             MsgBox.Show("Warning", "Please enter atleast percent or amount before adding");
-        }else if(!strDiscPercent.equalsIgnoreCase("") && !strDiscAmount.equals("")) {
+        }else if(Float.parseFloat(strDiscPercent) >0 && Float.parseFloat(strDiscAmount)>0) {
             MsgBox.Show("Warning", "Please enter any one, percent or amount before adding");
         } else{
             if (strDiscAmount== null || strDiscAmount.equals(""))
@@ -326,7 +326,7 @@ public class FragmentDiscount extends Fragment {
             MsgBox.Show("Warning", "Please Enter Discount description before adding");
         } else if(strDiscPercent.equalsIgnoreCase("") && strDiscAmount.equals("")) {
             MsgBox.Show("Warning", "Please enter atleast percent or amount before adding");
-        }else if(!strDiscPercent.equalsIgnoreCase("") && !strDiscAmount.equals("")) {
+        }else  if(Float.parseFloat(strDiscPercent) >0 && Float.parseFloat(strDiscAmount)>0) {
             MsgBox.Show("Warning", "Please enter any one, percent or amount before adding");
         }
         else

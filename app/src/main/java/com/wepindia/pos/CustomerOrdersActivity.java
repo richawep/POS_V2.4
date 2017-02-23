@@ -126,7 +126,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         	BILLING_MODE = getIntent().getStringExtra("BILLING_MODE");
         	strUserId = getIntent().getStringExtra("USER_ID");
         	strUserName = getIntent().getStringExtra("USER_NAME");
-        	discountAmount = getIntent().getFloatExtra("DISCOUNT_AMOUNT",0);
+        	//discountAmount = getIntent().getFloatExtra("DISCOUNT_AMOUNT",0);
         	iAccessLevel = getIntent().getIntExtra("ACCESS_LEVEL", 1);
 
             //tvTitleUserName.setText(strUserName.toUpperCase());
@@ -240,39 +240,50 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 			Map<String, String> CustData = new HashMap<String, String>(5);
 			CustData = lstCustomerDetail.get(position);
 
-			LoadPendingOrderItems(Integer.parseInt(CustData.get("Id")));
+
 
 			txtCustName.setText(CustData.get("Name"));
 			txtCustPhone.setText(CustData.get("Phone").substring(7));
 			txtCustAddress.setText(CustData.get("Address"));
-			txtCustId.setText(CustData.get("Id"));
-			Log.d("Customer Orders Click", "Customer Id:" + CustData.get("Id"));
-			txtTime.setText(CustData.get("Time"));
-			Log.d("Customer Orders Click", "Customer Time:" + CustData.get("Time"));
-            btnOrder.setEnabled(true);
+            txtCustId.setText(CustData.get("Id"));
+            txtTime.setText(CustData.get("Time"));
+            Log.d("Customer Orders Click", "Customer Id:" + CustData.get("Id"));
+            Log.d("Customer Orders Click", "Customer Time:" + CustData.get("Time"));
+            LoadPendingOrderItems(Integer.parseInt(CustData.get("Id")));
 
+
+            btnOrder.setEnabled(true);
+            int billstatus =1;
+            if (BILLING_MODE.equals("4"))
+                billstatus =2;
+            int paid  = dbCustomerOrder.getBillDetailByCustomerWithTime1(Integer.valueOf(txtCustId.getText().toString()),
+                    billstatus,Double.parseDouble(txtBillAmount.getText().toString()),txtTime.getText().toString());
+            if(paid >0) {
+                txtPaidStatus.setText("Paid");
+                strPaymentStatus= "Paid";
+                txtBillNo.setText(String.valueOf(paid));
+                // Log.d("BillNo",String.valueOf(paid));
+
+                //txtAmountDue.setText("0");
+            }
+            else
+            {
+                if(BILLING_MODE.equals("3")) {
+                    txtPaidStatus.setText("Not Paid");
+                    strPaymentStatus = "Not Paid";
+                }else if(BILLING_MODE.equals("4")) {
+                    txtPaidStatus.setText("Cash On Delivery");
+                    strPaymentStatus = "Cash On Delivery";
+                }
+                txtBillNo.setText("0");
+                //txtAmountDue.setText(txtBillAmount.getText().toString());
+            }
             if(BILLING_MODE.equalsIgnoreCase("4"))
             {
                 lnrboxx6.setVisibility(View.VISIBLE);
             } else { // counter sales , jBillingMode = 3
                 lnrboxx6.setVisibility(View.INVISIBLE);
-                int paid  = dbCustomerOrder.getBillDetailByCustomerWithTime1(Integer.valueOf(txtCustId.getText().toString()),
-                        1,Double.parseDouble(txtBillAmount.getText().toString()),txtTime.getText().toString());
-                if(paid >0) {
-                    txtPaidStatus.setText("Paid");
-                    strPaymentStatus= "Paid";
-                    txtBillNo.setText(String.valueOf(paid));
-                   // Log.d("BillNo",String.valueOf(paid));
 
-                    //txtAmountDue.setText("0");
-                }
-                else
-                {
-                    txtPaidStatus.setText("Not Paid");
-                    strPaymentStatus= "Not Paid";
-                    txtBillNo.setText("0");
-                    //txtAmountDue.setText(txtBillAmount.getText().toString());
-                }
             }
 
 		}
@@ -429,6 +440,28 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             }
 
 		}
+        String time = txtTime.getText().toString();
+        int billstatus =1;
+        if (BILLING_MODE.equals("4"))
+            billstatus =2;
+        int billingMode =0;
+        if(!BILLING_MODE.equals(""))
+            billingMode = Integer.parseInt(BILLING_MODE);
+        Cursor cursor = dbCustomerOrder.getBillDetailByCustomerIdTime(
+                Integer.valueOf(txtCustId.getText().toString()),billstatus,time, billingMode);
+        discountAmount =0;
+        while(cursor!=null && cursor.moveToNext() )
+        {
+            float subtot = (cursor.getFloat(cursor.getColumnIndex("SubTotal")));
+            String strsubtot = String.format("%.2f",subtot);
+            String strtot = String.format("%.2f",dBillTotal);
+            if(strsubtot.equals(strtot))
+            {
+                discountAmount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
+                break;
+            }
+        }
+
         txtBillAmount.setText(String.format("%.2f", dBillTotal-discountAmount));
 	}
 
@@ -456,7 +489,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 	private void LaunchBillScreen(){
 		//SharedPreferences spUser = getSharedPreferences(FILE_SHARED_PREFERENCE, 0);
-		Intent intentBillScreen = new Intent(myContext,BillingScreenActivity.class);
+		Intent intentBillScreen = new Intent(myContext,HomeDeliveryBillingActivity.class);
 		intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
 		intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
 		intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -563,6 +596,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                             intentBillScreen.putExtra("MAKE_ORDER", "YES");
                             intentBillScreen.putExtra("IS_PRINT_BILL", false);
                             intentBillScreen.putExtra("IS_FINISH", true);
+                            Log.d("Sending Discount", String.valueOf(discountAmount));
+                            intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
                             intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
                             //startActivityForResult(intentBillScreen,1);
                             setResult(RESULT_OK, intentBillScreen);
@@ -579,6 +614,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                             intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
                             intentBillScreen.putExtra("MAKE_ORDER", "YES");
                             intentBillScreen.putExtra("IS_PRINT_BILL",true);
+                            Log.d("Sending Discount", String.valueOf(discountAmount));
+                            intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
                             intentBillScreen.putExtra("BILLNO",txtBillNo.getText().toString());
                             intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
                             //startActivityForResult(intentBillScreen,1);
@@ -589,7 +626,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                     .show();
         }else
         {
-            Intent intentBillScreen = new Intent(myContext,BillingScreenActivity.class);
+            Intent intentBillScreen = new Intent(myContext,HomeDeliveryBillingActivity.class);
             intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
             intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -625,6 +662,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                                     intentBillScreen.putExtra("MAKE_ORDER", "YES");
                                     intentBillScreen.putExtra("IS_PRINT_BILL", false);
                                     intentBillScreen.putExtra("IS_FINISH", true);
+                                    Log.d("Sending Discount", String.valueOf(discountAmount));
+                                    intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
                                     intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
                                     //startActivityForResult(intentBillScreen,1);
                                     setResult(RESULT_OK, intentBillScreen);
@@ -641,6 +680,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                                     intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
                                     intentBillScreen.putExtra("MAKE_ORDER", "YES");
                                     intentBillScreen.putExtra("IS_PRINT_BILL",true);
+                                    Log.d("Sending Discount", String.valueOf(discountAmount));
+                                    intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
                                     intentBillScreen.putExtra("BILLNO",txtBillNo.getText().toString());
                                     intentBillScreen.putExtra("PAYMENT_STATUS", txtPaidStatus.getText().toString());
                                     //startActivityForResult(intentBillScreen,1);
@@ -681,6 +722,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             Intent intentTender = new Intent(myContext, DeliveryActivity.class);
             intentTender.putExtra("CUST_ID", txtCustId.getText().toString());
 			intentTender.putExtra("BILLAMT", txtBillAmount.getText().toString());
+
             Cursor crsrBillDetail = dbCustomerOrder.getBillDetailByCustomerWithTime(Integer.valueOf(txtCustId.getText().toString()),
                     2, Float.parseFloat(txtBillAmount.getText().toString()));
             if(crsrBillDetail.moveToFirst()) {
@@ -755,7 +797,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                 //ResetCustomerOrder();
                 //LoadOrderToList();
                 //LaunchBillScreen();
-                Intent intentBillScreen = new Intent(myContext,BillingScreenActivity.class);
+                Intent intentBillScreen = new Intent(myContext,HomeDeliveryBillingActivity.class);
                 intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
                 intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
                 intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -864,18 +906,22 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                             TextView RiderName = (TextView) ((TableRow)v).getChildAt(2);
                             strRiderCode = RiderCode.getText().toString();
                             txtRiderName.setText(RiderName.getText());
-                            String time = txtTime.getText().toString();
-                            int paid  = dbCustomerOrder.getBillDetailByCustomerWithTime1(Integer.valueOf(txtCustId.getText().toString()),
-                                    2,Float.parseFloat(txtBillAmount.getText().toString()),time);
-                            if(paid ==1) {
-                                txtPaidStatus.setText("Paid");
+                            if(txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))
                                 txtAmountDue.setText("0");
-                            }
                             else
-                            {
-                                txtPaidStatus.setText("Cash on Delivery");
                                 txtAmountDue.setText(txtBillAmount.getText().toString());
-                            }
+                            //String time = txtTime.getText().toString();
+//                            int paid  = dbCustomerOrder.getBillDetailByCustomerWithTime1(Integer.valueOf(txtCustId.getText().toString()),
+//                                    2,Float.parseFloat(txtBillAmount.getText().toString()),time);
+//                            if(paid ==1) {
+//                                txtPaidStatus.setText("Paid");
+//                                txtAmountDue.setText("0");
+//                            }
+//                            else
+//                            {
+//                                txtPaidStatus.setText("Cash on Delivery");
+//                                txtAmountDue.setText(txtBillAmount.getText().toString());
+//                            }
                             lnrboxx7.setVisibility(View.VISIBLE);
 
                             RiderDialog.dismiss();
@@ -907,7 +953,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 			try
 			{
-				PayBill();
+				PayBill("OK");
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -934,11 +980,11 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             return;
         } else {
 
-            PayBill();
+            PayBill("PrintBill");
         }
     }
 
-    protected void PayBill()
+    protected void PayBill(String FUNCTIONCALLED)
     {
         iRiderCode = Integer.valueOf(strRiderCode);
         strCustId = txtCustId.getText().toString();
@@ -947,20 +993,32 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
         Log.d("Delivery Result", "Rider Code:" + iRiderCode +
                 " Delivery Cahrge:" + dDeliveryCharge + " Petty Cash:" + dPettyCash);
+        String time = txtTime.getText().toString();
+        if(time == null)
+            time = "";
+//        Cursor cursor = dbCustomerOrder.getBillSetting();
+//        String InvoiceDate = "0";
+//        if(cursor.moveToFirst())
+//        {
+//            InvoiceDate = cursor.getString(cursor.getColumnIndex("BusinessDate"));
+//        }
 
-        Cursor crsrBillDetail = dbCustomerOrder.getBillDetailByCustomerWithTime(Integer.valueOf(strCustId), 2, Float.parseFloat(strBillAmt));
-        if(crsrBillDetail.moveToFirst()) {
-            txtBillAmount.setText(crsrBillDetail.getString(crsrBillDetail.getColumnIndex("BillAmount")));
+        int paid = dbCustomerOrder.getBillDetailByCustomerWithTime1(Integer.valueOf(strCustId), 2,
+                Double.parseDouble(strBillAmt), time);
+        if(paid >0) {
+            txtBillAmount.setText(strBillAmt);
             // Insert details to RiderSettlement table
-            SaveRiderdelivery(strCustId, crsrBillDetail.getString(crsrBillDetail.getColumnIndex("InvoiceNo")));
+            String billNo = String.valueOf(paid);
+            txtBillNo.setText(billNo);
+            SaveRiderdelivery(strCustId,billNo );
 
             // Launch bill screen to save bill to database
             Toast.makeText(myContext, "This Customer already Paid the amount", Toast.LENGTH_LONG).show();
-            Cursor crsrRiderSettlement = dbCustomerOrder.getRiderSettlementByCustId(Integer.valueOf(strCustId));
-            if(crsrRiderSettlement.moveToFirst()) {
-                int iResult = dbCustomerOrder.deleteKOTItems(Integer.valueOf(strCustId), String.valueOf(4));
-                Log.d("Delivery:", "Items deleted from pending KOT:" + iResult);
-            }
+//            Cursor crsrRiderSettlement = dbCustomerOrder.getRiderSettlementByCustId(Integer.valueOf(strCustId));
+//            if(crsrRiderSettlement.moveToFirst()) {
+//                int iResult = dbCustomerOrder.deleteKOTItems(Integer.valueOf(strCustId), String.valueOf(4));
+//                Log.d("Delivery:", "Items deleted from pending KOT:" + iResult);
+//            }
             txtCustId.setText(strCustId.toString());
             //LaunchBillScreen();
         }
@@ -970,23 +1028,36 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             CalculateTotalAmount();
 
             // Insert details to RiderSettlement table
-            SaveRiderdelivery(strCustId, String.valueOf(dbCustomerOrder.getNewBillNumbers()));
+            String newBillNo = String.valueOf(dbCustomerOrder.getNewBillNumbers());
+            SaveRiderdelivery(strCustId, newBillNo);
+            txtBillNo.setText(newBillNo);
             txtCustId.setText(strCustId);
 
             //LaunchBillScreen();
 
         }
 
-        //ResetCustomerOrder();
-        //LoadOrderToList();
-        //LaunchBillScreen();
-        Intent intentBillScreen = new Intent(myContext,BillingScreenActivity.class);
+        Intent intentBillScreen = new Intent(myContext,HomeDeliveryBillingActivity.class);
         intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
         intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
         intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
         intentBillScreen.putExtra("CUST_ID", Integer.parseInt(txtCustId.getText().toString()));
         intentBillScreen.putExtra("PAYMENT_STATUS", strPaymentStatus);
-        intentBillScreen.putExtra("MAKE_ORDER", "NO");
+        intentBillScreen.putExtra("MAKE_ORDER", "YES");
+        Log.d("Sending Discount", String.valueOf(discountAmount));
+        intentBillScreen.putExtra("DISCOUNT_AMOUNT", discountAmount);
+        intentBillScreen.putExtra("BILLNO", txtBillNo.getText().toString());
+        if(txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))
+            intentBillScreen.putExtra("IS_PAID", "YES");
+        else
+            intentBillScreen.putExtra("IS_PAID", "NO");
+
+
+
+        if(FUNCTIONCALLED.equalsIgnoreCase("ok"))
+            intentBillScreen.putExtra("IS_FINISH", true);
+        if(FUNCTIONCALLED.equalsIgnoreCase("PRINTBILL"))
+            intentBillScreen.putExtra("IS_PRINT_BILL", true);
         //startActivityForResult(intentBillScreen,1);
         setResult(RESULT_OK, intentBillScreen);
 

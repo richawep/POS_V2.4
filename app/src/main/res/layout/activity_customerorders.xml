@@ -366,7 +366,7 @@
                         android:id="@+id/boxx6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/boxx5"
+                        android:layout_below="@+id/rowCustPaidStatus"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
                         android:orientation="horizontal"
@@ -458,7 +458,7 @@
                                 android:id="@+id/rowCustSubmit"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/rowCustPaidStatus"
+                                android:layout_below="@+id/rowCustAmountDue"
                                 android:layout_marginTop="20dp"
                                 android:gravity="center"
                                 android:weightSum="6">

@@ -812,7 +812,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_ReverseCharge + " TEXT, " + KEY_BusinessType + " TEXT," +
             KEY_ProvisionalAssess + " TEXT, " + KEY_Ecom_GSTIN + " TEXT, " + KEY_CardPayment + " REAL, " + KEY_CashPayment + " REAL, "
             + KEY_BillAmount + " REAL, " + KEY_BillingMode + " TEXT, "
-            + KEY_CouponPayment + " REAL, "+ KEY_WalletPayment + " REAL, " + KEY_CustId + " NUMERIC, " + KEY_DeliveryCharge + " REAL, " + KEY_TotalServiceTaxAmount + " REAL, "
+            + KEY_CouponPayment + " REAL, " + KEY_WalletPayment + " REAL, " + KEY_CustId + " NUMERIC, " + KEY_DeliveryCharge + " REAL, " + KEY_TotalServiceTaxAmount + " REAL, "
             + KEY_EmployeeId + " NUMERIC," + KEY_ReprintCount + " NUMERIC, " + KEY_TotalDiscountAmount + " REAL,"
             + KEY_TotalTaxAmount + " REAL, " + KEY_UserId + " NUMERIC, " + KEY_PettyCashPayment + " REAL, "
             + KEY_PaidTotalPayment + " REAL, " + KEY_ChangePayment + " REAL)";
@@ -894,7 +894,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_MenuCode + " INTEGER, " + KEY_SupplyType + " TEXT , " +
             KEY_ItemName + " TEXT, " + KEY_Value + " REAL, " + KEY_Quantity + " REAL, " + KEY_UOM + "  TEXT, " + KEY_TaxableValue + " REAL, " +
             KEY_SalesTax + " REAL," + KEY_ServiceTaxAmount + " REAl, " + KEY_Amount + " REAL," + KEY_AdditionalChargeName + " TEXT, " +
-            KEY_AdditionalChargeAmount + " REAL , "+KEY_isGoodinward+" INTEGER )";
+            KEY_AdditionalChargeAmount + " REAL , " + KEY_isGoodinward + " INTEGER )";
 
     String QUERY_CREATE_TABLE_GOODS_INWARD = " CREATE TABLE " + TBL_GOODSINWARD + " ( " +
             KEY_MenuCode + " INTEGER, " + KEY_SupplyType + " TEXT , " + KEY_ItemName + " TEXT, " + KEY_Value + " REAL, " +
@@ -2064,7 +2064,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
             }
             if (iCount > 1) {
-                String strTemp = strDbBackupFileName + String.valueOf(iCount - 1)+".db";
+                String strTemp = strDbBackupFileName + String.valueOf(iCount - 1) + ".db";
                 File DbFile = new File(DB_BACKUP_PATH + strTemp);
                 lBackupLastModified = DbFile.lastModified();
 
@@ -2451,7 +2451,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public int getDepartmentIdByName(String name) {
         int id = -1;
-        try{
+        try {
             Cursor cursor = dbFNB.query(TBL_DEPARTMENT, null, KEY_DeptName + "=?", new String[]{String.valueOf(name)}, null, null, null, null);
             //if (cursor != null)
             if (cursor.moveToFirst()) {
@@ -2459,7 +2459,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             } else {
                 id = 0;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d(TAG, e.toString());
         }
 
@@ -2469,9 +2469,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // -----Retrieve single Department-----
     public Cursor getDepartment(int DeptCode) {
-        try{
+        try {
             return dbFNB.query(TBL_DEPARTMENT, new String[]{"DeptCode", "DeptName"}, "DeptCode=" + DeptCode, null, null, null, null);
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d(TAG, e.toString());
             return null;
         }
@@ -2548,7 +2548,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public int getCategoryIdByName(String name) {
         int id = -1;
-        try{
+        try {
             Cursor cursor = dbFNB.query(TBL_CATEGORY, null, "CategName=?", new String[]{String.valueOf(name)}, null, null, null, null);
             //if (cursor != null)
             if (cursor.moveToFirst()) {
@@ -2556,7 +2556,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             } else {
                 id = 0;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d(TAG, e.toString());
         }
         // return contact
@@ -2565,15 +2565,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public ArrayList<String> getCategoryNameByDeptCode(String name) {
         String categname = "";
-        ArrayList<String> list= new ArrayList<String>();
-        try{
+        ArrayList<String> list = new ArrayList<String>();
+        try {
             Cursor cursor = dbFNB.query(TBL_CATEGORY, null, "DeptCode=?", new String[]{String.valueOf(name)}, null, null, null, null);
             //if (cursor != null)
             list.add("Select department");
-            while (cursor!=null && cursor.moveToNext()) {
+            while (cursor != null && cursor.moveToNext()) {
                 list.add(cursor.getString(cursor.getColumnIndex("CategName")));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d(TAG, e.toString());
         }
         // return contact
@@ -3266,7 +3266,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             list = new LinkedHashSet<String>();
             Log.d(TAG, e.toString());
             //Log.d(TAG,e.toString());
-        }finally {
+        } finally {
             db.close();
         }
         return list.toString();
@@ -3309,17 +3309,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public float getCustomerTotalTransaction(int iCustId) {
         SQLiteDatabase db = getWritableDatabase();
-        float result =0;
-        try{
+        float result = 0;
+        try {
             Cursor cursor = db.query(TBL_CUSTOMER, new String[]{"TotalTransaction"}, "CustId=" + iCustId, null, null,
                     null, null);
 
             if (cursor.moveToFirst()) {
-                result =  cursor.getFloat(0);
+                result = cursor.getFloat(0);
             } else {
-                result =  0;
-            }}catch(Exception e)
-        {
+                result = 0;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             result = 0;
         }
@@ -3343,17 +3343,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public float getCustomerCreditAmount(int iCustId) {
         SQLiteDatabase db = getWritableDatabase();
-        float result =0;
-        try{
+        float result = 0;
+        try {
             Cursor cursor = db.query(TBL_CUSTOMER, new String[]{"CreditAmount"}, "CustId=" + iCustId, null, null,
                     null, null);
 
             if (cursor.moveToFirst()) {
-                result =  cursor.getFloat(0);
+                result = cursor.getFloat(0);
             } else {
-                result =  0;
-            }}catch(Exception e)
-        {
+                result = 0;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             result = 0;
         }
@@ -3379,7 +3379,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Update Customer table-----
     public int updateCustomerTransaction(int iCustId, float fLastTransaction, float fTotalTransaction, float fCreditAmount) {
         SQLiteDatabase db = getWritableDatabase();
-        int result =0;
+        int result = 0;
         try {
             cvDbValues = new ContentValues();
 
@@ -3388,8 +3388,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put("CreditAmount", fCreditAmount);
 
             result = db.update(TBL_CUSTOMER, cvDbValues, "CustId=" + iCustId, null);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             result = 0;
         }
@@ -3622,6 +3621,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "Quantity", "ImageUri"},
                 "DeptCode=" + DeptCode, null, null, null, null);
     }
+
     public Cursor getItemsForAllDepartments() {
         return dbFNB.query(TBL_ITEM_Outward, new String[]{"MenuCode", "ItemName", "Quantity", "ImageUri"},
                 "DeptCode > 0", null, null, null, null);
@@ -3787,18 +3787,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Update Item stock-----
     public int updateItemStock(int MenuCode, float Stock) {
         SQLiteDatabase db = getWritableDatabase();
-        int result =0;
+        int result = 0;
         try {
             cvDbValues = new ContentValues();
 
             cvDbValues.put("Quantity", Stock);
 
             result = db.update(TBL_ITEM_Outward, cvDbValues, "MenuCode=" + MenuCode, null);
-        }catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return  result;
+        return result;
     }
 
     // -----Update Item stock-----
@@ -3889,6 +3888,55 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.insert(TBL_PENDINGKOT, null, cvDbValues);
     }
 
+    public long addKOT_new(PendingKOT objPendingKOT) {
+
+        long result =0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+        cvDbValues = new ContentValues();
+
+        cvDbValues.put("TokenNumber", objPendingKOT.getTokenNumber());
+        cvDbValues.put("TableNumber", objPendingKOT.getTableNumber());
+        cvDbValues.put("SubUdfNumber", objPendingKOT.getSubUdfNumber());
+        cvDbValues.put("EmployeeId", objPendingKOT.getEmployeeId());
+        cvDbValues.put("CustId", objPendingKOT.getCusId());
+        cvDbValues.put("Time", objPendingKOT.getTime());
+        cvDbValues.put("ItemNumber", objPendingKOT.getItemNumber());
+        cvDbValues.put("ItemName", objPendingKOT.getItemName());
+        cvDbValues.put("Quantity", objPendingKOT.getQuantity());
+        cvDbValues.put("Rate", objPendingKOT.getRate());
+        cvDbValues.put("Amount", objPendingKOT.getAmount());
+        cvDbValues.put("TaxPercent", objPendingKOT.getTaxPercent());
+        cvDbValues.put("TaxAmount", objPendingKOT.getTaxAmount());
+        cvDbValues.put("DiscountPercent", objPendingKOT.getDiscountPercent());
+        cvDbValues.put("DiscountAmount", objPendingKOT.getDiscountAmount());
+        cvDbValues.put("ModifierAmount", objPendingKOT.getModifierAmount());
+        cvDbValues.put("ServiceTaxPercent", objPendingKOT.getServiceTaxPercent());
+        cvDbValues.put("ServiceTaxAmount", objPendingKOT.getServiceTaxAmount());
+        cvDbValues.put("TaxType", objPendingKOT.getTaxType());
+        cvDbValues.put("DeptCode", objPendingKOT.getDeptCode());
+        cvDbValues.put("CategCode", objPendingKOT.getCategCode());
+        cvDbValues.put("KitchenCode", objPendingKOT.getKitchenCode());
+        cvDbValues.put("OrderMode", objPendingKOT.getOrderMode());
+        cvDbValues.put("IsCheckedOut", objPendingKOT.getIsCheckedOut());
+        cvDbValues.put("TableSplitNo", objPendingKOT.getTableSplitNo());
+        cvDbValues.put("PrintKOTStatus", objPendingKOT.getPrintKOTStatus());
+        cvDbValues.put(KEY_HSNCode, objPendingKOT.getHSNCode());
+        cvDbValues.put(KEY_POS, objPendingKOT.getPOS());
+        cvDbValues.put(KEY_SupplyType, objPendingKOT.getSupplyType());
+
+        result = db.insert(TBL_PENDINGKOT, null, cvDbValues);
+    }catch(Exception e )
+    {
+        result = 0;
+        e.printStackTrace();
+    }finally
+
+    {
+        return result;
+    }
+}
+
     public long updateKOT(int ItemNo, float Qty, float Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus) {
         cvDbValues = new ContentValues();
         cvDbValues.put("Quantity", Qty);
@@ -3896,6 +3944,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("TaxAmount", TaxAmt);
         cvDbValues.put("ServiceTaxAmount", SerTaxAmt);
         return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
+    }
+
+    public long updateKOT_new(int ItemNo, float Qty, float Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result =0;
+        try
+        {
+            cvDbValues = new ContentValues();
+            cvDbValues.put("Quantity", Qty);
+            cvDbValues.put("Amount", Amount);
+            cvDbValues.put("TaxAmount", TaxAmt);
+            cvDbValues.put("ServiceTaxAmount", SerTaxAmt);
+            result =  db.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            return result;
+        }
+
     }
 
     public long updateKOTNo(int KOTNo) {
@@ -3923,6 +3992,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         " AND ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode + " AND PrintKOTStatus = " + PrintStatus
                 , null, null, null, null);
     }
+    public Cursor getItemsForUpdatingKOT_new(int TableNo, int SubUdfNo, int TableSplitNo, int ItemNo, int OrderMode) {
+        int PrintStatus = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TBL_PENDINGKOT, new String[]{"*"},
+                    "TableNumber=" + TableNo + " AND SubUdfNumber=" + SubUdfNo + " AND TableSplitNo=" + TableSplitNo +
+                            " AND ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode + " AND PrintKOTStatus = " + PrintStatus
+                    , null, null, null, null);
+        }catch (Exception e)
+        {
+            cursor = null;
+            e.printStackTrace();
+        }
+        finally {
+            return cursor;
+        }
+    }
 
     // -----Retrieve KOT items for billing from Pending KOT table-----
     public Cursor getKOTItems(int TableNumber, int SubUdfNumber, int TableSplitNo) {
@@ -3934,6 +4021,45 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Cursor getItemsForReprintBill(int InvoiceNo) {
         // return dbFNB.rawQuery("Select * from BillItem, BillDetail where BillDetail.BillNumber = '" + BillNumber + "' AND BillItem.BillNumber = BillDetail.BillNumber", null);
         return dbFNB.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "'", null);
+    }
+
+    public Cursor getItemsForReprintBill_new(int InvoiceNo) {
+        // return dbFNB.rawQuery("Select * from BillItem, BillDetail where BillDetail.BillNumber = '" + BillNumber + "' AND BillItem.BillNumber = BillDetail.BillNumber", null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor crsr = null;
+        try
+        {
+            crsr = db.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "'", null);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            crsr = null;
+        }
+        finally {
+            return crsr;
+        }
+    }
+    public float getDiscountAmountForBillNumber(int InvoiceNo) {
+        // return dbFNB.rawQuery("Select * from BillItem, BillDetail where BillDetail.BillNumber = '" + BillNumber + "' AND BillItem.BillNumber = BillDetail.BillNumber", null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor crsr = null;
+        float discount  = 0;
+        try
+        {
+            crsr = db.rawQuery("Select * from " + TBL_BILLDETAIL + " where InvoiceNo = '" + InvoiceNo + "'", null);
+            if(crsr!= null && crsr.moveToFirst())
+                discount = crsr.getFloat(crsr.getColumnIndex("TotalDiscountAmount"));
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            discount = 0;
+        }
+        finally {
+            return discount;
+        }
     }
 
     // -----Retrieve KOT items for sa;es tax print
@@ -3981,6 +4107,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int deleteKOTItemsByItemToken(String ItemNumber, int TokenNumber, int SubUdfNumber) {
 
         return dbFNB.delete(TBL_PENDINGKOT, "ItemNumber=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND SubUdfNumber=" + SubUdfNumber, null);
+    }
+ public int deleteKOTItemsByItemToken_new(String ItemNumber, int TokenNumber, int SubUdfNumber) {
+
+     SQLiteDatabase db = this.getWritableDatabase();
+     int result =0;
+     try {
+         result = db.delete(TBL_PENDINGKOT, "ItemNumber=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND SubUdfNumber=" + SubUdfNumber, null);
+     }catch (Exception e)
+     {
+         e.printStackTrace();
+         result =0;
+     }finally {
+         return result;
+     }
+
     }
 
     // -----Delete Customer items from Pending KOT table-----
@@ -4092,6 +4233,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("TokenNumber", objDeletedKOT.getTokenNumber());
 
         return dbFNB.insert(TBL_DELETEDKOT, null, cvDbValues);
+    }
+public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    long result =0;
+    try {
+        cvDbValues = new ContentValues();
+
+        cvDbValues.put("Reason", objDeletedKOT.getReason());
+        cvDbValues.put("EmployeeId", objDeletedKOT.getEmployeeId());
+        cvDbValues.put("SubUdfNumber", objDeletedKOT.getSubudfNumber());
+        cvDbValues.put("TableNumber", objDeletedKOT.getTableNumber());
+        cvDbValues.put("Time", objDeletedKOT.getTime());
+        cvDbValues.put("TokenNumber", objDeletedKOT.getTokenNumber());
+
+        result = db.insert(TBL_DELETEDKOT, null, cvDbValues);
+    }catch (Exception e)
+    {
+        result =0;
+        e.printStackTrace();
+    }
+    finally {
+        return result;
+    }
     }
 
     // -----Delete all KOT items from Pending KOT table-----
@@ -4289,6 +4453,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 "' AND BillAmount = '" + BillAmount + "' AND InvoiceDate = '" + strDate_date.getTime() + "' ", null, null, null, null);
     }
 
+    //public Cursor getBillDetailByCustomerWithTime11(int CustId, int BillStatus, float BillAmount ,String time,String strDate ) {
+
+
+        /*SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        try {
+             date = format.parse(strDate);
+            System.out.println(date.getTime());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Cursor cursor = dbFNB.query(TBL_BILLDETAIL, new String[]{"*"}, "CustId= '" + CustId + "' AND BillStatus = '" + BillStatus +
+                "' AND BillAmount = '" + BillAmount + "' AND Time = '" + time + "' AND InvoiceDate LIKE '"+date.getTime()+"'", null, null, null, null);
+        while(cursor !=null && cursor.moveToNext() && paid < 1 )
+        {
+            double billamount = cursor.getDouble(cursor.getColumnIndex(KEY_BillAmount));
+            float ff = Float.parseFloat(String.format("%.2f",billamount));
+            double roundedAmount_database = Math.ceil(ff);
+            double roundedAmount_received = Math.ceil(BillAmount);
+            //Log.d("roundedAmount_database",String.valueOf(roundedAmount_database));
+            //Log.d("roundedAmount_received",String.valueOf(roundedAmount_received));
+            if(roundedAmount_database ==roundedAmount_received )
+                paid =cursor.getInt(cursor.getColumnIndex(KEY_InvoiceNo));
+
+        }*/
+   // }
+
 //    public Cursor getBillDetailByCustomerWithTime1(int CustId, int BillStatus, float BillAmount ,String time) {
 //
 //        double amt1 = BillAmount-0.5;
@@ -4297,28 +4489,71 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 //                "' AND BillAmount = '" + BillAmount + "' AND "+KEY_Time +" LIKE '" + time + "' ", null, null, null, null);
 //    }
 
-    public int getBillDetailByCustomerWithTime1(int CustId, int BillStatus, float BillAmount ,String time) {
+    public int getBillDetailByCustomerWithTime1(int CustId, int BillStatus, double BillAmount ,String time) {
 
         int paid =0;
-        Cursor cursor =  dbFNB.query(TBL_BILLDETAIL, new String[]{"*"}, "CustId= '" + CustId + "' AND BillStatus = '" + BillStatus +
-                "'  AND "+KEY_Time +" LIKE '" + time + "' ", null, null, null, null);
-        if(cursor !=null && cursor.moveToFirst())
+        SQLiteDatabase db = this.getReadableDatabase();
+        try
         {
-            double billamount = cursor.getDouble(cursor.getColumnIndex(KEY_BillAmount));
-            float ff = Float.parseFloat(String.format("%.2f",billamount));
-            if(ff == BillAmount)
-                paid =1;
+            Cursor cursor =  db.query(TBL_BILLDETAIL, new String[]{"*"}, "CustId= '" + CustId + "' AND BillStatus = '" + BillStatus +
+                    "'  AND "+KEY_Time +" LIKE '" + time + "' ", null, null, null, null);
+            while(cursor !=null && cursor.moveToNext() && paid < 1 )
+            {
+                double billamount = cursor.getDouble(cursor.getColumnIndex(KEY_BillAmount));
+                float ff = Float.parseFloat(String.format("%.2f",billamount));
+               double roundedAmount_database = Math.ceil(ff);
+               double roundedAmount_received = Math.ceil(BillAmount);
+                //Log.d("roundedAmount_database",String.valueOf(roundedAmount_database));
+                //Log.d("roundedAmount_received",String.valueOf(roundedAmount_received));
+                if(roundedAmount_database ==roundedAmount_received )
+                    paid =cursor.getInt(cursor.getColumnIndex(KEY_InvoiceNo));
 
+            }
+        }catch (Exception e)
+        {
+            paid =0;
+            e.printStackTrace();
         }
-        return paid;
+        finally {
+            return paid;
+        }
+
     }
 
+    public Cursor getBillDetailByCustomerIdTime(int CustId, int BillStatus, String time,int billingMode  ) {
 
+        Cursor cursor =null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        try {
+             cursor = db.query(TBL_BILLDETAIL, new String[]{"*"}, "CustId= '" + CustId + "' AND BillStatus = '" + BillStatus +
+                    "'  AND " + KEY_Time + " LIKE '" + time + "' AND "+KEY_BillingMode+" = "+billingMode, null, null, null, null);
+
+        } catch (Exception e) {
+            cursor = null;
+            e.printStackTrace();
+        } finally {
+            return cursor;
+        }
+    }
     // -----Void Bill-----
     public int makeBillVoid(int InvoiceNo) {
-        cvDbValues = new ContentValues();
-        cvDbValues.put(KEY_BillStatus, 0);
-        return dbFNB.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
+        SQLiteDatabase db ;
+        int result = 0;
+        try
+        {
+            db = this.getReadableDatabase();
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_BillStatus, 0);
+            result =db.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
+        }catch (Exception e)
+        {
+           e.printStackTrace();
+            result =0;
+        }
+        finally {
+             return result;
+        }
+
     }
 
     // -----update Reprint Count for duplicate bill print-----
