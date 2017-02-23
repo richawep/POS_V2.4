@@ -128,7 +128,7 @@
                                             android:background="#000000" />-->
 
                                         <ListView
-                                            android:id="@+id/lstStockDepartmentNames"
+                                            android:id="@+id/listViewFilter1"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_marginTop="5dp"
@@ -144,7 +144,7 @@
                                             android:background="#000000" />
 
                                         <ListView
-                                            android:id="@+id/lstStockCategoryNames"
+                                            android:id="@+id/listViewFilter2"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -159,7 +159,7 @@
                                             android:background="#000000" />
 
                                         <GridView
-                                            android:id="@+id/gridStockItems"
+                                            android:id="@+id/listViewFilter3"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
