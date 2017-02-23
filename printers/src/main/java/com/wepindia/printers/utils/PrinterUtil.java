@@ -527,15 +527,18 @@ public class PrinterUtil {
         while (it1.hasNext())
         {
             BillTaxItem billKotItem = (BillTaxItem) it1.next();
-            String TxName = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getTxName()),23,1);
-            String TxPercent = getPostAddedSpaceFormat("","@ " + String.valueOf(billKotItem.getPercent()) + " %",15,1);
-            //String TxValue = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getPrice()),8,1);
-            String TxValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getPrice()),7,1),8 ,1);
+            if(billKotItem.getPercent()> 0)
+            {
+                String TxName = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getTxName()),23,1);
+                String TxPercent = getPostAddedSpaceFormat("","@ " + String.valueOf(billKotItem.getPercent()) + " %",15,1);
+                //String TxValue = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getPrice()),8,1);
+                String TxValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getPrice()),7,1),8 ,1);
 
-            //String pre = getSpaceFormat(billKotItem.getTxName(),String.valueOf(billKotItem.getPercent()),String.valueOf(billKotItem.getPrice()),36,3);
-            String pre = TxName + TxPercent + TxValue;
-            dSalesTaxAmt += billKotItem.getPrice();
-            esc.addText(pre+"\n");
+                //String pre = getSpaceFormat(billKotItem.getTxName(),String.valueOf(billKotItem.getPercent()),String.valueOf(billKotItem.getPrice()),36,3);
+                String pre = TxName + TxPercent + TxValue;
+                dSalesTaxAmt += billKotItem.getPrice();
+                esc.addText(pre+"\n");
+            }
         }
         // Service Sub Tax Calculation
         double dSerSubTaxPer = 0, dSerSubTaxAmt = 0;
@@ -550,37 +553,48 @@ public class PrinterUtil {
 
         // Service Tax
         double dServiceTaxPer = 0, dServiceTaxAmt = 0;
+        boolean isServiceTaxApplied = false;
         ArrayList<BillServiceTaxItem> billServiceTaxItems = item.getBillServiceTaxItems();
         Iterator it2 = billServiceTaxItems.iterator();
-        while (it2.hasNext())
-        {
+        while (it2.hasNext()) {
+
             BillServiceTaxItem billKotItem = (BillServiceTaxItem) it2.next();
-            dServiceTaxPer = billKotItem.getServicePercent();
-            dServiceTaxAmt = billKotItem.getServicePrice();
-            dServiceTaxPer = dServiceTaxPer - dSerSubTaxPer;
-            dServiceTaxAmt = dServiceTaxAmt - dSerSubTaxAmt;
-            String TxName = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getServiceTxName()),23,1);
-            String TxPercent = getPostAddedSpaceFormat("","@ " + String.format("%.2f",dServiceTaxPer) + " %",15,1);
-            String TxValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",dServiceTaxAmt),7,1),8,1);
-            //String pre = getSpaceFormat(billKotItem.getServiceTxName(),String.valueOf(billKotItem.getServicePercent()),String.valueOf(billKotItem.getServicePrice()),36,1);
-            String pre = TxName + TxPercent + TxValue;
-            esc.addText(pre+"\n");
+            if (billKotItem.getServicePercent() > 0){
+                isServiceTaxApplied = true;
+                dServiceTaxPer = billKotItem.getServicePercent();
+                dServiceTaxAmt = billKotItem.getServicePrice();
+                dServiceTaxPer = dServiceTaxPer - dSerSubTaxPer;
+                dServiceTaxAmt = dServiceTaxAmt - dSerSubTaxAmt;
+                String TxName = getPostAddedSpaceFormat("", String.valueOf(billKotItem.getServiceTxName()), 23, 1);
+                String TxPercent = getPostAddedSpaceFormat("", "@ " + String.format("%.2f", dServiceTaxPer) + " %", 15, 1);
+                String TxValue = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", dServiceTaxAmt), 7, 1), 8, 1);
+                //String pre = getSpaceFormat(billKotItem.getServiceTxName(),String.valueOf(billKotItem.getServicePercent()),String.valueOf(billKotItem.getServicePrice()),36,1);
+                String pre = TxName + TxPercent + TxValue;
+                esc.addText(pre + "\n");
+            }
         }
         // Service Sub Tax
+        if(isServiceTaxApplied){
         ArrayList<BillSubTaxItem> billSubTaxItems = item.getBillSubTaxItems();
         Iterator it3 = billSubTaxItems.iterator();
-        while (it3.hasNext())
+            while (it3.hasNext())
+            {
+                BillSubTaxItem billKotItem = (BillSubTaxItem) it3.next();
+                String TxName = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getTxName()),23,1);
+                String TxPercent = getPostAddedSpaceFormat("","@ " + String.format("%.2f",billKotItem.getPercent()) + " %",15,1);
+                String TxValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getPrice()),7,1),8,1);
+                //String pre = getSpaceFormat(billKotItem.getTxName(), String.format("%.2f",billKotItem.getPercent()), String.format("%.2f",billKotItem.getPrice()),36,0);
+                String pre = TxName + TxPercent + TxValue;
+                esc.addText(pre+"\n");
+            }
+        }
+        else
         {
-            BillSubTaxItem billKotItem = (BillSubTaxItem) it3.next();
-            String TxName = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getTxName()),23,1);
-            String TxPercent = getPostAddedSpaceFormat("","@ " + String.format("%.2f",billKotItem.getPercent()) + " %",15,1);
-            String TxValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getPrice()),7,1),8,1);
-            //String pre = getSpaceFormat(billKotItem.getTxName(), String.format("%.2f",billKotItem.getPercent()), String.format("%.2f",billKotItem.getPrice()),36,0);
-            String pre = TxName + TxPercent + TxValue;
-            esc.addText(pre+"\n");
+            dSerSubTaxAmt = 0;
         }
         dTotalTaxAmt = dSalesTaxAmt + dServiceTaxAmt + dSerSubTaxAmt;
-        esc.addText(getSpaceFormater("Total Tax Amount",String.format("%.2f",dTotalTaxAmt),45,1)+"\n");
+        if(dTotalTaxAmt >0)
+        {   esc.addText(getSpaceFormater("Total Tax Amount",String.format("%.2f",dTotalTaxAmt),45,1)+"\n");}
         esc.addText("==============================================="+"\n");
         esc.addText(getSpaceFormater("TOTAL",String.format("%.2f",item.getNetTotal()),45,1)+"\n");
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
