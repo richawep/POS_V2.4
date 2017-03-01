@@ -1,6 +1,8 @@
 package com.wepindia.pos.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by PriyabratP on 29-11-2016.
@@ -20,5 +22,17 @@ public class DateUtil {
             e.printStackTrace();
         }
         return rData;
+    }
+
+    public static Date getInMills(String dateTxt){
+        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+        Date d = null;
+        try {
+            d = f.parse(dateTxt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long milliseconds = d.getTime();
+        return d;
     }
 }

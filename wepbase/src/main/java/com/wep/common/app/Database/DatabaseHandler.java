@@ -802,20 +802,47 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_DiscountPercent + " REAL, " + KEY_DiscountAmount + " REAL, " + KEY_TaxAmount + " REAL, " +
             KEY_TaxPercent + " REAL)";
 
-    // richa_2012
     String QUERY_CREATE_TABLE_Outward_Supply_Items_Details = " CREATE TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + "( "
-            + KEY_GSTIN + " TEXT, " + KEY_CustName + " TEXT, " + KEY_CustStateCode + " Text, "
-            + KEY_InvoiceNo + " INTEGER PRIMARY KEY, " + KEY_InvoiceDate + " TEXT, " + KEY_Time + " TEXT, " + KEY_POS + " TEXT, "
-            + KEY_TotalItems + " NUMERIC," + KEY_TaxableValue + " TEXT, " + KEY_SubTotal + " REAl, "
-            + KEY_BillStatus + " NUMERIC," + KEY_IGSTRate + " REAL," + KEY_IGSTAmount + " REAL," + KEY_CGSTRate + " REAL," +
-            KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL," + KEY_SGSTAmount + " REAL," + KEY_GrandTotal + " REAL, " +
-            KEY_ReverseCharge + " TEXT, " + KEY_BusinessType + " TEXT," +
-            KEY_ProvisionalAssess + " TEXT, " + KEY_Ecom_GSTIN + " TEXT, " + KEY_CardPayment + " REAL, " + KEY_CashPayment + " REAL, "
-            + KEY_BillAmount + " REAL, " + KEY_BillingMode + " TEXT, "
-            + KEY_CouponPayment + " REAL, " + KEY_WalletPayment + " REAL, " + KEY_CustId + " NUMERIC, " + KEY_DeliveryCharge + " REAL, " + KEY_TotalServiceTaxAmount + " REAL, "
-            + KEY_EmployeeId + " NUMERIC," + KEY_ReprintCount + " NUMERIC, " + KEY_TotalDiscountAmount + " REAL,"
-            + KEY_TotalTaxAmount + " REAL, " + KEY_UserId + " NUMERIC, " + KEY_PettyCashPayment + " REAL, "
-            + KEY_PaidTotalPayment + " REAL, " + KEY_ChangePayment + " REAL)";
+            + KEY_GSTIN + " TEXT, "
+            + KEY_CustName + " TEXT, "
+            + KEY_CustStateCode + " Text, "
+            + KEY_InvoiceNo + " INTEGER PRIMARY KEY, "
+            + KEY_InvoiceDate + " TEXT, "
+            + KEY_Time + " TEXT, "
+            + KEY_POS + " TEXT, "
+            + KEY_TotalItems + " NUMERIC,"
+            + KEY_TaxableValue + " TEXT, "
+            + KEY_SubTotal + " REAl, "
+            + KEY_BillStatus + " NUMERIC,"
+            + KEY_IGSTRate + " REAL,"
+            + KEY_IGSTAmount + " REAL,"
+            + KEY_CGSTRate + " REAL,"
+            + KEY_CGSTAmount + " REAL, "
+            + KEY_SGSTRate + " REAL,"
+            + KEY_SGSTAmount + " REAL,"
+            + KEY_GrandTotal + " REAL, "
+            + KEY_ReverseCharge + " TEXT, "
+            + KEY_BusinessType + " TEXT,"
+            + KEY_ProvisionalAssess + " TEXT, "
+            + KEY_Ecom_GSTIN + " TEXT, "
+            + KEY_CardPayment + " REAL, "
+            + KEY_CashPayment + " REAL, "
+            + KEY_BillAmount + " REAL, "
+            + KEY_BillingMode + " TEXT, "
+            + KEY_CouponPayment + " REAL, "
+            + KEY_WalletPayment + " REAL, "
+            + KEY_CustId + " NUMERIC, "
+            + KEY_DeliveryCharge + " REAL, "
+            + KEY_TotalServiceTaxAmount + " REAL, "
+            + KEY_EmployeeId + " NUMERIC,"
+            + KEY_ReprintCount + " NUMERIC, "
+            + KEY_TotalDiscountAmount + " REAL,"
+            + KEY_TotalTaxAmount + " REAL, "
+            + KEY_UserId + " NUMERIC, "
+            + KEY_PettyCashPayment + " REAL, "
+            + KEY_PaidTotalPayment + " REAL, "
+            + KEY_ChangePayment + " REAL" +
+            ")";
 
     String QUERY_CREATE_TABLE_OUTWARD_SUPPLY_AMMEND = " CREATE TABLE " + TBL_OUTWARD_SUPPLY_LEDGER_AMEND + " (" +
             KEY_GSTIN + "  TEXT, " + KEY_CustName + " TEXT, " + KEY_MONTH + " TEXT, " + KEY_SupplyType + " TEXT, " +
@@ -4757,9 +4784,12 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
     // -----Bill wise and Transaction Report-----
     public Cursor getBillwiseReport(String StartDate, String EndDate) {
-        return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"},
+        /*return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"},
                 "BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null,
-                KEY_InvoiceNo);
+                KEY_InvoiceNo);*/
+
+        String QUERY_REPORT = "Select * from "+TBL_BILLDETAIL+" where "+"BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'";
+        return dbFNB.rawQuery(QUERY_REPORT,null);
     }
 
     // richa_2012
@@ -4768,6 +4798,15 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"},
                 "BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' AND " + KEY_BillingMode + " LIKE '"
                         + billingMode + "'", null, null, null, KEY_InvoiceNo);
+
+        /*String QUERY_REPORT = "Select * from TBL_BILLDETAIL where "+"BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' AND " + KEY_BillingMode + " LIKE '" + billingMode + "'";
+        return dbFNB.rawQuery(QUERY_REPORT,null);*/
+    }
+
+    // -----Bill wise and Transaction Report-----
+    public Cursor getBillingReport1(String StartDate, String EndDate, int billingMode)
+    {
+        return dbFNB.rawQuery("Select * from TBL_BILLDETAIL where "+"BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' AND " + KEY_BillingMode + " LIKE '" + billingMode + "'",null);
     }
 
     // -----Tax Report-----
@@ -6825,6 +6864,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     /************************************************************************************************************************************/
     // -----Insert Bill-----
     public long addBilll(BillDetail objBillDetail, String gstin) {
+        long rData = -1;
         SQLiteDatabase db = getWritableDatabase();
         try{
             ContentValues cvDbValues = new ContentValues();
@@ -6862,13 +6902,14 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
             cvDbValues.put(KEY_SGSTAmount, objBillDetail.getSGSTAmount());
             cvDbValues.put(KEY_SubTotal, objBillDetail.getSubTotal());
 
-            return db.insert(TBL_BILLDETAIL, null, cvDbValues);
+            rData = db.insert(TBL_BILLDETAIL, null, cvDbValues);
         }catch (Exception e){
-            e.printStackTrace();
-            return -1;
+            Log.d(TAG,e.toString());
+            rData = -1;
         }finally {
             //db.close();
         }
+        return rData;
     }
 
     /*public long updateBill(BillDetail objBillDetail) {
