@@ -42,6 +42,7 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.GenericClasses.ReportHelper;
 import com.wepindia.pos.R;
 import com.wepindia.pos.TabbedReportActivity;
+import com.wepindia.pos.utils.DateUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     DateTime objDate;
     MessageDialog MsgBox;
     TextView lblPersonName, txtReportPerson;
-    EditText txtReportDateStart, txtReportDateEnd, txtPersonId;
+    private EditText txtReportDateStart, txtReportDateEnd, txtPersonId;
     WepButton btnPrint, btnExport, btnView;
     Spinner spnrReportType;
     TableRow rowPersonId;//, rowReportColumnCaption;
@@ -339,7 +340,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     })
                     .show();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -384,35 +384,44 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     }
 
     public void ViewReport() {
-
-        // Clear the table
-        tblReport.removeAllViews();
-        if (spnrReportType.getSelectedItemPosition() != 5 ||
-                spnrReportType.getSelectedItemPosition() != 6) {
-            if (DateValidation(txtReportDateStart.getText().toString(),
-                    txtReportDateEnd.getText().toString()) != true) {
-                return;
-            }
+        String txtStartDate = txtReportDateStart.getText().toString();
+        String txtEndDate = txtReportDateEnd.getText().toString();
+        if(txtStartDate.equalsIgnoreCase("") || txtEndDate.equalsIgnoreCase(""))
+        {
+            MsgBox.Show("Warning", "Please select From & To Date");
         }
-        // ReportHelper object
-        ReportHelper objReportColumn = new ReportHelper(myContext);
-        objReportColumn.setReportColumnCaptions(myContext, strReportName, tblReport);
+        else
+        {
+            startDate_date = DateUtil.getInMills(txtStartDate);
+            endDate_date = DateUtil.getInMills(txtEndDate);
+            // Clear the table
+            tblReport.removeAllViews();
+            if (spnrReportType.getSelectedItemPosition() != 5 || spnrReportType.getSelectedItemPosition() != 6)
+            {
+                if (DateValidation(txtReportDateStart.getText().toString(), txtReportDateEnd.getText().toString()) != true)
+                {
+                    return;
+                }
+            }
+            // ReportHelper object
+            ReportHelper objReportColumn = new ReportHelper(myContext);
+            objReportColumn.setReportColumnCaptions(myContext, strReportName, tblReport);
 
-        //switch (spnrReportType.getSelectedItemPosition() + 1) {
-        switch (Integer.valueOf(strReportsId)) {
-            case 1:    // Bill wise Report
-                BillwiseReport();
-                break;
+            //switch (spnrReportType.getSelectedItemPosition() + 1) {
+            switch (Integer.valueOf(strReportsId)) {
+                case 1:    // Bill wise Report
+                    BillwiseReport();
+                    break;
 
-            case 2:    // Transaction Report
-                TransactionReport();
-                break;
+                case 2:    // Transaction Report
+                    TransactionReport();
+                    break;
 
-            case 3:    // Sales Tax Report
-                TaxReport();
-                break;
+                case 3:    // Sales Tax Report
+                    TaxReport();
+                    break;
 
-            case 4:    // Service Tax Report
+                case 4:    // Service Tax Report
                 /*int iTaxType = 0;
                 String strServiceTaxPercent = "";
                 Cursor Settings = dbReport.getBillSetting();
@@ -427,145 +436,146 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 }
                 break;*/
 
-            case 5:    // Void Bill Report
-                VoidBillReport();
-                break;
+                case 5:    // Void Bill Report
+                    VoidBillReport();
+                    break;
 
-            case 6:    // Duplicate Bill Report
-                DuplicateBillReport();
-                break;
+                case 6:    // Duplicate Bill Report
+                    DuplicateBillReport();
+                    break;
 
-            case 7:    // KOT Pending Report
-                KOTPendingReport();
-                break;
+                case 7:    // KOT Pending Report
+                    KOTPendingReport();
+                    break;
 
-            case 8:    // KOT Deleted Report
-                KOTDeletedReport();
-                break;
+                case 8:    // KOT Deleted Report
+                    KOTDeletedReport();
+                    break;
 
-            case 9:    // Item wise Report
-                ItemwiseReport();
-                break;
+                case 9:    // Item wise Report
+                    ItemwiseReport();
+                    break;
 
-            case 10: // Day wise Report
-                int count = tblReport.getChildCount();
-                DaywiseReport(count);
-                break;
+                case 10: // Day wise Report
+                    int count = tblReport.getChildCount();
+                    DaywiseReport(count);
+                    break;
 
-            case 11: // Month wise Report
-                try {
-                    MonthwiseReport();
-                } catch (NumberFormatException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                break;
+                case 11: // Month wise Report
+                    try {
+                        MonthwiseReport();
+                    } catch (NumberFormatException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    break;
 
-            case 12: // Department wise Report
-                DepartmentwiseReport();
-                break;
+                case 12: // Department wise Report
+                    DepartmentwiseReport();
+                    break;
 
-            case 13: // Category wise Report
-                CategorywiseReport();
-                break;
+                case 13: // Category wise Report
+                    CategorywiseReport();
+                    break;
 
-            case 14: // Kitchen wise Report
-                KitchenwiseReport();
-                break;
+                case 14: // Kitchen wise Report
+                    KitchenwiseReport();
+                    break;
 
-            case 15: // Waiter wise Report
-                WaiterwiseReport();
-                break;
+                case 15: // Waiter wise Report
+                    WaiterwiseReport();
+                    break;
 
-            case 16: // Waiter Detailed Report
-                WaiterDetailedReport();
-                break;
+                case 16: // Waiter Detailed Report
+                    WaiterDetailedReport();
+                    break;
 
-            case 17: // Rider wise Report
-                RiderwiseReport();
-                break;
+                case 17: // Rider wise Report
+                    RiderwiseReport();
+                    break;
 
-            case 18: // Rider Detailed Report
-                RiderDetailedReport();
-                break;
+                case 18: // Rider Detailed Report
+                    RiderDetailedReport();
+                    break;
 
-            case 19: // User wise Report
-                UserwiseReport();
-                break;
+                case 19: // User wise Report
+                    UserwiseReport();
+                    break;
 
-            case 20: // User Detailed Report
-                UserDetailedReport();
-                break;
+                case 20: // User Detailed Report
+                    UserDetailedReport();
+                    break;
 
-            case 21: // Customer wise Report
-                CustomerwiseReport();
-                break;
+                case 21: // Customer wise Report
+                    CustomerwiseReport();
+                    break;
 
-            case 22: // Customer Detailed Report
-                CustomerDetailedReport();
-                break;
+                case 22: // Customer Detailed Report
+                    CustomerDetailedReport();
+                    break;
 
-            case 23: // Payments Report
-                PaymentReport();
-                break;
+                case 23: // Payments Report
+                    PaymentReport();
+                    break;
 
-            case 24: // Receipts Report
-                ReceiptReport();
-                break;
+                case 24: // Receipts Report
+                    ReceiptReport();
+                    break;
 
-            case 25: // Fast Sellin Itemwise Report
-                FastSellingItemwiseReport();
-                break;
+                case 25: // Fast Sellin Itemwise Report
+                    FastSellingItemwiseReport();
+                    break;
 
-            case 26: //// GSTR1-B2B
-                GSTR1_B2B();
-                break;
-            case 27: // GSTR1-B2BA
-                break;
-            case 28:// GSTR1-B2C
-                GSTR1_B2Cs();
-                break;
-            case 29:// GSTR1-B2ClA
-                break;
-            case 30:// GSTR1-B2Cl
-                GSTR1_B2Cl();
-                break;
-            case 31:// GSTR1-B2CsA
-                break;
-            case 32: // GSTR2-B2B
-                GSTR2_registered();
-                break;
-            case 33:// GSTR2-B2BA
-                break;
-            case 34: // GTR2-B2C
-                GSTR2_unregistered();
-                break;
-            case 35: // GTR2-B2cA
-                break;
-            case 36: //2A
-                break;
-            case 37:// modified 2a
-                break;
-            case 38://2A validation
-                reconcile2();
-                break;
-            case 39://1A validation
-                reconcile1();
-                break;
-            case 40: //Supplier wise
-                SupplierwiseReport();
-                break;
-            case 41: //Cummulative Payment-Reciept-Sales Report
-                Cummulate_payment();
-                break;
-            // richa_2012
-            case 42:  // Cummulative Billing Report
-                Cummulate_Billing();
-                break;
+                case 26: //// GSTR1-B2B
+                    GSTR1_B2B();
+                    break;
+                case 27: // GSTR1-B2BA
+                    break;
+                case 28:// GSTR1-B2C
+                    GSTR1_B2Cs();
+                    break;
+                case 29:// GSTR1-B2ClA
+                    break;
+                case 30:// GSTR1-B2Cl
+                    GSTR1_B2Cl();
+                    break;
+                case 31:// GSTR1-B2CsA
+                    break;
+                case 32: // GSTR2-B2B
+                    GSTR2_registered();
+                    break;
+                case 33:// GSTR2-B2BA
+                    break;
+                case 34: // GTR2-B2C
+                    GSTR2_unregistered();
+                    break;
+                case 35: // GTR2-B2cA
+                    break;
+                case 36: //2A
+                    break;
+                case 37:// modified 2a
+                    break;
+                case 38://2A validation
+                    reconcile2();
+                    break;
+                case 39://1A validation
+                    reconcile1();
+                    break;
+                case 40: //Supplier wise
+                    SupplierwiseReport();
+                    break;
+                case 41: //Cummulative Payment-Reciept-Sales Report
+                    Cummulate_payment();
+                    break;
+                // richa_2012
+                case 42:  // Cummulative Billing Report
+                    Cummulate_Billing();
+                    break;
 
+            }
         }
     }
 
@@ -1092,14 +1102,11 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
     private void BillwiseReport() {
-        /*Cursor Report = dbReport.getBillwiseReport(
-                txtReportDateStart.getText().toString(), txtReportDateEnd.getText().toString());*/
+        /*Cursor Report = dbReport.getBillwiseReport(txtReportDateStart.getText().toString(), txtReportDateEnd.getText().toString());*/
+        Cursor Report = dbReport.getBillwiseReport(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
 
-        Cursor Report = dbReport.getBillwiseReport(
-                String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
-
-        if (Report.moveToFirst()) {
-
+        if (Report.moveToFirst())
+        {
             TextView Date, BillNumber, TotalItems, Amount, SalesTax, ServiceTax, Discount;
             TableRow rowReport;
             float totSalesTax =0, totServiceTax =0, totbillAmt =0,totDisc =0;
