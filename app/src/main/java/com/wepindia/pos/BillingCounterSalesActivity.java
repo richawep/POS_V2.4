@@ -149,7 +149,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         tvDiscountAmount = (TextView) findViewById(R.id.tvDiscountAmount);
         tvSubTotal = (TextView) findViewById(R.id.tvSubTotalValue);
         tvBillAmount = (TextView) findViewById(R.id.tvBillTotalValue);
-
+        Time = Calendar.getInstance();
         loadAutoCompleteData();
         loadItems(0);
 
