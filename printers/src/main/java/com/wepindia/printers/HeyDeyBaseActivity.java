@@ -251,7 +251,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
                 if (isErrorCorrection && status == 0) {
                     printReceiptPrint();
                 }
-                Toast.makeText(this, "printer：" + printerNum + " status：" + str, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "printer：" + printerNum + " status：" + str, Toast.LENGTH_SHORT).show();
             } catch (RemoteException e1) {
                 Toast.makeText(this, "exception", Toast.LENGTH_SHORT).show();
                 e1.printStackTrace();

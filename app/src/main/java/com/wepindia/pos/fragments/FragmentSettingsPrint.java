@@ -58,6 +58,7 @@ public class FragmentSettingsPrint extends Fragment {
         spinnerReceipt = (Spinner) view.findViewById(R.id.spnr4);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(myContext,android.R.layout.simple_spinner_item, printersList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        initSinglePrinter();
         spinnerKot.setAdapter(dataAdapter);
         spinnerKot.setSelection(getPosition(sharedPreferences.getString("kot","--Select--")));
         spinnerBill.setAdapter(dataAdapter);
@@ -135,6 +136,15 @@ public class FragmentSettingsPrint extends Fragment {
         });
         return view;
     }
+
+    private void initSinglePrinter() {
+        editor.putString("kot","Heyday");
+        editor.putString("bill","Heyday");
+        editor.putString("report","Heyday");
+        editor.putString("receipt","Heyday");
+        editor.commit();
+    }
+
     public void saveKotPrint() {
         String str = printersList.get(spinnerKot.getSelectedItemPosition());
         if(str.equalsIgnoreCase("--Select--"))
