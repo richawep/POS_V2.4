@@ -93,59 +93,63 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(DEBUG_TAG, "requestCode" + requestCode + '\n' + "resultCode" + resultCode);
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_ENABLE_BT) {
-            if (resultCode == Activity.RESULT_OK) {
-                // bluetooth is opened , select bluetooth device fome list
-                Intent intent = new Intent(HeyDeyBaseActivity.this, BluetoothDeviceList.class);
-                startActivityForResult(intent, REQUEST_CONNECT_DEVICE);
-            } else {
-                // bluetooth is not open
-                Toast.makeText(this, R.string.bluetooth_is_not_enabled, Toast.LENGTH_SHORT).show();
-            }
-        } else if (requestCode == REQUEST_USB_DEVICE) {
-            // When DeviceListActivity returns with a device to connect
-            if (resultCode == Activity.RESULT_OK) {
-                String address = data.getExtras().getString(EXTRA_DEVICE_ADDRESS);
-                mPortParam.setUsbDeviceName(address);
-            }
-        } else if (requestCode == REQUEST_CONNECT_DEVICE) {
-            // When DeviceListActivity returns with a device to connect
-            if (resultCode == Activity.RESULT_OK) {
-                String address = data.getExtras().getString(EXTRA_DEVICE_ADDRESS);
-                mPortParam.setBluetoothAddr(address);
-                mPortParam.setPortType(4/*mPortParam.getPortType()*/); // 4 For Bluetooth Connectivity
-                mPortParam.setIpAddr(mPortParam.getIpAddr());
-                mPortParam.setPortNumber(mPortParam.getPortNumber());
-                mPortParam.setUsbDeviceName(mPortParam.getUsbDeviceName());
-                if (CheckPortParamters(mPortParam)) {
-                    PortParamDataBase database = new PortParamDataBase(this);
-                    database.deleteDataBase("" + printerNum);
-                    database.insertPortParam(printerNum, mPortParam);
-                    // Write Print code
-                    //Toast.makeText(this, "Value inserted", Toast.LENGTH_SHORT).show();
-                    if (printType.equalsIgnoreCase("TEST")) {
-                        Intent intent = new Intent();
-                        intent.putExtra("code", code);
-                        intent.putExtra("name", name);
-                        intent.putExtra("printer", printerNum);
-                        setResult(Activity.RESULT_OK, intent);
-                        //finish();
-
-                    }
-                    try{
-                        connectOrDisConnectToDevice();
-                    }catch (DeadObjectException e){
-
-                    }
+        try{
+            Log.d(DEBUG_TAG, "requestCode" + requestCode + '\n' + "resultCode" + resultCode);
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == REQUEST_ENABLE_BT) {
+                if (resultCode == Activity.RESULT_OK) {
+                    // bluetooth is opened , select bluetooth device fome list
+                    Intent intent = new Intent(HeyDeyBaseActivity.this, BluetoothDeviceList.class);
+                    startActivityForResult(intent, REQUEST_CONNECT_DEVICE);
                 } else {
-                    messageBox(getString(R.string.port_parameters_wrong));
+                    // bluetooth is not open
+                    Toast.makeText(this, R.string.bluetooth_is_not_enabled, Toast.LENGTH_SHORT).show();
                 }
+            } else if (requestCode == REQUEST_USB_DEVICE) {
+                // When DeviceListActivity returns with a device to connect
+                if (resultCode == Activity.RESULT_OK) {
+                    String address = data.getExtras().getString(EXTRA_DEVICE_ADDRESS);
+                    mPortParam.setUsbDeviceName(address);
+                }
+            } else if (requestCode == REQUEST_CONNECT_DEVICE) {
+                // When DeviceListActivity returns with a device to connect
+                if (resultCode == Activity.RESULT_OK) {
+                    String address = data.getExtras().getString(EXTRA_DEVICE_ADDRESS);
+                    mPortParam.setBluetoothAddr(address);
+                    mPortParam.setPortType(4/*mPortParam.getPortType()*/); // 4 For Bluetooth Connectivity
+                    mPortParam.setIpAddr(mPortParam.getIpAddr());
+                    mPortParam.setPortNumber(mPortParam.getPortNumber());
+                    mPortParam.setUsbDeviceName(mPortParam.getUsbDeviceName());
+                    if (CheckPortParamters(mPortParam)) {
+                        PortParamDataBase database = new PortParamDataBase(this);
+                        database.deleteDataBase("" + printerNum);
+                        database.insertPortParam(printerNum, mPortParam);
+                        // Write Print code
+                        //Toast.makeText(this, "Value inserted", Toast.LENGTH_SHORT).show();
+                        if (printType.equalsIgnoreCase("TEST")) {
+                            Intent intent = new Intent();
+                            intent.putExtra("code", code);
+                            intent.putExtra("name", name);
+                            intent.putExtra("printer", printerNum);
+                            setResult(Activity.RESULT_OK, intent);
+                            //finish();
 
-            } else {
-                messageBox(getString(R.string.port_parameters_is_not_save));
+                        }
+                        try{
+                            connectOrDisConnectToDevice();
+                        }catch (DeadObjectException e){
+
+                        }
+                    } else {
+                        messageBox(getString(R.string.port_parameters_wrong));
+                    }
+
+                } else {
+                    messageBox(getString(R.string.port_parameters_is_not_save));
+                }
             }
+        }catch (Exception e){
+
         }
     }
 
@@ -251,7 +255,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
                 if (isErrorCorrection && status == 0) {
                     printReceiptPrint();
                 }
-                Toast.makeText(this, "printer：" + printerNum + " status：" + str, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "printer：" + printerNum + " status：" + str, Toast.LENGTH_SHORT).show();
             } catch (RemoteException e1) {
                 Toast.makeText(this, "exception", Toast.LENGTH_SHORT).show();
                 e1.printStackTrace();
@@ -408,7 +412,8 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
             int type = mGpService.getPrinterCommandType(printerNum);
             if (type == GpCom.ESC_COMMAND) {
                 int status = mGpService.queryPrinterStatus(printerNum, 500);
-                if (status == GpCom.STATE_NO_ERR) {
+                if (status == GpCom.STATE_NO_ERR)
+                {
                     if (printType.equalsIgnoreCase("TEST")) {
                         testPrint();
                     } else {
@@ -423,7 +428,13 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
                             e.printStackTrace();
                         }
                     }
-                } else {
+                }
+                else if(status == GpCom.STATE_OFFLINE)
+                {
+                    Toast.makeText(this, "Printer Offline", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
                     //Toast.makeText(getApplicationContext(), "Printer error!", Toast.LENGTH_SHORT).show();
                     try {
                         checkPrinterConfig(true);
@@ -432,7 +443,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
                     }
                 }
             }
-        } catch (RemoteException e1) {
+        } catch (Exception e1) {
             e1.printStackTrace();
         }
     }

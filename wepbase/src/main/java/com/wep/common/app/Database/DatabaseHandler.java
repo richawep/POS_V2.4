@@ -806,7 +806,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_GSTIN + " TEXT, "
             + KEY_CustName + " TEXT, "
             + KEY_CustStateCode + " Text, "
-            + KEY_InvoiceNo + " INTEGER PRIMARY KEY, "
+            + KEY_InvoiceNo + " INTEGER, "
             + KEY_InvoiceDate + " TEXT, "
             + KEY_Time + " TEXT, "
             + KEY_POS + " TEXT, "
