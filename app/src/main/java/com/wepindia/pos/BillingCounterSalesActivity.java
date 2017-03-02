@@ -397,6 +397,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private void initViews() {
         btn_PrintBill = (WepButton) findViewById(R.id.btn_PrintBill);
         btn_PrintBill.setOnClickListener(this);
+        //btn_PrintBill.setEnabled(false);
         btn_PayBill = (WepButton) findViewById(R.id.btn_PayBill);
         btn_PayBill.setOnClickListener(this);
         btn_Clear = (WepButton) findViewById(R.id.btn_Clear);
@@ -405,6 +406,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         btn_DeleteBill.setOnClickListener(this);
         btn_Reprint = (WepButton) findViewById(R.id.btn_Reprint);
         btn_Reprint.setOnClickListener(this);
+        //btn_Reprint.setEnabled(false);
         btn_DineInAddCustomer = (WepButton) findViewById(R.id.btn_DineInAddCustomer);
         btn_DineInAddCustomer.setOnClickListener(this);
         btnDept = (Button) findViewById(R.id.btnLabel1);
@@ -625,6 +627,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     public void onPrinterAvailable() {
         isPrinterAvailable = true;
+        btn_PrintBill.setEnabled(true);
+        btn_Reprint.setEnabled(true);
     }
 
     @Override

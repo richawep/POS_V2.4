@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import com.mswipetech.wisepad.sdktest.view.ApplicationData;
 import com.wep.common.app.Database.BillSetting;
 import com.wep.common.app.Database.DatabaseHandler;
+import com.wep.common.app.utils.Preferences;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 
 import java.util.Calendar;
@@ -108,6 +110,17 @@ public class LoginActivity extends Activity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        initSinglePrinter();
+    }
+
+    private void initSinglePrinter() {
+        SharedPreferences sharedPreferences = Preferences.getSharedPreferencesForPrint(LoginActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("kot","Heyday");
+        editor.putString("bill","Heyday");
+        editor.putString("report","Heyday");
+        editor.putString("receipt","Heyday");
+        editor.commit();
     }
 
     @Override
