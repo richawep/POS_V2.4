@@ -4798,16 +4798,9 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"},
                 "BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' AND " + KEY_BillingMode + " LIKE '"
                         + billingMode + "'", null, null, null, KEY_InvoiceNo);
-
-        /*String QUERY_REPORT = "Select * from TBL_BILLDETAIL where "+"BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' AND " + KEY_BillingMode + " LIKE '" + billingMode + "'";
-        return dbFNB.rawQuery(QUERY_REPORT,null);*/
     }
 
-    // -----Bill wise and Transaction Report-----
-    public Cursor getBillingReport1(String StartDate, String EndDate, int billingMode)
-    {
-        return dbFNB.rawQuery("Select * from TBL_BILLDETAIL where "+"BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' AND " + KEY_BillingMode + " LIKE '" + billingMode + "'",null);
-    }
+
 
     // -----Tax Report-----
     public Cursor getTaxReport(String StartDate, String EndDate) {

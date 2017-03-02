@@ -38,6 +38,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -102,7 +103,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
     WepButton btnSplitBill, btnSaveKOT, btnPayBill, btnDeleteKOT,btnDeleteBill, btnDeliveryStatus, btnPrintKOT, btnPrintBill,
             btnClear, btnReprint;
     TextView tvDate, tvSubTotal, tvTaxTotal, tvServiceTaxTotal, tvBillAmount, tvSubUdfValue,txtOthercharges;
-
+    private LinearLayout idd_date;
     EditText edtCustId, edtCustName, edtCustPhoneNo, edtCustAddress, etCustGSTIN;
     Button btnAddCustomer;
     CheckBox chk_interstate = null;
@@ -190,16 +191,41 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
             if (crsrSettings.moveToFirst()) {
                 HomeDeliveryCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeHomeDeliveryCaption"));
                 TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
-                if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1) {
+                if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1)
+                {
                     Date date1 = new Date();
-                    strDate = DateFormat.format("dd-MM-yyyy", date1.getTime()).toString();
-                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
-                    tvDate.setText(String.valueOf(strDate_date.getTime()));
-                } else {
-                    strDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
-                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
-                    tvDate.setText(String.valueOf(strDate_date.getTime()));
+                    try {
+                        CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
+                        tvDate.setText(String.valueOf(sdate));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+                else
+                {
+                    String strDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
+                    try {
+                        tvDate.setText(String.valueOf(strDate));
+                        Date date1 = new Date();
+                        CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
+                        if(strDate.equals(sdate.toString()))
+                            idd_date.setVisibility(View.INVISIBLE);
+                        else
+                            idd_date.setVisibility(View.VISIBLE);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+//                if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1) {
+//                    Date date1 = new Date();
+//                    strDate = DateFormat.format("dd-MM-yyyy", date1.getTime()).toString();
+//                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
+//                    tvDate.setText(String.valueOf(strDate_date.getTime()));
+//                } else {
+//                    strDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
+//                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
+//                    tvDate.setText(String.valueOf(strDate_date.getTime()));
+//                }
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
                 FASTBILLINGMODE = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
                 businessDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
@@ -692,7 +718,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
         edtCustPhoneNo = (EditText) findViewById(R.id.edtCustPhoneNo);
         edtCustAddress = (EditText) findViewById(R.id.edtCustAddress);
         btnAddCustomer = (Button) findViewById(R.id.btn_DineInAddCustomer);
-
+        idd_date  = (LinearLayout) findViewById(R.id.idd_date);
         tblOrderItems = (TableLayout) findViewById(R.id.tblOrderItems);
 
         tvSubUdfValue = (EditText) findViewById(R.id.tvSubUdfValue);
@@ -2998,8 +3024,17 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
 
         // Date
         //objBillDetail.setDate(String.valueOf(d.getTime()));
-        objBillDetail.setDate(tvDate.getText().toString());
-        Log.d("InsertBillDetail", "Date:" + d.getTime());
+        try {
+            String date_today = tvDate.getText().toString();
+            //Log.d("Date ", date_today);
+            Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date_today);
+            objBillDetail.setDate(String.valueOf(date1.getTime()));
+            Log.d("InsertBillDetail", "Date:" + objBillDetail.getDate());
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
 
         // Time
         objBillDetail.setTime(String.format("%tR", Time));

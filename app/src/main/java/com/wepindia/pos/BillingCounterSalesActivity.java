@@ -31,6 +31,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -97,6 +98,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     EditText  edtCustName, edtCustPhoneNo, edtCustAddress, edtCustDineInPhoneNo, etCustGSTIN;
     private AutoCompleteTextView autoCompleteTextViewSearchItem, autoCompleteTextViewSearchMenuCode;
     private RelativeLayout boxDept,boxCat,boxItem;
+    private LinearLayout idd_date;
     private Button btnDept,btnCat,btnItems;
     Spinner spnr_pos;
     String strUserId = "", strUserName = "", strDate = "";
@@ -149,10 +151,19 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         tvDiscountAmount = (TextView) findViewById(R.id.tvDiscountAmount);
         tvSubTotal = (TextView) findViewById(R.id.tvSubTotalValue);
         tvBillAmount = (TextView) findViewById(R.id.tvBillTotalValue);
-        Time = Calendar.getInstance();
+
         loadAutoCompleteData();
         loadItems(0);
-
+        Time = Calendar.getInstance();
+        ClearAll();
+        Cursor crssOtherChrg = db.getKOTModifierByModes_new(CounterSalesCaption);
+        double dOtherChrgs = 0;
+        if (crssOtherChrg.moveToFirst()) {
+            do {
+                dOtherChrgs += crssOtherChrg.getDouble(crssOtherChrg.getColumnIndex("ModifierAmount"));
+            } while (crssOtherChrg.moveToNext());
+            textViewOtherCharges.setText(String.format("%.2f", dOtherChrgs));
+        }
     }
 
     @Override
@@ -233,7 +244,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             @Override
             protected void onPostExecute(ArrayList<Items> list) {
                 super.onPostExecute(list);
-                editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+               // editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
                 if(list!=null)
                     setItemsAdapter(list);
                 gridViewItems.setVisibility(View.VISIBLE);
@@ -260,7 +271,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             @Override
             protected void onPostExecute(ArrayList<Items> list) {
                 super.onPostExecute(list);
-                editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+                //editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
                 if(list!=null)
                     setItemsAdapter(list);
                 gridViewItems.setVisibility(View.VISIBLE);
@@ -418,6 +429,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         editTextMobile = (EditText) findViewById(R.id.edtCustPhoneNo);
         editTextAddress = (EditText) findViewById(R.id.edtCustAddress);
         etCustGSTIN = (EditText) findViewById(R.id.etCustGSTIN);
+        idd_date  = (LinearLayout) findViewById(R.id.idd_date);
         autoCompleteTextViewSearchItem = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItem);
         autoCompleteTextViewSearchItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -532,23 +544,24 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1)
             {
                 Date date1 = new Date();
-                CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
-                String strDate = sdate.toString();
-                Date strDate_date = null;
                 try {
-                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
-                    tvDate.setText(String.valueOf(strDate_date.getTime()));
-                } catch (ParseException e) {
+                    CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
+                    tvDate.setText(String.valueOf(sdate));
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             else
             {
                 String strDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
-                Date strDate_date;
                 try {
-                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
-                    tvDate.setText(String.valueOf(strDate_date.getTime()));
+                    tvDate.setText(String.valueOf(strDate));
+                    Date date1 = new Date();
+                    CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
+                    if(strDate.equals(sdate.toString()))
+                        idd_date.setVisibility(View.INVISIBLE);
+                    else
+                        idd_date.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1448,7 +1461,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     public void ControlsSetEnabled() {
         btn_DineInAddCustomer.setVisibility(View.VISIBLE);
-        textViewOtherCharges.setEnabled(true);
+       // textViewOtherCharges.setEnabled(true);
         listViewDept.setEnabled(true);
         listViewCat.setEnabled(true);
         gridViewItems.setEnabled(true);
@@ -1483,7 +1496,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         btn_DineInAddCustomer.setVisibility(View.VISIBLE);
         //tvHSNCode_out.setEnabled(false);
         autoCompleteTextViewSearchMenuCode.setEnabled(false);
-        textViewOtherCharges.setEnabled(false);
+        //textViewOtherCharges.setEnabled(false);
         //btn_item_fastBillingMode.setEnabled(false);
         listViewDept.setEnabled(false);
         listViewCat.setEnabled(false);
@@ -2111,8 +2124,16 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         // Date
         //objBillDetail.setDate(String.valueOf(d.getTime()));
-        objBillDetail.setDate(tvDate.getText().toString());
-        Log.d("InsertBillDetail", "Date:" + d.getTime());
+        try {
+            String date_today = tvDate.getText().toString();
+            //Log.d("Date ", date_today);
+            Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date_today);
+            objBillDetail.setDate(String.valueOf(date1.getTime()));
+            Log.d("InsertBillDetail", "Date:" + objBillDetail.getDate());
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         // Time
         objBillDetail.setTime(String.format("%tR", Time));
@@ -2184,7 +2205,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         // Delivery Charge
         objBillDetail.setDeliveryCharge(Float.parseFloat(textViewOtherCharges.getText().toString()));
-        Log.d("InsertBillDetail", "Delivery Charge:0");
+        Log.d("InsertBillDetail", "Delivery Charge: "+objBillDetail.getDeliveryCharge());
 
 
         // Taxable Value

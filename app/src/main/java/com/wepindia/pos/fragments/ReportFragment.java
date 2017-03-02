@@ -325,7 +325,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                 startDate_date =   new Date(dateReportDate.getYear() - 1900, dateReportDate.getMonth(), dateReportDate.getDayOfMonth());
                             } else {
                                 txtReportDateEnd.setText(strDate);
-                                endDate_date =   new Date(dateReportDate.getYear() - 1900, dateReportDate.getMonth(), dateReportDate.getDayOfMonth()+1);
+                                endDate_date =   new Date(dateReportDate.getYear() - 1900, dateReportDate.getMonth(), dateReportDate.getDayOfMonth());
 
                             }
                             Log.d("ReportDate", "Selected Date:" + strDate);
@@ -390,19 +390,22 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         {
             MsgBox.Show("Warning", "Please select From & To Date");
         }
-        else
+        else if (startDate_date.getTime() > endDate_date.getTime())
         {
-            startDate_date = DateUtil.getInMills(txtStartDate);
-            endDate_date = DateUtil.getInMills(txtEndDate);
+            MsgBox.Show("Warning", "'From Date' cannot be greater than 'To Date' ");
+        }else
+        {
+            //startDate_date = DateUtil.getInMills(txtStartDate);
+            //endDate_date = DateUtil.getInMills(txtEndDate);
             // Clear the table
             tblReport.removeAllViews();
-            if (spnrReportType.getSelectedItemPosition() != 5 || spnrReportType.getSelectedItemPosition() != 6)
+            /*if (spnrReportType.getSelectedItemPosition() != 5 || spnrReportType.getSelectedItemPosition() != 6)
             {
                 if (DateValidation(txtReportDateStart.getText().toString(), txtReportDateEnd.getText().toString()) != true)
                 {
                     return;
                 }
-            }
+            }*/
             // ReportHelper object
             ReportHelper objReportColumn = new ReportHelper(myContext);
             objReportColumn.setReportColumnCaptions(myContext, strReportName, tblReport);
