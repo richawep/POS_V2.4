@@ -309,7 +309,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             Toast.makeText(myContext, "Change Due is : " + strChange + ", Please Give.", Toast.LENGTH_SHORT).show();
         }
         else if(dTenderAmount < dTotalValue) {
-            //Toast.makeText(myContext, "Amount Due is : " + String.valueOf(dChangeAmount) + ", Please Collect.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(myContext, "Amount Due is : " + String.valueOf(dChangeAmount) + ", Please Collect.", Toast.LENGTH_SHORT).show();
         }
     }
 
