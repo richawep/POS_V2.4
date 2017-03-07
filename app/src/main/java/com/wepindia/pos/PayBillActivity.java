@@ -72,6 +72,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     String strTotal, strCustId = "0";
     double dRoundoffTotal;
     float dWalletPayment =0;
+    int RESETCALLED =0;
 
     // Variables
     public static final String IS_COMPLIMENTARY_BILL = "false";
@@ -165,39 +166,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         edtRoundOff.setEnabled(false);
         edtTenderTotalValue = (EditText) findViewById(R.id.edtTenderTotalValue);
         edtTenderTotalValue.setEnabled(false);
-        /*edtTenderTotalValue.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                double paidTotal = 0,total = 0;
-                try{
-                    total = Double.parseDouble(edtTotalValue.getText().toString());
-                }catch (Exception e){
-                    total = 0;
-                }
-                try{
-                    paidTotal = Double.parseDouble(edtTenderTotalValue.getText().toString());
-                }catch (Exception e){
-                    total = 0;
-                }
-
-                if(paidTotal > total){
-                    edtPaid.setText("");
-                    //MsgBox.Show("Error", "Paid total can't exceed total value");
-                    edtChange.setText(total+"");
-                    edtTenderTotalValue.setText("");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });*/
         edtPaid = (EditText) findViewById(R.id.edtPaid);
         edtPaid.addTextChangedListener(ChangeAmountEvent);
         edtCard = (EditText) findViewById(R.id.edtCard);
@@ -314,6 +282,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     }
 
     private void ResetPayBill() {
+        RESETCALLED =1;
         edtPaid.setText("0");
         edtCard.setText("0");
         edtCoupon.setText("0");
@@ -321,6 +290,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         edtVoucher.setText("0");
         edtDiscount.setText("0");
         edtChange.setText("0");
+        RESETCALLED = 0;
     }
 
     public void CardPayment(View view) {
