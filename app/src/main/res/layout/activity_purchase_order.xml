@@ -313,6 +313,7 @@
                             android:id="@+id/autocompletetv_suppliername"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:drawableRight="@drawable/searchicon_img"
                             android:layout_weight="1" />
 
                     </LinearLayout>
