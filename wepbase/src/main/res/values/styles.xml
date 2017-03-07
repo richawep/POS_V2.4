@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="Theme.AppBar.Normal" parent="ThemeOverlay.AppCompat.Light">
@@ -29,6 +30,13 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginLeft">@dimen/btn_marigin</item>
         <item name="android:layout_marginRight">@dimen/btn_marigin</item>
+    </style>
+
+
+    <style name="CheckBoxAppTheme">
+        <item name="colorAccent">@color/colorGreyBackground</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlHighlight">@color/cadetblue</item>
     </style>
 
 </resources>

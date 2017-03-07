@@ -49,6 +49,7 @@ import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
 
+import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.json.JSONObject;
 
 import java.util.Date;
@@ -164,6 +165,39 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         edtRoundOff.setEnabled(false);
         edtTenderTotalValue = (EditText) findViewById(R.id.edtTenderTotalValue);
         edtTenderTotalValue.setEnabled(false);
+        /*edtTenderTotalValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                double paidTotal = 0,total = 0;
+                try{
+                    total = Double.parseDouble(edtTotalValue.getText().toString());
+                }catch (Exception e){
+                    total = 0;
+                }
+                try{
+                    paidTotal = Double.parseDouble(edtTenderTotalValue.getText().toString());
+                }catch (Exception e){
+                    total = 0;
+                }
+
+                if(paidTotal > total){
+                    edtPaid.setText("");
+                    //MsgBox.Show("Error", "Paid total can't exceed total value");
+                    edtChange.setText(total+"");
+                    edtTenderTotalValue.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });*/
         edtPaid = (EditText) findViewById(R.id.edtPaid);
         edtPaid.addTextChangedListener(ChangeAmountEvent);
         edtCard = (EditText) findViewById(R.id.edtCard);
@@ -194,22 +228,16 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     TextWatcher ChangeAmountEvent = new TextWatcher() {
 
         public void afterTextChanged(Editable s) {
-            // TODO Auto-generated method stub
             TenderChange();
         }
 
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-            // TODO Auto-generated method stub
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
         }
 
-        public void onTextChanged(CharSequence s, int start, int before,
-                                  int count) {
-            // TODO Auto-generated method stub
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
 
         }
-
     };
 
     private void TenderChange() {

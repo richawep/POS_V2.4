@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -42,9 +43,6 @@ import java.util.Locale;
 @SuppressWarnings("Since15")
 public class LoginActivity extends Activity {
 
-    // Context object
-    Context myContext;
-
     // DatabaseHandler object
     DatabaseHandler dbLogin = new DatabaseHandler(LoginActivity.this);
     // MessageDialog Object
@@ -60,26 +58,23 @@ public class LoginActivity extends Activity {
     Calendar calDate;
     // Variables - BillSettings object
     BillSetting objBillSettings = new BillSetting();
+    private SharedPreferences sharedPreferences;
+    private AppCompatCheckBox appCompatCheckBox;
 
     @TargetApi(9)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        myContext = this;
-
         try {
             MsgBox = new MessageDialog(this);
-
             calDate = Calendar.getInstance();
-
             txtUserId = (EditText) findViewById(R.id.txtUserId);
             txtPassword = (EditText) findViewById(R.id.txtPassword);
             btnDateDisplay = (Button) findViewById(R.id.btnDateDisplay);
             btnMonthDisplay = (Button) findViewById(R.id.btnMonthDisplay);
             btnYearDisplay = (Button) findViewById(R.id.btnYearDisplay);
-
+            appCompatCheckBox = (AppCompatCheckBox) findViewById(R.id.checkboxRememberMe);
             btnDateDisplay.setText(String.valueOf(calDate.get(Calendar.DAY_OF_MONTH)));
             btnMonthDisplay.setText(calDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US));
             btnYearDisplay.setText(String.valueOf(calDate.get(Calendar.YEAR)));
@@ -114,13 +109,16 @@ public class LoginActivity extends Activity {
     }
 
     private void initSinglePrinter() {
-        SharedPreferences sharedPreferences = Preferences.getSharedPreferencesForPrint(LoginActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
+        sharedPreferences = Preferences.getSharedPreferencesForPrint(LoginActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("kot","Heyday");
         editor.putString("bill","Heyday");
         editor.putString("report","Heyday");
         editor.putString("receipt","Heyday");
         editor.commit();
+
+        appCompatCheckBox.setChecked(sharedPreferences.getBoolean("isChecked",false));
+        txtUserId.setText(sharedPreferences.getString("userNameTxt",""));
     }
 
     @Override
@@ -145,7 +143,7 @@ public class LoginActivity extends Activity {
                 "listing of IT companies in India with a group turnover of over Rs 3000 mn( USD 60Mn) . " +
                 "WeP Group have been re-inventing itself every few years, from the last 12 years, " +
                 "by bringing in new disruptive products in the market and is poised to make significant change in next few years.";
-        AlertDialog.Builder PickUpTender = new AlertDialog.Builder(myContext);
+        AlertDialog.Builder PickUpTender = new AlertDialog.Builder(this);
         PickUpTender
                 .setIcon(R.drawable.ic_launcher)
                 .setTitle("About")
@@ -157,33 +155,46 @@ public class LoginActivity extends Activity {
     // Login button event
 
     public void onLogin(View view) {
-        Cursor User = dbLogin.getUser(txtUserId.getText().toString(), txtPassword.getText().toString());
-        if (User != null) {
-            if (User.moveToFirst()) {
-                Intent intentHomeScreen = new Intent(myContext, HomeActivity.class);
+        String userNameTxt = txtUserId.getText().toString();
+        String userPassTxt = txtPassword.getText().toString();
+        if(userNameTxt.equalsIgnoreCase("") || userPassTxt.equalsIgnoreCase(""))
+        {
+            MsgBox.Show("Login", "Please enter a Username & Password");
+        }
+        else
+        {
+            if(appCompatCheckBox.isChecked()){
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("userNameTxt",userNameTxt);
+                editor.putBoolean("isChecked",true);
+                editor.commit();
+            }
+            Cursor User = dbLogin.getUser(userNameTxt,userPassTxt);
+            if (User != null) {
+                if (User.moveToFirst()) {
+                    Intent intentHomeScreen = new Intent(this, HomeActivity.class);
+                    String userId = User.getString(User.getColumnIndex("UserId"));
+                    String userName = User.getString(User.getColumnIndex("Name"));
+                    String userRole = User.getString(User.getColumnIndex("RoleId"))+"";
 
-                String userId = User.getString(User.getColumnIndex("UserId"));
-                String userName = User.getString(User.getColumnIndex("Name"));
-                String userRole = User.getString(User.getColumnIndex("RoleId"))+"";
+                    ApplicationData.savePreference(this,ApplicationData.USER_ID,userId);
+                    ApplicationData.savePreference(this,ApplicationData.USER_NAME,userName);
+                    ApplicationData.savePreference(this,ApplicationData.USER_ROLE,userRole);
 
-                ApplicationData.savePreference(this,ApplicationData.USER_ID,userId);
-                ApplicationData.savePreference(this,ApplicationData.USER_NAME,userName);
-                ApplicationData.savePreference(this,ApplicationData.USER_ROLE,userRole);
-
-                startActivity(intentHomeScreen);
+                    startActivity(intentHomeScreen);
 
                 /*objBillSettings.setDateAndTime(1);
                 long iResult = dbLogin.updateDateAndTime(objBillSettings);*/
 
-                finish();
+                    finish();
 
+                } else {
+                    MsgBox.Show("Login", "Wrong user id or password");
+                }
             } else {
-                MsgBox.Show("Login", "Wrong user id or password");
+                MsgBox.Show("Login", "Login DB Error");
             }
-        } else {
-            MsgBox.Show("Login", "Login DB Error");
         }
-
     }
 
     // Close button event
@@ -212,8 +223,8 @@ public class LoginActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
-            LayoutInflater UserAuthorization = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(this);
+            LayoutInflater UserAuthorization = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
             final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
             final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);

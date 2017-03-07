@@ -27,6 +27,7 @@ import com.wep.common.app.gst.get.GetGSTR1Summary;
 import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
 import com.wep.common.app.gst.get.GetGSTR2B2BInvoice;
 import com.wep.common.app.gst.get.GetGSTR2B2BItem;
+import com.wep.common.app.models.ItemOutward;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.models.User;
 import com.wep.common.app.print.Payment;
@@ -7131,6 +7132,70 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         }finally {
             //db.close();
         }
+    }
+
+    // -----Delete Items from Item Table-----
+    public int deleteAllOutwardItem() {
+        SQLiteDatabase db = getWritableDatabase();
+        int del =0;
+        try{
+            del = db.delete(TBL_ITEM_Outward, null, null);
+        }catch (Exception e){
+            e.printStackTrace();
+            del = 0;
+        }finally {
+            //db.close();
+        }
+        return del;
+    }
+
+    public ArrayList<ItemOutward> getAllItem() {
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<ItemOutward> dataList = new ArrayList<ItemOutward>();
+        try{
+            Cursor cursorItem = db.query(TBL_ITEM_Outward, new String[]{"*"}, null, null, null, null, null);
+            while(cursorItem!=null && cursorItem.moveToNext())
+            {
+                ItemOutward item = new ItemOutward();
+                item.setMenuCode(cursorItem.getInt(cursorItem.getColumnIndex("MenuCode")));
+                item.setLongName(cursorItem.getString(cursorItem.getColumnIndex("ItemName")));
+                item.setDineIn1(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice1")));
+                item.setDineIn2(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice2")));
+                item.setDineIn3(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice3")));
+                item.setStock(cursorItem.getFloat(cursorItem.getColumnIndex("Quantity")));
+                item.setDeptCode(cursorItem.getInt(cursorItem.getColumnIndex("DeptCode")));
+                item.setCategCode(cursorItem.getInt(cursorItem.getColumnIndex("CategCode")));
+                item.setKitchenCode(cursorItem.getInt(cursorItem.getColumnIndex("KitchenCode")));
+                item.setBarCode(cursorItem.getString(cursorItem.getColumnIndex("ItemBarcode")));
+                item.setImageUri(cursorItem.getString(cursorItem.getColumnIndex("ImageUri")));
+                item.setUOM(cursorItem.getString(cursorItem.getColumnIndex("UOM")));
+                item.setSalesTaxPercent(cursorItem.getFloat(cursorItem.getColumnIndex("SalesTaxPercent")));
+                item.setServiceTaxPercent(cursorItem.getFloat(cursorItem.getColumnIndex("ServiceTaxPercent")));
+                item.setItemId(cursorItem.getInt(cursorItem.getColumnIndex("ItemId")));
+                dataList.add(item);
+            }
+        }catch (Exception e){
+            dataList = null;
+            e.printStackTrace();
+        }finally {
+            //db.close();
+        }
+        return dataList;
+    }
+
+
+    public int deleteAllInwardItem() {
+        SQLiteDatabase db = getWritableDatabase();
+        int del =0;
+        try{
+            del = db.delete(TBL_ITEM_Inward, null, null);
+        }catch (Exception e){
+            e.printStackTrace();
+            del = 0;
+        }finally {
+            //db.close();
+        }
+        return del;
     }
 
 }

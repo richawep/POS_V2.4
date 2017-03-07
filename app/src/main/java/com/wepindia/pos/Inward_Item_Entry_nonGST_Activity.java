@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -2238,5 +2240,54 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
     @Override
     public void onHomePressed() {
         ActionBarUtils.navigateHome(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_with_delete, menu);
+        for (int j = 0; j < menu.size(); j++) {
+            MenuItem item = menu.getItem(j);
+            item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == android.R.id.home)
+        {
+            finish();
+        }
+        else if (id == R.id.action_home)
+        {
+            onHomePressed();
+        }
+        else if (id == R.id.action_screen_shot)
+        {
+            com.wep.common.app.ActionBarUtils.takeScreenshot(this,findViewById(android.R.id.content).getRootView());
+        }
+        else if (id == R.id.action_clear)
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Confirmation")
+                    .setMessage("Do you really want to Delete?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            long lResult = dbInwardItem.deleteAllInwardItem();
+                            //MsgBox.Show("", "Item Deleted Successfully");
+
+                            if(lResult>0){
+                                ClearItemTable();
+                                Toast.makeText(myContext, "Items Deleted Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

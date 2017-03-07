@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.models.Items;
+import com.wep.common.app.utils.AppUtils;
 import com.wepindia.pos.R;
 
 import java.io.File;
@@ -64,7 +65,7 @@ public class ItemsAdapter extends BaseAdapter {
         }
         Items items = itemsList.get(position);
         String title = items.getItemName();
-        String icon = items.getItemImage();
+        String icon = AppUtils.getImagePath(items.getItemImage(),title);
         Uri uri = Uri.fromFile(new File(icon));
         viewHolder.textView.setText(title+"");
         try{
