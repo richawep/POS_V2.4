@@ -71,7 +71,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     String strTotal, strCustId = "0";
     double dRoundoffTotal;
     float dWalletPayment =0;
-    int RESETCALLED = 0;
 
     // Variables
     public static final String IS_COMPLIMENTARY_BILL = "false";
@@ -196,7 +195,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
         public void afterTextChanged(Editable s) {
             // TODO Auto-generated method stub
-
             TenderChange();
         }
 
@@ -282,13 +280,12 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         else if(dTenderAmount > dTotalValue) {
             Toast.makeText(myContext, "Change Due is : " + strChange + ", Please Give.", Toast.LENGTH_SHORT).show();
         }
-        else if(dTenderAmount < dTotalValue  && RESETCALLED ==0) {
-            Toast.makeText(myContext, "Amount Due is : " + String.valueOf(dChangeAmount) + ", Please Collect.", Toast.LENGTH_SHORT).show();
+        else if(dTenderAmount < dTotalValue) {
+            //Toast.makeText(myContext, "Amount Due is : " + String.valueOf(dChangeAmount) + ", Please Collect.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void ResetPayBill() {
-        RESETCALLED = 1;
         edtPaid.setText("0");
         edtCard.setText("0");
         edtCoupon.setText("0");
@@ -296,7 +293,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         edtVoucher.setText("0");
         edtDiscount.setText("0");
         edtChange.setText("0");
-        RESETCALLED = 0;
     }
 
     public void CardPayment(View view) {
@@ -493,7 +489,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                     if (rbDiscAmount.isChecked() == true) {
                                         edtDiscount.setText(DiscountAmount.getText().toString());
                                     }
-                                    //CHANGEMESSAGE = 1;
                                     TenderChange();
                                     PayBillDialog.dismiss();
                                 } else {
@@ -642,7 +637,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                 TableRow Row = (TableRow) v;
                                 TextView CouponValue = (TextView) Row.getChildAt(2);
                                 edtCoupon.setText(CouponValue.getText().toString());
-                                //CHANGEMESSAGE = 0;
                                 TenderChange();
                                 PayBillDialog.dismiss();
                             }
@@ -687,7 +681,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             // TODO Auto-generated method stub
 
             CouponAmount();
-            //CHANGEMESSAGE = 1;
             TenderChange();
         }
 
@@ -833,7 +826,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                     edtPettyCash.setEnabled(true);
                                     edtPettyCash.setText(edtTotalValue.getText().toString());
                                 }
-                                //CHANGEMESSAGE = 1;
+
                                 TenderChange();
                                 PayBillDialog.dismiss();
                             }

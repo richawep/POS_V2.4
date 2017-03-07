@@ -60,6 +60,11 @@ public class ItemOutwardAdapter extends BaseAdapter {
         return itemOutwardsArrayList;
     }
 
+    public void notifyDataSetChanged(ArrayList<ItemOutward> allItem) {
+        this.itemOutwardsArrayList = allItem;
+        notifyDataSetChanged();
+    }
+
     static class ViewHolder {
         TextView menuCode;
         TextView itemName;
@@ -132,7 +137,6 @@ public class ItemOutwardAdapter extends BaseAdapter {
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
 
-
                             int menucode = obj.getMenuCode();
                             long lResult = handler.DeleteItemByMenuCode(menucode);
                             if(lResult>0)
@@ -140,7 +144,6 @@ public class ItemOutwardAdapter extends BaseAdapter {
                                 itemOutwardsArrayList.remove(i);
                                 notifyDataSetChanged();
                             }
-
                             dialog.dismiss();
                         }
                     })

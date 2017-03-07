@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/back_fnb"
     android:orientation="vertical"
     android:weightSum="3"
@@ -45,8 +46,8 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="0.75"
@@ -56,13 +57,13 @@
             android:id="@+id/txtUserId"
             android:layout_width="275dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
             android:background="@android:drawable/edit_text"
             android:ems="10"
             android:hint="User Id"
             android:imeOptions="flagNoExtractUi"
             android:inputType="text"
-            android:text="admin">
+            >
 
             <requestFocus />
         </EditText>
@@ -71,19 +72,31 @@
             android:id="@+id/txtPassword"
             android:layout_width="275dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_below="@+id/txtUserId"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:background="@android:drawable/edit_text"
             android:ems="10"
             android:hint="Password"
             android:imeOptions="flagNoExtractUi"
             android:inputType="textPassword"
-            android:text="admin" />
+             />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/checkboxRememberMe"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtPassword"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            app:buttonTint="@color/white"
+            android:text="Remember Me " />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_below="@+id/checkboxRememberMe"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="horizontal">
@@ -111,14 +124,14 @@
                 android:layout_marginRight="@dimen/btn_marigin"
                 android:background="@drawable/background_btn"
                 android:contentDescription="Click here to close the application"
-                android:textColor="@android:color/white"
                 android:onClick="Close"
                 android:text="Exit"
+                android:textColor="@android:color/white"
                 android:theme="@style/WepButtonWithMarigin" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
