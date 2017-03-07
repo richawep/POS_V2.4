@@ -324,20 +324,22 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         }
     }
 
-    public void SaveBill(View view) {
-        if(Float.parseFloat(edtTenderTotalValue.getText().toString()) >=
-                Float.parseFloat(edtTotalValue.getText().toString())) {
+    public void SaveBill(View view)
+    {
+        if(Float.parseFloat(edtTenderTotalValue.getText().toString()) >= Float.parseFloat(edtTotalValue.getText().toString()))
+        {
             // Close Database connection
             dbPayBill.CloseDatabase();
-
             // set Results
             Intent intentResult = new Intent();
-
             intentResult.putExtra(IS_COMPLIMENTARY_BILL, false);
             intentResult.putExtra(COMPLIMENTARY_REASON, "");
-            if (Float.parseFloat(edtDiscount.getText().toString()) > 0) {
+            if (Float.parseFloat(edtDiscount.getText().toString()) > 0)
+            {
                 intentResult.putExtra(IS_DISCOUNTED, true);
-            } else {
+            }
+            else
+            {
                 intentResult.putExtra(IS_DISCOUNTED, false);
             }
             intentResult.putExtra(IS_PRINT_BILL, false);
@@ -351,9 +353,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             intentResult.putExtra(TENDER_WALLET_VALUE, dWalletPayment);
             intentResult.putExtra(ORDER_DELIVERED, strOrderDelivered);
             intentResult.putExtra("CUST_ID", Integer.parseInt(tvCustId.getText().toString()));
-
             setResult(RESULT_OK, intentResult);
-
             // Finish the activity
             this.finish();
         }
