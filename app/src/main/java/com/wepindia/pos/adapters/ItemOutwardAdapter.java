@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.models.ItemOutward;
+import com.wep.common.app.utils.AppUtils;
 import com.wepindia.pos.R;
 
 import java.io.File;
@@ -111,9 +113,24 @@ public class ItemOutwardAdapter extends BaseAdapter {
         rowparams.gravity = Gravity.CENTER;
         viewHolder.itemImg.setLayoutParams(rowparams);
         viewHolder.itemImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        if(!itemOutward.getImageUri().equals("")){
+        /*if(!itemOutward.getImageUri().equals(""))
+        {
             viewHolder.itemImg.setImageURI(Uri.fromFile(new File(itemOutward.getImageUri())));
-        } else {
+
+        }
+        else
+        {
+            viewHolder.itemImg.setImageResource(R.drawable.img_noimage);
+        }*/
+        String icon = AppUtils.getImagePath(itemOutward.getImageUri(),itemOutward.getLongName());
+        Uri uri = Uri.fromFile(new File(icon));
+        try{
+            Picasso.with(activity)
+                    .load(uri)
+                    .placeholder(R.drawable.img_noimage) //this is optional the image to display while the url image is downloading
+                    .error(R.drawable.img_noimage)         //this is also optional if some error has occurred in downloading the image this image would be displayed
+                    .into(viewHolder.itemImg);
+        }catch (Exception e){
             viewHolder.itemImg.setImageResource(R.drawable.img_noimage);
         }
 

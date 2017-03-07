@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.wep.common.app.utils.AppUtils;
 import com.wepindia.pos.R;
 
 /**
@@ -74,8 +75,10 @@ public class ImageAdapter extends BaseAdapter{
 		{
 
 			try{
+				String icon = AppUtils.getImagePath(ImageUri[position],DisplayText[position]);
+				Uri uri = Uri.fromFile(new File(icon));
 				Picasso.with(contextAdapter)
-						.load(ImageUri[position])
+						.load(uri)
 						.placeholder(R.drawable.img_noimage) //this is optional the image to display while the url image is downloading
 						.error(R.drawable.img_noimage)         //this is also optional if some error has occurred in downloading the image this image would be displayed
 						.into(imgGridImage);

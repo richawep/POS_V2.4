@@ -49,6 +49,7 @@ import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
 
+import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.json.JSONObject;
 
 import java.util.Date;
@@ -195,22 +196,16 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     TextWatcher ChangeAmountEvent = new TextWatcher() {
 
         public void afterTextChanged(Editable s) {
-            // TODO Auto-generated method stub
             TenderChange();
         }
 
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-            // TODO Auto-generated method stub
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
         }
 
-        public void onTextChanged(CharSequence s, int start, int before,
-                                  int count) {
-            // TODO Auto-generated method stub
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
 
         }
-
     };
 
     private void TenderChange() {
@@ -281,7 +276,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         else if(dTenderAmount > dTotalValue) {
             Toast.makeText(myContext, "Change Due is : " + strChange + ", Please Give.", Toast.LENGTH_SHORT).show();
         }
-        else if(dTenderAmount < dTotalValue && RESETCALLED == 0) {
+        else if(dTenderAmount < dTotalValue) {
             Toast.makeText(myContext, "Amount Due is : " + String.valueOf(dChangeAmount) + ", Please Collect.", Toast.LENGTH_SHORT).show();
         }
     }
