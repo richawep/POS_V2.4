@@ -736,6 +736,8 @@ public class ConvertIngredientActivity extends Activity {
             TableRow tr = (TableRow) tbl_convert_ingredients.getChildAt(i);
             TextView IngredientName = (TextView) tr.getChildAt(2);
             TextView IngredientQuantity = (TextView) tr.getChildAt(3);
+            TextView IngredientUOM = (TextView) tr.getChildAt(4);
+            String unit = IngredientUOM.getText().toString();
             float ingredient_qty_prev = 0;
 
             String ingredientname = IngredientName.getText().toString();
@@ -752,7 +754,7 @@ public class ConvertIngredientActivity extends Activity {
             {
                 properQuantity= -1;
                 Toast.makeText(myContext, ingredientname+" is less in quantity.\nRequired quantity is "+ingredient_qty
-                        +" and available quantity is "+ingredient_qty_prev, Toast.LENGTH_LONG).show();
+                        +" "+unit+" and available quantity is "+ingredient_qty_prev+" "+unit, Toast.LENGTH_LONG).show();
             }
         }
         return  properQuantity;
