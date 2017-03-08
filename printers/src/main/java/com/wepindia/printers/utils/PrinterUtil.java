@@ -11,6 +11,7 @@ import com.wep.common.app.print.BillServiceTaxItem;
 import com.wep.common.app.print.BillSubTaxItem;
 import com.wep.common.app.print.BillTaxItem;
 import com.wep.common.app.print.Payment;
+import com.wep.common.app.print.PrintIngredientsModel;
 import com.wep.common.app.print.PrintKotBillItem;
 import com.wepindia.printers.R;
 
@@ -602,6 +603,48 @@ public class PrinterUtil {
         esc.addText(item.getFooterLine()+"\n");
         esc.addPrintAndFeedLines((byte)3);
 
+        Vector<Byte> datas = esc.getCommand();
+        Byte[] Bytes = datas.toArray(new Byte[datas.size()]);
+        byte[] bytes = ArrayUtils.toPrimitive(Bytes);
+        String str = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return str;
+    }
+
+    public String getPrintIngredients(ArrayList<PrintIngredientsModel> item) {
+        EscCommand esc = new EscCommand();
+        esc.addPrintAndFeedLines((byte)2);
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);
+        //esc.addText("Resturant Bill"+"\n");
+        esc.addText("Ingredients List\n");
+        esc.addPrintAndLineFeed();
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
+        esc.addText("===============================================\n");
+
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
+        esc.addText("ITEMID ITEM NAME             QTY     UOM "+"\n");
+        esc.addText("==============================================="+"\n");
+
+        Iterator it = item.iterator();
+        int count =0;
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+        while (it.hasNext())
+        {
+            PrintIngredientsModel Item = (PrintIngredientsModel) it.next();
+            count++;
+
+            String preId = getPostAddedSpaceFormat("",String.valueOf(Item.getItemId()),7,1);
+            if(!String.valueOf(Item.getItemId()).equals(" ")&& count >1)
+                esc.addText("-----------------------------------------------"+"\n");
+            String preName = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(Item.getItemName()),22,1),17,1);
+            String preQty = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.valueOf(Item.getQty()),4,1),10,1);
+            String preUOM = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(Item.getUom()),4,1),8,1);
+            String pre = preId+preName+preQty+preUOM;
+            esc.addText(pre+"\n");
+        }
+        esc.addText("==============================================="+"\n");
+        esc.addPrintAndFeedLines((byte)3);
         Vector<Byte> datas = esc.getCommand();
         Byte[] Bytes = datas.toArray(new Byte[datas.size()]);
         byte[] bytes = ArrayUtils.toPrimitive(Bytes);

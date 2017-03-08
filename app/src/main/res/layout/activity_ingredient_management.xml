@@ -287,6 +287,20 @@
                             android:gravity="center">
 
                             <com.wep.common.app.views.WepButton
+                                android:id="@+id/btnPrint"
+                                android:layout_width="120dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/background_btn"
+                                android:theme="@style/WepButtonWithMarigin"
+                                android:layout_marginLeft="@dimen/btn_marigin"
+                                android:layout_marginRight="@dimen/btn_marigin"
+                                android:onClick="PrintIngredients"
+                                android:text="Print Ingredient List" />
+
+                            <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnSave"
                                 android:layout_width="120dp"
                                 android:layout_height="45dp"
