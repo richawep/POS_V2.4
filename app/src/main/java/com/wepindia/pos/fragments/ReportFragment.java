@@ -1139,18 +1139,28 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 Amount.setPadding(0,0,30,0);
                 totbillAmt+= Float.parseFloat(Amount.getText().toString());
 
+//                SalesTax = new TextView(myContext);
+//                SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+//                SalesTax.setGravity(Gravity.END);
+//                SalesTax.setPadding(0,0,45,0);
+//                totSalesTax+= Float.parseFloat(SalesTax.getText().toString());
+//
+//                ServiceTax = new TextView(myContext);
+//                //ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
+//                ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+//                ServiceTax.setGravity(Gravity.END);
+//                ServiceTax.setPadding(0,0,35,0);
+//                totServiceTax+= Float.parseFloat(ServiceTax.getText().toString());
+
+                // richa - making single tax value
                 SalesTax = new TextView(myContext);
-                SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                double tax =0;
+                tax = Report.getDouble(Report.getColumnIndex("TotalTaxAmount"));
+                tax += Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"));
+                SalesTax.setText(String.format("%.2f",tax));
                 SalesTax.setGravity(Gravity.END);
                 SalesTax.setPadding(0,0,45,0);
-                totSalesTax+= Float.parseFloat(SalesTax.getText().toString());
-
-                ServiceTax = new TextView(myContext);
-                //ServiceTax.setText(Report.getString(Report.getColumnIndex("TotalServiceTaxAmount")));
-                ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
-                ServiceTax.setGravity(Gravity.END);
-                ServiceTax.setPadding(0,0,35,0);
-                totServiceTax+= Float.parseFloat(ServiceTax.getText().toString());
+                totSalesTax+= tax;
 
                 Discount = new TextView(myContext);
                 //Discount.setText(Report.getString(Report.getColumnIndex("TotalDiscountAmount")));
@@ -1164,7 +1174,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 rowReport.addView(TotalItems);
                 rowReport.addView(Discount);
                 rowReport.addView(SalesTax);
-                rowReport.addView(ServiceTax);
+                //rowReport.addView(ServiceTax); -- richa - making single tax
                 rowReport.addView(Amount);
 
                 tblReport.addView(rowReport,
@@ -1224,7 +1234,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             rowReport.addView(TotalItems);
             rowReport.addView(Discount);
             rowReport.addView(SalesTax);
-            rowReport.addView(ServiceTax);
+            //rowReport.addView(ServiceTax); -- richa - making single tax
             rowReport.addView(Amount);
 
             tblReport.addView(rowReport,
@@ -2333,8 +2343,36 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                     Double.parseDouble(Qty.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("Quantity"))));
 */
+
+                            // Discount
+                            TextView Disc = (TextView) rowItem.getChildAt(3);
+                            Disc.setText(String.format("%.2f",
+                                    Double.parseDouble(Disc.getText().toString()) +
+                                            Report.getDouble(Report.getColumnIndex("DiscountAmount"))));
+                            Disc.setGravity(Gravity.END);
+                            Disc.setPadding(0,0,50,0);
+
+                            // richa making single tax
+                            // Sales Tax
+                            TextView Tax = (TextView) rowItem.getChildAt(4);
+                            double tax = 0;
+                            tax = Report.getDouble(Report.getColumnIndex("TaxAmount"));
+                            tax += Report.getDouble(Report.getColumnIndex("ServiceTaxAmount"));
+                            Tax.setText(String.format("%.2f",Double.parseDouble(Tax.getText().toString()) +tax ));
+                            Tax.setGravity(Gravity.END);
+                            Tax.setPadding(0,0,45,0);
+
+                            // Service Tax
+//                            TextView ServTax = (TextView) rowItem.getChildAt(5);
+//                            ServTax.setText(String.format("%.2f",
+//                                    Double.parseDouble(ServTax.getText().toString()) +
+//                                            Report.getDouble(Report.getColumnIndex("ServiceTaxAmount"))));
+//                            ServTax.setGravity(Gravity.END);
+//                            ServTax.setPadding(0,0,35,0);
+
+
                             // Amount
-                            TextView Amt = (TextView) rowItem.getChildAt(6);
+                            TextView Amt = (TextView) rowItem.getChildAt(5);
                             /*Amt.setText(String.format("%.2f",
                                     Double.parseDouble(Amt.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("TaxableValue"))));*/
@@ -2346,32 +2384,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             Amt.setGravity(Gravity.END);
                             Amt.setPadding(0,0,30,0);
 
-                            // Sales Tax
-                            TextView Tax = (TextView) rowItem.getChildAt(4);
-                            Tax.setText(String.format("%.2f",
-                                    Double.parseDouble(Tax.getText().toString()) +
-                                            Report.getDouble(Report.getColumnIndex("TaxAmount"))));
-                            Tax.setGravity(Gravity.END);
-                            Tax.setPadding(0,0,45,0);
-
-                            // Service Tax
-                            TextView ServTax = (TextView) rowItem.getChildAt(5);
-                            ServTax.setText(String.format("%.2f",
-                                    Double.parseDouble(ServTax.getText().toString()) +
-                                            Report.getDouble(Report.getColumnIndex("ServiceTaxAmount"))));
-                            ServTax.setGravity(Gravity.END);
-                            ServTax.setPadding(0,0,35,0);
-
-                            // Discount
-                            TextView Disc = (TextView) rowItem.getChildAt(3);
-                            Disc.setText(String.format("%.2f",
-                                    Double.parseDouble(Disc.getText().toString()) +
-                                            Report.getDouble(Report.getColumnIndex("DiscountAmount"))));
-                            Disc.setGravity(Gravity.END);
-                            Disc.setPadding(0,0,50,0);
-
                             // Modifier Amount
-                            TextView ModAmt = (TextView) rowItem.getChildAt(7);
+                            TextView ModAmt = (TextView) rowItem.getChildAt(6);
                             ModAmt.setText(String.format("%.2f",
                                     Double.parseDouble(ModAmt.getText().toString()) +
                                             Report.getDouble(Report.getColumnIndex("ModifierAmount"))));
@@ -2415,17 +2429,26 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     Amount.setGravity(Gravity.END);
                     Amount.setPadding(0,0,30,0);
 
+//                    SalesTax = new TextView(myContext);
+//                    SalesTax.setText(String.format("%.2f", Report.getDouble(Report
+//                            .getColumnIndex("TaxAmount"))));
+//                    SalesTax.setGravity(Gravity.END);
+//                    SalesTax.setPadding(0,0,45,0);
+//
+//                    ServiceTax = new TextView(myContext);
+//                    ServiceTax.setText(String.format("%.2f", Report.getDouble(Report
+//                            .getColumnIndex("ServiceTaxAmount"))));
+//                    ServiceTax.setGravity(Gravity.END);
+//                    ServiceTax.setPadding(0,0,35,0);
+
+
+                    // richa - making single tax
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(String.format("%.2f", Report.getDouble(Report
-                            .getColumnIndex("TaxAmount"))));
+                    double tax =  Report.getDouble(Report.getColumnIndex("TaxAmount"));
+                    tax += Report.getDouble(Report.getColumnIndex("ServiceTaxAmount"));
+                    SalesTax.setText(String.format("%.2f",tax));
                     SalesTax.setGravity(Gravity.END);
                     SalesTax.setPadding(0,0,45,0);
-
-                    ServiceTax = new TextView(myContext);
-                    ServiceTax.setText(String.format("%.2f", Report.getDouble(Report
-                            .getColumnIndex("ServiceTaxAmount"))));
-                    ServiceTax.setGravity(Gravity.END);
-                    ServiceTax.setPadding(0,0,35,0);
 
                     Discount = new TextView(myContext);
                     Discount.setText(String.format("%.2f", Report.getDouble(Report
@@ -2445,7 +2468,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowReport.addView(SoldQty);
                     rowReport.addView(Discount);
                     rowReport.addView(SalesTax);
-                    rowReport.addView(ServiceTax);
+                    //rowReport.addView(ServiceTax);  richa - making single tax
                     rowReport.addView(Amount);
                     rowReport.addView(ModifierAmount);
 
@@ -4519,7 +4542,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 //String name1 = btn.getText().toString();
                 arrayListColumns.add(name);
             }
-            arrayListRows.add(arrayListColumns);
+            if(arrayListColumns.size()>0)
+                arrayListRows.add(arrayListColumns);
         }
 
         return arrayListRows;
