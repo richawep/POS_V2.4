@@ -4397,6 +4397,26 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         }
     }
 
+    public int getLastBillNoforDate(String date_str) {
+        Cursor cursor = dbFNB.rawQuery("SELECT MAX(InvoiceNo) as InvoiceNo FROM "+TBL_OUTWARD_SUPPLY_ITEMS_DETAILS+" WHERE "+
+                KEY_InvoiceDate+" LIKE '"+date_str+"'", null);
+        int invno =0;
+        if(cursor!=null && cursor.moveToFirst()){
+            invno = cursor.getInt(cursor.getColumnIndex(KEY_InvoiceNo));
+        }
+        return invno;
+    }
+
+    public int getLastBillNo() {
+        Cursor cursor = dbFNB.rawQuery("SELECT MAX(InvoiceNo) as InvoiceNo FROM "+TBL_OUTWARD_SUPPLY_ITEMS_DETAILS, null);
+        int invno =0;
+        if(cursor!=null && cursor.moveToFirst()){
+            invno = cursor.getInt(cursor.getColumnIndex(KEY_InvoiceNo));
+        }
+        return invno;
+    }
+
+
     // -----Retrieve Bill setting-----
     public Cursor getBillNoResetSetting() {
         return dbFNB.query("BillNoConfiguration", new String[]{"*"}, null, null, null, null, null);
@@ -4411,16 +4431,32 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
     public int UpdateBillNoReset(String period) {
         Date d = new Date();
-        CharSequence s = android.text.format.DateFormat.format("yyyy-MM-dd", d.getTime());
+        CharSequence s = android.text.format.DateFormat.format("dd-MM-yyyy", d.getTime());
         Calendar cal = Calendar.getInstance(); //adding one day to current date cal.add(Calendar.DAY_OF_MONTH, 1); Date tommrrow = cal.getTime();
         cal.add(Calendar.DAY_OF_MONTH, 1);
         Date tommrrow = cal.getTime();
-        CharSequence s1 = android.text.format.DateFormat.format("yyyy-MM-dd", tommrrow.getTime());
+        CharSequence s1 = android.text.format.DateFormat.format("dd-MM-yyyy", tommrrow.getTime());
 
         cvDbValues = new ContentValues();
         cvDbValues.put("InvoiceNo", 0);
         cvDbValues.put("Period", period);
         cvDbValues.put("PeriodDate", s1.toString());
+
+        return dbFNB.update("BillNoConfiguration", cvDbValues, null, null);
+    }
+
+    public int UpdateBillNoResetwithDate(String period, String date , int invoiceNo) {
+//        Date d = new Date();
+//        CharSequence s = android.text.format.DateFormat.format("dd-MM-yyyy", d.getTime());
+//        Calendar cal = Calendar.getInstance(); //adding one day to current date cal.add(Calendar.DAY_OF_MONTH, 1); Date tommrrow = cal.getTime();
+//        cal.add(Calendar.DAY_OF_MONTH, 1);
+//        Date tommrrow = cal.getTime();
+//        CharSequence s1 = android.text.format.DateFormat.format("dd-MM-yyyy", tommrrow.getTime());
+
+        cvDbValues = new ContentValues();
+        cvDbValues.put("InvoiceNo", invoiceNo);
+        cvDbValues.put("Period", period);
+        cvDbValues.put("PeriodDate", date);
 
         return dbFNB.update("BillNoConfiguration", cvDbValues, null, null);
     }
@@ -4789,8 +4825,10 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
                 "BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null,
                 KEY_InvoiceNo);*/
 
-        String QUERY_REPORT = "Select * from "+TBL_BILLDETAIL+" where "+"BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'";
-        return dbFNB.rawQuery(QUERY_REPORT,null);
+        //String QUERY_REPORT = "Select * from "+TBL_BILLDETAIL+" where "+"BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'";
+        //return dbFNB.rawQuery(QUERY_REPORT,null);
+        return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"},
+                " BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null,KEY_InvoiceDate);
     }
 
     // richa_2012
@@ -4798,7 +4836,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     public Cursor getBillingReport(String StartDate, String EndDate, int billingMode) {
         return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"},
                 "BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' AND " + KEY_BillingMode + " LIKE '"
-                        + billingMode + "'", null, null, null, KEY_InvoiceNo);
+                        + billingMode + "'", null, null, null, KEY_InvoiceDate);
     }
 
 
@@ -6059,7 +6097,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put("WeighScale", 0);
         cvDbValues.put("ServiceTaxPercent", 5.0);
         cvDbValues.put("ServiceTaxType", 2);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
         String timeStamp = dateFormat.format(date);
         cvDbValues.put("BusinessDate", timeStamp);

@@ -36,6 +36,7 @@ import com.wepindia.pos.GST.CreditDebitActivity;
 import com.wepindia.pos.GST.GSTHomeActivity;
 import com.wepindia.pos.GST.InwardInvoiceEntry_Activity;
 import com.wepindia.pos.GST.controlers.GSTDataController;
+import com.wepindia.pos.GenericClasses.BillNoReset;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
@@ -84,9 +85,6 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             strUserId = ApplicationData.getUserId(this);//ApplicationData.USER_ID;
             strUserName = ApplicationData.getUserName(this);//ApplicationData.USER_NAME;
             strUserRole = Integer.valueOf(ApplicationData.getUserRole(this));
-
-
-
             //dbHomeScreen.DeleteDatabase();
             getDb().CreateDatabase();
             //dbHomeScreen.OpenDatabase();
@@ -95,7 +93,6 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             txtUserName = (TextView) findViewById(R.id.txtViewUserName);
             txtUserName.setText(strUserName.toUpperCase());
             InitializeViews();
-
             Display();
             checkForAutoDayEnd(); // called after display because settingcrsr is being set in Display()
         } catch (Exception e) {
@@ -154,6 +151,9 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                     iResult = 0;
                     long Result = getDb().updateKOTNo(0);
                     Log.d("AutoDayEnd", "KOT No reset to 0 status :"+Result);
+
+                    BillNoReset bs = new BillNoReset();
+                    bs.setBillNo(dbHomeScreen);
                 }
 
             }
@@ -167,6 +167,8 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     protected void onResume() {
         super.onResume();
     listAccesses = getDb().getPermissionsNamesForRole(getDb().getRoleName(strUserRole+""));
+    BillNoReset bs = new BillNoReset();
+    bs.setBillNo(dbHomeScreen);
     }
 
     public boolean isAccessable(String type){
@@ -254,6 +256,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         tvCounterSalesOption = (TextView) findViewById(R.id.tvCounterSalesOption);
         tvPickUpOption1 = (TextView) findViewById(R.id.tvPickUpOption1);
     }
+
     @SuppressWarnings("deprecation")
     private void DayEnd() {
         try {
@@ -340,23 +343,13 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 
                             long Result = getDb().updateKOTNo(0);
                             Log.d("ManualDayEnd", "KOT No reset to 0 status :"+Result);
-                            //int iDateAndTime = 0;
-                            /*Date d = new Date();
-                            CharSequence currentdate = DateFormat.format("dd-MM-yyyy", d.getTime());
-*/
+
                             long iResult = getDb().updateBusinessDate(String.valueOf(strNextDate));
                             Log.d("ManualDayEnd", "Bussiness Date updation status :" + iResult);
 
-                            /*Cursor crsrBillDate = dbHomeScreen.getBillSetting();
-                            if (crsrBillDate.moveToFirst()) {
-                                if (currentdate.toString().equalsIgnoreCase(crsrBillDate.getString(crsrBillDate.getColumnIndex("BusinessDate")))) {
-                                    objBillSettings.setDateAndTime(1);
-                                    long iResult = dbHomeScreen.updateDateAndTime(objBillSettings);
-                                } else {
-                                    objBillSettings.setDateAndTime(0);
-                                    long iResult = dbHomeScreen.updateDateAndTime(objBillSettings);
-                                }
-                            }*/
+                            //setBillNo();
+                            BillNoReset bs = new BillNoReset();
+                            bs.setBillNo(dbHomeScreen);
 
                             if (iResult > 0) {
                                 MsgBox.Show("Information", "Transaction Date changed to " + strNextDate);

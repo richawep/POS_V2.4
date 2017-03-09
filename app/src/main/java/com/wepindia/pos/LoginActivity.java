@@ -34,8 +34,10 @@ import com.mswipetech.wisepad.sdktest.view.ApplicationData;
 import com.wep.common.app.Database.BillSetting;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.utils.Preferences;
+import com.wepindia.pos.GenericClasses.BillNoReset;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -82,31 +84,13 @@ public class LoginActivity extends Activity {
             dbLogin.CreateDatabase();
             dbLogin.OpenDatabase();
 
-            Cursor crsrBillNoResetSetting = null;
-            crsrBillNoResetSetting = dbLogin.getBillNoResetSetting();
-            if (crsrBillNoResetSetting.moveToFirst()) {
-                if (crsrBillNoResetSetting.getString(crsrBillNoResetSetting.getColumnIndex("Period")).equalsIgnoreCase("Enable")) {
-                    Date d = new Date();
-                    CharSequence s = android.text.format.DateFormat.format("yyyy-MM-dd", d.getTime());
-                    int iResult = 0;
-                    if (crsrBillNoResetSetting.getString(crsrBillNoResetSetting.getColumnIndex("PeriodDate")).equalsIgnoreCase(s.toString())) {
-                        String strPeriod = "Enable";
-                        iResult = dbLogin.UpdateBillNoReset(strPeriod);
-                    } /*else {
-                        String strPeriod = "Disable";
-                        iResult = dbLogin.UpdateBillNoResetPeriod(strPeriod);
-                    }*/
-                }
-            } else {
-                Log.d("OtherSettings", "No data in BillNoResetSettings table");
-            }
-
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         initSinglePrinter();
     }
+
 
     private void initSinglePrinter() {
         sharedPreferences = Preferences.getSharedPreferencesForPrint(LoginActivity.this); // getSharedPreferences("PrinterConfigurationActivity", Context.MODE_PRIVATE);
