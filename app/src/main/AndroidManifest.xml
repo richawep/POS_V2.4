@@ -277,6 +277,11 @@
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
+            android:name=".PrintIngredients"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
             android:name=".GoodsInwardNoteActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />

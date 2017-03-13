@@ -32,6 +32,7 @@ import com.gprinter.save.PortParamDataBase;
 import com.gprinter.service.GpPrintService;
 import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.print.Payment;
+import com.wep.common.app.print.PrintIngredientsModel;
 import com.wep.common.app.print.PrintKotBillItem;
 import com.wepindia.printers.heydey.BluetoothDeviceList;
 import com.wepindia.printers.heydey.Util;
@@ -523,6 +524,11 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
         printReceiptPrint();
     }
 
+    public void printHeydeyIngredients(ArrayList<PrintIngredientsModel> item, String type) {
+        printType = type;
+        tmpList = printerUtil.getPrintIngredients(item);
+        printReceiptPrint();
+    }
     public void printTest() {
         testPrint();
         ;

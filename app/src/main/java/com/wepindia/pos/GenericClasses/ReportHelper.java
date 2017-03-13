@@ -95,7 +95,7 @@ public class ReportHelper{
 				(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		rowColumnCaption.setBackgroundColor(activityContext.getResources().getColor(R.color.colorPrimaryLight));
 		
-		if(ReportName.equalsIgnoreCase("Bill wise Report") || ReportName.equalsIgnoreCase("Void Bill Report") || 
+		if( ReportName.equalsIgnoreCase("Void Bill Report") ||
 				ReportName.equalsIgnoreCase("Day wise Report") || ReportName.equalsIgnoreCase("Month wise Report") ||
 				ReportName.equalsIgnoreCase("Duplicate Bill Report")){
 			
@@ -171,7 +171,69 @@ public class ReportHelper{
 			}
 			
 		}
-		
+		if(ReportName.equalsIgnoreCase("Bill wise Report") ){
+
+			TextView Date = new TextView(activityContext);
+			Date.setWidth(120);
+			Date.setTextSize(15);
+			Date.setTextColor(Color.WHITE);
+			Date.setText("Date");
+
+			TextView BillNumber = new TextView(activityContext);
+			BillNumber.setWidth(100);
+			BillNumber.setTextSize(15);
+			BillNumber.setTextColor(Color.WHITE);
+			if(ReportName.equalsIgnoreCase("Day wise Report") ||
+					ReportName.equalsIgnoreCase("Month wise Report")){
+				BillNumber.setText("Total Bills");
+			} else {
+				BillNumber.setText("Bill Number");
+			}
+
+			TextView TotalItems = null;
+			TotalItems = new TextView(activityContext);
+			TotalItems.setWidth(100);
+			TotalItems.setTextSize(15);
+			TotalItems.setTextColor(Color.WHITE);
+			TotalItems.setText("Items");
+
+			TextView Amount = new TextView(activityContext);
+			Amount.setWidth(100);
+			Amount.setTextSize(15);
+			Amount.setTextColor(Color.WHITE);
+			Amount.setText("Bill Amount");
+
+			TextView SalesTax = new TextView(activityContext);
+			SalesTax.setWidth(100);
+			SalesTax.setTextSize(15);
+			SalesTax.setTextColor(Color.WHITE);
+			SalesTax.setText("      Tax");
+
+			TextView ServiceTax = new TextView(activityContext);
+			ServiceTax.setWidth(100);
+			ServiceTax.setTextSize(15);
+			ServiceTax.setTextColor(Color.WHITE);
+			ServiceTax.setText("Service Tax");
+
+			TextView Discount = new TextView(activityContext);
+			Discount.setWidth(100);
+			Discount.setTextSize(15);
+			Discount.setTextColor(Color.WHITE);
+			Discount.setText("Discount");
+
+
+
+			// Add views to row
+			rowColumnCaption.addView(Date);
+			rowColumnCaption.addView(BillNumber);
+			rowColumnCaption.addView(TotalItems);
+			rowColumnCaption.addView(Discount);
+			rowColumnCaption.addView(SalesTax);
+			//rowColumnCaption.addView(ServiceTax); richa making single tax
+			rowColumnCaption.addView(Amount);
+
+		}
+
 		else if(ReportName.equalsIgnoreCase("Transaction Report")){
 			
 			TextView Date = new TextView(activityContext);
@@ -369,8 +431,9 @@ public class ReportHelper{
 			SalesTax.setWidth(100);
 			SalesTax.setTextSize(15);
 			SalesTax.setTextColor(Color.WHITE);
-			SalesTax.setText("Sales Tax");
-			
+			//SalesTax.setText("Sales Tax");
+			SalesTax.setText("      Tax");
+
 			TextView ServiceTax = new TextView(activityContext);
 			ServiceTax.setWidth(100);
 			ServiceTax.setTextSize(15);
@@ -395,7 +458,7 @@ public class ReportHelper{
 			rowColumnCaption.addView(Quantity);
 			rowColumnCaption.addView(Discount);
 			rowColumnCaption.addView(SalesTax);
-			rowColumnCaption.addView(ServiceTax);
+			//rowColumnCaption.addView(ServiceTax); richa - making single tax
 			rowColumnCaption.addView(Amount);
 			rowColumnCaption.addView(Modifier);
 			

@@ -46,6 +46,7 @@
                 android:hint="Mobile No"
                 android:inputType="number"
                 android:maxLength="10"
+                android:drawableRight="@drawable/searchicon_img"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
@@ -368,7 +369,7 @@
                                         <TextView
                                             android:id="@+id/tvDateHeading"
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
+                                            android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:background="@color/colorPrimaryLight"
                                             android:text="Date :"
@@ -378,7 +379,7 @@
                                         <TextView
                                             android:id="@+id/tvBillDateValue"
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
+                                            android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:gravity="right"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
