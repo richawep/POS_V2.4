@@ -2375,15 +2375,19 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
-        if (String.valueOf(iCustId).equalsIgnoreCase("") || String.valueOf(iCustId).equalsIgnoreCase("0")) {
-        } else {
+        if (String.valueOf(iCustId).equalsIgnoreCase("") || String.valueOf(iCustId).equalsIgnoreCase("0"))
+        {
+            // No customer Details, do nothing
+        }
+        else
+        {
             float fTotalTransaction = db.getCustomerTotalTransaction(iCustId);
             float fCreditAmount = db.getCustomerCreditAmount(iCustId);
-            fCreditAmount = fCreditAmount - Float.parseFloat(tvBillAmount.getText().toString());
+            //fCreditAmount = fCreditAmount - Float.parseFloat(tvBillAmount.getText().toString());
+            fCreditAmount = fCreditAmount - fPettCashPayment;
             fTotalTransaction += Float.parseFloat(tvBillAmount.getText().toString());
 
-            long lResult1 = db.updateCustomerTransaction(iCustId,
-                    Float.parseFloat(tvBillAmount.getText().toString()), fTotalTransaction, fCreditAmount);
+            long lResult1 = db.updateCustomerTransaction(iCustId, Float.parseFloat(tvBillAmount.getText().toString()), fTotalTransaction, fCreditAmount);
         }
 
         // Bill No Reset Configuration
@@ -2655,7 +2659,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     boolean isComplimentaryBill, isDiscounted, isPrintBill = false;
                     float dDiscPercent;
                     String strComplimentaryReason = "";
-
+                    iCustId = data.getIntExtra("CUST_ID", 1);
+                    customerId = iCustId+"";
                     isComplimentaryBill = data.getBooleanExtra(PayBillActivity.IS_COMPLIMENTARY_BILL, false);
                     isDiscounted = data.getBooleanExtra(PayBillActivity.IS_DISCOUNTED, false);
                     isPrintBill = data.getBooleanExtra(PayBillActivity.IS_PRINT_BILL, true);
@@ -2672,8 +2677,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     isDiscounted = data.getBooleanExtra(PayBillActivity.IS_DISCOUNTED, false);
                     fTotalDiscount = 0;
                     fTotalDiscount = data.getFloatExtra(PayBillActivity.DISCOUNT_PERCENT, 0);
-                    iCustId = data.getIntExtra("CUST_ID", 1);
-
+                    /*iCustId = data.getIntExtra("CUST_ID", 1);
+                    customerId = iCustId+"";*/
                     if (isDiscounted == true) {
                         Log.v("Tender Result", "Discounted:" + isDiscounted);
                         Log.v("Tender Result", "Discount Amount:" + fTotalDiscount);

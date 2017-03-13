@@ -59,6 +59,8 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     private static final String TAG = PayBillActivity.class.getSimpleName();
     Context myContext;
 
+    AlertDialog alertDialog = null;
+
     // DatabaseHandler object
     DatabaseHandler dbPayBill = new DatabaseHandler(PayBillActivity.this);
     // MessageDialog object
@@ -101,7 +103,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     String strUserName = "";
     Cursor crsrCustomer;
     Date d;
-    private int toPayAmount;
+    private double toPayAmount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -328,78 +330,67 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     {
         if(Float.parseFloat(edtTenderTotalValue.getText().toString()) >= Float.parseFloat(edtTotalValue.getText().toString()))
         {
-            // Close Database connection
             dbPayBill.CloseDatabase();
-            // set Results
-            Intent intentResult = new Intent();
-            intentResult.putExtra(IS_COMPLIMENTARY_BILL, false);
-            intentResult.putExtra(COMPLIMENTARY_REASON, "");
-            if (Float.parseFloat(edtDiscount.getText().toString()) > 0)
-            {
-                intentResult.putExtra(IS_DISCOUNTED, true);
-            }
-            else
-            {
-                intentResult.putExtra(IS_DISCOUNTED, false);
-            }
-            intentResult.putExtra(IS_PRINT_BILL, false);
-            intentResult.putExtra(DISCOUNT_PERCENT, Float.parseFloat(edtDiscount.getText().toString()));
-            intentResult.putExtra(TENDER_CASH_VALUE, Float.parseFloat(edtPaid.getText().toString()));
-            intentResult.putExtra(TENDER_CARD_VALUE, Float.parseFloat(edtCard.getText().toString()));
-            intentResult.putExtra(TENDER_COUPON_VALUE, Float.parseFloat(edtCoupon.getText().toString()));
-            intentResult.putExtra(TENDER_PETTYCASH_VALUE, Float.parseFloat(edtPettyCash.getText().toString()));
-            intentResult.putExtra(TENDER_PAIDTOTAL_VALUE, Float.parseFloat(edtTenderTotalValue.getText().toString()));
-            intentResult.putExtra(TENDER_CHANGE_VALUE, Float.parseFloat(edtChange.getText().toString()));
-            intentResult.putExtra(TENDER_WALLET_VALUE, dWalletPayment);
-            intentResult.putExtra(ORDER_DELIVERED, strOrderDelivered);
-            intentResult.putExtra("CUST_ID", Integer.parseInt(tvCustId.getText().toString()));
-            setResult(RESULT_OK, intentResult);
-            // Finish the activity
+            setResult(RESULT_OK, getSaveIntent(false));
             this.finish();
         }
         else
         {
             MsgBox.Show("Warning", "Check Bill Amount is Paid or not.\nPaid Total is less than Total Amount");
         }
-
     }
 
     public void PrintBill(View view)
     {
-        if(Float.parseFloat(edtTenderTotalValue.getText().toString()) >= Float.parseFloat(edtTotalValue.getText().toString())) {
-            // Close Database connection
+        if(Float.parseFloat(edtTenderTotalValue.getText().toString()) >= Float.parseFloat(edtTotalValue.getText().toString()))
+        {
             dbPayBill.CloseDatabase();
-
-            // set Results
-            Intent intentResult = new Intent();
-
-            intentResult.putExtra(IS_COMPLIMENTARY_BILL, false);
-            intentResult.putExtra(COMPLIMENTARY_REASON, "");
-            if (Float.parseFloat(edtDiscount.getText().toString()) > 0) {
-                intentResult.putExtra(IS_DISCOUNTED, true);
-            } else {
-                intentResult.putExtra(IS_DISCOUNTED, false);
-            }
-            intentResult.putExtra(IS_PRINT_BILL, true);
-            intentResult.putExtra(DISCOUNT_PERCENT, Float.parseFloat(edtDiscount.getText().toString()));
-            intentResult.putExtra(TENDER_CASH_VALUE, Float.parseFloat(edtPaid.getText().toString()));
-            intentResult.putExtra(TENDER_CARD_VALUE, Float.parseFloat(edtCard.getText().toString()));
-            intentResult.putExtra(TENDER_COUPON_VALUE, Float.parseFloat(edtCoupon.getText().toString()));
-            intentResult.putExtra(TENDER_PETTYCASH_VALUE, Float.parseFloat(edtPettyCash.getText().toString()));
-            intentResult.putExtra(TENDER_PAIDTOTAL_VALUE, Float.parseFloat(edtTenderTotalValue.getText().toString()));
-            intentResult.putExtra(TENDER_CHANGE_VALUE, Float.parseFloat(edtChange.getText().toString()));
-            intentResult.putExtra(TENDER_WALLET_VALUE, dWalletPayment);
-            intentResult.putExtra(ORDER_DELIVERED, strOrderDelivered);
-            intentResult.putExtra("CUST_ID", Integer.parseInt(tvCustId.getText().toString()));
-
-            setResult(RESULT_OK, intentResult);
-
-            // Finish the activity
+            setResult(RESULT_OK, getSaveIntent(true));
             this.finish();
         }
         else
         {
             MsgBox.Show("Warning", "Check Bill Amount is Paid or not.\nPaid Total is less than Total Amount");
+        }
+    }
+
+    public Intent getSaveIntent(boolean isPrint){
+        Intent intentResult = new Intent();
+        intentResult.putExtra(IS_COMPLIMENTARY_BILL, false);
+        intentResult.putExtra(COMPLIMENTARY_REASON, "");
+        if (Float.parseFloat(edtDiscount.getText().toString()) > 0)
+        {
+            intentResult.putExtra(IS_DISCOUNTED, true);
+        }
+        else
+        {
+            intentResult.putExtra(IS_DISCOUNTED, false);
+        }
+        intentResult.putExtra(IS_PRINT_BILL, isPrint);
+        intentResult.putExtra(DISCOUNT_PERCENT, Float.parseFloat(edtDiscount.getText().toString()));
+        intentResult.putExtra(TENDER_CASH_VALUE, Float.parseFloat(edtPaid.getText().toString()));
+        intentResult.putExtra(TENDER_CARD_VALUE, Float.parseFloat(edtCard.getText().toString()));
+        intentResult.putExtra(TENDER_COUPON_VALUE, Float.parseFloat(edtCoupon.getText().toString()));
+        intentResult.putExtra(TENDER_PETTYCASH_VALUE, (float) getPettyCash());
+        intentResult.putExtra(TENDER_PAIDTOTAL_VALUE, Float.parseFloat(edtTenderTotalValue.getText().toString()));
+        intentResult.putExtra(TENDER_CHANGE_VALUE, Float.parseFloat(edtChange.getText().toString()));
+        intentResult.putExtra(TENDER_WALLET_VALUE, dWalletPayment);
+        intentResult.putExtra(ORDER_DELIVERED, strOrderDelivered);
+        intentResult.putExtra("CUST_ID", Integer.parseInt(tvCustId.getText().toString()));
+        return intentResult;
+    }
+
+    private double getPettyCash() {
+        double totalValue = Double.parseDouble(edtTotalValue.getText().toString());
+        double petty = Double.parseDouble(edtPettyCash.getText().toString());
+        double effectiveVal = toPayAmount-petty;
+        if(effectiveVal >= 0)
+        {
+            return Double.parseDouble(edtPettyCash.getText().toString());
+        }
+        else
+        {
+            return toPayAmount-effectiveVal;
         }
     }
 
@@ -722,9 +713,203 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         edtCoupon.setText(String.format("%.2f",dCouponAmount));
     }
 
-    public void CreditCustomer(final View view) {
+    public void showCreditCustomerDialog()
+    {
+        String btnTxtOkay = "Pay";
+        String btnTxtCancel = "Cancel";
+        final String btnTxtNutral = "Credit & Pay";
+
+        LayoutInflater li = LayoutInflater.from(PayBillActivity.this);
+        View promptsView = li.inflate(R.layout.pay_bill_dialog, null);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PayBillActivity.this);
+        alertDialogBuilder.setView(promptsView);
+        final EditText editTextMobile = (EditText) promptsView.findViewById(R.id.editTextMobile);
+        final EditText editTextName = (EditText) promptsView.findViewById(R.id.editTextName);
+        final EditText editTextBalance = (EditText) promptsView.findViewById(R.id.editTextBalance);
+
+        final TextView textViewBalanceUpdate = (TextView) promptsView.findViewById(R.id.textViewBalanceUpdate);
+        final TextView textViewMessage = (TextView) promptsView.findViewById(R.id.textViewMessage);
+
+        final Button btnCancel = (Button) promptsView.findViewById(R.id.btnCancel);
+        btnCancel.setText(btnTxtCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AlertDialog) alertDialog).cancel();
+            }
+        });
+        final Button btnNutral = (Button) promptsView.findViewById(R.id.btnNutral);
+        btnNutral.setText(btnTxtNutral);
+        btnNutral.setVisibility(View.INVISIBLE);
+        btnNutral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AlertDialog) alertDialog).cancel();
+                /*float fCreditAmount = dbPayBill.getCustomerCreditAmount(Integer.parseInt(strCustId));
+                if(fCreditAmount <= 0)
+                {
+                    edtPettyCash.setText(getEffectivePaybleAmountForCreditCustomerNegative()+"");
+                }
+                else
+                {
+                    edtPettyCash.setText(getEffectivePaybleAmountForCreditCustomer()+"");
+                }*/
+
+                edtPettyCash.setText(getEffectivePaybleAmountForCreditCustomer()+"");
+            }
+        });
+        final Button btnOk = (Button) promptsView.findViewById(R.id.btnOk);
+        btnOk.setText(btnTxtOkay);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double newBlnc = getUpdatedAmountForCreditCustomer(toPayAmount,getEffectivePaybleAmountForCreditCustomer());
+                if(btnNutral.getVisibility() == View.VISIBLE)
+                {
+                    //Exceed Payble Amount
+                    //edtPettyCash.setText(toPayAmount+"");
+                    float fCreditAmount = dbPayBill.getCustomerCreditAmount(Integer.parseInt(tvCustId.getText().toString()));
+                    if(fCreditAmount < 0)
+                    {
+                        edtPettyCash.setText(0+"");
+                    }
+                    else
+                    {
+                        edtPettyCash.setText(toPayAmount+"");
+                    }
+                }
+                else
+                {
+                    edtPettyCash.setText(getEffectivePaybleAmountForCreditCustomer()+"");
+                }
+                ((AlertDialog) alertDialog).cancel();
+            }
+        });
+
+        editTextMobile.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                try {
+                    if (editTextMobile.getText().toString().length() == 10)
+                    {
+                        Cursor crsrCust = dbPayBill.getPayBillCustomerByMobileNo(editTextMobile.getText().toString());
+                        if (crsrCust.moveToFirst())
+                        {
+                            try{
+                                String custId = crsrCust.getString(crsrCust.getColumnIndex("CustId"));
+                                tvCustId.setText(custId+"");
+                                Cursor cursor = dbPayBill.getPayBillCustomer(custId);
+                                cursor.moveToFirst();
+                                String custName = cursor.getString(cursor.getColumnIndex("CustName"));
+                                double custBalance = cursor.getDouble(cursor.getColumnIndex("CreditAmount"));
+                                toPayAmount = custBalance;
+                                editTextName.setText(custName);
+                                editTextBalance.setText(custBalance+"");
+                                //Balance After Payment: 100-46=54
+                                double newBlnc = getUpdatedAmountForCreditCustomer(custBalance,getEffectivePaybleAmountForCreditCustomer());
+                                if(newBlnc >= 0)
+                                {
+                                    textViewBalanceUpdate.setText("Balance After Payment: "+custBalance+"-"+getEffectivePaybleAmountForCreditCustomer()+"="+newBlnc);
+                                    textViewBalanceUpdate.setVisibility(View.VISIBLE);
+                                    btnNutral.setVisibility(View.INVISIBLE);
+                                    btnOk.setText("Pay");
+                                }
+                                else
+                                {
+                                    textViewBalanceUpdate.setText("Balance After Payment: 0.00 (If Paid remaining by cash else -ve)");
+                                    textViewMessage.setVisibility(View.VISIBLE);
+                                    textViewBalanceUpdate.setVisibility(View.VISIBLE);
+                                    btnNutral.setVisibility(View.VISIBLE);
+                                    btnNutral.setText("Credit & Pay");
+                                    btnOk.setText("Pay Partialy");
+                                }
+
+                            }catch (Exception e){
+                                MsgBox.Show("", e+"");
+                            }
+                        }
+                        else
+                        {
+                            MsgBox.Show("", "Customer is not Found, Please Add Customer for Petty Cash");
+                        }
+                    }
+                    else
+                    {
+                        editTextName.setText("");
+                        editTextBalance.setText("");
+                        textViewBalanceUpdate.setVisibility(View.INVISIBLE);
+                        textViewMessage.setVisibility(View.INVISIBLE);
+                        btnNutral.setVisibility(View.INVISIBLE);
+                        btnOk.setText("Pay");
+                        /*btnNutral.setText("Credit & Pay");
+                        btnOk.setText("Pay Partialy");*/
+                    }
+                } catch (Exception ex) {
+                    editTextName.setText("");
+                    editTextBalance.setText("");
+                    textViewBalanceUpdate.setVisibility(View.INVISIBLE);
+                    textViewMessage.setVisibility(View.INVISIBLE);
+                    btnNutral.setVisibility(View.INVISIBLE);
+                    MsgBox.Show("Error", ex.getMessage());
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+        editTextMobile.setText(phone);
+        alertDialogBuilder.setCancelable(false);
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.setTitle("Credit Customer");
+        alertDialog.show();
+
+    }
+
+    public double getEffectivePaybleAmountForCreditCustomer(){
+        double amount = 0.0;
+        try{
+            double paybleAmount = Double.parseDouble(edtTotalValue.getText().toString());
+            double paidAmount = Double.parseDouble(edtTenderTotalValue.getText().toString());
+            amount = paybleAmount - paidAmount;
+        }catch (Exception e){
+
+        }
+        return amount;
+    }
+
+    public double getEffectivePaybleAmountForCreditCustomerNegative(){
+        double amount = 0.0;
+        try{
+            double paybleAmount = Double.parseDouble(edtTotalValue.getText().toString());
+            double paidAmount = Double.parseDouble(edtTenderTotalValue.getText().toString());
+            amount = paybleAmount - paidAmount;
+        }catch (Exception e){
+
+        }
+        return amount;
+    }
+
+    public double getUpdatedAmountForCreditCustomer(double amt1,double amt2){
+        double amount = 0.0;
+        try{
+            amount = amt1 - amt2;
+        }catch (Exception e){
+            amount = 0.0;
+        }
+        return amount;
+    }
+
+    public void CreditCustomer(View view) {
+        edtPettyCash.setText("0");
         //edtPettyCash.setEnabled(true);
         // custom dialog
+        //showOldPaybillDialog(view);
+        showCreditCustomerDialog();
+    }
+
+    private void showOldPaybillDialog(final View view) {
         PayBillDialog = new Dialog(myContext);
         PayBillDialog.setContentView(R.layout.paybill_tablelist);
         PayBillDialog.setTitle("Credit Customer");
@@ -831,7 +1016,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                         }
                     });
                     rowPayBill.setTag("TAG");
-
                     tblPayBill.addView(rowPayBill, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                 } while (crsrCustomer.moveToNext());

@@ -4643,6 +4643,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put("CategCode", objBillItem.getCategCode());
         cvDbValues.put("KitchenCode", objBillItem.getKitchenCode());
         cvDbValues.put("TaxType", objBillItem.getTaxType());
+        //cvDbValues.put("CustId", objBillItem.getCustId());
         //cvDbValues.put(KEY_BusinessType, objBillItem.getBusinessType());
         cvDbValues.put(KEY_InvoiceDate, objBillItem.getInvoiceDate());
         cvDbValues.put(KEY_HSNCode, objBillItem.getHSNCode());

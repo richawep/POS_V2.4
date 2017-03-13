@@ -520,6 +520,37 @@ public class ReportHelper{
 			LastTransaction.setTextSize(15);
 			LastTransaction.setTextColor(Color.WHITE);
 			LastTransaction.setText("Last Transaction");
+
+			TextView cash = new TextView(activityContext);
+			cash.setWidth(120);
+			cash.setTextSize(15);
+			cash.setTextColor(Color.WHITE);
+			cash.setText("Cash Payment  ");
+
+
+			TextView card = new TextView(activityContext);
+			card.setWidth(120);
+			card.setTextSize(15);
+			card.setTextColor(Color.WHITE);
+			card.setText("Card Payment");
+
+			TextView coupon = new TextView(activityContext);
+			coupon.setWidth(130);
+			coupon.setTextSize(15);
+			coupon.setTextColor(Color.WHITE);
+			coupon.setText("Coupon Payment");
+
+			TextView credit = new TextView(activityContext);
+			credit.setWidth(120);
+			credit.setTextSize(15);
+			credit.setTextColor(Color.WHITE);
+			credit.setText("Credit Payment");
+
+			TextView wallet = new TextView(activityContext);
+			wallet.setWidth(120);
+			wallet.setTextSize(15);
+			wallet.setTextColor(Color.WHITE);
+			wallet.setText("Wallet Payment");
 			
 			TextView TotalTransaction = new TextView(activityContext);
 			TotalTransaction.setWidth(125);
@@ -532,14 +563,17 @@ public class ReportHelper{
 			rowColumnCaption.addView(Name);
 			rowColumnCaption.addView(Bills);
 			rowColumnCaption.addView(LastTransaction);
+			rowColumnCaption.addView(cash);
+			rowColumnCaption.addView(card);
+			rowColumnCaption.addView(coupon);
+			rowColumnCaption.addView(credit);
+			rowColumnCaption.addView(wallet);
 			rowColumnCaption.addView(TotalTransaction);
 			
 		}
 		
-		else if(ReportName.equalsIgnoreCase("Waiter Detailed Report") || 
-				ReportName.equalsIgnoreCase("Rider Detailed Report") || 
-				ReportName.equalsIgnoreCase("User Detailed Report") ||
-				ReportName.equalsIgnoreCase("Customer Detailed Report")){
+		else if(ReportName.equalsIgnoreCase("Waiter Detailed Report") || ReportName.equalsIgnoreCase("Rider Detailed Report") || ReportName.equalsIgnoreCase("User Detailed Report"))
+		{
 			
 			TextView Date = new TextView(activityContext);
 			Date.setWidth(100);
@@ -592,6 +626,83 @@ public class ReportHelper{
 			rowColumnCaption.addView(ServiceTax);
 			rowColumnCaption.addView(Amount);
 			
+		}
+
+		else if(ReportName.equalsIgnoreCase("Customer Detailed Report"))
+		{
+			TextView Date = new TextView(activityContext);
+			Date.setWidth(100);
+			Date.setTextSize(15);
+			Date.setTextColor(Color.WHITE);
+			Date.setText("Date");
+
+			TextView BillNumber = new TextView(activityContext);
+			BillNumber.setWidth(100);
+			BillNumber.setTextSize(15);
+			BillNumber.setTextColor(Color.WHITE);
+			BillNumber.setText("Bill Number");
+
+			TextView TotalItems = new TextView(activityContext);
+			TotalItems.setWidth(100);
+			TotalItems.setTextSize(15);
+			TotalItems.setTextColor(Color.WHITE);
+			TotalItems.setText("Total Items");
+
+			TextView Discount = new TextView(activityContext);
+			Discount.setWidth(100);
+			Discount.setTextSize(15);
+			Discount.setTextColor(Color.WHITE);
+			Discount.setText("Discount");
+
+			TextView cash = new TextView(activityContext);
+			cash.setWidth(120);
+			cash.setTextSize(15);
+			cash.setTextColor(Color.WHITE);
+			cash.setText("Cash Payment  ");
+
+
+			TextView card = new TextView(activityContext);
+			card.setWidth(120);
+			card.setTextSize(15);
+			card.setTextColor(Color.WHITE);
+			card.setText("Card Payment");
+
+			TextView coupon = new TextView(activityContext);
+			coupon.setWidth(130);
+			coupon.setTextSize(15);
+			coupon.setTextColor(Color.WHITE);
+			coupon.setText("Coupon Payment");
+
+			TextView credit = new TextView(activityContext);
+			credit.setWidth(120);
+			credit.setTextSize(15);
+			credit.setTextColor(Color.WHITE);
+			credit.setText("Credit Payment");
+
+			TextView wallet = new TextView(activityContext);
+			wallet.setWidth(120);
+			wallet.setTextSize(15);
+			wallet.setTextColor(Color.WHITE);
+			wallet.setText("Wallet Payment");
+
+			TextView Amount = new TextView(activityContext);
+			Amount.setWidth(120);
+			Amount.setTextSize(15);
+			Amount.setTextColor(Color.WHITE);
+			Amount.setText("Bill Amount");
+
+			// Add views to row
+			rowColumnCaption.addView(Date);
+			rowColumnCaption.addView(BillNumber);
+			rowColumnCaption.addView(TotalItems);
+			rowColumnCaption.addView(Discount);
+			rowColumnCaption.addView(cash);
+			rowColumnCaption.addView(card);
+			rowColumnCaption.addView(coupon);
+			rowColumnCaption.addView(credit);
+			rowColumnCaption.addView(wallet);
+			rowColumnCaption.addView(Amount);
+
 		}
 		
 		else if(ReportName.equalsIgnoreCase("Payments Report") || 

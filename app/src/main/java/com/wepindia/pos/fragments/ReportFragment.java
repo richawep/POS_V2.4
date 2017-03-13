@@ -4069,84 +4069,100 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void CustomerwiseReport() {
-        /*Cursor Report = dbReport.getCustomerwiseReport(txtReportDateStart.getText().toString(),
-                txtReportDateEnd.getText().toString());
-*/
+    private void CustomerwiseReport()
+    {
+        /*Cursor Report = dbReport.getCustomerwiseReport(txtReportDateStart.getText().toString(),txtReportDateEnd.getText().toString());*/
         Cursor Report = dbReport.getCustomerwiseReport(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
-
-
-
         Log.d("CustomerwiseReport", "Rows Count:" + Report.getCount());
 
-        if (Report.moveToFirst()) {
+        if (Report.moveToFirst())
+        {
             boolean isCustomerExists = false;
-
             TextView CustId, CustName, TotalBills, LastTransaction, TotalTransaction;
             TableRow rowReport;
 
             do {
-                for (int iPosition = 1; iPosition < tblReport.getChildCount(); iPosition++) {
-
+                for (int iPosition = 1; iPosition < tblReport.getChildCount(); iPosition++)
+                {
                     TableRow rowItem = (TableRow) tblReport.getChildAt(iPosition);
-                    if (rowItem.getChildAt(0) != null) {
-
+                    if (rowItem.getChildAt(0) != null)
+                    {
                         TextView Id = (TextView) rowItem.getChildAt(0);
-
-                        if (Id.getText().toString().equalsIgnoreCase(Report.getString(Report
-                                .getColumnIndex("CustId")))) {
-
+                        if (Id.getText().toString().equalsIgnoreCase(Report.getString(Report.getColumnIndex("CustId"))))
+                        {
                             // Total Bills
                             TextView Bills = (TextView) rowItem.getChildAt(2);
-                            Bills.setText(String.format("%d",
-                                    Integer.parseInt(Bills.getText().toString()) + 1));
-
+                            Bills.setText(String.format("%d", Integer.parseInt(Bills.getText().toString()) + 1));
                             isCustomerExists = true;
                             break;
                         }
                     }
                 }
 
-                if (isCustomerExists == false) {
-
+                if (isCustomerExists == false)
+                {
                     rowReport = new TableRow(myContext);
-                    rowReport.setLayoutParams(new ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT));
+                    rowReport.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     CustId = new TextView(myContext);
-                    CustId.setText(Report.getString(Report
-                            .getColumnIndex("CustId")));
+                    CustId.setText(Report.getString(Report.getColumnIndex("CustId")));
+                    rowReport.addView(CustId);
 
                     CustName = new TextView(myContext);
-                    CustName.setText(Report.getString(Report
-                            .getColumnIndex("CustName")));
+                    CustName.setText(Report.getString(Report.getColumnIndex("CustName")));
+                    rowReport.addView(CustName);
 
                     TotalBills = new TextView(myContext);
                     TotalBills.setText("1");
+                    TotalBills.setGravity(Gravity.CENTER);
+                    rowReport.addView(TotalBills);
 
                     LastTransaction = new TextView(myContext);
-                    LastTransaction.setText(String.format("%.2f", Report.getDouble(Report
-                            .getColumnIndex("LastTransaction"))));
-                    LastTransaction.setGravity(Gravity.END);
-                    LastTransaction.setPadding(0,0,30,0);
+                    LastTransaction.setText(String.format("%.2f", Report.getDouble(Report.getColumnIndex("LastTransaction"))));
+                    LastTransaction.setGravity(Gravity.CENTER);
+                    //LastTransaction.setPadding(0,0,30,0);
+                    rowReport.addView(LastTransaction);
+
+
+                    TextView cash = new TextView(myContext);
+                    cash.setGravity(Gravity.END);
+                    cash.setPadding(7,0,50,7);
+                    cash.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CashPayment"))));
+                    rowReport.addView(cash);
+
+                    TextView card = new TextView(myContext);
+                    card.setGravity(Gravity.END);
+                    card.setPadding(7,0,50,7);
+                    card.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CardPayment"))));
+                    rowReport.addView(card);
+
+                    TextView coupon = new TextView(myContext);
+                    coupon.setGravity(Gravity.END);
+                    coupon.setPadding(7,0,50,7);
+                    coupon.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CouponPayment"))));
+                    rowReport.addView(coupon);
+
+                    TextView credit = new TextView(myContext);
+                    credit.setGravity(Gravity.END);
+                    credit.setPadding(7,0,50,7);
+                    credit.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("PettyCashPayment"))));
+                    rowReport.addView(credit);
+
+                    TextView wallet = new TextView(myContext);
+                    wallet.setGravity(Gravity.END);
+                    wallet.setPadding(7,0,50,7);
+                    wallet.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("WalletPayment"))));
+                    rowReport.addView(wallet);
+
+
 
                     TotalTransaction = new TextView(myContext);
-                    TotalTransaction.setText(String.format("%.2f", Report.getDouble(Report
-                            .getColumnIndex("TotalTransaction"))));
-                    TotalTransaction.setGravity(Gravity.END);
-                    TotalTransaction.setPadding(0,0,30,0);
-
-
-                    rowReport.addView(CustId);
-                    rowReport.addView(CustName);
-                    rowReport.addView(TotalBills);
-                    rowReport.addView(LastTransaction);
+                    TotalTransaction.setText(String.format("%.2f", Report.getDouble(Report.getColumnIndex("TotalTransaction"))));
+                    TotalTransaction.setGravity(Gravity.CENTER);
+                    //TotalTransaction.setPadding(0,0,30,0);
                     rowReport.addView(TotalTransaction);
 
-                    tblReport.addView(rowReport, new ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT));
+                    tblReport.addView(rowReport, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 }
 
                 isCustomerExists = false;
@@ -4156,81 +4172,111 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             btnPrint.setEnabled(true);
             btnExport.setEnabled(true);
 
-        } else {
+        }
+        else
+        {
             MsgBox.Show("Warning", "No transaction has been done");
         }
     }
 
     private void CustomerDetailedReport() {
-        if (txtPersonId.getText().toString().equalsIgnoreCase("")) {
+        if (txtPersonId.getText().toString().equalsIgnoreCase(""))
+        {
             MsgBox.Show("Warning", "Please Select Customer");
-        } else {
-
-            Cursor Report = dbReport.getCustomerDetailedReport(Integer
-                            .parseInt(txtPersonId.getText().toString()),
-                    String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
-
-
-            if (Report.moveToFirst()) {
-
-                TextView Date, BillNumber, TotalItems, Discount, SalesTax, ServiceTax, Amount;
+        }
+        else
+        {
+            Cursor Report = dbReport.getCustomerDetailedReport(Integer.parseInt(txtPersonId.getText().toString()), String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+            if (Report.moveToFirst())
+            {
                 TableRow rowReport;
-
                 do {
                     rowReport = new TableRow(myContext);
-                    rowReport.setLayoutParams(new ViewGroup.LayoutParams
-                            (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    rowReport.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-                    Date = new TextView(myContext);
+                    TextView Date = new TextView(myContext);
                     String dateInMillis = Report.getString(Report.getColumnIndex("InvoiceDate"));
                     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                     String dateString = formatter.format(Long.parseLong(dateInMillis));
                     Date.setText(dateString);
+                    rowReport.addView(Date);
 
-                    BillNumber = new TextView(myContext);
+                    TextView BillNumber = new TextView(myContext);
                     BillNumber.setText(Report.getString(Report.getColumnIndex("InvoiceNo")));
+                    BillNumber.setGravity(Gravity.CENTER);
+                    rowReport.addView(BillNumber);
 
-                    TotalItems = new TextView(myContext);
+                    TextView TotalItems = new TextView(myContext);
                     TotalItems.setText(Report.getString(Report.getColumnIndex("TotalItems")));
+                    TotalItems.setGravity(Gravity.CENTER);
+                    rowReport.addView(TotalItems);
 
-                    Discount = new TextView(myContext);
+                    TextView Discount = new TextView(myContext);
                     Discount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalDiscountAmount"))));
                     Discount.setGravity(Gravity.END);
                     Discount.setPadding(0,0,50,0);
+                    rowReport.addView(Discount);
 
-                    SalesTax = new TextView(myContext);
+                    /*SalesTax = new TextView(myContext);
                     SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
                     SalesTax.setGravity(Gravity.END);
                     SalesTax.setPadding(0,0,45,0);
-
                     ServiceTax = new TextView(myContext);
                     ServiceTax.setGravity(Gravity.END);
                     ServiceTax.setPadding(0,0,35,0);
-                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
+                    ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));*/
 
-                    Amount = new TextView(myContext);
+                    TextView cash = new TextView(myContext);
+                    cash.setGravity(Gravity.END);
+                    cash.setPadding(7,0,50,7);
+                    cash.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CashPayment"))));
+                    rowReport.addView(cash);
+
+                    TextView card = new TextView(myContext);
+                    card.setGravity(Gravity.END);
+                    card.setPadding(7,0,50,7);
+                    card.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CardPayment"))));
+                    rowReport.addView(card);
+
+                    TextView coupon = new TextView(myContext);
+                    coupon.setGravity(Gravity.END);
+                    coupon.setPadding(7,0,50,7);
+                    coupon.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CouponPayment"))));
+                    rowReport.addView(coupon);
+
+                    TextView credit = new TextView(myContext);
+                    credit.setGravity(Gravity.END);
+                    credit.setPadding(7,0,50,7);
+                    credit.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("PettyCashPayment"))));
+                    rowReport.addView(credit);
+
+                    TextView wallet = new TextView(myContext);
+                    wallet.setGravity(Gravity.END);
+                    wallet.setPadding(7,0,50,7);
+                    wallet.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("WalletPayment"))));
+                    rowReport.addView(wallet);
+
+                    TextView Amount = new TextView(myContext);
                     Amount.setGravity(Gravity.END);
-                    Amount.setPadding(0,0,30,0);
+                    Amount.setPadding(7,0,50,7);
                     Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
-
-                    rowReport.addView(Date);
-                    rowReport.addView(BillNumber);
-                    rowReport.addView(TotalItems);
-                    rowReport.addView(Discount);
-                    rowReport.addView(SalesTax);
-                    rowReport.addView(ServiceTax);
                     rowReport.addView(Amount);
 
-                    tblReport.addView(rowReport,
-                            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                    ViewGroup.LayoutParams.WRAP_CONTENT));
 
+
+
+
+                    /*rowReport.addView(SalesTax);
+                    rowReport.addView(ServiceTax);*/
+
+                    tblReport.addView(rowReport, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 } while (Report.moveToNext());
-
                 btnPrint.setEnabled(true);
                 btnExport.setEnabled(true);
 
-            } else {
+            }
+            else
+            {
                 MsgBox.Show("Warning", "No transaction has been done");
             }
         }

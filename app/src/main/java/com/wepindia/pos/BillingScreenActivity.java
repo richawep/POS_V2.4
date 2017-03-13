@@ -3820,17 +3820,19 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
-        if (String.valueOf(iCustId).equalsIgnoreCase("") || String.valueOf(iCustId).equalsIgnoreCase("0")) {
-        } else {
+        if (String.valueOf(iCustId).equalsIgnoreCase("") || String.valueOf(iCustId).equalsIgnoreCase("0"))
+        {
+        }
+        else
+        {
             float fTotalTransaction = dbBillScreen.getCustomerTotalTransaction(iCustId);
             float fCreditAmount = dbBillScreen.getCustomerCreditAmount(iCustId);
-            fCreditAmount = fCreditAmount - Float.parseFloat(tvBillAmount.getText().toString());
+            //fCreditAmount = fCreditAmount - Float.parseFloat(tvBillAmount.getText().toString());
+            fCreditAmount = fCreditAmount - fPettCashPayment;
             fTotalTransaction += Float.parseFloat(tvBillAmount.getText().toString());
 
-            long lResult1 = dbBillScreen.updateCustomerTransaction(iCustId,
-                    Float.parseFloat(tvBillAmount.getText().toString()), fTotalTransaction, fCreditAmount);
+            long lResult1 = dbBillScreen.updateCustomerTransaction(iCustId, Float.parseFloat(tvBillAmount.getText().toString()), fTotalTransaction, fCreditAmount);
         }
-
         // Bill No Reset Configuration
         long Result2 = dbBillScreen.UpdateBillNoResetInvoiceNo(Integer.parseInt(tvBillNumber.getText().toString()));
     }
