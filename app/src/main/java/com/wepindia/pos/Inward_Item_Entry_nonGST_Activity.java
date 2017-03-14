@@ -45,6 +45,7 @@ import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.StockInwardMaintain;
 
 import org.w3c.dom.Text;
 
@@ -99,11 +100,11 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
     ArrayList<String> itemlist;
     TextView tv_suppliercode;
     int count =1;
-
+    String businessDate ="";
     // Variables
     ArrayAdapter<String> adapDeptCode, adapCategCode, adapKitCode, adapTax, adapDiscount;
     String strMenuCode, AMU,strImageUri = "";
-    SQLiteDatabase db;
+
     String strUploadFilepath = "", strUserName = "";
     private List<String> labelsDept;
     private List<String> labelsCateg;
@@ -157,7 +158,11 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
             DisplayItems(-1); // display all data
             labelsSupplierName = new ArrayList<String>();
             loadSpinnerData();
-
+            Cursor cursor = dbInwardItem.getCurrentDate();
+            if(cursor!=null && cursor.moveToFirst())
+            {
+                businessDate = cursor.getString(cursor.getColumnIndex("BusinessDate"));
+            }
 
 
             autocompletetv_suppliername.setOnTouchListener(new View.OnTouchListener(){
@@ -1650,10 +1655,28 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                     // already present , needs to update
                     String qty_str = item_present_crsr.getString(item_present_crsr.getColumnIndex("Quantity"));
                     float qty_temp = Float.parseFloat(qty_str);
-                    quantity += qty_temp;
+                    int menuCode = item_present_crsr.getInt(item_present_crsr.getColumnIndex("MenuCode"));
+                    //quantity+=qty_temp;
                     Long l = dbInwardItem.updateIngredient(itemname, quantity, mou);
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname + " updated  successfully at " + l);
+                        // updating stock inward
+
+                        double openingStock =0, closingStock =0;
+                        StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, dbInwardItem);
+                        Cursor crsr_inward_stock = dbInwardItem.getInwardStock(itemname);
+                        if(crsr_inward_stock!=null && crsr_inward_stock.moveToFirst())
+                        {
+                            openingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("OpeningStock"));
+                            closingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("ClosingStock"));
+                        }
+                        double additionalQty = Double.parseDouble(et_inw_quantity.getText().toString());
+
+
+                        stock_inward.updateOpeningStock_Inward(businessDate,menuCode,itemname,
+                                openingStock+additionalQty,rate);
+                        stock_inward.updateClosingStock_Inward(businessDate,menuCode,itemname,closingStock+additionalQty);
+
                     }
 
                 }else
@@ -1662,9 +1685,15 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                     Long  l = dbInwardItem.addIngredient(itemname, quantity, mou);
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname + " added  successfully at " + l);
+                        // updating inward stock
+                        int menuCode =0;
+                        StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, dbInwardItem);
+                        Cursor goodsInward_cursor = dbInwardItem.getItem_GoodsInward(itemname);
+                        if(goodsInward_cursor!=null && goodsInward_cursor.moveToFirst()) {
+                            menuCode = goodsInward_cursor.getInt(goodsInward_cursor.getColumnIndex("MenuCode"));}
+                        stock_inward.addIngredientToStock_Inward(businessDate,menuCode,itemname,quantity,rate);
                     }
                 }
-
             }
 
         } else if (Type == 2) { // update
@@ -1696,11 +1725,27 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                 if (item_present_crsr != null && item_present_crsr.moveToFirst()) {
                     // already present , needs to update
                     String qty_str = item_present_crsr.getString(item_present_crsr.getColumnIndex("Quantity"));
+                    int menuCode = item_present_crsr.getInt(item_present_crsr.getColumnIndex("MenuCode"));
                     float qty_temp = Float.parseFloat(qty_str);
-                    quantity += qty_temp;
+                   // quantity += qty_temp;
                     Long l = dbInwardItem.updateIngredient(itemname, quantity, mou);
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname + " updated  successfully at " + l);
+                        double openingStock =0, closingStock =0;
+                        StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, dbInwardItem);
+                        Cursor crsr_inward_stock = dbInwardItem.getInwardStock(itemname);
+                        if(crsr_inward_stock!=null && crsr_inward_stock.moveToFirst())
+                        {
+                            openingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("OpeningStock"));
+                            closingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("ClosingStock"));
+                        }
+                        double additionalQty = Double.parseDouble(et_inw_quantity.getText().toString());
+
+
+                        stock_inward.updateOpeningStock_Inward(businessDate,menuCode,itemname,
+                                additionalQty,rate);
+                        stock_inward.updateClosingStock_Inward(businessDate,menuCode,itemname,additionalQty);
+
                     }
 
                 }else
@@ -1709,6 +1754,12 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                     Long  l = dbInwardItem.addIngredient(itemname, quantity, mou);
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname + " added  successfully at " + l);
+                        int menuCode =0;
+                        StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, dbInwardItem);
+                        Cursor goodsInward_cursor = dbInwardItem.getItem_GoodsInward(itemname);
+                        if(goodsInward_cursor!=null && goodsInward_cursor.moveToFirst()) {
+                            menuCode = goodsInward_cursor.getInt(goodsInward_cursor.getColumnIndex("MenuCode"));}
+                        stock_inward.addIngredientToStock_Inward(businessDate,menuCode,itemname,quantity,rate);
                     }
                 }
                 if (iRowId >0  ){ // not updated

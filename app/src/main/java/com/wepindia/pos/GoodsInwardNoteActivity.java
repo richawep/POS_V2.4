@@ -43,6 +43,7 @@ import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.StockInwardMaintain;
 
 import org.w3c.dom.Text;
 
@@ -834,6 +835,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             for (int i = 0; i < tbl_inward_item_details.getChildCount(); i++) {
                 TableRow row = (TableRow) tbl_inward_item_details.getChildAt(i);
                 TextView ItemName = (TextView) row.getChildAt(2);
+                TextView Rate = (TextView) row.getChildAt(3);
                 TextView Quantity = (TextView) row.getChildAt(4);
                 TextView UOM = (TextView) row.getChildAt(5);
 
@@ -853,6 +855,23 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                     l = dbGoodsInwardNote.updateIngredient(itemname_str, quantity_f, uom_str);
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname_str + " updated  successfully at " + l);
+                        // updating stock inward
+
+                        double openingStock =0, closingStock =0;
+                        StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, dbGoodsInwardNote);
+                        Cursor crsr_inward_stock = dbGoodsInwardNote.getInwardStock(itemname_str);
+                        int menuCode =0;
+                        if(crsr_inward_stock!=null && crsr_inward_stock.moveToFirst())
+                        {
+                            openingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("OpeningStock"));
+                            closingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("ClosingStock"));
+                            menuCode = crsr_inward_stock.getInt(crsr_inward_stock.getColumnIndex("MenuCode"));
+                        }
+                        double additionalQty = Double.parseDouble(Quantity.getText().toString());
+                        stock_inward.updateOpeningStock_Inward(invoicedate,menuCode,itemname_str,
+                                openingStock+additionalQty,Double.parseDouble(Rate.getText().toString()));
+                        stock_inward.updateClosingStock_Inward(invoicedate,menuCode,itemname_str,
+                                closingStock+additionalQty);
                     }
 
                 }else
@@ -861,6 +880,16 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                     l = dbGoodsInwardNote.addIngredient(itemname_str, quantity_f, uom_str);
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname_str + " added  successfully at " + l);
+
+                        // updating Stock inward
+                        int menuCode =0;
+                        StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, dbGoodsInwardNote);
+                        Cursor goodsInward_cursor = dbGoodsInwardNote.getItem_GoodsInward(itemname_str);
+                        if(goodsInward_cursor!=null && goodsInward_cursor.moveToFirst()) {
+                            menuCode = goodsInward_cursor.getInt(goodsInward_cursor.getColumnIndex("MenuCode"));}
+                        stock_inward.addIngredientToStock_Inward(invoicedate,menuCode,itemname_str,
+                                Double.parseDouble(qty),Double.parseDouble(Rate.getText().toString()));
+
                     }
                 }
             }

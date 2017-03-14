@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -18,13 +15,11 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -32,9 +27,9 @@ import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.Ingredients;
-import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.MessageDialog;
-import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.StockInwardMaintain;
+import com.wepindia.pos.utils.StockOutwardMaintain;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -666,6 +661,7 @@ public class ConvertIngredientActivity extends Activity {
         String itemname = tv_convert_item.getText().toString();
         int menucode = Integer.parseInt(tv_convert_menucode.getText().toString());
         String item_quantity = et_convert_item_quantity.getText().toString();
+        double rate =0;
         float item_qty_f =0;
         float item_qty_prev_f =0;
         int count = tbl_convert_ingredients.getChildCount();
@@ -686,6 +682,7 @@ public class ConvertIngredientActivity extends Activity {
        if(IngredientsInQuantity() > 0)
        {
            Cursor item_crsr  = dbIngredientManagement.getItem(menucode);
+
            if(item_crsr !=null && item_crsr.moveToFirst())
            {
                String item_prev_qty = item_crsr.getString(item_crsr.getColumnIndex("Quantity"));
@@ -693,11 +690,46 @@ public class ConvertIngredientActivity extends Activity {
                {
                    item_qty_prev_f = Float.parseFloat(item_prev_qty);
                }
+               if(item_crsr.getDouble(item_crsr.getColumnIndex("DineInPrice1")) > 0)
+                    rate = item_crsr.getDouble(item_crsr.getColumnIndex("DineInPrice1"));
+               else if(item_crsr.getDouble(item_crsr.getColumnIndex("DineInPrice2")) > 0)
+                   rate = item_crsr.getDouble(item_crsr.getColumnIndex("DineInPrice2"));
+               else if(item_crsr.getDouble(item_crsr.getColumnIndex("DineInPrice3")) > 0)
+                   rate = item_crsr.getDouble(item_crsr.getColumnIndex("DineInPrice3"));
+
            }
            long item_update = dbIngredientManagement.updateItemQuantity(menucode,item_qty_f+item_qty_prev_f);
            if(item_update > 0)
            {
+
                Log.d("ConvertingIngredients", itemname+" updated to "+(item_qty_f+item_qty_prev_f));
+               // updating in table outwardStock
+
+               Cursor date_cursor = dbIngredientManagement.getCurrentDate();
+               String currentdate = "";
+               if(date_cursor.moveToNext())
+                   currentdate = date_cursor.getString(date_cursor.getColumnIndex("BusinessDate"));
+               StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbIngredientManagement);
+               double OpeningQuantity =0;
+               double ClosingQuantity =0;
+               Cursor outward_item_stock = dbIngredientManagement.getOutwardStockItem(currentdate,menucode);
+               if(outward_item_stock!=null && outward_item_stock.moveToNext()){
+                   OpeningQuantity = outward_item_stock.getDouble(outward_item_stock.getColumnIndex("OpeningStock"));
+                   OpeningQuantity += Double.parseDouble(item_quantity);
+
+                   ClosingQuantity = outward_item_stock.getDouble(outward_item_stock.getColumnIndex("ClosingStock"));
+                   ClosingQuantity += Double.parseDouble(item_quantity);
+               }
+               else
+               {
+                   OpeningQuantity = (Double.parseDouble(String.valueOf(item_qty_prev_f)) + Double.parseDouble(item_quantity));
+                   ClosingQuantity = OpeningQuantity;
+               }
+               stock_outward.updateOpeningStock_Outward( currentdate, menucode,itemname,OpeningQuantity, rate );
+               stock_outward.updateClosingStock_Outward( currentdate, menucode,itemname,ClosingQuantity);
+
+
+               // updating ingredients
                for(int i =0; i< count; i++)
                {
                    TableRow tr = (TableRow) tbl_convert_ingredients.getChildAt(i);
@@ -718,6 +750,17 @@ public class ConvertIngredientActivity extends Activity {
                    }
                    ingredientquantity = ingredient_qty_prev-ingredientquantity;
                    int ingredient_updated = dbIngredientManagement.updateIngredientQuantityInGoodsInward(ingredientname, ingredientquantity);
+                   if(ingredient_updated > 0)
+                   {
+                       // update inward stock
+                       Cursor inward_crsr = dbIngredientManagement.getItem_GoodsInward(ingredientname);
+                       if(ingredient_crsr!=null && inward_crsr.moveToFirst())
+                       {
+                           int menuCode = ingredient_crsr.getInt(inward_crsr.getColumnIndex("MenuCode"));
+                           StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, dbIngredientManagement);
+                           stock_inward.updateClosingStock_Inward(currentdate,menuCode,ingredientname,ingredientquantity);
+                       }
+                   }
                    Log.d("ConvertingIngredients", ingredientname+" updated to "+ingredientquantity);
 
                }// end for

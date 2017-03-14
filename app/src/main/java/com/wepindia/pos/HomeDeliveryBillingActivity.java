@@ -5,13 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
@@ -31,13 +28,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -72,6 +67,7 @@ import com.wepindia.pos.adapters.CategoryAdapter;
 import com.wepindia.pos.adapters.DepartmentAdapter;
 import com.wepindia.pos.adapters.ItemsAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.StockOutwardMaintain;
 import com.wepindia.printers.WepPrinterBaseActivity;
 import com.wepindia.printers.utils.TimeUtil;
 
@@ -80,7 +76,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 
@@ -145,6 +140,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
     private Toolbar toolbar;
     private AppCompatDelegate delegate;
     String businessDate="";
+    int BillwithStock = 0;
 
     String FASTBILLINGMODE = "1"; // by default setting to items only mode
     ImageAdapter myImageAdapter = null;
@@ -216,18 +212,10 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
                         e.printStackTrace();
                     }
                 }
-//                if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1) {
-//                    Date date1 = new Date();
-//                    strDate = DateFormat.format("dd-MM-yyyy", date1.getTime()).toString();
-//                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
-//                    tvDate.setText(String.valueOf(strDate_date.getTime()));
-//                } else {
-//                    strDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
-//                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
-//                    tvDate.setText(String.valueOf(strDate_date.getTime()));
-//                }
+
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
                 FASTBILLINGMODE = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
+                BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
                 businessDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
             }
             Cursor crssOtherChrg = null;
@@ -4131,6 +4119,41 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
         return returnStatus;
     }
 
+    private void updateOutwardStock()
+    {
+        Log.d(TAG, "updateOutwardStock()");
+        String businessdate = tvDate.getText().toString();
+        DatabaseHandler db_local = new DatabaseHandler(getApplicationContext());
+        db_local.CreateDatabase();
+        db_local.OpenDatabase();
+        StockOutwardMaintain stock_outward = new StockOutwardMaintain(getApplicationContext(), db_local);
+        for (int iRow = 0; iRow < tblOrderItems.getChildCount(); iRow++) {
+            TableRow RowBillItem = (TableRow) tblOrderItems.getChildAt(iRow);
+            int menuCode = -1;
+            String itemname = "";
+            double closingQty = 0;
+            // Item Number
+            if (RowBillItem.getChildAt(0) != null) {
+                CheckBox ItemNumber = (CheckBox) RowBillItem.getChildAt(0);
+                menuCode = (Integer.parseInt(ItemNumber.getText().toString()));
+            }
+            // Item Name
+            if (RowBillItem.getChildAt(1) != null) {
+                TextView ItemName = (TextView) RowBillItem.getChildAt(1);
+                itemname = (ItemName.getText().toString());
+            }
+
+            // Quantity
+            if (RowBillItem.getChildAt(3) != null){
+                Cursor cursor = db_local.getItem(menuCode);
+                if(cursor.moveToNext())
+                    closingQty = cursor.getDouble(cursor.getColumnIndex("Quantity"));
+            }
+            stock_outward.updateClosingStock_Outward(businessdate,menuCode,itemname,closingQty);
+
+        } // end of for
+        db_local.CloseDatabase();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -4191,6 +4214,9 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
 
                         l(2, isPrintBill);
                         Toast.makeText(myContext, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
+                        if (BillwithStock==1)
+                            updateOutwardStock();
+
                         if (isComplimentaryBill == true) {
                             // Save complimentary bill details
                             SaveComplimentaryBill(Integer.parseInt(tvBillNumber.getText().toString()),

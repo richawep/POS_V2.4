@@ -78,6 +78,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     private Button btn_ReportDateFrom,btn_ReportDateTo,
             btn_ReportPrint,btn_ReportExport,btn_ReportView,btn_ReportClose;
 
+
+
     public ReportFragment() {
     }
 
@@ -96,6 +98,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         btn_ReportView.setOnClickListener(this);
         btn_ReportClose = (Button) view.findViewById(R.id.btn_ReportClose);
         btn_ReportClose.setOnClickListener(this);
+
         onInit();
         return view;
     }
@@ -225,6 +228,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             Cursor crsrReport = (Cursor) adapter.getSelectedItem();
             strReportName = crsrReport.getString(crsrReport.getColumnIndex("ReportsName"));
             ResetAll();
+
             if (strReportName.equalsIgnoreCase("Waiter Detailed Report") ||
                     strReportName.equalsIgnoreCase("Rider Detailed Report") ||
                     strReportName.equalsIgnoreCase("User Detailed Report") ||
@@ -393,7 +397,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         else if (startDate_date.getTime() > endDate_date.getTime())
         {
             MsgBox.Show("Warning", "'From Date' cannot be greater than 'To Date' ");
-        }else
+        }
+        else
         {
             //startDate_date = DateUtil.getInMills(txtStartDate);
             //endDate_date = DateUtil.getInMills(txtEndDate);
@@ -577,7 +582,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 case 42:  // Cummulative Billing Report
                     Cummulate_Billing();
                     break;
-
+                case 43:  // Outward Stock Report
+                    OutwardStockReport();
+                    break;
+                case 44:  // Inward Stock Report
+                    InwardStockReport();
+                    break;
             }
         }
     }
@@ -600,6 +610,232 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
         // finish the activity
         getActivity().finish();
+    }
+
+    private void OutwardStockReport()
+    {
+
+        //Cursor cursorStock =  dbReport.getoutwardStock(String.valueOf(startDate_date), String.valueOf(endDate_date));
+        String startDate = txtReportDateStart.getText().toString();
+        String endDate = txtReportDateEnd.getText().toString();
+        Cursor cursorStock_start =  dbReport.getoutwardStock(startDate);
+        Cursor cursorStock_end =  dbReport.getoutwardStock(endDate);
+        if(cursorStock_start ==null || !cursorStock_start.moveToFirst())
+        {
+            MsgBox.Show("Sorry","Opening Stock not available for date : "+startDate);
+        } else if (cursorStock_end ==null || !cursorStock_end.moveToFirst())
+        {
+            MsgBox.Show("Sorry","Closing Stock not available for date : "+endDate);
+        }
+        else{
+            // adding stock
+            double totbillAmt =0;
+            do {
+                TableRow rowReport = new TableRow(myContext);
+                rowReport.setLayoutParams(new ViewGroup.LayoutParams
+                        (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                TextView ItemCode = new TextView(myContext);
+                ItemCode.setTextSize(15);
+                int menuCode = cursorStock_start.getInt(cursorStock_start.getColumnIndex("MenuCode"));
+                ItemCode.setText(String.valueOf(menuCode));
+                ItemCode.setPadding(5,0,0,0);
+
+
+                TextView ItemName = new TextView(myContext);
+                ItemName.setTextSize(15);
+                ItemName.setText(cursorStock_start.getString(cursorStock_start.getColumnIndex("ItemName")));
+
+
+                TextView OpeningStock = new TextView(myContext);
+                OpeningStock.setTextSize(15);
+                OpeningStock.setText(String.format("%.2f",
+                        cursorStock_start.getDouble(cursorStock_start.getColumnIndex("OpeningStock"))));
+                OpeningStock.setGravity(Gravity.END);
+                OpeningStock.setPadding(0,0,30,0);
+
+
+                TextView ClosingStock = new TextView(myContext);
+                ClosingStock.setTextSize(15);
+                ClosingStock.setGravity(Gravity.END);
+                ClosingStock.setPadding(0,0,30,0);
+
+                TextView Amount = new TextView(myContext);
+                Amount.setTextSize(15);
+                Amount.setGravity(Gravity.END);
+                Amount.setPadding(0,0,20,0);
+
+
+                Cursor crsr_closing = dbReport.getOutwardStockItem(endDate, menuCode);
+                if(crsr_closing!= null && crsr_closing.moveToFirst()) {
+                    double closingStock = crsr_closing.getDouble(crsr_closing.getColumnIndex("ClosingStock"));
+                    ClosingStock.setText(String.format("%.2f",closingStock));
+                    double rate = crsr_closing.getDouble(crsr_closing.getColumnIndex("Rate"));
+                    Amount.setText(String.format("%.2f",closingStock*rate));
+                    totbillAmt+= closingStock*rate;
+
+                }else {
+                    ClosingStock.setText("-");
+                    Amount.setText("-");
+                }
+
+                // Add views to row
+                rowReport.addView(ItemCode);
+                rowReport.addView(ItemName);
+                rowReport.addView(OpeningStock);
+                rowReport.addView(ClosingStock);
+                rowReport.addView(Amount);
+                tblReport.addView(rowReport);
+
+            }while(cursorStock_start.moveToNext());
+            TableRow rowReport = new TableRow(myContext);
+            rowReport.setLayoutParams(new ViewGroup.LayoutParams
+                    (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            rowReport.setBackgroundColor(myContext.getResources().getColor(R.color.colorPrimaryLight));
+
+            TextView ItemCode = new TextView(myContext);
+            ItemCode.setText("Total");
+            ItemCode.setTextColor(Color.WHITE);
+            ItemCode.setTextSize(15);
+
+            TextView ItemName = new TextView(myContext);
+            TextView OpeningStock = new TextView(myContext);
+            TextView ClosingStock = new TextView(myContext);
+
+            TextView Amount = new TextView(myContext);
+            Amount.setText(String.format("%.2f",totbillAmt));
+            Amount.setGravity(Gravity.END);
+            Amount.setPadding(0,0,20,0);
+            Amount.setTextColor(Color.WHITE);
+            Amount.setTextSize(15);
+
+
+            rowReport.addView(ItemCode);
+            rowReport.addView(ItemName);
+            rowReport.addView(OpeningStock);
+            rowReport.addView(ClosingStock);
+            rowReport.addView(Amount);
+
+            tblReport.addView(rowReport,
+                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            btnPrint.setEnabled(true);
+            btnExport.setEnabled(true);
+        }
+    }
+
+    private void InwardStockReport()
+    {
+
+        //Cursor cursorStock =  dbReport.getoutwardStock(String.valueOf(startDate_date), String.valueOf(endDate_date));
+        String startDate = txtReportDateStart.getText().toString();
+        String endDate = txtReportDateEnd.getText().toString();
+        Cursor cursorStock_start =  dbReport.getinwardStock(startDate);
+        Cursor cursorStock_end =  dbReport.getinwardStock(endDate);
+        if(cursorStock_start ==null || !cursorStock_start.moveToFirst())
+        {
+            MsgBox.Show("Sorry","Opening Stock not available for date : "+startDate);
+        } else if (cursorStock_end ==null || !cursorStock_end.moveToFirst())
+        {
+            MsgBox.Show("Sorry","Closing Stock not available for date : "+endDate);
+        }
+        else{
+            // adding stock
+            double totbillAmt =0;
+            do {
+                TableRow rowReport = new TableRow(myContext);
+                rowReport.setLayoutParams(new ViewGroup.LayoutParams
+                        (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                TextView ItemCode = new TextView(myContext);
+                ItemCode.setTextSize(15);
+                int menuCode = cursorStock_start.getInt(cursorStock_start.getColumnIndex("MenuCode"));
+                ItemCode.setText(String.valueOf(menuCode));
+                ItemCode.setPadding(5,0,0,0);
+
+
+                TextView ItemName = new TextView(myContext);
+                ItemName.setTextSize(15);
+                ItemName.setText(cursorStock_start.getString(cursorStock_start.getColumnIndex("ItemName")));
+
+
+                TextView OpeningStock = new TextView(myContext);
+                OpeningStock.setTextSize(15);
+                OpeningStock.setText(String.format("%.2f",
+                        cursorStock_start.getDouble(cursorStock_start.getColumnIndex("OpeningStock"))));
+                OpeningStock.setGravity(Gravity.END);
+                OpeningStock.setPadding(0,0,30,0);
+
+
+                TextView ClosingStock = new TextView(myContext);
+                ClosingStock.setTextSize(15);
+                ClosingStock.setGravity(Gravity.END);
+                ClosingStock.setPadding(0,0,30,0);
+
+                TextView Amount = new TextView(myContext);
+                Amount.setTextSize(15);
+                Amount.setGravity(Gravity.END);
+                Amount.setPadding(0,0,20,0);
+
+
+                Cursor crsr_closing = dbReport.getInwardStockItem(endDate, menuCode);
+                if(crsr_closing!= null && crsr_closing.moveToFirst()) {
+                    double closingStock = crsr_closing.getDouble(crsr_closing.getColumnIndex("ClosingStock"));
+                    ClosingStock.setText(String.format("%.2f",closingStock));
+                    double rate = crsr_closing.getDouble(crsr_closing.getColumnIndex("Rate"));
+                    Amount.setText(String.format("%.2f",closingStock*rate));
+                    totbillAmt+= closingStock*rate;
+
+                }else {
+                    ClosingStock.setText("-");
+                    Amount.setText("-");
+                }
+
+                // Add views to row
+                rowReport.addView(ItemCode);
+                rowReport.addView(ItemName);
+                rowReport.addView(OpeningStock);
+                rowReport.addView(ClosingStock);
+                //rowReport.addView(Amount);
+                tblReport.addView(rowReport);
+
+            }while(cursorStock_start.moveToNext());
+//            TableRow rowReport = new TableRow(myContext);
+//            rowReport.setLayoutParams(new ViewGroup.LayoutParams
+//                    (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//            rowReport.setBackgroundColor(myContext.getResources().getColor(R.color.colorPrimaryLight));
+//
+//            TextView ItemCode = new TextView(myContext);
+//            ItemCode.setText("Total");
+//            ItemCode.setTextColor(Color.WHITE);
+//            ItemCode.setTextSize(15);
+//
+//            TextView ItemName = new TextView(myContext);
+//            TextView OpeningStock = new TextView(myContext);
+//            TextView ClosingStock = new TextView(myContext);
+//
+//            TextView Amount = new TextView(myContext);
+//            Amount.setText(String.format("%.2f",totbillAmt));
+//            Amount.setGravity(Gravity.END);
+//            Amount.setPadding(0,0,20,0);
+//            Amount.setTextColor(Color.WHITE);
+//            Amount.setTextSize(15);
+//
+//
+//            rowReport.addView(ItemCode);
+//            rowReport.addView(ItemName);
+//            rowReport.addView(OpeningStock);
+//            rowReport.addView(ClosingStock);
+//            rowReport.addView(Amount);
+//
+//            tblReport.addView(rowReport,
+//                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//                            ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            btnPrint.setEnabled(true);
+            btnExport.setEnabled(true);
+        }
     }
 
     //richa_2012 starts

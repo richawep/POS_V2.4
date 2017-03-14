@@ -505,6 +505,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id = "@+id/idd_date"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_below="@+id/idd3"
@@ -518,22 +519,22 @@
                                         <TextView
                                             android:id="@+id/tvDateHeading"
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
+                                            android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:background="#ffffff"
                                             android:text="Date :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="#000000" />
+                                            android:background="@color/colorPrimaryLight"
+                                            android:textColor="@color/txtColorAccent" />
 
                                         <TextView
                                             android:id="@+id/tvBillDateValue"
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
+                                            android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:background="#ffffff"
                                             android:gravity="right"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="#000000" />
+                                            android:background="@color/colorPrimaryLight"
+                                            android:textColor="@color/txtColorAccent" />
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>

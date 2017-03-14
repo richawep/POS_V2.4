@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -30,16 +29,13 @@ import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
 import com.wep.common.app.gst.get.GetGSTR2B2BInvoice;
 import com.wep.common.app.gst.get.GetGSTR2B2BItem;
 import com.wep.gstcall.api.http.HTTPAsyncTask;
-import com.wep.gstcall.api.util.Config;
 import com.wepindia.pos.GST.AmmendActivity;
-import com.wepindia.pos.GST.CreditDebitActivity;
 import com.wepindia.pos.GST.GSTHomeActivity;
-import com.wepindia.pos.GST.InwardInvoiceEntry_Activity;
-import com.wepindia.pos.GST.controlers.GSTDataController;
 import com.wepindia.pos.GenericClasses.BillNoReset;
-import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.StockInwardMaintain;
+import com.wepindia.pos.utils.StockOutwardMaintain;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -130,9 +126,15 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                 {
                     // needs to change to current date
                     int iResult = 0;
+
+
                     iResult = getDb().updateBusinessDate(currentdate);
                     Log.d("AutoDayEnd", "BusinessDate set to "+currentdate+". Status of updation : " + iResult);
+                    StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, getDb());
+                    stock_outward.saveOpeningStock_Outward(currentdate);
 
+                    StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, getDb());
+                    stock_inward.saveOpeningStock_Inward(currentdate);
                     // delete all pending KOTS
                     iResult = 0;
                     iResult = getDb().deleteAllKOTItems();
@@ -154,6 +156,8 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 
                     BillNoReset bs = new BillNoReset();
                     bs.setBillNo(dbHomeScreen);
+
+
                 }
 
             }
@@ -257,6 +261,8 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         tvPickUpOption1 = (TextView) findViewById(R.id.tvPickUpOption1);
     }
 
+
+
     @SuppressWarnings("deprecation")
     private void DayEnd() {
         try {
@@ -344,18 +350,27 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                             long Result = getDb().updateKOTNo(0);
                             Log.d("ManualDayEnd", "KOT No reset to 0 status :"+Result);
 
+                            //UpdateStock();
                             long iResult = getDb().updateBusinessDate(String.valueOf(strNextDate));
                             Log.d("ManualDayEnd", "Bussiness Date updation status :" + iResult);
+                            StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, getDb());
+                            stock_outward.saveOpeningStock_Outward(strNextDate);
 
+                            StockInwardMaintain stock_inward = new StockInwardMaintain(myContext, getDb());
+                            stock_inward.saveOpeningStock_Inward(strNextDate);
                             //setBillNo();
                             BillNoReset bs = new BillNoReset();
                             bs.setBillNo(dbHomeScreen);
+
 
                             if (iResult > 0) {
                                 MsgBox.Show("Information", "Transaction Date changed to " + strNextDate);
                             } else {
                                 MsgBox.Show("Warning", "Error: DayEnd is not done");
                             }
+
+
+
                             /*View v = null;
                             GSTHomeActivity gs = new GSTHomeActivity();
                             */
@@ -750,6 +765,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     }
 
     @Override
+
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 

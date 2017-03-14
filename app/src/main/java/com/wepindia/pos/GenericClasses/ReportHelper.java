@@ -95,7 +95,8 @@ public class ReportHelper{
 				(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		rowColumnCaption.setBackgroundColor(activityContext.getResources().getColor(R.color.colorPrimaryLight));
 		
-		if( ReportName.equalsIgnoreCase("Void Bill Report") ||
+		if(/*ReportName.equalsIgnoreCase("Bill wise Report") ||*/
+				ReportName.equalsIgnoreCase("Void Bill Report") ||
 				ReportName.equalsIgnoreCase("Day wise Report") || ReportName.equalsIgnoreCase("Month wise Report") ||
 				ReportName.equalsIgnoreCase("Duplicate Bill Report")){
 			
@@ -171,7 +172,7 @@ public class ReportHelper{
 			}
 			
 		}
-		if(ReportName.equalsIgnoreCase("Bill wise Report") ){
+		else if(ReportName.equalsIgnoreCase("Bill wise Report") ){
 
 			TextView Date = new TextView(activityContext);
 			Date.setWidth(120);
@@ -231,6 +232,55 @@ public class ReportHelper{
 			rowColumnCaption.addView(SalesTax);
 			//rowColumnCaption.addView(ServiceTax); richa making single tax
 			rowColumnCaption.addView(Amount);
+
+		}
+        else if(ReportName.equalsIgnoreCase("Outward Stock Report") || ReportName.equalsIgnoreCase("Inward Stock Report") ){
+
+			TextView Date = new TextView(activityContext);
+			Date.setWidth(80);
+			Date.setTextSize(15);
+			Date.setTextColor(Color.WHITE);
+            Date.setText("ItemCode");
+
+
+
+			TextView TotalItems = null;
+			TotalItems = new TextView(activityContext);
+			TotalItems.setWidth(180);
+			TotalItems.setTextSize(15);
+			TotalItems.setTextColor(Color.WHITE);
+			TotalItems.setText("Items");
+
+			TextView SalesTax = new TextView(activityContext);
+			SalesTax.setWidth(100);
+			SalesTax.setTextSize(15);
+			SalesTax.setTextColor(Color.WHITE);
+
+			SalesTax.setText("Open STK");
+
+			TextView ServiceTax = new TextView(activityContext);
+			ServiceTax.setWidth(100);
+			ServiceTax.setTextSize(15);
+			ServiceTax.setTextColor(Color.WHITE);
+
+			ServiceTax.setText("Close STK");
+
+			TextView Amount = new TextView(activityContext);
+			Amount.setWidth(120);
+			Amount.setTextSize(15);
+			Amount.setTextColor(Color.WHITE);
+			Amount.setGravity(Gravity.CENTER);
+			Amount.setText("C.STK Value");
+
+			// Add views to row
+			rowColumnCaption.addView(Date);
+			rowColumnCaption.addView(TotalItems);
+			rowColumnCaption.addView(SalesTax);
+			rowColumnCaption.addView(ServiceTax);
+            if (ReportName.equalsIgnoreCase("Outward Stock Report"))
+                rowColumnCaption.addView(Amount);
+
+
 
 		}
 

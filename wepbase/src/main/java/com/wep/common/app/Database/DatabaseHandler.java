@@ -28,6 +28,7 @@ import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
 import com.wep.common.app.gst.get.GetGSTR2B2BInvoice;
 import com.wep.common.app.gst.get.GetGSTR2B2BItem;
 import com.wep.common.app.models.ItemOutward;
+import com.wep.common.app.models.ItemStock;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.models.User;
 import com.wep.common.app.print.Payment;
@@ -579,6 +580,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String TBL_BILLDETAIL = "OutwardSuppyItemsDetails";
     private static final String TBL_BILLITEM = "OutwardSupplyLedger";
+    private static final String TBL_StockOutward = "StockOutward";
+    private static final String TBL_StockInward = "StockInward";
+    public static final String KEY_OpeningStock = "OpeningStock";
+    public static final String KEY_ClosingStock = "ClosingStock";
+    public static final String KEY_ClosingStockValue = "ClosingStockValue";
+
     public static final String KEY_GSTIN = "GSTIN";
     public static final String KEY_CustName = "CustName";
     public static final String KEY_InvoiceNo = "InvoiceNo";
@@ -652,6 +659,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     String QUERY_CREATE_TABLE_OWNER_DETAILS = "CREATE TABLE " + TBL_OWNER_DETAILS + " ( " +
             KEY_GSTIN + " TEXT, " + KEY_Owner_Name + "  TEXT, " + KEY_FIRM_NAME + " TEXT, " + KEY_PhoneNo + " TEXT, " +
             KEY_Address + " TEXT, " + KEY_TINCIN + " TEXT, " + KEY_IsMainOffice + "  TEXT ) ";
+
+    String QUERY_CREATE_TABLE_Stock_Outward = "CREATE TABLE " + TBL_StockOutward + " ( " +
+            KEY_BusinessDate +" TEXT, "+KEY_MenuCode + " INTEGER, " + KEY_ItemName + "  TEXT, " + KEY_OpeningStock + " REAL, " +
+            KEY_ClosingStock + " REAL, " + KEY_Rate + " REAL ) ";
+
+    String QUERY_CREATE_TABLE_Stock_Inward = "CREATE TABLE " + TBL_StockInward + " ( " +
+            KEY_BusinessDate +" TEXT, "+KEY_MenuCode + " INTEGER, " + KEY_ItemName + "  TEXT, " + KEY_OpeningStock + " REAL, " +
+            KEY_ClosingStock + " REAL, " + KEY_Rate + " REAL ) ";
 
     String QUERY_CREATE_TABLE_ITEM_Inward = "CREATE TABLE " + TBL_ITEM_Inward + "( " + KEY_MenuCode +
             " INTEGER PRIMARY KEY, " + KEY_TaxationType + " TEXT, " +
@@ -925,7 +940,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_AdditionalChargeAmount + " REAL , " + KEY_isGoodinward + " INTEGER )";
 
     String QUERY_CREATE_TABLE_GOODS_INWARD = " CREATE TABLE " + TBL_GOODSINWARD + " ( " +
-            KEY_MenuCode + " INTEGER, " + KEY_SupplyType + " TEXT , " + KEY_ItemName + " TEXT, " + KEY_Value + " REAL, " +
+            KEY_MenuCode + " INTEGER PRIMARY KEY,  " + KEY_SupplyType + " TEXT , " + KEY_ItemName + " TEXT, " + KEY_Value + " REAL, " +
             KEY_Quantity + " REAL, " + KEY_UOM + "  TEXT )";
 
     String QUERY_CREATE_TABLE_INGREDIENTS = " CREATE TABLE " + TBL_INGREDIENTS + " ( " +
@@ -1169,6 +1184,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TABLE_GOODS_INWARD);
             db.execSQL(QUERY_CREATE_TABLE_INGREDIENTS);
             db.execSQL(QUERY_CREATE_TBL_TRANSACTIONS);
+            db.execSQL(QUERY_CREATE_TABLE_Stock_Outward);
+            db.execSQL(QUERY_CREATE_TABLE_Stock_Inward);
             setDefaultTableValues(db);
         } catch (Exception ex) {
             Toast.makeText(myContext, "OnCreate : " + ex.getMessage(), Toast.LENGTH_LONG).show();
@@ -1222,9 +1239,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Inward);
         db.execSQL("DROP TABLE IF EXIXTS " + TBL_CreditDebit_Outward);
         db.execSQL("DROP TABLE IF EXIXTS " + TBL_PURCHASEORDER);
-        db.execSQL("DROP TABLE IF EXIXTS " + TBL_GOODSINWARD);
+        //db.execSQL("DROP TABLE IF EXIXTS " + TBL_GOODSINWARD);
         db.execSQL("DROP TABLE IF EXIXTS " + TBL_INGREDIENTS);
         db.execSQL("DROP TABLE IF EXIXTS " + TBL_TRANSACTIONS);
+        //db.execSQL("DROP TABLE IF EXIXTS " + TBL_StockOutward);
+        //db.execSQL("DROP TABLE IF EXIXTS " + TBL_StockInward);
         onCreate(db);
     }
 
@@ -1673,6 +1692,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues = new ContentValues();
         cvDbValues.put("ReportsName", "Cummulative Billing Report");
         cvDbValues.put("ReportsType", 1);
+        cvDbValues.put("Status", 0);
+        db.insert(TBL_REPORTSMASTER, null, cvDbValues);
+
+        cvDbValues = new ContentValues();
+        cvDbValues.put("ReportsName", "Outward Stock Report");
+        cvDbValues.put("ReportsType", 2);
+        cvDbValues.put("Status", 0);
+        db.insert(TBL_REPORTSMASTER, null, cvDbValues);
+
+        cvDbValues = new ContentValues();
+        cvDbValues.put("ReportsName", "Inward Stock Report");
+        cvDbValues.put("ReportsType", 2);
         cvDbValues.put("Status", 0);
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
 
@@ -3691,6 +3722,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.query(TBL_ITEM_Outward, new String[]{"*"}, "MenuCode=" + MenuCode, null, null, null, null);
     }
 
+//    public Cursor getItem_new(int MenuCode) {
+//        Cursor cursor =null;
+//
+//        try {
+//            SQLiteDatabase db = getReadableDatabase();
+//            cursor = db.query(TBL_ITEM_Outward, new String[]{"*"}, "MenuCode=" + MenuCode, null, null, null, null);
+//        }catch(Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        finally {
+//            return cursor;
+//        }
+//    }
+
     // -----Retrieve Single Item based on Item Name-----
     public Cursor getbyItemName(String ItemName) {
 //        return dbFNB.query(TBL_ITEM_Outward, new String[]{"*"}, "ItemName = '" + ItemName + "'", null, null, null, null);
@@ -4832,6 +4878,18 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
                 " BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null,KEY_InvoiceDate);
     }
 
+
+    public Cursor getoutwardStock(String Date) {
+        Cursor cursor = null;
+        cursor =dbFNB.query(TBL_StockOutward, new String []{"*"},KEY_BusinessDate+" LIKE '"+Date+"'",null, null,null,null,null);
+        return cursor;
+    }
+
+    public Cursor getinwardStock(String Date) {
+        Cursor cursor = null;
+        cursor =dbFNB.query(TBL_StockInward, new String []{"*"},KEY_BusinessDate+" LIKE '"+Date+"'",null, null,null,null,null);
+        return cursor;
+    }
     // richa_2012
     // -----Bill wise and Transaction Report-----
     public Cursor getBillingReport(String StartDate, String EndDate, int billingMode) {
@@ -4839,8 +4897,102 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
                 "BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' AND " + KEY_BillingMode + " LIKE '"
                         + billingMode + "'", null, null, null, KEY_InvoiceDate);
     }
+    public Cursor getStockOutwardForBusinessdate(String businessDate) {
+        return dbFNB.query(TBL_StockOutward, new String[]{"*"}, KEY_BusinessDate+" LIKE '"+businessDate+"'",
+                null, null, null, null);
+    }
+
+    public long insertStockOutward(ItemStock item, String businessDate_str) {
+        long l = 0;
+        ContentValues cvdbValues = new ContentValues();
+        cvdbValues.put(KEY_BusinessDate, businessDate_str);
+        cvdbValues.put(KEY_MenuCode,item.getMenuCode());
+        cvdbValues.put(KEY_ItemName, item.getItemName());
+        cvdbValues.put(KEY_OpeningStock, item.getOpeningStock());
+        cvdbValues.put(KEY_ClosingStock, item.getClosingStock());
+        cvdbValues.put(KEY_Rate, item.getRate());
+        l = dbFNB.insert(TBL_StockOutward, null, cvdbValues);
+        return l;
+    }
+
+    public long updateClosingStockOutward(ItemStock item, String businessDate_str) {
+        long l = 0;
+        ContentValues cvdbValues = new ContentValues();
+        cvdbValues.put(KEY_ClosingStock, item.getClosingStock());
+        l = dbFNB.update(TBL_StockOutward, cvdbValues, KEY_MenuCode+" ="+item.getMenuCode()+" AND "+
+                KEY_BusinessDate+" LIKE '"+businessDate_str+"'", null);
+        return l;
+    }
+
+    public long updateOpeningStockOutward(ItemStock item, String businessDate_str) {
+        long l = 0;
+        ContentValues cvdbValues = new ContentValues();
+        cvdbValues.put(KEY_OpeningStock, item.getOpeningStock());
+        l = dbFNB.update(TBL_StockOutward, cvdbValues, KEY_MenuCode+" ="+item.getMenuCode()+" AND "+
+                KEY_BusinessDate+" LIKE '"+businessDate_str+"'", null);
+        return l;
+    }
+
+    public Cursor getOutwardStockItem(String currentdate,int MenuCode) {
+        Cursor cursor =null;
+        cursor =  dbFNB.query(TBL_StockOutward, new String[]{"*"}, KEY_BusinessDate+" LIKE '"+currentdate+"' AND "+
+                KEY_MenuCode+" = "+MenuCode, null, null, null, null);
+        return cursor;
+    }
+    public int clearOutwardStock(String currentdate) {
+       int del =0;
+        del =  dbFNB.delete(TBL_StockOutward, KEY_BusinessDate+" LIKE '"+currentdate+"' ",null);
+        return del;
+    }
 
 
+    public Cursor getInwardStockItem(String currentdate,int MenuCode) {
+        Cursor cursor =null;
+        cursor =  dbFNB.query(TBL_StockInward, new String[]{"*"}, KEY_BusinessDate+" LIKE '"+currentdate+"' AND "+
+                KEY_MenuCode+" = "+MenuCode, null, null, null, null);
+        return cursor;
+    }
+
+    public Cursor getStockInwardForBusinessdate(String businessDate) {
+        return dbFNB.query(TBL_StockInward, new String[]{"*"}, KEY_BusinessDate+" LIKE '"+businessDate+"'",
+                null, null, null, null);
+    }
+    public long insertStockInward(ItemStock item, String businessDate_str) {
+        long l = 0;
+        ContentValues cvdbValues = new ContentValues();
+        cvdbValues.put(KEY_BusinessDate, businessDate_str);
+        cvdbValues.put(KEY_MenuCode,item.getMenuCode());
+        cvdbValues.put(KEY_ItemName, item.getItemName());
+        cvdbValues.put(KEY_OpeningStock, item.getOpeningStock());
+        cvdbValues.put(KEY_ClosingStock, item.getClosingStock());
+        cvdbValues.put(KEY_Rate, item.getRate());
+        l = dbFNB.insert(TBL_StockInward, null, cvdbValues);
+        return l;
+    }
+
+    public Cursor getInwardStock(String itemname) {
+        Cursor cursor = null;
+        cursor =dbFNB.query(TBL_StockInward, new String []{"*"},KEY_ItemName+" LIKE '"+itemname+"'",null, null,null,null,null);
+        return cursor;
+    }
+
+    public long updateOpeningStockInward(ItemStock item, String businessDate_str) {
+        long l = 0;
+        ContentValues cvdbValues = new ContentValues();
+        cvdbValues.put(KEY_OpeningStock, item.getOpeningStock());
+        l = dbFNB.update(TBL_StockInward, cvdbValues, KEY_MenuCode+" ="+item.getMenuCode()+" AND "+
+                KEY_BusinessDate+" LIKE '"+businessDate_str+"'", null);
+        return l;
+    }
+
+    public long updateClosingStockInward(ItemStock item, String businessDate_str) {
+        long l = 0;
+        ContentValues cvdbValues = new ContentValues();
+        cvdbValues.put(KEY_ClosingStock, item.getClosingStock());
+        l = dbFNB.update(TBL_StockInward, cvdbValues, KEY_MenuCode+" ="+item.getMenuCode()+" AND "+
+                KEY_BusinessDate+" LIKE '"+businessDate_str+"'", null);
+        return l;
+    }
 
     // -----Tax Report-----
     public Cursor getTaxReport(String StartDate, String EndDate) {

@@ -58,6 +58,7 @@ import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.ItemOutwardAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.StockOutwardMaintain;
 
 
 import java.io.BufferedReader;
@@ -65,6 +66,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -101,6 +103,7 @@ public class ItemManagementActivity extends WepBaseActivity {
     int iMenuCode = 0;
     Cursor crsrSettings = null;
     private Toolbar toolbar;
+    String businessDate = "";
 
     ItemOutwardAdapter itemListAdapter = null;
     private ListView listViewItems;
@@ -131,7 +134,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                 tvDineIn1Caption.setText(crsrSettings.getString(crsrSettings.getColumnIndex("DineIn1Caption")));
                 tvDineIn2Caption.setText(crsrSettings.getString(crsrSettings.getColumnIndex("DineIn2Caption")));
                 tvDineIn3Caption.setText(crsrSettings.getString(crsrSettings.getColumnIndex("DineIn3Caption")));
-
+                businessDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
                 GSTEnable = crsrSettings.getString(crsrSettings.getColumnIndex("GSTEnable"));
                 HSNEnable_out =  crsrSettings.getString(crsrSettings.getColumnIndex("HSNCode_Out"));
 
@@ -208,9 +211,13 @@ public class ItemManagementActivity extends WepBaseActivity {
                             String path = strUploadFilepath;
                             FileInputStream inputStream = new FileInputStream(path);
                             buffer = new BufferedReader(new InputStreamReader(inputStream));
-
+                            Cursor cursor = dbItems.getCurrentDate();
+//                            String currentdate = "";
+//                            if(cursor.moveToNext())
+//                                currentdate = cursor.getString(cursor.getColumnIndex("BusinessDate"));
                             if (dataList.size()>0)
                             {
+                                final String current_date = businessDate;
                                 AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
                                         .setTitle("Replace Item")
                                         .setMessage(" Are you sure you want to Replace all the existing Items, if any")
@@ -218,6 +225,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 int deleted = dbItems.clearOutwardItemdatabase();
                                                 Log.d("ItemManagement"," Items deleted before uploading excel :"+deleted);
+                                                deleted = dbItems.clearOutwardStock(current_date);
+                                                Log.d("ItemManagement"," Outward Stock deleted before uploading excel :"+deleted);
                                                 new AsyncTask<Void,Void,Void>(){
                                                     ProgressDialog pd;
 
@@ -254,9 +263,11 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                                         2, 0, 0, 0, "", "",0f,0f,"",0f,"",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
                                                                         Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
                                                             }
-
+                                                            StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
+                                                            stock_outward.saveOpeningStock_Outward(current_date);
                                                         } catch (Exception exp) {
-                                                            Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
+                                                            exp.printStackTrace();
+                                                            //Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
                                                         }
                                                         return null;
                                                     }
@@ -271,7 +282,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                             Toast.makeText(getApplicationContext(), "Items Imported Successfully", Toast.LENGTH_LONG).show();
                                                             pd.dismiss();
                                                         }catch (Exception e){
-                                                            Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                            e.printStackTrace();
+                                                            //Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 }.execute();
@@ -1443,6 +1455,25 @@ public class ItemManagementActivity extends WepBaseActivity {
                             iKitchenCode, iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId,
                             strBarcode, strImageUri, frate, fquantity, hsnCode, fgsttax, g_s, MOU_str, taxationtype_str,
                             fSalesTax, fServiceTax, iMenuCode);
+
+
+                    // inserting new item stock in OutwardStock Table
+                    double rate =0;
+                    if(Double.parseDouble(txtDineIn1.getText().toString()) >0)
+                        rate = Double.parseDouble(txtDineIn1.getText().toString());
+                    else if(Double.parseDouble(txtDineIn2.getText().toString()) >0)
+                        rate = Double.parseDouble(txtDineIn2.getText().toString());
+                    else if(Double.parseDouble(txtDineIn3.getText().toString()) >0)
+                        rate = Double.parseDouble(txtDineIn3.getText().toString());
+
+                    double quantity =Double.parseDouble(txtStock.getText().toString());
+//                    Cursor date_cursor = dbItems.getCurrentDate();
+//                    String currentdate = "";
+//                    if(date_cursor.moveToNext())
+//                        currentdate = date_cursor.getString(date_cursor.getColumnIndex("BusinessDate"));
+                    StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
+                    stock_outward.addItemToStock_Outward( businessDate, iMenuCode,
+                            strLongName,quantity, rate );
                 }
 
             } else if (Type == 2) {
@@ -1460,6 +1491,27 @@ public class ItemManagementActivity extends WepBaseActivity {
                         iDiscountEnable, iBillWithStock, strImageUri, iTaxType, frate, hsnCode, g_s, MOU_str, taxationtype_str, fgsttax, tax, tax,
                         fSalesTax, fServiceTax, Integer.valueOf(strItemId));
                 Log.d("updateCategory", "Updated Rows: " + String.valueOf(iRowId));
+
+
+                // updating outwardStock table
+                double rate =0;
+                if(Double.parseDouble(txtDineIn1.getText().toString()) >0)
+                    rate = Double.parseDouble(txtDineIn1.getText().toString());
+                else if(Double.parseDouble(txtDineIn2.getText().toString()) >0)
+                    rate = Double.parseDouble(txtDineIn2.getText().toString());
+                else if(Double.parseDouble(txtDineIn3.getText().toString()) >0)
+                    rate = Double.parseDouble(txtDineIn3.getText().toString());
+
+                double quantity =Double.parseDouble(txtStock.getText().toString());
+                Cursor date_cursor = dbItems.getCurrentDate();
+//                String currentdate = "";
+//                if(date_cursor.moveToNext())
+//                    currentdate = date_cursor.getString(date_cursor.getColumnIndex("BusinessDate"));
+                StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
+                stock_outward.updateOpeningStock_Outward( businessDate, Integer.parseInt(strMenuCode),
+                        strLongName,quantity, rate );
+                stock_outward.updateClosingStock_Outward( businessDate, Integer.parseInt(strMenuCode),
+                        strLongName,quantity);
             }
         }
         else {
@@ -1659,6 +1711,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                     //DisplayItems();
                 } catch (Exception exp) {
                     //Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
+                    exp.printStackTrace();
                 }
                 return null;
             }
@@ -1681,54 +1734,63 @@ public class ItemManagementActivity extends WepBaseActivity {
     }
 
     public void EditItem(View v) {
-
-        if (txtLongName.getText().toString().equalsIgnoreCase("")) {
-            MsgBox.Show("Warning", "Please Enter Item Name");
-            return;
-        }
-
-        if (spnrMOU.getSelectedItem().toString().equalsIgnoreCase("") || spnrMOU.getSelectedItem().toString().equalsIgnoreCase("Select") ) {
-            MsgBox.Show("Warning", "Please Select Item UOM");
-            return;
-        }
-
-
-        if(crsrSettings.getString(crsrSettings.getColumnIndex("ItemNoReset")).equalsIgnoreCase("1")) {
-            if (edtMenuCode.getText().toString().equalsIgnoreCase("")) {
-                MsgBox.Show("Warning", "Please Enter Item Code");
+        try {
+            Date d = new SimpleDateFormat("dd-MM-yyyy").parse(businessDate);
+            int invoiceno = dbItems.getLastBillNoforDate(String.valueOf(d.getTime()));
+            if(invoiceno > 0)
+            {
+                // since already billing done for this businessdate, hence stock cannot be updated from here.
+                // to update stock , goto Price & Stock module
+                MsgBox.Show("Restriction", "You cannot update stock after making bill for the day. \n\nTo update stock , " +
+                        "please goto Price & Stock module \n\n Or make dayend to update from here ");
                 return;
             }
-            else {
-                iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
-                Cursor itemcrsr = dbItems.getItem(iMenuCode);
-                if(itemcrsr.moveToNext())
-                {
-                    String name = itemcrsr.getString(itemcrsr.getColumnIndex("ItemName"));
-                    if(!name.equalsIgnoreCase(txtLongName.getText().toString()))
-                    {
-                        MsgBox = new MessageDialog(myContext);
-                        MsgBox.Show("Inconsistent"," Menu Code "+iMenuCode+" already present for item "+name );
-                        return;
+
+
+            if (txtLongName.getText().toString().equalsIgnoreCase("")) {
+                MsgBox.Show("Warning", "Please Enter Item Name");
+                return;
+            }
+
+            if (spnrMOU.getSelectedItem().toString().equalsIgnoreCase("") || spnrMOU.getSelectedItem().toString().equalsIgnoreCase("Select")) {
+                MsgBox.Show("Warning", "Please Select Item UOM");
+                return;
+            }
+
+
+            if (crsrSettings.getString(crsrSettings.getColumnIndex("ItemNoReset")).equalsIgnoreCase("1")) {
+                if (edtMenuCode.getText().toString().equalsIgnoreCase("")) {
+                    MsgBox.Show("Warning", "Please Enter Item Code");
+                    return;
+                } else {
+                    iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
+                    Cursor itemcrsr = dbItems.getItem(iMenuCode);
+                    if (itemcrsr.moveToNext()) {
+                        String name = itemcrsr.getString(itemcrsr.getColumnIndex("ItemName"));
+                        if (!name.equalsIgnoreCase(txtLongName.getText().toString())) {
+                            MsgBox = new MessageDialog(myContext);
+                            MsgBox.Show("Inconsistent", " Menu Code " + iMenuCode + " already present for item " + name);
+                            return;
+                        }
                     }
                 }
             }
-        }
 
-        if (txtDineIn1.getText().toString().equalsIgnoreCase("")) {
-            txtDineIn1.setText("0");
-        }
+            if (txtDineIn1.getText().toString().equalsIgnoreCase("")) {
+                txtDineIn1.setText("0");
+            }
 
-        if (txtDineIn2.getText().toString().equalsIgnoreCase("")) {
-            txtDineIn2.setText("0");
-        }
+            if (txtDineIn2.getText().toString().equalsIgnoreCase("")) {
+                txtDineIn2.setText("0");
+            }
 
-        if (txtDineIn3.getText().toString().equalsIgnoreCase("")) {
-            txtDineIn3.setText("0");
-        }
+            if (txtDineIn3.getText().toString().equalsIgnoreCase("")) {
+                txtDineIn3.setText("0");
+            }
 
-        if (txtStock.getText().toString().equalsIgnoreCase("")) {
-            txtStock.setText("0");
-        }
+            if (txtStock.getText().toString().equalsIgnoreCase("")) {
+                txtStock.setText("0");
+            }
 
 
         /*if (etRate.getText().toString().equals(""))
@@ -1747,52 +1809,55 @@ public class ItemManagementActivity extends WepBaseActivity {
         {
             etGstTax.setText("0");
         }*/
-        if (etDiscount.getText().toString().equals(""))
-        {
-            etDiscount.setText("0");
-        }
-
-        new AsyncTask<Void,Void,Void>(){
-            ProgressDialog pd;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                pd = new ProgressDialog(ItemManagementActivity.this);
-                pd.setMessage("Loading...");
-                pd.setCancelable(false);
-                pd.show();
+            if (etDiscount.getText().toString().equals("")) {
+                etDiscount.setText("0");
             }
 
-            @Override
-            protected Void doInBackground(Void... params) {
+            new AsyncTask<Void, Void, Void>() {
+                ProgressDialog pd;
 
-                try {
-                    ReadData(2); // 2 - updateItem
-                    //ResetItem();
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    pd = new ProgressDialog(ItemManagementActivity.this);
+                    pd.setMessage("Loading...");
+                    pd.setCancelable(false);
+                    pd.show();
+                }
+
+                @Override
+                protected Void doInBackground(Void... params) {
+
+                    try {
+                        ReadData(2); // 2 - updateItem
+                        //ResetItem();
 //                    ClearItemTable();
 //                    DisplayItems();
-                } catch (Exception exp) {
-                    //Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (Exception exp) {
+                        //Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    return null;
                 }
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                try{
-                    ResetItem();
-                    //ClearItemTable();
-                    DisplayItemList();
-                    Toast.makeText(myContext, "Item Updated Successfully", Toast.LENGTH_LONG).show();
-                    pd.dismiss();
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    try {
+                        ResetItem();
+                        //ClearItemTable();
+                        DisplayItemList();
+                        Toast.makeText(myContext, "Item Updated Successfully", Toast.LENGTH_LONG).show();
+                        pd.dismiss();
 
-                }catch (Exception e){
-                    Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        }.execute();
+            }.execute();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void ClearItem(View v) {

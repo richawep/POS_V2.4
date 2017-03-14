@@ -288,7 +288,7 @@
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnPrint"
-                                android:layout_width="120dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"

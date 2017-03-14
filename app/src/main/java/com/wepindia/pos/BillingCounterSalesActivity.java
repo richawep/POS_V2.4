@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -41,7 +40,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mswipetech.wisepad.sdktest.view.ApplicationData;
-import com.mswipetech.wisepad.sdktest.view.VoidTransaction;
 import com.wep.common.app.Database.BillDetail;
 import com.wep.common.app.Database.BillItem;
 import com.wep.common.app.Database.Category;
@@ -49,7 +47,6 @@ import com.wep.common.app.Database.ComplimentaryBillDetail;
 import com.wep.common.app.Database.Customer;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.Department;
-import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.print.BillKotItem;
 import com.wep.common.app.print.BillServiceTaxItem;
@@ -59,23 +56,20 @@ import com.wep.common.app.print.PrintKotBillItem;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
-import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.CategoryAdapter;
 import com.wepindia.pos.adapters.DepartmentAdapter;
 import com.wepindia.pos.adapters.ItemsAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
-import com.wepindia.printers.HeyDeyBaseActivity;
+import com.wepindia.pos.utils.StockOutwardMaintain;
 import com.wepindia.printers.WepPrinterBaseActivity;
 import com.wepindia.printers.utils.TimeUtil;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class BillingCounterSalesActivity extends WepPrinterBaseActivity implements View.OnClickListener {
@@ -2645,6 +2639,41 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     }
 
+    private void updateOutwardStock()
+    {
+        Log.d(TAG, "updateOutwardStock()");
+        String businessdate = tvDate.getText().toString();
+        DatabaseHandler db_local = new DatabaseHandler(getApplicationContext());
+        db_local.CreateDatabase();
+        db_local.OpenDatabase();
+        StockOutwardMaintain stock_outward = new StockOutwardMaintain(getApplicationContext(), db_local);
+        for (int iRow = 0; iRow < tblOrderItems.getChildCount(); iRow++) {
+            TableRow RowBillItem = (TableRow) tblOrderItems.getChildAt(iRow);
+            int menuCode = -1;
+            String itemname = "";
+            double closingQty = 0;
+            // Item Number
+            if (RowBillItem.getChildAt(0) != null) {
+                CheckBox ItemNumber = (CheckBox) RowBillItem.getChildAt(0);
+                menuCode = (Integer.parseInt(ItemNumber.getText().toString()));
+            }
+            // Item Name
+            if (RowBillItem.getChildAt(1) != null) {
+                TextView ItemName = (TextView) RowBillItem.getChildAt(1);
+                itemname = (ItemName.getText().toString());
+            }
+
+            // Quantity
+            if (RowBillItem.getChildAt(3) != null){
+                Cursor cursor = db_local.getItem(menuCode);
+                if(cursor.moveToNext())
+                    closingQty = cursor.getDouble(cursor.getColumnIndex("Quantity"));
+            }
+            stock_outward.updateClosingStock_Outward(businessdate,menuCode,itemname,closingQty);
+
+        } // end of for
+        db_local.CloseDatabase();
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
@@ -2690,6 +2719,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     }
 
                     l(2, isPrintBill);
+                    if (BillwithStock==1)
+                        updateOutwardStock();
                     Toast.makeText(getApplicationContext(), "Bill saved Successfully", Toast.LENGTH_SHORT).show();
                     if (isComplimentaryBill == true) {
                         // Save complimentary bill details

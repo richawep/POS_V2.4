@@ -13,11 +13,9 @@
  ****************************************************************************/
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,20 +25,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,12 +41,12 @@ import com.wep.common.app.Database.Department;
 import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.views.WepButton;
-import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.CategoryAdapter;
 import com.wepindia.pos.adapters.DepartmentAdapter;
 import com.wepindia.pos.adapters.ItemsAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.StockOutwardMaintain;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,7 +57,7 @@ public class StockActivity extends WepBaseActivity {
     Context myContext;
 
     // DatabaseHandler object
-    DatabaseHandler dbStock = new DatabaseHandler(StockActivity.this);
+    DatabaseHandler dbStock ;
     // MessageDialog object
     MessageDialog MsgBox;
 
@@ -76,7 +67,7 @@ public class StockActivity extends WepBaseActivity {
 
     EditText txtNewStock, txtRate1, txtRate2, txtRate3;
     WepButton btnUpdate;
-    private DatabaseHandler db;
+
     private ItemsAdapter itemsAdapter;
     private DepartmentAdapter departmentAdapter;
     private CategoryAdapter categoryAdapter;
@@ -100,7 +91,7 @@ public class StockActivity extends WepBaseActivity {
         setContentView(R.layout.activity_stock);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        db = new DatabaseHandler(this);
+        dbStock = new DatabaseHandler(this);
 
         /*getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.application_title_bar);
         TextView tvTitleText = (TextView) findViewById(R.id.tvTitleBarCaption);
@@ -301,10 +292,10 @@ public class StockActivity extends WepBaseActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Items items = (Items) itemsAdapter.getItem(position);
-            //Cursor cursor = db.getItemss(items.getItemCode());
+            //Cursor cursor = dbStock.getItemss(items.getItemCode());
             Cursor Item = null;
             if (view.getTag() != null) {
-                Item = db.getItemss(items.getItemCode());
+                Item = dbStock.getItemss(items.getItemCode());
                 if (Item.moveToNext()) {
                     strMenuCode = Item.getString(Item.getColumnIndex("MenuCode"));
                     ItemLongName.setText(Item.getString(Item.getColumnIndex("ItemName")));
@@ -357,7 +348,7 @@ public class StockActivity extends WepBaseActivity {
             protected ArrayList<Items> doInBackground(Void... params) {
                 ArrayList<Items> list = null;
                 try {
-                    list =  db.getItemItems_dept(deptCode);
+                    list =  dbStock.getItemItems_dept(deptCode);
                 } catch (Exception e) {
                     list = null;
                 }
@@ -385,15 +376,15 @@ public class StockActivity extends WepBaseActivity {
             @Override
             protected ArrayList<Items> doInBackground(Void... params) {
                 if(categcode == 0)
-                    return db.getItemItems();
+                    return dbStock.getItemItems();
                 else
-                    return db.getItemItems(categcode);
+                    return dbStock.getItemItems(categcode);
             }
 
             @Override
             protected void onPostExecute(ArrayList<Items> list) {
                 super.onPostExecute(list);
-                //editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+                //editTextOrderNo.setText(String.valueOf(dbStock.getNewBillNumber()));
                 if(list!=null)
                     setItemsAdapter(list);
                 gridViewItems.setVisibility(View.VISIBLE);
@@ -411,13 +402,13 @@ public class StockActivity extends WepBaseActivity {
 
             @Override
             protected ArrayList<Department> doInBackground(Void... params) {
-                return db.getItemDepartment();
+                return dbStock.getItemDepartment();
             }
 
             @Override
             protected void onPostExecute(ArrayList<Department> list) {
                 super.onPostExecute(list);
-                //editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+                //editTextOrderNo.setText(String.valueOf(dbStock.getNewBillNumber()));
                 if(list!=null)
                     setDepartmentAdapter(list);
                 listViewDept.setVisibility(View.VISIBLE);
@@ -436,16 +427,16 @@ public class StockActivity extends WepBaseActivity {
             @Override
             protected ArrayList<Category> doInBackground(Void... params) {
                 if(deptCode == 0)
-                    return db.getAllItemCategory();
+                    return dbStock.getAllItemCategory();
                 else
-                    return db.getAllItemCategory(deptCode);
+                    return dbStock.getAllItemCategory(deptCode);
 
             }
 
             @Override
             protected void onPostExecute(ArrayList<Category> list) {
                 super.onPostExecute(list);
-                //editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+                //editTextOrderNo.setText(String.valueOf(dbStock.getNewBillNumber()));
                 if(list!=null)
                     setCategoryAdapter(list);
                 listViewCat.setVisibility(View.VISIBLE);
@@ -541,8 +532,40 @@ public class StockActivity extends WepBaseActivity {
 
         UpdateItemStock(Integer.parseInt(strMenuCode), (Float.parseFloat(strExistingStock) + Float.parseFloat(strNewStock)),
                 Float.parseFloat(strRate1), Float.parseFloat(strRate2), Float.parseFloat(strRate3));
-        Toast.makeText(myContext, "Price & Stock Updated Successfully", Toast.LENGTH_LONG).show();
+        //Toast.makeText(myContext, "Price & Stock Updated Successfully", Toast.LENGTH_LONG).show();
         //DisplayItems();
+        // updating in table outwardStock
+        String itemName = ItemLongName.getText().toString();
+        double rate =0;
+        if(Double.parseDouble(strRate1) >0)
+            rate = Double.parseDouble(strRate1);
+        else if(Double.parseDouble(strRate2) >0)
+            rate = Double.parseDouble(strRate2);
+        else if(Double.parseDouble(strRate3) >0)
+            rate = Double.parseDouble(strRate3);
+
+            Cursor date_cursor = dbStock.getCurrentDate();
+        String currentdate = "";
+        if(date_cursor.moveToNext())
+            currentdate = date_cursor.getString(date_cursor.getColumnIndex("BusinessDate"));
+        StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbStock);
+        double OpeningQuantity =0;
+        double ClosingQuantity =0;
+        Cursor outward_item_stock = dbStock.getOutwardStockItem(currentdate,Integer.parseInt(strMenuCode));
+        if(outward_item_stock!=null && outward_item_stock.moveToNext()){
+            OpeningQuantity = outward_item_stock.getDouble(outward_item_stock.getColumnIndex("OpeningStock"));
+            OpeningQuantity += Double.parseDouble(strNewStock);
+
+            ClosingQuantity = outward_item_stock.getDouble(outward_item_stock.getColumnIndex("ClosingStock"));
+            ClosingQuantity += Double.parseDouble(strNewStock);
+        }
+        else
+        {
+            OpeningQuantity = (Double.parseDouble(strExistingStock) + Double.parseDouble(strNewStock));
+            ClosingQuantity = OpeningQuantity;
+        }
+        stock_outward.updateOpeningStock_Outward( currentdate, Integer.parseInt(strMenuCode),itemName,OpeningQuantity, rate );
+        stock_outward.updateClosingStock_Outward( currentdate, Integer.parseInt(strMenuCode),itemName,ClosingQuantity);
         ResetStock();
 
     }

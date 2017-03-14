@@ -80,14 +80,14 @@ import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.StockOutwardMaintain;
 import com.wepindia.printers.WepPrinterBaseActivity;
 import com.wepindia.printers.utils.TimeUtil;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class BillingScreenActivity extends WepPrinterBaseActivity {
@@ -112,6 +112,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
     EditText et_pos = null;
     RelativeLayout relative_Interstate, relative_pos, relative_waiterno, relative_tableNo;
     Calendar Time; // Time variable
+    private LinearLayout idd_date;
     Cursor crsrSettings = null, crsrCustomerDetails = null;
     ArrayAdapter<String> adapDept, adapCateg, adapModifiers;
     String[] Name;
@@ -121,6 +122,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
     boolean bAuthorizationResult = false;
     int[] MenuCode;
     byte jBillingMode = 0, jWeighScale = 0;
+    int BillwithStock = 0;
     int iTaxType = 0, iTotalItems = 0, iCustId = 0, iTokenNumber = 0;
     float fTotalDiscount = 0, fCashPayment = 0, fCardPayment = 0, fCouponPayment = 0, fPettCashPayment = 0, fPaidTotalPayment = 0;
     float fChangePayment = 0;
@@ -198,17 +200,29 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                 if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1)
                 {
                     Date date1 = new Date();
-                    CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
-                    strDate = sdate.toString();
-                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
-                    tvDate.setText(String.valueOf(strDate_date.getTime()));
+                    try {
+                        CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
+                        tvDate.setText(String.valueOf(sdate));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 else
                 {
-                    strDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
-                    strDate_date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(strDate);
-                    tvDate.setText(String.valueOf(strDate_date.getTime()));
+                    String strDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
+                    try {
+                        tvDate.setText(String.valueOf(strDate));
+                        Date date1 = new Date();
+                        CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
+                        if(strDate.equals(sdate.toString()))
+                            idd_date.setVisibility(View.INVISIBLE);
+                        else
+                            idd_date.setVisibility(View.VISIBLE);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+                BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
             }
 
@@ -820,6 +834,8 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
+
+        idd_date  = (LinearLayout) findViewById(R.id.idd_date);
 
         tVLabelTableNo = (TextView) findViewById(R.id.textViewLabelTableNo);
         tVLabelWaiterNo = (TextView) findViewById(R.id.textViewLabelWaiterNo);
@@ -4622,6 +4638,41 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
         return returnStatus;
     }
 
+    private void updateOutwardStock()
+    {
+        Log.d(TAG, "updateOutwardStock()");
+        String businessdate = tvDate.getText().toString();
+        DatabaseHandler db_local = new DatabaseHandler(getApplicationContext());
+        db_local.CreateDatabase();
+        db_local.OpenDatabase();
+        StockOutwardMaintain stock_outward = new StockOutwardMaintain(getApplicationContext(), db_local);
+        for (int iRow = 0; iRow < tblOrderItems.getChildCount(); iRow++) {
+            TableRow RowBillItem = (TableRow) tblOrderItems.getChildAt(iRow);
+            int menuCode = -1;
+            String itemname = "";
+            double closingQty = 0;
+            // Item Number
+            if (RowBillItem.getChildAt(0) != null) {
+                CheckBox ItemNumber = (CheckBox) RowBillItem.getChildAt(0);
+                menuCode = (Integer.parseInt(ItemNumber.getText().toString()));
+            }
+            // Item Name
+            if (RowBillItem.getChildAt(1) != null) {
+                TextView ItemName = (TextView) RowBillItem.getChildAt(1);
+                itemname = (ItemName.getText().toString());
+            }
+
+            // Quantity
+            if (RowBillItem.getChildAt(3) != null){
+                Cursor cursor = db_local.getItem(menuCode);
+                if(cursor.moveToNext())
+                    closingQty = cursor.getDouble(cursor.getColumnIndex("Quantity"));
+            }
+            stock_outward.updateClosingStock_Outward(businessdate,menuCode,itemname,closingQty);
+
+        } // end of for
+        db_local.CloseDatabase();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -4662,6 +4713,8 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
 
                     l(2, isPrintBill);
                     Toast.makeText(myContext, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
+                    if (BillwithStock==1)
+                        updateOutwardStock();
                     if (isComplimentaryBill == true) {
                         // Save complimentary bill details
                         SaveComplimentaryBill(Integer.parseInt(tvBillNumber.getText().toString()),
