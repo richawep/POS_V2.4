@@ -93,14 +93,6 @@ public class StockActivity extends WepBaseActivity {
         setSupportActionBar(toolbar);
         dbStock = new DatabaseHandler(this);
 
-        /*getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.application_title_bar);
-        TextView tvTitleText = (TextView) findViewById(R.id.tvTitleBarCaption);
-        TextView tvTitleUserName = (TextView) findViewById(R.id.tvTitleBarUserName);
-        TextView tvTitleDate = (TextView) findViewById(R.id.tvTitleBarDate);
-        ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
-        ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.lnrPriceStock));
-        tvTitleText.setText("Price & Stock");*/
 
         myContext = this;
         MsgBox = new MessageDialog(myContext);
@@ -142,14 +134,27 @@ public class StockActivity extends WepBaseActivity {
                     btndepart.setVisibility(View.GONE);
                     btncateg.setVisibility(View.GONE);
                     btnitem.setVisibility(View.VISIBLE);
+
+                    listViewDept.setVisibility(View.GONE);
+                    tvdeptline.setVisibility(View.GONE);
+                    listViewCat.setVisibility(View.GONE);
+                    tvcategline.setVisibility(View.GONE);
+                    gridViewItems.setNumColumns(6);
                 } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2")) {
                     btndepart.setVisibility(View.VISIBLE);
                     btncateg.setVisibility(View.GONE);
                     btnitem.setVisibility(View.VISIBLE);
+
+                    listViewCat.setVisibility(View.GONE);
+                    tvcategline.setVisibility(View.GONE);
+                    gridViewItems.setNumColumns(4);
+
                 } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("3")) {
                     btndepart.setVisibility(View.VISIBLE);
                     btncateg.setVisibility(View.VISIBLE);
                     btnitem.setVisibility(View.VISIBLE);
+                    gridViewItems.setNumColumns(2);
+
                 }
 
                 btndepart.setOnClickListener(new View.OnClickListener() {
@@ -183,102 +188,7 @@ public class StockActivity extends WepBaseActivity {
                     }
                 });
 
-//                final ListView lstDepname = (ListView) findViewById(R.id.lstStockDepartmentNames);
-//                final ListView lstCateg = (ListView) findViewById(R.id.lstStockCategoryNames);
-//                final GridView griditem = (GridView) findViewById(R.id.gridStockItems);
 
-
-
-                // Load Items without Dept and Categ
-//                if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("1")) {
-//                    griditem.setNumColumns(6);
-//                    GetItemDetails();
-//                    tvdeptline.setVisibility(View.GONE);
-//                    tvcategline.setVisibility(View.GONE);
-//                    lstDepname.setVisibility(View.GONE);
-//                    lstCateg.setVisibility(View.GONE);
-//                } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2")) {
-//                    griditem.setNumColumns(4);
-//                    //GetItemDetailswithoutDeptCateg();
-//                    GetItemDetails();
-//                    tvcategline.setVisibility(View.GONE);
-//                    lstCateg.setVisibility(View.GONE);
-//                } else {
-//                    //GetItemDetailswithoutDeptCateg();
-//                    GetItemDetails();
-//                }
-//
-//
-//                if (Name.length > 0) {
-//                    // Assign item grid to image adapter
-//                    grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
-//                    // Make the item grid visible
-//                    grdItems.setVisibility(View.VISIBLE);
-//                } else {
-//                    // Make the item grid invisible
-//                    grdItems.setVisibility(View.INVISIBLE);
-//                }
-//
-//                btndepart.setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View arg0) {
-//                        // TODO Auto-generated method stub
-//                        lstDepname.setVisibility(View.VISIBLE);
-//                        Cursor Departments = null;
-//                        // Get departments
-//                        Departments = dbStock.getAllDepartments();
-//                        // Load departments to Department list
-//                        if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("3")) {
-//                            LoadDepartments(Departments);
-//                        } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2")) {
-//                            LoadDepartmentsItems(Departments);
-//                        }
-//                        lstCateg.setAdapter(null);
-//                        griditem.setAdapter(null);
-//                    }
-//                });
-//
-//                btncateg.setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View arg0) {
-//                        // TODO Auto-generated method stub
-//                        lstCateg.setVisibility(View.VISIBLE);
-//                        Cursor Category = null;
-//                        // Get Category
-//                        Category = dbStock.getCategories();
-////            // Load Category to Category List
-//                        LoadCategories(Category);
-//                        //lstDepname.setAdapter(null);
-//                        griditem.setAdapter(null);
-//
-//                    }
-//                });
-//
-//                btnitem.setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View arg0) {
-//                        // TODO Auto-generated method stub
-//                        griditem.setVisibility(View.VISIBLE);
-//                        // Get Department items detail
-//                        if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("1")) {
-//                            griditem.setNumColumns(6);
-//                            GetItemDetails();
-//                        } else {
-//                            //GetItemDetailswithoutDeptCateg();
-//                            GetItemDetails();
-//                        }
-//                        // This condition is to avoid NullReferenceException in getCount()
-//                        // in ImageAdapter class.
-//                        if (Name.length > 0) {
-//                            // Assign item grid to image adapter
-//                            grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
-//                            // Make the item grid visible
-//                            // grdItems.setVisibility(View.VISIBLE);
-//                        } else {
-//                            // Make the item grid invisible
-//                            grdItems.setVisibility(View.INVISIBLE);
-//                        }
-//                        lstDepname.setAdapter(null);
-//                        lstCateg.setAdapter(null);
-//                    }
-//                });
            }
             loadItems(0);
         } catch (Exception e) {
