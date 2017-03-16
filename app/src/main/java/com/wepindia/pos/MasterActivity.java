@@ -15,21 +15,16 @@
 package com.wepindia.pos;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wep.common.app.Database.DatabaseHandler;
@@ -135,7 +130,11 @@ public class MasterActivity extends WepBaseActivity {
             if (GSTEnable.equals("0"))
             {
                 // nongst
-                Intent intentStock = new Intent(myContext,Inward_Item_Entry_nonGST_Activity.class);
+//                Intent intentStock = new Intent(myContext,Inward_Item_Entry_nonGST_Activity.class);
+//                intentStock.putExtra("USER_NAME", strUserName);
+//                startActivity(intentStock);
+
+                Intent intentStock = new Intent(myContext,TabbedInwardItem_NonGST.class);
                 intentStock.putExtra("USER_NAME", strUserName);
                 startActivity(intentStock);
             }

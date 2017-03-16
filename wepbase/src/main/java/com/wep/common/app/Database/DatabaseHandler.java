@@ -3858,6 +3858,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.update(TBL_ITEM_Inward, cvDbValues, "MenuCode=" + objItem.getMenuCode(), null);
     }
 
+    public int updateItem_Inw(int supplierCode, int menuCode, String itemName , float quantity, float rate ) {
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_Rate, rate);
+        cvDbValues.put(KEY_Quantity, quantity);
+        return dbFNB.update(TBL_ITEM_Inward, cvDbValues, "MenuCode=" + menuCode, null);
+        //return dbFNB.update(TBL_ITEM_Inward, cvDbValues, "SupplierCode=" + supplierCode+" AND "+KEY_ItemName+" LIKE '"+itemName+"'", null);
+    }
+
     // -----Update Item stock-----
     public int updateItemStock(int MenuCode, float Stock) {
         SQLiteDatabase db = getWritableDatabase();
@@ -5322,6 +5330,13 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return dbFNB.update(TBL_GOODSINWARD, cvDbValues, KEY_ItemName + " LIKE '" + ingredientname + "'", null);
     }
 
+    public int updateIngredientQuantityInGoodsInward(String ingredientname, float ingredientquantity, float rate) {
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_Quantity, ingredientquantity);
+        cvDbValues.put(KEY_Value, ingredientquantity);
+
+        return dbFNB.update(TBL_GOODSINWARD, cvDbValues, KEY_ItemName + " LIKE '" + ingredientname + "'", null);
+    }
 
     // -----Retrieve Single Item based on Item MenuCode-----
     public Cursor getItem_inward(int MenuCode) {
@@ -5431,7 +5446,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
     // richa 2712_inward
     public Cursor getAllSupplierName_nonGST() {
-        ArrayList<String> list = new ArrayList<String>();
+
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TBL_Supplier + " WHERE " + KEY_SupplierType + " LIKE 'UnRegistered'";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArgument

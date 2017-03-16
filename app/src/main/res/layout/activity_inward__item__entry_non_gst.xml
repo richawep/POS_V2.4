@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<!-->
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_wep" />
-
+<!-->
     <LinearLayout
         android:id="@+id/lnrItemMaster"
         android:layout_width="match_parent"
@@ -124,11 +124,7 @@
                 android:layout_marginTop="30dp"
                 android:background="@color/colorGreyBackground">
 
-                <!--<HorizontalScrollView
-        android:id="@+id/hscrlItemMasterLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        tools:ignore="UselessParent,NestedScrolling,TooManyViews,HardcodedText" >-->
+
 
                 <TableLayout
                     android:id="@+id/tblItem"
@@ -225,7 +221,7 @@
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Supplier Name"
+                                    android:text="Supplier Name*"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <AutoCompleteTextView
@@ -423,7 +419,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Item Name"
+                                    android:text="Item Name*"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <AutoCompleteTextView
@@ -512,7 +508,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Rate"
+                                    android:text="Rate*"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <EditText
@@ -544,7 +540,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Quantity"
+                                    android:text="Quantity*"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <EditText
@@ -590,7 +586,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1.5"
                                     android:gravity="center"
-                                    android:text="UoM"
+                                    android:text="UoM*"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <Spinner

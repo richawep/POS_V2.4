@@ -16,20 +16,13 @@
  ****************************************************************************/
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatCallback;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
@@ -37,12 +30,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
@@ -54,12 +43,6 @@ import com.wepindia.pos.fragments.FragmentDiscount;
 import com.wepindia.pos.fragments.FragmentKitchen;
 import com.wepindia.pos.fragments.FragmentOtherTaxes;
 import com.wepindia.pos.fragments.FragmentPayment;
-import com.wepindia.pos.fragments.FragmentSettingsHeaderFooter;
-import com.wepindia.pos.fragments.FragmentSettingsMachine;
-import com.wepindia.pos.fragments.FragmentSettingsMiscellaneous;
-import com.wepindia.pos.fragments.FragmentSettingsOther;
-import com.wepindia.pos.fragments.FragmentSettingsPrice;
-import com.wepindia.pos.fragments.FragmentSettingsPrint;
 import com.wepindia.pos.fragments.FragmentTax;
 import com.wepindia.pos.utils.ActionBarUtils;
 

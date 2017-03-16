@@ -282,9 +282,7 @@ public class FragmentDiscount extends Fragment {
             MsgBox.Show("Warning", "Please Enter Discount description before adding");
         } else if(strDiscPercent.equalsIgnoreCase("") && strDiscAmount.equals("")) {
             MsgBox.Show("Warning", "Please enter atleast percent or amount before adding");
-        }else if(Float.parseFloat(strDiscPercent) >0 && Float.parseFloat(strDiscAmount)>0) {
-            MsgBox.Show("Warning", "Please enter any one, percent or amount before adding");
-        } else{
+        }else{
             if (strDiscAmount== null || strDiscAmount.equals(""))
             {
                 strDiscAmount="0";
@@ -292,6 +290,10 @@ public class FragmentDiscount extends Fragment {
             if (strDiscPercent== null || strDiscPercent.equals(""))
             {
                 strDiscPercent="0";
+            }
+            if(Float.parseFloat(strDiscPercent) >0 && Float.parseFloat(strDiscAmount)>0) {
+                MsgBox.Show("Warning", "Please enter any one, percent or amount before adding");
+                return;
             }
             if(IsDiscountPercentExists(strDiscDescription, Double.parseDouble(strDiscPercent))){
                 MsgBox.Show("Warning", "Discount is already present");
@@ -326,8 +328,6 @@ public class FragmentDiscount extends Fragment {
             MsgBox.Show("Warning", "Please Enter Discount description before adding");
         } else if(strDiscPercent.equalsIgnoreCase("") && strDiscAmount.equals("")) {
             MsgBox.Show("Warning", "Please enter atleast percent or amount before adding");
-        }else  if(Float.parseFloat(strDiscPercent) >0 && Float.parseFloat(strDiscAmount)>0) {
-            MsgBox.Show("Warning", "Please enter any one, percent or amount before adding");
         }
         else
         {
@@ -338,6 +338,10 @@ public class FragmentDiscount extends Fragment {
             if (strDiscPercent== null || strDiscPercent.equals(""))
             {
                 strDiscPercent="0";
+            }
+            if(Float.parseFloat(strDiscPercent) >0 && Float.parseFloat(strDiscAmount)>0) {
+                MsgBox.Show("Warning", "Please enter any one, percent or amount before adding");
+                return;
             }
             Log.d("Discount Selection","Id: " + strDiscId + " Description: " + strDiscDesc + " Percent: " + strDiscPercent);
             int iResult = dbDiscConfig.updateDiscountConfig(strDiscId, strDiscDesc, strDiscPercent, strDiscAmount);
