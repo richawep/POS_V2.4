@@ -729,10 +729,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     {
 
         //Cursor cursorStock =  dbReport.getoutwardStock(String.valueOf(startDate_date), String.valueOf(endDate_date));
+        ArrayList<Integer> itemCodeList = new ArrayList<>();
         String startDate = txtReportDateStart.getText().toString();
         String endDate = txtReportDateEnd.getText().toString();
         Cursor cursorStock_start =  dbReport.getinwardStock(startDate);
         Cursor cursorStock_end =  dbReport.getinwardStock(endDate);
+        int count_start = cursorStock_start.getCount();
+        int count_end = cursorStock_end.getCount();
         if(cursorStock_start ==null || !cursorStock_start.moveToFirst())
         {
             MsgBox.Show("Sorry","Opening Stock not available for date : "+startDate);
@@ -753,7 +756,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 int menuCode = cursorStock_start.getInt(cursorStock_start.getColumnIndex("MenuCode"));
                 ItemCode.setText(String.valueOf(menuCode));
                 ItemCode.setPadding(5,0,0,0);
-
+//                String id = String.valueOf(menuCode);
+                itemCodeList.add(menuCode);
 
                 TextView ItemName = new TextView(myContext);
                 ItemName.setTextSize(15);
@@ -801,6 +805,60 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 tblReport.addView(rowReport);
 
             }while(cursorStock_start.moveToNext());
+            if(count_end > count_start)
+            {
+                // some extra items entry is present on end date which are not present on opening date
+                do{
+                    TableRow rowReport = new TableRow(myContext);
+                    rowReport.setLayoutParams(new ViewGroup.LayoutParams
+                            (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    int menuCode = cursorStock_end.getInt(cursorStock_end.getColumnIndex("MenuCode"));
+                    if(!(itemCodeList.contains(menuCode))){
+                        TextView ItemCode = new TextView(myContext);
+                        ItemCode.setTextSize(15);
+                        ItemCode.setText(String.valueOf(menuCode));
+                        ItemCode.setPadding(5,0,0,0);
+
+                        TextView ItemName = new TextView(myContext);
+                        ItemName.setTextSize(15);
+                        ItemName.setText(cursorStock_end.getString(cursorStock_end.getColumnIndex("ItemName")));
+
+
+                        TextView OpeningStock = new TextView(myContext);
+                        OpeningStock.setTextSize(15);
+                        OpeningStock.setText("-");
+                        OpeningStock.setGravity(Gravity.END);
+                        OpeningStock.setPadding(0,0,30,0);
+
+
+                        TextView ClosingStock = new TextView(myContext);
+                        ClosingStock.setTextSize(15);
+                        ClosingStock.setGravity(Gravity.END);
+                        ClosingStock.setPadding(0,0,30,0);
+
+                        TextView Amount = new TextView(myContext);
+                        Amount.setTextSize(15);
+                        Amount.setGravity(Gravity.END);
+                        Amount.setPadding(0,0,20,0);
+
+
+                        double closingStock = cursorStock_end.getDouble(cursorStock_end.getColumnIndex("ClosingStock"));
+                        ClosingStock.setText(String.format("%.2f",closingStock));
+                        double rate = cursorStock_end.getDouble(cursorStock_end.getColumnIndex("Rate"));
+                        Amount.setText(String.format("%.2f",closingStock*rate));
+                        totbillAmt+= closingStock*rate;
+
+                        // Add views to row
+                        rowReport.addView(ItemCode);
+                        rowReport.addView(ItemName);
+                        rowReport.addView(OpeningStock);
+                        rowReport.addView(ClosingStock);
+                        //rowReport.addView(Amount);
+                        tblReport.addView(rowReport);
+                    }
+                }while(cursorStock_end.moveToNext());
+
+            }
 //            TableRow rowReport = new TableRow(myContext);
 //            rowReport.setLayoutParams(new ViewGroup.LayoutParams
 //                    (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

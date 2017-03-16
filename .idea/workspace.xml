@@ -13,26 +13,9 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c64221d-bd8c-41a4-bb92-8417c19acc06" name="Default" comment="1. Making Single tax (Sales Tax + Service Tax) in Billwise &amp; itemwise Report. Earlier Sales Tax and Service tax is shown separately.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedInwardItem_NonGST.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/ItemInwardAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/SupplierAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_tabbed_inward_item_nongst.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_inward_stock.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/Supplier_Model.java" />
+    <list default="true" id="7c64221d-bd8c-41a4-bb92-8417c19acc06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConfigurationActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConfigurationActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/MasterActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/MasterActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gstAPI/gstAPI.iml" afterPath="$PROJECT_DIR$/gstAPI/gstAPI.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/mSwipe.iml" afterPath="$PROJECT_DIR$/mSwipe/mSwipe.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
     </list>
     <ignored path="Feb10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,110 +51,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DatabaseHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+      <file leaf-file-name="ReportFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="4967" column="16" selection-start-line="4967" selection-start-column="16" selection-end-line="4967" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FragmentInwardSupply.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="1716" column="21" selection-start-line="1716" selection-start-column="21" selection-end-line="1716" selection-end-column="21" />
-              <folding>
-                <element signature="e#23945#24088#0" expanded="true" />
-                <element signature="e#24087#24088#0" expanded="true" />
-                <element signature="e#78968#79986#0" expanded="true" />
-                <element signature="e#79985#79986#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FragmentInwardStock.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="424" column="22" selection-start-line="424" selection-start-column="22" selection-end-line="424" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3931#4064#0" expanded="true" />
-                <element signature="e#4063#4064#0" expanded="true" />
-                <element signature="e#4109#4238#0" expanded="true" />
-                <element signature="e#4237#4238#0" expanded="true" />
-                <element signature="e#4455#4582#0" expanded="true" />
-                <element signature="e#4581#4582#0" expanded="true" />
-                <element signature="e#5237#5995#0" expanded="true" />
-                <element signature="e#5994#5995#0" expanded="true" />
-                <element signature="e#6057#6432#0" expanded="true" />
-                <element signature="e#6431#6432#0" expanded="true" />
-                <element signature="e#12963#12979#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TabbedInwardItem_NonGST.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedInwardItem_NonGST.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1485">
-              <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StockInwardMaintain.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/StockInwardMaintain.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="103" column="63" selection-start-line="102" selection-start-column="17" selection-end-line="103" selection-end-column="63" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider editor-type-id="android-manifest">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="341" column="69" selection-start-line="341" selection-start-column="69" selection-end-line="341" selection-end-column="69" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_fragment_inward_stock.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_inward_stock.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="158" column="69" selection-start-line="158" selection-start-column="49" selection-end-line="158" selection-end-column="69" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_inward__item__entry_non_gst.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="587" column="52" selection-start-line="587" selection-start-column="52" selection-end-line="587" selection-end-column="52" />
+            <state relative-caret-position="249">
+              <caret line="860" column="13" selection-start-line="860" selection-start-column="13" selection-end-line="860" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -5329,7 +5213,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConvertIngredientActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/Inward_Item_Entry_nonGST_Activity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConfigurationActivity.java" />
@@ -5348,6 +5231,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
       </list>
     </option>
   </component>
@@ -6105,7 +5989,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489578481615</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="1.displaying inward stock&#10;2. fragmenting inward item masters">
+      <created>1489671488737</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1489671488737</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6124,7 +6015,7 @@
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3119584" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34315425" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -6169,7 +6060,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adding counter sales screen" />
     <MESSAGE value="adding counter sales screene4f34" />
     <MESSAGE value="drg" />
     <MESSAGE value="ef" />
@@ -6194,7 +6084,8 @@
     <MESSAGE value="1. BillNoReset Issue fixed.&#10;2. Also order in which Billwise Report and Transaction Report is displayed is made inorder od ascending date . Earlier it was in order of BillNo.&#10;" />
     <MESSAGE value="1. Making Single tax (Sales Tax + Service Tax) in Billwise &amp; itemwise Report. Earlier Sales Tax and Service tax is shown separately." />
     <MESSAGE value="Controlling Stock Activity look. Earlier Dept/cat box are shown ireespective of fast billing mode" />
-    <option name="LAST_COMMIT_MESSAGE" value="Controlling Stock Activity look. Earlier Dept/cat box are shown ireespective of fast billing mode" />
+    <MESSAGE value="1.displaying inward stock&#10;2. fragmenting inward item masters" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.displaying inward stock&#10;2. fragmenting inward item masters" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6278,32 +6169,6 @@
         <state relative-caret-position="-850">
           <caret line="61" column="48" selection-start-line="61" selection-start-column="48" selection-end-line="61" selection-end-column="48" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13413">
-          <caret line="839" column="0" selection-start-line="839" selection-start-column="0" selection-end-line="839" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#15396#15397#0" expanded="false" />
-            <element signature="e#15428#15429#0" expanded="false" />
-            <element signature="e#207836#207855#0" expanded="false" />
-            <element signature="e#208212#208220#0" expanded="false" />
-            <element signature="e#210385#210393#0" expanded="false" />
-            <element signature="e#210918#210926#0" expanded="false" />
-            <element signature="e#211447#211455#0" expanded="false" />
-            <element signature="e#236684#236694#0" expanded="false" />
-            <element signature="e#301841#301851#0" expanded="false" />
-            <element signature="e#321915#321923#0" expanded="false" />
-            <element signature="e#322144#322161#0" expanded="false" />
-            <element signature="e#322233#322250#0" expanded="false" />
-            <element signature="e#322318#322335#0" expanded="false" />
-            <element signature="e#362235#362243#0" expanded="false" />
-            <element signature="e#362464#362481#0" expanded="false" />
-            <element signature="e#362641#362658#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -6660,7 +6525,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedInwardItem_NonGST.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1485">
+        <state relative-caret-position="-1434">
           <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -6763,6 +6628,14 @@
             <element signature="e#78968#79986#0" expanded="true" />
             <element signature="e#79985#79986#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="860" column="13" selection-start-line="860" selection-start-column="13" selection-end-line="860" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
