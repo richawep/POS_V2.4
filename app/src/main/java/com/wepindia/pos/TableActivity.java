@@ -590,7 +590,7 @@ public class TableActivity extends WepBaseActivity {
                 strTableSplitNo = "4";
             }*/
             // set Result
-            Intent intentResult = new Intent(myContext, BillingScreenActivity.class);
+            Intent intentResult = new Intent(myContext, BillingDineInActivity.class);
 
             intentResult.putExtra(TABLE_NO, strTableNumber);
             intentResult.putExtra(WAITER_NO, strWaiterNumber);
@@ -621,7 +621,7 @@ public class TableActivity extends WepBaseActivity {
 
     public void DineIn(View v) {
         // set Result
-        Intent intentResult = new Intent(myContext, BillingScreenActivity.class);
+        Intent intentResult = new Intent(myContext, BillingDineInActivity.class);
 
         intentResult.putExtra(TABLE_NO, "0");
         intentResult.putExtra(WAITER_NO, "0");

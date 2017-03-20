@@ -153,6 +153,11 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".BillingDineInActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeWep"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
             android:name=".TableActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
@@ -340,6 +345,7 @@
         <activity android:name=".TabbedInwardItem_NonGST"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
     </application>
 
 </manifest>
