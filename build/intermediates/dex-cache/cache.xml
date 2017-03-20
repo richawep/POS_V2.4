@@ -3,30 +3,30 @@
 
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_9dc4c208c6018e481e74bd6decd7adcf14351be5\classes.dex" />
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.1_a455ec6862ebb9391c8053edad9a6c6a65036a70\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.jaredrummler\material-spinner\1.1.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_ef73a0553142a0146cda9b09aed7dbafe492357e\classes.dex" />
+        sha1="60182b96dcbd95dc33dd734bc81505d2b5ddc70e">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jaredrummler-material-spinner-1.1.0_f2a02aa7eab0e7e4d34df6729ff40e81c5a02ed3\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\Feb10\printers\unspecified\jars\libs\commons-lang-2.6.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\wepfnb_modified\mSwipe\unspecified\jars\libs\apachehttp.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="7b864bf2ded4300446c9316d5cfff88effcbbfd2">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\8\commons-lang-2.6_553d58aa5bad485cc0aaca72787f2f8b36abe92a\classes.dex" />
+        sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_2362f6e5e804918c56f4cc0478af519236c7a008\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -35,322 +35,322 @@
         optimize="true"
         revision="24.0.0"
         sha1="a60a5e993c98c864010053cb901b7eab25306568">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.2.4_313aff129984a0a45e086871ec03bfcc02e7284e\classes.dex" />
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.2.4_313aff129984a0a45e086871ec03bfcc02e7284e\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_4223b9569b48893ca53b808dbd312b184eafd265\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\Feb10\printers\unspecified\jars\libs\jcc-bate-0.7.3.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="f03b2771ee9e00f44746d2532efb188ad31fff33">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\8\jcc-bate-0.7.3_97e237b7d47a209b62342bc2b7cc7adab5495e70\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-v13\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="e3c7e8ff9f476d0d93ee7b046fbe8037a2b822c0">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v13-24.2.1_a7d2b991ec6e364e6fe637e3bb53b67ad6069d1a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.1_58598a314291df19e1d205cfbd8125a70a1b15aa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.sothree.slidinguppanel\library\3.3.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="ab8a4903076897a8fe029433ba0c3c3f958712ce">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.sothree.slidinguppanel-library-3.3.1_9c801ce05939d1c9bbcbc01d0d6c32b03c9f3c47\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\Feb10\mSwipe\unspecified\jars\libs\MswipeWisepadDRDSDKAPIVer2.5.4.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="74a20528ad1e765e90f00fd30446521eb9e67185">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\8\MswipeWisepadDRDSDKAPIVer2.5.4_191f63c1e76cf0722e31f69c2e702d403d710a9f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Priyabrat\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_3f853ce8d627f6572bd836cd9835f6a791f9a149\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.razorpay\checkout\1.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="4843c04db16f6ddd08cd74ae7e887556f7d53f95">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.razorpay-checkout-1.2.0_53278b4671db927f7ce13f6f6c2879f531b635b4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_139bcf2990157d3cd64ec8a9f3e896cf1bbcebdf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\Feb10\printers\unspecified\jars\libs\effica_lib.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="f08f74e75f377d011d8a34e1522ca9fa41376558">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_21d93ce6af01ea0131ec181637f365487197a400\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_fb83dd82a68687b43262c03db07534207b4ba4c1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\Feb10\mSwipe\unspecified\jars\libs\apachehttp.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_8a926f16dd95967ec499448b05573d83703dd65e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_e4c4cd1188199b0f2df812ace783e9a58aa68613\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_23ecc6ae0f893542d1ca633d3f2adf3577715d8c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Priyabrat\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.1\support-annotations-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.1_4d304d474dd37af9577860f63f3ab8881b620d68\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.weiwangcn.betterspinner\library\1.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="b8399b3ef86b9fe9fbfb2171bb6560ff3c49d468">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.weiwangcn.betterspinner-library-1.1.0_ff61ac033934f3b4a5b14fbfa87f60a058c326bf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\libs\poi-3.8.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\2\poi-3.8_21affcf09253baebf77994c858032a1665642fe1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_0de8d8e686ee78f02aa1a031e94a3371af0fcc66\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_60197d059d1cd75bb6a35e60229b6a89f06e7fa3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\design\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.1_7cdea6ea1e4dc5743568466e93bd54bc16a40636\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-v13\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="c07fb99b729345908dda75fadbbf882e300631ff">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_d42b1e196ba54e04ca985f64cc1130783eca2f68\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
         sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_7ae80a0670823576ad7dadd5c9d43b04485b8237\classes.dex" />
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_97ed06c0b97569b9ba869dd9b0da6977ffd7d807\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
         sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_0a42d30039161d42bb15f38e50a519cce8ff164c\classes.dex" />
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_190c8b9cf22708e1c6fc21c0c8bd0732e478bca4\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\Feb10\printers\unspecified\jars\libs\apachestrlib.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="2a6e72794eeecaf83ed38b185d735a3d24b36669">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachestrlib_1dd8a5d1c3cc753d06edce14e1bc86522d2b66bc\classes.dex" />
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_dd1fee384114bd49da28933dc2c01e42eb053a5a\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\Feb10\printers\unspecified\jars\libs\gprinter-2.1.2.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\design\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_2477700446ef44e3685c3f2fcff93cfb81ba9cc7\classes.dex" />
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.1_6f2a3fce89c485972c896e17fb0eb2c0dd7c68c8\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.sothree.slidinguppanel\library\3.3.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.1_84e047819db1f08a2b6da30279c47444059105b0\classes.dex" />
+        sha1="ab8a4903076897a8fe029433ba0c3c3f958712ce">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.sothree.slidinguppanel-library-3.3.1_f90b987a1672aa5d2e1b1c51453d2572069a6793\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="f83b00041ecfba705603fec40363416c7de69719">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_708a3ed72a072958287cec778fb6212ead3de900\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="d3032719042e4c87dd3337b52d4efdc7e6db55af">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_a01a506d6a8eb5edc838eab5220fb0239b88f86d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="2b2e3faf3dfb8edf0de6b041cd793c0ee5e07d3e">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_284695316f99d7771fdb44437a0e618161c25c97\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.1_b756e98e88c5d45bd4bf1f606d6fa900fba0e2a1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.1_958ae79a2a7e68a67515b8aee055ff97613a86ad\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\Feb10\mSwipe\unspecified\jars\libs\simplyprintapi-android-1.3.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_e4905842cdb21b006db8c839af1e74c29ece36f4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Priyabrat\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\19.0\6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9\guava-19.0.jar"
+        jar="C:\Users\richaa\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\19.0\6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9\guava-19.0.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
         sha1="6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\guava-19.0_4ebc7080b99f217166fcacd9caf1c3328fd216d2\classes.dex" />
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\guava-19.0_5808de4355b3767dc304306b2ca2990cf724c2f7\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\classes.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.1_f8ea78519c3790ce7192643fa84d1bfecc6531a6\classes.dex" />
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_8583249b77784bf8c6e9f3177f6091b8613afc32\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\FNBApp\Feb10\app\build\intermediates\exploded-aar\com.jaredrummler\material-spinner\1.1.0\jars\classes.jar"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\wepfnb_modified\printers\unspecified\jars\libs\jcc-bate-0.7.3.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="60182b96dcbd95dc33dd734bc81505d2b5ddc70e">
-        <dex dex="D:\FNBApp\Feb10\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jaredrummler-material-spinner-1.1.0_6ad922b1f4f13cb765c1f9c5d1b167d1f8c3a1f3\classes.dex" />
+        sha1="f03b2771ee9e00f44746d2532efb188ad31fff33">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\8\jcc-bate-0.7.3_25dccafdc514d3d0e8cb097ffd51d6880d3b81f9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\richaa\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.1\support-annotations-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.1_d466f837d51a80a33999ecb0fa48dbbd1099ac22\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\wepfnb_modified\printers\unspecified\jars\libs\gprinter-2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_3834236578eebaa66dbfab2c312cdea75c928fab\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.1_bee941eecaf74b640e1d7cf1166ad7beea4afdb7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.weiwangcn.betterspinner\library\1.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="b8399b3ef86b9fe9fbfb2171bb6560ff3c49d468">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.weiwangcn.betterspinner-library-1.1.0_bb0403a409c3276256162cd7450c5a2f71187406\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_9b033db9f6b8682436d1a27a433f3b126956acc7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_299a6f19e15af6428294bb47fafd2fc983526d42\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_707e56dba0487b775857ffab1d787b6dfa14c59d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.1_694fa1d5797d746db16cf7914dce75053428e90d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.razorpay\checkout\1.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="4843c04db16f6ddd08cd74ae7e887556f7d53f95">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.razorpay-checkout-1.2.0_d07ac069a54cc249498d6c1fe50967b07c549fbc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_49a3700d0e3be89cc7a03d7df3928c93dbacb355\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\wepfnb_modified\mSwipe\unspecified\jars\libs\simplyprintapi-android-1.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_abcbbb933ee8e10bc50de5ee666cdb30eaeea523\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_b04921e009500a499610bce8e7c42b7c7ea0def3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\libs\poi-3.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\2\poi-3.8_8cce3dcc68316519d9a883f04c986004a1951915\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_6e7a72a5ec042b917e4f4928c602f7ad3f05f2e5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\wepfnb_modified\printers\unspecified\jars\libs\effica_lib.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="f08f74e75f377d011d8a34e1522ca9fa41376558">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_462a1a0c21b933a28072bdfb60ed53c164b14713\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.1_47de1e6b4ef6c0db79f44142494020f4d82a4340\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="7799e5a491828a58053d96be44712c8fdd426439">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_ecd8a86345e3db1176ab3f59c3c7c90ee3a3c2a5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\richaa\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_80d67fc57aaa8bd568c113419594a953bac12825\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_79b1c4762bd577104ba6535d37b2f9c6521f44e0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-v13\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="e3c7e8ff9f476d0d93ee7b046fbe8037a2b822c0">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v13-24.2.1_6d0c04ffbd37dcb3b76960290f773675e2184187\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="a98504d39d5e6cb3f7100e5b6897af9892950ae5">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_e6d68ae01029894a3f9537bc799d3e91eb74dbc1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.1_43ea2d42eb54575779bb645ce894dbdb1ccfbc55\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\wepfnb_modified\printers\unspecified\jars\libs\apachestrlib.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="2a6e72794eeecaf83ed38b185d735a3d24b36669">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachestrlib_52d2ea8e20dbac57d6a4ed0952d59ec8370e3d96\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-v13\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="c07fb99b729345908dda75fadbbf882e300631ff">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_a3441e4fabf9cb92a169a01f1d02ee67518a2d88\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_f04ae55c7222d7620edc6ee9c5e3420136738d4a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\wepfnb_modified\mSwipe\unspecified\jars\libs\MswipeWisepadDRDSDKAPIVer2.5.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="74a20528ad1e765e90f00fd30446521eb9e67185">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\8\MswipeWisepadDRDSDKAPIVer2.5.4_545e5f4356ffbaa429fb91607481b2954b4dd167\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\exploded-aar\wepfnb_modified\printers\unspecified\jars\libs\commons-lang-2.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="7b864bf2ded4300446c9316d5cfff88effcbbfd2">
+        <dex dex="E:\FnbProjects\inward_fragment_latest\wepfnb_modified\app\build\intermediates\transforms\dex\debug\folders\1000\8\commons-lang-2.6_da8f1c3dc8916631552232f6dacdc3735884efd8\classes.dex" />
     </item>
 
 </items>

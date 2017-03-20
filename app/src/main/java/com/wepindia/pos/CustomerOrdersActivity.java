@@ -14,14 +14,12 @@
  ****************************************************************************/
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
@@ -30,9 +28,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnKeyListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -489,7 +485,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 	private void LaunchBillScreen(){
 		//SharedPreferences spUser = getSharedPreferences(FILE_SHARED_PREFERENCE, 0);
-		Intent intentBillScreen = new Intent(myContext,HomeDeliveryBillingActivity.class);
+		Intent intentBillScreen = new Intent(myContext,BillingHomeDeliveryActivity.class);
 		intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
 		intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
 		intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -588,7 +584,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                     .setNeutralButton("Finish", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                            Intent intentBillScreen = new Intent(myContext, BillingHomeDeliveryActivity.class);
                             intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
                             intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
                             intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -607,7 +603,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                     .setPositiveButton("Print", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                            Intent intentBillScreen = new Intent(myContext, BillingHomeDeliveryActivity.class);
                             intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
                             intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
                             intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -626,7 +622,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                     .show();
         }else
         {
-            Intent intentBillScreen = new Intent(myContext,HomeDeliveryBillingActivity.class);
+            Intent intentBillScreen = new Intent(myContext,BillingHomeDeliveryActivity.class);
             intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
             intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -654,7 +650,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                             .setNeutralButton("Finish", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                                    Intent intentBillScreen = new Intent(myContext, BillingHomeDeliveryActivity.class);
                                     intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
                                     intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
                                     intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -673,7 +669,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                             .setPositiveButton("Print", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                                    Intent intentBillScreen = new Intent(myContext, BillingHomeDeliveryActivity.class);
                                     intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
                                     intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
                                     intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -691,7 +687,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                             })
                             .show();
                 }else {
-                    Intent intentBillScreen = new Intent(myContext, HomeDeliveryBillingActivity.class);
+                    Intent intentBillScreen = new Intent(myContext, BillingHomeDeliveryActivity.class);
                     intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
                     intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
                     intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -797,7 +793,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                 //ResetCustomerOrder();
                 //LoadOrderToList();
                 //LaunchBillScreen();
-                Intent intentBillScreen = new Intent(myContext,HomeDeliveryBillingActivity.class);
+                Intent intentBillScreen = new Intent(myContext,BillingHomeDeliveryActivity.class);
                 intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
                 intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
                 intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -1037,7 +1033,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
         }
 
-        Intent intentBillScreen = new Intent(myContext,HomeDeliveryBillingActivity.class);
+        Intent intentBillScreen = new Intent(myContext,BillingHomeDeliveryActivity.class);
         intentBillScreen.putExtra("BILLING_MODE", BILLING_MODE);
         intentBillScreen.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
         intentBillScreen.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));

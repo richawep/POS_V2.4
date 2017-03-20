@@ -79,11 +79,11 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 
-public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
+public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
-    private static final String TAG = HomeDeliveryBillingActivity.class.getSimpleName();
+    private static final String TAG = BillingHomeDeliveryActivity.class.getSimpleName();
     Context myContext;
-    DatabaseHandler dbBillScreen = new DatabaseHandler(HomeDeliveryBillingActivity.this);
+    DatabaseHandler dbBillScreen = new DatabaseHandler(BillingHomeDeliveryActivity.this);
     private DatabaseHandler db;
     MessageDialog MsgBox;
     EditText txtSearchItemBarcode,  tvWaiterNumber, tvTableNumber, tvTableSplitNo, tvBillNumber;
@@ -179,7 +179,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
             strMakeOrder = getIntent().getStringExtra("MAKE_ORDER");
             d = new Date();
             CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-            com.wep.common.app.ActionBarUtils.setupToolbar(HomeDeliveryBillingActivity.this, toolbar, getSupportActionBar(), "", strUserName, " Date:" + s.toString());
+            com.wep.common.app.ActionBarUtils.setupToolbar(BillingHomeDeliveryActivity.this, toolbar, getSupportActionBar(), "", strUserName, " Date:" + s.toString());
             IntializeViewVariables();
 
 
@@ -434,7 +434,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     try {
-                    /*Toast.makeText(HomeDeliveryBillingActivity.this, aTViewSearchItem.getText().toString(),
+                    /*Toast.makeText(BillingHomeDeliveryActivity.this, aTViewSearchItem.getText().toString(),
                             Toast.LENGTH_SHORT).show();*/
                         if ((aTViewSearchItem.getText().toString().equals(""))) {
                             MsgBox.Show("Warning", "Enter Item Name");
@@ -460,7 +460,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
 
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     try {
-                    /*Toast.makeText(HomeDeliveryBillingActivity.this, aTViewSearchMenuCode.getText().toString(),
+                    /*Toast.makeText(BillingHomeDeliveryActivity.this, aTViewSearchMenuCode.getText().toString(),
                             Toast.LENGTH_SHORT).show();*/
                         if ((aTViewSearchMenuCode.getText().toString().equals(""))) {
                             MsgBox.Show("Warning", "Enter Menu Code");
@@ -4563,7 +4563,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
             intent.putExtra("printType", "KOT");
             intent.putExtra("printData", item);
             startActivity(intent);*/
-                    String prf = Preferences.getSharedPreferencesForPrint(HomeDeliveryBillingActivity.this).getString("kot", "--Select--");
+                    String prf = Preferences.getSharedPreferencesForPrint(BillingHomeDeliveryActivity.this).getString("kot", "--Select--");
                     Intent intent = null;
                     if (prf.equalsIgnoreCase("Sohamsa")) {
                     /*intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);
@@ -4587,7 +4587,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
                         Toast.makeText(myContext, "Printer not configured", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(HomeDeliveryBillingActivity.this, "Please enter bill,waiter,table number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BillingHomeDeliveryActivity.this, "Please enter bill,waiter,table number", Toast.LENGTH_SHORT).show();
                 }
             }
         } else {
@@ -4701,7 +4701,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
                         item.setStrBillingModeName(HomeDeliveryCaption);
                     else if(jBillingMode ==3)
                         item.setStrBillingModeName(TakeAwayCaption);
-                    String prf = Preferences.getSharedPreferencesForPrint(HomeDeliveryBillingActivity.this).getString("bill", "--Select--");
+                    String prf = Preferences.getSharedPreferencesForPrint(BillingHomeDeliveryActivity.this).getString("bill", "--Select--");
                 /*Intent intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);*/
                     Intent intent = null;
                     if (prf.equalsIgnoreCase("Sohamsa")) {
@@ -4766,7 +4766,7 @@ public class HomeDeliveryBillingActivity extends WepPrinterBaseActivity {
                         Toast.makeText(myContext, "Printer not configured", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(HomeDeliveryBillingActivity.this, "Please Enter Bill, Waiter, Table Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BillingHomeDeliveryActivity.this, "Please Enter Bill, Waiter, Table Number", Toast.LENGTH_SHORT).show();
                 }
             }
         } else {

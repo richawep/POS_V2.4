@@ -148,7 +148,7 @@
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".HomeDeliveryBillingActivity"
+            android:name=".BillingHomeDeliveryActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
             android:theme="@style/AppThemeWep"

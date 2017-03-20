@@ -453,7 +453,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         {
             // Launch Billing screen activity in PickUp billing mode
 //			Intent intentPickUp = new Intent(myContext,CustomerOrdersActivity.class);
-            Intent intentPickUp = new Intent(myContext, HomeDeliveryBillingActivity.class);
+            Intent intentPickUp = new Intent(myContext, BillingHomeDeliveryActivity.class);
             intentPickUp.putExtra("BILLING_MODE", PICKUP);
             //intentPickUp.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             //intentPickUp.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
@@ -463,7 +463,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         } else if (v.getContentDescription().toString().equalsIgnoreCase("Delivery")) {
             // Launch Billing screen activity in Delivery billing mode
 
-            Intent intentDelivery = new Intent(myContext, HomeDeliveryBillingActivity.class);
+            Intent intentDelivery = new Intent(myContext, BillingHomeDeliveryActivity.class);
             intentDelivery.putExtra("BILLING_MODE", DELIVERY);
             //intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             //intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
