@@ -39,6 +39,7 @@ import android.widget.Toast;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.PaymentReceipt;
 import com.wep.common.app.WepBaseActivity;
+import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -74,7 +75,7 @@ public class PaymentReceiptActivity extends WepBaseActivity{
 	String strPaymentReceiptDate = "", strUserName = "";
 	MessageDialog MsgBox;
 	private Toolbar toolbar;
-		
+	private WepButton btnPrintPaymentReceipt, btnSavePaymentReceipt,btnClearPaymentReceipt,btnClosePaymentReceipt;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +104,29 @@ public class PaymentReceiptActivity extends WepBaseActivity{
         txtReason = (EditText)findViewById(R.id.etPaymentReceiptReason);
         txtAmount = (EditText)findViewById(R.id.etPaymentReceiptAmount);
         etInputValidate.ValidateDecimalInput(txtAmount);
-        
+
+		btnSavePaymentReceipt = (WepButton)findViewById(R.id.btnSavePaymentReceipt);
+		btnClearPaymentReceipt = (WepButton)findViewById(R.id.btnClearPaymentReceipt);
+		btnClosePaymentReceipt = (WepButton)findViewById(R.id.btnClosePaymentReceipt);
+
+		btnSavePaymentReceipt.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SavePaymentReceipt(v);
+			}
+		});
+		btnClearPaymentReceipt.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ClearPaymentReceipt(v);
+			}
+		});
+		btnClosePaymentReceipt.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ClosePaymentReceipt(v);
+			}
+		});
         ResetPaymentReceipt();
         
         try{

@@ -27,6 +27,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -272,8 +273,11 @@ public class CustomerDetailActivity extends WepBaseActivity {
                     rowCustomer.addView(tvAddress);
 
                     tvCreditAmount = new TextView(myContext);
-                    tvCreditAmount.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CreditAmount")));
-                    tvCreditAmount.setGravity(1);
+                    //tvCreditAmount.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CreditAmount")));
+                    double amt = crsrCustomer.getDouble(crsrCustomer.getColumnIndex("CreditAmount"));
+                    tvCreditAmount.setText(String.format("%.2f",amt));
+                    tvCreditAmount.setGravity(Gravity.END);
+                    tvCreditAmount.setPadding(0,0,10,0);
                     rowCustomer.addView(tvCreditAmount);
 
                     // Delete
@@ -389,8 +393,10 @@ public class CustomerDetailActivity extends WepBaseActivity {
                     rowCustomer.addView(tvAddress);
 
                     tvCreditAmount = new TextView(myContext);
-                    tvCreditAmount.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CreditAmount")));
-                    tvCreditAmount.setGravity(1);
+                    double amt = crsrCustomer.getDouble(crsrCustomer.getColumnIndex("CreditAmount"));
+                    tvCreditAmount.setText(String.format("%.2f",amt));
+                    tvCreditAmount.setGravity(Gravity.END);
+                    tvCreditAmount.setPadding(0,0,10,0);
                     rowCustomer.addView(tvCreditAmount);
 
                     // Delete
@@ -520,13 +526,11 @@ public class CustomerDetailActivity extends WepBaseActivity {
                     rowCustomer.addView(tvAddress);
 
                     tvCreditAmount = new TextView(myContext);
-                    String amount_str = crsrCustomer.getString(crsrCustomer.getColumnIndex("CreditAmount"));
-                    //BigDecimal bd = new BigDecimal(amount_str);
-                    //long amt_d =Long.parseLong(amount_str);
-                    double dd = Double.parseDouble(amount_str);
-                    //String dd1 = doubleconverter(dd);
-                    tvCreditAmount.setText(String.valueOf(dd));
-                    tvCreditAmount.setGravity(1);
+
+                    double amt = crsrCustomer.getDouble(crsrCustomer.getColumnIndex("CreditAmount"));
+                    tvCreditAmount.setText(String.format("%.2f",amt));
+                    tvCreditAmount.setGravity(Gravity.END);
+                    tvCreditAmount.setPadding(0,0,10,0);
                     rowCustomer.addView(tvCreditAmount);
 
 					// Delete
