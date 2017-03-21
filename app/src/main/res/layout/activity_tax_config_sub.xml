@@ -20,7 +20,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.25">
+            android:layout_weight="0.168">
 
             <LinearLayout
                 android:id="@+id/lnrSubTaxConfig"
@@ -258,7 +258,7 @@
                         android:background="@drawable/background_btn"
                         android:textColor="@color/white"
                         android:onClick="EditSubTaxConfig"
-                        android:text="Save" />
+                        android:text="Update" />
 
                     <Button
                         android:id="@+id/btnClearSubTax"

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.models.User;
+import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.UsersListAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
@@ -48,6 +49,7 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
     String strUserName = "";
     MessageDialog MsgBox;
     private Toolbar toolbar;
+    private WepButton btnSubmitUser,btnDeleteUser,btnClearUser, btnCloseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,28 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
         CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
         //tvTitleDate.setText("Date : " + s);
 
+
+        com.wep.common.app.ActionBarUtils.setupToolbar(UserManagementActivity.this,toolbar,getSupportActionBar(),"Waiter/Rider",strUserName," Date:"+s.toString());
+
+        try {
+
+            getDb().CreateDatabase();
+            getDb().OpenDatabase();
+            listRoles = getDb().getAllRoles();
+            InitializeViewVariables();
+            spinnerRoleAdapter = new ArrayAdapter(UserManagementActivity.this, android.R.layout.simple_spinner_item, listRoles);
+            spinnerRoleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerRole.setAdapter(spinnerRoleAdapter);
+
+            updateUsersList();
+        } catch (Exception ex) {
+            MsgBox.Show("Error", ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    private void InitializeViewVariables()
+    {
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextMobile = (EditText) findViewById(R.id.editTextMobile);
         editTextDesignation = (EditText) findViewById(R.id.editTextDesignation);
@@ -89,27 +113,39 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
                 listItemClickEvent(usersListAdapter.getItems(position));
             }
         });
+        btnSubmitUser = (WepButton)findViewById(R.id.btnSubmitUser);
+        btnDeleteUser = (WepButton)findViewById(R.id.btnDeleteUser);
+        btnClearUser = (WepButton)findViewById(R.id.btnClearUser);
+        btnCloseUser = (WepButton)findViewById(R.id.btnCloseUser);
+
+        btnSubmitUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SubmitFormData(v);
+            }
+        });
+        btnDeleteUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteItem(v);
+            }
+        });
+        btnClearUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearFormData(v);
+            }
+        });
+        btnCloseUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Close(v);
+            }
+        });
         //imageViewHome.setOnClickListener(this);
         //imageViewBack.setOnClickListener(this);
         textViewAttachment.setOnClickListener(this);
-        com.wep.common.app.ActionBarUtils.setupToolbar(UserManagementActivity.this,toolbar,getSupportActionBar(),"Waiter/Rider",strUserName," Date:"+s.toString());
-
-        try {
-
-            getDb().CreateDatabase();
-            getDb().OpenDatabase();
-            listRoles = getDb().getAllRoles();
-
-            spinnerRoleAdapter = new ArrayAdapter(UserManagementActivity.this, android.R.layout.simple_spinner_item, listRoles);
-            spinnerRoleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerRole.setAdapter(spinnerRoleAdapter);
-
-            updateUsersList();
-        } catch (Exception ex) {
-            MsgBox.Show("Error", ex.getMessage());
-        }
     }
-
     public DatabaseHandler getDb(){
         if(dbHelper==null){
             dbHelper = new DatabaseHandler(this);

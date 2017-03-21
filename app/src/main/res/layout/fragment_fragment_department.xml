@@ -30,7 +30,6 @@
             android:hint="Department Name"
             android:inputType="text" />
     </TableRow>
-
     <ScrollView
         android:id="@+id/scrlDepartmentTable"
         android:layout_width="wrap_content"

@@ -321,7 +321,6 @@
                                 android:layout_gravity="center"
                                 android:background="@drawable/background_btn"
                                 android:gravity="center"
-                                android:onClick="AddSupplier"
                                 android:text="Add Supplier"
                                 android:textColor="@android:color/white"
                                 android:theme="@style/WepButtonWithMarigin" />

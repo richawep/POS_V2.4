@@ -270,7 +270,7 @@
                                     android:layout_marginLeft="15dp"
                                     android:layout_weight="1"
                                     android:gravity="left|center_vertical"
-                                    android:text="Item Name"
+                                    android:text="Item Name*"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <EditText
@@ -593,7 +593,7 @@
                                     android:layout_marginLeft="15dp"
                                     android:layout_weight="1.4"
                                     android:gravity="left|center_vertical"
-                                    android:text="UoM"
+                                    android:text="UoM*"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <Spinner

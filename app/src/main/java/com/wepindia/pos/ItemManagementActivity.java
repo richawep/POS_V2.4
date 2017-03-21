@@ -82,7 +82,8 @@ public class ItemManagementActivity extends WepBaseActivity {
     Spinner spnrDepartment, spnrCategory, spnrKitchen, spnrSalesTax, spnrAdditionalTax, spnrOptionalTax1, spnrOptionalTax2, spnrDiscount;
     CheckBox chkPriceChange, chkDiscountEnable, chkBillWithStock;
     RadioButton rbForwardTax, rbReverseTax;
-    WepButton btnAdd, btnEdit, btnUploadExcel, btnSaveExcel;
+    WepButton btnAdd, btnEdit, btnUploadExcel, btnSaveExcel,btnClearItem,btnCloseItem,btnImageBrowse;
+
     ImageView imgItemImage;
     TableLayout tblItems;
     TextView tvDineIn1Caption, tvDineIn2Caption, tvDineIn3Caption, tvFileName;
@@ -184,8 +185,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
             });
             // Upload Excel data to Database
-            btnUploadExcel = (WepButton) findViewById(R.id.buttonUploadExcel);
-            btnSaveExcel = (WepButton) findViewById(R.id.buttonSaveExcel);
+
 
             btnUploadExcel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -499,6 +499,9 @@ public class ItemManagementActivity extends WepBaseActivity {
         tvDineIn2Caption = (TextView) findViewById(R.id.tvDineInPrice2);
         tvDineIn3Caption = (TextView) findViewById(R.id.tvDineInPrice3);
 
+        btnUploadExcel = (WepButton) findViewById(R.id.buttonUploadExcel);
+        btnSaveExcel = (WepButton) findViewById(R.id.buttonSaveExcel);
+
         spnrDepartment = (Spinner) findViewById(R.id.spnrItemDeptCode);
         spnrDepartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -562,6 +565,40 @@ public class ItemManagementActivity extends WepBaseActivity {
 
         btnAdd = (WepButton) findViewById(R.id.btnAddItem);
         btnEdit = (WepButton) findViewById(R.id.btnEditItem);
+        btnClearItem = (WepButton) findViewById(R.id.btnClearItem);
+        btnCloseItem = (WepButton) findViewById(R.id.btnCloseItem);
+        btnImageBrowse = (WepButton) findViewById(R.id.btnImageBrowse);
+
+        btnImageBrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Browse(v);
+            }
+        });
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddItem(v);
+            }
+        });
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditItem(v);
+            }
+        });
+        btnClearItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClearItem(v);
+            }
+        });
+        btnCloseItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseItem(v);
+            }
+        });
 
         tblItems = (TableLayout) findViewById(R.id.tblItem);
 
@@ -2360,4 +2397,6 @@ public class ItemManagementActivity extends WepBaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

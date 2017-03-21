@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:ems="5"
             android:enabled="false"
-            android:hint="Coupon Barcode"
+
             android:inputType="text" />
     </TableRow>
 

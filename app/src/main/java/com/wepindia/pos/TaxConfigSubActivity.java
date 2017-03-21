@@ -223,7 +223,7 @@ public class TaxConfigSubActivity extends WepBaseActivity {
                             btnAddSubTax.setClickable(false);
                             btnEditSubTax.setClickable(true);
                             btnAddSubTax.setTextColor(Color.GRAY);
-                            btnEditSubTax.setTextColor(Color.BLACK);
+                            btnEditSubTax.setTextColor(Color.WHITE);
                         }
                     }
                 });
@@ -332,7 +332,7 @@ public class TaxConfigSubActivity extends WepBaseActivity {
         txtSubTaxPercent.setText("");
         btnAddSubTax.setClickable(true);
         btnEditSubTax.setClickable(false);
-        btnAddSubTax.setTextColor(Color.BLACK);
+        btnAddSubTax.setTextColor(Color.WHITE);
         btnEditSubTax.setTextColor(Color.GRAY);
     }
 

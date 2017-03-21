@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
 
     // View handling variables
     EditText txtUserId, txtPassword;
-    Button btnDateDisplay, btnMonthDisplay, btnYearDisplay;
+    Button btnDateDisplay, btnMonthDisplay, btnYearDisplay, btnLogin, btnClose;
 
     // Class Variables
     private static final int HOME_RESULT = 1;
@@ -76,6 +76,20 @@ public class LoginActivity extends Activity {
             btnDateDisplay = (Button) findViewById(R.id.btnDateDisplay);
             btnMonthDisplay = (Button) findViewById(R.id.btnMonthDisplay);
             btnYearDisplay = (Button) findViewById(R.id.btnYearDisplay);
+            btnLogin = (Button) findViewById(R.id.btnLogin);
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onLogin(v);
+                }
+            });
+            btnClose = (Button) findViewById(R.id.btnClose);
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Close(v);
+                }
+            });
             appCompatCheckBox = (AppCompatCheckBox) findViewById(R.id.checkboxRememberMe);
             btnDateDisplay.setText(String.valueOf(calDate.get(Calendar.DAY_OF_MONTH)));
             btnMonthDisplay.setText(calDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US));
@@ -83,6 +97,8 @@ public class LoginActivity extends Activity {
 
             dbLogin.CreateDatabase();
             dbLogin.OpenDatabase();
+
+
 
         } catch (Exception e) {
             // TODO Auto-generated catch block

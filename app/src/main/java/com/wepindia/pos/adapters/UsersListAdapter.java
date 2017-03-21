@@ -78,6 +78,7 @@ public class UsersListAdapter extends BaseAdapter {
         }
         User user = usersList.get(i);
         viewHolder.textViewId.setText(user.getId()+"");
+        viewHolder.textViewId.setPadding(3,0,0,0);
         viewHolder.textViewName.setText(user.getUserName()+"");
         viewHolder.textViewRole.setText(handler.getRoleName(user.getUserRole()+""));
         return convertView;

@@ -61,6 +61,7 @@
             android:background="@android:drawable/edit_text"
             android:ems="10"
             android:hint="User Id"
+            android:text="admin"
             android:imeOptions="flagNoExtractUi"
             android:inputType="text"
             >

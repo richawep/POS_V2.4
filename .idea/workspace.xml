@@ -23,7 +23,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/UsersListAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/UsersListAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentOtherTaxes.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentOtherTaxes.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
@@ -95,8 +94,8 @@
       <file leaf-file-name="FragmentSettingsPrint.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="261" column="22" selection-start-line="261" selection-start-column="22" selection-end-line="261" selection-end-column="22" />
+            <state relative-caret-position="265">
+              <caret line="264" column="39" selection-start-line="264" selection-start-column="39" selection-end-line="264" selection-end-column="39" />
               <folding>
                 <element signature="e#5208#5361#0" expanded="true" />
                 <element signature="e#5360#5361#0" expanded="true" />
@@ -6133,7 +6132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490091257344</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="correcting the reset functionality uder Settings-&gt;Print-&gt;print receipt.&#10;earlier it was resetting Print report instead of print receipt">
+      <created>1490091649134</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1490091649134</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6197,7 +6203,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fdvb rfvb" />
     <MESSAGE value="ftjsr" />
     <MESSAGE value="null pinter excepton handling&#10;" />
     <MESSAGE value="KOT no reset to 1 on dayend(auto/manual both)" />
@@ -6222,7 +6227,8 @@
     <MESSAGE value="1.modifying inward stock report for items not present on startdate but present on endDate" />
     <MESSAGE value="optimising inward item master opening time" />
     <MESSAGE value="renaming HomeDeliveryBilling Class" />
-    <option name="LAST_COMMIT_MESSAGE" value="renaming HomeDeliveryBilling Class" />
+    <MESSAGE value="correcting the reset functionality uder Settings-&gt;Print-&gt;print receipt.&#10;earlier it was resetting Print report instead of print receipt" />
+    <option name="LAST_COMMIT_MESSAGE" value="correcting the reset functionality uder Settings-&gt;Print-&gt;print receipt.&#10;earlier it was resetting Print report instead of print receipt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6852,8 +6858,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="261" column="22" selection-start-line="261" selection-start-column="22" selection-end-line="261" selection-end-column="22" />
+        <state relative-caret-position="265">
+          <caret line="264" column="39" selection-start-line="264" selection-start-column="39" selection-end-line="264" selection-end-column="39" />
           <folding>
             <element signature="e#5208#5361#0" expanded="true" />
             <element signature="e#5360#5361#0" expanded="true" />

@@ -190,6 +190,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
     private void connection() {
         conn = new HeyDeyBaseActivity.PrinterServiceConnection();
         Intent intent = new Intent("com.gprinter.aidl.GpPrintService");
+        intent.setPackage(this.getPackageName());
         bindService(intent, conn, Context.BIND_AUTO_CREATE); // bindService
     }
 

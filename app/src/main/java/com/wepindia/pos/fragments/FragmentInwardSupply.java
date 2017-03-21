@@ -70,9 +70,9 @@ public class FragmentInwardSupply extends Fragment {
     String businessDate="";
 
     WepButton btnAdd, btnEdit, btnUploadExcel, btnSaveExcel, btnCloseItem, btnClearItem;
-    ImageView imgItemImage;
+    //ImageView imgItemImage;
     TableLayout tblItems;
-    TextView tvFileName;
+    //TextView tvFileName;
 
     Spinner spnrUOM,spnr_supplytype;
     EditText et_inw_supplierAddress,et_inw_ItemBarcode;
@@ -154,6 +154,7 @@ public class FragmentInwardSupply extends Fragment {
                     return false;
                 }
             });
+
 
             autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -456,7 +457,7 @@ public class FragmentInwardSupply extends Fragment {
             count =1;
             DisplayItems(-1);
 
-            tvFileName.setPaintFlags(tvFileName.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            //tvFileName.setPaintFlags(tvFileName.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
            /* spnrSalesTax.setSelection(0);
             spnrAdditionalTax.setSelection(1);*/
@@ -471,16 +472,17 @@ public class FragmentInwardSupply extends Fragment {
         }
         finally {
             //dbInwardItem.CloseDatabase();
+            return view;
         }
-        return view;
+
     }
 
     private void InitializeViewVariables(View view) {
         EditTextInputHandler etInputValidate = new EditTextInputHandler();
-        tvFileName = (TextView) view.findViewById(R.id.tvFileName);
+        //tvFileName = (TextView) view.findViewById(R.id.tvFileName);
         tblItems = (TableLayout) view.findViewById(R.id.tblItem);
-        imgItemImage = (ImageView) view.findViewById(R.id.imgItemImage);
-        imgItemImage.setImageResource(R.drawable.img_noimage);
+//        imgItemImage = (ImageView) view.findViewById(R.id.imgItemImage);
+//        imgItemImage.setImageResource(R.drawable.img_noimage);
         spnrUOM= (Spinner)view.findViewById(R.id.spnrUOM);
         spnr_supplytype = (Spinner)view.findViewById(R.id.spnr_supplytype);
         et_inw_rate = (EditText) view.findViewById(R.id.et_inw_rate);
@@ -504,6 +506,7 @@ public class FragmentInwardSupply extends Fragment {
         btnAddSupplier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Test", "onClickListener is getting started");
                 AddSupplier(v);
             }
         });
@@ -771,13 +774,13 @@ public class FragmentInwardSupply extends Fragment {
                                 et_Inw_ServiceTax.setText(OtherTax.getText());
 
 
-                                imgItemImage.setImageURI(null);
-                                if (!strImageUri.equalsIgnoreCase("")) { // &&
-                                    // strImageUri.contains("\\")){
-                                    imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
-                                } else {
-                                    imgItemImage.setImageResource(R.drawable.img_noimage);
-                                }
+//                                imgItemImage.setImageURI(null);
+//                                if (!strImageUri.equalsIgnoreCase("")) { // &&
+//                                    // strImageUri.contains("\\")){
+//                                    imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
+//                                } else {
+//                                    imgItemImage.setImageResource(R.drawable.img_noimage);
+//                                }
                                 btnAdd.setEnabled(false);
                                 btnEdit.setEnabled(true);
 
@@ -1025,13 +1028,13 @@ public class FragmentInwardSupply extends Fragment {
                             et_Inw_ServiceTax.setText(OtherTax.getText());
 
 
-                            imgItemImage.setImageURI(null);
-                            if (!strImageUri.equalsIgnoreCase("")) { // &&
-                                // strImageUri.contains("\\")){
-                                imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
-                            } else {
-                                imgItemImage.setImageResource(R.drawable.img_noimage);
-                            }
+//                            imgItemImage.setImageURI(null);
+//                            if (!strImageUri.equalsIgnoreCase("")) { // &&
+//                                // strImageUri.contains("\\")){
+//                                imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
+//                            } else {
+//                                imgItemImage.setImageResource(R.drawable.img_noimage);
+//                            }
                             btnAdd.setEnabled(false);
                             btnEdit.setEnabled(true);
 
@@ -1274,13 +1277,13 @@ public class FragmentInwardSupply extends Fragment {
                             et_Inw_ServiceTax.setText(OtherTax.getText());
 
 
-                            imgItemImage.setImageURI(null);
-                            if (!strImageUri.equalsIgnoreCase("")) { // &&
-                                // strImageUri.contains("\\")){
-                                imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
-                            } else {
-                                imgItemImage.setImageResource(R.drawable.img_noimage);
-                            }
+//                            imgItemImage.setImageURI(null);
+//                            if (!strImageUri.equalsIgnoreCase("")) { // &&
+//                                // strImageUri.contains("\\")){
+//                                imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
+//                            } else {
+//                                imgItemImage.setImageResource(R.drawable.img_noimage);
+//                            }
                             btnAdd.setEnabled(false);
                             btnEdit.setEnabled(true);
 
@@ -1812,7 +1815,7 @@ public class FragmentInwardSupply extends Fragment {
         strImageUri = "";
         AMU = "";
         spnrUOM.setSelection(0);
-        tvFileName.setText("FileName");
+        //tvFileName.setText("FileName");
         et_inw_ItemBarcode.setText("");
         autocomplete_inw_ItemName.setText("");
         et_inw_rate.setText("");
@@ -2091,14 +2094,14 @@ public class FragmentInwardSupply extends Fragment {
                 Log.d("FilePicker Result", "Path + FileName:" + strImageUri);
                 // Toast.makeText(myContext, "Image Path:" + strImageUri,
                 // Toast.LENGTH_LONG).show();
-                if(!strImageUri.equalsIgnoreCase("")) {
-                    imgItemImage.setImageURI(null);
-                    imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
-                }else{
-                    imgItemImage.setImageResource(R.drawable.img_noimage);
-                }
+//                if(!strImageUri.equalsIgnoreCase("")) {
+//                    imgItemImage.setImageURI(null);
+//                    imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
+//                }else{
+//                    imgItemImage.setImageResource(R.drawable.img_noimage);
+//                }
                 strUploadFilepath = data.getStringExtra(UploadFilePickerActivity.EXTRA_FILE_PATH);
-                tvFileName.setText(strUploadFilepath.substring(strUploadFilepath.lastIndexOf("/")+1));
+               // tvFileName.setText(strUploadFilepath.substring(strUploadFilepath.lastIndexOf("/")+1));
             }
         }
         super.onActivityResult( requestCode,  resultCode,  data);

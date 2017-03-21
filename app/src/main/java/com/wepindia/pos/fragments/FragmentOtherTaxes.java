@@ -240,7 +240,7 @@ public class FragmentOtherTaxes extends Fragment {
                             btnAddModifier.setClickable(false);
                             btnEditModifier.setClickable(true);
                             btnAddModifier.setTextColor(Color.GRAY);
-                            btnEditModifier.setTextColor(Color.BLACK);
+                            btnEditModifier.setTextColor(Color.WHITE);
                         }
                     }
                 });
@@ -356,7 +356,7 @@ public class FragmentOtherTaxes extends Fragment {
         loadSpinnerData();
         btnAddModifier.setClickable(true);
         btnEditModifier.setClickable(false);
-        btnAddModifier.setTextColor(Color.BLACK);
+        btnAddModifier.setTextColor(Color.WHITE);
         btnEditModifier.setTextColor(Color.GRAY);
     }
 

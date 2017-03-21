@@ -66,7 +66,7 @@ public class StockActivity extends WepBaseActivity {
     TextView tvExistingStock;
 
     EditText txtNewStock, txtRate1, txtRate2, txtRate3;
-    WepButton btnUpdate;
+    WepButton btnUpdate,btnClearStock,btnCloseStock ;
 
     private ItemsAdapter itemsAdapter;
     private DepartmentAdapter departmentAdapter;
@@ -393,7 +393,28 @@ public class StockActivity extends WepBaseActivity {
         txtRate2 = (EditText) findViewById(R.id.etItemRate2);
         txtRate3 = (EditText) findViewById(R.id.etItemRate3);
         btnUpdate = (WepButton) findViewById(R.id.btnUpdateStock);
+        btnClearStock = (WepButton) findViewById(R.id.btnClearStock);
+        btnCloseStock = (WepButton) findViewById(R.id.btnCloseStock);
 
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateStock(v);
+            }
+        });
+
+        btnClearStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClearStock(v);
+            }
+        });
+        btnCloseStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseStock(v);
+            }
+        });
         gridViewItems = (GridView) findViewById(R.id.listViewFilter3);
         gridViewItems.setOnItemClickListener(itemsClick);
         listViewDept = (ListView) findViewById(R.id.listViewFilter1);
