@@ -67,7 +67,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
     AutoCompleteTextView autocompletetv_suppliername, autocompletetv_invoiceno,autocompletetv_itemlist, autocompletetv_purchase_order;
     TableLayout tbl_inward_item_details;
     CheckBox chk_inward_additional_charge;
-    com.wep.common.app.views.WepButton btnEditPO,btnGeneratePO,btnAddSupplier;
+    com.wep.common.app.views.WepButton btnEditPO,btnGeneratePO,btnAddSupplier, btnClearItem, btnCloseItem;
 
 
     ArrayList<String> labelsSupplierName;
@@ -787,9 +787,41 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
         btnEditPO = (com.wep.common.app.views.WepButton) findViewById (R.id.btnEditPO);
         btnGeneratePO = (com.wep.common.app.views.WepButton) findViewById (R.id.btnGeneratePO);
+        btnClearItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnClearItem);
+        btnCloseItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnCloseItem);
         btnAddSupplier = (com.wep.common.app.views.WepButton) findViewById (R.id.btnAddSupplier);
+        btnAddSupplier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddSupplier(v);
+            }
+        });
+        btnGeneratePO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeneratePO(v);
+            }
+        });
 
+        btnClearItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Clear_inward(v);
+            }
+        });
 
+        btnCloseItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Close_inward(v);
+            }
+        });
+        btnEditPO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditPO(v);
+            }
+        });
         chk_inward_additional_charge = (CheckBox) findViewById(R.id.chk_inward_additional_charge);
         et_inward_additionalchargeamount = (EditText) findViewById(R.id.et_inward_additionalchargeamount);
         et_inward_additionalchargename  = (EditText) findViewById(R.id.et_inward_additionalchargename);
@@ -1516,7 +1548,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         objItem.setItemname(itemName);
         objItem.setItemBarcode(strbarCode);
         objItem.setRate(ratef);
-        objItem.setQuantity(quantity);
+        objItem.setQuantity(0);
         objItem.setMOU(mou);
         objItem.setImageId(ImageUri);
         objItem.setSalesTaxPercent(SalesTax);
