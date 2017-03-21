@@ -123,7 +123,7 @@ public class FragmentSettingsPrint extends Fragment {
         resetReceiptPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetReportPrint();
+                resetReceiptPrint();
             }
         });
 
@@ -259,7 +259,7 @@ public class FragmentSettingsPrint extends Fragment {
     public void resetReceiptPrint() {
         editor.putString("receipt","--Select--");
         editor.commit();
-        spinnerReport.setSelection(0);
+        spinnerReceipt.setSelection(0);
     }
 
     public int getPosition(String str){
