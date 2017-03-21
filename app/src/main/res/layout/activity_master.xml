@@ -222,7 +222,7 @@
                             android:contentDescription="GoodInwardNote"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/purchase_register" />
+                            android:src="@drawable/goodsinwardnote" />
 
                         <TextView
                             android:id="@+id/tvGoodInwardNoteOption"
