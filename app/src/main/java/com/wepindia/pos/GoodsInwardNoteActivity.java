@@ -72,7 +72,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
     AutoCompleteTextView autocompletetv_suppliername, autocompletetv_invoiceno,autocompletetv_itemlist, autocompletetv_purchase_order;
     TableLayout tbl_inward_item_details;
     CheckBox chk_inward_additional_charge;
-    WepButton btnSubmitItem,btnSaveItem,btnAddSupplier;
+    WepButton btnSubmitItem,btnSaveItem,btnAddSupplier, btnClearItem, btnCloseItem;
 
 
     ArrayList<String> labelsSupplierName;
@@ -578,7 +578,9 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 .show();
     }
 
-
+    public boolean isNumeric(String s) {
+        return s.matches("[-+]?\\d*\\.?\\d+");
+    }
 
     public  void SaveNote(View v)
     {
@@ -603,6 +605,9 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         }else  if  (purchaseorderno.equals(""))
         {
             MsgBox.Show("Insufficient Information ", " Please add Purchase Order");
+        }else if(!isNumeric(purchaseorderno))
+        {
+            MsgBox.Show("Error ", " Please enter Purchase Order in numbers only");
         }
         /*else if (invno.equals("") || invodate.equals(""))  {
             MsgBox.Show(" Insufficient Information ","Please fill Invoice Details");
@@ -822,6 +827,10 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         {
             MsgBox.Show(" Insufficent Information ", " Please Select/Add Purchase Order ");
             return;
+        }else if(!purchaseorderno.equalsIgnoreCase("NA") && !isNumeric(purchaseorderno))
+        {
+            MsgBox.Show("Error ", " Please enter Purchase Order in numbers only");
+            return;
         }
         if(invoiceno.equals("")|| invoicedate.equals(""))
         {
@@ -895,14 +904,12 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             }
             if(l>0)
             {
-                if(!purchaseorderno.equalsIgnoreCase("NA"))
+                if(purchaseorderno.equalsIgnoreCase("NA"))
                 {
-                    /*int del = dbGoodsInwardNote.deletePurchaseOrder(suppliercode, Integer.parseInt(purchaseorderno));
-                    String info = " No of rows deleted for purchase order "+purchaseorderno+" : "+del;
-                    Log.d("GoodsInwardNote :",info);*/
-                    if(!purchaseorderno.equalsIgnoreCase("NA"))
-                        savePurchaseOrder(1);
+                    autocompletetv_purchase_order.setText("-100");
+                    savePurchaseOrder(1);
                 }
+                savePurchaseOrder(1);
                 Toast.makeText(myContext, " Item added Successfully", Toast.LENGTH_SHORT).show();
             }
             reset_inward(0);
@@ -937,8 +944,42 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         btnSubmitItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnSubmitItem);
         btnSaveItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnSaveItem);
         btnAddSupplier = (com.wep.common.app.views.WepButton) findViewById (R.id.btnAddSupplier);
+        btnClearItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnClearItem);
+        btnCloseItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnCloseItem);
 
+        btnAddSupplier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddSupplier(v);
+            }
+        });
 
+        btnSaveItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveNote(v);
+            }
+        });
+
+        btnSubmitItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodsInward(v);
+            }
+        });
+        btnClearItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Clear_inward(v);
+            }
+        });
+
+        btnCloseItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Close_inward(v);
+            }
+        });
         chk_inward_additional_charge = (CheckBox) findViewById(R.id.chk_inward_additional_charge);
         et_inward_additionalchargeamount = (EditText) findViewById(R.id.et_inward_additionalchargeamount);
         et_inward_additionalchargename  = (EditText) findViewById(R.id.et_inward_additionalchargename);
