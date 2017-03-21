@@ -15,12 +15,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7c64221d-bd8c-41a4-bb92-8417c19acc06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerOrdersActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerOrdersActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RiderSettlementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RiderSettlementActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerorders.xml" />
     </list>
     <ignored path="Feb10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -6108,7 +6102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490101867761</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="making BillingScreens (all4) compatible with Android 5+&#10;">
+      <created>1490107046721</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1490107046721</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6172,7 +6173,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="changes for saving time correctly in database during billing" />
     <MESSAGE value="1 reportHandler.java -&gt; displaying reports within given date range &#10;2. countersales.java/xml -&gt; displaying date when current date is not same as business date&#10;save time properly in database while billing&#10;3. homeDeliveryBillingScreen.java/xml -&gt; displaying date when current date is not same as busineess date" />
     <MESSAGE value="1. correcting display of petty cash customers in activity_customerdetail.xml" />
     <MESSAGE value="1. paybillActivity.java -  displaying amount to recieved in toast" />
@@ -6197,7 +6197,8 @@
     <MESSAGE value="making GoodsInward compatible with Android 5+&#10;Also updating supplier if, goodsinward is mafe w/o PO. Earlier, supplier reports are not  updated is goodsinward is made w/o PO. &#10;" />
     <MESSAGE value="making GoodsInward compatible with Android 5+&#10;Also updating supplier if, goodsinward is mafe w/o PO. Earlier, supplier reports are not  updated is goodsinward is made w/o PO." />
     <MESSAGE value="makingIngredientManagment compatible with Android 5+&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="makingIngredientManagment compatible with Android 5+&#10;" />
+    <MESSAGE value="making BillingScreens (all4) compatible with Android 5+&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="making BillingScreens (all4) compatible with Android 5+&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
