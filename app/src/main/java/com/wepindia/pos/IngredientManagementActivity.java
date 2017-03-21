@@ -55,7 +55,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
     AutoCompleteTextView autocompletetv_itemslist, autocompletetv_ingredientlist, autocompletetv_submitteditemsearch;
     EditText et_item_quantity, et_ingredient_quantity;
     TextView tv_ingredient_uom,tv_item_uom,tv_menucode;
-    WepButton btnSave, btnSubmit,btnAddIngredient,btnPrint;
+    WepButton btnSave, btnSubmit,btnAddIngredient,btnPrint, btnClearItem,btnCloseItem;
     TableLayout tbl_displayingredient, tbl_displaysubmitteditems;
 
     /*TextView tv_convert_item_authorize;
@@ -925,7 +925,39 @@ public class IngredientManagementActivity extends WepBaseActivity {
         btnSave = (WepButton) findViewById(R.id.btnSave);
         btnSubmit = (WepButton) findViewById(R.id.btnSubmit);
         btnPrint = (WepButton) findViewById(R.id.btnPrint);
+        btnClearItem = (WepButton) findViewById(R.id.btnClearItem);
+        btnCloseItem = (WepButton) findViewById(R.id.btnCloseItem);
 
+        btnPrint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrintIngredients(v);
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Save(v);
+            }
+        });
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Submit(v);
+            }
+        });
+        btnClearItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Clear(v);
+            }
+        });
+        btnCloseItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Close(v);
+            }
+        });
         //btnAddIngredient = (Button) findViewById(R.id.btnAddIngredient);
 
         tbl_displayingredient = (TableLayout) findViewById(R.id.tbl_displayingredient);

@@ -11,6 +11,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -62,6 +63,12 @@ public class PrintIngredients extends WepPrinterBaseActivity {
             CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
 
             btn_Print = (Button)findViewById(R.id.btn_Print);
+            btn_Print.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Print(v);
+                }
+            });
             tbl_displaysubmitteditems = (TableLayout) findViewById(R.id.tbl_displaysubmitteditems);
             dbIngredientManagement.CreateDatabase();
             dbIngredientManagement.OpenDatabase();

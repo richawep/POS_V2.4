@@ -525,7 +525,32 @@ public class ConvertIngredientActivity extends Activity {
         btn_convert_convertIngredient = (Button)findViewById(R.id.btn_convert_convertIngredient);
         btn_convert_close = (Button)findViewById(R.id.btn_convert_close);
         tbl_convert_ingredients = (TableLayout) findViewById(R.id.tbl_convert_ingredients);
-    }
+
+        btn_convert_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddIngredient(v);
+            }
+        });
+        btn_convert_Submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Submit(v);
+                }
+            });
+       btn_convert_convertIngredient.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ConvertIngredients(v);
+                }
+            });
+       btn_convert_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Close(v);
+                }
+            });
+        }
 
     public void Submit(View v)
     {
