@@ -52,6 +52,7 @@ import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,10 +65,10 @@ public class CustomerDetailActivity extends WepBaseActivity {
 	DatabaseHandler dbCustomer = new DatabaseHandler(CustomerDetailActivity.this);
 	// MessageDialog object
 	MessageDialog MsgBox;
-
+    List<String> labelsItemName = null;
 	// View handlers
 	EditText txtName, txtPhone, txtAddress, txtSearchPhone, txtCreditAmount ,txGSTIN;
-    WepButton btnAdd, btnEdit;
+    WepButton btnAdd, btnEdit,btnClearCustomer,btnCloseCustomer;
 	TableLayout tblCustomer;
     AutoCompleteTextView txtSearchName;
 
@@ -115,7 +116,33 @@ public class CustomerDetailActivity extends WepBaseActivity {
 
             btnAdd = (WepButton) findViewById(R.id.btnAddCustomer);
             btnEdit = (WepButton) findViewById(R.id.btnEditCustomer);
+            btnClearCustomer = (WepButton) findViewById(R.id.btnClearCustomer);
+            btnCloseCustomer = (WepButton) findViewById(R.id.btnCloseCustomer);
 
+            btnAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AddCustomer(v);
+                }
+            });
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditCustomer(v);
+                }
+            });
+            btnClearCustomer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ClearCustomer(v);
+                }
+            });
+            btnCloseCustomer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CloseCustomer(v);
+                }
+            });
             tblCustomer = (TableLayout) findViewById(R.id.tblCustomer);
 
             ResetCustomer();
@@ -571,9 +598,11 @@ public class CustomerDetailActivity extends WepBaseActivity {
 
                             TableRow tr = (TableRow) v.getParent();
                             TextView CustId = (TextView) tr.getChildAt(1);
+                            TextView CustName = (TextView) tr.getChildAt(2);
+
                             long lResult = dbCustomer.DeleteCustomer(Integer.valueOf(CustId.getText().toString()));
                             MsgBox.Show("", "Customer Deleted Successfully");
-
+                            ((ArrayAdapter<String>)(txtSearchName.getAdapter())).remove(CustName.getText().toString());
                             ClearCustomerTable();
                             DisplayCustomer();
 
@@ -675,6 +704,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
 				ResetCustomer();
 				ClearCustomerTable();
 				DisplayCustomer();
+                ((ArrayAdapter<String>)(txtSearchName.getAdapter())).add(Name);
 			}
 		}
 	}
@@ -715,14 +745,20 @@ public class CustomerDetailActivity extends WepBaseActivity {
 
     private void loadAutoCompleteData() {
         // List - Get Item Name
-        List<String> labelsItemName = dbCustomer.getAllCustomerName();
+         labelsItemName = dbCustomer.getAllCustomerName();
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,labelsItemName);
+        //ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,labelsItemName);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(myContext,android.R.layout.simple_expandable_list_item_1);
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         // attaching data adapter to spinner
+
         txtSearchName.setAdapter(dataAdapter);
+        dataAdapter.setNotifyOnChange(true);
+        dataAdapter.addAll(labelsItemName);
     }
+
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

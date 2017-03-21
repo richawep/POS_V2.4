@@ -45,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="50dp"
                     android:ems="5"
+                    android:drawableRight="@drawable/searchicon_img"
                     android:hint="Search Mobile No"
                     android:inputType="number"
                     android:maxLength="10" />
@@ -65,6 +66,7 @@
                     android:layout_weight="1"
                     android:completionThreshold="1"
                     android:gravity="left"
+                    android:drawableRight="@drawable/searchicon_img"
                     android:hint="Search Customer Name"
                     android:imeOptions="flagNoExtractUi"
                     android:inputType="text"
