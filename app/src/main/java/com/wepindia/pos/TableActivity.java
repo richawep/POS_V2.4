@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.mswipetech.wisepad.sdktest.view.ApplicationData;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
+import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.WaiterAdapter;
@@ -82,7 +83,7 @@ public class TableActivity extends WepBaseActivity {
     FrameLayout frame_split;
     private Toolbar toolbar;
     TextView tvTableSelectVLine, tvVerticalLine;
-
+    private WepButton btn_DineInTableBooking,btn_TableCancel,btn_TableDineIn,btn_TableOK,btn_DineInTableStatus;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +139,45 @@ public class TableActivity extends WepBaseActivity {
 
             tvTableSelectVLine = (TextView) findViewById(R.id.tvTableSelectVLine);
             tvVerticalLine = (TextView)findViewById(R.id.tvVerticalLine);
+
+            btn_DineInTableBooking = (WepButton)findViewById(R.id.btn_DineInTableBooking);
+            btn_TableCancel = (WepButton)findViewById(R.id.btn_TableCancel);
+            btn_TableDineIn = (WepButton)findViewById(R.id.btn_TableDineIn);
+            btn_TableOK = (WepButton)findViewById(R.id.btn_TableOK);
+            btn_DineInTableStatus = (WepButton)findViewById(R.id.btn_DineInTableStatus);
+
+            btn_DineInTableBooking.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DineInTableBooking(v);
+                }
+            });
+            btn_TableCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Cancel(v);
+                }
+            });
+            btn_TableDineIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DineIn(v);
+                }
+            });
+            btn_TableOK.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    OK(v);
+                }
+            });
+            btn_DineInTableStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DineInTableStatus(v);
+                }
+            });
+
+
 
             MsgBox = new MessageDialog(myContext);
 

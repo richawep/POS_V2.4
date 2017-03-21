@@ -725,6 +725,62 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         btnReprint = (WepButton) findViewById(R.id.btn_Reprint);
         btnDeliveryStatus = (WepButton) findViewById(R.id.btn_DeliveryStatus);
 
+        btnAddCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddCustomer(v);
+            }
+        });
+        btnSaveKOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveKOT(v);
+            }
+        });
+        btnPrintKOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printKOT(v);
+            }
+        });
+        btnPrintBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printBILL(v);
+            }
+        });
+        btnPayBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tender(v);
+            }
+        });
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Clear(v);
+            }
+        });
+        btnDeleteBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteBill(v);
+            }
+        });
+        btnReprint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReprintBill(v);
+            }
+        });
+        btnDeliveryStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KOTStatus(v);
+            }
+        });
+
+
         // GST implementation
         /*
         tvHSNCode_out = (TextView) findViewById(R.id.tvColHSN);
@@ -3501,24 +3557,24 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
      * Load KOT Button Click event, opens Load KOT activity only if KOT is
      * pending
      *
-     * @param v : Clicked Button
+     * @param  : Clicked Button
      *************************************************************************************************************************************/
-    public void LoadKOT(View v) {
-        Cursor KOT = dbBillScreen.getOccupiedTables();
-        if (KOT.moveToFirst()) {
-            do {
-                Log.d("OccupiedTables", "Table Number:" + KOT.getString(0) + " SubUdf Number:" + KOT.getString(1));
-            } while (KOT.moveToNext());
-            ClearAll(); // To avoid adding item to existing item in table layout
-            Intent intentShiftTable = new Intent(myContext, TableShiftMergeActivity.class);
-            intentShiftTable.putExtra("SHIFT_MERGE", 3);
-            intentShiftTable.putExtra("USER_NAME", strUserName);
-            startActivityForResult(intentShiftTable, 4);
-
-        } else {
-            MsgBox.Show("Warning", "No occupied tables");
-        }
-    }
+//    public void LoadKOT(View v) {
+//        Cursor KOT = dbBillScreen.getOccupiedTables();
+//        if (KOT.moveToFirst()) {
+//            do {
+//                Log.d("OccupiedTables", "Table Number:" + KOT.getString(0) + " SubUdf Number:" + KOT.getString(1));
+//            } while (KOT.moveToNext());
+//            ClearAll(); // To avoid adding item to existing item in table layout
+//            Intent intentShiftTable = new Intent(myContext, TableShiftMergeActivity.class);
+//            intentShiftTable.putExtra("SHIFT_MERGE", 3);
+//            intentShiftTable.putExtra("USER_NAME", strUserName);
+//            startActivityForResult(intentShiftTable, 4);
+//
+//        } else {
+//            MsgBox.Show("Warning", "No occupied tables");
+//        }
+//    }
 
 
 
@@ -4276,7 +4332,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 }
 
                                 String isPaid = data.getStringExtra("IS_PAID");
-                                if(!isPaid.equals("YES"))
+                                if(isPaid!=null && !isPaid.equals("YES"))
                                 {
                                     l(2, isPrintBill);
 //                                    if(isPrintBill==true)

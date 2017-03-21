@@ -69,7 +69,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 	// View handlers
 	TextView lblHeadingOrderDetails;
 	EditText txtCustPhone, txtCustName, txtCustAddress, txtCustId, txtBillAmount,txtTime,txtBillNo;
-	Button btnAdd, btnOrder, btnTender, btnDelivery;
+	Button btnAdd, btnOrder, btnTender, btnDelivery, btn_DeliveryOrderCancel,btn_OrderCustomerClear,btn_OrderCustomerClose;
 	ListView lstvwOrderCustName;
 	ScrollView scrlOrderDetail;
 	TableLayout tblOrderDetails, tblRider;
@@ -174,6 +174,9 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		btnOrder = (Button)findViewById(R.id.btn_OrderCustomerOrder);
 		btnTender = (Button)findViewById(R.id.btn_OrderCustomerTender);
 		btnDelivery = (Button)findViewById(R.id.btn_OrderCustomerDelivery);
+		btn_DeliveryOrderCancel = (Button)findViewById(R.id.btn_DeliveryOrderCancel);
+		btn_OrderCustomerClear = (Button)findViewById(R.id.btn_OrderCustomerClear);
+		btn_OrderCustomerClose = (Button)findViewById(R.id.btn_OrderCustomerClose);
 
 		lstvwOrderCustName = (ListView)findViewById(R.id.lstCustomerPendingOrders);
 		lstvwOrderCustName.setOnItemClickListener(CustomerOrderListClick);
@@ -188,6 +191,44 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         txtAmountDue = (EditText) findViewById(R.id.etCustAmountDue);
         lnrboxx6 = (LinearLayout) findViewById(R.id.boxx6);
         lnrboxx7 = (LinearLayout) findViewById(R.id.boxx7);
+
+		btnOrder.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Order(v);
+			}
+		});
+		btnDelivery.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Delivery(v);
+			}
+		});
+		btnTender.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Tender(v);
+			}
+		});
+		btn_DeliveryOrderCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CancelOrder(v);
+			}
+		});
+		btn_OrderCustomerClear.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Clear(v);
+			}
+		});
+		btn_OrderCustomerClose.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Close(v);
+			}
+		});
+
 	}
 
 	OnKeyListener Phone_Search_KeyPress = new OnKeyListener() {

@@ -300,7 +300,7 @@ public class RiderSettlementActivity extends WepBaseActivity{
 //				Float.parseFloat(txtPettyCash.getText().toString()) +
 //				Float.parseFloat(txtDeliveryCharge.getText().toString());
 
-		if(fSettledAmount < fAAmountDue){
+		if(fSettledAmount < fAAmountDue ){
 			MsgBox.Show("Warning", "Settled Amount is less, it should be " + fAAmountDue +
 					"\n" + "i.e, (Bill Amount + Delivery Charge + PettyCash)");
 						
