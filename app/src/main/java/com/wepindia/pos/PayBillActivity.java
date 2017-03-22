@@ -476,7 +476,13 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
                                     }
                                     if (rbDiscAmount.isChecked() == true) {
-                                        edtDiscount.setText(DiscountAmount.getText().toString());
+                                        double discAmt = Double.parseDouble(DiscountAmount.getText().toString());
+                                        if(discAmt <= dRoundoffTotal)
+                                            edtDiscount.setText(String.format("%.2f",discAmt));
+                                        else
+                                        {
+                                            Toast.makeText(myContext, "Discount is not applicable as bill amount is less than "+discAmt, Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                     TenderChange();
                                     PayBillDialog.dismiss();

@@ -16,7 +16,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c64221d-bd8c-41a4-bb92-8417c19acc06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TaxConfigSubActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TaxConfigSubActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
     </list>
     <ignored path="Feb10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,15 +62,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TaxConfigSubActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TaxConfigSubActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TaxConfigSubActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="261" column="65" selection-start-line="261" selection-start-column="65" selection-end-line="261" selection-end-column="65" />
+            <state relative-caret-position="635">
+              <caret line="258" column="29" selection-start-line="258" selection-start-column="29" selection-end-line="258" selection-end-column="29" />
               <folding>
                 <element signature="e#11001#14296#0" expanded="true" />
                 <element signature="e#14295#14296#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PayBillActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1533">
+              <caret line="481" column="31" selection-start-line="481" selection-start-column="31" selection-end-line="481" selection-end-column="31" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -5219,7 +5229,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_inward_stock.xml" />
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedInwardItem_NonGST.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" />
@@ -5270,6 +5279,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TaxConfigSubActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
       </list>
     </option>
   </component>
@@ -5738,13 +5748,6 @@
       <option name="presentableId" value="Default" />
       <updated>1486752611947</updated>
     </task>
-    <task id="LOCAL-00006" summary="adding counter sales screene4f34">
-      <created>1487246729210</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1487246729210</updated>
-    </task>
     <task id="LOCAL-00007" summary="drg">
       <created>1487247514566</created>
       <option name="number" value="00007" />
@@ -6081,7 +6084,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490183898492</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="total tax percent not changing upon deleting first subTax">
+      <created>1490187960728</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1490187960728</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6145,7 +6155,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1. ConvertIngredientAcitvity.java - displaying units along with quantity in toast when required ingredient quantity is less then available quantity." />
     <MESSAGE value="1. including search icon" />
     <MESSAGE value="1. implementing print ingredients" />
     <MESSAGE value="1. rectifying the look on business date different from system date" />
@@ -6170,7 +6179,8 @@
     <MESSAGE value="renaming description as payment/receipt in configuration" />
     <MESSAGE value="removing HSN Column from all 4 billing screens" />
     <MESSAGE value="1.allowing to make only when amount &gt;0&#10;2.controlling functionality of pay and print button upon adding new item" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.allowing to make only when amount &gt;0&#10;2.controlling functionality of pay and print button upon adding new item" />
+    <MESSAGE value="total tax percent not changing upon deleting first subTax" />
+    <option name="LAST_COMMIT_MESSAGE" value="total tax percent not changing upon deleting first subTax" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6226,7 +6236,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/img_goodsinward.png" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/img_purchaseorder.png" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/purchaseorder.png">
       <provider selected="true" editor-type-id="images">
@@ -6724,12 +6733,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TaxConfigSubActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="261" column="65" selection-start-line="261" selection-start-column="65" selection-end-line="261" selection-end-column="65" />
+        <state relative-caret-position="635">
+          <caret line="258" column="29" selection-start-line="258" selection-start-column="29" selection-end-line="258" selection-end-column="29" />
           <folding>
             <element signature="e#11001#14296#0" expanded="true" />
             <element signature="e#14295#14296#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1533">
+          <caret line="481" column="31" selection-start-line="481" selection-start-column="31" selection-end-line="481" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>
