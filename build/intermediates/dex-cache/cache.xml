@@ -34,7 +34,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="7bafc7d39a20c576d2173712529c6bb6f74ae31f">
+        sha1="c1d80f46f1d194fd326a16d8f536ce09657493b6">
         <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_37a53a22aa52e1543dbf238a61b8043f8c7c132f\classes.dex" />
     </item>
     <item
@@ -178,7 +178,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="68ae21bfd5eaeea765c6d482704512e0bdd2042a">
+        sha1="a90e10da78183cd91cde95c3c14dd4bce4845b87">
         <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_ef1042a25d5b18f5e3539321e1523a377209e3c2\classes.dex" />
     </item>
     <item

@@ -25,6 +25,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -105,7 +107,7 @@ public class ItemManagementActivity extends WepBaseActivity {
     Cursor crsrSettings = null;
     private Toolbar toolbar;
     String businessDate = "";
-
+    String itemName_beforeChange_in_update="";
     ItemOutwardAdapter itemListAdapter = null;
     private ListView listViewItems;
     ArrayList<ItemOutward> dataList = null;
@@ -495,6 +497,29 @@ public class ItemManagementActivity extends WepBaseActivity {
         txtStock = (EditText) findViewById(R.id.etItemStock);
         tvFileName = (TextView) findViewById(R.id.tvFileName);
 
+        txtStock.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    try{
+                        Date d = new SimpleDateFormat("dd-MM-yyyy").parse(businessDate);
+                        int invoiceno = dbItems.getLastBillNoforDate(String.valueOf(d.getTime()));
+                        if(invoiceno > 0)
+                        {
+                            // since already billing done for this businessdate, hence stock cannot be updated from here.
+                            // to update stock , goto Price & Stock module
+                            MsgBox.Show("Restriction", "You cannot update stock after making bill for the day. \n\nTo update stock , " +
+                                    "please goto Price & Stock module \n\n Or make Day End  to update from here ");
+                            return;
+                        }
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }}
+            }
+        });
+
         tvDineIn1Caption = (TextView) findViewById(R.id.tvDineInPrice1);
         tvDineIn2Caption = (TextView) findViewById(R.id.tvDineInPrice2);
         tvDineIn3Caption = (TextView) findViewById(R.id.tvDineInPrice3);
@@ -648,7 +673,7 @@ public class ItemManagementActivity extends WepBaseActivity {
     private void listItemClickEvent(ItemOutward item) {
         edtMenuCode.setText(String.valueOf(item.getMenuCode()));
         txtLongName.setText(item.getLongName());
-
+        itemName_beforeChange_in_update = item.getLongName();
         txtBarcode.setText(item.getBarCode());
         txtDineIn1.setText(String.valueOf(item.getDineIn1()));
         txtDineIn2.setText(String.valueOf(item.getDineIn2()));
@@ -833,505 +858,509 @@ public class ItemManagementActivity extends WepBaseActivity {
     }
 
     @SuppressWarnings("deprecation")
-    private void DisplayItems() {
-        Cursor crsrItems = null;
-
-        crsrItems = dbItems.getAllItems();
-        //crsrItems = dbItems.getAllItemswithDeptCategName();
-        TableRow rowItems = null;
-
-        TextView tvSno, tvMenuCode, tvLongName, tvShortName, tvDineIn1, tvDineIn2, tvDineIn3, tvTakeAway, tvPickUp, tvDelivery,
-                tvStock, tvPriceChange, tvDiscountEnable, tvBillWithStock, tvTaxType, tvDeptCode, tvCategCode,
-                tvKitchenCode, tvSalesTaxId, tvAdditionalTaxId, tvOptionalTaxId1, tvOptionalTaxId2, tvDiscountId,
-                tvItemBarcode, tvImageUri, tvSpace, tvDeptName, tvCategName, tvItemId;
-        TextView tvHSNCode_out,tvMOU,tvRate,tvGSTRate,tvSupplyType, tvSalesTaxPercent, tvServiceTaxPercent;
-        ImageView imgIcon;
-        ImageButton btnItemDelete;
-        int i = 1;
-
-        if (crsrItems.moveToFirst()) {
-            do {
-                rowItems = new TableRow(myContext);
-                rowItems.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-                rowItems.setBackgroundResource(R.drawable.border_itemdatabase);
-
-                tvSno = new TextView(myContext);
-                tvSno.setTextSize(15);
-                tvSno.setGravity(1);
-                tvSno.setWidth(105);
-                tvSno.setTextColor(getResources().getColor(R.color.black));
-                tvSno.setText(String.valueOf(i));
-                //rowItems.addView(tvSno);
-
-                tvMenuCode = new TextView(myContext);
-                tvMenuCode.setTextSize(18);
-                tvMenuCode.setGravity(1);
-                tvMenuCode.setWidth(160);
-                tvMenuCode.setText(crsrItems.getString(crsrItems.getColumnIndex("MenuCode")));
-                //rowItems.addView(tvMenuCode);
-
-                tvLongName = new TextView(myContext);
-                tvLongName.setTextSize(15);
-                tvLongName.setWidth(360);
-                //tvLongName.setTypeface(Typeface.DEFAULT_BOLD);
-                tvLongName.setTextColor(getResources().getColor(R.color.black));
-                tvLongName.setText(crsrItems.getString(crsrItems.getColumnIndex("ItemName")));
-                //rowItems.addView(tvLongName);
-
-
-
-                tvDineIn1 = new TextView(myContext);
-                //tvDineIn1.setGravity(1);
-                tvDineIn1.setTextSize(15);
-                tvDineIn1.setGravity(1);
-                tvDineIn1.setWidth(110);
-                //tvDineIn1.setBackgroundResource(R.drawable.border);
-                tvDineIn1.setText(crsrItems.getString(crsrItems.getColumnIndex("DineInPrice1")));
-                //rowItems.addView(tvDineIn1);
-
-                tvDineIn2 = new TextView(myContext);
-                tvDineIn2.setGravity(1);
-                tvDineIn2.setTextSize(15);
-                tvDineIn2.setWidth(110);
-                tvDineIn2.setText(crsrItems.getString(crsrItems.getColumnIndex("DineInPrice2")));
-                //rowItems.addView(tvDineIn2);
-
-                tvDineIn3 = new TextView(myContext);
-                tvDineIn3.setGravity(1);
-                tvDineIn3.setWidth(110);
-                tvDineIn3.setTextSize(15);
-                tvDineIn3.setText(crsrItems.getString(crsrItems.getColumnIndex("DineInPrice3")));
-                //rowItems.addView(tvDineIn3);
-
-
-
-                tvStock = new TextView(myContext);
-                tvStock.setGravity(1);
-                tvStock.setWidth(110);
-                tvStock.setTextSize(15);
-                //tvStock.setTypeface(Typeface.DEFAULT_BOLD);
-                tvStock.setTextColor(getResources().getColor(R.color.black));
-                //tvStock.setBackgroundResource(R.drawable.border);
-                tvStock.setText(crsrItems.getString(crsrItems.getColumnIndex("Quantity")));
-                //rowItems.addView(tvStock);
-
-
-
-
-
-                tvDeptCode = new TextView(myContext);
-                tvDeptCode.setText(crsrItems.getString(crsrItems.getColumnIndex("DeptCode")));
-                //rowItems.addView(tvDeptCode);
-
-                tvCategCode = new TextView(myContext);
-                tvCategCode.setText(crsrItems.getString(crsrItems.getColumnIndex("CategCode")));
-                //rowItems.addView(tvCategCode);
-
-                tvKitchenCode = new TextView(myContext);
-                tvKitchenCode.setText(crsrItems.getString(crsrItems.getColumnIndex("KitchenCode")));
-                //rowItems.addView(tvKitchenCode);
-
-
-
-                tvItemBarcode = new TextView(myContext);
-                tvItemBarcode.setText(crsrItems.getString(crsrItems.getColumnIndex("ItemBarcode")));
-                //rowItems.addView(tvItemBarcode);
-
-                tvImageUri = new TextView(myContext);
-                tvImageUri.setText(crsrItems.getString(crsrItems.getColumnIndex("ImageUri")));
-                //rowItems.addView(tvImageUri);
-
-                imgIcon = new ImageView(myContext);
-                TableRow.LayoutParams rowparams = new TableRow.LayoutParams(60, 40);
-                rowparams.gravity = Gravity.CENTER;
-                imgIcon.setLayoutParams(rowparams);
-                imgIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imgIcon.setImageURI(null);
-                // imgIcon.setBackgroundResource(R.drawable.border);
-                if (!crsrItems.getString(crsrItems.getColumnIndex("ImageUri")).equalsIgnoreCase("")) { // &&
-                    // strImageUri.contains("\\")){
-                    imgIcon.setImageURI(Uri.fromFile(new File(crsrItems.getString(crsrItems.getColumnIndex("ImageUri")))));
-                } else {
-                    imgIcon.setImageResource(R.drawable.img_noimage);
-                }
-                //rowItems.addView(imgIcon);
-
-                tvSupplyType = new TextView(myContext);
-                tvSupplyType.setGravity(1);
-                tvSupplyType.setWidth(110);
-                tvSupplyType.setText(crsrItems.getString(crsrItems.getColumnIndex("SupplyType")));
-                //rowItems.addView(tvSupplyType);
-
-
-                tvMOU = new TextView(myContext);
-                tvMOU.setGravity(Gravity.RIGHT|Gravity.END);
-                tvMOU.setWidth(120);
-                tvMOU.setTextSize(15);
-                //tvMOU.setTypeface(Typeface.DEFAULT_BOLD);
-                tvMOU.setTextColor(getResources().getColor(R.color.black));
-                //tvMOU.setBackgroundResource(R.drawable.border);
-                tvMOU.setText(crsrItems.getString(crsrItems.getColumnIndex("UOM")));
-                //rowItems.addView(tvMOU);
-
-
-
-                // For Space purpose
-                tvSpace = new TextView(myContext);
-                tvSpace.setWidth(49);
-                tvSpace.setText("");
-                //tvSpace.setBackgroundResource(R.drawable.border);
-                //rowItems.addView(tvSpace);
-
-                TextView tvSpace1 = new TextView(myContext);
-                tvSpace1.setText("");
-                tvSpace1.setWidth(22);
-
-                // Delete
-                int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
-                btnItemDelete = new ImageButton(myContext);
-
-                TableRow.LayoutParams rowparams1 = new TableRow.LayoutParams(40, 35);
-                rowparams1.gravity = Gravity.CENTER;
-                btnItemDelete.setBackground(getResources().getDrawable(R.drawable.delete_icon_border));
-                //btnItemDelete.setLayoutParams(rowparams1);
-                btnItemDelete.setLayoutParams(new TableRow.LayoutParams(40, 35));
-                //btnItemDelete.setOnClickListener(mListener);
-
-
-
-
-                TextView tvTaxationType = new TextView(myContext);
-                tvTaxationType.setText(spnrtaxationtype.getSelectedItem().toString());
-
-                tvItemId = new TextView(myContext);
-                tvItemId.setText(crsrItems.getString(crsrItems.getColumnIndex("ItemId")));
-
-                tvSalesTaxPercent = new TextView(myContext);
-                tvSalesTaxPercent.setText(crsrItems.getString(crsrItems.getColumnIndex("SalesTaxPercent")));
-
-                tvServiceTaxPercent = new TextView(myContext);
-                tvServiceTaxPercent.setText(crsrItems.getString(crsrItems.getColumnIndex("ServiceTaxPercent")));
-
-                if(GSTEnable.equals("0")) {
-
-                    rowItems.addView(tvSno);//0
-                    rowItems.addView(tvMenuCode);//1
-                    rowItems.addView(tvLongName);//2
-
-                    rowItems.addView(tvDineIn1);//3
-                    rowItems.addView(tvDineIn2);//4
-                    rowItems.addView(tvDineIn3);//5
-
-                    rowItems.addView(tvStock);//6
-
-                    rowItems.addView(tvDeptCode);//7
-                    rowItems.addView(tvCategCode);//8
-                    rowItems.addView(tvKitchenCode);//9
-
-                    rowItems.addView(tvItemBarcode);//10
-                    rowItems.addView(tvImageUri);//11
-                    rowItems.addView(tvSpace1);//12
-                    rowItems.addView(imgIcon);//13
-                    rowItems.addView(tvSpace);//14
-                    rowItems.addView(btnItemDelete);//15
-
-
-                    rowItems.addView(tvItemId);//16
-                    rowItems.addView(tvSalesTaxPercent);//17
-                    rowItems.addView(tvServiceTaxPercent);//18
-                    rowItems.addView(tvMOU);//19
-
-                    rowItems.setOnClickListener(new View.OnClickListener() {
-
-                        public void onClick(View v) {
-                            // TODO Auto-generated method stub
-
-                            if (String.valueOf(v.getTag()) == "TAG") {
-                                TableRow Row = (TableRow) v;
-                                ROWCLICKEVENT = 1;
-                                TextView MenuCode = (TextView) Row.getChildAt(1);
-                                TextView LongName = (TextView) Row.getChildAt(2);
-                                TextView DineIn1 = (TextView) Row.getChildAt(3);
-                                TextView DineIn2 = (TextView) Row.getChildAt(4);
-                                TextView DineIn3 = (TextView) Row.getChildAt(5);
-                                TextView Stock = (TextView) Row.getChildAt(6);
-                                TextView DeptCode = (TextView) Row.getChildAt(7);
-                                TextView CategCode = (TextView) Row.getChildAt(8);
-                                TextView KitchenCode = (TextView) Row.getChildAt(9);
-                                TextView Barcode = (TextView) Row.getChildAt(10);
-                                TextView ImageUri = (TextView) Row.getChildAt(11);
-                                TextView ItemId = (TextView) Row.getChildAt(16);
-                                TextView SalesTaxPercent = (TextView) Row.getChildAt(17);
-                                TextView ServiceTaxPercent = (TextView) Row.getChildAt(18);
-                                TextView MOU = (TextView) Row.getChildAt(19);
-
-                                strItemId = ItemId.getText().toString();
-                                edtMenuCode.setText(MenuCode.getText().toString());
-                                txtLongName.setText(LongName.getText());
-                                //txtShortName.setText(ShortName.getText());
-                                txtBarcode.setText(Barcode.getText());
-                                txtDineIn1.setText(DineIn1.getText());
-                                txtDineIn2.setText(DineIn2.getText());
-                                txtDineIn3.setText(DineIn3.getText());
-                                txtStock.setText(Stock.getText());
-                                strImageUri = ImageUri.getText().toString();
-
-                                Cursor crsrDept = dbItems.getDepartment(Integer.valueOf(DeptCode.getText().toString()));
-                                String deptName = "Select";
-                                int deptid = 0;
-                                if (crsrDept.moveToFirst()) {
-                                    deptName = crsrDept.getString(crsrDept.getColumnIndex("DeptName"));
-                                    deptid = getIndexDept(deptName + "");
-                                    spnrDepartment.setSelection(deptid);
-                                } else {
-
-                                    deptid = getIndexDept(deptName + "");
-                                    spnrDepartment.setSelection(deptid);
-                                }
-                                //spnrDepartment.setSelection(Integer.parseInt(DeptCode.getText().toString()));
-                                ArrayList<String> listCateg = dbItems.getCategoryNameByDeptCode(String.valueOf(deptid));
-                                loadSpinnerData_cat(listCateg);
-                                int  deptCode =Integer.parseInt(DeptCode.getText().toString());
-                                if (deptCode ==0) {
-                                    spnrCategory.setSelection(0);
-                                }else {
-                                    Cursor crsrCateg = dbItems.getCategory(Integer.valueOf(CategCode.getText().toString()));
-                                    String categName = "";
-                                    if (crsrCateg.moveToFirst()) {
-                                        categName = crsrCateg.getString(crsrCateg.getColumnIndex("CategName"));
-                                    }
-                                    boolean bool = false;
-                                    int i =0;
-                                    for( i =0; !categName.equals("")&&bool == false && i<listCateg.size();i++)
-                                    {
-                                        if(categName.equalsIgnoreCase(listCateg.get(i)))
-                                            bool = true;
-                                    }
-                                    /*ArrayAdapter<String> dataAdapter = (ArrayAdapter<String>) spnrCategory.getAdapter();
-                                    int spinnerPosition = dataAdapter.getPosition(categName);*/
-                                    if(bool) // true
-                                    {
-                                        spnrCategory.setSelection(i-1);
-                                    }
-                                    else
-                                        spnrCategory.setSelection(0);
-                                }
-
-
-
-
-                                spnrKitchen.setSelection(Integer.parseInt(KitchenCode.getText().toString()) );
-
-
-                                imgItemImage.setImageURI(null);
-                                if (!strImageUri.equalsIgnoreCase("")) { // &&
-                                    // strImageUri.contains("\\")){
-                                    imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
-                                } else {
-                                    imgItemImage.setImageResource(R.drawable.img_noimage);
-                                }
-                                edtItemSalesTax.setText(SalesTaxPercent.getText().toString());
-                                edtItemServiceTax.setText(ServiceTaxPercent.getText().toString());
-                                String uom_temp = MOU.getText().toString();
-                                String uom = "("+uom_temp+")";
-                                int index = getIndex(uom);
-                                spnrMOU.setSelection(index);
-                                btnAdd.setEnabled(false);
-                                btnEdit.setEnabled(true);
-                            }
-                        }
-                    });
-
-                    rowItems.setTag("TAG");
-
-                    tblItems.addView(rowItems, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-                    i++;
-                }
-                else
-                {
-                    // gst enabled
-
-                    /*rowItems.addView(tvSno);
-                    rowItems.addView(tvMenuCode);
-                    rowItems.addView(tvLongName);
-                    rowItems.addView(tvShortName);
-                    rowItems.addView(tvRate);
-                    rowItems.addView(tvStock);
-                    rowItems.addView(tvMOU);
-                    rowItems.addView(tvTakeAway);
-                    rowItems.addView(tvPickUp);
-                    rowItems.addView(tvDelivery);
-                    rowItems.addView(tvGSTRate);
-                    rowItems.addView(tvPriceChange);
-                    rowItems.addView(tvDiscountEnable);
-                    rowItems.addView(tvBillWithStock);
-                    rowItems.addView(tvTaxType);
-                    rowItems.addView(tvDeptCode);
-                    rowItems.addView(tvCategCode);
-                    rowItems.addView(tvKitchenCode);
-                    rowItems.addView(tvSalesTaxId);
-                    rowItems.addView(tvAdditionalTaxId);
-                    rowItems.addView(tvOptionalTaxId1);
-                    rowItems.addView(tvOptionalTaxId2);
-                    rowItems.addView(tvDiscountId);
-                    rowItems.addView(tvItemBarcode);
-                    rowItems.addView(tvImageUri);//24
-                    rowItems.addView(tvSpace1);//25
-                    rowItems.addView(imgIcon);//26
-                    rowItems.addView(tvSpace);//27
-                    rowItems.addView(btnItemDelete);//28
-                    rowItems.addView(tvHSNCode_out);//29
-                    rowItems.addView(tvSupplyType);
-                    rowItems.addView(tvTaxationType);
-
-                    // For Space purpose
-                    tvSpace = new TextView(myContext);
-                    tvSpace.setText("              ");
-                    rowItems.addView(tvSpace);
-                    rowItems.addView(tvItemId);//33
-                    rowItems.addView(tvSalesTaxPercent);//34
-                    rowItems.addView(tvServiceTaxPercent);//35
-
-                    rowItems.setOnClickListener(new View.OnClickListener() {
-
-                        public void onClick(View v) {
-                            // TODO Auto-generated method stub
-
-                            if (String.valueOf(v.getTag()) == "TAG") {
-                                TableRow Row = (TableRow) v;
-
-                                TextView MenuCode = (TextView) Row.getChildAt(1);
-                                TextView LongName = (TextView) Row.getChildAt(2);
-                                TextView ShortName = (TextView) Row.getChildAt(3);
-                                TextView Rate = (TextView) Row.getChildAt(4);
-                                TextView Quantity = (TextView) Row.getChildAt(5);
-                                TextView MOU = (TextView) Row.getChildAt(6);
-                                TextView TakeAway = (TextView) Row.getChildAt(7);
-                                TextView PickUp = (TextView) Row.getChildAt(8);
-                                TextView Delivery = (TextView) Row.getChildAt(9);
-                                TextView GSTRate = (TextView) Row.getChildAt(10);
-                                TextView PriceChange = (TextView) Row.getChildAt(11);
-                                TextView DiscountEnable = (TextView) Row.getChildAt(12);
-                                TextView BillWithStock = (TextView) Row.getChildAt(13);
-                                TextView TaxType = (TextView) Row.getChildAt(14);
-                                TextView DeptCode = (TextView) Row.getChildAt(15);
-                                TextView CategCode = (TextView) Row.getChildAt(16);
-                                TextView KitchenCode = (TextView) Row.getChildAt(17);
-                                TextView SalesTaxId = (TextView) Row.getChildAt(18);
-                                TextView AdditionalTaxId = (TextView) Row.getChildAt(19);
-                                TextView OptionalTaxId1 = (TextView) Row.getChildAt(20);
-                                TextView OptionalTaxId2 = (TextView) Row.getChildAt(21);
-                                TextView DiscountId = (TextView) Row.getChildAt(22);
-                                TextView Barcode = (TextView) Row.getChildAt(23);
-                                TextView ImageUri = (TextView) Row.getChildAt(24);
-                                TextView SupplyType = (TextView) Row.getChildAt(30);
-                                TextView HSNCode_out = (TextView) Row.getChildAt(29);
-                                TextView taxationtype =  (TextView) Row.getChildAt(31);
-                                TextView ItemId = (TextView) Row.getChildAt(33);
-                                TextView SalesTaxPercent = (TextView) Row.getChildAt(34);
-                                TextView ServiceTaxPercent = (TextView) Row.getChildAt(35);
-
-                                strItemId = ItemId.getText().toString();
-                                edtMenuCode.setText(MenuCode.getText());
-                                txtLongName.setText(LongName.getText());
-                                //txtShortName.setText(ShortName.getText());
-                                txtBarcode.setText(Barcode.getText());
-                                *//*txtDineIn1.setText(DineIn1.getText());
-                                txtDineIn2.setText(DineIn2.getText());
-                                txtDineIn3.setText(DineIn3.getText());
-                                txtStock.setText(Stock.getText());*//*
-                                strImageUri = ImageUri.getText().toString();
-
-                                // gst
-                                etGstTax.setText(GSTRate.getText());
-                                etRate.setText(Rate.getText());
-                                etQuantity.setText(Quantity.getText());
-                                etHSN.setText(HSNCode_out.getText());
-                                etDiscount.setText(DiscountId.getText());
-                                // richa to do
-                                spnrG_S.setSelection(supplytypeAdapter.getPosition(SupplyType.getText().toString()));
-                                spnrMOU.setSelection(MOUAdapter.getPosition(MOU.getText().toString()));
-                                spnrtaxationtype.setSelection(taxationtypeAdapter.getPosition(taxationtype.getText().toString()));
-
-                                // gst end
-                                Cursor crsrDept = dbItems.getDepartment(Integer.valueOf(DeptCode.getText().toString()));
-                                if(crsrDept.moveToFirst()) {
-                                    String deptName = crsrDept.getString(crsrDept.getColumnIndex("DeptName"));
-                                    int deptid = getIndexDept(deptName + "");
-                                    spnrDepartment.setSelection(deptid);
-                                } else {
-                                    String deptName = "Select";
-                                    int deptid = getIndexDept(deptName + "");
-                                    spnrDepartment.setSelection(deptid);
-                                }
-                                //spnrDepartment.setSelection(Integer.parseInt(DeptCode.getText().toString()));
-                                Cursor crsrCateg = dbItems.getCategory(Integer.valueOf(CategCode.getText().toString()));
-                                if(crsrCateg.moveToFirst()) {
-                                    String categName = crsrCateg.getString(crsrCateg.getColumnIndex("CategName"));
-                                    int categid = getIndexCateg(categName + "");
-                                    spnrCategory.setSelection(categid);
-                                } else {
-                                    String categName = "Select";
-                                    int categid = getIndexCateg(categName + "");
-                                    spnrCategory.setSelection(categid);
-                                }
-                                //spnrCategory.setSelection(Integer.parseInt(CategCode.getText().toString()));
-                                spnrKitchen.setSelection(Integer.parseInt(KitchenCode.getText().toString()) - 1);
-                                spnrSalesTax.setSelection(Integer.parseInt(SalesTaxId.getText().toString()) - 1);
-                                spnrAdditionalTax.setSelection(Integer.parseInt(AdditionalTaxId.getText().toString()) - 1);
-                                spnrOptionalTax1.setSelection(Integer.parseInt(OptionalTaxId1.getText().toString()) - 1);
-                                spnrOptionalTax2.setSelection(Integer.parseInt(OptionalTaxId2.getText().toString()) - 1);
-                                spnrDiscount.setSelection(Integer.parseInt(DiscountId.getText().toString()) - 1);
-
-                                if (PriceChange.getText().toString().equalsIgnoreCase("Yes")) {
-                                    chkPriceChange.setChecked(true);
-                                } else {
-                                    chkPriceChange.setChecked(false);
-                                }
-                                if (DiscountEnable.getText().toString().equalsIgnoreCase("Yes")) {
-                                    chkDiscountEnable.setChecked(true);
-                                } else {
-                                    chkDiscountEnable.setChecked(false);
-                                }
-                                if (BillWithStock.getText().toString().equalsIgnoreCase("Yes")) {
-                                    chkBillWithStock.setChecked(true);
-                                } else {
-                                    chkBillWithStock.setChecked(false);
-                                }
-
-                                if (TaxType.getText().toString().equalsIgnoreCase("Forward Tax")) {
-                                    rbForwardTax.setChecked(true);
-                                } else if (TaxType.getText().toString().equalsIgnoreCase("Reverse Tax")) {
-                                    rbReverseTax.setChecked(true);
-                                }
-
-                                imgItemImage.setImageURI(null);
-                                if (!strImageUri.equalsIgnoreCase("")) { // &&
-                                    // strImageUri.contains("\\")){
-                                    imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
-                                } else {
-                                    imgItemImage.setImageResource(R.drawable.img_noimage);
-                                }
-                                edtItemSalesTax.setText(SalesTaxPercent.getText().toString());
-                                edtItemServiceTax.setText(ServiceTaxPercent.getText().toString());
-                                btnAdd.setEnabled(false);
-                                btnEdit.setEnabled(true);
-                            }
-                        }
-                    });
-
-                    rowItems.setTag("TAG");
-
-
-                    tblItems.addView(rowItems, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-                    i++;*/
-                }
-            } while (crsrItems.moveToNext());
-        } else {
-            Log.d("DisplayItem", "No Item found");
-        }
-
-    }
+//    private void DisplayItems() {
+//        Cursor crsrItems = null;
+//
+//        crsrItems = dbItems.getAllItems();
+//        //crsrItems = dbItems.getAllItemswithDeptCategName();
+//        TableRow rowItems = null;
+//
+//        TextView tvSno, tvMenuCode, tvLongName, tvShortName, tvDineIn1, tvDineIn2, tvDineIn3, tvTakeAway, tvPickUp, tvDelivery,
+//                tvStock, tvPriceChange, tvDiscountEnable, tvBillWithStock, tvTaxType, tvDeptCode, tvCategCode,
+//                tvKitchenCode, tvSalesTaxId, tvAdditionalTaxId, tvOptionalTaxId1, tvOptionalTaxId2, tvDiscountId,
+//                tvItemBarcode, tvImageUri, tvSpace, tvDeptName, tvCategName, tvItemId;
+//        TextView tvHSNCode_out,tvMOU,tvRate,tvGSTRate,tvSupplyType, tvSalesTaxPercent, tvServiceTaxPercent;
+//        ImageView imgIcon;
+//        ImageButton btnItemDelete;
+//        int i = 1;
+//
+//        if (crsrItems.moveToFirst()) {
+//            do {
+//                rowItems = new TableRow(myContext);
+//                rowItems.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+//                rowItems.setBackgroundResource(R.drawable.border_itemdatabase);
+//
+//                tvSno = new TextView(myContext);
+//                tvSno.setTextSize(15);
+//                tvSno.setGravity(1);
+//                tvSno.setWidth(105);
+//                tvSno.setTextColor(getResources().getColor(R.color.black));
+//                tvSno.setText(String.valueOf(i));
+//                //rowItems.addView(tvSno);
+//
+//                tvMenuCode = new TextView(myContext);
+//                tvMenuCode.setTextSize(18);
+//                tvMenuCode.setGravity(1);
+//                tvMenuCode.setWidth(160);
+//                tvMenuCode.setText(crsrItems.getString(crsrItems.getColumnIndex("MenuCode")));
+//                //rowItems.addView(tvMenuCode);
+//
+//                tvLongName = new TextView(myContext);
+//                tvLongName.setTextSize(15);
+//                tvLongName.setWidth(360);
+//                //tvLongName.setTypeface(Typeface.DEFAULT_BOLD);
+//                tvLongName.setTextColor(getResources().getColor(R.color.black));
+//                tvLongName.setText(crsrItems.getString(crsrItems.getColumnIndex("ItemName")));
+//                //rowItems.addView(tvLongName);
+//
+//
+//
+//                tvDineIn1 = new TextView(myContext);
+//                //tvDineIn1.setGravity(1);
+//                tvDineIn1.setTextSize(15);
+//                tvDineIn1.setGravity(1);
+//                tvDineIn1.setWidth(110);
+//                //tvDineIn1.setBackgroundResource(R.drawable.border);
+//                tvDineIn1.setText(crsrItems.getString(crsrItems.getColumnIndex("DineInPrice1")));
+//                //rowItems.addView(tvDineIn1);
+//
+//                tvDineIn2 = new TextView(myContext);
+//                tvDineIn2.setGravity(1);
+//                tvDineIn2.setTextSize(15);
+//                tvDineIn2.setWidth(110);
+//                tvDineIn2.setText(crsrItems.getString(crsrItems.getColumnIndex("DineInPrice2")));
+//                //rowItems.addView(tvDineIn2);
+//
+//                tvDineIn3 = new TextView(myContext);
+//                tvDineIn3.setGravity(1);
+//                tvDineIn3.setWidth(110);
+//                tvDineIn3.setTextSize(15);
+//                tvDineIn3.setText(crsrItems.getString(crsrItems.getColumnIndex("DineInPrice3")));
+//                //rowItems.addView(tvDineIn3);
+//
+//
+//
+//                tvStock = new TextView(myContext);
+//                tvStock.setGravity(1);
+//                tvStock.setWidth(110);
+//                tvStock.setTextSize(15);
+//                //tvStock.setTypeface(Typeface.DEFAULT_BOLD);
+//                tvStock.setTextColor(getResources().getColor(R.color.black));
+//                //tvStock.setBackgroundResource(R.drawable.border);
+//                tvStock.setText(crsrItems.getString(crsrItems.getColumnIndex("Quantity")));
+//                //rowItems.addView(tvStock);
+//
+//
+//
+//
+//
+//                tvDeptCode = new TextView(myContext);
+//                tvDeptCode.setText(crsrItems.getString(crsrItems.getColumnIndex("DeptCode")));
+//                //rowItems.addView(tvDeptCode);
+//
+//                tvCategCode = new TextView(myContext);
+//                tvCategCode.setText(crsrItems.getString(crsrItems.getColumnIndex("CategCode")));
+//                //rowItems.addView(tvCategCode);
+//
+//                tvKitchenCode = new TextView(myContext);
+//                tvKitchenCode.setText(crsrItems.getString(crsrItems.getColumnIndex("KitchenCode")));
+//                //rowItems.addView(tvKitchenCode);
+//
+//
+//
+//                tvItemBarcode = new TextView(myContext);
+//                tvItemBarcode.setText(crsrItems.getString(crsrItems.getColumnIndex("ItemBarcode")));
+//                //rowItems.addView(tvItemBarcode);
+//
+//                tvImageUri = new TextView(myContext);
+//                tvImageUri.setText(crsrItems.getString(crsrItems.getColumnIndex("ImageUri")));
+//                //rowItems.addView(tvImageUri);
+//
+//                imgIcon = new ImageView(myContext);
+//                TableRow.LayoutParams rowparams = new TableRow.LayoutParams(60, 40);
+//                rowparams.gravity = Gravity.CENTER;
+//                imgIcon.setLayoutParams(rowparams);
+//                imgIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//                imgIcon.setImageURI(null);
+//                // imgIcon.setBackgroundResource(R.drawable.border);
+//                if (!crsrItems.getString(crsrItems.getColumnIndex("ImageUri")).equalsIgnoreCase("")) { // &&
+//                    // strImageUri.contains("\\")){
+//                    imgIcon.setImageURI(Uri.fromFile(new File(crsrItems.getString(crsrItems.getColumnIndex("ImageUri")))));
+//                } else {
+//                    imgIcon.setImageResource(R.drawable.img_noimage);
+//                }
+//                //rowItems.addView(imgIcon);
+//
+//                tvSupplyType = new TextView(myContext);
+//                tvSupplyType.setGravity(1);
+//                tvSupplyType.setWidth(110);
+//                tvSupplyType.setText(crsrItems.getString(crsrItems.getColumnIndex("SupplyType")));
+//                //rowItems.addView(tvSupplyType);
+//
+//
+//                tvMOU = new TextView(myContext);
+//                tvMOU.setGravity(Gravity.RIGHT|Gravity.END);
+//                tvMOU.setWidth(120);
+//                tvMOU.setTextSize(15);
+//                //tvMOU.setTypeface(Typeface.DEFAULT_BOLD);
+//                tvMOU.setTextColor(getResources().getColor(R.color.black));
+//                //tvMOU.setBackgroundResource(R.drawable.border);
+//                tvMOU.setText(crsrItems.getString(crsrItems.getColumnIndex("UOM")));
+//                //rowItems.addView(tvMOU);
+//
+//
+//
+//                // For Space purpose
+//                tvSpace = new TextView(myContext);
+//                tvSpace.setWidth(49);
+//                tvSpace.setText("");
+//                //tvSpace.setBackgroundResource(R.drawable.border);
+//                //rowItems.addView(tvSpace);
+//
+//                TextView tvSpace1 = new TextView(myContext);
+//                tvSpace1.setText("");
+//                tvSpace1.setWidth(22);
+//
+//                // Delete
+//                int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
+//                btnItemDelete = new ImageButton(myContext);
+//
+//                TableRow.LayoutParams rowparams1 = new TableRow.LayoutParams(40, 35);
+//                rowparams1.gravity = Gravity.CENTER;
+//                btnItemDelete.setBackground(getResources().getDrawable(R.drawable.delete_icon_border));
+//                //btnItemDelete.setLayoutParams(rowparams1);
+//                btnItemDelete.setLayoutParams(new TableRow.LayoutParams(40, 35));
+//                //btnItemDelete.setOnClickListener(mListener);
+//
+//
+//
+//
+//                TextView tvTaxationType = new TextView(myContext);
+//                tvTaxationType.setText(spnrtaxationtype.getSelectedItem().toString());
+//
+//                tvItemId = new TextView(myContext);
+//                tvItemId.setText(crsrItems.getString(crsrItems.getColumnIndex("ItemId")));
+//
+//                tvSalesTaxPercent = new TextView(myContext);
+//                tvSalesTaxPercent.setText(crsrItems.getString(crsrItems.getColumnIndex("SalesTaxPercent")));
+//
+//                tvServiceTaxPercent = new TextView(myContext);
+//                tvServiceTaxPercent.setText(crsrItems.getString(crsrItems.getColumnIndex("ServiceTaxPercent")));
+//
+//                if(GSTEnable.equals("0")) {
+//
+//                    rowItems.addView(tvSno);//0
+//                    rowItems.addView(tvMenuCode);//1
+//                    rowItems.addView(tvLongName);//2
+//
+//                    rowItems.addView(tvDineIn1);//3
+//                    rowItems.addView(tvDineIn2);//4
+//                    rowItems.addView(tvDineIn3);//5
+//
+//                    rowItems.addView(tvStock);//6
+//
+//                    rowItems.addView(tvDeptCode);//7
+//                    rowItems.addView(tvCategCode);//8
+//                    rowItems.addView(tvKitchenCode);//9
+//
+//                    rowItems.addView(tvItemBarcode);//10
+//                    rowItems.addView(tvImageUri);//11
+//                    rowItems.addView(tvSpace1);//12
+//                    rowItems.addView(imgIcon);//13
+//                    rowItems.addView(tvSpace);//14
+//                    rowItems.addView(btnItemDelete);//15
+//
+//
+//                    rowItems.addView(tvItemId);//16
+//                    rowItems.addView(tvSalesTaxPercent);//17
+//                    rowItems.addView(tvServiceTaxPercent);//18
+//                    rowItems.addView(tvMOU);//19
+//
+//                    rowItems.setOnClickListener(new View.OnClickListener() {
+//
+//                        public void onClick(View v) {
+//                            // TODO Auto-generated method stub
+//
+//                            if (String.valueOf(v.getTag()) == "TAG") {
+//                                TableRow Row = (TableRow) v;
+//                                ROWCLICKEVENT = 1;
+//                                TextView MenuCode = (TextView) Row.getChildAt(1);
+//                                TextView LongName = (TextView) Row.getChildAt(2);
+//                                itemName_beforeChange_in_update = LongName.getText().toString();
+//                                Log.d("Richa",itemName_beforeChange_in_update);
+//                                TextView DineIn1 = (TextView) Row.getChildAt(3);
+//                                TextView DineIn2 = (TextView) Row.getChildAt(4);
+//                                TextView DineIn3 = (TextView) Row.getChildAt(5);
+//                                TextView Stock = (TextView) Row.getChildAt(6);
+//                                TextView DeptCode = (TextView) Row.getChildAt(7);
+//                                TextView CategCode = (TextView) Row.getChildAt(8);
+//                                TextView KitchenCode = (TextView) Row.getChildAt(9);
+//                                TextView Barcode = (TextView) Row.getChildAt(10);
+//                                TextView ImageUri = (TextView) Row.getChildAt(11);
+//                                TextView ItemId = (TextView) Row.getChildAt(16);
+//                                TextView SalesTaxPercent = (TextView) Row.getChildAt(17);
+//                                TextView ServiceTaxPercent = (TextView) Row.getChildAt(18);
+//                                TextView MOU = (TextView) Row.getChildAt(19);
+//
+//                                strItemId = ItemId.getText().toString();
+//                                edtMenuCode.setText(MenuCode.getText().toString());
+//                                txtLongName.setText(LongName.getText());
+//                                itemName_beforeChange_in_update = txtLongName.getText().toString();
+//                                Log.d("Richa1",itemName_beforeChange_in_update);
+//                                //txtShortName.setText(ShortName.getText());
+//                                txtBarcode.setText(Barcode.getText());
+//                                txtDineIn1.setText(DineIn1.getText());
+//                                txtDineIn2.setText(DineIn2.getText());
+//                                txtDineIn3.setText(DineIn3.getText());
+//                                txtStock.setText(Stock.getText());
+//                                strImageUri = ImageUri.getText().toString();
+//
+//                                Cursor crsrDept = dbItems.getDepartment(Integer.valueOf(DeptCode.getText().toString()));
+//                                String deptName = "Select";
+//                                int deptid = 0;
+//                                if (crsrDept.moveToFirst()) {
+//                                    deptName = crsrDept.getString(crsrDept.getColumnIndex("DeptName"));
+//                                    deptid = getIndexDept(deptName + "");
+//                                    spnrDepartment.setSelection(deptid);
+//                                } else {
+//
+//                                    deptid = getIndexDept(deptName + "");
+//                                    spnrDepartment.setSelection(deptid);
+//                                }
+//                                //spnrDepartment.setSelection(Integer.parseInt(DeptCode.getText().toString()));
+//                                ArrayList<String> listCateg = dbItems.getCategoryNameByDeptCode(String.valueOf(deptid));
+//                                loadSpinnerData_cat(listCateg);
+//                                int  deptCode =Integer.parseInt(DeptCode.getText().toString());
+//                                if (deptCode ==0) {
+//                                    spnrCategory.setSelection(0);
+//                                }else {
+//                                    Cursor crsrCateg = dbItems.getCategory(Integer.valueOf(CategCode.getText().toString()));
+//                                    String categName = "";
+//                                    if (crsrCateg.moveToFirst()) {
+//                                        categName = crsrCateg.getString(crsrCateg.getColumnIndex("CategName"));
+//                                    }
+//                                    boolean bool = false;
+//                                    int i =0;
+//                                    for( i =0; !categName.equals("")&&bool == false && i<listCateg.size();i++)
+//                                    {
+//                                        if(categName.equalsIgnoreCase(listCateg.get(i)))
+//                                            bool = true;
+//                                    }
+//                                    /*ArrayAdapter<String> dataAdapter = (ArrayAdapter<String>) spnrCategory.getAdapter();
+//                                    int spinnerPosition = dataAdapter.getPosition(categName);*/
+//                                    if(bool) // true
+//                                    {
+//                                        spnrCategory.setSelection(i-1);
+//                                    }
+//                                    else
+//                                        spnrCategory.setSelection(0);
+//                                }
+//
+//
+//
+//
+//                                spnrKitchen.setSelection(Integer.parseInt(KitchenCode.getText().toString()) );
+//
+//
+//                                imgItemImage.setImageURI(null);
+//                                if (!strImageUri.equalsIgnoreCase("")) { // &&
+//                                    // strImageUri.contains("\\")){
+//                                    imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
+//                                } else {
+//                                    imgItemImage.setImageResource(R.drawable.img_noimage);
+//                                }
+//                                edtItemSalesTax.setText(SalesTaxPercent.getText().toString());
+//                                edtItemServiceTax.setText(ServiceTaxPercent.getText().toString());
+//                                String uom_temp = MOU.getText().toString();
+//                                String uom = "("+uom_temp+")";
+//                                int index = getIndex(uom);
+//                                spnrMOU.setSelection(index);
+//                                btnAdd.setEnabled(false);
+//                                btnEdit.setEnabled(true);
+//                            }
+//                        }
+//                    });
+//
+//                    rowItems.setTag("TAG");
+//
+//                    tblItems.addView(rowItems, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+//                    i++;
+//                }
+//                else
+//                {
+//                    // gst enabled
+//
+//                    /*rowItems.addView(tvSno);
+//                    rowItems.addView(tvMenuCode);
+//                    rowItems.addView(tvLongName);
+//                    rowItems.addView(tvShortName);
+//                    rowItems.addView(tvRate);
+//                    rowItems.addView(tvStock);
+//                    rowItems.addView(tvMOU);
+//                    rowItems.addView(tvTakeAway);
+//                    rowItems.addView(tvPickUp);
+//                    rowItems.addView(tvDelivery);
+//                    rowItems.addView(tvGSTRate);
+//                    rowItems.addView(tvPriceChange);
+//                    rowItems.addView(tvDiscountEnable);
+//                    rowItems.addView(tvBillWithStock);
+//                    rowItems.addView(tvTaxType);
+//                    rowItems.addView(tvDeptCode);
+//                    rowItems.addView(tvCategCode);
+//                    rowItems.addView(tvKitchenCode);
+//                    rowItems.addView(tvSalesTaxId);
+//                    rowItems.addView(tvAdditionalTaxId);
+//                    rowItems.addView(tvOptionalTaxId1);
+//                    rowItems.addView(tvOptionalTaxId2);
+//                    rowItems.addView(tvDiscountId);
+//                    rowItems.addView(tvItemBarcode);
+//                    rowItems.addView(tvImageUri);//24
+//                    rowItems.addView(tvSpace1);//25
+//                    rowItems.addView(imgIcon);//26
+//                    rowItems.addView(tvSpace);//27
+//                    rowItems.addView(btnItemDelete);//28
+//                    rowItems.addView(tvHSNCode_out);//29
+//                    rowItems.addView(tvSupplyType);
+//                    rowItems.addView(tvTaxationType);
+//
+//                    // For Space purpose
+//                    tvSpace = new TextView(myContext);
+//                    tvSpace.setText("              ");
+//                    rowItems.addView(tvSpace);
+//                    rowItems.addView(tvItemId);//33
+//                    rowItems.addView(tvSalesTaxPercent);//34
+//                    rowItems.addView(tvServiceTaxPercent);//35
+//
+//                    rowItems.setOnClickListener(new View.OnClickListener() {
+//
+//                        public void onClick(View v) {
+//                            // TODO Auto-generated method stub
+//
+//                            if (String.valueOf(v.getTag()) == "TAG") {
+//                                TableRow Row = (TableRow) v;
+//
+//                                TextView MenuCode = (TextView) Row.getChildAt(1);
+//                                TextView LongName = (TextView) Row.getChildAt(2);
+//                                TextView ShortName = (TextView) Row.getChildAt(3);
+//                                TextView Rate = (TextView) Row.getChildAt(4);
+//                                TextView Quantity = (TextView) Row.getChildAt(5);
+//                                TextView MOU = (TextView) Row.getChildAt(6);
+//                                TextView TakeAway = (TextView) Row.getChildAt(7);
+//                                TextView PickUp = (TextView) Row.getChildAt(8);
+//                                TextView Delivery = (TextView) Row.getChildAt(9);
+//                                TextView GSTRate = (TextView) Row.getChildAt(10);
+//                                TextView PriceChange = (TextView) Row.getChildAt(11);
+//                                TextView DiscountEnable = (TextView) Row.getChildAt(12);
+//                                TextView BillWithStock = (TextView) Row.getChildAt(13);
+//                                TextView TaxType = (TextView) Row.getChildAt(14);
+//                                TextView DeptCode = (TextView) Row.getChildAt(15);
+//                                TextView CategCode = (TextView) Row.getChildAt(16);
+//                                TextView KitchenCode = (TextView) Row.getChildAt(17);
+//                                TextView SalesTaxId = (TextView) Row.getChildAt(18);
+//                                TextView AdditionalTaxId = (TextView) Row.getChildAt(19);
+//                                TextView OptionalTaxId1 = (TextView) Row.getChildAt(20);
+//                                TextView OptionalTaxId2 = (TextView) Row.getChildAt(21);
+//                                TextView DiscountId = (TextView) Row.getChildAt(22);
+//                                TextView Barcode = (TextView) Row.getChildAt(23);
+//                                TextView ImageUri = (TextView) Row.getChildAt(24);
+//                                TextView SupplyType = (TextView) Row.getChildAt(30);
+//                                TextView HSNCode_out = (TextView) Row.getChildAt(29);
+//                                TextView taxationtype =  (TextView) Row.getChildAt(31);
+//                                TextView ItemId = (TextView) Row.getChildAt(33);
+//                                TextView SalesTaxPercent = (TextView) Row.getChildAt(34);
+//                                TextView ServiceTaxPercent = (TextView) Row.getChildAt(35);
+//
+//                                strItemId = ItemId.getText().toString();
+//                                edtMenuCode.setText(MenuCode.getText());
+//                                txtLongName.setText(LongName.getText());
+//                                //txtShortName.setText(ShortName.getText());
+//                                txtBarcode.setText(Barcode.getText());
+//                                *//*txtDineIn1.setText(DineIn1.getText());
+//                                txtDineIn2.setText(DineIn2.getText());
+//                                txtDineIn3.setText(DineIn3.getText());
+//                                txtStock.setText(Stock.getText());*//*
+//                                strImageUri = ImageUri.getText().toString();
+//
+//                                // gst
+//                                etGstTax.setText(GSTRate.getText());
+//                                etRate.setText(Rate.getText());
+//                                etQuantity.setText(Quantity.getText());
+//                                etHSN.setText(HSNCode_out.getText());
+//                                etDiscount.setText(DiscountId.getText());
+//                                // richa to do
+//                                spnrG_S.setSelection(supplytypeAdapter.getPosition(SupplyType.getText().toString()));
+//                                spnrMOU.setSelection(MOUAdapter.getPosition(MOU.getText().toString()));
+//                                spnrtaxationtype.setSelection(taxationtypeAdapter.getPosition(taxationtype.getText().toString()));
+//
+//                                // gst end
+//                                Cursor crsrDept = dbItems.getDepartment(Integer.valueOf(DeptCode.getText().toString()));
+//                                if(crsrDept.moveToFirst()) {
+//                                    String deptName = crsrDept.getString(crsrDept.getColumnIndex("DeptName"));
+//                                    int deptid = getIndexDept(deptName + "");
+//                                    spnrDepartment.setSelection(deptid);
+//                                } else {
+//                                    String deptName = "Select";
+//                                    int deptid = getIndexDept(deptName + "");
+//                                    spnrDepartment.setSelection(deptid);
+//                                }
+//                                //spnrDepartment.setSelection(Integer.parseInt(DeptCode.getText().toString()));
+//                                Cursor crsrCateg = dbItems.getCategory(Integer.valueOf(CategCode.getText().toString()));
+//                                if(crsrCateg.moveToFirst()) {
+//                                    String categName = crsrCateg.getString(crsrCateg.getColumnIndex("CategName"));
+//                                    int categid = getIndexCateg(categName + "");
+//                                    spnrCategory.setSelection(categid);
+//                                } else {
+//                                    String categName = "Select";
+//                                    int categid = getIndexCateg(categName + "");
+//                                    spnrCategory.setSelection(categid);
+//                                }
+//                                //spnrCategory.setSelection(Integer.parseInt(CategCode.getText().toString()));
+//                                spnrKitchen.setSelection(Integer.parseInt(KitchenCode.getText().toString()) - 1);
+//                                spnrSalesTax.setSelection(Integer.parseInt(SalesTaxId.getText().toString()) - 1);
+//                                spnrAdditionalTax.setSelection(Integer.parseInt(AdditionalTaxId.getText().toString()) - 1);
+//                                spnrOptionalTax1.setSelection(Integer.parseInt(OptionalTaxId1.getText().toString()) - 1);
+//                                spnrOptionalTax2.setSelection(Integer.parseInt(OptionalTaxId2.getText().toString()) - 1);
+//                                spnrDiscount.setSelection(Integer.parseInt(DiscountId.getText().toString()) - 1);
+//
+//                                if (PriceChange.getText().toString().equalsIgnoreCase("Yes")) {
+//                                    chkPriceChange.setChecked(true);
+//                                } else {
+//                                    chkPriceChange.setChecked(false);
+//                                }
+//                                if (DiscountEnable.getText().toString().equalsIgnoreCase("Yes")) {
+//                                    chkDiscountEnable.setChecked(true);
+//                                } else {
+//                                    chkDiscountEnable.setChecked(false);
+//                                }
+//                                if (BillWithStock.getText().toString().equalsIgnoreCase("Yes")) {
+//                                    chkBillWithStock.setChecked(true);
+//                                } else {
+//                                    chkBillWithStock.setChecked(false);
+//                                }
+//
+//                                if (TaxType.getText().toString().equalsIgnoreCase("Forward Tax")) {
+//                                    rbForwardTax.setChecked(true);
+//                                } else if (TaxType.getText().toString().equalsIgnoreCase("Reverse Tax")) {
+//                                    rbReverseTax.setChecked(true);
+//                                }
+//
+//                                imgItemImage.setImageURI(null);
+//                                if (!strImageUri.equalsIgnoreCase("")) { // &&
+//                                    // strImageUri.contains("\\")){
+//                                    imgItemImage.setImageURI(Uri.fromFile(new File(strImageUri)));
+//                                } else {
+//                                    imgItemImage.setImageResource(R.drawable.img_noimage);
+//                                }
+//                                edtItemSalesTax.setText(SalesTaxPercent.getText().toString());
+//                                edtItemServiceTax.setText(ServiceTaxPercent.getText().toString());
+//                                btnAdd.setEnabled(false);
+//                                btnEdit.setEnabled(true);
+//                            }
+//                        }
+//                    });
+//
+//                    rowItems.setTag("TAG");
+//
+//
+//                    tblItems.addView(rowItems, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+//                    i++;*/
+//                }
+//            } while (crsrItems.moveToNext());
+//        } else {
+//            Log.d("DisplayItem", "No Item found");
+//        }
+//
+//    }
 
     private int getIndex(String substring){
 
@@ -1376,13 +1405,67 @@ public class ItemManagementActivity extends WepBaseActivity {
 
 
 
-    private boolean IsItemExists(String ItemFullName, String MenuCode) {
+    private boolean IsItemExists(String ItemFullName, int MenuCode, int type) {
         boolean isItemExists = false;
 
-        for (ItemOutward item : dataList) {
-            if (item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase()) || item.getItemId() == Integer.parseInt(MenuCode)) {
-                isItemExists = true;
-                break;
+        if(type==1){
+            for (ItemOutward item : dataList) {
+                if ( item.getMenuCode() == (MenuCode) && !item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase())){
+                    MsgBox = new MessageDialog(myContext);
+                    MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getLongName() );
+                    isItemExists = true;
+                    break;
+                }
+                else if (item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase()) && item.getMenuCode() != (MenuCode)){
+                    MsgBox = new MessageDialog(myContext);
+                    MsgBox.Show("Inconsistent"," Item "+ItemFullName +" already present with Menu Code "+item.getMenuCode());
+                    isItemExists = true;
+                    break;
+                }else if (item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase()) && item.getMenuCode() == (MenuCode)){
+                    MsgBox = new MessageDialog(myContext);
+                    MsgBox.Show("Inconsistent"," Item "+ItemFullName +" already present with Menu Code "+item.getMenuCode()+
+                            "\n Therefore you cannot add it again");
+                    isItemExists = true;
+                    break;
+                }
+            }
+        }else if(type ==2)
+        {
+            List<String> itemlist = dbItems.getAllItemsNames();
+            List<String> menuCodelist = dbItems.getAllMenuCode();
+            for (ItemOutward item : dataList) {
+                if(itemName_beforeChange_in_update.equalsIgnoreCase(ItemFullName))
+                {
+                    if(item.getMenuCode()==MenuCode && !item.getLongName().equalsIgnoreCase(ItemFullName)){
+                        MsgBox = new MessageDialog(myContext);
+                        MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getLongName() );
+                        isItemExists = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    // itemname is either the new name or existing name
+                    if(itemlist.contains(ItemFullName))
+                    {
+                        MsgBox = new MessageDialog(myContext);
+                        MsgBox.Show("Inconsistent"," Item "+ItemFullName +" already present with Menu Code "+item.getMenuCode());
+                        isItemExists = true;
+                        break;
+                    }/*else if ( menuCodelist.contains(String.valueOf(MenuCode))){
+                        MsgBox = new MessageDialog(myContext);
+                        MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getLongName() );
+                        isItemExists = true;
+                        break;
+                    }*/
+                    /*else if ( item.getMenuCode() == (MenuCode) && !item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase())){
+                        MsgBox = new MessageDialog(myContext);
+                        MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getLongName() );
+                        isItemExists = true;
+                        break;
+                    }*/
+
+                }
             }
         }
         return isItemExists;
@@ -1483,7 +1566,8 @@ public class ItemManagementActivity extends WepBaseActivity {
         if (fgsttax >= 0 && fquantity >= 0) {
             // Type 1 - addItem, Type 2 - updateItem
             if (Type == 1) {
-                if (IsItemExists(strLongName.toUpperCase(), String.valueOf(iMenuCode))) {
+                if (false )/*IsItemExists(strLongName.toUpperCase(), String.valueOf(iMenuCode)))*/
+                {
                     MsgBox.Show("Warning", "Item already present");
                 } else {
 
@@ -1589,7 +1673,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         etHSN.setText("0");
         etGstTax.setText("0");
         etDiscount.setText("0");
-
+        itemName_beforeChange_in_update="";
         spnrMOU.setSelection(0);
         spnrCategory.setSelection(0);
         spnrDepartment.setSelection(0);
@@ -1670,18 +1754,24 @@ public class ItemManagementActivity extends WepBaseActivity {
             }
             else {
                 iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
-                Cursor itemcrsr = dbItems.getItem(iMenuCode);
-                if(itemcrsr.moveToNext())
+                String ItemFullName = txtLongName.getText().toString().toUpperCase();
+                if(IsItemExists( ItemFullName,  iMenuCode,1))
                 {
-                    String name = itemcrsr.getString(itemcrsr.getColumnIndex("ItemName"));
-                    if(!name.equalsIgnoreCase(txtLongName.getText().toString()))
-                    {
-                        MsgBox = new MessageDialog(myContext);
-                        MsgBox.Show("Inconsistent"," Menu Code "+iMenuCode+" already present for item "+name );
-                        return;
-                    }
+                    return;
                 }
             }
+        }else
+        {
+            String ItemFullName = txtLongName.getText().toString().toUpperCase();
+            List<String> itemlist = dbItems.getAllItemsNames();
+            if(itemlist.contains(ItemFullName))
+            {
+                MsgBox = new MessageDialog(myContext);
+                MsgBox.Show("Inconsistent"," Item "+ItemFullName +" already present ");
+                return;
+            }
+        }
+        /*else
         }
 
         /*if (spnrDepartment.getSelectedItem().toString().equals("Select")) {
@@ -1772,16 +1862,16 @@ public class ItemManagementActivity extends WepBaseActivity {
 
     public void EditItem(View v) {
         try {
-            Date d = new SimpleDateFormat("dd-MM-yyyy").parse(businessDate);
+            /*Date d = new SimpleDateFormat("dd-MM-yyyy").parse(businessDate);
             int invoiceno = dbItems.getLastBillNoforDate(String.valueOf(d.getTime()));
             if(invoiceno > 0)
             {
                 // since already billing done for this businessdate, hence stock cannot be updated from here.
                 // to update stock , goto Price & Stock module
                 MsgBox.Show("Restriction", "You cannot update stock after making bill for the day. \n\nTo update stock , " +
-                        "please goto Price & Stock module \n\n Or make dayend to update from here ");
+                        "please goto Price & Stock module \n\n Or make Day End  to update from here ");
                 return;
-            }
+            }*/
 
 
             if (txtLongName.getText().toString().equalsIgnoreCase("")) {
@@ -1801,15 +1891,22 @@ public class ItemManagementActivity extends WepBaseActivity {
                     return;
                 } else {
                     iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
-                    Cursor itemcrsr = dbItems.getItem(iMenuCode);
-                    if (itemcrsr.moveToNext()) {
-                        String name = itemcrsr.getString(itemcrsr.getColumnIndex("ItemName"));
-                        if (!name.equalsIgnoreCase(txtLongName.getText().toString())) {
-                            MsgBox = new MessageDialog(myContext);
-                            MsgBox.Show("Inconsistent", " Menu Code " + iMenuCode + " already present for item " + name);
-                            return;
-                        }
+                    iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
+                    String ItemFullName = txtLongName.getText().toString().toUpperCase();
+                    if(IsItemExists( ItemFullName,  iMenuCode,2))
+                    {
+                        return;
                     }
+                }
+            }else
+            {
+                String ItemFullName = txtLongName.getText().toString().toUpperCase();
+                List<String> itemlist = dbItems.getAllItemsNames();
+                if(itemlist.contains(ItemFullName) && !itemName_beforeChange_in_update.equalsIgnoreCase(ItemFullName))
+                {
+                    MsgBox = new MessageDialog(myContext);
+                    MsgBox.Show("Inconsistent"," Item "+ItemFullName +" already present ");
+                    return;
                 }
             }
 
@@ -2381,7 +2478,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         {
             new AlertDialog.Builder(this)
                     .setTitle("Confirmation")
-                    .setMessage("Do you really want to Delete?")
+                    .setMessage("Are you sure to delete all the existing Items?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -2390,6 +2487,8 @@ public class ItemManagementActivity extends WepBaseActivity {
                             if(lResult>0)
                             {
                                 itemListAdapter.notifyDataSetChanged(dbItems.getAllItem());
+                                dataList.clear();
+                                ResetItem();
                                 Toast.makeText(myContext, "Items Deleted Successfully", Toast.LENGTH_SHORT).show();
                             }
                         }})
