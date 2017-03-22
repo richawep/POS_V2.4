@@ -250,8 +250,9 @@ public class TaxConfigSubActivity extends WepBaseActivity {
                         public void onClick(DialogInterface dialog, int which) {
 
                             TableRow tr = (TableRow) v.getParent();
-                            TextView TaxId = (TextView) tr.getChildAt(1);
-                            long lResult = dbTaxConfigSub.DeleteSubTax(TaxId.getText().toString());
+                            TextView SubTaxId = (TextView) tr.getChildAt(1);
+                            TextView TaxId = (TextView) tr.getChildAt(6);
+                            long lResult = dbTaxConfigSub.DeleteSubTax(SubTaxId.getText().toString());
                             //MsgBox.Show("", "SubTax Deleted Successfully");
                             Toast.makeText(myContext, "SubTax Deleted Successfully", Toast.LENGTH_SHORT).show();
 
