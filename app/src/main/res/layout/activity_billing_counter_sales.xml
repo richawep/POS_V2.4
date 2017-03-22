@@ -194,7 +194,6 @@
                                     android:id="@+id/tvColHSN"
                                     android:layout_width="80dp"
                                     android:layout_height="wrap_content"
-                                    android:text="HSN"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
                                     android:textColor="@color/txtColorAccent" />
 
