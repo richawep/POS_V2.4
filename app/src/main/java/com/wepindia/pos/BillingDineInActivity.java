@@ -1752,7 +1752,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             } while (crsrItem.moveToNext());
 
             CalculateTotalAmount();
-
+            btnPayBill.setEnabled(false);
+            btnPrintBill.setEnabled(false);
             // Display Total Items
             //txtTotalItems.setText(String.valueOf(tblOrderItems.getChildCount()));
 
@@ -3970,9 +3971,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
      *************************************************************************************************************************************/
     public void Tender(View v) {
 
-        if (tvBillAmount.getText().toString().equals("") || tvBillAmount.getText().toString().equals("0.00")) {
+        if (tvBillAmount.getText().toString().equals("") ) {
             MsgBox.Show("Warning", "Please add item to make bill");
-        } else if (chk_interstate.isChecked() && spnr_pos.getSelectedItem().equals("")) {
+        } else if ( tvBillAmount.getText().toString().equals("0.00")) {
+            MsgBox.Show("Warning", "Please make bill of amount greater than 0.00");
+        }else if (chk_interstate.isChecked() && spnr_pos.getSelectedItem().equals("")) {
             MsgBox.Show("Warning", "Please Select Code for Intersate Supply");
         }
         /*else if (jBillingMode== 4 && strPaymentStatus!= null && strPaymentStatus.equalsIgnoreCase("Paid"))
@@ -4722,6 +4725,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         if (tblOrderItems.getChildCount() < 1){
             MsgBox.Show("Warning", "Add Item before Printing Bill");
             proceed =0;
+        } else if (tvBillAmount.getText().toString().equals("") ) {
+            MsgBox.Show("Warning", "Please add item to make bill");
+        } else if ( tvBillAmount.getText().toString().equals("0.00")) {
+            MsgBox.Show("Warning", "Please make bill of amount greater than 0.00");
         }
         else if (jBillingMode==4 )
         {

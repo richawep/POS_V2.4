@@ -1664,6 +1664,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             } while (crsrItem.moveToNext());
 
             CalculateTotalAmount();
+            btnPayBill.setEnabled(false);
+            btnPrintBill.setEnabled(false);
 
             // Display Total Items
             //txtTotalItems.setText(String.valueOf(tblOrderItems.getChildCount()));
@@ -3921,8 +3923,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
      *************************************************************************************************************************************/
     public void Tender(View v) {
 
-        if (tvBillAmount.getText().toString().equals("") || tvBillAmount.getText().toString().equals("0.00")) {
+        if (tvBillAmount.getText().toString().equals("") ) {
             MsgBox.Show("Warning", "Please add item to make bill");
+        } else if ( tvBillAmount.getText().toString().equals("0.00")) {
+            MsgBox.Show("Warning", "Please make bill of amount greater than 0.00");
         }else if (edtCustId.getText().toString().equalsIgnoreCase("0"))
         {
             MsgBox.Show("Warning", "Please add customer to make bill");
@@ -4657,6 +4661,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         if (tblOrderItems.getChildCount() < 1){
             MsgBox.Show("Warning", "Add item before Printing Bill");
             proceed =0;
+        }else if (tvBillAmount.getText().toString().equals("") ) {
+            MsgBox.Show("Warning", "Please add item to make bill");
+        } else if ( tvBillAmount.getText().toString().equals("0.00")) {
+            MsgBox.Show("Warning", "Please make bill of amount greater than 0.00");
         }else if (edtCustId.getText().toString().equals("0")){
             MsgBox.Show("Warning", "Add customer before Printing Bill");
             proceed =0;
