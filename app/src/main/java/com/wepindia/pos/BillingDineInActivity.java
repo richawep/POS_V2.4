@@ -424,7 +424,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     Cursor Category = null;
                     // Get Category
                     //Category = dbBillScreen.getCategories();
-                    Category = dbBillScreen.getCategorybyDept();
+                    //Category = dbBillScreen.getCategorybyDept();
+                    Category = dbBillScreen.getAllCategories();
                     // Load Category to Category List
                     LoadCategories(Category);
                     lstvwDepartment.setAdapter(null);
@@ -1104,6 +1105,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
     private void LoadCategories(Cursor crsrCateg) {
 
         //Cursor cursor = crsrCateg;
+
         String columns[] = new String[]{"_id", "CategName", "DeptCode"};
         int vals[] = new int[]{R.id.tvlstCategCode, R.id.tvlstCategName, R.id.tvlstCategDeptCode};
         categdataAdapter = new SimpleCursorAdapter(this, R.layout.activity_categnames, crsrCateg, columns, vals);

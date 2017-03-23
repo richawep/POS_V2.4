@@ -3697,6 +3697,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Cursor getCategoryItems(int DeptCode) {
         return dbFNB.rawQuery("Select CategCode as _id, CategName, DeptCode from Category where DeptCode=" + DeptCode, null);
     }
+    public Cursor getAllCategories() {
+        return dbFNB.rawQuery("Select CategCode as _id, CategName, DeptCode from Category ", null);
+    }
 
     public Cursor getCategorybyDept() {
         return dbFNB.rawQuery("Select CategCode as _id, CategName, DeptCode from Category where DeptCode not in (Select DeptCode from Department)", null);
