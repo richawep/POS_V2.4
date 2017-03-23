@@ -83,7 +83,7 @@
                     android:layout_width="30dp"
                     android:layout_height="40dp"
                     android:layout_marginRight="10dp"
-                    android:gravity="center"
+
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FFFFFF" />
             </TableRow>

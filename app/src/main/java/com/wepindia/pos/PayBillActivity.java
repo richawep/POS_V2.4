@@ -585,6 +585,8 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
         // set the custom dialog components - text, image and button
         tblPayBill = (TableLayout) PayBillDialog.findViewById(R.id.tblPayBill);
+        TextView tvCaptionPaybillAmount = (TextView) PayBillDialog.findViewById(R.id.tvCaptionPaybillAmount);
+        tvCaptionPaybillAmount.setText("Qty");
         Cursor crsrCoupon = dbPayBill.getPayBillCoupon();
         if (crsrCoupon.moveToFirst()) {
             int i = 1;
@@ -625,6 +627,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     txtCouponQty.setText("0");
                     txtCouponQty.setWidth(80);
                     txtCouponQty.setSelectAllOnFocus(true);
+                    txtCouponQty.setTextColor(Color.parseColor("#000000"));
                     txtCouponQty.setOnKeyListener(CouponQtyKeyPressEvent);
                     txtCouponQty.addTextChangedListener(CouponQtyChangeEvent);
                     rowPayBill.addView(txtCouponQty);
