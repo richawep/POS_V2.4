@@ -72,7 +72,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
     WepButton btnAdd, btnEdit,btnClearCustomer,btnCloseCustomer;
 	TableLayout tblCustomer;
     AutoCompleteTextView txtSearchName;
-
+    String upon_rowClick_Phn = "";
 	// Variables
 	String Id, Name, Phone, Address, LastTransaction, TotalTransaction, CreditAmount, strUserName = "", strCustGSTIN ="";
     private Toolbar toolbar;
@@ -568,6 +568,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
 
 								txtName.setText(rowName.getText());
 								txtPhone.setText(rowPhone.getText());
+                                upon_rowClick_Phn = rowPhone.getText().toString();
 								txtAddress.setText(rowAddress.getText());
 								txtCreditAmount.setText(rowCreditAmount.getText());
                                 txGSTIN.setText(gstin.getText().toString());
@@ -680,7 +681,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
 		txtSearchPhone.setText("");
 		txtSearchName.setText("");
         txGSTIN.setText("");
-
+        upon_rowClick_Phn="";
 		btnAdd.setEnabled(true);
 		btnEdit.setEnabled(false);
 
@@ -719,7 +720,16 @@ public class CustomerDetailActivity extends WepBaseActivity {
 		Address = txtAddress.getText().toString();
 		CreditAmount = txtCreditAmount.getText().toString();
         String GSTIN = txGSTIN.getText().toString();
-
+        if(!Phone.equalsIgnoreCase(upon_rowClick_Phn))
+        {
+            Cursor cursor = dbCustomer.getCustomer(Phone);
+            if(cursor!=null && cursor.moveToFirst())
+            {
+                String name = cursor.getString(cursor.getColumnIndex("CustName"));
+                MsgBox.Show("Error", name+" already registered with Phn : "+Phone );
+                return;
+            }
+        }
 		Log.d("Customer Selection", "Id: " + Id + " Name: " + Name + " Phone:" + Phone + " Address:" + Address
 				+ " Last Transn.:" + LastTransaction + " Total Transan.:" + TotalTransaction+" GSTIN : "+GSTIN);
 		int iResult = dbCustomer.updateCustomer(Address, Phone, Name, Integer.parseInt(Id),
