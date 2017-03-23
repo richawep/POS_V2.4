@@ -3392,8 +3392,16 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
         // Date
         //objBillDetail.setDate(String.valueOf(d.getTime()));
-        objBillDetail.setDate(tvDate.getText().toString());
-        Log.d("InsertBillDetail", "Date:" + d.getTime());
+        try {
+            String date_today = tvDate.getText().toString();
+            //Log.d("Date ", date_today);
+            Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date_today);
+            objBillDetail.setDate(String.valueOf(date1.getTime()));
+            Log.d("InsertBillDetail", "Date:" + objBillDetail.getDate());
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         // Time
         objBillDetail.setTime(String.format("%tR", Time));
@@ -4875,6 +4883,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
                     if(reprintBillingMode == 0) {
                         item.setStrBillingModeName(CounterSalesCaption);
+                        item.setDate(tvDate.getText().toString());
+                        item.setTime(TimeUtil.getTime());
                     }else
                     {
                         switch (reprintBillingMode)
@@ -4887,6 +4897,23 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                                 break;
                             case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
                                 break;
+                        }
+                        try{
+                        Cursor c  = dbBillScreen.getBillDetail(orderId);
+                        if(c!=null && c.moveToNext()){
+
+                            String time = c.getString(c.getColumnIndex("Time"));
+                            item.setTime(time);
+                            String milli = c.getString(c.getColumnIndex("InvoiceDate"));
+                            long ldate = Long.parseLong(milli);
+                            Date date = new Date(ldate);
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                            String date_s = formatter.format(date);
+                            item.setDate(date_s);
+                            item.setTime(time);
+                        }}catch(Exception e)
+                        {
+                            e.printStackTrace();
                         }
                     }
                     String prf = Preferences.getSharedPreferencesForPrint(BillingDineInActivity.this).getString("bill", "--Select--");
