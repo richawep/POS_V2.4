@@ -106,7 +106,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     public boolean isPrinterAvailable = false;
     private String strPaymentStatus;
     private int PrintBillPayment = 0;
-    private String CounterSalesCaption;
+    String HomeDeliveryCaption="", TakeAwayCaption="", DineInCaption = "", CounterSalesCaption = "";
     float fTotalsubTaxPercent = 0;
     int iTaxType = 0, iTotalItems = 0, iCustId = 0, iTokenNumber = 0;
     float fChangePayment = 0;
@@ -114,7 +114,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     float fTotalDiscount = 0, fCashPayment = 0, fCardPayment = 0, fCouponPayment = 0, fPettCashPayment = 0, fPaidTotalPayment = 0;
     int BillwithStock = 0;
     String businessDate="";
-
+    int reprintBillingMode =0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -385,6 +385,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     private void ClearAll()
     {
+        reprintBillingMode=0;
         tvSubTotal.setText("0.00");
         tvTaxTotal.setText("0.00");
         tvServiceTaxTotal.setText("0.00");
@@ -538,7 +539,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private void init() {
         if (crsrSettings!=null && crsrSettings.moveToFirst())
         {
+            DineInCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeDineInCaption"));
             CounterSalesCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeCounterSalesCaption"));
+            HomeDeliveryCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeHomeDeliveryCaption"));
+            TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
+
             if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1)
             {
                 Date date1 = new Date();
@@ -2464,21 +2469,37 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     item.setTotalSalesTaxAmount(tvTaxTotal.getText().toString());
                     item.setTotalServiceTaxAmount(tvServiceTaxTotal.getText().toString());
 
-                    String billingmode= "";
-                    billingmode = CounterSalesCaption;
-                    /*switch (jBillingMode)
+                    if(reprintBillingMode == 0) {
+                        item.setStrBillingModeName(CounterSalesCaption);
+                    }else
                     {
-                        case 1 : billingmode = DineInCaption;
-                            break;
-                        case 2 :
-                            break;
-                        case 3 : billingmode = TakeAwayCaption;
-                            break;
-                        case 4 : billingmode = HomeDeliveryCaption;
-                            break;
-                    }*/
-                    billingmode = CounterSalesCaption;
-                    item.setStrBillingModeName(billingmode);
+                        switch (reprintBillingMode)
+                        {
+                            case 1 : item.setStrBillingModeName(DineInCaption);
+                                break;
+                            case 2 : item.setStrBillingModeName(CounterSalesCaption);
+                                break;
+                            case 3 : item.setStrBillingModeName(TakeAwayCaption);
+                                break;
+                            case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
+                                break;
+                        }
+                    }
+//                    String billingmode= "";
+//                    billingmode = CounterSalesCaption;
+//                    /*switch (jBillingMode)
+//                    {
+//                        case 1 : billingmode = DineInCaption;
+//                            break;
+//                        case 2 :
+//                            break;
+//                        case 3 : billingmode = TakeAwayCaption;
+//                            break;
+//                        case 4 : billingmode = HomeDeliveryCaption;
+//                            break;
+//                    }*/
+//                    billingmode = CounterSalesCaption;
+//                    item.setStrBillingModeName(billingmode);
                     String prf = Preferences.getSharedPreferencesForPrint(BillingCounterSalesActivity.this).getString("bill", "--Select--");
                 /*Intent intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);*/
                     Intent intent = null;
@@ -3021,7 +3042,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                             if (LoadItemForReprint.moveToFirst()) {
                                 fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
                                 float discper = db.getDiscountPercentForBillNumber(billNo);
+                                reprintBillingMode = db.getBillingModeBillNumber(billNo);
                                 tvDiscountPercentage.setText(String.format("%.2f",discper));
+                                tvDiscountAmount.setText(String.format("%.2f",fTotalDiscount));
                                 editTextOrderNo.setText(txtReprintBillNo.getText().toString());
                                 LoadItemsForReprintBill(LoadItemForReprint);
                                 Cursor crsrBillDetail = db.getBillDetails(Integer.valueOf(txtReprintBillNo.getText().toString()));

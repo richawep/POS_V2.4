@@ -133,7 +133,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
     float fTotalsubTaxPercent = 0;
     Button btndepart, btncateg, btnitem;
     TextView tvdeptline, tvcategline;
-    String HomeDeliveryCaption="", TakeAwayCaption="";
+    String HomeDeliveryCaption="", TakeAwayCaption="", DineInCaption = "", CounterSalesCaption = "";
     int iKOTNo = -1;
     int iPrintKOTStatus = 0;
     public boolean isPrinterAvailable = false;
@@ -142,6 +142,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
     String businessDate="";
     int BillwithStock = 0;
 
+    int reprintBillingMode =0;
     String FASTBILLINGMODE = "1"; // by default setting to items only mode
     ImageAdapter myImageAdapter = null;
 
@@ -185,6 +186,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
             crsrSettings = db.getBillSettings();
             if (crsrSettings.moveToFirst()) {
+                DineInCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeDineInCaption"));
+                CounterSalesCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeCounterSalesCaption"));
                 HomeDeliveryCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeHomeDeliveryCaption"));
                 TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
                 if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1)
@@ -2025,7 +2028,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
     private void ClearAll() {
 
         txtSearchItemBarcode.setText("");
-
+        reprintBillingMode=0;
         tvSubUdfValue.setText("1");
         tvSubTotal.setText("0.00");
         tvTaxTotal.setText("0.00");
@@ -4059,6 +4062,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
                                 tvDiscountPercentage.setText(String.format("%.2f",db.getDiscountPercentForBillNumber(billNo)));
                                 tvBillNumber.setText(txtReprintBillNo.getText().toString());
+                                reprintBillingMode = db.getBillingModeBillNumber(billNo);
                                 LoadItemsForReprintBill(LoadItemForReprint);
                                 Cursor crsrBillDetail = dbBillScreen.getBillDetail(Integer.valueOf(txtReprintBillNo.getText().toString()));
                                 if (crsrBillDetail.moveToFirst()) {
@@ -4777,11 +4781,25 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     item.setTotalsubTaxPercent(fTotalsubTaxPercent);
                     item.setTotalSalesTaxAmount(tvTaxTotal.getText().toString());
                     item.setTotalServiceTaxAmount(tvServiceTaxTotal.getText().toString());
-
-                    if(jBillingMode ==4)
-                        item.setStrBillingModeName(HomeDeliveryCaption);
-                    else if(jBillingMode ==3)
-                        item.setStrBillingModeName(TakeAwayCaption);
+                    if(reprintBillingMode == 0) {
+                        if (jBillingMode == 4)
+                            item.setStrBillingModeName(HomeDeliveryCaption);
+                        else if (jBillingMode == 3)
+                            item.setStrBillingModeName(TakeAwayCaption);
+                    }else
+                    {
+                        switch (reprintBillingMode)
+                        {
+                            case 1 : item.setStrBillingModeName(DineInCaption);
+                                break;
+                            case 2 : item.setStrBillingModeName(CounterSalesCaption);
+                                break;
+                            case 3 : item.setStrBillingModeName(TakeAwayCaption);
+                                break;
+                            case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
+                                break;
+                        }
+                    }
                     String prf = Preferences.getSharedPreferencesForPrint(BillingHomeDeliveryActivity.this).getString("bill", "--Select--");
                 /*Intent intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);*/
                     Intent intent = null;

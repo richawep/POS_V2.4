@@ -10,26 +10,16 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="excep" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c64221d-bd8c-41a4-bb92-8417c19acc06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_home_delivery_billing.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_home_delivery_billing.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/utils/PrinterUtil.java" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/utils/PrinterUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillDetail.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillDetail.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/PrintKotBillItem.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/PrintKotBillItem.java" />
     </list>
     <ignored path="Feb10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,54 +58,11 @@
       <file leaf-file-name="BillingDineInActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="2228" column="22" selection-start-line="2228" selection-start-column="10" selection-end-line="2228" selection-end-column="22" />
+            <state relative-caret-position="120">
+              <caret line="698" column="22" selection-start-line="698" selection-start-column="22" selection-end-line="698" selection-end-column="22" />
               <folding>
-                <element signature="e#15906#16458#0" expanded="true" />
-                <element signature="e#16457#16458#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HomeActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/HomeActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="440" column="61" selection-start-line="440" selection-start-column="61" selection-end-line="440" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TableActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="638" column="0" selection-start-line="638" selection-start-column="0" selection-end-line="638" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BillingScreenActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="878" column="69" selection-start-line="878" selection-start-column="69" selection-end-line="878" selection-end-column="69" />
-              <folding>
-                <element signature="e#25873#26420#0" expanded="true" />
-                <element signature="e#26419#26420#0" expanded="true" />
-                <element signature="e#26470#27017#0" expanded="true" />
-                <element signature="e#27016#27017#0" expanded="true" />
-                <element signature="e#28137#29055#0" expanded="true" />
-                <element signature="e#29054#29055#0" expanded="true" />
-                <element signature="e#29099#29731#0" expanded="true" />
-                <element signature="e#29730#29731#0" expanded="true" />
-                <element signature="e#29774#31162#0" expanded="true" />
-                <element signature="e#31161#31162#0" expanded="true" />
-                <element signature="e#47219#47366#0" expanded="true" />
-                <element signature="e#47365#47366#0" expanded="true" />
+                <element signature="e#16389#16941#0" expanded="true" />
+                <element signature="e#16940#16941#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -124,8 +71,8 @@
       <file leaf-file-name="BillingCounterSalesActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="129" column="39" selection-start-line="129" selection-start-column="8" selection-end-line="129" selection-end-column="39" />
+            <state relative-caret-position="154">
+              <caret line="3046" column="95" selection-start-line="3042" selection-start-column="32" selection-end-line="3046" selection-end-column="95" />
               <folding />
             </state>
           </provider>
@@ -134,19 +81,12 @@
       <file leaf-file-name="BillingHomeDeliveryActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="3620" column="23" selection-start-line="3620" selection-start-column="23" selection-end-line="3620" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DatabaseHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="4471" column="0" selection-start-line="4471" selection-start-column="0" selection-end-line="4471" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="120">
+              <caret line="144" column="30" selection-start-line="144" selection-start-column="4" selection-end-line="144" selection-end-column="30" />
+              <folding>
+                <element signature="e#32864#33012#0" expanded="true" />
+                <element signature="e#33011#33012#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -5317,11 +5257,11 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home_delivery_billing.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity.java" />
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
       </list>
     </option>
@@ -5769,20 +5709,6 @@
       <option name="presentableId" value="Default" />
       <updated>1486752611947</updated>
     </task>
-    <task id="LOCAL-00009" summary="ef">
-      <created>1487253030876</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1487253030876</updated>
-    </task>
-    <task id="LOCAL-00010" summary="ef">
-      <created>1487253535788</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1487253535788</updated>
-    </task>
     <task id="LOCAL-00011" summary="fdvb rfvb">
       <created>1487255470108</created>
       <option name="number" value="00011" />
@@ -6112,7 +6038,21 @@
       <option name="project" value="LOCAL" />
       <updated>1490244271306</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="including discount percent in bill for all billing modules">
+      <created>1490269108205</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1490269108205</updated>
+    </task>
+    <task id="LOCAL-00059" summary="invoicedate in outwardsupplyledger">
+      <created>1490270135905</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1490270135905</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6131,13 +6071,13 @@
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40554592" sideWeight="0.5030534" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5753899" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27383015" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18890814" sideWeight="0.49694657" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4662045" sideWeight="0.49694657" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32885906" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33102253" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -6149,7 +6089,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928944" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32061067" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24809161" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977098" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -6176,8 +6116,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1. rectifying the look on business date different from system date" />
-    <MESSAGE value="1. PayBillActivity.java - controlling the display of toast poped up upon entering this screen" />
     <MESSAGE value="1. BillNoReset Issue fixed.&#10;2. Also order in which Billwise Report and Transaction Report is displayed is made inorder od ascending date . Earlier it was in order of BillNo.&#10;" />
     <MESSAGE value="1. Making Single tax (Sales Tax + Service Tax) in Billwise &amp; itemwise Report. Earlier Sales Tax and Service tax is shown separately." />
     <MESSAGE value="Controlling Stock Activity look. Earlier Dept/cat box are shown ireespective of fast billing mode" />
@@ -6201,7 +6139,9 @@
     <MESSAGE value="total tax percent not changing upon deleting first subTax" />
     <MESSAGE value="Discount amt cannot be greater than bill amount, if so, than discount is not applicable" />
     <MESSAGE value="displaying date as per businessDate in DineIn Bill" />
-    <option name="LAST_COMMIT_MESSAGE" value="displaying date as per businessDate in DineIn Bill" />
+    <MESSAGE value="including discount percent in bill for all billing modules" />
+    <MESSAGE value="invoicedate in outwardsupplyledger" />
+    <option name="LAST_COMMIT_MESSAGE" value="invoicedate in outwardsupplyledger" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6250,85 +6190,85 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java</url>
-          <line>4052</line>
+          <line>4062</line>
           <properties />
           <option name="timeStamp" value="171" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java</url>
-          <line>4148</line>
+          <line>4169</line>
           <properties />
           <option name="timeStamp" value="172" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
-          <line>2450</line>
+          <line>2463</line>
           <properties />
           <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java</url>
-          <line>244</line>
+          <line>247</line>
           <properties />
           <option name="timeStamp" value="174" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java</url>
-          <line>2046</line>
+          <line>2049</line>
           <properties />
           <option name="timeStamp" value="175" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java</url>
-          <line>303</line>
+          <line>308</line>
           <properties />
           <option name="timeStamp" value="176" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java</url>
-          <line>2227</line>
+          <line>2232</line>
           <properties />
           <option name="timeStamp" value="177" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java</url>
-          <line>3632</line>
+          <line>3645</line>
           <properties />
           <option name="timeStamp" value="178" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java</url>
-          <line>4501</line>
+          <line>4522</line>
           <properties />
           <option name="timeStamp" value="179" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java</url>
-          <line>7180</line>
+          <line>7201</line>
           <properties />
           <option name="timeStamp" value="180" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java</url>
-          <line>4466</line>
+          <line>4487</line>
           <properties />
           <option name="timeStamp" value="181" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java</url>
-          <line>7018</line>
+          <line>7039</line>
           <properties />
           <option name="timeStamp" value="182" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java</url>
-          <line>4508</line>
+          <line>4529</line>
           <properties />
           <option name="timeStamp" value="184" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java</url>
-          <line>4540</line>
+          <line>4561</line>
           <properties />
           <option name="timeStamp" value="185" />
         </line-breakpoint>
@@ -6350,11 +6290,17 @@
           <properties />
           <option name="timeStamp" value="191" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
+          <line>3221</line>
+          <properties />
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="192" />
+      <option name="time" value="193" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -6753,22 +6699,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="3620" column="23" selection-start-line="3620" selection-start-column="23" selection-end-line="3620" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="129" column="39" selection-start-line="129" selection-start-column="8" selection-end-line="129" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableBookingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -6801,14 +6731,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="4471" column="0" selection-start-line="4471" selection-start-column="0" selection-end-line="4471" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-24/android/app/Instrumentation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
@@ -6825,27 +6747,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="878" column="69" selection-start-line="878" selection-start-column="69" selection-end-line="878" selection-end-column="69" />
-          <folding>
-            <element signature="e#25873#26420#0" expanded="true" />
-            <element signature="e#26419#26420#0" expanded="true" />
-            <element signature="e#26470#27017#0" expanded="true" />
-            <element signature="e#27016#27017#0" expanded="true" />
-            <element signature="e#28137#29055#0" expanded="true" />
-            <element signature="e#29054#29055#0" expanded="true" />
-            <element signature="e#29099#29731#0" expanded="true" />
-            <element signature="e#29730#29731#0" expanded="true" />
-            <element signature="e#29774#31162#0" expanded="true" />
-            <element signature="e#31161#31162#0" expanded="true" />
-            <element signature="e#47219#47366#0" expanded="true" />
-            <element signature="e#47365#47366#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
@@ -6854,13 +6755,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="4139" column="32" selection-start-line="4139" selection-start-column="32" selection-end-line="4139" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="196" column="117" selection-start-line="195" selection-start-column="16" selection-end-line="196" selection-end-column="117" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="144" column="30" selection-start-line="144" selection-start-column="4" selection-end-line="144" selection-end-column="30" />
+          <folding>
+            <element signature="e#32864#33012#0" expanded="true" />
+            <element signature="e#33011#33012#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="3046" column="95" selection-start-line="3042" selection-start-column="32" selection-end-line="3046" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="2228" column="22" selection-start-line="2228" selection-start-column="10" selection-end-line="2228" selection-end-column="22" />
+        <state relative-caret-position="120">
+          <caret line="698" column="22" selection-start-line="698" selection-start-column="22" selection-end-line="698" selection-end-column="22" />
           <folding>
-            <element signature="e#15906#16458#0" expanded="true" />
-            <element signature="e#16457#16458#0" expanded="true" />
+            <element signature="e#16389#16941#0" expanded="true" />
+            <element signature="e#16940#16941#0" expanded="true" />
           </folding>
         </state>
       </provider>

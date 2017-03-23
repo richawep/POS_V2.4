@@ -4123,6 +4123,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             return crsr;
         }
     }
+    public int getBillingModeBillNumber(int InvoiceNo) {
+        // return dbFNB.rawQuery("Select * from BillItem, BillDetail where BillDetail.BillNumber = '" + BillNumber + "' AND BillItem.BillNumber = BillDetail.BillNumber", null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor crsr = null;
+        int discount  = 0;
+        try
+        {
+            crsr = db.rawQuery("Select * from " + TBL_BILLDETAIL + " where InvoiceNo = '" + InvoiceNo + "'", null);
+            if(crsr!= null && crsr.moveToFirst())
+                discount = crsr.getInt(crsr.getColumnIndex(KEY_BillingMode));
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            discount = 0;
+        }
+        finally {
+            return discount;
+        }
+    }
     public float getDiscountAmountForBillNumber(int InvoiceNo) {
         // return dbFNB.rawQuery("Select * from BillItem, BillDetail where BillDetail.BillNumber = '" + BillNumber + "' AND BillItem.BillNumber = BillDetail.BillNumber", null);
         SQLiteDatabase db = this.getReadableDatabase();
