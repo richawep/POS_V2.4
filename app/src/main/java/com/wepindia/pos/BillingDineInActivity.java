@@ -4821,7 +4821,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     } else {
                         item.setPaymentStatus(strPaymentStatus);
                     }
-                    item.setDate(TimeUtil.getDate());
+                    item.setDate(tvDate.getText().toString());
                     item.setTime(TimeUtil.getTime());
 
                     item.setTotalsubTaxPercent(fTotalsubTaxPercent);
