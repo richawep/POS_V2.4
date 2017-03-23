@@ -2076,7 +2076,15 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             Log.d("InsertBillItems", "Sub Total :" + subtotal);
 
             // Date
-            objBillItem.setInvoiceDate(String.valueOf(d.getTime()));
+            String date_today = tvDate.getText().toString();
+            //Log.d("Date ", date_today);
+            try {
+                Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date_today);
+                objBillItem.setInvoiceDate(String.valueOf(date1.getTime()));
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
 
             // cust name
             String custname = editTextName.getText().toString();
@@ -3188,7 +3196,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         double dSubTotal = 0, dTaxTotal = 0, dModifierAmt = 0, dServiceTaxAmt = 0, dOtherCharges = 0, dTaxAmt = 0, dSerTaxAmt = 0;
         float dTaxPercent = 0, dSerTaxPercent = 0;
-        //double discountamt = Double.parseDouble(tvDiscountAmount.getText().toString());
+        double discountamt = Double.parseDouble(tvDiscountAmount.getText().toString());
         // Item wise tax calculation ----------------------------
         for (int iRow = 0; iRow < tblOrderItems.getChildCount(); iRow++) {
 
@@ -3240,7 +3248,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     }
 
                     tvSubTotal.setText(String.format("%.2f", dSubTotal));
-                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dTaxTotal + dServiceTaxAmt + dOtherCharges));
+                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dTaxTotal + dServiceTaxAmt + dOtherCharges- discountamt));
                 } else {
 
                     if (false) {
@@ -3252,7 +3260,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         tvServiceTaxTotal.setText(String.format("%.2f", dSerTaxAmt));
                     }
                     tvSubTotal.setText(String.format("%.2f", dSubTotal));
-                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dTaxAmt + dSerTaxAmt + dOtherCharges));
+                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dTaxAmt + dSerTaxAmt + dOtherCharges-discountamt));
                 }
             } else {
                 if (crsrSettings.getString(crsrSettings.getColumnIndex("TaxType")).equalsIgnoreCase("1")) {
@@ -3265,7 +3273,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         tvServiceTaxTotal.setText(String.format("%.2f", dServiceTaxAmt));
                     }
                     tvSubTotal.setText(String.format("%.2f", dSubTotal));
-                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dOtherCharges));
+                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dOtherCharges-discountamt));
 
                 } else {
                     tvSubTotal.setText(String.format("%.2f", dSubTotal));
@@ -3279,7 +3287,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     }
                     tvTaxTotal.setText(String.format("%.2f", dTaxAmt));
                     tvServiceTaxTotal.setText(String.format("%.2f", dSerTaxAmt));
-                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dOtherCharges));
+                    tvBillAmount.setText(String.format("%.2f", dSubTotal + dOtherCharges-discountamt));
                 }
             }
         }

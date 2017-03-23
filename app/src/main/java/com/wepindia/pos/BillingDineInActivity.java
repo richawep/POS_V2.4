@@ -66,6 +66,7 @@ import com.wepindia.pos.utils.StockOutwardMaintain;
 import com.wepindia.printers.WepPrinterBaseActivity;
 import com.wepindia.printers.utils.TimeUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -3325,7 +3326,15 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             Log.d("InsertBillItems", "Sub Total :" + subtotal);
 
             // Date
-            objBillItem.setInvoiceDate(String.valueOf(d.getTime()));
+            String date_today = tvDate.getText().toString();
+            //Log.d("Date ", date_today);
+            try {
+                Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date_today);
+                objBillItem.setInvoiceDate(String.valueOf(date1.getTime()));
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
 
             // cust name
             String custname = edtCustName.getText().toString();

@@ -3021,8 +3021,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             Log.d("InsertBillItems", "Sub Total :" + subtotal);
 
             // Date
-            objBillItem.setInvoiceDate(String.valueOf(d.getTime()));
-
+            String date_today = tvDate.getText().toString();
+            //Log.d("Date ", date_today);
+            try {
+                Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date_today);
+                objBillItem.setInvoiceDate(String.valueOf(date1.getTime()));
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
             // cust name
             String custname = edtCustName.getText().toString();
             objBillItem.setCustName(custname);
