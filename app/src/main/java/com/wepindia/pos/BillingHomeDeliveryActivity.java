@@ -94,7 +94,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
     private ItemsAdapter itemsAdapter;
     TableLayout tblOrderItems;
     TextView tvSalesTax;
-    TextView tvServiceTax, tvDiscountAmount;
+    TextView tvServiceTax, tvDiscountAmount,  tvDiscountPercentage;
     WepButton btnSplitBill, btnSaveKOT, btnPayBill, btnDeleteKOT,btnDeleteBill, btnDeliveryStatus, btnPrintKOT, btnPrintBill,
             btnClear, btnReprint;
     TextView tvDate, tvSubTotal, tvTaxTotal, tvServiceTaxTotal, tvBillAmount, tvSubUdfValue,txtOthercharges;
@@ -164,7 +164,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         TextView textViewCenter = (TextView) toolbar.findViewById(com.wep.common.app.R.id.textViewCenter);
         tvSalesTax = (TextView) findViewById(R.id.tvTaxTotal);
         tvServiceTax = (TextView) findViewById(R.id.tvServiceTax);
-        tvDiscountAmount = (TextView) findViewById(R.id.tvDiscountAmount);
+
         myContext = this;
         dbBillScreen.OpenDatabase();
         try {
@@ -240,6 +240,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             loadAutoCompleteData();
             loadItems(0);
             // Get bill number
+            Log.d("Richa_init : ", String.valueOf(dbBillScreen.getNewBillNumber()));
             int iBillNumber = db.getNewBillNumber();
             tvBillNumber.setText(String.valueOf(iBillNumber));
 
@@ -715,6 +716,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         tvServiceTaxTotal = (TextView) findViewById(R.id.tvServiceTaxValue);
         tvBillAmount = (TextView) findViewById(R.id.tvBillTotalValue);
         txtOthercharges = (TextView) findViewById(R.id.txtOthercharges);
+        tvDiscountPercentage = (TextView) findViewById(R.id.tvDiscountPercentage);
+        tvDiscountAmount = (TextView) findViewById(R.id.tvDiscountAmount);
 
         btnDeleteBill = (WepButton) findViewById(R.id.btn_DeleteBill);
         btnPayBill = (WepButton) findViewById(R.id.btn_PayBill);
@@ -2027,6 +2030,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         tvSubTotal.setText("0.00");
         tvTaxTotal.setText("0.00");
         tvDiscountAmount.setText("0.00");
+        tvDiscountPercentage.setText("0.00");
         tvServiceTaxTotal.setText("0.00");
         tvBillAmount.setText("0.00");
         //chk_interstate.setChecked(false);
@@ -3121,6 +3125,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         objBillDetail.setBillAmount(Float.parseFloat(billamt_temp));
         Log.d("InsertBillDetail", "Bill Amount:" + tvBillAmount.getText().toString());
 
+        // Discount Percentage
+        objBillDetail.setTotalDiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
+        Log.d("InsertBillDetail", "Discount Percentage:" + objBillDetail.getTotalDiscountPercentage());
+
         // Discount Amount
         float discount = Float.parseFloat(tvDiscountAmount.getText().toString());
         objBillDetail.setTotalDiscountAmount(discount);
@@ -4042,6 +4050,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
                             if (LoadItemForReprint.moveToFirst()) {
                                 fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
+                                tvDiscountPercentage.setText(String.format("%.2f",db.getDiscountPercentForBillNumber(billNo)));
                                 tvBillNumber.setText(txtReprintBillNo.getText().toString());
                                 LoadItemsForReprintBill(LoadItemForReprint);
                                 Cursor crsrBillDetail = dbBillScreen.getBillDetail(Integer.valueOf(txtReprintBillNo.getText().toString()));
@@ -4233,7 +4242,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
                         strComplimentaryReason = data.getStringExtra(PayBillActivity.COMPLIMENTARY_REASON);
                         strOrderDelivered = data.getBooleanExtra("ORDER_DELIVERED",false);
-                       // dDiscPercent = data.getFloatExtra(PayBillActivity.DISCOUNT_PERCENT, 0);
+                        dDiscPercent = data.getFloatExtra("DISCOUNT_PERCENTAGE", 0);
                         fCashPayment = data.getFloatExtra(PayBillActivity.TENDER_CASH_VALUE, 0);
                         fCardPayment = data.getFloatExtra(PayBillActivity.TENDER_CARD_VALUE, 0);
                         fCouponPayment = data.getFloatExtra(PayBillActivity.TENDER_COUPON_VALUE, 0);
@@ -4251,6 +4260,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             Log.v("Tender Result", "Discounted:" + isDiscounted);
                             Log.v("Tender Result", "Discount Amount:" + fTotalDiscount);
                             tvDiscountAmount.setText(String.valueOf(fTotalDiscount));
+                            tvDiscountPercentage.setText(String.valueOf(dDiscPercent));
                             float total = Float.parseFloat(tvBillAmount.getText().toString());
                             //total = Math.round(total);
                             total -= fTotalDiscount;
@@ -4755,7 +4765,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     }
                     item.setDate(businessDate);
                     item.setTime(TimeUtil.getTime());
-
+                    item.setdiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
                     item.setFdiscount(fTotalDiscount);
                     item.setTotalsubTaxPercent(fTotalsubTaxPercent);
                     item.setTotalSalesTaxAmount(tvTaxTotal.getText().toString());

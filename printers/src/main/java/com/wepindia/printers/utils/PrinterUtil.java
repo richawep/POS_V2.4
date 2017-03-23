@@ -499,7 +499,16 @@ public class PrinterUtil {
         esc.addText("==============================================="+"\n");
         esc.addText(getSpaceFormater("Sub-Total",String.format("%.2f",item.getSubTotal()),45,1)+"\n");
         float discount = item.getFdiscount();
-        if (discount > 0)
+        float discountPercentage = item.getdiscountPercentage();
+        if(discountPercentage > 0)
+        {
+            String DiscName = getPostAddedSpaceFormat("","Discount Amount",23,1);
+            String DiscPercent = getPostAddedSpaceFormat("","@ " + String.format("%.2f",discountPercentage) + " %",15,1);
+            String DiscValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",discount),7,1),8 ,1);
+            String pre = DiscName + DiscPercent + DiscValue;
+            esc.addText(pre+"\n");
+        }
+        else if (discount > 0)
         {
             esc.addText(getSpaceFormater("Discount Amount",String.format("%.2f",discount),45,1)+"\n");
         }
@@ -531,7 +540,7 @@ public class PrinterUtil {
             if(billKotItem.getPercent()> 0)
             {
                 String TxName = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getTxName()),23,1);
-                String TxPercent = getPostAddedSpaceFormat("","@ " + String.valueOf(billKotItem.getPercent()) + " %",15,1);
+                String TxPercent = getPostAddedSpaceFormat("","@ " + String.format("%.2f", billKotItem.getPercent()) + " %",15,1);
                 //String TxValue = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getPrice()),8,1);
                 String TxValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getPrice()),7,1),8 ,1);
 

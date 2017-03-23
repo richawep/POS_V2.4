@@ -100,7 +100,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private TableLayout tblOrderItems;
     private String GSTEnable = "", HSNEnable_out = "", POSEnable = "";
     private Cursor crsrSettings = null;
-    private TextView textViewOtherCharges,tvTaxTotal,tvServiceTaxTotal,tvSubTotal,tvBillAmount,tvDate, tvDiscountAmount;
+    private TextView textViewOtherCharges,tvTaxTotal,tvServiceTaxTotal,tvSubTotal,tvBillAmount,tvDate, tvDiscountAmount, tvDiscountPercentage;
     private String fastBillingMode = "1";
     private String customerId = "0";
     public boolean isPrinterAvailable = false;
@@ -143,6 +143,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         tvTaxTotal = (TextView) findViewById(R.id.tvTaxTotalValue);
         tvServiceTaxTotal = (TextView) findViewById(R.id.tvServiceTaxValue);
         tvDiscountAmount = (TextView) findViewById(R.id.tvDiscountAmount);
+        tvDiscountPercentage = (TextView) findViewById(R.id.tvDiscountPercentage);
         tvSubTotal = (TextView) findViewById(R.id.tvSubTotalValue);
         tvBillAmount = (TextView) findViewById(R.id.tvBillTotalValue);
 
@@ -389,6 +390,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         tvServiceTaxTotal.setText("0.00");
         tvBillAmount.setText("0.00");
         tvDiscountAmount.setText("0.00");
+        tvDiscountPercentage.setText("0.00");
         editTextName.setText("");
         editTextMobile.setText("");
         editTextAddress.setText("");
@@ -2079,7 +2081,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             // cust name
             String custname = editTextName.getText().toString();
             objBillItem.setCustName(custname);
-            Log.d("InsertBillDetail", "CustName :" + custname);
+            Log.d("InsertBillItems", "CustName :" + custname);
 
             // cust StateCode
             //String custStateCode =spnr_pos.getSelectedItem().toString();
@@ -2090,7 +2092,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 custStateCode = str.substring(length - 2, length);
             }*/
             objBillItem.setCustStateCode(custStateCode);
-            Log.d("InsertBillDetail", "CustStateCode :" + custStateCode);
+            Log.d("InsertBillItems", "CustStateCode :" + custStateCode);
 
             // BusinessType
             /*if (etCustGSTIN.getText().toString().equals("")) {
@@ -2103,7 +2105,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 objBillItem.setBusinessType("B2B");
             }*/
             objBillItem.setBusinessType("B2C");
-            Log.d("InsertBillDetail", "BusinessType : " + objBillItem.getBusinessType());
+            Log.d("InsertBillItems", "BusinessType : " + objBillItem.getBusinessType());
 
             // richa to do - hardcoded b2b bussinies type
             //objBillItem.setBusinessType("B2B");
@@ -2178,6 +2180,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         String billamt_temp = String.format("%.2f",Float.parseFloat(tvBillAmount.getText().toString()));
         objBillDetail.setBillAmount(Float.parseFloat(billamt_temp));
         Log.d("InsertBillDetail", "Bill Amount:" + tvBillAmount.getText().toString());
+
+        // Discount Percentage
+        objBillDetail.setTotalDiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
+        Log.d("InsertBillDetail", "Discount Percentage:" + objBillDetail.getTotalDiscountPercentage());
 
         // Discount Amount
         objBillDetail.setTotalDiscountAmount(fTotalDiscount);
@@ -2441,8 +2447,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     } else {
                         item.setPaymentStatus(strPaymentStatus);
                     }
-                    item.setDate(businessDate);
+                    item.setDate(tvDate.getText().toString());
                     item.setTime(TimeUtil.getTime());
+                    item.setdiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
                     item.setFdiscount(fTotalDiscount);
                     Log.d("Discount :",String.valueOf(fTotalDiscount));
                     item.setTotalsubTaxPercent(fTotalsubTaxPercent);
@@ -2698,10 +2705,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     iCustId = data.getIntExtra("CUST_ID", 1);
                     customerId = iCustId+"";
                     isComplimentaryBill = data.getBooleanExtra(PayBillActivity.IS_COMPLIMENTARY_BILL, false);
-                    isDiscounted = data.getBooleanExtra(PayBillActivity.IS_DISCOUNTED, false);
+
                     isPrintBill = data.getBooleanExtra(PayBillActivity.IS_PRINT_BILL, true);
                     strComplimentaryReason = data.getStringExtra(PayBillActivity.COMPLIMENTARY_REASON);
-                    dDiscPercent = data.getFloatExtra(PayBillActivity.DISCOUNT_PERCENT, 0);
+                    dDiscPercent = data.getFloatExtra("DISCOUNT_PERCENTAGE", 0);
+
                     fCashPayment = data.getFloatExtra(PayBillActivity.TENDER_CASH_VALUE, 0);
                     fCardPayment = data.getFloatExtra(PayBillActivity.TENDER_CARD_VALUE, 0);
                     fCouponPayment = data.getFloatExtra(PayBillActivity.TENDER_COUPON_VALUE, 0);
@@ -2719,6 +2727,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         Log.v("Tender Result", "Discounted:" + isDiscounted);
                         Log.v("Tender Result", "Discount Amount:" + fTotalDiscount);
                         tvDiscountAmount.setText(String.valueOf(fTotalDiscount));
+                        tvDiscountPercentage.setText(String.valueOf(dDiscPercent));
                         float total = Float.parseFloat(tvBillAmount.getText().toString());
                         //total = Math.round(total);
                         total -= fTotalDiscount;
@@ -3003,6 +3012,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                             Cursor LoadItemForReprint = db.getItemsForReprintBill_new(billNo);
                             if (LoadItemForReprint.moveToFirst()) {
                                 fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
+                                float discper = db.getDiscountPercentForBillNumber(billNo);
+                                tvDiscountPercentage.setText(String.format("%.2f",discper));
                                 editTextOrderNo.setText(txtReprintBillNo.getText().toString());
                                 LoadItemsForReprintBill(LoadItemForReprint);
                                 Cursor crsrBillDetail = db.getBillDetails(Integer.valueOf(txtReprintBillNo.getText().toString()));
@@ -3177,7 +3188,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         double dSubTotal = 0, dTaxTotal = 0, dModifierAmt = 0, dServiceTaxAmt = 0, dOtherCharges = 0, dTaxAmt = 0, dSerTaxAmt = 0;
         float dTaxPercent = 0, dSerTaxPercent = 0;
-
+        //double discountamt = Double.parseDouble(tvDiscountAmount.getText().toString());
         // Item wise tax calculation ----------------------------
         for (int iRow = 0; iRow < tblOrderItems.getChildCount(); iRow++) {
 

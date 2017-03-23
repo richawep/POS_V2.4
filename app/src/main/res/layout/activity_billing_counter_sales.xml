@@ -341,6 +341,17 @@
                                             android:textAppearance="?android:attr/textAppearanceMedium"
                                             android:textColor="@color/txtColorAccent" />
                                         <TextView
+                                            android:id="@+id/tvDiscountPercentage"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="#ffffff"
+                                            android:gravity="right"
+                                            android:text="0"
+                                            android:visibility="gone"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:textColor="#000000" />
+                                        <TextView
                                             android:id="@+id/tvDiscountAmount"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"

@@ -853,6 +853,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_EmployeeId + " NUMERIC,"
             + KEY_ReprintCount + " NUMERIC, "
             + KEY_TotalDiscountAmount + " REAL,"
+            + KEY_DiscPercentage + " REAL,"
             + KEY_TotalTaxAmount + " REAL, "
             + KEY_UserId + " NUMERIC, "
             + KEY_PettyCashPayment + " REAL, "
@@ -4143,6 +4144,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             return discount;
         }
     }
+    public float getDiscountPercentForBillNumber(int InvoiceNo) {
+        // return dbFNB.rawQuery("Select * from BillItem, BillDetail where BillDetail.BillNumber = '" + BillNumber + "' AND BillItem.BillNumber = BillDetail.BillNumber", null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor crsr = null;
+        float discount  = 0;
+        try
+        {
+            crsr = db.rawQuery("Select * from " + TBL_BILLDETAIL + " where InvoiceNo = '" + InvoiceNo + "'", null);
+            if(crsr!= null && crsr.moveToFirst())
+                discount = crsr.getFloat(crsr.getColumnIndex(KEY_DiscPercentage));
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            discount = 0;
+        }
+        finally {
+            return discount;
+        }
+    }
 
     // -----Retrieve KOT items for sa;es tax print
     public Cursor getItemsForSalesTaxPrint(int InvoiceNo) {
@@ -7026,7 +7048,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
             cvDbValues.put("ModifierAmount", objBillItem.getModifierAmount());
             cvDbValues.put(KEY_TaxableValue, objBillItem.getAmount());
             cvDbValues.put("DiscountAmount", objBillItem.getDiscountAmount());
-            cvDbValues.put("DiscountPercent", objBillItem.getDiscountPercent());
+            cvDbValues.put(KEY_DiscountPercent, objBillItem.getDiscountPercent());
             cvDbValues.put("ServiceTaxAmount", objBillItem.getServiceTaxAmount());
             cvDbValues.put("ServiceTaxPercent", objBillItem.getServiceTaxPercent());
             cvDbValues.put("TaxAmount", objBillItem.getTaxAmount());
@@ -7077,6 +7099,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
             cvDbValues.put("TotalItems", objBillDetail.getTotalItems());
             cvDbValues.put("BillAmount", objBillDetail.getBillAmount());
             cvDbValues.put("TotalDiscountAmount", objBillDetail.getTotalDiscountAmount());
+            cvDbValues.put(KEY_DiscPercentage, objBillDetail.getTotalDiscountPercentage());
             cvDbValues.put("TotalServiceTaxAmount", objBillDetail.getTotalServiceTaxAmount());
             cvDbValues.put("TotalTaxAmount", objBillDetail.getTotalTaxAmount());
             cvDbValues.put("CashPayment", objBillDetail.getCashPayment());
@@ -7156,15 +7179,17 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     }
     public int UpdateBillNoResetInvoiceNos(int invno) {
         SQLiteDatabase db = getWritableDatabase();
+        int result =0;
         try{
             cvDbValues = new ContentValues();
             cvDbValues.put("InvoiceNo", invno);
-            return db.update("BillNoConfiguration", cvDbValues, null, null);
+            result= db.update("BillNoConfiguration", cvDbValues, null, null);
         }catch (Exception e){
             e.printStackTrace();
-            return 1;
+            result = 0;
         }finally {
             //db.close();
+            return result;
         }
     }
 

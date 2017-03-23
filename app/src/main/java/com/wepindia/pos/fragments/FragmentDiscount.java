@@ -294,6 +294,9 @@ public class FragmentDiscount extends Fragment {
             if(Float.parseFloat(strDiscPercent) >0 && Float.parseFloat(strDiscAmount)>0) {
                 MsgBox.Show("Warning", "Please enter any one, percent or amount before adding");
                 return;
+            }else if (Float.parseFloat(strDiscPercent) >99.99){
+                MsgBox.Show("Warning", "Discount percent cannot be greater than 99.99");
+                return;
             }
             if(IsDiscountPercentExists(strDiscDescription, Double.parseDouble(strDiscPercent))){
                 MsgBox.Show("Warning", "Discount is already present");
@@ -342,6 +345,9 @@ public class FragmentDiscount extends Fragment {
             if(Float.parseFloat(strDiscPercent) >0 && Float.parseFloat(strDiscAmount)>0) {
                 MsgBox.Show("Warning", "Please enter any one, percent or amount before adding");
                 return;
+            }else if (Float.parseFloat(strDiscPercent) >99.99){
+            MsgBox.Show("Warning", "Discount percent cannot be greater than 99.99");
+            return;
             }
             Log.d("Discount Selection","Id: " + strDiscId + " Description: " + strDiscDesc + " Percent: " + strDiscPercent);
             int iResult = dbDiscConfig.updateDiscountConfig(strDiscId, strDiscDesc, strDiscPercent, strDiscAmount);

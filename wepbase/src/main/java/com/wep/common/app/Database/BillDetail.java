@@ -23,7 +23,7 @@ public class BillDetail {
 	int iBillNumber, iBillStatus, iCustId, iEmployeeId, iReprintCount, iTotalItems, iUserId;
 	String BillingMode; // richa_2012
 	float fBillAmount, fCardPayment, fCashPayment, fCouponPayment, fPettyCashPayment, fPaidTotalPayment, fChangePayment, fWalletAmount,
-	fDeliveryCharge, fTotalDiscountAmount, fTotalTaxAmount, fTotalServiceTaxAmount, IGSTAmount, CGSTAmount, SGSTAmount, SubTotal;
+	fDeliveryCharge, fTotalDiscountPercentage,fTotalDiscountAmount, fTotalTaxAmount, fTotalServiceTaxAmount, IGSTAmount, CGSTAmount, SGSTAmount, SubTotal;
 	
 	// Default Constructor
 	public BillDetail(){
@@ -54,6 +54,7 @@ public class BillDetail {
 		this.fCouponPayment = 0;
 		this.fDeliveryCharge = 0;
 		this.fTotalDiscountAmount = 0;
+		this.fTotalDiscountPercentage = 0;
 		this.fTotalTaxAmount = 0;
 		this.fTotalServiceTaxAmount = 0;
 		this.fWalletAmount = 0;
@@ -97,6 +98,14 @@ public class BillDetail {
         this.fChangePayment = ChangePayment;
 		this.fWalletAmount = walletAmount;
 		
+	}
+
+	public float getTotalDiscountPercentage() {
+		return fTotalDiscountPercentage;
+	}
+
+	public void setTotalDiscountPercentage(float fTotalDiscountPercentage) {
+		this.fTotalDiscountPercentage = fTotalDiscountPercentage;
 	}
 
 	public float getWalletAmount() {

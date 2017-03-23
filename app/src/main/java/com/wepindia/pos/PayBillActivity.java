@@ -75,6 +75,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     double dRoundoffTotal;
     float dWalletPayment =0;
     int RESETCALLED =0;
+    float discPercent =0;
 
     // Variables
     public static final String IS_COMPLIMENTARY_BILL = "false";
@@ -293,6 +294,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         edtDiscount.setText("0");
         edtChange.setText("0");
         RESETCALLED = 0;
+        discPercent =0;
     }
 
     public void CardPayment(View view) {
@@ -368,6 +370,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         }
         intentResult.putExtra(IS_PRINT_BILL, isPrint);
         intentResult.putExtra(DISCOUNT_PERCENT, Float.parseFloat(edtDiscount.getText().toString()));
+        intentResult.putExtra("DISCOUNT_PERCENTAGE",discPercent);
         intentResult.putExtra(TENDER_CASH_VALUE, Float.parseFloat(edtPaid.getText().toString()));
         intentResult.putExtra(TENDER_CARD_VALUE, Float.parseFloat(edtCard.getText().toString()));
         intentResult.putExtra(TENDER_COUPON_VALUE, Float.parseFloat(edtCoupon.getText().toString()));
@@ -464,8 +467,9 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                     TextView DiscountAmount = (TextView) Row.getChildAt(3);
                                     if (rbDiscPercent.isChecked() == true) {
                                        // float discPercent = Float.parseFloat(edtTotalValue.getText().toString()) * (Float.parseFloat(DiscountPercent.getText().toString()) / 100);
-                                        float discPercent = Float.parseFloat(strTotal) * (Float.parseFloat(DiscountPercent.getText().toString()) / 100);
-                                        edtDiscount.setText(String.format("%.2f",discPercent));
+                                        discPercent = (Float.parseFloat(DiscountPercent.getText().toString()));
+                                        float disc_amt = Float.parseFloat(strTotal) *  (discPercent/ 100);
+                                        edtDiscount.setText(String.format("%.2f",disc_amt));
 //                                        float total = Float.parseFloat(strTotal);
 //                                        total -= Float.parseFloat(edtDiscount.getText().toString());
 //                                        Log.v("Debug", "Total Amount after Discount:" + total);
@@ -477,6 +481,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                     }
                                     if (rbDiscAmount.isChecked() == true) {
                                         double discAmt = Double.parseDouble(DiscountAmount.getText().toString());
+                                        discPercent =0;
                                         if(discAmt <= dRoundoffTotal)
                                             edtDiscount.setText(String.format("%.2f",discAmt));
                                         else

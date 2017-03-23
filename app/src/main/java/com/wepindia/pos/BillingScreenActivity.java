@@ -103,7 +103,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
     TableLayout tblOrderItems;
     TextView tvSalesTax;
     TextView tvServiceTax;
-    WepButton btnSplitBill, btnShiftTable, btnMergeTable, btnModifier, btnSaveKOT, btnPayBill, btnLoadKOT, btnDeleteKOT,btnDeleteBill, btnKOTStatus, btnPrintKOT, btnPrintBill, btnClear, btnReprint;
+    WepButton btnSplitBill, btnShiftTable, btnMergeTable, btn_ReprintKOT,btnModifier, btnSaveKOT, btnPayBill, btnLoadKOT, btnDeleteKOT,btnDeleteBill, btnKOTStatus, btnPrintKOT, btnPrintBill, btnClear, btnReprint;
     TextView tvDate, tvSubTotal, tvTaxTotal, tvServiceTaxTotal, tvBillAmount, tvSubUdfValue, txtOthercharges;
     TextView tvWaiterName, tVLabelTableNo, tVLabelWaiterNo, tVLabelOrderNo;
     EditText edtCustId, edtCustName, edtCustPhoneNo, edtCustAddress, edtCustDineInPhoneNo, etCustGSTIN;
@@ -876,6 +876,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
         btnShiftTable = (WepButton) findViewById(R.id.btn_ShiftTable);
         btnMergeTable = (WepButton) findViewById(R.id.btn_MergeTable);
         btnModifier = (WepButton) findViewById(R.id.btn_Modifier);
+        btn_ReprintKOT = (WepButton) findViewById(R.id.btn_ReprintKOT);
         btnSaveKOT = (WepButton) findViewById(R.id.btn_SaveKOT);
         //btnTable = (Button) findViewById(R.id.btn_TableNo);
         //btnWaiter = (Button) findViewById(R.id.btn_WaiterNo);
@@ -943,6 +944,92 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                 }
             }
         });
+
+        btnLoadKOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadKOT(v);
+            }
+        });
+        btnModifier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ModifyKOT(v);
+            }
+        });
+        btn_ReprintKOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReprintKOT(v);
+            }
+        });
+        btnDeleteKOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VoidKOT(v);
+            }
+        });
+        btnShiftTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShiftTable(v);
+            }
+        });
+        btnMergeTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MergeTable(v);
+            }
+        });
+        btnSaveKOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveKOT(v);
+            }
+        });
+        btnPrintKOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printKOT(v);
+            }
+        });
+        btnPrintBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printBILL(v);
+            }
+        });
+        btnPayBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tender(v);
+            }
+        });
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tender(v);
+            }
+        });
+        btnDeleteBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteBill(v);
+            }
+        });
+        btnReprint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReprintBill(v);
+            }
+        });
+        btnKOTStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KOTStatus(v);
+            }
+        });
+
     }
 
     /*************************************************************************************************************************************

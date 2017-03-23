@@ -138,7 +138,9 @@
             android:layout_above="@+id/boxBtn"
             android:layout_below="@+id/boxTop">
 
-            <include layout="@layout/order_page_content_homedelivery" />
+            <include layout="@layout/order_page_content_homedelivery"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
 
 
         </RelativeLayout>
