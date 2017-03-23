@@ -2460,8 +2460,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     } else {
                         item.setPaymentStatus(strPaymentStatus);
                     }
-                    item.setDate(tvDate.getText().toString());
-                    item.setTime(TimeUtil.getTime());
                     item.setdiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
                     item.setFdiscount(fTotalDiscount);
                     Log.d("Discount :",String.valueOf(fTotalDiscount));
@@ -2471,6 +2469,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                     if(reprintBillingMode == 0) {
                         item.setStrBillingModeName(CounterSalesCaption);
+                        item.setDate(tvDate.getText().toString());
+                        item.setTime(String.format("%tR", Time));
+
                     }else
                     {
                         switch (reprintBillingMode)
@@ -2483,6 +2484,23 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 break;
                             case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
                                 break;
+                        }
+                        try{
+                            Cursor c  = db.getBillDetail_counter(orderId);
+                            if(c!=null && c.moveToNext()){
+
+                                String time = c.getString(c.getColumnIndex("Time"));
+                                item.setTime(time);
+                                String milli = c.getString(c.getColumnIndex("InvoiceDate"));
+                                long ldate = Long.parseLong(milli);
+                                Date date = new Date(ldate);
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                                String date_s = formatter.format(date);
+                                item.setDate(date_s);
+                                item.setTime(time);
+                            }}catch(Exception e)
+                        {
+                            e.printStackTrace();
                         }
                     }
 //                    String billingmode= "";

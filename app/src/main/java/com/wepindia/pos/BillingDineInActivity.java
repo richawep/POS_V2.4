@@ -4882,9 +4882,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
 
                     if(reprintBillingMode == 0) {
-                        item.setStrBillingModeName(CounterSalesCaption);
+                        item.setStrBillingModeName(DineInCaption);
                         item.setDate(tvDate.getText().toString());
-                        item.setTime(TimeUtil.getTime());
+                        item.setTime(String.format("%tR", Time));
+
                     }else
                     {
                         switch (reprintBillingMode)

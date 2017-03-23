@@ -4774,18 +4774,22 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     } else {
                         item.setPaymentStatus(strPaymentStatus);
                     }
-                    item.setDate(businessDate);
-                    item.setTime(TimeUtil.getTime());
+                    /*item.setDate(businessDate);
+                    item.setTime(TimeUtil.getTime());*/
                     item.setdiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
                     item.setFdiscount(fTotalDiscount);
                     item.setTotalsubTaxPercent(fTotalsubTaxPercent);
                     item.setTotalSalesTaxAmount(tvTaxTotal.getText().toString());
                     item.setTotalServiceTaxAmount(tvServiceTaxTotal.getText().toString());
+
                     if(reprintBillingMode == 0) {
                         if (jBillingMode == 4)
                             item.setStrBillingModeName(HomeDeliveryCaption);
                         else if (jBillingMode == 3)
                             item.setStrBillingModeName(TakeAwayCaption);
+                        item.setDate(tvDate.getText().toString());
+                        item.setTime(String.format("%tR", Time));
+
                     }else
                     {
                         switch (reprintBillingMode)
@@ -4798,6 +4802,23 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 break;
                             case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
                                 break;
+                        }
+                        try{
+                            Cursor c  = dbBillScreen.getBillDetail(orderId);
+                            if(c!=null && c.moveToNext()){
+
+                                String time = c.getString(c.getColumnIndex("Time"));
+                                item.setTime(time);
+                                String milli = c.getString(c.getColumnIndex("InvoiceDate"));
+                                long ldate = Long.parseLong(milli);
+                                Date date = new Date(ldate);
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                                String date_s = formatter.format(date);
+                                item.setDate(date_s);
+                                item.setTime(time);
+                            }}catch(Exception e)
+                        {
+                            e.printStackTrace();
                         }
                     }
                     String prf = Preferences.getSharedPreferencesForPrint(BillingHomeDeliveryActivity.this).getString("bill", "--Select--");
