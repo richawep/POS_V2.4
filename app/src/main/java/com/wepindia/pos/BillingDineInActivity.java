@@ -5006,7 +5006,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         final EditText txtTblSplitNo = (EditText) vwAuthorization.findViewById(R.id.txtDineInTenderTableSplitNo);
         txtTblSplitNo.setText("1");
 
-        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("RePrint KOT").setMessage("Enter Table Number")
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("RePrint KOT")
                 .setView(vwAuthorization).setNegativeButton("Cancel", null)
                 .setPositiveButton("RePrint", new DialogInterface.OnClickListener() {
 
