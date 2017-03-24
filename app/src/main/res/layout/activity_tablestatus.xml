@@ -118,6 +118,15 @@
                 android:textColor="@color/white" />
 
             <com.wep.common.app.views.WepButton
+                android:id="@+id/btnClearTableStatus"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:text="Clear"
+                android:background="@drawable/background_btn"
+                android:textColor="@color/white" />
+
+            <com.wep.common.app.views.WepButton
                 android:id="@+id/btnCloseTableStatus"
                 android:layout_width="100dp"
                 android:layout_height="45dp"

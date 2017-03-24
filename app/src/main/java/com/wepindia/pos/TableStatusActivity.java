@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class TableStatusActivity extends WepBaseActivity implements View.OnClick
     // MessageDialog object
     MessageDialog MsgBox;// = new MessageDialog(HeaderFooterActivity.this);
     TableLayout tblTableStatus;
-    WepButton btnSearchTableStatus, btnCloseTableStatus;
+    WepButton btnSearchTableStatus, btnCloseTableStatus, btnClearTableStatus;
     EditText txtTableSearchTable;
     private Toolbar toolbar;
     private TextView textViewAttachment;
@@ -73,7 +74,16 @@ public class TableStatusActivity extends WepBaseActivity implements View.OnClick
         txtTableSearchTable = (EditText) findViewById(R.id.etTableSearchTable);
         btnSearchTableStatus = (WepButton) findViewById(R.id.btnSearchTableStatus);
         btnCloseTableStatus = (WepButton) findViewById(R.id.btnCloseTableStatus);
-
+        btnClearTableStatus = (WepButton) findViewById(R.id.btnClearTableStatus);
+        btnClearTableStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Clear();
+                for(int i=tblTableStatus.getChildCount()-1;i>0;i--)
+                    tblTableStatus.removeViewAt(i);
+                LoadTableStatus();
+            }
+        });
         try {
             dbTableStatus.CreateDatabase();
             dbTableStatus.OpenDatabase();
@@ -82,6 +92,11 @@ public class TableStatusActivity extends WepBaseActivity implements View.OnClick
         } catch (Exception exp) {
             Toast.makeText(myContext, "OnCreate: " + exp.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    void Clear()
+    {
+        txtTableSearchTable.setText("");
     }
 
     private void showFileChooser() {
@@ -124,11 +139,12 @@ public class TableStatusActivity extends WepBaseActivity implements View.OnClick
                 tvSNo.setTextSize(18);
                 tvSNo.setGravity(1);
                 tvSNo.setText(String.valueOf(i));
+                tvSNo.setGravity(Gravity.CENTER);
                 rowTableStatus.addView(tvSNo);
 
                 tvTableNo = new TextView(myContext);
                 tvTableNo.setTextSize(18);
-                tvTableNo.setGravity(1);
+                tvTableNo.setGravity(Gravity.CENTER);
                 if(crsrOccupiedTable.getString(2).equalsIgnoreCase("1")) {
                     tvTableNo.setText(crsrOccupiedTable.getString(0));
                 }
@@ -140,7 +156,7 @@ public class TableStatusActivity extends WepBaseActivity implements View.OnClick
 
                 tvInTime = new TextView(myContext);
                 tvInTime.setTextSize(18);
-                tvInTime.setGravity(1);
+                tvInTime.setGravity(Gravity.CENTER);
                 tvInTime.setText(crsrOccupiedTable.getString(1));
                 rowTableStatus.addView(tvInTime);
 
@@ -151,7 +167,7 @@ public class TableStatusActivity extends WepBaseActivity implements View.OnClick
 
                 tvTimeCount = new TextView(myContext);
                 tvTimeCount.setTextSize(18);
-                tvTimeCount.setGravity(1);
+                tvTimeCount.setGravity(Gravity.CENTER);
                 tvTimeCount.setText("Occupied");
                 rowTableStatus.addView(tvTimeCount);
 
@@ -212,42 +228,46 @@ public class TableStatusActivity extends WepBaseActivity implements View.OnClick
                     tvSNo = new TextView(myContext);
                     tvSNo.setTextSize(18);
                     tvSNo.setText(String.valueOf(i));
+                    tvSNo.setGravity(Gravity.CENTER);
                     rowTableStatus.addView(tvSNo);
 
                     tvTableNo = new TextView(myContext);
                     tvTableNo.setTextSize(18);
                     tvTableNo.setText(crsrOccupiedTable.getString(0));
+                    tvTableNo.setGravity(Gravity.CENTER);
                     rowTableStatus.addView(tvTableNo);
 
                     tvInTime = new TextView(myContext);
                     tvInTime.setTextSize(18);
                     tvInTime.setText(crsrOccupiedTable.getString(1));
+                    tvInTime.setGravity(Gravity.CENTER);
                     rowTableStatus.addView(tvInTime);
 
-                    tvTimeCount = new TextView(myContext);
-                    tvTimeCount.setTextSize(18);
-                    tvTimeCount.setText("");
-                    rowTableStatus.addView(tvTimeCount);
+//                    tvTimeCount = new TextView(myContext);
+//                    tvTimeCount.setTextSize(18);
+//                    tvTimeCount.setText("");
+//                    rowTableStatus.addView(tvTimeCount);
 
                     tvStatus = new TextView(myContext);
                     tvStatus.setTextSize(18);
                     tvStatus.setText("Occupied");
+                    tvStatus.setGravity(Gravity.CENTER);
                     rowTableStatus.addView(tvStatus);
 
-                    rowTableStatus.setOnClickListener(new View.OnClickListener() {
-
-                        public void onClick(View v) {
-                            // TODO Auto-generated method stub
-                            if (String.valueOf(v.getTag()) == "TAG") {
-                                TableRow Row = (TableRow) v;
-                                TextView DeptCode = (TextView) Row.getChildAt(0);
-                                TextView DeptName = (TextView) Row.getChildAt(1);
-                                // strDeptCode = DeptCode.getText().toString();
-                                // txtDeptName.setText(DeptName.getText());
-
-                            }
-                        }
-                    });
+//                    rowTableStatus.setOnClickListener(new View.OnClickListener() {
+//
+//                        public void onClick(View v) {
+//                            // TODO Auto-generated method stub
+//                            if (String.valueOf(v.getTag()) == "TAG") {
+//                                TableRow Row = (TableRow) v;
+//                                TextView DeptCode = (TextView) Row.getChildAt(0);
+//                                TextView DeptName = (TextView) Row.getChildAt(1);
+//                                // strDeptCode = DeptCode.getText().toString();
+//                                // txtDeptName.setText(DeptName.getText());
+//
+//                            }
+//                        }
+//                    });
 
                     rowTableStatus.setTag("TAG");
 
