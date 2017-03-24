@@ -250,6 +250,13 @@
 
 
     </LinearLayout>
-
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+        android:layout_marginRight="@dimen/activity_horizontal_margin1"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+        android:text="*Please note % entered is taken upto 2 digits after decimal"
+        android:textColor="@color/red"/>
 </LinearLayout>

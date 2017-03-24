@@ -635,6 +635,13 @@
                         android:weightSum="6">
 
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="*Please note any % entered is taken upto 2 digits after decimal"
+                            android:layout_gravity="bottom"
+                            android:textColor="@color/red"/>
+
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

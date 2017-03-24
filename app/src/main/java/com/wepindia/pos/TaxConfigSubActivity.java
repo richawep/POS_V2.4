@@ -347,6 +347,12 @@ public class TaxConfigSubActivity extends WepBaseActivity {
         } else if (strSubTaxPercent.equalsIgnoreCase("")) {
             MsgBox.Show("Warning", "Please Enter Sub Tax Percent before adding");
         } else {
+            double subTaxPercent_d = Double.parseDouble(strSubTaxPercent);
+            if(subTaxPercent_d <0 || subTaxPercent_d > 99.99)
+            {
+                MsgBox.Show("Warning", "Please enter sub tax percent between 0 and 99.99");
+                return;
+            }
             iSubTaxId = dbTaxConfigSub.getSubTaxId();
             Log.d("InsertTaxConfig", "Tax Id: " + String.valueOf(iSubTaxId));
             iSubTaxId++;
@@ -387,6 +393,12 @@ public class TaxConfigSubActivity extends WepBaseActivity {
         strTaxId = txtTaxId.getText().toString();
         strSubTaxDesc = txtSubTaxDesc.getText().toString();
         strSubTaxPercent = txtSubTaxPercent.getText().toString();
+        double subTaxPercent_d = Double.parseDouble(strSubTaxPercent);
+        if(subTaxPercent_d <0 || subTaxPercent_d > 99.99)
+        {
+            MsgBox.Show("Warning", "Please enter sub tax percent between 0 and 99.99");
+            return;
+        }
         Log.d("Tax Selection", "Sub Id: " + strSubTaxId + " Sub Description: " + strSubTaxDesc + " Percent: " + strSubTaxPercent);
 
         int iResult = dbTaxConfigSub.updateSubTaxConfig(strSubTaxId, strSubTaxDesc, strSubTaxPercent, strTaxId);

@@ -437,12 +437,26 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                             Item_quantity = String.format("%.2f",Float.parseFloat(et_input_quantity.getText().toString()));
                         if (saletax_str == null || saletax_str.equals(""))
                             Item_saletax= "0.00";
-                        else
-                            Item_saletax = String.format("%.2f",Float.parseFloat(saletax_str));
+                        else {
+                            double saletax_d = Double.parseDouble(saletax_str);
+                            if(saletax_d <0 || saletax_d > 99.99)
+                            {
+                                MsgBox.Show("Warning", "Please enter sales tax % between 0 and 99.99");
+                                return;
+                            }
+                            Item_saletax = String.format("%.2f", saletax_d);
+                        }
                         if (servicetax_str== null || servicetax_str.equals(""))
                             Item_servicetax = "0.00";
-                        else
-                            Item_servicetax = String.format("%.2f",Float.parseFloat(servicetax_str));
+                        else{
+                            double servicetax_d = Double.parseDouble(servicetax_str);
+                            if(servicetax_d <0 || servicetax_d > 99.99)
+                            {
+                                MsgBox.Show("Warning", "Please enter service tax % between 0 and 99.99");
+                                return;
+                            }
+                            Item_servicetax = String.format("%.2f",servicetax_d);
+                        }
 
                         if (Item_name.equals("") ||  quantity.equals("") || rate.equals(""))
                         {

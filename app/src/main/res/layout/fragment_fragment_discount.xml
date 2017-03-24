@@ -56,8 +56,7 @@
             android:hint="Discount Percent"
             android:inputType="numberDecimal" />
     </TableRow>
-
-    <TableRow
+        <TableRow
         android:id="@+id/rowDiscAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,7 +91,7 @@
         android:layout_below="@+id/rowDiscAmount"
         android:layout_alignBottom="@+id/tvHorizontalLine"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp" >
+        android:layout_marginBottom="15dp" >
         <TableLayout
             android:id="@+id/tblDiscConfig"
             android:layout_width="wrap_content"
@@ -152,6 +151,15 @@
         </TableLayout>
     </ScrollView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvHorizontalLine"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="*Please note % entered is taken upto 2 digits after decimal"
+        android:textColor="@color/red"/>
     <TextView
         android:id="@+id/tvHorizontalLine"
         android:layout_width="fill_parent"

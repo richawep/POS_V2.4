@@ -1815,6 +1815,24 @@ public class ItemManagementActivity extends WepBaseActivity {
             etDiscount.setText("0");
         }
 
+        String salesTax_str = edtItemSalesTax.getText().toString();
+        if (salesTax_str.equalsIgnoreCase("")) {
+            edtItemSalesTax.setText("0");
+        }else if (Double.parseDouble(salesTax_str)< 0 || Double.parseDouble(salesTax_str)>99.99)
+        {
+            MsgBox.Show("Warning","Please enter sales tax percent between 0 and 99.99");
+            return;
+        }
+
+        String serviceTax_str = edtItemServiceTax.getText().toString();
+        if (serviceTax_str.equalsIgnoreCase("")) {
+            edtItemServiceTax.setText("0");
+        }else if (Double.parseDouble(serviceTax_str) <0 || Double.parseDouble(serviceTax_str)> 99.99)
+        {
+            MsgBox.Show("Warning","Please enter service tax percent between 0 and 99.99");
+            return;
+        }
+
 
         new AsyncTask<Void,Void,Void>(){
             ProgressDialog pd;
@@ -1945,6 +1963,23 @@ public class ItemManagementActivity extends WepBaseActivity {
         }*/
             if (etDiscount.getText().toString().equals("")) {
                 etDiscount.setText("0");
+            }
+            String salesTax_str = edtItemSalesTax.getText().toString();
+            if (salesTax_str.equalsIgnoreCase("")) {
+                edtItemSalesTax.setText("0");
+            }else if (Double.parseDouble(salesTax_str)< 0 || Double.parseDouble(salesTax_str)>99.99)
+            {
+                MsgBox.Show("Warning","Please enter sales tax percent between 0 and 99.99");
+                return;
+            }
+
+            String serviceTax_str = edtItemServiceTax.getText().toString();
+            if (serviceTax_str.equalsIgnoreCase("")) {
+                edtItemServiceTax.setText("0");
+            }else if (Double.parseDouble(serviceTax_str) <0 || Double.parseDouble(serviceTax_str)> 99.99)
+            {
+                MsgBox.Show("Warning","Please enter service tax percent between 0 and 99.99");
+                return;
             }
 
             new AsyncTask<Void, Void, Void>() {

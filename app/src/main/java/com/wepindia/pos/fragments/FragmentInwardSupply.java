@@ -1873,13 +1873,22 @@ public class FragmentInwardSupply extends Fragment {
         }
 
 
-
-        if (et_Inw_SalesTax.getText().toString().equalsIgnoreCase("")) {
+        String salesTax_str = et_Inw_SalesTax.getText().toString();
+        if (salesTax_str.equalsIgnoreCase("")) {
             et_Inw_SalesTax.setText("0");
+        }else if (Double.parseDouble(salesTax_str)< 0 || Double.parseDouble(salesTax_str)>99.99)
+        {
+            MsgBox1.Show("Warning","Please enter sales tax percent between 0 and 99.99");
+            return;
         }
 
-        if (et_Inw_ServiceTax.getText().toString().equalsIgnoreCase("")) {
+        String serviceTax_str = et_Inw_ServiceTax.getText().toString();
+        if (serviceTax_str.equalsIgnoreCase("")) {
             et_Inw_ServiceTax.setText("0");
+        }else if (Double.parseDouble(serviceTax_str) <0 || Double.parseDouble(serviceTax_str)> 99.99)
+        {
+            MsgBox1.Show("Warning","Please enter service tax percent between 0 and 99.99");
+            return;
         }
 
         if (et_inw_quantity.getText().toString().equalsIgnoreCase("")) {
@@ -1933,11 +1942,22 @@ public class FragmentInwardSupply extends Fragment {
             return;
         }
 
-        if (et_Inw_SalesTax.getText().toString().equalsIgnoreCase("")) {
+        String salesTax_str = et_Inw_SalesTax.getText().toString();
+        if (salesTax_str.equalsIgnoreCase("")) {
             et_Inw_SalesTax.setText("0");
+        }else if (Double.parseDouble(salesTax_str)< 0 || Double.parseDouble(salesTax_str)>99.99)
+        {
+            MsgBox1.Show("Warning","Please enter sales tax percent between 0 and 99.99");
+            return;
         }
-        if (et_Inw_ServiceTax.getText().toString().equalsIgnoreCase("")) {
+
+        String serviceTax_str = et_Inw_ServiceTax.getText().toString();
+        if (serviceTax_str.equalsIgnoreCase("")) {
             et_Inw_ServiceTax.setText("0");
+        }else if (Double.parseDouble(serviceTax_str) <0 || Double.parseDouble(serviceTax_str)> 99.99)
+        {
+            MsgBox1.Show("Warning","Please enter service tax percent between 0 and 99.99");
+            return;
         }
 
         if (et_inw_quantity.getText().toString().equalsIgnoreCase("")) {
