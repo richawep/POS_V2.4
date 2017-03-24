@@ -3057,19 +3057,44 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                             int billNo = Integer.valueOf(txtReprintBillNo.getText().toString());
                             Cursor LoadItemForReprint = db.getItemsForReprintBill_new(billNo);
+//                            if (LoadItemForReprint.moveToFirst()) {
+//                                fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
+//                                float discper = db.getDiscountPercentForBillNumber(billNo);
+//                                reprintBillingMode = db.getBillingModeBillNumber(billNo);
+//                                tvDiscountPercentage.setText(String.format("%.2f",discper));
+//                                tvDiscountAmount.setText(String.format("%.2f",fTotalDiscount));
+//                                editTextOrderNo.setText(txtReprintBillNo.getText().toString());
+//                                LoadItemsForReprintBill(LoadItemForReprint);
+//                                Cursor crsrBillDetail = db.getBillDetails(Integer.valueOf(txtReprintBillNo.getText().toString()));
+//                                if (crsrBillDetail.moveToFirst()) {
+//                                    customerId = crsrBillDetail.getString(crsrBillDetail.getColumnIndex("CustId"));
+//                                }
+//                            }
                             if (LoadItemForReprint.moveToFirst()) {
-                                fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
-                                float discper = db.getDiscountPercentForBillNumber(billNo);
-                                reprintBillingMode = db.getBillingModeBillNumber(billNo);
-                                tvDiscountPercentage.setText(String.format("%.2f",discper));
-                                tvDiscountAmount.setText(String.format("%.2f",fTotalDiscount));
-                                editTextOrderNo.setText(txtReprintBillNo.getText().toString());
-                                LoadItemsForReprintBill(LoadItemForReprint);
-                                Cursor crsrBillDetail = db.getBillDetails(Integer.valueOf(txtReprintBillNo.getText().toString()));
-                                if (crsrBillDetail.moveToFirst()) {
-                                    customerId = crsrBillDetail.getString(crsrBillDetail.getColumnIndex("CustId"));
+                                Cursor cursor = db.getBillDetail_counter(billNo);
+                                if(cursor!= null && cursor.moveToFirst())
+                                {
+                                    int billStatus = cursor.getInt(cursor.getColumnIndex("BillStatus"));
+                                    if(billStatus==0)
+                                    {
+                                        messageDialog.Show("Warning", "This bill has been deleted");
+                                        return;
+                                    }
+                                    fTotalDiscount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
+                                    float discper = cursor.getFloat(cursor.getColumnIndex("DiscPercentage"));
+                                    reprintBillingMode = cursor.getInt(cursor.getColumnIndex("BillingMode"));
+
+                                    tvDiscountPercentage.setText(String.format("%.2f",discper));
+                                    tvDiscountAmount.setText(String.format("%.2f",fTotalDiscount));
+                                    editTextOrderNo.setText(txtReprintBillNo.getText().toString());
+                                    LoadItemsForReprintBill(LoadItemForReprint);
+                                    Cursor crsrBillDetail = db.getBillDetail_counter(Integer.valueOf(txtReprintBillNo.getText().toString()));
+                                    if (crsrBillDetail.moveToFirst()) {
+                                        customerId = crsrBillDetail.getString(crsrBillDetail.getColumnIndex("CustId"));
+                                    }
                                 }
-                            } else {
+
+                            }else {
                                 messageDialog.Show("Warning", "No Item is present for the Bill Number " + txtReprintBillNo.getText().toString());
                             }
                             strPaymentStatus = "Paid";

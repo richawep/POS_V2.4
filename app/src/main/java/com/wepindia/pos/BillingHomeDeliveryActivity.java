@@ -3629,6 +3629,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
         // Close Database Connection
         dbBillScreen.CloseDatabase();
+        db.CloseDatabase();
 
         // finish the activity
         this.finish();
@@ -4058,17 +4059,48 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             int billNo = Integer.valueOf(txtReprintBillNo.getText().toString());
                             Cursor LoadItemForReprint = dbBillScreen.getItemsForReprintBill_new(billNo);
 
+//                            if (LoadItemForReprint.moveToFirst()) {
+//                                fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
+//                                tvDiscountPercentage.setText(String.format("%.2f",db.getDiscountPercentForBillNumber(billNo)));
+//                                tvBillNumber.setText(txtReprintBillNo.getText().toString());
+//                                reprintBillingMode = db.getBillingModeBillNumber(billNo);
+//                                LoadItemsForReprintBill(LoadItemForReprint);
+//                                Cursor crsrBillDetail = dbBillScreen.getBillDetail(Integer.valueOf(txtReprintBillNo.getText().toString()));
+//                                if (crsrBillDetail.moveToFirst()) {
+//                                    edtCustId.setText(crsrBillDetail.getString(crsrBillDetail.getColumnIndex("CustId")));
+//                                }
+//                            }
                             if (LoadItemForReprint.moveToFirst()) {
-                                fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
-                                tvDiscountPercentage.setText(String.format("%.2f",db.getDiscountPercentForBillNumber(billNo)));
-                                tvBillNumber.setText(txtReprintBillNo.getText().toString());
-                                reprintBillingMode = db.getBillingModeBillNumber(billNo);
-                                LoadItemsForReprintBill(LoadItemForReprint);
-                                Cursor crsrBillDetail = dbBillScreen.getBillDetail(Integer.valueOf(txtReprintBillNo.getText().toString()));
-                                if (crsrBillDetail.moveToFirst()) {
-                                    edtCustId.setText(crsrBillDetail.getString(crsrBillDetail.getColumnIndex("CustId")));
+                                Cursor cursor = dbBillScreen.getBillDetail(billNo);
+                                if(cursor!= null && cursor.moveToFirst())
+                                {
+//                                    fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
+//                                    float discper = db.getDiscountPercentForBillNumber(billNo);
+//                                    reprintBillingMode = db.getBillingModeBillNumber(billNo);
+//                                    tvDiscountPercentage.setText(String.format("%.2f",discper));
+//                                    tvDiscountAmount.setText(String.format("%.2f",fTotalDiscount));
+//                                    tvBillNumber.setText(txtReprintBillNo.getText().toString());
+                                    int billStatus = cursor.getInt(cursor.getColumnIndex("BillStatus"));
+                                    if(billStatus==0)
+                                    {
+                                        MsgBox.Show("Warning", "This bill has been deleted");
+                                        return;
+                                    }
+                                    fTotalDiscount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
+                                    float discper = cursor.getFloat(cursor.getColumnIndex("DiscPercentage"));
+                                    reprintBillingMode = cursor.getInt(cursor.getColumnIndex("BillingMode"));
+
+                                    tvDiscountPercentage.setText(String.format("%.2f",discper));
+                                    tvDiscountAmount.setText(String.format("%.2f",fTotalDiscount));
+                                    tvBillNumber.setText(txtReprintBillNo.getText().toString());
+                                    LoadItemsForReprintBill(LoadItemForReprint);
+                                    Cursor crsrBillDetail = dbBillScreen.getBillDetail(Integer.valueOf(txtReprintBillNo.getText().toString()));
+                                    if (crsrBillDetail.moveToFirst()) {
+                                        edtCustId.setText(crsrBillDetail.getString(crsrBillDetail.getColumnIndex("CustId")));
+                                    }
                                 }
-                            } else {
+
+                            }else {
                                 MsgBox.Show("Warning",
                                         "No Item is present for the Bill Number " + txtReprintBillNo.getText().toString());
                             }
