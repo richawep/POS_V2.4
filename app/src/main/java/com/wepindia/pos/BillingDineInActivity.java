@@ -2963,7 +2963,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 tvSpace1.setText("       ");
 
                 TextView tvPrintKOTStatus = new TextView(myContext);
-                tvPrintKOTStatus.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("PrintKOTStatus")));
+                tvPrintKOTStatus.setText("1");
 
                 // Add all text views and edit text to Item Row
                 // rowItem.addView(tvNumber);
@@ -4742,6 +4742,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     waiterId = Integer.parseInt(tvWaiterNumber.getText().toString().trim());
                     orderId = Integer.parseInt(tvBillNumber.getText().toString().trim());
                     ArrayList<BillKotItem> billKotItems = kotPrint();
+                    if(billKotItems.size()<1)
+                    {
+                        MsgBox.Show("Oops", "No new item in KOT to print");
+                        return;
+                    }
                     PrintKotBillItem item = new PrintKotBillItem();
                     item.setBillKotItems(billKotItems);
                     item.setTableNo(tableId);
