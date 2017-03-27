@@ -412,6 +412,10 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
         // set the custom dialog components - text, image and button
         tblPayBill = (TableLayout) PayBillDialog.findViewById(R.id.tblPayBill);
+        TextView tvCaptionPaybillValue = (TextView) PayBillDialog.findViewById(R.id.tvCaptionPaybillValue);
+        TextView tvCaptionPaybillAmount = (TextView) PayBillDialog.findViewById(R.id.tvCaptionPaybillAmount);
+        tvCaptionPaybillValue.setText("Percent");
+        tvCaptionPaybillAmount.setText("Amount");
         Cursor crsrDiscount = dbPayBill.getPayBillDiscount();
         if (crsrDiscount.moveToFirst()) {
             int i = 1;
@@ -427,7 +431,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     tvSno = new TextView(myContext);
                     tvSno.setHeight(40);
                     tvSno.setTextSize(20);
-                    tvSno.setGravity(1);
                     tvSno.setTextColor(Color.parseColor("#000000"));
                     tvSno.setText(String.valueOf(i));
                     rowPayBill.addView(tvSno);
@@ -441,7 +444,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
                     tvPercent = new TextView(myContext);
                     tvPercent.setHeight(40);
-                    tvPercent.setWidth(50);
                     tvPercent.setTextSize(20);
                     tvPercent.setTextColor(Color.parseColor("#000000"));
                     tvPercent.setText(crsrDiscount.getString(2));
@@ -449,7 +451,6 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
                     tvAmount = new TextView(myContext);
                     tvAmount.setHeight(40);
-                    tvAmount.setWidth(50);
                     tvAmount.setTextSize(20);
                     tvAmount.setTextColor(Color.parseColor("#000000"));
                     tvAmount.setText(crsrDiscount.getString(3));
