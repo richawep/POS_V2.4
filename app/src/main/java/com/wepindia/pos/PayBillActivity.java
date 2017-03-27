@@ -431,8 +431,10 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     tvSno = new TextView(myContext);
                     tvSno.setHeight(40);
                     tvSno.setTextSize(20);
+                    tvSno.setPadding(3,0,0,0);
                     tvSno.setTextColor(Color.parseColor("#000000"));
                     tvSno.setText(String.valueOf(i));
+                    i++;
                     rowPayBill.addView(tvSno);
 
                     tvName = new TextView(myContext);
