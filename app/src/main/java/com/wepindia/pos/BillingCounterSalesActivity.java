@@ -2437,7 +2437,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     ArrayList<BillSubTaxItem> billSubTaxItems = subtaxPrint();
                     PrintKotBillItem item = new PrintKotBillItem();
 
-                    Cursor crsrCustomer = db.getFnbCustomer(customerId);
+                    Cursor crsrCustomer = db.getCustomerById(Integer.parseInt(customerId));
                     if (crsrCustomer.moveToFirst()) {
                         item.setCustomerName(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName")));
                     } else {
