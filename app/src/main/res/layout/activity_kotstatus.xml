@@ -138,6 +138,18 @@
                 />
 
             <Button
+                android:id="@+id/btnClearKOTStatus"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/background_btn"
+                android:textColor="@android:color/white"
+                android:theme="@style/WepButtonWithMarigin"
+                android:onClick="ClearKOTStatus"
+                android:text="Clear"
+                />
+
+            <Button
                 android:id="@+id/btnCloseKOTStatus"
                 android:layout_width="100dp"
                 android:layout_height="45dp"

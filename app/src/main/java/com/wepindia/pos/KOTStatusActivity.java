@@ -38,7 +38,7 @@ public class KOTStatusActivity extends WepBaseActivity {
 	// MessageDialog object
 	MessageDialog MsgBox;// = new MessageDialog(HeaderFooterActivity.this);
 	TableLayout tblKOTStatus;
-	Button btnSearchKOTStatus, btnCloseKOTStatus;
+	Button btnSearchKOTStatus, btnCloseKOTStatus, btnClearKOTStatus;
 	EditText txtSearchTable;
     String strUserName = "", strBillingMode = "";
 	private Toolbar toolbar;
@@ -76,7 +76,13 @@ public class KOTStatusActivity extends WepBaseActivity {
 		txtSearchTable = (EditText) findViewById(R.id.etSearchTable);
 		btnSearchKOTStatus = (Button) findViewById(R.id.btnSearchKOTStatus);
 		btnCloseKOTStatus = (Button) findViewById(R.id.btnCloseKOTStatus);
-
+		btnClearKOTStatus = (Button) findViewById(R.id.btnClearKOTStatus);
+		btnClearKOTStatus.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ClearKOTStatus(v);
+			}
+		});
 		try {
 			dbKOTStatus.CreateDatabase();
 			dbKOTStatus.OpenDatabase();
@@ -85,6 +91,14 @@ public class KOTStatusActivity extends WepBaseActivity {
 		} catch (Exception exp) {
 			Toast.makeText(myContext, "OnCreate: " + exp.getMessage(), Toast.LENGTH_LONG).show();
 		}
+	}
+
+
+	public  void  ClearKOTStatus(View v)
+	{
+		ResetKOTStatus();
+		txtSearchTable.setText("");
+		LoadKOTStatus();
 	}
 
 	@SuppressWarnings("deprecation")
