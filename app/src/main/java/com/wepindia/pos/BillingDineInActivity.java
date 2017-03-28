@@ -134,7 +134,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
     private Toolbar toolbar;
     private AppCompatDelegate delegate;
     int reprintBillingMode =0;
-
+    boolean isReprint = false;
     public void onConfigurationRequired() {
 
     }
@@ -2200,6 +2200,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
      *************************************************************************************************************************************/
     private void ClearAll() {
 
+        isReprint = false;
         txtSearchItemBarcode.setText("");
         reprintBillingMode=0;
         tvWaiterNumber.setText("0");
@@ -4163,6 +4164,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                                         "No Item is present for the Bill Number " + txtReprintBillNo.getText().toString());
                             }
                             strPaymentStatus = "Paid";
+                            isReprint = true;
                             PrintNewBill();
                             // update bill reprint count
                             int Result = dbBillScreen
@@ -4653,16 +4655,32 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
     public ArrayList<BillTaxItem> otherChargesPrint() {
         ArrayList<BillTaxItem> billOtherChargesItems = new ArrayList<BillTaxItem>();
 
-        Cursor crsrTax = dbBillScreen.getItemsForOtherChargesPrint(DineInCaption);
-        if (crsrTax.moveToFirst()) {
-            do {
-                String taxname = crsrTax.getString(crsrTax.getColumnIndex("ModifierDescription"));
-                String taxpercent = "0";
-                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("ModifierAmount")));
+        if(isReprint)
+        {
+            Cursor crsrTax = dbBillScreen.getBillDetail(Integer.parseInt(tvBillNumber.getText().toString()));
+            if(crsrTax.moveToFirst())
+            {
+                String taxname = "OtherCharges";
+                double taxpercent = 0;
+                Double taxvalue = crsrTax.getDouble(crsrTax.getColumnIndex("DeliveryCharge"));
 
-                BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                BillTaxItem taxItem = new BillTaxItem(taxname, (taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
                 billOtherChargesItems.add(taxItem);
-            } while (crsrTax.moveToNext());
+            }
+
+        }else
+        { // fresh print
+            Cursor crsrTax = dbBillScreen.getItemsForOtherChargesPrint(DineInCaption);
+            if (crsrTax.moveToFirst()) {
+                do {
+                    String taxname = crsrTax.getString(crsrTax.getColumnIndex("ModifierDescription"));
+                    String taxpercent = "0";
+                    Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("ModifierAmount")));
+
+                    BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                    billOtherChargesItems.add(taxItem);
+                } while (crsrTax.moveToNext());
+            }
         }
         return billOtherChargesItems;
     }
