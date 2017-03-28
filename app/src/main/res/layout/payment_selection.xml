@@ -91,7 +91,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="Change"
+                        android:text="Difference"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </LinearLayout>
