@@ -5250,6 +5250,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         try {
             if (edtCustName.getText().toString().equalsIgnoreCase("") || edtCustPhoneNo.getText().toString().equalsIgnoreCase("") || edtCustAddress.getText().toString().equalsIgnoreCase("")) {
                 MsgBox.Show("Warning", "Please fill all details before adding customer");
+            } else if (edtCustPhoneNo.getText().toString().length()!= 10)
+            {
+                MsgBox.Show("Warning", "Please fill 10 digit customer phone number");
+                return;
             } else {
                 Cursor crsrCust = dbBillScreen.getCustomer(edtCustPhoneNo.getText().toString());
                 if (crsrCust.moveToFirst()) {

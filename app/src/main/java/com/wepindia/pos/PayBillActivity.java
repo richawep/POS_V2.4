@@ -306,6 +306,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
     public void makePayment() {
         txt = edtTotalValue.getText().toString().trim();
+        //txt = edtChange.getText().toString().trim();
         if (txt.equalsIgnoreCase("")) {
             Toast.makeText(PayBillActivity.this, "Enter Amount", Toast.LENGTH_SHORT).show();
         } else {

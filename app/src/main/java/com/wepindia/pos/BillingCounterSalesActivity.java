@@ -340,7 +340,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             {
                 messageDialog.Show("Warning", "Please fill all details before adding customer");
             }
-            else
+            else if (editTextMobile.getText().toString().length()!= 10)
+            {
+                messageDialog.Show("Warning", "Please fill 10 digit customer phone number");
+                return;
+            } else
             {
                 Cursor crsrCust = db.getFnbCustomer(editTextMobile.getText().toString());
                 if (crsrCust.moveToFirst())
