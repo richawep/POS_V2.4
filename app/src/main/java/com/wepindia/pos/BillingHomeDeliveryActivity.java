@@ -2003,7 +2003,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         }
         // -------------------------------------------------
 
-        dOtherCharges = Double.valueOf(txtOthercharges.getText().toString());
+        //dOtherCharges = Double.valueOf(txtOthercharges.getText().toString());
         if (crsrSettings.moveToFirst()) {
             if (crsrSettings.getString(crsrSettings.getColumnIndex("Tax")).equalsIgnoreCase("1")) {
                 if (crsrSettings.getString(crsrSettings.getColumnIndex("TaxType")).equalsIgnoreCase("1")) {
@@ -4629,8 +4629,14 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 double taxpercent = 0;
                 Double taxvalue = crsrTax.getDouble(crsrTax.getColumnIndex("DeliveryCharge"));
 
-                BillTaxItem taxItem = new BillTaxItem(taxname, (taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
-                billOtherChargesItems.add(taxItem);
+                if(taxvalue>0)
+                {
+                    BillTaxItem taxItem = new BillTaxItem(taxname, (taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                    billOtherChargesItems.add(taxItem);
+                    double totalamt = Double.parseDouble(tvBillAmount.getText().toString().trim());
+                    totalamt+= taxvalue;
+                    tvBillAmount.setText(String.format("%.2f", totalamt));
+                }
             }
 
         }else

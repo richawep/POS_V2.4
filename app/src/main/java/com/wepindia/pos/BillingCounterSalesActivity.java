@@ -2652,8 +2652,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 double taxpercent = 0;
                 Double taxvalue = crsrTax.getDouble(crsrTax.getColumnIndex("DeliveryCharge"));
 
-                BillTaxItem taxItem = new BillTaxItem(taxname, (taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
-                billOtherChargesItems.add(taxItem);
+                if(taxvalue>0)
+                {
+                    BillTaxItem taxItem = new BillTaxItem(taxname, (taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                    billOtherChargesItems.add(taxItem);
+                    double totalamt = Double.parseDouble(tvBillAmount.getText().toString().trim());
+                    totalamt+= taxvalue;
+                    tvBillAmount.setText(String.format("%.2f", totalamt));
+                }
             }
 
         }else
@@ -3321,7 +3327,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }
         // -------------------------------------------------
 
-        dOtherCharges = Double.valueOf(textViewOtherCharges.getText().toString());
+        //dOtherCharges = Double.valueOf(textViewOtherCharges.getText().toString());
         if (crsrSettings.moveToFirst()) {
             if (crsrSettings.getString(crsrSettings.getColumnIndex("Tax")).equalsIgnoreCase("1")) {
                 if (crsrSettings.getString(crsrSettings.getColumnIndex("TaxType")).equalsIgnoreCase("1")) {
