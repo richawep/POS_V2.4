@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -557,7 +558,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 		// BillNumber
 		objRiderSettlement.setBillNumber(Integer.valueOf(BillNimber));
-		Log.d("SaveRiderDelivery", "Bill Number:" + dbCustomerOrder.getNewBillNumbers());
+		Log.d("SaveRiderDelivery", "Bill Number:" + BillNimber);
 
 		// TotalItems
 		objRiderSettlement.setTotalItems(crsrPendingOrderItems.getCount());
@@ -1172,7 +1173,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             CalculateTotalAmount();
 
             // Insert details to RiderSettlement table
-            String newBillNo = String.valueOf(dbCustomerOrder.getNewBillNumbers());
+			DatabaseHandler db = new DatabaseHandler(myContext);
+            String newBillNo = String.valueOf(db.getNewBillNumber());
             SaveRiderdelivery(strCustId, newBillNo);
             txtBillNo.setText(newBillNo);
             txtCustId.setText(strCustId);
