@@ -3124,6 +3124,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                             }else {
                                 messageDialog.Show("Warning", "No Item is present for the Bill Number " + txtReprintBillNo.getText().toString());
+                                return;
                             }
                             strPaymentStatus = "Paid";
                             isReprint = true;
