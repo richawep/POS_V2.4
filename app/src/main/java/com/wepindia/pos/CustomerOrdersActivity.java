@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
@@ -90,7 +91,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
     Dialog RiderDialog;
     String strRiderCode = "";
     LinearLayout lnrboxx6,lnrboxx7;
-
+    String HomeDeliveryCaption="", TakeAwayCaption="";
     Cursor crsrSettings;
 	private Toolbar toolbar;
 	private String title;
@@ -150,6 +151,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 			if(crsrSettings.moveToFirst()){
 				iServiceTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("ServiceTaxType"));
 				dServiceTaxPercent = crsrSettings.getDouble(crsrSettings.getColumnIndex("ServiceTaxPercent"));
+                HomeDeliveryCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeHomeDeliveryCaption"));
+                TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
 			}
 
 			LoadOrderToList();
@@ -254,6 +257,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 						btnAdd.setEnabled(false);
 						btnOrder.setEnabled(true);
+						btnOrder.setTextColor(Color.WHITE);
 
 					} else {
 						txtCustName.requestFocus();
@@ -290,6 +294,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 
             btnOrder.setEnabled(true);
+            btnOrder.setTextColor(Color.WHITE);
             int billstatus =1;
             if (BILLING_MODE.equals("4"))
                 billstatus =2;
@@ -438,7 +443,11 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             // --------------------------------------
 
             // Other Charges ------------------
-            Cursor crssOtherChrg = dbCustomerOrder.getKOTModifierByModes("HomeDelivery");
+            Cursor crssOtherChrg = null;
+            if(BILLING_MODE.equalsIgnoreCase("3"))
+                 crssOtherChrg = dbCustomerOrder.getKOTModifierByModes(TakeAwayCaption);
+            else
+                crssOtherChrg = dbCustomerOrder.getKOTModifierByModes(HomeDeliveryCaption);
             if (crssOtherChrg.moveToFirst()) {
                 do {
                     dOtherChrgs += crssOtherChrg.getDouble(crssOtherChrg.getColumnIndex("ModifierAmount"));
@@ -489,7 +498,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         discountAmount =0;
         while(cursor!=null && cursor.moveToNext() )
         {
-            float subtot = (cursor.getFloat(cursor.getColumnIndex("SubTotal")));
+            double subtot = (cursor.getDouble(cursor.getColumnIndex("SubTotal")));
+            subtot+= dOtherChrgs;
             String strsubtot = String.format("%.2f",subtot);
             String strtot = String.format("%.2f",dBillTotal);
             if(strsubtot.equals(strtot))
@@ -511,6 +521,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         txtBillAmount.setText("");
 		btnAdd.setEnabled(true);
 		btnOrder.setEnabled(false);
+        btnOrder.setTextColor(Color.GRAY);
 		btnTender.setEnabled(true);
 		btnDelivery.setEnabled(true);
 
@@ -608,6 +619,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				txtCustId.setText(String.valueOf(lResult));
 				btnAdd.setEnabled(false);
 				btnOrder.setEnabled(true);
+                btnOrder.setTextColor(Color.WHITE);
 			}
 
 			Log.d("CustomerOrder", "New Customer added at position:" + lResult);
@@ -617,7 +629,11 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 	public void Order(View v){
 		//LaunchBillScreen();
 
-        if(BILLING_MODE.equalsIgnoreCase("3") && txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))
+        int count = tblOrderDetails.getChildCount();
+        if(tblOrderDetails.getChildCount() <= 1){
+            MsgBox.Show("Warning", "No order is selected to modify order");
+        } else {
+        if((BILLING_MODE.equalsIgnoreCase("3") && txtPaidStatus.getText().toString().equalsIgnoreCase("Paid")))
         {
             MsgBox.setTitle("Note")
                     .setMessage(" Paid Order cannot be modified. Do you want to print bill")
@@ -661,6 +677,12 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                         }
                     })
                     .show();
+        }else if( (BILLING_MODE.equalsIgnoreCase("4")) && txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))
+        {
+            MsgBox.setTitle("Note")
+                    .setMessage(" Paid Order cannot be modified.")
+                    .setNegativeButton("Cancel",null)
+                    .show();
         }else
         {
             Intent intentBillScreen = new Intent(myContext,BillingHomeDeliveryActivity.class);
@@ -673,7 +695,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             //startActivityForResult(intentBillScreen,1);
             setResult(RESULT_OK, intentBillScreen);
             this.finish();
-        }
+        }}
 
 	}
 
@@ -850,35 +872,74 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         }
 	}
 
-	public void CancelOrder(View view)
+	public void CancelOrder(final View view)
 	{
        // boolean r = txtCustId.getText().toString().equals("");
         if((txtCustId!= null && !txtCustId.getText().toString().equals("")))
         {
+            if(txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))
+            {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
-                    .setTitle("Delete")
-                    .setMessage("Are you sure you want to Delete this Order")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
+				MessageDialog msg1 = new MessageDialog(myContext);
+                msg1.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill")
+						.setMessage("Payment for this order has been done. Are you sure to delete this order.")
+                        .setNegativeButton("Cancel", null)
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
-                            int iResult = dbCustomerOrder.deleteKOTItems(Integer.valueOf(txtCustId.getText().toString()), String.valueOf(BILLING_MODE));
-                            Log.d("Delivery:", "Items deleted from pending KOT:" + iResult);
-                            MsgBox.Show("", "Customer Order Deleted Successfully");
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
 
-                            ResetCustomerOrder();
-                            LoadOrderToList();
+//								Cursor result = dbCustomerOrder.getBillDetailByCustomerIdTime(Integer.valueOf(txtCustId.getText().toString()),
+//										2, txtTime.getText().toString(),Integer.parseInt(BILLING_MODE));
+								int InvoiceNo = Integer.parseInt(txtBillNo.getText().toString());
+								if (InvoiceNo>0) {
+									Cursor result = dbCustomerOrder.getBillDetail(InvoiceNo);
+									if(result.moveToFirst()){
+									if (result.getInt(result.getColumnIndex("BillStatus")) != 0) {
+										VoidBill((InvoiceNo));
+									} else {
 
-                            dialog.dismiss();
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
+										Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
+										String msg = "Bill Number "+InvoiceNo+ " is already voided";
+										//MsgBox.Show("VoidBill",msg);
+										Log.d("VoidBill",msg);
+									}}
+								} else {
+									Toast.makeText(myContext, "No bill found ", Toast.LENGTH_SHORT).show();
+
+								}
+
+                            }
+                        })
+						.show();
+            }else
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
+                        .setTitle("Delete")
+                        .setMessage("Are you sure you want to Delete this Order")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                int iResult = dbCustomerOrder.deleteKOTItems(Integer.valueOf(txtCustId.getText().toString()), String.valueOf(BILLING_MODE));
+                                Log.d("Delivery:", "Items deleted from pending KOT:" + iResult);
+                                MsgBox.Show("", "Customer Order Deleted Successfully");
+
+                                ResetCustomerOrder();
+                                LoadOrderToList();
+
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+
+
         }
         else
         {
@@ -887,7 +948,53 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         }
 	}
 
-	public void AssignDriver(View view)
+    public void VoidBill(final int invoiceno) {
+
+        AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
+
+        LayoutInflater UserAuthorization = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
+
+        final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
+        final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
+
+        AuthorizationDialog.setTitle("Authorization").setIcon(R.drawable.ic_launcher).setView(vwAuthorization)
+                .setNegativeButton("Cancel", null).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                Cursor User = dbCustomerOrder.getUserr(txtUserId.getText().toString(),
+                        txtPassword.getText().toString());
+                if (User.moveToFirst()) {
+                    if (User.getInt(User.getColumnIndex("RoleId")) == 1) {
+                        //ReprintVoid(Byte.parseByte("2"));
+                        int result = dbCustomerOrder.makeBillVoid(invoiceno);
+
+                        if(result >0)
+                        {
+                            String msg = "Bill Number "+invoiceno+" voided successfully";
+                            // MsgBox.Show("Warning", msg);
+                            //Toast.makeText(myContext, msg, Toast.LENGTH_SHORT).show();
+                            Log.d("VoidBill", msg);
+                            int iResult = dbCustomerOrder.deleteKOTItems(Integer.valueOf(txtCustId.getText().toString()), String.valueOf(BILLING_MODE));
+                            Log.d("Delivery:", "Items deleted from pending KOT:" + iResult);
+							MsgBox.Show("Success", msg);
+							ResetCustomerOrder();
+							LoadOrderToList();
+                        }
+                    } else {
+                        MsgBox.Show("Warning", "Void Bill failed due to in sufficient access privilage");
+                    }
+                } else {
+                    MsgBox.Show("Warning", "Void Bill failed due to wrong user id or password");
+                }
+            }
+        }).show();
+    }
+
+
+    public void AssignDriver(View view)
 	{
         // custom dialog
         RiderDialog = new Dialog(myContext);

@@ -4199,7 +4199,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Cursor getItemsForOtherChargesPrint(String jBillingMode) {
 
         return dbFNB.rawQuery("Select * from " + TBL_KOTMODIFIER + " where ModifierModes LIKE '" +
-                jBillingMode+ "'", null);
+                jBillingMode+ "' AND "+KEY_IsChargeable+" LIKE '1'", null);
     }
 
     // -----Retrieve KOT items for service tax print
@@ -7005,7 +7005,8 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
         try{
-            cursor = db.rawQuery("Select * from " + TBL_KOTMODIFIER + " where ModifierModes LIKE '" + jBillingMode+ "'", null);
+            cursor = db.rawQuery("Select * from " + TBL_KOTMODIFIER + " where ModifierModes LIKE '" + jBillingMode+ "' AND "+
+                    KEY_IsChargeable+" LIKE '1'", null);
         }catch (Exception e){
             e.printStackTrace();
             cursor = null;
