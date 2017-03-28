@@ -35,7 +35,7 @@ public class FragmentInwardStock extends Fragment {
     MessageDialog MsgBox;
 
     TextView ItemLongName;
-    TextView tvExistingStock;
+    TextView tvExistingStock,tvItemNewStock;
     EditText txtNewStock, txtRate1;
     WepButton btnUpdate,btnClearStock,btnCloseStock,btn_InwardItem,btn_Supplier;
 
@@ -80,6 +80,8 @@ public class FragmentInwardStock extends Fragment {
             {
                 businessDate= cursor.getString(cursor.getColumnIndex("BusinessDate"));
             }
+            tvItemNewStock.setEnabled(false);
+            txtNewStock.setEnabled(false);
             loadItems(0);
             ResetStock();
         }
@@ -93,6 +95,7 @@ public class FragmentInwardStock extends Fragment {
     private void InitializeViews(View view) {
         ItemLongName = (TextView) view.findViewById(R.id.txtItemLongNameValue);
         tvExistingStock = (TextView) view.findViewById(R.id.tvItemExistingStockValue);
+        tvItemNewStock = (TextView) view.findViewById(R.id.tvItemNewStock);
         txtNewStock = (EditText) view.findViewById(R.id.etItemNewStock);
         txtRate1 = (EditText) view.findViewById(R.id.etItemRate1);        
 
@@ -138,6 +141,8 @@ public class FragmentInwardStock extends Fragment {
    private void btnItemClick()
    {
        listViewSupplier.setVisibility(View.INVISIBLE);
+       tvItemNewStock.setEnabled(false);
+       txtNewStock.setEnabled(false);
        loadItems(0);
        ResetStock();
        SUPPLIER_MODE = false;
@@ -146,6 +151,8 @@ public class FragmentInwardStock extends Fragment {
    private void btnSupplierClick()
     {
         listViewItem.setVisibility(View.INVISIBLE);
+        tvItemNewStock.setEnabled(true);
+        txtNewStock.setEnabled(true);
         loadSupplier();
         ResetStock();
         SUPPLIER_MODE = true;

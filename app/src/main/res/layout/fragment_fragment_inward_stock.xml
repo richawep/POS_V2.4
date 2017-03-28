@@ -240,7 +240,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/red"
-                            android:text="*Please note, new stock will be added to existing stock"/>
+                            android:text="*Please note, new stock will be added to existing stock \n*To update stock, kindly select supplier and then item."/>
                     </LinearLayout>
                 </LinearLayout>
 
