@@ -1560,8 +1560,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         if (tvBillAmount.getText().toString().equals("") ) {
             messageDialog.Show("Warning", "Please add item to make bill");
-        } else if ( tvBillAmount.getText().toString().equals("0.00")) {
-            messageDialog.Show("Warning", "Please make bill of amount greater than 0.00");
+        } else if ( tvSubTotal.getText().toString().equals("0.00")) {
+            messageDialog.Show("Warning", "Please add item of rate greater than 0.00");
         }
 
         else

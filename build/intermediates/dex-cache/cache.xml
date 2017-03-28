@@ -3,24 +3,6 @@
 
     <item
         is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="bc6eeb688ed7f2d896aedf930fb7a114f78bb41b">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_ef1042a25d5b18f5e3539321e1523a377209e3c2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\wepfnb_datamini\mSwipe\unspecified\jars\libs\MswipeWisepadDRDSDKAPIVer2.5.4.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="74a20528ad1e765e90f00fd30446521eb9e67185">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\8\MswipeWisepadDRDSDKAPIVer2.5.4_ad2310b3ff7ac47a4a952a522613eebc7a608b0e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-v13\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
@@ -39,24 +21,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_b99eaf8f1c7eb41e6698b377b9eb17f58e68fd79\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_c98b25712a986249f6e78710627f4dd79d594088\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\wepfnb_datamini\printers\unspecified\jars\libs\effica_lib.jar"
         jumboMode="true"
         optimize="true"
@@ -70,26 +34,8 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="c1d80f46f1d194fd326a16d8f536ce09657493b6">
+        sha1="93236cc463c67e8f65d1c298e667417fd5c84a8e">
         <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_37a53a22aa52e1543dbf238a61b8043f8c7c132f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="f83b00041ecfba705603fec40363416c7de69719">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_165790056358a8f740040b6cc22bc243939f884d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-v13\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="e3c7e8ff9f476d0d93ee7b046fbe8037a2b822c0">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v13-24.2.1_f095f623b6ce6d2e73491dad98e0a73dd49d5f86\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -111,48 +57,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_e272c35ecaa62fae528f80df534a0fcbbabc06f9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.1_cefcee9aeeb95d9ca73492a84a306d5c7cf4d5b8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\wepfnb_datamini\printers\unspecified\jars\libs\apachestrlib.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
         sha1="2a6e72794eeecaf83ed38b185d735a3d24b36669">
         <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachestrlib_a1c229fecbd7be377669c473ef562f34c1ab2c4a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_b97ab042f0fd15dab4772f8a7e48802be588e123\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.razorpay\checkout\1.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="4843c04db16f6ddd08cd74ae7e887556f7d53f95">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.razorpay-checkout-1.2.0_7536abbede3f3ee4fe84386342cc6947c9985ce1\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -180,15 +90,6 @@
         revision="24.0.0"
         sha1="6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9">
         <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\guava-19.0_5808de4355b3767dc304306b2ca2990cf724c2f7\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.jaredrummler\material-spinner\1.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="60182b96dcbd95dc33dd734bc81505d2b5ddc70e">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jaredrummler-material-spinner-1.1.0_7f4bfcb627e3c4bf548e0d1768134a47d0268a4d\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -228,39 +129,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\richaa\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_80d67fc57aaa8bd568c113419594a953bac12825\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_5ab03c83bd6b679a8153850564b70c6cdfca8ab3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\wepfnb_datamini\mSwipe\unspecified\jars\libs\simplyprintapi-android-1.3.0.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
         sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
         <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_1c4973d55e00869ea02d9c6dd1264aff85547538\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_4061834718ad38a8bd97944855f2a5abdc9f0eeb\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -279,6 +153,150 @@
         revision="24.0.0"
         sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
         <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_f18ff69fbbde00ca87453ce7fd346f5084434daf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\libs\poi-3.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\2\poi-3.8_924a172755540ff8630568ac8904dfa9a8a76381\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_c9941c2118c657b65fc7f1925154483d17142f58\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="37d5907aa99a9642df1afb6751d5d5b08db85f21">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_ef1042a25d5b18f5e3539321e1523a377209e3c2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\wepfnb_datamini\mSwipe\unspecified\jars\libs\MswipeWisepadDRDSDKAPIVer2.5.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="74a20528ad1e765e90f00fd30446521eb9e67185">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\8\MswipeWisepadDRDSDKAPIVer2.5.4_ad2310b3ff7ac47a4a952a522613eebc7a608b0e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_b99eaf8f1c7eb41e6698b377b9eb17f58e68fd79\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_c98b25712a986249f6e78710627f4dd79d594088\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_165790056358a8f740040b6cc22bc243939f884d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-v13\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="e3c7e8ff9f476d0d93ee7b046fbe8037a2b822c0">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v13-24.2.1_f095f623b6ce6d2e73491dad98e0a73dd49d5f86\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_e272c35ecaa62fae528f80df534a0fcbbabc06f9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.1_cefcee9aeeb95d9ca73492a84a306d5c7cf4d5b8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_b97ab042f0fd15dab4772f8a7e48802be588e123\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.razorpay\checkout\1.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="4843c04db16f6ddd08cd74ae7e887556f7d53f95">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.razorpay-checkout-1.2.0_7536abbede3f3ee4fe84386342cc6947c9985ce1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.jaredrummler\material-spinner\1.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="60182b96dcbd95dc33dd734bc81505d2b5ddc70e">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jaredrummler-material-spinner-1.1.0_7f4bfcb627e3c4bf548e0d1768134a47d0268a4d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\richaa\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_80d67fc57aaa8bd568c113419594a953bac12825\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_5ab03c83bd6b679a8153850564b70c6cdfca8ab3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_4061834718ad38a8bd97944855f2a5abdc9f0eeb\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -333,24 +351,6 @@
         revision="24.0.0"
         sha1="f03b2771ee9e00f44746d2532efb188ad31fff33">
         <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\8\jcc-bate-0.7.3_e7c698cea0823877fe4a468ddae42e61ffd7da08\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\libs\poi-3.8.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\2\poi-3.8_924a172755540ff8630568ac8904dfa9a8a76381\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.0"
-        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
-        <dex dex="E:\FnbProjects\FnB_Datamini\wepfnb_datamini\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_c9941c2118c657b65fc7f1925154483d17142f58\classes.dex" />
     </item>
 
 </items>

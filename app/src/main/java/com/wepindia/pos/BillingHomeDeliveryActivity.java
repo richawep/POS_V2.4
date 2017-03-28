@@ -3991,8 +3991,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
         if (tvBillAmount.getText().toString().equals("") ) {
             MsgBox.Show("Warning", "Please add item to make bill");
-        } else if ( tvBillAmount.getText().toString().equals("0.00")) {
-            MsgBox.Show("Warning", "Please make bill of amount greater than 0.00");
+        } else if ( tvSubTotal.getText().toString().equals("0.00")) {
+            MsgBox.Show("Warning", "Please add item of rate greater than 0.00");
         }else if (edtCustId.getText().toString().equalsIgnoreCase("0"))
         {
             MsgBox.Show("Warning", "Please add customer to make bill");
@@ -4484,6 +4484,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                         tvBillNumber.setText(strBillNo);
                                         Log.d("BillNo Recieved: ",strBillNo);}
                                     isReprint = true;
+                                    CalculateTotalAmountforRePrint();
                                     PrintNewBill();
                                     int iResult = dbBillScreen.deleteKOTItems(iCustId, String.valueOf(jBillingMode));
                                     Log.d("HomeDeliveryBillingAct:", "1 Items deleted from pending KOT:" + iResult);

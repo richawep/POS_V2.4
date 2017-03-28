@@ -4016,8 +4016,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
         if (tvBillAmount.getText().toString().equals("") ) {
             MsgBox.Show("Warning", "Please add item to make bill");
-        } else if ( tvBillAmount.getText().toString().equals("0.00")) {
-            MsgBox.Show("Warning", "Please make bill of amount greater than 0.00");
+        } else if ( tvSubTotal.getText().toString().equals("0.00")) {
+            MsgBox.Show("Warning", "Please add item of rate greater than 0.00");
         }else if (chk_interstate.isChecked() && spnr_pos.getSelectedItem().equals("")) {
             MsgBox.Show("Warning", "Please Select Code for Intersate Supply");
         }
