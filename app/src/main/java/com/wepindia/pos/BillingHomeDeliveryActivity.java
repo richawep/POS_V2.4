@@ -4448,22 +4448,28 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             strMakeOrder = data.getStringExtra("MAKE_ORDER");
                             isPrintBill = data.getBooleanExtra("IS_PRINT_BILL",false);
                             isFinish = data.getBooleanExtra("IS_FINISH", false);
-                            if(strBillMode.equals("4"))
-                            {
+                            if(strBillMode.equals("4")) {
                                 String strBillNo = data.getStringExtra("BILLNO");
-                                if (strBillNo != null && !strBillNo.equals("") && !strBillNo.equals("0")){
+                                if (strBillNo != null && !strBillNo.equals("") && !strBillNo.equals("0")) {
                                     tvBillNumber.setText(strBillNo);
-                                    Log.d("BillNo Recieved  ","in billing mode 4 :"+strBillNo);
+                                    Log.d("BillNo Recieved  ", "in billing mode 4 :" + strBillNo);
                                 }
 
-                                String isPaid = data.getStringExtra("IS_PAID");
-                                if(isPaid!=null && !isPaid.equals("YES"))
-                                {
-                                    l(2, isPrintBill);
-//                                    if(isPrintBill==true)
-//                                    {
-//                                        tvBillNumber.setText(String.valueOf(Integer.parseInt(tvBillNumber.getText().toString())-1));
-//                                    }
+                                Cursor BillItems = dbBillScreen.getKOTItems(iCustId, String.valueOf(jBillingMode));
+                                if (BillItems.moveToFirst()) {
+                                    ClearAll();
+                                    //LoadKOTItems(BillItems);
+                                    fTotalDiscount = data.getFloatExtra("DISCOUNT_AMOUNT", 0);
+                                    CustomerDetailsFilled = false;
+                                    LoadModifyKOTItems(BillItems);
+                                    String isPaid = data.getStringExtra("IS_PAID");
+                                    if (isPaid != null && !isPaid.equals("YES")) {
+                                        l(2, isPrintBill);
+    //                                    if(isPrintBill==true)
+    //                                    {
+    //                                        tvBillNumber.setText(String.valueOf(Integer.parseInt(tvBillNumber.getText().toString())-1));
+    //                                    }
+                                    }
                                 }
                             }
 
