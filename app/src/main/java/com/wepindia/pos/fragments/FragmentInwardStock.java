@@ -34,7 +34,7 @@ public class FragmentInwardStock extends Fragment {
     DatabaseHandler dbStockInward ;
     MessageDialog MsgBox;
 
-    TextView ItemLongName;
+    TextView ItemLongName,item_uom;
     TextView tvExistingStock,tvItemNewStock;
     EditText txtNewStock, txtRate1;
     WepButton btnUpdate,btnClearStock,btnCloseStock,btn_InwardItem,btn_Supplier;
@@ -94,6 +94,7 @@ public class FragmentInwardStock extends Fragment {
 
     private void InitializeViews(View view) {
         ItemLongName = (TextView) view.findViewById(R.id.txtItemLongNameValue);
+        item_uom = (TextView) view.findViewById(R.id.item_uom);
         tvExistingStock = (TextView) view.findViewById(R.id.tvItemExistingStockValue);
         tvItemNewStock = (TextView) view.findViewById(R.id.tvItemNewStock);
         txtNewStock = (EditText) view.findViewById(R.id.etItemNewStock);
@@ -168,6 +169,7 @@ public class FragmentInwardStock extends Fragment {
                     //strMenuCode = Item.getString(Item.getColumnIndex("MenuCode"));
                     ItemLongName.setText(items.getItemName());
                     tvExistingStock.setText(String.format("%.2f",items.getOpeningStock()));
+                    item_uom.setText(items.getUOM());
                     txtRate1.setText(String.format("%.2f",items.getRate()));
                     txtNewStock.setText("0");
                     btnUpdate.setEnabled(true);
@@ -199,8 +201,12 @@ public class FragmentInwardStock extends Fragment {
             MsgBox.Show("Warning", "Enter rate before updating");
             return;
         }
-        UpdateItemStock_goodsInward(itemname, Float.parseFloat(strNewStock), Float.parseFloat(strRate1));
-        UpdateStockInward(itemname, Float.parseFloat(strNewStock), Double.parseDouble(strRate1));
+        /*UpdateItemStock_goodsInward(itemname, Float.parseFloat(strNewStock), Float.parseFloat(strRate1));
+        UpdateStockInward(itemname, Float.parseFloat(strNewStock), Double.parseDouble(strRate1));*/
+
+        String uom = item_uom.getText().toString();
+        double rate_new = UpdateGoodsInward(itemname, Float.parseFloat(strNewStock), uom, Double.parseDouble(strRate1));
+        UpdateStockInward(itemname,Float.parseFloat(strNewStock),   rate_new);
 
         if(SUPPLIER_MODE)
         {            // update for Supplierwise item in TBL_ITEM_INWARD
@@ -234,6 +240,7 @@ public class FragmentInwardStock extends Fragment {
                         item.setItemName(cursor.getString(cursor.getColumnIndex("ItemName")));
                         item.setOpeningStock(cursor.getDouble(cursor.getColumnIndex("Quantity")));
                         item.setRate(cursor.getDouble(cursor.getColumnIndex("Value")));
+                        item.setUOM(cursor.getString(cursor.getColumnIndex("UOM")));
                         itemList.add(item);
                     }
                 }else{
@@ -244,6 +251,7 @@ public class FragmentInwardStock extends Fragment {
                         item.setItemName(cursor.getString(cursor.getColumnIndex("ItemName")));
                         item.setOpeningStock(cursor.getDouble(cursor.getColumnIndex("Quantity")));
                         item.setRate(cursor.getDouble(cursor.getColumnIndex("Rate")));
+                        item.setUOM(cursor.getString(cursor.getColumnIndex("UOM")));
                         itemList.add(item);
                     }
                 }
@@ -309,6 +317,7 @@ public class FragmentInwardStock extends Fragment {
         tvExistingStock.setText("0");
         txtRate1.setText("0");
         btnUpdate.setEnabled(false);
+        item_uom.setText("");
     }
 //    private void loadSupplier() {
 //        ArrayList<Supplier_Model> supplierList = new ArrayList<Supplier_Model>();
@@ -389,6 +398,100 @@ public class FragmentInwardStock extends Fragment {
     }
 
 
+    private double UpdateGoodsInward(String itemname, float quantity, String mou, double rate)
+    {
+        double rate_new = 0;
+        try {
+            Cursor item_present_crsr = dbStockInward.getItem_GoodsInward(itemname);
+            if (item_present_crsr != null && item_present_crsr.moveToFirst()) {
+                // already present , needs to update
+                String qty_str = item_present_crsr.getString(item_present_crsr.getColumnIndex("Quantity"));
+                float qty_temp = Float.parseFloat(qty_str);
+                quantity += qty_temp;
+
+                int newSupplierCount = item_present_crsr.getInt(item_present_crsr.getColumnIndex("SupplierCount"));
+                double rate_prev = item_present_crsr.getDouble(item_present_crsr.getColumnIndex("Value"));
+                rate_new = rate_prev*newSupplierCount;
+                rate_new += rate;
+                newSupplierCount++;
+                rate_new /= newSupplierCount;
+
+                Long l = dbStockInward.updateIngredient(itemname, quantity,rate_new, newSupplierCount);
+                if (l > 0) {
+                    Log.d(" GoodsInwardNote ", itemname + " updated  successfully at " + l);
+                }
+
+            }else
+            {
+                // new entry
+                rate_new = rate;
+                Long  l = dbStockInward.addIngredient(itemname, quantity, mou, rate_new, 1);
+                if (l > 0) {
+                    Log.d(" GoodsInwardNote ", itemname + " added  successfully at " + l);
+                }
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        finally {
+            return rate_new;
+        }
+    }
+    private void UpdateStockInward(String itemname, float quantity,  double rate)
+    {
+        try{
+            Cursor item_present_crsr = dbStockInward.getInwardStock(itemname);
+            double Openingqty_prev = 0;
+            double Closingqty_prev = 0;
+            ItemStock item = new ItemStock();
+
+            if (item_present_crsr != null && item_present_crsr.moveToFirst()) {
+                // already present , needs to update
+                String qty_str = item_present_crsr.getString(item_present_crsr.getColumnIndex("OpeningStock"));
+                if(!qty_str.equalsIgnoreCase(""))
+                    Openingqty_prev =  Double.parseDouble(qty_str);
+                String ClosingQty_str = item_present_crsr.getString(item_present_crsr.getColumnIndex("ClosingStock"));
+                if(!qty_str.equalsIgnoreCase(""))
+                    Closingqty_prev =  Double.parseDouble(qty_str);
+                item.setMenuCode(item_present_crsr.getInt(item_present_crsr.getColumnIndex("MenuCode")));
+                item.setOpeningStock(Openingqty_prev+Double.parseDouble(String.valueOf(quantity)));
+                item.setClosingStock(Closingqty_prev+Double.parseDouble(String.valueOf(quantity)));
+                item.setRate(rate);
+                Long l = dbStockInward.updateOpeningStockInward(item, businessDate);
+                if (l>0) {
+                    Log.d("Stockinwardmaintain", " SaveStock() : opening save stock for item :" + item.getItemName());
+                }
+                l = dbStockInward.updateClosingStockInward(item, businessDate);
+                if (l>0) {
+                    Log.d("Stockinwardmaintain", " SaveStock() : closing save stock for item :" + item.getItemName());
+                }
+
+            }else
+            {
+                // new entry
+                Cursor itemCursor = dbStockInward.getItem_GoodsInward(itemname);
+                if(itemCursor != null && itemCursor.moveToFirst())
+                {
+                    item.setMenuCode(itemCursor.getInt(itemCursor.getColumnIndex("MenuCode")));
+                    item.setItemName(itemname);
+                    item.setOpeningStock(quantity);
+                    item.setClosingStock(quantity);
+                    item.setRate(rate);
+                    Log.d("SaveStock():", item.getItemName() + " @ " + businessDate);
+                    long l = dbStockInward.insertStockInward(item, businessDate);
+                    if (l>0) {
+                        Log.d("Stockinwardmaintain", " SaveStock() : save stock for item :" + item.getItemName());
+                    }
+                }
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void UpdateItemStock_goodsInward(String ItemName, float NewStock, float Rate1) {
         long lRowId = 0;
@@ -411,7 +514,7 @@ public class FragmentInwardStock extends Fragment {
             Log.d("FragmentInwardStock", "TBL_ItemInward : Row Id:" + String.valueOf(lRowId));
         }
     }
-    private void UpdateStockInward(String itemname, float quantity, double rate)
+    private void UpdateStockInward_old(String itemname, float quantity, double rate)
     {
         try{
             Cursor item_present_crsr = dbStockInward.getInwardStock(itemname);
