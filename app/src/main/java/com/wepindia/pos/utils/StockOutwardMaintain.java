@@ -3,6 +3,7 @@ package com.wepindia.pos.utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -77,7 +78,7 @@ public class StockOutwardMaintain {
         item.setMenuCode(MenuCode);
         item.setItemName(ItemName);
         item.setClosingStock(ClosingStock);
-        Log.d("updateClosingStock():", item.getItemName() + " @ " + businessdate);
+        Log.d("updateClosingStock():", item.getItemName() + " @ " + businessdate+" closing quantity:"+ClosingStock);
         long status = db.updateClosingStockOutward(item, businessdate);
         if (status < 1) {
             Log.d("Stockoutwardmaintain", " SaveStock() : cannot save stock for item :" + item.getItemName());

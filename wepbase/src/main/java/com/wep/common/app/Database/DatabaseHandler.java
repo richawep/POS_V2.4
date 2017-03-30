@@ -5003,6 +5003,23 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
                 KEY_MenuCode+" = "+MenuCode, null, null, null, null);
         return cursor;
     }
+    public Cursor getOutwardStockItem_counter(String currentdate,int MenuCode) {
+        Cursor cursor =null;
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            if(db!=null)
+            {
+                cursor =  db.query(TBL_StockOutward, new String[]{"*"}, KEY_BusinessDate+" LIKE '"+currentdate+"' AND "+
+                        KEY_MenuCode+" = "+MenuCode, null, null, null, null);
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }finally {
+            return cursor;
+        }
+
+    }
     public int clearOutwardStock(String currentdate) {
        int del =0;
         del =  dbFNB.delete(TBL_StockOutward, KEY_BusinessDate+" LIKE '"+currentdate+"' ",null);
