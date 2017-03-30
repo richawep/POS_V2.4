@@ -221,6 +221,7 @@
                                 android:layout_width="200dp"
                                 android:layout_height="wrap_content"
                                 android:text="Rate"
+                                android:enabled="false"
                                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
                             <EditText
@@ -228,6 +229,7 @@
                                 android:layout_width="200dp"
                                 android:layout_height="wrap_content"
                                 android:ems="5"
+                                android:enabled="false"
                                 android:inputType="numberDecimal"
                                 android:selectAllOnFocus="true" />
 

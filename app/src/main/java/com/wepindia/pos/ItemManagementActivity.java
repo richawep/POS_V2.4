@@ -1500,7 +1500,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         Item objItem = new Item(ItemBarcode, LongName, ShortName, AdditionalTaxId, BillWithStock, CategCode, DeptCode,
                 DiscId, DiscountEnable, KitchenCode, OptionalTaxId1, OptionalTaxId2, PriceChange, SalesTaxId, TaxType,
                 DeliveryPrice, DineInPrice1, DineInPrice2, DineInPrice3, PickUpPrice, Stock, TakeAwayPrice, ImageUri,hsnCode,
-                fgsttax,0,cgsttax, 0,sgsttax, 0 ,MOU_str, taxationtype,frate,g_s, SalesTaxPercent, ServiceTaxPercent, MenuCode);
+                fgsttax,0,cgsttax, 0,sgsttax, 0 ,MOU_str, taxationtype,frate,g_s, SalesTaxPercent, ServiceTaxPercent, MenuCode,0,0);
 
         lRowId = dbItems.addItem(objItem);
 

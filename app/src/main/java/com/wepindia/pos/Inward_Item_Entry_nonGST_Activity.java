@@ -1657,7 +1657,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                     float qty_temp = Float.parseFloat(qty_str);
                     int menuCode = item_present_crsr.getInt(item_present_crsr.getColumnIndex("MenuCode"));
                     //quantity+=qty_temp;
-                    Long l = dbInwardItem.updateIngredient(itemname, quantity, mou);
+                    Long l = dbInwardItem.updateIngredient(itemname, quantity, 0,0); // richa_todo
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname + " updated  successfully at " + l);
                         // updating stock inward
@@ -1682,7 +1682,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                 }else
                 {
                     // new entry
-                    Long  l = dbInwardItem.addIngredient(itemname, quantity, mou);
+                    Long  l = dbInwardItem.addIngredient(itemname, quantity, mou,0,0); // richa_todo
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname + " added  successfully at " + l);
                         // updating inward stock
@@ -1728,7 +1728,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                     int menuCode = item_present_crsr.getInt(item_present_crsr.getColumnIndex("MenuCode"));
                     float qty_temp = Float.parseFloat(qty_str);
                    // quantity += qty_temp;
-                    Long l = dbInwardItem.updateIngredient(itemname, quantity, mou);
+                    Long l = dbInwardItem.updateIngredient(itemname, quantity, 0,0); // richa_todo
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname + " updated  successfully at " + l);
                         double openingStock =0, closingStock =0;
@@ -1751,7 +1751,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                 }else
                 {
                     // new entry
-                    Long  l = dbInwardItem.addIngredient(itemname, quantity, mou);
+                    Long  l = dbInwardItem.addIngredient(itemname, quantity, mou,0,0); // richa_todo
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname + " added  successfully at " + l);
                         int menuCode =0;

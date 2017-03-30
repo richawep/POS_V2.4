@@ -11,13 +11,15 @@ public class ItemStock {
     private  double OpeningStock;
     private  double ClosingStock;
     private  double Rate;
+    private String UOM;
 
-    public ItemStock(int menuCode, String itemName, double openingStock, double closingStock, double rate) {
+    public ItemStock(int menuCode, String itemName, double openingStock, double closingStock, double rate, String uom) {
         MenuCode = menuCode;
         ItemName = itemName;
         OpeningStock = openingStock;
         ClosingStock = closingStock;
         Rate = rate;
+        UOM = uom;
     }
 
     public ItemStock() {
@@ -26,6 +28,15 @@ public class ItemStock {
         OpeningStock = 0;
         ClosingStock = 0;
         Rate = 0;
+        UOM = "";
+    }
+
+    public String getUOM() {
+        return UOM;
+    }
+
+    public void setUOM(String UOM) {
+        this.UOM = UOM;
     }
 
     public int getMenuCode() {
