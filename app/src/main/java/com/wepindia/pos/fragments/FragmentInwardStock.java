@@ -35,8 +35,8 @@ public class FragmentInwardStock extends Fragment {
     MessageDialog MsgBox;
 
     TextView ItemLongName,item_uom;
-    TextView tvExistingStock,tvItemNewStock;
-    EditText txtNewStock, txtRate1;
+    TextView tvExistingStock,tvItemNewStock, txtRate1, tvItemRate1, tvItemExistingStock;
+    EditText txtNewStock;
     WepButton btnUpdate,btnClearStock,btnCloseStock,btn_InwardItem,btn_Supplier;
 
     private ItemInwardAdapter itemsAdapter;
@@ -97,8 +97,10 @@ public class FragmentInwardStock extends Fragment {
         item_uom = (TextView) view.findViewById(R.id.item_uom);
         tvExistingStock = (TextView) view.findViewById(R.id.tvItemExistingStockValue);
         tvItemNewStock = (TextView) view.findViewById(R.id.tvItemNewStock);
+        tvItemExistingStock = (TextView) view.findViewById(R.id.tvItemExistingStock);
         txtNewStock = (EditText) view.findViewById(R.id.etItemNewStock);
-        txtRate1 = (EditText) view.findViewById(R.id.etItemRate1);        
+        txtRate1 = (TextView) view.findViewById(R.id.etItemRate1);
+        tvItemRate1 = (TextView) view.findViewById(R.id.tvItemRate1);
 
         listViewItem = (ListView) view.findViewById(R.id.listViewFilter3);
         listViewItem.setOnItemClickListener(itemsClick);
@@ -144,6 +146,8 @@ public class FragmentInwardStock extends Fragment {
        listViewSupplier.setVisibility(View.INVISIBLE);
        tvItemNewStock.setEnabled(false);
        txtNewStock.setEnabled(false);
+       tvItemRate1.setText("Weighted Avg Rate");
+       tvItemExistingStock.setText("Existing Stock");
        loadItems(0);
        ResetStock();
        SUPPLIER_MODE = false;
@@ -154,6 +158,8 @@ public class FragmentInwardStock extends Fragment {
         listViewItem.setVisibility(View.INVISIBLE);
         tvItemNewStock.setEnabled(true);
         txtNewStock.setEnabled(true);
+        tvItemRate1.setText("Prev. Rate");
+        tvItemExistingStock.setText("Stock purchased till now for supplier");
         loadSupplier();
         ResetStock();
         SUPPLIER_MODE = true;
@@ -406,16 +412,18 @@ public class FragmentInwardStock extends Fragment {
             if (item_present_crsr != null && item_present_crsr.moveToFirst()) {
                 // already present , needs to update
                 String qty_str = item_present_crsr.getString(item_present_crsr.getColumnIndex("Quantity"));
-                float qty_temp = Float.parseFloat(qty_str);
-                quantity += qty_temp;
-
+                float qty_prev = Float.parseFloat(qty_str);
+                //quantity += qty_prev;
                 int newSupplierCount = item_present_crsr.getInt(item_present_crsr.getColumnIndex("SupplierCount"));
                 double rate_prev = item_present_crsr.getDouble(item_present_crsr.getColumnIndex("Value"));
+                double temp = rate_prev * qty_prev;
+                double newtemp = quantity *rate;
+                rate_new = (temp+newtemp)/(quantity+qty_prev);
                 /*rate_new = rate_prev*newSupplierCount;
                 rate_new += rate;
                 rate_new /= newSupplierCount;*/
 
-                Long l = dbStockInward.updateIngredient(itemname, quantity,rate_new, newSupplierCount);
+                Long l = dbStockInward.updateIngredient(itemname, quantity+qty_prev,rate_new, newSupplierCount);
                 if (l > 0) {
                     Log.d(" GoodsInwardNote ", itemname + " updated  successfully at " + l);
                 }

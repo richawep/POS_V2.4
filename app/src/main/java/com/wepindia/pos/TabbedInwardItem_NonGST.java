@@ -78,7 +78,7 @@ public class TabbedInwardItem_NonGST extends WepBaseActivity {
         bundle1.putString("REPORT_TYPE", "1");
         FragmentInwardSupply reportFragment1 = new FragmentInwardSupply();
         reportFragment1.setArguments(bundle1);
-        adapter.addFragment(reportFragment1, "Inward Supply ");
+        adapter.addFragment(reportFragment1, "Supplier Item Linkage ");
 
         viewPager.setAdapter(adapter);
     }

@@ -85,7 +85,7 @@
                     android:textColor="@android:color/white"
                     android:theme="@style/WepButtonWithMarigin"
                     android:onClick="EditPO"
-                    android:text="Edit PO" />
+                    android:text="Update PO" />
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnClearItem"

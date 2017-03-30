@@ -5579,8 +5579,8 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         String selectQuery = "Select DISTINCT " + KEY_ItemName + "  FROM " + TBL_ITEM_Inward + " WHERE " + KEY_SUPPLIERNAME +
                 " LIKE '" + suppliername + "' AND " + KEY_SupplierCode + " LIKE '" + suppliercode + "'";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);
-        //list.add("Not in list");
-        list.add("Add new item");
+        list.add("Not in list");
+        //list.add("Add new item");
         while (cursor != null && cursor.moveToNext()) {
             String item = cursor.getString(cursor.getColumnIndex(KEY_ItemName));
             list.add(item);
