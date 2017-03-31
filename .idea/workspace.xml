@@ -16,12 +16,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/ItemsAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/ItemsAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/pay_bill_dialog.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/pay_bill_dialog.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/payment/MSwipePaymentActivity.java" afterPath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/payment/MSwipePaymentActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/view/CardSaleDialog.java" afterPath="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/view/CardSaleDialog.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,8 +51,8 @@
       <file leaf-file-name="PayBillActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="860" column="70" selection-start-line="860" selection-start-column="70" selection-end-line="860" selection-end-column="70" />
+            <state relative-caret-position="158">
+              <caret line="851" column="33" selection-start-line="851" selection-start-column="33" selection-end-line="851" selection-end-column="33" />
               <folding>
                 <element signature="e#37955#38000#0" expanded="true" />
                 <element signature="e#38663#38717#0" expanded="true" />
@@ -5831,7 +5825,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490939174146</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;Fixed: Wallet Payment&#10;Change: Credit Customer Validation Changed&#10;Progress: Card payment&#10;">
+      <created>1490964886319</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1490964886319</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -5895,7 +5896,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="pulling" />
     <MESSAGE value="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;" />
+    <MESSAGE value="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;Fixed: Wallet Payment&#10;Change: Credit Customer Validation Changed&#10;Progress: Card payment&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;Fixed: Wallet Payment&#10;Change: Credit Customer Validation Changed&#10;Progress: Card payment&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6290,8 +6292,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="860" column="70" selection-start-line="860" selection-start-column="70" selection-end-line="860" selection-end-column="70" />
+        <state relative-caret-position="158">
+          <caret line="851" column="33" selection-start-line="851" selection-start-column="33" selection-end-line="851" selection-end-column="33" />
           <folding>
             <element signature="e#37955#38000#0" expanded="true" />
             <element signature="e#38663#38717#0" expanded="true" />
