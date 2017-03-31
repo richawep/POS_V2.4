@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -384,8 +385,12 @@ public class TableBookingActivity extends WepBaseActivity {
             }
 
 
-            TableSelectionDialog.setIcon(R.drawable.ic_launcher).setTitle("Table Selection").setMessage("Select Table for Booking")
-                    .setView(vwTableSelection).setNegativeButton("Cancel", null)
+
+
+            TableSelectionDialog.setIcon(R.drawable.ic_launcher)
+                    .setTitle("Select Table for Booking")
+                    .setView(vwTableSelection)
+                    .setNegativeButton("Cancel", null)
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
@@ -394,7 +399,17 @@ public class TableBookingActivity extends WepBaseActivity {
                             tvTableNo.setText(txtTblNo.getText().toString());
 
                         }
-                    }).show();
+                    });
+            AlertDialog alert11 = TableSelectionDialog.create();
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert11.getWindow().getAttributes());
+            lp.width = 150;
+            lp.height = 500;
+            /*lp.x=-170;
+            lp.y=100;*/
+            alert11.getWindow().setAttributes(lp);
+
+            alert11.show();
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
