@@ -365,7 +365,7 @@ public class PrinterUtil {
     // For Hey dey Printer
     public String getPrintKOT(PrintKotBillItem item) {
         EscCommand esc = new EscCommand();
-        esc.addPrintAndFeedLines((byte)3);
+        //esc.addPrintAndFeedLines((byte)1);
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);
         String tblno = "", modename = "";
@@ -430,7 +430,7 @@ public class PrinterUtil {
 
     public String getPrintBill(PrintKotBillItem item) {
         EscCommand esc = new EscCommand();
-        esc.addPrintAndFeedLines((byte)2);
+        //esc.addPrintAndFeedLines((byte)2);
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);
         //esc.addText("Resturant Bill"+"\n");
@@ -440,8 +440,12 @@ public class PrinterUtil {
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addText(item.getAddressLine2()+"\n");
-        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
-        esc.addText(item.getAddressLine3()+"\n");
+        String add = item.getAddressLine3();
+        if(!add.trim().equals(""))
+        {
+            esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+            esc.addText(item.getAddressLine3()+"\n");
+        }
         esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
         esc.addText("===============================================\n");
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
@@ -609,7 +613,8 @@ public class PrinterUtil {
         esc.addText(getSpaceFormater("TOTAL",String.format("%.2f",item.getNetTotal()),45,1)+"\n");
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addText("================================================\n");
-        esc.addText(item.getFooterLine()+"\n");
+        if(!item.getFooterLine().equals(""))
+            esc.addText(item.getFooterLine()+"\n");
         esc.addPrintAndFeedLines((byte)3);
 
         Vector<Byte> datas = esc.getCommand();
