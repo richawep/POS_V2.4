@@ -22,7 +22,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsMiscellaneous.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsMiscellaneous.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrice.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsPrice.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
     </list>
     <ignored path="Feb10.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -5968,13 +5967,6 @@
       <option name="presentableId" value="Default" />
       <updated>1486752611947</updated>
     </task>
-    <task id="LOCAL-00045" summary="changing image of GoodsInward Note to non water mark image">
-      <created>1490098221793</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1490098221793</updated>
-    </task>
     <task id="LOCAL-00046" summary="making Po compatible with Android 5+">
       <created>1490098322459</created>
       <option name="number" value="00046" />
@@ -6311,7 +6303,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490948187131</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="app was crashing after restor default. - Rectified. - Reason : some of values are not set, resulting null by default , and hence when going in billing screen , it crashed randomly">
+      <created>1490950853896</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1490950853896</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6376,7 +6375,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="adding caption for table split no in reprint KOT" />
     <MESSAGE value="Earlier deleted bills are also reprinted. Now deleted bills  cannot be printed , instead amessage is displayed that this bill no is deleted" />
     <MESSAGE value="Adding clear button to table status. Also correcting the display aligmnment upon search button click" />
     <MESSAGE value="KOT PRint" />
@@ -6401,7 +6399,8 @@
     <MESSAGE value="Stock outward not displaying changed stock when BillwithStock is disabled. - Rectified" />
     <MESSAGE value="Tax report not coming accurate. Rectified" />
     <MESSAGE value="ok and cancel buttons were not visible when no of tables &gt; 25. - rectified" />
-    <option name="LAST_COMMIT_MESSAGE" value="ok and cancel buttons were not visible when no of tables &gt; 25. - rectified" />
+    <MESSAGE value="app was crashing after restor default. - Rectified. - Reason : some of values are not set, resulting null by default , and hence when going in billing screen , it crashed randomly" />
+    <option name="LAST_COMMIT_MESSAGE" value="app was crashing after restor default. - Rectified. - Reason : some of values are not set, resulting null by default , and hence when going in billing screen , it crashed randomly" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

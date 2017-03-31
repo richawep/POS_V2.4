@@ -339,7 +339,7 @@ public class FragmentSettingsPrice extends Fragment {
         }
     }
 
-    private void ReadSettings(){
+    private int  ReadSettings(){
 
         // Local variables
         String strDI1From, strDI2From, strDI3From, strDI1To, strDI2To, strDI3To, strMaxWaiter, strMaxTables,
@@ -417,6 +417,7 @@ public class FragmentSettingsPrice extends Fragment {
         if(strDI1From.equalsIgnoreCase("") || strDI2From.equalsIgnoreCase("") || strDI3From.equalsIgnoreCase("") || strDI1To.equalsIgnoreCase("") ||
                 strDI2To.equalsIgnoreCase("") || strDI3To.equalsIgnoreCase("") || strMaxWaiter.equalsIgnoreCase("") || strMaxTables.equalsIgnoreCase("")){
             Toast.makeText(myContext, "Please fill all the text boxes before saving the settings", Toast.LENGTH_LONG).show();
+            return 0;
         }
         else{
             // Initialize all the settings variable
@@ -448,6 +449,7 @@ public class FragmentSettingsPrice extends Fragment {
             objBillSettings.setTakeAwayCaption(TakeAwayCaption);
             objBillSettings.setHomeDeliveryCaption(HomeDeliveryCaption);
         }
+        return 1;
     }
 
     private void SaveDineInSettings(){
@@ -467,8 +469,8 @@ public class FragmentSettingsPrice extends Fragment {
     }
 
     public void Apply(){
-        ReadSettings();
-        SaveDineInSettings();
+        if(ReadSettings()>0)
+            SaveDineInSettings();
     }
 
     public void Close(){
