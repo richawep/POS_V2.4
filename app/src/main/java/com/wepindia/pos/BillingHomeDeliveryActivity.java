@@ -4405,7 +4405,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 //LoadKOTItems(BillItems);
                                 LoadModifyKOTItems(BillItems);
                         }}*/
-
+                        PrintBillPayment= 0;
                         l(2, isPrintBill);
                         Toast.makeText(myContext, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
                         updateOutwardStock();

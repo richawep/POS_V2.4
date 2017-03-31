@@ -4448,7 +4448,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         tvBillAmount.setText(String.format("%.2f",total));
                         //OverAllDiscount(dDiscPercent);
                     }
-
+                    PrintBillPayment =0;
                     l(2, isPrintBill);
                     Toast.makeText(myContext, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
                     updateOutwardStock();
