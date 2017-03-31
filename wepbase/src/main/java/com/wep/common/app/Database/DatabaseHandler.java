@@ -6417,6 +6417,11 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_POS_OUT, 0);
         cvDbValues.put(KEY_HSNCode, 0);
         cvDbValues.put(KEY_ReverseCharge_OUT, 0);
+        cvDbValues.put(KEY_GSTEnable, 0);
+        cvDbValues.put(KEY_FastBillingMode, 1);
+        cvDbValues.put(KEY_ItemNoReset, 0);
+        cvDbValues.put(KEY_PrintPreview, 0);
+        cvDbValues.put(KEY_TableSpliting, 0);
         long result1 = dbFNB.insert(TBL_BILLSETTING, null, cvDbValues);
     }
 
