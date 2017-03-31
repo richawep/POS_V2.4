@@ -607,7 +607,7 @@
                             android:text="Amount"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/et_Inw_Amount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -626,6 +626,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -635,6 +636,7 @@
 
                         <TextView
                             android:id="@+id/tv_AverageRate"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"

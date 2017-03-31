@@ -42,6 +42,8 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 import com.wepindia.pos.UploadFilePickerActivity;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,13 +81,13 @@ public class FragmentInwardSupply extends Fragment {
 
     AutoCompleteTextView autocompletetv_supplierPhn, autocompletetv_suppliername,autocomplete_inw_ItemName;
     WepButton btnAddSupplier;
-    EditText et_inw_rate,et_inw_quantity,et_Inw_Amount;
+    EditText et_inw_rate,et_inw_quantity;
     EditText et_Inw_ServiceTax, et_Inw_SalesTax;
     ArrayList<String> labelsSupplierName,labelsSupplierPhn;
     ArrayList<String> itemlist;
-    TextView tv_suppliercode, tv_AverageRate,tv_count;//, spnrUOM_selection_code;
+    TextView tv_suppliercode, tv_AverageRate,tv_count,et_Inw_Amount;//, spnrUOM_selection_code;
     int count =1;
-
+    float rate_prev_for_touched_item =0;
     // Variables
     ArrayAdapter<String> adapDeptCode, adapCategCode, adapKitCode, adapTax, adapDiscount;
     String strMenuCode, AMU,strImageUri = "";
@@ -109,7 +111,6 @@ public class FragmentInwardSupply extends Fragment {
         }catch (Exception e){
 
         }
-
     }
 
     @Override
@@ -489,7 +490,7 @@ public class FragmentInwardSupply extends Fragment {
         et_Inw_ServiceTax = (EditText) view.findViewById(R.id.et_Inw_ServiceTax);
         et_Inw_SalesTax = (EditText) view.findViewById(R.id.et_Inw_SalesTax);
         et_inw_quantity = (EditText) view.findViewById(R.id.et_inw_quantity);
-        et_Inw_Amount = (EditText) view.findViewById(R.id.et_Inw_Amount);
+        et_Inw_Amount = (TextView) view.findViewById(R.id.et_Inw_Amount);
         autocompletetv_suppliername = (AutoCompleteTextView) view.findViewById(R.id.autocompletetv_suppliername);
         autocomplete_inw_ItemName= (AutoCompleteTextView) view.findViewById(R.id.autocomplete_inw_ItemName);
         autocompletetv_supplierPhn = (AutoCompleteTextView) view.findViewById(R.id.autocompletetv_supplierPhn);
@@ -781,6 +782,7 @@ public class FragmentInwardSupply extends Fragment {
 
                                 //autocomplete_inw_ItemName.setText(LongName.getText());
                                 et_inw_rate.setText(Rate.getText().toString());
+                                rate_prev_for_touched_item = Float.parseFloat(et_inw_rate.getText().toString());
                                 et_inw_quantity.setText(Quantity.getText().toString());
                                 double rate = Double.parseDouble(et_inw_rate.getText().toString());
                                 double quantity = Double.parseDouble(et_inw_quantity.getText().toString());
@@ -1041,6 +1043,7 @@ public class FragmentInwardSupply extends Fragment {
                             et_inw_quantity.setText(Quantity.getText().toString());
                             double rate = Double.parseDouble(et_inw_rate.getText().toString());
                             double quantity = Double.parseDouble(et_inw_quantity.getText().toString());
+                            rate_prev_for_touched_item = Float.parseFloat(et_inw_rate.getText().toString());
                             double amount = rate * quantity;
                             et_Inw_Amount.setText(String.valueOf(amount));
 
@@ -1291,6 +1294,7 @@ public class FragmentInwardSupply extends Fragment {
 
                             et_inw_rate.setText(Rate.getText().toString());
                             et_inw_quantity.setText(Quantity.getText().toString());
+                            rate_prev_for_touched_item = Float.parseFloat(et_inw_rate.getText().toString());
                             double rate = Double.parseDouble(et_inw_rate.getText().toString());
                             double quantity = Double.parseDouble(et_inw_quantity.getText().toString());
                             double amount = rate * quantity;
@@ -1335,8 +1339,17 @@ public class FragmentInwardSupply extends Fragment {
         DisplayItems( suppliercode);
     }
 
-    private void updateGoodsInwardQuantity(final String itemname, float quantity)
+    private void updateGoodsInwardQuantity(final String itemname, float quantity, boolean isItem_todelete)
     {
+        if(isItem_todelete)
+        {
+           int l =  dbInwardItem.deleteItemInGoodsInward(itemname);
+            if(l>0)
+                Log.d("InwardSupply", itemname + " deleted successfully in TBL_GoodsInward");
+            else
+                Log.d("InwardSupply", itemname + " cannot be deleted in TBL_GoodsInward");
+        }
+        else{
         Cursor cursor = dbInwardItem. getItem_GoodsInward(itemname);
         if(cursor!=null && cursor.moveToFirst())
         {
@@ -1357,6 +1370,8 @@ public class FragmentInwardSupply extends Fragment {
             }
         }
     }
+
+    }
     private View.OnClickListener mListener = new View.OnClickListener() {
         public void onClick(final View v) {
 
@@ -1368,131 +1383,138 @@ public class FragmentInwardSupply extends Fragment {
             if(cursor!=null && cursor.moveToFirst()) {
                 int count_item = cursor.getInt(cursor.getColumnIndex("SupplierCount")) - 1;
                 if (count_item == 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
-                            .setTitle("Delete")
-                            .setMessage("Are you sure you want to Delete this Item. " +
-                                    "\nPlease note that this item has only one supplier now." +
-                                    "\nThis will delete the item from Inward Item database also" +
-                                    "\nIf you still want to delete it,press Ok")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    TableRow tr = (TableRow) v.getParent();
-                                    TextView ItemNumber = (TextView) tr.getChildAt(4);
-                                    TextView ItemQuantity = (TextView) tr.getChildAt(8);
-                                    TextView ItemName = (TextView) tr.getChildAt(5);
-                                    TextView SupplierCode = (TextView) tr.getChildAt(16);
-                                    TextView SupplierName = (TextView) tr.getChildAt(1);
-                                    TextView SupplierPhone = (TextView) tr.getChildAt(2);
-                                    TextView SupplierAddress = (TextView) tr.getChildAt(3);
-
-                                    String itemname = ItemName.getText().toString();
-                                    String suppliername = SupplierName.getText().toString();
-                                    String supplierphone = SupplierPhone.getText().toString();
-                                    String supplieraddress = SupplierAddress.getText().toString();
-                                    int suppliercode = Integer.parseInt(SupplierCode.getText().toString());
-
-                                    long lResult = dbInwardItem.DeleteItem_Inw(ItemNumber.getText().toString());
-                                    //MsgBox.Show("", "Item Deleted Successfully");
-                                    if (lResult>0){
-                                        Toast.makeText(myContext, "Item Deleted Successfully", Toast.LENGTH_SHORT).show();
-                                        Log.d("InwardSupply",itemname+" delete successfully for supplier "+suppliername+" in TBL_ItemInward");
-                                        updateGoodsInwardQuantity(itemname, Float.parseFloat(ItemQuantity.getText().toString()));
-                                    }
-
-                                    ClearItemTable();
-                                    if (sema_display == SUPPLIERWISE)
-                                    {
-                                        count =1;
-                                        DisplayItems(suppliercode, suppliername,supplierphone,supplieraddress);
-                                    }else if (sema_display == ITEMWISE)
-                                    {
-                                        count =1;
-                                        DisplayItems(itemname);
-                                    }else
-                                    {
-                                        // display all
-                                        count =1;
-                                        DisplayItems(-1);
-                                    }
-
-
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
+                    deleteitemWithWarning(tr);
+                }else {
+                    deleteItem(tr);
                 }
+            }else{
+               deleteItem(tr);
             }
-            else
-            {
-                AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
-                        .setTitle("Delete")
-                        .setMessage("Are you sure you want to Delete this Item. " +
-                                "\nPlease note that quantity will also be reduced from Inward Item database." +
-                                "\nTo delete only item for this supplier, without reducing the quantity, kindly first reset the quantity , then delete this.")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                TableRow tr = (TableRow) v.getParent();
-                                TextView ItemNumber = (TextView) tr.getChildAt(4);
-                                TextView ItemQuantity = (TextView) tr.getChildAt(8);
-                                TextView ItemName = (TextView) tr.getChildAt(5);
-                                TextView SupplierCode = (TextView) tr.getChildAt(16);
-                                TextView SupplierName = (TextView) tr.getChildAt(1);
-                                TextView SupplierPhone = (TextView) tr.getChildAt(2);
-                                TextView SupplierAddress = (TextView) tr.getChildAt(3);
-
-                                String itemname = ItemName.getText().toString();
-                                String suppliername = SupplierName.getText().toString();
-                                String supplierphone = SupplierPhone.getText().toString();
-                                String supplieraddress = SupplierAddress.getText().toString();
-                                int suppliercode = Integer.parseInt(SupplierCode.getText().toString());
-
-                                long lResult = dbInwardItem.DeleteItem_Inw(ItemNumber.getText().toString());
-                                //MsgBox.Show("", "Item Deleted Successfully");
-                                if (lResult>0){
-                                    Toast.makeText(myContext, "Item Deleted Successfully", Toast.LENGTH_SHORT).show();
-                                    Log.d("InwardSupply",itemname+" delete successfully for supplier "+suppliername+" in TBL_ItemInward");
-                                    updateGoodsInwardQuantity(itemname, Float.parseFloat(ItemQuantity.getText().toString()));
-                                }
-
-                                ClearItemTable();
-                                if (sema_display == SUPPLIERWISE)
-                                {
-                                    count =1;
-                                    DisplayItems(suppliercode, suppliername,supplierphone,supplieraddress);
-                                }else if (sema_display == ITEMWISE)
-                                {
-                                    count =1;
-                                    DisplayItems(itemname);
-                                }else
-                                {
-                                    // display all
-                                    count =1;
-                                    DisplayItems(-1);
-                                }
-
-
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-            }
+        }
 
     };
+
+    private void deleteitemWithWarning(final TableRow tr)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to Delete this Item. " +
+                        "\nPlease note that this item has only one supplier now." +
+                        "\nThis will delete the item from Inward Item database also" +
+                        "\nIf you still want to delete it,press Ok")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        TextView ItemNumber = (TextView) tr.getChildAt(4);
+                        TextView ItemQuantity = (TextView) tr.getChildAt(8);
+                        TextView ItemName = (TextView) tr.getChildAt(5);
+                        TextView SupplierCode = (TextView) tr.getChildAt(16);
+                        TextView SupplierName = (TextView) tr.getChildAt(1);
+                        TextView SupplierPhone = (TextView) tr.getChildAt(2);
+                        TextView SupplierAddress = (TextView) tr.getChildAt(3);
+
+                        String itemname = ItemName.getText().toString();
+                        String suppliername = SupplierName.getText().toString();
+                        String supplierphone = SupplierPhone.getText().toString();
+                        String supplieraddress = SupplierAddress.getText().toString();
+                        int suppliercode = Integer.parseInt(SupplierCode.getText().toString());
+
+                        long lResult = dbInwardItem.DeleteItem_Inw(ItemNumber.getText().toString());
+                        //MsgBox.Show("", "Item Deleted Successfully");
+                        if (lResult>0){
+                            Toast.makeText(myContext, "Item Deleted Successfully", Toast.LENGTH_SHORT).show();
+                            Log.d("InwardSupply",itemname+" delete successfully for supplier "+suppliername+" in TBL_ItemInward");
+                            updateGoodsInwardQuantity(itemname, Float.parseFloat(ItemQuantity.getText().toString()),true);
+                        }
+
+                        ResetItem();
+                        ClearItemTable();
+                        if (sema_display == SUPPLIERWISE)
+                        {
+                            count =1;
+                            DisplayItems(suppliercode, suppliername,supplierphone,supplieraddress);
+                        }else if (sema_display == ITEMWISE)
+                        {
+                            count =1;
+                            DisplayItems(itemname);
+                        }else
+                        {
+                            // display all
+                            count =1;
+                            DisplayItems(-1);
+                        }
+
+
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+    private  void deleteItem(final TableRow tr)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to Delete this Item. " +
+                        "\nPlease note that quantity will also be reduced from Inward Item database." +
+                        "\nTo delete only item for this supplier, without reducing the quantity, kindly first reset the quantity , then delete this.")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        TextView ItemNumber = (TextView) tr.getChildAt(4);
+                        TextView ItemQuantity = (TextView) tr.getChildAt(8);
+                        TextView ItemName = (TextView) tr.getChildAt(5);
+                        TextView SupplierCode = (TextView) tr.getChildAt(16);
+                        TextView SupplierName = (TextView) tr.getChildAt(1);
+                        TextView SupplierPhone = (TextView) tr.getChildAt(2);
+                        TextView SupplierAddress = (TextView) tr.getChildAt(3);
+
+                        String itemname = ItemName.getText().toString();
+                        String suppliername = SupplierName.getText().toString();
+                        String supplierphone = SupplierPhone.getText().toString();
+                        String supplieraddress = SupplierAddress.getText().toString();
+                        int suppliercode = Integer.parseInt(SupplierCode.getText().toString());
+
+                        long lResult = dbInwardItem.DeleteItem_Inw(ItemNumber.getText().toString());
+                        //MsgBox.Show("", "Item Deleted Successfully");
+                        if (lResult>0){
+                            Toast.makeText(myContext, "Item Deleted Successfully", Toast.LENGTH_SHORT).show();
+                            Log.d("InwardSupply",itemname+" delete successfully for supplier "+suppliername+" in TBL_ItemInward");
+                            updateGoodsInwardQuantity(itemname, Float.parseFloat(ItemQuantity.getText().toString()),false);
+                        }
+                        ResetItem();
+                        ClearItemTable();
+                        if (sema_display == SUPPLIERWISE)
+                        {
+                            count =1;
+                            DisplayItems(suppliercode, suppliername,supplierphone,supplieraddress);
+                        }else if (sema_display == ITEMWISE)
+                        {
+                            count =1;
+                            DisplayItems(itemname);
+                        }else
+                        {
+                            // display all
+                            count =1;
+                            DisplayItems(-1);
+                        }
+
+
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
     private boolean IsItemExists(String ItemFullName) {
         boolean isItemExists = false;
@@ -1727,7 +1749,7 @@ public class FragmentInwardSupply extends Fragment {
             }
             else {
                 InsertItem( suppliercode,  suppliername, itemname,  strBarcode, rate,  quantity, mou, ImageUri, SalesTax, ServiceTax,supplytype);
-                double rate_new = UpdateGoodsInward(itemname, quantity, mou, Double.parseDouble(et_inw_rate.getText().toString()));
+                double rate_new = UpdateGoodsInward(itemname, quantity, mou, Double.parseDouble(et_inw_rate.getText().toString()), true);
                // UpdateStockInward(itemname,quantity,   rate_new);
             }
 
@@ -1752,14 +1774,16 @@ public class FragmentInwardSupply extends Fragment {
 
             int count = Integer.parseInt(tv_count.getText().toString());
             float averageRate_f = Float.parseFloat(tv_AverageRate.getText().toString());
-            float tot = count*averageRate_f;
-            tot+=rate;
-            count++;
-            tot/=count;
+            float tot = averageRate_f;
+            if(rate_prev_for_touched_item != rate) {
+                tot = count * averageRate_f;
+                tot += rate;
+                count++;
+                tot /= count;
 
-            String tot_str = String.format("%.2f",tot);
-            tot = Float.parseFloat(tot_str);
-
+                String tot_str = String.format("%.2f", tot);
+                tot = Float.parseFloat(tot_str);
+            }
             objItem.setCount(count);
             objItem.setAverageRate(tot);
 
@@ -1769,7 +1793,7 @@ public class FragmentInwardSupply extends Fragment {
                 int iRowId = dbInwardItem.updateItem_Inw_nonGST(objItem);
                 if (iRowId >0  ){ // not updated
                     Toast.makeText(myContext, "Update Item Inward : Row updated: "+String.valueOf(iRowId), Toast.LENGTH_SHORT).show();
-                    double rate_new =  UpdateGoodsInward(itemname,quantity,mou,Double.parseDouble(et_inw_rate.getText().toString()));
+                    double rate_new =  UpdateGoodsInward(itemname,quantity,mou,Double.parseDouble(et_inw_rate.getText().toString()), false);
                     //UpdateStockInward(itemname,quantity,rate_new);
                 } else{
                     Toast.makeText(myContext, " Item Cannot be updated", Toast.LENGTH_SHORT).show();
@@ -1802,7 +1826,7 @@ public class FragmentInwardSupply extends Fragment {
                                 et_inw_supplierAddress.setText(supplieraddress1);
                                 autocomplete_inw_ItemName.setText(itemname1);
                                 ClearingAndDisplaying();
-                                double rate_new =  UpdateGoodsInward(itemname1, quantity1, mou1, Double.parseDouble(et_inw_rate.getText().toString()));
+                                double rate_new =  UpdateGoodsInward(itemname1, quantity1, mou1, Double.parseDouble(et_inw_rate.getText().toString()), true);
                                // UpdateStockInward(itemname1, quantity1,rate_new);
                             }
                         })
@@ -1814,14 +1838,14 @@ public class FragmentInwardSupply extends Fragment {
         }
     }
 
-    private double UpdateGoodsInward(String itemname, float quantity, String mou, double rate)
+    private double UpdateGoodsInward(String itemname, float quantity, String mou, double rate, boolean isNewSupplier)
     {
         double rate_new = 0;
         try {
             Cursor item_present_crsr = dbInwardItem.getItem_GoodsInward(itemname);
             if (item_present_crsr != null && item_present_crsr.moveToFirst()) {
                 // already present , needs to update
-                String qty_str = item_present_crsr.getString(item_present_crsr.getColumnIndex("Quantity"));
+               /* String qty_str = item_present_crsr.getString(item_present_crsr.getColumnIndex("Quantity"));
                 float qty_temp = Float.parseFloat(qty_str);
                 quantity += qty_temp;
 
@@ -1835,13 +1859,20 @@ public class FragmentInwardSupply extends Fragment {
                 Long l = dbInwardItem.updateIngredient(itemname, quantity,rate_new, newSupplierCount);
                 if (l > 0) {
                     Log.d(" GoodsInwardNote ", itemname + " updated  successfully at " + l);
-                }
+                }*/
+                if(isNewSupplier)
+                {
+                    int newSupplierCount = item_present_crsr.getInt(item_present_crsr.getColumnIndex("SupplierCount"));
+                    newSupplierCount++;
+                    Long l = dbInwardItem.updateSupplierCountInGoodsInward(itemname,newSupplierCount);
 
+                }
             }else
             {
                 // new entry
                 rate_new = rate;
-                Long  l = dbInwardItem.addIngredient(itemname, quantity, mou, rate_new, 1);
+                //Long  l = dbInwardItem.addIngredient(itemname, quantity, mou, rate_new, 1);
+                Long  l = dbInwardItem.addIngredient(itemname, quantity, mou, 0, 1);
                 if (l > 0) {
                     Log.d(" GoodsInwardNote ", itemname + " added  successfully at " + l);
                 }
@@ -2017,6 +2048,7 @@ public class FragmentInwardSupply extends Fragment {
         btnAdd.setEnabled(true);
         btnEdit.setEnabled(false);
         btnResetQuantity.setEnabled(false);
+        rate_prev_for_touched_item = 0;
     }
 
 

@@ -5003,6 +5003,23 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
                 KEY_MenuCode+" = "+MenuCode, null, null, null, null);
         return cursor;
     }
+    public Cursor getOutwardStockItem_counter(String currentdate,int MenuCode) {
+        Cursor cursor =null;
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            if(db!=null)
+            {
+                cursor =  db.query(TBL_StockOutward, new String[]{"*"}, KEY_BusinessDate+" LIKE '"+currentdate+"' AND "+
+                        KEY_MenuCode+" = "+MenuCode, null, null, null, null);
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }finally {
+            return cursor;
+        }
+
+    }
     public int clearOutwardStock(String currentdate) {
        int del =0;
         del =  dbFNB.delete(TBL_StockOutward, KEY_BusinessDate+" LIKE '"+currentdate+"' ",null);
@@ -5579,8 +5596,8 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         String selectQuery = "Select DISTINCT " + KEY_ItemName + "  FROM " + TBL_ITEM_Inward + " WHERE " + KEY_SUPPLIERNAME +
                 " LIKE '" + suppliername + "' AND " + KEY_SupplierCode + " LIKE '" + suppliercode + "'";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);
-        //list.add("Not in list");
-        list.add("Add new item");
+        list.add("Not in list");
+        //list.add("Add new item");
         while (cursor != null && cursor.moveToNext()) {
             String item = cursor.getString(cursor.getColumnIndex(KEY_ItemName));
             list.add(item);

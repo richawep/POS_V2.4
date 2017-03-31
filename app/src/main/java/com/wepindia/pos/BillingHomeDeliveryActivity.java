@@ -4325,11 +4325,21 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
             // Quantity
             if (RowBillItem.getChildAt(3) != null){
-                Cursor cursor = db_local.getItem(menuCode);
-                if(cursor.moveToNext())
-                    closingQty = cursor.getDouble(cursor.getColumnIndex("Quantity"));
+                TextView ItemQuantity = (TextView) RowBillItem.getChildAt(3);
+                double qty_to_reduce = Double.parseDouble(ItemQuantity.getText().toString());
+                //Cursor cursor = db_local.getItem(menuCode);
+                Cursor cursor = db_local.getOutwardStockItem(businessdate,menuCode);
+                if(cursor!=null && cursor.moveToNext())
+                {
+                    closingQty = cursor.getDouble(cursor.getColumnIndex("ClosingStock"));
+                    if(closingQty<= qty_to_reduce)
+                        closingQty =0;
+                    else
+                        closingQty -= qty_to_reduce;
+                    stock_outward.updateClosingStock_Outward(businessdate,menuCode,itemname,closingQty);
+                }
+
             }
-            stock_outward.updateClosingStock_Outward(businessdate,menuCode,itemname,closingQty);
 
         } // end of for
         db_local.CloseDatabase();
@@ -4395,8 +4405,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
                         l(2, isPrintBill);
                         Toast.makeText(myContext, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
-                        if (BillwithStock==1)
-                            updateOutwardStock();
+                        updateOutwardStock();
 
                         if (isComplimentaryBill == true) {
                             // Save complimentary bill details

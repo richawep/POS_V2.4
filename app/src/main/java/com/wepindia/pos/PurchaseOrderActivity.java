@@ -187,7 +187,9 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         et_inward_item_quantity.setBackgroundColor(getResources().getColor(R.color.grey));
                         et_inward_item_quantity.setEnabled(false);
                        // autocompletetv_itemlist.setText("");
-                        input_window();
+                        //input_window();
+                        MsgBox.Show("Warning","Kindly goto \"Inward Supply Item\" and add the desired item." +
+                                "\nPlease save your data , if any , before leaving this screen");
 
                     }else if (itemname.equalsIgnoreCase("Select/Add Supplier"))
                     {
@@ -269,7 +271,9 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                                 .setMessage(" Please Select Item  ")
                                 .setPositiveButton("OK", null)
                                 .show();*/
-                        input_window();
+                        //input_window();
+                        MsgBox.Show("Warning","Kindly goto \"Inward Supply Item\" and add the desired item." +
+                                "\nPlease save your data , if any , before leaving this screen");
                     }else   if (et_inward_item_quantity.getText().toString().equals(""))
                     {
                         et_inward_item_quantity.setBackgroundColor(Color.WHITE);
@@ -287,7 +291,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         }
                         else
                         {
-                            MsgBox.setTitle(" Insufficient Information")
+                            /*MsgBox.setTitle(" Insufficient Information")
                                     .setMessage(" Item not found in database for this Supplier. Do you want add it.")
                                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
@@ -295,6 +299,12 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                                         }
                                     })
                                     .setNegativeButton("Cancel", null)
+                                    .show();*/
+                            MsgBox.setTitle(" Insufficient Information")
+                                    .setMessage(" Item not found in database for this Supplier." +
+                                            "\nKindly goto \"Inward Supply Item\" and add the desired item" +
+                                            "\nPlease save your data , if any , before leaving this screen")
+                                    .setPositiveButton("Ok",null)
                                     .show();
                         }
                     }
