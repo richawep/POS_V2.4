@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.wep.common.app.Database.BillSetting;
 import com.wep.common.app.Database.DatabaseHandler;
@@ -247,7 +248,7 @@ public class FragmentSettingsMiscellaneous extends Fragment {
         return startDate;
     }
 
-    private void ReadSettings(){
+    private int ReadSettings(){
 
         // Local variables
         String strPOSNumber, strTIN, strSubUdfText, BusinessDate;
@@ -268,7 +269,9 @@ public class FragmentSettingsMiscellaneous extends Fragment {
 
         if(strPOSNumber.equalsIgnoreCase("") || strTIN.equalsIgnoreCase("") ||
                 BusinessDate.equalsIgnoreCase("")){
-            MsgBox.Show("Warning", "Please fill all text boxes");
+           // MsgBox.Show("Warning", "Please fill all text boxes");
+            Toast.makeText(myContext, "Please fill all the text boxes before saving the settings", Toast.LENGTH_LONG).show();
+            return 0;
         }
         else{
             objBillSettings.setPOSNumber(Integer.parseInt(strPOSNumber));
@@ -283,7 +286,7 @@ public class FragmentSettingsMiscellaneous extends Fragment {
                 objBillSettings.setWeighScale(0);
             }
         }
-        int iDateAndTime = 0;
+        /*int iDateAndTime = 0;
         Date d = new Date();
         CharSequence currentdate = DateFormat.format("yyyy-MM-dd", d.getTime());
         Cursor crsrBillDate = dbMiscellaneousSettings.getBillSetting();
@@ -299,7 +302,8 @@ public class FragmentSettingsMiscellaneous extends Fragment {
                 objBillSettings.setDateAndTime(0);
                 long iResult = dbMiscellaneousSettings.updateDateAndTime(objBillSettings);
             }
-        }
+        }*/
+        return 1;
     }
 
     private void SaveMiscSettings(){
@@ -325,8 +329,8 @@ public class FragmentSettingsMiscellaneous extends Fragment {
     }
 
     public void Apply(){
-        ReadSettings();
-        SaveMiscSettings();
+        if(ReadSettings()>0)
+            SaveMiscSettings();
     }
 
     public void Close(){

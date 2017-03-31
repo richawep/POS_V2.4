@@ -5089,14 +5089,14 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
        /* return dbFNB.rawQuery("SELECT * FROM OutwardSuppyItemsDetails ,OutwardSupplyLedger,TaxConfig WHERE OutwardSuppyItemsDetails.BillStatus=1 AND\n" +
                 "OutwardSuppyItemsDetails.InvoiceNo=OutwardSupplyLedger.InvoiceNo AND\n" +
                 "OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);*/
-        return dbFNB.rawQuery("SELECT  TaxPercent,TaxAmount,BillAmount FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
+        return dbFNB.rawQuery("SELECT  TaxPercent,TaxAmount,Value FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
                 " AND OutwardSuppyItemsDetails.InvoiceNo = OutwardSupplyLedger.InvoiceNo " +
                 " AND OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);
     }
 
     public Cursor getTaxReport_Service(String StartDate, String EndDate) {
 
-        return dbFNB.rawQuery("SELECT  ServiceTaxPercent,ServiceTaxAmount,BillAmount FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
+        return dbFNB.rawQuery("SELECT  ServiceTaxPercent,ServiceTaxAmount,Value FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
                 " AND OutwardSuppyItemsDetails.InvoiceNo = OutwardSupplyLedger.InvoiceNo " +
                 " AND OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);
     }
@@ -6417,6 +6417,11 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_POS_OUT, 0);
         cvDbValues.put(KEY_HSNCode, 0);
         cvDbValues.put(KEY_ReverseCharge_OUT, 0);
+        cvDbValues.put(KEY_GSTEnable, 0);
+        cvDbValues.put(KEY_FastBillingMode, 1);
+        cvDbValues.put(KEY_ItemNoReset, 0);
+        cvDbValues.put(KEY_PrintPreview, 0);
+        cvDbValues.put(KEY_TableSpliting, 0);
         long result1 = dbFNB.insert(TBL_BILLSETTING, null, cvDbValues);
     }
 

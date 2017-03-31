@@ -2824,6 +2824,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         tvBillAmount.setText(String.format("%.2f",total));
                     }
 
+                    PrintBillPayment =0;
                     l(2, isPrintBill);
                     updateOutwardStock();
                     Toast.makeText(getApplicationContext(), "Bill saved Successfully", Toast.LENGTH_SHORT).show();

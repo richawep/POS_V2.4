@@ -1715,12 +1715,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
         Log.d("TaxReport", "Rows Count:" + Report.getCount());
 
+        float  totbillAmt =0, totSalesTax =0;
         if (Report.moveToFirst()) {
             boolean isTaxExists = false;
 
             TextView Percent, Description, TaxAmount, TotalAmount;
             TableRow rowReport;
-            float  totbillAmt =0, totSalesTax =0;
+
 
             do {
                 for (int iPosition = 1; iPosition < tblReport.getChildCount(); iPosition++) {
@@ -1747,7 +1748,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                 TextView Amt = (TextView) rowItem.getChildAt(3);
                                 Amt.setText(String.format("%.2f",
                                         Double.parseDouble(Amt.getText().toString()) +
-                                                Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                                                Report.getDouble(Report.getColumnIndex("Value"))));
                                 Amt.setGravity(Gravity.END);
                                 Amt.setPadding(0,0,25,0);
                                 isTaxExists = true;
@@ -1784,19 +1785,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     Percent = new TextView(myContext);
-                    Percent.setText(Report.getString(Report.getColumnIndex("TaxPercent")));
-
-                    /*Cursor cc = dbReport.getPercentFromItemLedger(Report.getString(Report.getColumnIndex("InvoiceNo")),
-                            Report.getString(Report.getColumnIndex("InvoiceDate")));
-                    if(cc !=null && cc.moveToNext())
-                    {
-                        Percent.setText(cc.getString(cc
-                                .getColumnIndex("TaxPercent")));
-                    }
-                    else
-                    {
-                        Percent.setText("-");
-                    }*/
+                    Percent.setText(String.format("%.2f",Report.getFloat(Report.getColumnIndex("TaxPercent"))));
 
 
                     Description = new TextView(myContext);
@@ -1810,7 +1799,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     TotalAmount = new TextView(myContext);
                     TotalAmount.setText(String.format("%.2f",Report.getDouble(Report
-                            .getColumnIndex("BillAmount"))));
+                            .getColumnIndex("Value"))));
+                    totbillAmt = totbillAmt +Float.parseFloat(TotalAmount.getText().toString());
                     TotalAmount.setGravity(Gravity.END);
                     TotalAmount.setPadding(0,0,25,0);
 
@@ -1864,7 +1854,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TextView Description = new TextView(myContext);
 
             TextView TotalAmount = new TextView(myContext);
-            TotalAmount.setText(String.format("%.2f",totAmt));
+            //TotalAmount.setText(String.format("%.2f",totbillAmt));
             TotalAmount.setTextColor(Color.WHITE);
             TotalAmount.setTextSize(15);
             TotalAmount.setGravity(Gravity.END);
@@ -1932,7 +1922,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                 TextView Amt = (TextView) rowItem.getChildAt(3);
                                 Amt.setText(String.format("%.2f",
                                         Double.parseDouble(Amt.getText().toString()) +
-                                                Report.getDouble(Report.getColumnIndex("BillAmount"))));
+                                                Report.getDouble(Report.getColumnIndex("Value"))));
                                 Amt.setGravity(Gravity.END);
                                 Amt.setPadding(0,0,25,0);
                                 isTaxExists = true;
@@ -1976,7 +1966,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     TotalAmount = new TextView(myContext);
                     TotalAmount.setText(String.format("%.2f",Float.parseFloat(Report.getString(Report
-                            .getColumnIndex("BillAmount")))));
+                            .getColumnIndex("Value")))));
                     TotalAmount.setGravity(Gravity.END);
                     TotalAmount.setPadding(0,0,25,0);
 

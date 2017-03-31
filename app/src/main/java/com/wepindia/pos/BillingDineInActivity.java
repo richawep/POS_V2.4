@@ -385,15 +385,20 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             /*btndepart.setVisibility(View.INVISIBLE);
             btncateg.setVisibility(View.INVISIBLE);
             btnitem.setVisibility(View.INVISIBLE);*/
-            if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("1")) {
+            String fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
+            if(fastBillingMode == null)
+            {
+                fastBillingMode = "1";
+            }
+            if (fastBillingMode.equalsIgnoreCase("1")) {
                 btndepart.setVisibility(View.GONE);
                 btncateg.setVisibility(View.GONE);
                 btnitem.setVisibility(View.VISIBLE);
-            } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2")) {
+            } else if (fastBillingMode.equalsIgnoreCase("2")) {
                 btndepart.setVisibility(View.VISIBLE);
                 btncateg.setVisibility(View.GONE);
                 btnitem.setVisibility(View.VISIBLE);
-            } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("3")) {
+            } else if (fastBillingMode.equalsIgnoreCase("3")) {
                 btndepart.setVisibility(View.VISIBLE);
                 btncateg.setVisibility(View.VISIBLE);
                 btnitem.setVisibility(View.VISIBLE);
@@ -4443,7 +4448,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         tvBillAmount.setText(String.format("%.2f",total));
                         //OverAllDiscount(dDiscPercent);
                     }
-
+                    PrintBillPayment =0;
                     l(2, isPrintBill);
                     Toast.makeText(myContext, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
                     updateOutwardStock();

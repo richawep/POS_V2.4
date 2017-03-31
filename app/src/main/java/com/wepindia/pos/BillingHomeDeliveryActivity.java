@@ -248,36 +248,39 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             //Log.d("Richa_init : ", String.valueOf(dbBillScreen.getNewBillNumber()));
             int iBillNumber = db.getNewBillNumber();
             tvBillNumber.setText(String.valueOf(iBillNumber));
+            if(FASTBILLINGMODE !=null) {
 
-            if (FASTBILLINGMODE.equalsIgnoreCase("1")) {
-                // setting visibility of buttons
-                btndepart.setVisibility(View.GONE);
-                btncateg.setVisibility(View.GONE);
-                btnitem.setVisibility(View.VISIBLE);
 
-                // setting visibility of grids/listviews
-                gridViewItems.setNumColumns(6);
-                loadItems(0);
-                tvdeptline.setVisibility(View.GONE);
-                tvcategline.setVisibility(View.GONE);
-                listViewDept.setVisibility(View.GONE);
-                listViewCateg.setVisibility(View.GONE);
+                if (FASTBILLINGMODE.equalsIgnoreCase("1")) {
+                    // setting visibility of buttons
+                    btndepart.setVisibility(View.GONE);
+                    btncateg.setVisibility(View.GONE);
+                    btnitem.setVisibility(View.VISIBLE);
 
-            } else if (FASTBILLINGMODE.equalsIgnoreCase("2")) {
-                btndepart.setVisibility(View.VISIBLE);
-                btncateg.setVisibility(View.GONE);
-                btnitem.setVisibility(View.VISIBLE);
+                    // setting visibility of grids/listviews
+                    gridViewItems.setNumColumns(6);
+                    loadItems(0);
+                    tvdeptline.setVisibility(View.GONE);
+                    tvcategline.setVisibility(View.GONE);
+                    listViewDept.setVisibility(View.GONE);
+                    listViewCateg.setVisibility(View.GONE);
 
-                gridViewItems.setNumColumns(4);
-                loadItems(0);
-                tvcategline.setVisibility(View.GONE);
-                listViewCateg.setVisibility(View.GONE);
+                } else if (FASTBILLINGMODE.equalsIgnoreCase("2")) {
+                    btndepart.setVisibility(View.VISIBLE);
+                    btncateg.setVisibility(View.GONE);
+                    btnitem.setVisibility(View.VISIBLE);
 
-            } else if (FASTBILLINGMODE.equalsIgnoreCase("3")) {
-                btndepart.setVisibility(View.VISIBLE);
-                btncateg.setVisibility(View.VISIBLE);
-                btnitem.setVisibility(View.VISIBLE);
-                loadItems(0);
+                    gridViewItems.setNumColumns(4);
+                    loadItems(0);
+                    tvcategline.setVisibility(View.GONE);
+                    listViewCateg.setVisibility(View.GONE);
+
+                } else if (FASTBILLINGMODE.equalsIgnoreCase("3")) {
+                    btndepart.setVisibility(View.VISIBLE);
+                    btncateg.setVisibility(View.VISIBLE);
+                    btnitem.setVisibility(View.VISIBLE);
+                    loadItems(0);
+                }
             }
 
             crsrCustomerDetails = db.getCustomerById(iCustId);
@@ -4402,7 +4405,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 //LoadKOTItems(BillItems);
                                 LoadModifyKOTItems(BillItems);
                         }}*/
-
+                        PrintBillPayment= 0;
                         l(2, isPrintBill);
                         Toast.makeText(myContext, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
                         updateOutwardStock();
