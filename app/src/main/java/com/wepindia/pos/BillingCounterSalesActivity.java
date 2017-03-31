@@ -578,6 +578,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
 
             fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
+            // Handling Null pointer Exception
+            if(fastBillingMode==null)
+                fastBillingMode = "";
+
             if (fastBillingMode.equalsIgnoreCase("1"))
             {
                 gridViewItems.setNumColumns(6);
@@ -585,7 +589,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 boxDept.setVisibility(View.GONE);
                 boxCat.setVisibility(View.GONE);
             }
-            else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2"))
+            else if (fastBillingMode.equalsIgnoreCase("2"))
             {
                 gridViewItems.setNumColumns(4);
                 //GetItemDetailswithoutDeptCateg();

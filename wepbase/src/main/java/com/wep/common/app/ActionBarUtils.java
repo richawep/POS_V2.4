@@ -65,7 +65,8 @@ public class ActionBarUtils {
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
             outputStream.flush();
             outputStream.close();
-            openScreenshot(activity, imageFile);
+            //openScreenshot(activity, imageFile);
+            Toast.makeText(activity, "Screenshot Saved Successfully", Toast.LENGTH_SHORT).show();
         } catch (Throwable e) {
             // Several error may come out with file handling or OOM
             e.printStackTrace();

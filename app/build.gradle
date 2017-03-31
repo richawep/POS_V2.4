@@ -48,6 +48,7 @@ dependencies {
         mavenCentral()
     }
     compile files('libs/poi-3.8.jar')
+    compile files('libs/imageLib.jar')
     //compile project(':printerSohamsa')
     //compile project(':printers')
     compile 'com.android.support:support-v4:24.2.1'
@@ -60,5 +61,6 @@ dependencies {
     compile ('com.weiwangcn.betterspinner:library:1.1.0') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
+    compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.jaredrummler:material-spinner:1.1.0'
 }

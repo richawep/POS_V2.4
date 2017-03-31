@@ -56,6 +56,7 @@ import com.wep.common.app.Database.Item;
 import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.models.ItemOutward;
 import com.wep.common.app.views.WepButton;
+import com.wep.common.app.views.WepEditText;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.ItemOutwardAdapter;
@@ -80,7 +81,8 @@ public class ItemManagementActivity extends WepBaseActivity {
     DatabaseHandler dbItems = new DatabaseHandler(ItemManagementActivity.this);
     MessageDialog MsgBox;
     int ROWCLICKEVENT = 0;
-    EditText txtLongName, txtShortName, txtBarcode, txtDineIn1, txtDineIn2, txtDineIn3, txtStock;
+    EditText /*txtLongName,*/ txtShortName, txtBarcode, txtDineIn1, txtDineIn2, txtDineIn3, txtStock;
+    WepEditText txtLongName;
     Spinner spnrDepartment, spnrCategory, spnrKitchen, spnrSalesTax, spnrAdditionalTax, spnrOptionalTax1, spnrOptionalTax2, spnrDiscount;
     CheckBox chkPriceChange, chkDiscountEnable, chkBillWithStock;
     RadioButton rbForwardTax, rbReverseTax;
@@ -486,7 +488,7 @@ public class ItemManagementActivity extends WepBaseActivity {
     private void InitializeViewVariables() {
         EditTextInputHandler etInputValidate = new EditTextInputHandler();
 
-        txtLongName = (EditText) findViewById(R.id.etItemLongName);
+        txtLongName = (WepEditText) findViewById(R.id.etItemLongName);
         txtBarcode = (EditText) findViewById(R.id.etItemBarcode);
         txtDineIn1 = (EditText) findViewById(R.id.etItemDineInPrice1);
         etInputValidate.ValidateDecimalInput(txtDineIn1);
@@ -2530,6 +2532,12 @@ public class ItemManagementActivity extends WepBaseActivity {
                     .setNegativeButton(android.R.string.no, null).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        txtLongName.clearFocus();
+        txtLongName.setCursorVisible(false);
     }
 
 

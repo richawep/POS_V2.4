@@ -4,29 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:ignore="HardcodedText,UseCompoundDrawables" >
-    
+    tools:ignore="HardcodedText,UseCompoundDrawables">
+
     <ImageView
         android:id="@+id/grid_item_image"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_gravity="center"
-        android:padding="2dp"
         android:adjustViewBounds="true"
         android:contentDescription="Grid_Image"
-        android:src="@drawable/ic_launcher" >
-    </ImageView>
- 
+        android:padding="2dp"
+        android:src="@drawable/img_noimage"></ImageView>
+
     <TextView
         android:id="@+id/grid_item_label"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="13dp"
-        android:text="Grid_Image_Text"
-        android:textColor="#000000" >
-    </TextView>
-    
+        android:text="Grid Title"
+        android:textColor="#000000"
+        android:textSize="13dp"></TextView>
+
 
 </LinearLayout>
