@@ -5089,14 +5089,14 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
        /* return dbFNB.rawQuery("SELECT * FROM OutwardSuppyItemsDetails ,OutwardSupplyLedger,TaxConfig WHERE OutwardSuppyItemsDetails.BillStatus=1 AND\n" +
                 "OutwardSuppyItemsDetails.InvoiceNo=OutwardSupplyLedger.InvoiceNo AND\n" +
                 "OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);*/
-        return dbFNB.rawQuery("SELECT  TaxPercent,TaxAmount,BillAmount FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
+        return dbFNB.rawQuery("SELECT  TaxPercent,TaxAmount,Value FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
                 " AND OutwardSuppyItemsDetails.InvoiceNo = OutwardSupplyLedger.InvoiceNo " +
                 " AND OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);
     }
 
     public Cursor getTaxReport_Service(String StartDate, String EndDate) {
 
-        return dbFNB.rawQuery("SELECT  ServiceTaxPercent,ServiceTaxAmount,BillAmount FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
+        return dbFNB.rawQuery("SELECT  ServiceTaxPercent,ServiceTaxAmount,Value FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
                 " AND OutwardSuppyItemsDetails.InvoiceNo = OutwardSupplyLedger.InvoiceNo " +
                 " AND OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);
     }
