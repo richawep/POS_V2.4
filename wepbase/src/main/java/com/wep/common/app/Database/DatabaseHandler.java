@@ -595,6 +595,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_HSNCode = "HSNCode";
     public static final String KEY_SUPPLIERNAME = "SupplierName";
     public static final String KEY_SupplierPhone = "SupplierPhone";
+    public static final String KEY_SupplierCount = "SupplierCount";
+    public static final String KEY_Count = "Count";
+    public static final String KEY_AverageRate = "AverageRate";
     public static final String KEY_SupplierAddress = "SupplierAddress";
     public static final String KEY_SupplierCode = "SupplierCode";
     public static final String KEY_TaxableValue = "TaxableValue";
@@ -678,7 +681,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_DiscId + " NUMERIC, " + KEY_DiscountEnable + " NUMERIC, " + KEY_ItemBarcode + " TEXT, " +
             KEY_KitchenCode + " NUMERIC, " + KEY_PriceChange + " NUMERIC, " +
             KEY_SalesTaxId + " NUMERIC, " + KEY_SalesTaxPercent + " REAL, " + KEY_SerTaxPercent + " REAL, " +
-            KEY_TaxType + " NUMERIC )";
+            KEY_Count+" INTEGER, "+ KEY_AverageRate+" REAL, "+KEY_TaxType + " NUMERIC )";
 
     String QUERY_CREATE_TABLE_ITEM_Outward = "CREATE TABLE " + TBL_ITEM_Outward + "( "
             + KEY_TaxType + " NUMERIC, "
@@ -942,7 +945,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     String QUERY_CREATE_TABLE_GOODS_INWARD = " CREATE TABLE " + TBL_GOODSINWARD + " ( " +
             KEY_MenuCode + " INTEGER PRIMARY KEY,  " + KEY_SupplyType + " TEXT , " + KEY_ItemName + " TEXT, " + KEY_Value + " REAL, " +
-            KEY_Quantity + " REAL, " + KEY_UOM + "  TEXT )";
+            KEY_Quantity + " REAL, " + KEY_UOM + "  TEXT, "+KEY_SupplierCount+" INTEGER )";
 
     String QUERY_CREATE_TABLE_INGREDIENTS = " CREATE TABLE " + TBL_INGREDIENTS + " ( " +
             KEY_MenuCode + " INTEGER, " + KEY_ItemName + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + "  TEXT, " +
@@ -5382,11 +5385,16 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
         return dbFNB.update(TBL_GOODSINWARD, cvDbValues, KEY_ItemName + " LIKE '" + ingredientname + "'", null);
     }
+    public long updateSupplierCountInGoodsInward(String ingredientname, int count) {
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_SupplierCount, count);
+        return dbFNB.update(TBL_GOODSINWARD, cvDbValues, KEY_ItemName + " LIKE '" + ingredientname + "'", null);
+    }
 
     public int updateIngredientQuantityInGoodsInward(String ingredientname, float ingredientquantity, float rate) {
         cvDbValues = new ContentValues();
         cvDbValues.put(KEY_Quantity, ingredientquantity);
-        cvDbValues.put(KEY_Value, ingredientquantity);
+        //cvDbValues.put(KEY_Value, ingredientquantity);
 
         return dbFNB.update(TBL_GOODSINWARD, cvDbValues, KEY_ItemName + " LIKE '" + ingredientname + "'", null);
     }
@@ -5425,14 +5433,25 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_SupplierCode, objItem.getsuppliercode());
         cvDbValues.put(KEY_ItemBarcode, objItem.getItemBarcode());
         cvDbValues.put(KEY_Rate, objItem.getRate());
-        cvDbValues.put(KEY_Quantity, objItem.getQuantity());
+        //cvDbValues.put(KEY_Quantity, objItem.getQuantity());
         cvDbValues.put(KEY_UOM, objItem.getMOU());
         cvDbValues.put(KEY_SalesTaxPercent, objItem.getSalesTaxPercent());
         cvDbValues.put(KEY_ServiceTaxPercent, objItem.getServiceTaxPercent());
         cvDbValues.put("ImageUri", objItem.getImageUri());
         cvDbValues.put(KEY_SupplyType, objItem.getSupplyType());
+        cvDbValues.put(KEY_AverageRate, objItem.getAverageRate());
+        cvDbValues.put(KEY_Count, objItem.getCount());
 
         return dbFNB.update(TBL_ITEM_Inward, cvDbValues, "MenuCode=" + objItem.getMenuCode(), null);
+    }
+
+    public long resetStock_inward(int supplierCode, int menuCode,String itemName) {
+
+        cvDbValues = new ContentValues();
+
+        cvDbValues.put(KEY_Quantity, 0);
+        String whereClause = KEY_MenuCode+" = "+menuCode+" AND "+KEY_ItemName+" LIKE '"+itemName+"' AND "+KEY_SupplierCode+" = "+supplierCode;
+        return dbFNB.update(TBL_ITEM_Inward, cvDbValues, whereClause, null);
     }
 
     public long addItem_Inw_nonGST(Item objItem) {
@@ -5449,6 +5468,8 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_SupplyType, objItem.getSupplyType());
         cvDbValues.put("ImageUri", objItem.getImageUri());
         cvDbValues.put(KEY_UOM, objItem.getMOU());
+        cvDbValues.put(KEY_Count,1);
+        cvDbValues.put(KEY_AverageRate,objItem.getAverageRate());
         return dbFNB.insert(TBL_ITEM_Inward, null, cvDbValues);
     }
 
@@ -5635,23 +5656,32 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return cursor;
     }
 
-    public long addIngredient(String itemname_str, float quantity_f, String uom_str) {
+    public long addIngredient(String itemname_str, float quantity_f, String uom_str, double rate, int supplierCount) {
         cvDbValues = new ContentValues();
         cvDbValues.put(KEY_ItemName, itemname_str);
         cvDbValues.put(KEY_Quantity, quantity_f);
         cvDbValues.put(KEY_UOM, uom_str);
+        cvDbValues.put(KEY_Value, rate);
+        cvDbValues.put(KEY_SupplierCount, supplierCount);
         return dbFNB.insert(TBL_GOODSINWARD, null, cvDbValues);
     }
 
-    public long updateIngredient(String itemname_str, float quantity_f, String uom_str) {
+    public long updateIngredient(String itemname_str, float quantity_f, double rate, int SupplierCount) {
         cvDbValues = new ContentValues();
         cvDbValues.put(KEY_ItemName, itemname_str);
         cvDbValues.put(KEY_Quantity, quantity_f);
-        cvDbValues.put(KEY_UOM, uom_str);
+        cvDbValues.put(KEY_Value, rate);
+        cvDbValues.put(KEY_SupplierCount, SupplierCount);
 
         String whereClause = KEY_ItemName + " LIKE '" + itemname_str + "'";
         return dbFNB.update(TBL_GOODSINWARD, cvDbValues, whereClause, null);
     }
+
+    public int deleteItemInGoodsInward(String  itemname) {
+
+        return dbFNB.delete(TBL_GOODSINWARD, KEY_ItemName + " LIKE '"+itemname+"'", null);
+    }
+
 
     public int deletePurchaseOrder(int suppliercode, int purchaseorder) {
 

@@ -411,10 +411,9 @@ public class FragmentInwardStock extends Fragment {
 
                 int newSupplierCount = item_present_crsr.getInt(item_present_crsr.getColumnIndex("SupplierCount"));
                 double rate_prev = item_present_crsr.getDouble(item_present_crsr.getColumnIndex("Value"));
-                rate_new = rate_prev*newSupplierCount;
+                /*rate_new = rate_prev*newSupplierCount;
                 rate_new += rate;
-                newSupplierCount++;
-                rate_new /= newSupplierCount;
+                rate_new /= newSupplierCount;*/
 
                 Long l = dbStockInward.updateIngredient(itemname, quantity,rate_new, newSupplierCount);
                 if (l > 0) {

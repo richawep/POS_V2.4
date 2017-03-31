@@ -25,7 +25,9 @@ public class Item {
 	float fDineInPrice1, fDineInPrice2, fDineInPrice3, fTakeAwayPrice, fPickUpPrice, fDeliveryPrice, fQuantity;
 	float IGSTRate, IGSTAmount, CGSTRate, CGSTAmount,SGSTRate, SGSTAmount, Rate;
 	String MOU,HSNCode,TaxationType , SupplyType, pos;
-	float fSalesTaxPercent, fServiceTaxPercent;
+	float fSalesTaxPercent, fServiceTaxPercent, AverageRate;
+	int count ;
+
 	
 	// Default Constructor
 	public Item(){
@@ -70,6 +72,8 @@ public class Item {
 
 		this.fSalesTaxPercent = 0;
 		this.fServiceTaxPercent = 0;
+		this.AverageRate = 0;
+		this.count = 0;
 	}
 
 
@@ -79,7 +83,7 @@ public class Item {
 			int TaxType,float DeliveryPrice,float DineInPrice1,float DineInPrice2,float DineInPrice3,float PickUpPrice,float Quantity,
 				float TakeAwayPrice,String ImageUri,String HSNCode, float IGSTRate, float IGSTAmount, float CGSTRate,
 				float CGSTAmount, float SGSTRate, float SGSTAmount,String MOU,String TaxationType , float Rate, String supplyType,
-                float SalesTaxPercent, float ServiceTaxPercent, int MenuCode){
+                float SalesTaxPercent, float ServiceTaxPercent, int MenuCode , float AverageRate, int count){
 
         this.iMenuCode = MenuCode;
 		this.strItemBarcode = ItemBarcode;
@@ -119,8 +123,25 @@ public class Item {
 
         this.fSalesTaxPercent = SalesTaxPercent;
         this.fServiceTaxPercent = ServiceTaxPercent;
+        this.AverageRate = AverageRate;
+        this.count = count;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public float getAverageRate() {
+		return AverageRate;
+	}
+
+	public void setAverageRate(float averageRate) {
+		AverageRate = averageRate;
+	}
 
 	public float getRate() {
 		return Rate;

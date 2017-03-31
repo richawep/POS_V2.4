@@ -876,7 +876,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                     String qty_str = item_present_crsr.getString(item_present_crsr.getColumnIndex("Quantity"));
                     float qty_temp = Float.parseFloat(qty_str);
                     quantity_f += qty_temp;
-                    l = dbGoodsInwardNote.updateIngredient(itemname_str, quantity_f, uom_str);
+                    l = dbGoodsInwardNote.updateIngredient(itemname_str, quantity_f, 0,0); // richa_todo
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname_str + " updated  successfully at " + l);
                         // updating stock inward
@@ -901,7 +901,8 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 }else
                 {
                     // new entry
-                    l = dbGoodsInwardNote.addIngredient(itemname_str, quantity_f, uom_str);
+                    //richa_todo
+                    l = dbGoodsInwardNote.addIngredient(itemname_str, quantity_f, uom_str,0,0);
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname_str + " added  successfully at " + l);
 

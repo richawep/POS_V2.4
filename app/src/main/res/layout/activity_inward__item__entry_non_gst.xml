@@ -62,7 +62,7 @@
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="Rate"
+                    android:text="Prev.Rate"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/txtColorAccent" />
 
@@ -130,7 +130,7 @@
                     android:id="@+id/tblItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:collapseColumns="2,3,4,6,10,11,12,13,16">
+                    android:collapseColumns="2,3,4,6,10,11,12,13,16,17,18">
 
 
                 </TableLayout>
@@ -407,7 +407,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin1"
                         android:orientation="horizontal"
                         android:layout_weight="1"  >
@@ -430,16 +430,15 @@
                             android:layout_weight="0.67"
                             android:enabled="false"
                             android:gravity="center"
-                            android:hint="Item Barcode"
                             android:textSize="13dp" />
 
-                        <ImageView
+                        <!--<ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginLeft="5dp"
                             android:layout_weight="1.3"
-                            android:src="@drawable/searchicon_img" />
+                            android:src="@drawable/searchicon_img" />-->
 
                     </LinearLayout>
 
@@ -482,7 +481,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Quantity*"
+                            android:enabled="false"
+                            android:text="Quantity"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <EditText
@@ -492,6 +492,7 @@
                             android:layout_weight="0.45"
                             android:gravity="center"
                             android:hint="0.00"
+                            android:enabled="false"
                             android:inputType="numberDecimal"
                             android:maxLength="20"
                             android:textSize="13dp" />
@@ -512,6 +513,13 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1.05"
                         android:orientation="horizontal">
+
+                        <!--<TextView
+                            android:id="@+id/spnrUOM_selection_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:text="-1"/>-->
 
                         <TextView
                             android:layout_width="match_parent"
@@ -615,7 +623,40 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal"></LinearLayout>
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Average Rate"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/tv_AverageRate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:maxLength="7"
+                            android:textSize="13dp" />
+
+                        <TextView
+                            android:id="@+id/tv_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:visibility="gone"
+                            android:gravity="center"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:maxLength="7"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -638,7 +679,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="*Please note any % entered is taken upto 2 digits after decimal"
+                            android:text="*Compulsory Fields\n**Please note any value entered is taken upto 2 digits after decimal"
                             android:layout_gravity="bottom"
                             android:textColor="@color/red"/>
 
@@ -896,14 +937,13 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="15dp"
                         android:orientation="horizontal"
-                        android:weightSum="4">
+                        >
 
                         <com.wep.common.app.views.WepButton
                             android:id="@+id/btnAddItem"
-                            android:layout_width="100dp"
-                            android:layout_height="45dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="10dp"
@@ -916,9 +956,25 @@
                             android:theme="@style/WepButtonWithMarigin" />
 
                         <com.wep.common.app.views.WepButton
+                            android:id="@+id/btnResetQuantity"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_btn"
+                            android:onClick="ResetQty"
+                            android:text="Reset Qty"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/WepButtonWithMarigin" />
+
+
+                        <com.wep.common.app.views.WepButton
                             android:id="@+id/btnEditItem"
-                            android:layout_width="100dp"
-                            android:layout_height="45dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="10dp"
@@ -932,8 +988,8 @@
 
                         <com.wep.common.app.views.WepButton
                             android:id="@+id/btnClearItem"
-                            android:layout_width="100dp"
-                            android:layout_height="45dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="10dp"
@@ -947,8 +1003,8 @@
 
                         <com.wep.common.app.views.WepButton
                             android:id="@+id/btnCloseItem"
-                            android:layout_width="100dp"
-                            android:layout_height="45dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="10dp"
