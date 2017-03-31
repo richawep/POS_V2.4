@@ -68,11 +68,12 @@ public class CardSaleDialog extends Dialog implements android.view.View.OnClickL
 	{
 		int i = v.getId();
 		if (i == R.id.cardsalecustomdlg_BTN_ok) {
-			cardSaleListener.onOkClicked();
-			CardSaleDialog.this.dismiss();
+
 			SharedPreferences.Editor editor = sharedPreference.edit();
-			editor.putString("paidAmount",payment.getTotalAmount());
+			editor.putString("paidAmount",/*payment.getTotalAmount()*/"0");
 			editor.commit();
+			CardSaleDialog.this.dismiss();
+			cardSaleListener.onOkClicked();
 
 		}else if (i == R.id.cardsalecustomdlg_BTN_print) {
 			/*Intent intent = new Intent(context, PrinterSohamsaActivity.class);
@@ -80,11 +81,12 @@ public class CardSaleDialog extends Dialog implements android.view.View.OnClickL
 			intent.putExtra("printType","PaymentPrint");
 			intent.putExtra("printData",payment);
 			context.startActivity(intent);*/
-			cardSaleListener.onPrintClicked(payment);
-			CardSaleDialog.this.dismiss();
+
 			SharedPreferences.Editor editor = sharedPreference.edit();
-			editor.putString("paidAmount",payment.getTotalAmount());
+			editor.putString("paidAmount",/*payment.getTotalAmount()*/"0");
 			editor.commit();
+			CardSaleDialog.this.dismiss();
+			cardSaleListener.onPrintClicked(payment);
 		}
 	}
 

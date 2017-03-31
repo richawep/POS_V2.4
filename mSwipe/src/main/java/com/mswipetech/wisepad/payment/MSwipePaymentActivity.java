@@ -508,7 +508,7 @@ public class MSwipePaymentActivity extends WepPrinterBaseActivity implements Car
         }catch (Exception e){
             Toast.makeText(getApplicationContext(), "payment save Exception", Toast.LENGTH_SHORT).show();
         }
-        finish();
+        //finish();
     }
 
     @Override
@@ -517,7 +517,7 @@ public class MSwipePaymentActivity extends WepPrinterBaseActivity implements Car
             DatabaseHandler handler = new DatabaseHandler(MSwipePaymentActivity.this);
             handler.saveTransaction(payment);
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "payment save Exception", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Payment save Exception", Toast.LENGTH_SHORT).show();
         }
         transactionCompleted();
         /*Intent intent = new Intent(getApplicationContext(), TransactionActivity.class);
@@ -2692,6 +2692,9 @@ public class MSwipePaymentActivity extends WepPrinterBaseActivity implements Car
                             public void onClick(View v) {
 
                                 dlgRemoveCard.dismiss();
+                                Intent intent = new Intent();
+                                intent.putExtra("amount",payAmount);
+                                setResult(RESULT_OK,intent);
                                 showSignature();
 
 

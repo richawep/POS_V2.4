@@ -57,6 +57,7 @@ import java.util.Date;
 public class PayBillActivity extends FragmentActivity implements FragmentLogin.OnLoginCompletedListener,PaymentResultListener {
 
     private static final String TAG = PayBillActivity.class.getSimpleName();
+    private static final int REQUEST_CODE_CARD_PAYMENT = 12;
     Context myContext;
 
     AlertDialog alertDialog = null;
@@ -306,15 +307,18 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
     public void makePayment() {
         txt = edtTotalValue.getText().toString().trim();
-        //txt = edtChange.getText().toString().trim();
-        if (txt.equalsIgnoreCase("")) {
+        txt = getCardPaybles()+"";
+        if (txt.equalsIgnoreCase(""))
+        {
             Toast.makeText(PayBillActivity.this, "Enter Amount", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else
+        {
             if (Constants.Reference_Id.length() != 0 && Constants.Session_Tokeniser.length() != 0) {
                 Intent intent = new Intent(getApplicationContext(), MSwipePaymentActivity.class);
                 intent.putExtra("amount", txt);
                 intent.putExtra("phone", phone);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE_CARD_PAYMENT);
                 //finish();
             } else {
                 //Constants.showDialog(MenuView.this, "SDk List", "Please login first to perform the card sale.", 1);
@@ -327,6 +331,19 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                 }
             }
         }
+    }
+
+    public String getCardPaybles(){
+        double val = 0;
+        try{
+            val = Double.parseDouble(edtChange.getText().toString().trim());
+        }catch (Exception e){
+
+        }
+        if(val>0)
+            return edtChange.getText().toString().trim();
+        else
+            return 0+"";
     }
 
     public void SaveBill(View view)
@@ -831,14 +848,38 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                     btnNutral.setVisibility(View.INVISIBLE);
                                     btnOk.setText("Pay");
                                 }
+                                else if(newBlnc < 0)
+                                {
+                                    if(custBalance != 0)
+                                    {
+                                        textViewBalanceUpdate.setText("");
+                                        textViewMessage.setVisibility(View.VISIBLE);
+                                        textViewMessage.setText(getString(R.string.text_message_payment_zero));
+                                        textViewBalanceUpdate.setVisibility(View.VISIBLE);
+                                        btnNutral.setVisibility(View.VISIBLE);
+                                        btnNutral.setText("Credit & Pay");
+                                        btnOk.setText("Partial Payment");
+                                    }
+                                    else
+                                    {
+                                        textViewBalanceUpdate.setText("");
+                                        textViewMessage.setVisibility(View.VISIBLE);
+                                        textViewMessage.setText(getString(R.string.text_message_payment_zero_negative));
+                                        textViewBalanceUpdate.setVisibility(View.VISIBLE);
+                                        btnNutral.setVisibility(View.VISIBLE);
+                                        btnNutral.setText("Credit & Pay");
+                                        btnOk.setText("Others");
+                                    }
+                                }
                                 else
                                 {
-                                    textViewBalanceUpdate.setText("Balance After Payment: 0.00 (If Paid remaining by cash else -ve)");
+                                    textViewBalanceUpdate.setText("");
                                     textViewMessage.setVisibility(View.VISIBLE);
                                     textViewBalanceUpdate.setVisibility(View.VISIBLE);
                                     btnNutral.setVisibility(View.VISIBLE);
                                     btnNutral.setText("Credit & Pay");
                                     btnOk.setText("Pay Partialy");
+                                    textViewMessage.setText(getString(R.string.text_message_payment_zero_negative));
                                 }
 
                             }catch (Exception e){
@@ -1143,9 +1184,9 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
     private void loginCompleted() {
         Intent intent = new Intent(getApplicationContext(), MSwipePaymentActivity.class);
-        intent.putExtra("amount", txt);
+        intent.putExtra("amount", getCardPaybles()+"");
         intent.putExtra("phone", phone);
-        startActivity(intent);
+        startActivityForResult(intent,REQUEST_CODE_CARD_PAYMENT);
         //finish();
     }
 
@@ -1296,6 +1337,20 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             handler.saveTransaction(payment);
         } catch (Exception e) {
             Log.e(TAG, "Exception in onPaymentError", e);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_CARD_PAYMENT)
+        {
+            if(data!=null){
+                String amount = data.getStringExtra("amount");
+                edtVoucher.setText(edtChange.getText().toString().trim());
+                edtChange.setText("0");
+                Toast.makeText(myContext, "Hello"+amount, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

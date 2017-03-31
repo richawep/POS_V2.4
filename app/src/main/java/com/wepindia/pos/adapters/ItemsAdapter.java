@@ -51,25 +51,25 @@ public class ItemsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        /*ViewHolder viewHolder;
-        if(convertView == null)
+    public View getView(int position, View view, ViewGroup parent) {
+        /*if(convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.grid_images, null);
-            viewHolder = new ViewHolder();
+            view = inflater.inflate(R.layout.grid_images, null);
+            *//*viewHolder = new ViewHolder();
             viewHolder.textView = (TextView) convertView.findViewById(R.id.grid_item_label);
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.grid_item_image);
-            convertView.setTag(viewHolder);
+            convertView.setTag(viewHolder);*//*
         }
         else
         {
-            viewHolder = (ViewHolder) convertView.getTag();
+            //viewHolder = (ViewHolder) convertView.getTag();
+            view = (View) convertView.getTag();
         }*/
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.grid_images, null);
-        TextView textView = (TextView) convertView.findViewById(R.id.grid_item_label);
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.grid_item_image);
+        view = inflater.inflate(R.layout.grid_images, null);
+        TextView textView = (TextView) view.findViewById(R.id.grid_item_label);
+        ImageView imageView = (ImageView) view.findViewById(R.id.grid_item_image);
         Items items = itemsList.get(position);
         String title = items.getItemName();
         String icon = AppUtils.getImagePath(items.getItemImage(),title);
@@ -97,7 +97,7 @@ public class ItemsAdapter extends BaseAdapter {
             imageView.setImageResource(R.drawable.img_noimage);
         }*/
 
-        return convertView;
+        return view;
     }
 
     public void notifyDataSetChanged(ArrayList<Items> list) {

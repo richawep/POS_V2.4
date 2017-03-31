@@ -95,7 +95,7 @@
         android:layout_below="@+id/textViewBalanceUpdate"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Your Credit Balance Amout is less than Payable Amount. Do you want to continue with Paritial Payment? "
+        android:text="@string/text_message_payment_default"
         android:textColor="@android:color/holo_red_dark"
         android:visibility="invisible" />
 

@@ -123,5 +123,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="savenprint"><![CDATA[Save & Print]]></string>
+    <string name="text_message_payment_default">Your Credit Balance Amount is less than Payable Amount. Do you want to continue with Partial Payment?</string>
+    <string name="text_message_payment_zero_negative">Your Credit Balance Amount is less than Payable Amount. You can Pay by  Credit or Other Mode.</string>
+    <string name="text_message_payment_zero">Your Credit Balance Amount is less than Payable Amount. You can Pay by  Credit or Partial Payment.</string>
 
 </resources>
