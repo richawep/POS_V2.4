@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="app_name">WeP_FnB</string>
+    <string name="app_name">WePFnB_GST</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_login">WeP_FnB</string>
+    <string name="title_activity_login">WeP_FnB_GST</string>
     <string name="error_configuration">Please configure serial port first</string>
     <string name="error_security">You do not have read/write permission to the serial port.</string>
     <string name="error_unknown">The serial port can not be opened for an unknown reason.</string>
