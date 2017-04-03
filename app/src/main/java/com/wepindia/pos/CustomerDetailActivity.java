@@ -461,7 +461,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
         }
     }
 
-    public String doubleconverter(double value) //Got here 6.743240136E7 or something..
+    /*public String doubleconverter(double value) //Got here 6.743240136E7 or something..
     {
         DecimalFormat formatter;
 
@@ -471,7 +471,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
             formatter = new DecimalFormat("0");
 
         return formatter.format(value);
-    }
+    }*/
 
         @SuppressWarnings("deprecation")
 	private void DisplayCustomer() {
