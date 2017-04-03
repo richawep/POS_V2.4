@@ -507,14 +507,16 @@ public class CustomerDetailActivity extends WepBaseActivity {
 
                     tvLastTransaction = new TextView(myContext);
                     tvLastTransaction.setTextSize(18);
-                    tvLastTransaction.setGravity(1);
-                    tvLastTransaction.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("LastTransaction")));
+                    tvLastTransaction.setGravity(Gravity.END);
+                    tvLastTransaction.setPadding(0,0,10,0);
+                    tvLastTransaction.setText(String.format("%.2f",crsrCustomer.getFloat(crsrCustomer.getColumnIndex("LastTransaction"))));
                     rowCustomer.addView(tvLastTransaction);
 
                     tvTotalTransaction = new TextView(myContext);
                     tvTotalTransaction.setTextSize(18);
-                    tvTotalTransaction.setGravity(1);
-                    tvTotalTransaction.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("TotalTransaction")));
+                    tvTotalTransaction.setGravity(Gravity.END);
+                    tvTotalTransaction.setPadding(0,0,10,0);
+                    tvTotalTransaction.setText(String.format("%.2f",crsrCustomer.getFloat(crsrCustomer.getColumnIndex("TotalTransaction"))));
                     rowCustomer.addView(tvTotalTransaction);
 
                     tvPhone = new TextView(myContext);
@@ -526,9 +528,9 @@ public class CustomerDetailActivity extends WepBaseActivity {
                     rowCustomer.addView(tvAddress);
 
                     tvCreditAmount = new TextView(myContext);
-
                     double amt = crsrCustomer.getDouble(crsrCustomer.getColumnIndex("CreditAmount"));
                     tvCreditAmount.setText(String.format("%.2f",amt));
+                    tvCreditAmount.setTextSize(18);
                     tvCreditAmount.setGravity(Gravity.END);
                     tvCreditAmount.setPadding(0,0,10,0);
                     rowCustomer.addView(tvCreditAmount);
