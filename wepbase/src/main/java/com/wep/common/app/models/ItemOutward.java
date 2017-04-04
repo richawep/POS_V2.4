@@ -22,6 +22,8 @@ public class ItemOutward {
     private float SalesTaxPercent;
     private float ServiceTaxPercent;
     private String UOM;
+    private String HSN;
+    private String TaxationType;
 
     public ItemOutward() {
 
@@ -40,10 +42,13 @@ public class ItemOutward {
         SalesTaxPercent = 0;
         ServiceTaxPercent = 0;
         this.UOM = "";
+        this.HSN = "";
+        this.TaxationType="GST";
     }
 
     public ItemOutward(int menuCode, String longName, float dineIn1, float dineIn2, float dineIn3, float stock,
-                       int deptCode, int categCode, int kitchenCode, String barCode, String imageUri, int itemId, float salesTaxPercent, float serviceTaxPercent, String UOM) {
+                       int deptCode, int categCode, int kitchenCode, String barCode, String imageUri, int itemId, float salesTaxPercent,
+                       float serviceTaxPercent, String UOM, String HSN, String taxationType) {
         this.menuCode = menuCode;
         LongName = longName;
         DineIn1 = dineIn1;
@@ -59,6 +64,24 @@ public class ItemOutward {
         SalesTaxPercent = salesTaxPercent;
         ServiceTaxPercent = serviceTaxPercent;
         this.UOM = UOM;
+        this.HSN = HSN;
+        TaxationType = taxationType;
+    }
+
+    public String getTaxationType() {
+        return TaxationType;
+    }
+
+    public void setTaxationType(String taxationType) {
+        TaxationType = taxationType;
+    }
+
+    public String getHSN() {
+        return HSN;
+    }
+
+    public void setHSN(String HSN) {
+        this.HSN = HSN;
     }
 
     public int getMenuCode() {

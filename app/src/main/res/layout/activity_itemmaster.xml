@@ -93,47 +93,6 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/txtColorAccent" />
 
-                <!--GST-->
-                <TextView
-                    android:id="@+id/tvCaptionRate"
-                    android:layout_width="105dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Rate "
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
-
-                <TextView
-                    android:id="@+id/tvCaptionQuanity"
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-                    android:gravity="center_horizontal"
-                    android:text="Quantity"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
-
-                <TextView
-                    android:id="@+id/tvCaptionMOU"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-                    android:gravity="center_horizontal"
-                    android:text="UOM"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
-
-
-                <TextView
-                    android:id="@+id/tvCaptionGSTRate"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-                    android:gravity="center_horizontal"
-                    android:text="GST TAX % "
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
-
                 <TextView
                     android:id="@+id/tvCaptionImage"
                     android:layout_width="100dp"
@@ -229,7 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="55dp"
+                android:layout_marginBottom="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="#000000" />
@@ -241,376 +200,307 @@
                 android:orientation="vertical"
                 android:weightSum="5">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
 
-                        <FrameLayout
-                            android:id="@+id/rowLongName"
+                        <TextView
+                            android:id="@+id/tvItemLongName"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="Item Name*"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvItemLongName"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Item Name*"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <com.wep.common.app.views.WepEditText
-                                    android:id="@+id/etItemLongName"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:hint="Item Full name"
-                                    android:inputType="text"
-                                    android:maxLength="20"
-                                    android:textSize="13dp" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
+                        <com.wep.common.app.views.WepEditText
+                            android:id="@+id/etItemLongName"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvBarcode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:enabled="false"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Barcode"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <EditText
-                                    android:id="@+id/etItemBarcode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:enabled="false"
-                                    android:hint="Item Barcode"
-                                    android:inputType="text"
-                                    android:maxLength="20"
-                                    android:textSize="13dp" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvKitchenCode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Kitchen"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <Spinner
-                                    android:id="@+id/spnrItemKitchenCode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center_vertical" />
-
-                            </LinearLayout>
-                        </FrameLayout>
-
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvDeptCode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Department"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <Spinner
-                                    android:id="@+id/spnrItemDeptCode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvCategCode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Category"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <Spinner
-                                    android:id="@+id/spnrItemCategCode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-                            </LinearLayout>
-                        </FrameLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="Item Full name"
+                            android:inputType="text"
+                            android:maxLength="20"
+                            android:textSize="13dp" />
                     </LinearLayout>
-                </FrameLayout>
 
-                <FrameLayout
-                    android:id="@+id/frame_rate_nongst"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvBarcode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:gravity="left|center_vertical"
+                            android:text="Barcode"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <EditText
+                            android:id="@+id/etItemBarcode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:hint="Item Barcode"
+                            android:inputType="text"
+                            android:maxLength="20"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvKitchenCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="Kitchen"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <Spinner
+                            android:id="@+id/spnrItemKitchenCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvDeptCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="Department"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <Spinner
+                            android:id="@+id/spnrItemDeptCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvCategCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="Category"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <Spinner
+                            android:id="@+id/spnrItemCategCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
 
-                        <FrameLayout
-                            android:id="@+id/frame_rate1"
+                        <TextView
+                            android:id="@+id/tvDineInPrice1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="Rate 1"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                        <EditText
+                            android:id="@+id/etItemDineInPrice1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="0.0"
+                            android:inputType="numberDecimal"
+                            android:maxLength="7"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:id="@+id/tvDineInPrice1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Rate 1"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
 
-                                <EditText
-                                    android:id="@+id/etItemDineInPrice1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:hint="0.0"
-                                    android:inputType="numberDecimal"
-                                    android:maxLength="7"
-                                    android:selectAllOnFocus="true"
-                                    android:textSize="13dp" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/frame_rate2"
+                        <TextView
+                            android:id="@+id/tvDineInPrice2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="Rate 2"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                        <EditText
+                            android:id="@+id/etItemDineInPrice2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="0.0"
+                            android:inputType="numberDecimal"
+                            android:maxLength="7"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:id="@+id/tvDineInPrice2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Rate 2"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
 
-                                <EditText
-                                    android:id="@+id/etItemDineInPrice2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:hint="0.0"
-                                    android:inputType="numberDecimal"
-                                    android:maxLength="7"
-                                    android:selectAllOnFocus="true"
-                                    android:textSize="13dp" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/frame_rate3"
+                        <TextView
+                            android:id="@+id/tvDineInPrice3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="Rate 3"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                        <EditText
+                            android:id="@+id/etItemDineInPrice3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="0.0"
+                            android:inputType="numberDecimal"
+                            android:maxLength="7"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:id="@+id/tvDineInPrice3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Rate 3"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
 
-                                <EditText
-                                    android:id="@+id/etItemDineInPrice3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:hint="0.0"
-                                    android:inputType="numberDecimal"
-                                    android:maxLength="7"
-                                    android:selectAllOnFocus="true"
-                                    android:textSize="13dp" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/frame_stock"
+                        <TextView
+                            android:id="@+id/tvStock"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="Stock"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                        <EditText
+                            android:id="@+id/etItemStock"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:maxLength="5"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:id="@+id/tvStock"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Stock"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:weightSum="2">
 
-                                <EditText
-                                    android:id="@+id/etItemStock"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:hint="0.00"
-                                    android:inputType="numberDecimal"
-                                    android:maxLength="5"
-                                    android:selectAllOnFocus="true"
-                                    android:textSize="13dp" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/frame_UOM"
+                        <TextView
+                            android:id="@+id/tv_UOM"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="left"
-                            android:layout_weight="1">
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1.4"
+                            android:gravity="left|center_vertical"
+                            android:text="UoM*"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tv_UOM"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1.4"
-                                    android:gravity="left|center_vertical"
-                                    android:text="UoM*"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <Spinner
-                                    android:id="@+id/spnr_UOM"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_weight="1"
-                                    android:entries="@array/UOM"
-                                    android:gravity="center" />
-
-                            </LinearLayout>
-
-                        </FrameLayout>
+                        <Spinner
+                            android:id="@+id/spnr_UOM"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:entries="@array/UOM"
+                            android:gravity="center" />
 
                     </LinearLayout>
-                </FrameLayout>
+                </LinearLayout>
 
                 <FrameLayout
                     android:id="@+id/frame_rate_gst"
@@ -807,7 +697,7 @@
                                 android:weightSum="2">
 
                                 <TextView
-                                    android:id="@+id/tv_taxationtype"
+                                    android:id="@+id/tv_taxationtype1"
                                     android:layout_width="100sp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
@@ -816,7 +706,7 @@
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <Spinner
-                                    android:id="@+id/spnr_taxationtype"
+                                    android:id="@+id/spnr_taxationtype1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="10dp"
@@ -839,7 +729,7 @@
                                 android:weightSum="2">
 
                                 <TextView
-                                    android:id="@+id/tvHSNCode"
+                                    android:id="@+id/tvHSNCode1"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
@@ -848,7 +738,7 @@
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <EditText
-                                    android:id="@+id/etHSNCode"
+                                    android:id="@+id/etHSNCode1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
@@ -863,453 +753,398 @@
                     </LinearLayout>
                 </FrameLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
-                    android:layout_weight="1">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <FrameLayout
-                            android:id="@+id/frame_salesTax"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvSalesTax"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Sales Tax(%)"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <Spinner
-                                    android:id="@+id/spnrItemSalesTax"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:visibility="gone" />
-
-                                <EditText
-                                    android:id="@+id/edtItemSalesTax"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:hint="0.00"
-                                    android:inputType="numberDecimal"
-                                    android:selectAllOnFocus="true"
-                                    android:textSize="13dp" />
-
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/frame_serviceTax"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvAdditionalTax"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Service Tax(%)"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <Spinner
-                                    android:id="@+id/spnrItemAdditionalTax"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:visibility="gone" />
-
-                                <EditText
-                                    android:id="@+id/edtItemServiceTax"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:hint="0.00"
-                                    android:inputType="numberDecimal"
-                                    android:selectAllOnFocus="true"
-                                    android:textSize="13dp" />
-
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/frame_GSTTax"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvGSTTax"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="GST Tax"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <EditText
-                                    android:id="@+id/etGSTTax"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:hint="18 "
-                                    android:inputType="numberDecimal"
-                                    android:maxLength="2"
-                                    android:selectAllOnFocus="true"
-                                    android:textSize="13dp" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/frame_discount"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvDiscount_frame"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:text="Item Code"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                                <Spinner
-                                    android:id="@+id/spnrItemDiscount"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:visibility="gone" />
-
-                                <EditText
-                                    android:id="@+id/edtMenuCode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:inputType="number"
-                                    android:selectAllOnFocus="true"
-                                    android:textSize="15dp" />
-
-                                <EditText
-                                    android:id="@+id/etdiscount"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:hint="12 "
-                                    android:inputType="numberDecimal"
-                                    android:maxLength="2"
-                                    android:selectAllOnFocus="true"
-                                    android:textSize="13dp"
-                                    android:visibility="gone" />
-
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:weightSum="5">
+                        android:layout_weight="1"
+                        android:weightSum="2">
 
-                        <FrameLayout
+                        <TextView
+                            android:id="@+id/tvSalesTax"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="15dp"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="CGST Tax(%)"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="*Please note any % entered is taken upto 2 digits after decimal"
-                                android:textColor="@color/red"/>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="gone"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvOptionalTax1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="Optional Tax"
-                                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                                <Spinner
-                                    android:id="@+id/spnrItemOptionalTax1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
+                        <EditText
+                            android:id="@+id/edtItemCGSTTax"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <ImageView
-                                    android:id="@+id/imgItemImage"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:contentDescription="Item Image" />
-
-                                <com.wep.common.app.views.WepButton
-                                    android:id="@+id/btnImageBrowse"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/background_btn"
-                                    android:onClick="Browse"
-                                    android:text="Browse Image"
-                                    android:textColor="@android:color/white"
-                                    android:theme="@style/WepButtonWithMarigin" />
-                            </LinearLayout>
-
-                        </FrameLayout>
-
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <TextView
-                                    android:id="@+id/tvFileName"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginRight="10dp"
-                                    android:gravity="right"
-                                    android:text="FileName" />
-
-                            </LinearLayout>
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-
-                                <com.wep.common.app.views.WepButton
-                                    android:id="@+id/buttonUploadExcel"
-                                    android:layout_width="100dp"
-                                    android:layout_height="45dp"
-                                    android:layout_gravity="left"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="0dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/background_btn"
-                                    android:text="Browse File"
-                                    android:textColor="@android:color/white"
-                                    android:theme="@style/WepButtonWithMarigin" />
-
-                                <com.wep.common.app.views.WepButton
-                                    android:id="@+id/buttonSaveExcel"
-                                    android:layout_width="70dp"
-                                    android:layout_height="45dp"
-                                    android:layout_gravity="right"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/background_btn"
-                                    android:text="Upload File"
-                                    android:textColor="@android:color/white"
-                                    android:theme="@style/WepButtonWithMarigin" />
-                            </LinearLayout>
-                        </FrameLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
 
                     </LinearLayout>
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:weightSum="4"
-                        android:layout_marginBottom="4dp">
+                        android:layout_weight="1"
+                        android:weightSum="2">
 
-                        <com.wep.common.app.views.WepButton
-                            android:id="@+id/btnAddItem"
-                            android:layout_width="100dp"
-                            android:layout_height="45dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
+                        <TextView
+                            android:id="@+id/tvAdditionalTax"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
                             android:layout_weight="1"
-                            android:background="@drawable/background_btn"
-                            android:onClick="AddItem"
-                            android:text="Add"
-                            android:textColor="@android:color/white"
-                            android:theme="@style/WepButtonWithMarigin" />
+                            android:gravity="left|center_vertical"
+                            android:text="SGST Tax(%)"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <com.wep.common.app.views.WepButton
-                            android:id="@+id/btnEditItem"
-                            android:layout_width="100dp"
-                            android:layout_height="45dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
+
+                        <EditText
+                            android:id="@+id/edtItemSGSTTax"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/background_btn"
-                            android:onClick="EditItem"
-                            android:text="Update"
-                            android:textColor="@android:color/white"
-                            android:theme="@style/WepButtonWithMarigin" />
+                            android:gravity="center"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
 
-                        <com.wep.common.app.views.WepButton
-                            android:id="@+id/btnClearItem"
-                            android:layout_width="100dp"
-                            android:layout_height="45dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvGSTTax"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
                             android:layout_weight="1"
-                            android:background="@drawable/background_btn"
-                            android:onClick="ClearItem"
-                            android:text="Clear"
-                            android:textColor="@android:color/white"
-                            android:theme="@style/WepButtonWithMarigin" />
+                            android:gravity="left|center_vertical"
+                            android:text="GST Tax"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <com.wep.common.app.views.WepButton
-                            android:id="@+id/btnCloseItem"
-                            android:layout_width="100dp"
-                            android:layout_height="45dp"
+                        <EditText
+                            android:id="@+id/etGSTTax"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="18 "
+                            android:inputType="numberDecimal"
+                            android:maxLength="2"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvDiscount_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="Item Code"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                        <EditText
+                            android:id="@+id/edtMenuCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:selectAllOnFocus="true"
+                            android:textSize="15dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tv_taxationtype"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="15dp"
+                            android:gravity="left|center_vertical"
+                            android:text=" TaxationType"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <Spinner
+                            android:id="@+id/spnr_taxationtype"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_marginRight="10dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tvHSNCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="HSNCode"
+                            android:layout_marginLeft="15dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <EditText
+                            android:id="@+id/etHSNCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint=" "
+                            android:maxLength="7"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:weightSum="5">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/tvOptionalTax1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Optional Tax"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                            <Spinner
+                                android:id="@+id/spnrItemOptionalTax1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="*Please note any % entered is taken upto 2 digits after decimal"
+                            android:textColor="@color/red" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
+
+                        <ImageView
+                            android:id="@+id/imgItemImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:contentDescription="Item Image" />
+
+                        <com.wep.common.app.views.WepButton
+                            android:id="@+id/btnImageBrowse"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
                             android:background="@drawable/background_btn"
-                            android:onClick="CloseItem"
-                            android:text="Close"
+                            android:onClick="Browse"
+                            android:text="Browse Image"
                             android:textColor="@android:color/white"
                             android:theme="@style/WepButtonWithMarigin" />
                     </LinearLayout>
-                </FrameLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight ="1"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvFileName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="10dp"
+                            android:gravity="right"
+                            android:text="FileName" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight ="1"
+                        android:weightSum="2">
+
+                        <com.wep.common.app.views.WepButton
+                            android:id="@+id/buttonUploadExcel"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_btn"
+                            android:text="Browse File"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/WepButtonWithMarigin" />
+
+                        <com.wep.common.app.views.WepButton
+                            android:id="@+id/buttonSaveExcel"
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_btn"
+                            android:text="Upload File"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/WepButtonWithMarigin" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:weightSum="4"
+                    android:layout_marginBottom="4dp">
+
+                    <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnAddItem"
+                        android:layout_width="100dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn"
+                        android:onClick="AddItem"
+                        android:text="Add"
+                        android:textColor="@android:color/white"
+                        android:theme="@style/WepButtonWithMarigin" />
+
+                    <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnEditItem"
+                        android:layout_width="100dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn"
+                        android:onClick="EditItem"
+                        android:text="Update"
+                        android:textColor="@android:color/white"
+                        android:theme="@style/WepButtonWithMarigin" />
+
+                    <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnClearItem"
+                        android:layout_width="100dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn"
+                        android:onClick="ClearItem"
+                        android:text="Clear"
+                        android:textColor="@android:color/white"
+                        android:theme="@style/WepButtonWithMarigin" />
+
+                    <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnCloseItem"
+                        android:layout_width="100dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn"
+                        android:onClick="CloseItem"
+                        android:text="Close"
+                        android:textColor="@android:color/white"
+                        android:theme="@style/WepButtonWithMarigin" />
+                </LinearLayout>
             </LinearLayout>
 
             <!-- Invissible -->
