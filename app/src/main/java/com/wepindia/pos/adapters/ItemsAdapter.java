@@ -51,38 +51,33 @@ public class ItemsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        /*if(convertView == null)
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
+        if(convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.grid_images, null);
-            *//*viewHolder = new ViewHolder();
-            viewHolder.textView = (TextView) convertView.findViewById(R.id.grid_item_label);
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.grid_item_image);
-            convertView.setTag(viewHolder);*//*
+            convertView = inflater.inflate(R.layout.grid_images, null);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
         }
         else
         {
-            //viewHolder = (ViewHolder) convertView.getTag();
-            view = (View) convertView.getTag();
-        }*/
-        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.grid_images, null);
-        TextView textView = (TextView) view.findViewById(R.id.grid_item_label);
-        ImageView imageView = (ImageView) view.findViewById(R.id.grid_item_image);
+            viewHolder = (ViewHolder) convertView.getTag();
+            //convertView = (View) convertView.getTag();
+        }
         Items items = itemsList.get(position);
         String title = items.getItemName();
         String icon = AppUtils.getImagePath(items.getItemImage(),title);
         Uri uri = Uri.fromFile(new File(icon));
-        textView.setText(title+"");
+        viewHolder.textView.setText(title+"");
         try{
             Picasso.with(activity)
                     .load(uri)
                     .placeholder(R.drawable.img_noimage) //this is optional the image to display while the url image is downloading
                     .error(R.drawable.img_noimage)         //this is also optional if some error has occurred in downloading the image this image would be displayed
-                    .into(imageView);
+                    .into(viewHolder.imageView);
         }catch (Exception e){
-            imageView.setImageResource(R.drawable.img_noimage);
+            viewHolder.imageView.setImageResource(R.drawable.img_noimage);
         }
 
         /*try{
@@ -97,7 +92,7 @@ public class ItemsAdapter extends BaseAdapter {
             imageView.setImageResource(R.drawable.img_noimage);
         }*/
 
-        return view;
+        return convertView;
     }
 
     public void notifyDataSetChanged(ArrayList<Items> list) {
@@ -105,8 +100,13 @@ public class ItemsAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    /*static class ViewHolder {
-        ImageView imageView;
+    static class ViewHolder {
         TextView textView;
-    }*/
+        ImageView imageView;
+
+        ViewHolder(View root) {
+            textView = (TextView) root.findViewById(R.id.grid_item_label);
+            imageView = (ImageView) root.findViewById(R.id.grid_item_image);
+        }
+    }
 }
