@@ -212,7 +212,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 
             // displaying buttons as per GST enabled or disabled
             String GSTEnable = settingcrsr.getString(settingcrsr.getColumnIndex("GSTEnable"));
-            if (GSTEnable!=null && GSTEnable.equals("1"))
+            if (false)/*(GSTEnable!=null && GSTEnable.equals("1"))*/
             {
                 rl_dinein.setVisibility(View.GONE);
                 rl_pickup.setVisibility(View.GONE);

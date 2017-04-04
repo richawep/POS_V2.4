@@ -44,6 +44,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -383,7 +384,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                 }
             });
 
-            //SetGSTView();
+            SetGSTView();
             DisplayItemList();
 
             tvFileName.setPaintFlags(tvFileName.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -398,19 +399,16 @@ public class ItemManagementActivity extends WepBaseActivity {
     private void SetGSTView()
     {
         Cursor crsrSettings = dbItems.getBillSetting();
-
+        LinearLayout linear_HSN_OUT = (LinearLayout) findViewById(R.id.linear_HSN_OUT);
         if (crsrSettings.moveToFirst()) {
             if(HSNEnable_out == null ) {
-                FrameLayout fr_HSNCode_out = (FrameLayout) findViewById(R.id.frame_HSNCode);
-                fr_HSNCode_out.setVisibility(View.INVISIBLE);
+                linear_HSN_OUT.setVisibility(View.INVISIBLE);
             }
             else if(HSNEnable_out.equalsIgnoreCase("0") ) {
-                FrameLayout fr_HSNCode_out = (FrameLayout) findViewById(R.id.frame_HSNCode);
-                fr_HSNCode_out.setVisibility(View.INVISIBLE);
+                linear_HSN_OUT.setVisibility(View.INVISIBLE);
             }
             else {
-                FrameLayout fr_HSNCode_out = (FrameLayout) findViewById(R.id.frame_HSNCode);
-                fr_HSNCode_out.setVisibility(View.VISIBLE);
+                linear_HSN_OUT.setVisibility(View.VISIBLE);
             }
         }
     }
