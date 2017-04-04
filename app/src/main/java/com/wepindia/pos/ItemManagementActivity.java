@@ -1479,6 +1479,9 @@ public class ItemManagementActivity extends WepBaseActivity {
         hsnCode = etHSN.getText().toString();
         fgsttax = Float.parseFloat(etGstTax.getText().toString());*/
         iDiscountId = 0;
+        hsnCode = etHSN.getText().toString();
+        if(hsnCode.equals(""))
+            hsnCode= "0";
         String g_s = spnrG_S.getItemAtPosition(spnrG_S.getSelectedItemPosition()).toString();
         //String MOU_str = spnrMOU.getItemAtPosition(spnrMOU.getSelectedItemPosition()).toString();
         String MOU_str_temp = spnrMOU.getSelectedItem().toString();
