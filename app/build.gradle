@@ -40,6 +40,7 @@ android {
 }
 
 
+
 dependencies {
     compile project(':mSwipe')
     compile project(':gstAPI')
@@ -51,6 +52,9 @@ dependencies {
     compile files('libs/imageLib.jar')
     //compile project(':printerSohamsa')
     //compile project(':printers')
+    compile('com.weiwangcn.betterspinner:library:1.1.0') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.sothree.slidinguppanel:library:3.3.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
@@ -58,9 +62,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:support-v13:24.2.1'
     compile 'com.razorpay:checkout:1.2.0'
-    compile ('com.weiwangcn.betterspinner:library:1.1.0') {
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-    }
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.jaredrummler:material-spinner:1.1.0'
 }

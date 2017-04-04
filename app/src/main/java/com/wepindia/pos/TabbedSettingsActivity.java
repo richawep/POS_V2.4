@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.fragments.FragmentSettingsGST;
 import com.wepindia.pos.fragments.FragmentSettingsHeaderFooter;
 import com.wepindia.pos.fragments.FragmentSettingsMachine;
 import com.wepindia.pos.fragments.FragmentSettingsMiscellaneous;
@@ -95,15 +96,22 @@ public class TabbedSettingsActivity extends WepBaseActivity{
 
         Bundle bundle5=new Bundle();
         bundle5.putString("REPORT_TYPE", "5");
-        FragmentSettingsMachine reportFragment5 = new FragmentSettingsMachine();
+        FragmentSettingsGST reportFragment5 = new FragmentSettingsGST();
         reportFragment5.setArguments(bundle5);
-        adapter.addFragment(reportFragment5, "Machine");
+        adapter.addFragment(reportFragment5, "GST");
 
         Bundle bundle6=new Bundle();
         bundle6.putString("REPORT_TYPE", "6");
-        FragmentSettingsPrint reportFragment6 = new FragmentSettingsPrint();
+        FragmentSettingsMachine reportFragment6 = new FragmentSettingsMachine();
         reportFragment6.setArguments(bundle6);
-        adapter.addFragment(reportFragment6, "Print");
+        adapter.addFragment(reportFragment6, "Machine");
+
+
+        Bundle bundle7=new Bundle();
+        bundle7.putString("REPORT_TYPE", "7");
+        FragmentSettingsPrint reportFragment7 = new FragmentSettingsPrint();
+        reportFragment7.setArguments(bundle7);
+        adapter.addFragment(reportFragment7, "Print");
 
         viewPager.setAdapter(adapter);
     }

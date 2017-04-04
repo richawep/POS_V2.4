@@ -1,11 +1,14 @@
-package com.wepindia.pos.GST;
+package com.wepindia.pos.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 
@@ -14,9 +17,8 @@ import com.wep.common.app.Database.DatabaseHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 
-public class GSTConfiguration_Activity extends Activity {
 
-    // Context object
+public class FragmentSettingsGST extends Fragment {
     Context myContext;
 
     // DatabaseHandler object
@@ -28,26 +30,41 @@ public class GSTConfiguration_Activity extends Activity {
     RadioButton rbGstinEnable , rbGstinDisable ,rbPosEnable , rbPosDisable ,rbHsnCodeEnable,  rbHsnCodeDisable ;
     RadioButton rbReverseChargeEnable , rbReverseChargeDisable ,rbGstinEnable_out, rbGstinDisable_out ;
     RadioButton rbPosEnable_out,  rbPosDisable_out,  rbHsnCodeEnable_out,  rbHsnCodeDisable_out , rbReverseChargeEnable_out ,
-            rbReverseChargeDisable_out ,rbGSTenable,rbGSTdisable;
-
+            rbReverseChargeDisable_out ;
 
     Button btnApply, btnClose;
-
-    // Variables - BillSettings object
     BillSetting objBillSettings ;
+
+
+
+    public FragmentSettingsGST() {
+        // Required empty public constructor
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gstconfiguration);
-        dbGSTSettings = new DatabaseHandler(GSTConfiguration_Activity.this);
-        myContext = this;
+        try{
+            dbGSTSettings = new DatabaseHandler(getActivity());
+            dbGSTSettings.OpenDatabase();
+        }catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_fragment_settings_gst, container, false);
+        myContext = getActivity();
+
         objBillSettings =  new BillSetting();
 
         MsgBox = new MessageDialog(myContext);
 
         try {
-            InitializeViews();
+            InitializeViews(view);
 
             dbGSTSettings.CloseDatabase();
             dbGSTSettings.CreateDatabase();
@@ -57,45 +74,51 @@ public class GSTConfiguration_Activity extends Activity {
             exp.printStackTrace();
             MsgBox.Show("Exception", exp.getMessage());
         }
-
+        return view;
     }
 
-    private void InitializeViews() {
+    private void InitializeViews(View view) {
 
-        rbGstinEnable = (RadioButton) findViewById(R.id.rbGstinEnable);
-        rbGstinDisable = (RadioButton) findViewById(R.id.rbGstinDisable);
+        rbGstinEnable = (RadioButton) view.findViewById(R.id.rbGstinEnable);
+        rbGstinDisable = (RadioButton) view.findViewById(R.id.rbGstinDisable);
 
-        rbPosEnable = (RadioButton) findViewById(R.id.rbPosEnable);
-        rbPosDisable = (RadioButton) findViewById(R.id.rbPosDisable);
+        rbPosEnable = (RadioButton) view.findViewById(R.id.rbPosEnable);
+        rbPosDisable = (RadioButton) view.findViewById(R.id.rbPosDisable);
 
-        rbHsnCodeEnable = (RadioButton) findViewById(R.id.rbHsnCodeEnable);
-        rbHsnCodeDisable = (RadioButton) findViewById(R.id.rbHsnCodeDisable);
+        rbHsnCodeEnable = (RadioButton) view.findViewById(R.id.rbHsnCodeEnable);
+        rbHsnCodeDisable = (RadioButton) view.findViewById(R.id.rbHsnCodeDisable);
 
-        rbReverseChargeEnable = (RadioButton) findViewById(R.id.rbReverseChargeEnable);
-        rbReverseChargeDisable = (RadioButton) findViewById(R.id.rbReverseChargeDisable);
+        rbReverseChargeEnable = (RadioButton) view.findViewById(R.id.rbReverseChargeEnable);
+        rbReverseChargeDisable = (RadioButton) view.findViewById(R.id.rbReverseChargeDisable);
 
-        rbGstinEnable_out = (RadioButton) findViewById(R.id.rbGstinEnable_out);
-        rbGstinDisable_out = (RadioButton) findViewById(R.id.rbGstinDisable_out);
+        rbGstinEnable_out = (RadioButton) view.findViewById(R.id.rbGstinEnable_out);
+        rbGstinDisable_out = (RadioButton) view.findViewById(R.id.rbGstinDisable_out);
 
-        rbPosEnable_out = (RadioButton) findViewById(R.id.rbPosEnable_out);
-        rbPosDisable_out = (RadioButton) findViewById(R.id.rbPosDisable_out);
+        rbPosEnable_out = (RadioButton) view.findViewById(R.id.rbPosEnable_out);
+        rbPosDisable_out = (RadioButton) view.findViewById(R.id.rbPosDisable_out);
 
-        rbHsnCodeEnable_out = (RadioButton) findViewById(R.id.rbHsnCodeEnable_out);
-        rbHsnCodeDisable_out = (RadioButton) findViewById(R.id.rbHsnCodeDisable_out);
+        rbHsnCodeEnable_out = (RadioButton) view.findViewById(R.id.rbHsnCodeEnable_out);
+        rbHsnCodeDisable_out = (RadioButton) view.findViewById(R.id.rbHsnCodeDisable_out);
 
-        rbReverseChargeEnable_out = (RadioButton) findViewById(R.id.rbReverseChargeEnable_out);
-        rbReverseChargeDisable_out = (RadioButton) findViewById(R.id.rbReverseChargeDisable_out);
+        rbReverseChargeEnable_out = (RadioButton) view.findViewById(R.id.rbReverseChargeEnable_out);
+        rbReverseChargeDisable_out = (RadioButton) view.findViewById(R.id.rbReverseChargeDisable_out);
 
-        /*rbGSTenable = (RadioButton) findViewById(R.id.rbGstEnable);
-        rbGSTdisable  = (RadioButton) findViewById(R.id.rbGstDisable);*/
-        btnApply = (Button) findViewById(R.id.btnApplyOtherSettings);
-        btnClose = (Button) findViewById(R.id.btnCloseOtherSettings);
-    }
+        btnApply = (Button) view.findViewById(R.id.btnApplyOtherSettings);
+        btnClose = (Button) view.findViewById(R.id.btnCloseOtherSettings);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        DisplaySettings();
+        btnApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Apply(v);
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Close(v);
+            }
+        });
     }
 
     private void DisplaySettings() {
@@ -106,11 +129,6 @@ public class GSTConfiguration_Activity extends Activity {
 
         if (crsrBillSetting.moveToFirst()) {
 
-            /*if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("GSTEnable"))==1) {
-                rbGSTenable.setChecked(true);
-            }else {
-                rbGSTdisable.setChecked(true);
-            }*/
             if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("GSTIN")) == 1) {
                 rbGstinEnable.setChecked(true);
             } else {
@@ -177,16 +195,10 @@ public class GSTConfiguration_Activity extends Activity {
         // Local variables
         int igstin, igstin_out, ipos, ipos_out, ihsncode, ihsncode_out , ireversecharge, ireversecharge_out,igst;
 
-        if (true/*rbGSTenable.isChecked()== true*/)
-        {
-            igst =1;
-        }
-        else
-        {
-            igst=0;
-        }
+        igst =1;
+
         if (rbGstinEnable.isChecked() == true) {
-             igstin= 1;
+            igstin= 1;
         } else {
             igstin = 0;
         }
@@ -283,9 +295,6 @@ public class GSTConfiguration_Activity extends Activity {
 
         // close database connection
         dbGSTSettings.CloseDatabase();
-
-        // close the activity
-        this.finish();
+        getActivity().finish();
     }
-
 }

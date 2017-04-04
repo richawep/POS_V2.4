@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.wepindia.pos.fragments.FragmentSettingsGST">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -312,7 +313,7 @@
                     android:layout_weight="1.3">
 
 
-             </FrameLayout>
+                </FrameLayout>
             </LinearLayout>
 
 
@@ -335,20 +336,25 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
-        <Button
+        <com.wep.common.app.views.WepButton
             android:id="@+id/btnApplyOtherSettings"
             android:layout_width="100dp"
             android:layout_height="45dp"
-            android:background="@drawable/gradient_button"
+            android:background="@drawable/background_btn"
+            android:textColor="@android:color/white"
+            android:theme="@style/WepButtonWithMarigin"
             android:onClick="Apply"
             android:text="Apply" />
 
-        <Button
+        <com.wep.common.app.views.WepButton
             android:id="@+id/btnCloseOtherSettings"
             android:layout_width="100dp"
             android:layout_height="45dp"
+            android:background="@drawable/background_btn"
+            android:textColor="@android:color/white"
+            android:theme="@style/WepButtonWithMarigin"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/gradient_button"
+
             android:onClick="Close"
             android:text="Close" />
     </LinearLayout>
