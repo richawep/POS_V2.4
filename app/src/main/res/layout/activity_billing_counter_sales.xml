@@ -22,7 +22,20 @@
             android:layout_alignParentTop="true"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:weightSum="4">
+            android:weightSum="5">
+
+            <EditText
+                android:id="@+id/etCustGSTIN"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="Customer GSTIN"
+                android:inputType="text"
+                android:minHeight="40dp"
+                android:selectAllOnFocus="true"
+                android:textSize="10sp"
+                />
 
             <EditText
                 android:id="@+id/edtCustName"
@@ -139,33 +152,70 @@
                                 android:textSize="10sp" />
                         </LinearLayout>
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:id="@+id/boxFields"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/search_boxes"
-                            android:gravity="center">
+                            >
 
-                            <TextView
-                                android:id="@+id/textViewLabelOrderNo"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/relative_interstate"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:gravity="center"
-                                android:text="Order No" />
+                                android:minHeight="40dp"
+                                android:layout_weight="1"
+                                >
 
-                            <EditText
-                                android:id="@+id/tvBillNumberValue"
-                                android:layout_width="wrap_content"
+                                <CheckBox
+                                    android:id="@+id/checkbox_interstate"
+                                    android:layout_width="match_parent"
+                                    android:layout_weight="1.4"
+                                    android:layout_height="match_parent"
+                                    android:text="InterState"
+                                    android:textColor="@color/gray"
+                                    android:gravity="center"
+                                    android:textSize="15sp" />
+
+                                <Spinner
+                                    android:id="@+id/spnr_pos"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    />
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toRightOf="@+id/textViewLabelOrderNo"
-                                android:enabled="false"
-                                android:minWidth="90dp"
-                                android:textAlignment="center"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textSize="12dp" />
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1">
 
-                        </RelativeLayout>
+                                <TextView
+                                    android:id="@+id/textViewLabelOrderNo"
+                                    android:layout_width="match_parent"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="Order No" />
+
+                                <EditText
+                                    android:id="@+id/tvBillNumberValue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:layout_weight="1"
+                                    android:layout_marginLeft="10dp"
+                                    android:minWidth="90dp"
+                                    android:textAlignment="center"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:textSize="12dp" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -193,6 +243,7 @@
                                 <TextView
                                     android:id="@+id/tvColHSN"
                                     android:layout_width="80dp"
+                                    android:text="HSN"
                                     android:layout_height="wrap_content"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
                                     android:textColor="@color/txtColorAccent" />
@@ -232,7 +283,7 @@
 
                             <ScrollView
                                 android:id="@+id/scrlVertOrderItems"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/rowBillColumnCaption"
                                 android:layout_marginLeft="5dp"
@@ -256,7 +307,7 @@
                         <LinearLayout
                             android:id="@+id/boxTaxInfo"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:background="@color/azure"
                             android:orientation="horizontal"
@@ -277,9 +328,42 @@
                                     android:orientation="vertical">
 
                                     <LinearLayout
+                                        android:id="@+id/idd0"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_below="@+id/idd1"
+                                        android:layout_marginBottom="2.5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:id="@+id/tvIGSTTax"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:textColor="@color/txtColorAccent"
+                                            android:text="IGST-Tax :"
+                                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                                        <TextView
+                                            android:id="@+id/tvIGSTValue"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:textColor="@color/txtColorAccent"
+                                            android:gravity="right"
+                                            android:text="0.00"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
                                         android:id="@+id/idd2"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_below="@+id/idd1"
                                         android:layout_marginBottom="2.5dp"
                                         android:layout_marginTop="5dp"
@@ -293,7 +377,7 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:background="@color/colorPrimaryLight"
-                                            android:text="Sales-Tax :"
+                                            android:text="CGST-Tax :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
                                             android:textColor="@color/txtColorAccent" />
 
@@ -312,7 +396,7 @@
                                     <LinearLayout
                                         android:id="@+id/idd3"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_below="@+id/idd2"
                                         android:layout_marginBottom="2.5dp"
                                         android:layout_marginTop="2.5dp"
@@ -326,7 +410,7 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:background="@color/colorPrimaryLight"
-                                            android:text="Service-Tax :"
+                                            android:text="SGST-Tax :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
                                             android:textColor="@color/txtColorAccent" />
 
@@ -366,7 +450,7 @@
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_below="@+id/idd3"
                                         android:id="@+id/idd_date"
                                         android:layout_marginBottom="5dp"
@@ -428,7 +512,7 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:background="@color/colorPrimaryLight"
-                                            android:text="Sub-Total"
+                                            android:text="Taxable Value :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
                                             android:textColor="@color/txtColorAccent" />
 
@@ -461,7 +545,7 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="0.9"
                                             android:background="@color/colorPrimaryLight"
-                                            android:text="Other Charges"
+                                            android:text="Other Charges :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
                                             android:textColor="@color/txtColorAccent" />
 

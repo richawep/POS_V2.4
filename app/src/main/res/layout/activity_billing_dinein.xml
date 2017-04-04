@@ -673,6 +673,39 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                                 android:orientation="vertical">
 
                                 <LinearLayout
+                                    android:id="@+id/idd0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/idd1"
+                                    android:layout_marginBottom="2.5dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:id="@+id/tvIGSTTax"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:background="@color/colorPrimaryLight"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:text="IGST-Tax :"
+                                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                                    <TextView
+                                        android:id="@+id/tvIGSTValue"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:background="@color/colorPrimaryLight"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:gravity="right"
+                                        android:text="0.00"
+                                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                                </LinearLayout>
+
+                                <LinearLayout
                                     android:id="@+id/idd2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -690,7 +723,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                                         android:layout_weight="1"
                                         android:background="@color/colorPrimaryLight"
                                         android:textColor="@color/txtColorAccent"
-                                        android:text="Sales-Tax :"
+                                        android:text="CGST-Tax :"
                                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                     <TextView
@@ -723,7 +756,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                                         android:layout_weight="1"
                                         android:background="@color/colorPrimaryLight"
                                         android:textColor="@color/txtColorAccent"
-                                        android:text="Service-Tax :"
+                                        android:text="SGST-Tax :"
                                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                     <TextView
@@ -821,7 +854,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                                         android:layout_weight="1"
                                         android:background="@color/colorPrimaryLight"
                                         android:textColor="@color/txtColorAccent"
-                                        android:text="Sub-Total"
+                                        android:text="Taxable Value :"
                                         android:textAppearance="?android:attr/textAppearanceSmall"
                                         />
 
@@ -855,7 +888,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                                         android:layout_weight="0.9"
                                         android:background="@color/colorPrimaryLight"
                                         android:textColor="@color/txtColorAccent"
-                                        android:text="Other Charges"
+                                        android:text="Other Charges :"
                                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                     <TextView
