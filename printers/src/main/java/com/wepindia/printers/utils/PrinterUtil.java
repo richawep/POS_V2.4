@@ -455,7 +455,7 @@ public class PrinterUtil {
         esc.addText("Date : "+item.getDate() +" | "+"Time : "+item.getTime()+"\n");
         esc.addText("Cashier   : "+item.getOrderBy()+"\n");
         esc.addText("Customer Name   : "+item.getCustomerName()+"\n");
-        if(item.getBillingMode().equalsIgnoreCase("4")) {
+        if(item.getBillingMode().equalsIgnoreCase("4") || item.getBillingMode().equalsIgnoreCase("3")) {
             esc.addText("Payment Status   : " + item.getPaymentStatus()+"\n");
         }
         // -----------

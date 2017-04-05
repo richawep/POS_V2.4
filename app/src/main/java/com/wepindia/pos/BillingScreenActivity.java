@@ -3702,6 +3702,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
         Log.d("InsertBillDetail", "Billing Mode :" + String.valueOf(jBillingMode));
 
 
+
         // pos
         if (chk_interstate.isChecked()) {
             String str = spnr_pos.getSelectedItem().toString();
@@ -5146,7 +5147,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                     ArrayList<BillKotItem> billKotItems = kotPrint();
                     PrintKotBillItem item = new PrintKotBillItem();
                     item.setBillKotItems(billKotItems);
-                    item.setTableNo(tableId);
+                    item.setTableNo(String.valueOf(tableId));
                     item.setWaiterNo(waiterId);
                     item.setBillNo(String.valueOf(iKOTNo));
                     item.setOrderBy(strUserName);
@@ -5277,7 +5278,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                     item.setBillSubTaxItems(billSubTaxItems);
                     item.setSubTotal(Double.parseDouble(tvSubTotal.getText().toString().trim()));
                     item.setNetTotal(Double.parseDouble(tvBillAmount.getText().toString().trim()));
-                    item.setTableNo(tableId);
+                    item.setTableNo(String.valueOf(tableId));
                     item.setWaiterNo(waiterId);
                     item.setBillNo(String.valueOf(orderId));
                     item.setOrderBy(strUserName);

@@ -73,6 +73,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     WepButton btnCreditCustomer, btnDiscount, btnCardPayment, /*btnVoucher,*/ btnSaveBill, btnCoupon, btnPrintBill;
     TableLayout tblPayBill;
     String strTotal, strCustId = "0";
+    float baseValue_recieved =0;
     double dRoundoffTotal;
     float dWalletPayment =0;
     int RESETCALLED =0;
@@ -121,6 +122,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             Intent intentt = getIntent();
             strTotal = intentt.getStringExtra("TotalAmount");
             strCustId = intentt.getStringExtra("CustId");
+            baseValue_recieved = intentt.getFloatExtra("BaseValue",0);
             strOrderDelivered = intentt.getBooleanExtra(ORDER_DELIVERED,false);
             if(strCustId==null)
                 strCustId = "0";
@@ -179,6 +181,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         edtPettyCash = (EditText) findViewById(R.id.edtPettycash);
         edtPettyCash.setEnabled(false);
         edtPettyCash.addTextChangedListener(ChangeAmountEvent);
+        edtCard.addTextChangedListener(textChangeCard);
         edtDiscount = (EditText) findViewById(R.id.edtDisc);
         edtDiscount.addTextChangedListener(ChangeAmountEvent);
         edtDiscount.setEnabled(false);
@@ -209,6 +212,21 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+        }
+    };
+
+    TextWatcher textChangeCard = new TextWatcher() {
+
+        public void afterTextChanged(Editable s) {
+            TenderChange();
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            //double amount = Double.parseDouble(s.toString());
         }
     };
 
@@ -489,7 +507,8 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                     if (rbDiscPercent.isChecked() == true) {
                                        // float discPercent = Float.parseFloat(edtTotalValue.getText().toString()) * (Float.parseFloat(DiscountPercent.getText().toString()) / 100);
                                         discPercent = (Float.parseFloat(DiscountPercent.getText().toString()));
-                                        float disc_amt = Float.parseFloat(strTotal) *  (discPercent/ 100);
+                                        //float disc_amt = Float.parseFloat(strTotal) *  (discPercent/ 100);
+                                        float disc_amt = baseValue_recieved *  (discPercent/ 100);
                                         edtDiscount.setText(String.format("%.2f",disc_amt));
 //                                        float total = Float.parseFloat(strTotal);
 //                                        total -= Float.parseFloat(edtDiscount.getText().toString());
@@ -507,6 +526,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                             edtDiscount.setText(String.format("%.2f",discAmt));
                                         else
                                         {
+                                            edtDiscount.setText("0");
                                             Toast.makeText(myContext, "Discount is not applicable as bill amount is less than "+discAmt, Toast.LENGTH_LONG).show();
                                         }
                                     }
@@ -1346,9 +1366,14 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         if(requestCode == REQUEST_CODE_CARD_PAYMENT)
         {
             if(data!=null){
-                String amount = data.getStringExtra("amount");
-                edtVoucher.setText(edtChange.getText().toString().trim());
-                edtChange.setText("0");
+                final String amount = data.getStringExtra("amount");
+                edtCard.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        edtCard.setText(amount);
+                    }
+                },500);
+                //edtChange.setText("0");
                 Toast.makeText(myContext, "Hello"+amount, Toast.LENGTH_SHORT).show();
             }
         }

@@ -3526,6 +3526,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             intentTender.putExtra("CustId", edtCustId.getText().toString());
             intentTender.putExtra("phone", edtCustPhoneNo.getText().toString());
             intentTender.putExtra("USER_NAME", strUserName);
+            intentTender.putExtra("BaseValue", Float.parseFloat(tvSubTotal.getText().toString()));
             intentTender.putExtra("ORDER_DELIVERED", strOrderDelivered);
             startActivityForResult(intentTender, 1);
             //l(2, true);
@@ -4059,6 +4060,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             intentTender.putExtra("TotalAmount", tvBillAmount.getText().toString());
             intentTender.putExtra("CustId", edtCustId.getText().toString());
             intentTender.putExtra("phone", edtCustPhoneNo.getText().toString());
+            intentTender.putExtra("BaseValue", Float.parseFloat(tvSubTotal.getText().toString()));
             intentTender.putExtra("USER_NAME", strUserName);
             startActivityForResult(intentTender, 1);
         }
@@ -4827,7 +4829,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     }
                     PrintKotBillItem item = new PrintKotBillItem();
                     item.setBillKotItems(billKotItems);
-                    item.setTableNo(tableId);
+                    item.setTableNo(String.valueOf(tableId));
                     item.setWaiterNo(waiterId);
                     item.setBillNo(String.valueOf(iKOTNo));
                     item.setOrderBy(strUserName);
@@ -4958,7 +4960,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     item.setSubTotal(Double.parseDouble(tvSubTotal.getText().toString().trim()));
                     item.setNetTotal(Double.parseDouble(tvBillAmount.getText().toString().trim()));
                     //Log.d("netTotal",String.valueOf(item.getNetTotal()) );
-                    item.setTableNo(tableId);
+                    item.setTableNo(String.valueOf(tableId));
                     item.setWaiterNo(waiterId);
                     item.setBillNo(String.valueOf(orderId));
                     item.setOrderBy(strUserName);
@@ -4989,12 +4991,18 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                         switch (reprintBillingMode)
                         {
                             case 1 : item.setStrBillingModeName(DineInCaption);
+                                item.setBillingMode("1");
+                                //item.setPaymentStatus(""); // payment status not required for dinein Mode
                                 break;
                             case 2 : item.setStrBillingModeName(CounterSalesCaption);
+                                item.setBillingMode("2");
+                                //item.setPaymentStatus(""); // payment status not required for CounterSales Mode
                                 break;
                             case 3 : item.setStrBillingModeName(TakeAwayCaption);
+                                item.setBillingMode("3");
                                 break;
                             case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
+                                item.setBillingMode("4");
                                 break;
                         }
                         try{
@@ -5010,6 +5018,26 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 String date_s = formatter.format(date);
                                 item.setDate(date_s);
                                 item.setTime(time);
+
+                                if(reprintBillingMode==1)
+                                {
+                                    String tableNo = c.getString(c.getColumnIndex("TableNo"));
+                                    String splitno = c.getString(c.getColumnIndex("TableSplitNo"));
+                                    if(splitno!=null && !splitno.equals(""))
+                                        item.setTableNo(tableNo+" - "+splitno);
+                                    else
+                                        item.setTableNo(tableNo);
+                                }
+                                String userId = c.getString(c.getColumnIndex("UserId"));
+                                if( userId!=null)
+                                {
+                                    Cursor user_cursor = db.getUsers_counter(userId);
+                                    if(user_cursor!=null && user_cursor.moveToFirst())
+                                    {
+                                        item.setOrderBy(user_cursor.getString(user_cursor.getColumnIndex("Name")));
+                                    }
+                                }
+
                             }}catch(Exception e)
                         {
                             e.printStackTrace();

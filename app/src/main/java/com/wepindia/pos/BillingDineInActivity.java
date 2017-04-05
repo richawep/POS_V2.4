@@ -125,6 +125,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
     String GSTEnable = "", HSNEnable_out = "", POSEnable = "";
     TextView tvHSNCode_out;
     Date strDate_date;
+    int tableSplit =0;
     float fTotalsubTaxPercent = 0;
     Button btndepart, btncateg, btnitem;
     TextView tvdeptline, tvcategline;
@@ -204,6 +205,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 }
                 BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
+				tableSplit = crsrSettings.getInt(crsrSettings.getColumnIndex("TableSpliting"));
 
                 // GSt
                 HSNEnable_out = crsrSettings.getString(crsrSettings.getColumnIndex("HSNCode_Out"));
@@ -2284,6 +2286,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         edtCustName.setText("");
         edtCustId.setText("0");
         edtCustPhoneNo.setText("");
+        edtCustDineInPhoneNo.setText("");
         edtCustAddress.setText("");
         etCustGSTIN.setText("");
         // Display Total Items
@@ -3497,6 +3500,14 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         objBillDetail.setBillingMode(String.valueOf(jBillingMode));
         Log.d("InsertBillDetail", "Billing Mode :" + String.valueOf(jBillingMode));
 
+        objBillDetail.setTableNo(tvTableNumber.getText().toString());
+        Log.d("InsertBillDetail", "Table No "+objBillDetail.getTableNo());
+        if (tableSplit ==1)
+        {
+            objBillDetail.setTableSplitNo(tvTableSplitNo.getText().toString());
+            Log.d("InsertBillDetail", "Table Split No: "+objBillDetail.getTableSplitNo());
+        }
+
 
         // pos
         if (chk_interstate.isChecked()) {
@@ -4094,11 +4105,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             Intent intentTender = new Intent(myContext, PayBillActivity.class);
             intentTender.putExtra("TotalAmount", tvBillAmount.getText().toString());
             intentTender.putExtra("CustId", edtCustId.getText().toString());
-            if (jBillingMode == 1) {
-                intentTender.putExtra("phone", edtCustDineInPhoneNo.getText().toString());
-            } else {
-                intentTender.putExtra("phone", edtCustPhoneNo.getText().toString());
-            }
+            intentTender.putExtra("phone", edtCustDineInPhoneNo.getText().toString());
+            intentTender.putExtra("BaseValue", Float.parseFloat(tvSubTotal.getText().toString()));
             intentTender.putExtra("USER_NAME", strUserName);
             startActivityForResult(intentTender, 1);
         }
@@ -4715,7 +4723,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         Cursor crsrTax = dbBillScreen.getItemsForSalesTaxPrint(Integer.valueOf(tvBillNumber.getText().toString()));
         if (crsrTax.moveToFirst()) {
             do {
-                String taxname = "Sales Tax"; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                String taxname = "VAT"; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
                 String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("TaxPercent"));
                 Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxAmount")));
 
@@ -4847,7 +4855,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     }
                     PrintKotBillItem item = new PrintKotBillItem();
                     item.setBillKotItems(billKotItems);
-                    item.setTableNo(tableId);
+                    item.setTableNo(String.valueOf(tableId));
                     item.setWaiterNo(waiterId);
                     item.setBillNo(String.valueOf(iKOTNo));
                     item.setOrderBy(strUserName);
@@ -4982,7 +4990,12 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     item.setBillSubTaxItems(billSubTaxItems);
                     item.setSubTotal(Double.parseDouble(tvSubTotal.getText().toString().trim()));
                     item.setNetTotal(Double.parseDouble(tvBillAmount.getText().toString().trim()));
-                    item.setTableNo(tableId);
+                    String tablemsg = String.valueOf(tableId);
+                    if (tableSplit ==1)
+                    {
+                        tablemsg  =  String.valueOf(tableId) +" - "+ tvTableSplitNo.getText().toString();
+                    }
+                    item.setTableNo(tablemsg);
                     item.setWaiterNo(waiterId);
                     item.setBillNo(String.valueOf(orderId));
                     item.setOrderBy(strUserName);
@@ -5013,28 +5026,54 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         switch (reprintBillingMode)
                         {
                             case 1 : item.setStrBillingModeName(DineInCaption);
+                                item.setBillingMode("1");
+                                //item.setPaymentStatus(""); // payment status not required for dinein Mode
                                 break;
                             case 2 : item.setStrBillingModeName(CounterSalesCaption);
+                                item.setBillingMode("2");
+                                //item.setPaymentStatus(""); // payment status not required for CounterSales Mode
                                 break;
                             case 3 : item.setStrBillingModeName(TakeAwayCaption);
+                                item.setBillingMode("3");
                                 break;
                             case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
+                                item.setBillingMode("4");
                                 break;
                         }
                         try{
-                        Cursor c  = dbBillScreen.getBillDetail(orderId);
-                        if(c!=null && c.moveToNext()){
+                            Cursor c  = db.getBillDetail_counter(orderId);
+                            if(c!=null && c.moveToNext()){
 
-                            String time = c.getString(c.getColumnIndex("Time"));
-                            item.setTime(time);
-                            String milli = c.getString(c.getColumnIndex("InvoiceDate"));
-                            long ldate = Long.parseLong(milli);
-                            Date date = new Date(ldate);
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-                            String date_s = formatter.format(date);
-                            item.setDate(date_s);
-                            item.setTime(time);
-                        }}catch(Exception e)
+                                String time = c.getString(c.getColumnIndex("Time"));
+                                item.setTime(time);
+                                String milli = c.getString(c.getColumnIndex("InvoiceDate"));
+                                long ldate = Long.parseLong(milli);
+                                Date date = new Date(ldate);
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                                String date_s = formatter.format(date);
+                                item.setDate(date_s);
+                                item.setTime(time);
+
+                                if(reprintBillingMode==1)
+                                {
+                                    String tableNo = c.getString(c.getColumnIndex("TableNo"));
+                                    String splitno = c.getString(c.getColumnIndex("TableSplitNo"));
+                                    if(splitno!=null && !splitno.equals(""))
+                                        item.setTableNo(tableNo+" - "+splitno);
+                                    else
+                                        item.setTableNo(tableNo);
+                                }
+                                String userId = c.getString(c.getColumnIndex("UserId"));
+                                if(reprintBillingMode != 0 && userId!=null)
+                                {
+                                    Cursor user_cursor = db.getUsers_counter(userId);
+                                    if(user_cursor!=null && user_cursor.moveToFirst())
+                                    {
+                                        item.setOrderBy(user_cursor.getString(user_cursor.getColumnIndex("Name")));
+                                    }
+                                }
+
+                            }}catch(Exception e)
                         {
                             e.printStackTrace();
                         }

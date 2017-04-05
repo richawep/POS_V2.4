@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class PrintKotBillItem implements Serializable {
 
     private String billNo;
-    private int tableNo;
+    private String tableNo;
     private int waiterNo;
     private String orderBy;
     private String customerName;
@@ -41,7 +41,7 @@ public class PrintKotBillItem implements Serializable {
     public PrintKotBillItem() {
     }
 
-    public PrintKotBillItem(String billNo, int tableNo, int waiterNo, String orderBy, String customerName, String date,
+    public PrintKotBillItem(String billNo, String tableNo, int waiterNo, String orderBy, String customerName, String date,
                             String time, double subTotal, double netTotal, String addressLine1, String addressLine2,
                             String addressLine3, String footerLine, ArrayList<BillKotItem> billKotItems, ArrayList<BillTaxItem> billTaxItems,
                             String BillingMode, String PaymentStatus, String TotalSalesTaxAmount, String TotalServiceTaxAmount,
@@ -138,11 +138,11 @@ public class PrintKotBillItem implements Serializable {
         this.billNo = billNo;
     }
 
-    public int getTableNo() {
+    public String getTableNo() {
         return tableNo;
     }
 
-    public void setTableNo(int tableNo) {
+    public void setTableNo(String tableNo) {
         this.tableNo = tableNo;
     }
 

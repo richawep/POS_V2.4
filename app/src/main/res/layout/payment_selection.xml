@@ -285,6 +285,17 @@
                         android:selectAllOnFocus="true"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="15dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="*Please not discount is calculated on subtotal"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
 

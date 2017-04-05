@@ -861,8 +861,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_UserId + " NUMERIC, "
             + KEY_PettyCashPayment + " REAL, "
             + KEY_PaidTotalPayment + " REAL, "
-            + KEY_ChangePayment + " REAL" +
-            ")";
+            + KEY_ChangePayment + " REAL, "
+            + KEY_TableNo +" TEXT, "
+            + KEY_Table_Split_No+" TEXT "
+            +")";
 
     String QUERY_CREATE_TABLE_OUTWARD_SUPPLY_AMMEND = " CREATE TABLE " + TBL_OUTWARD_SUPPLY_LEDGER_AMEND + " (" +
             KEY_GSTIN + "  TEXT, " + KEY_CustName + " TEXT, " + KEY_MONTH + " TEXT, " + KEY_SupplyType + " TEXT, " +
@@ -4407,11 +4409,14 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_InvoiceNo, objBillDetail.getBillNumber());
         cvDbValues.put("Time", objBillDetail.getTime());
         cvDbValues.put(KEY_GSTIN, gstin);
+        cvDbValues.put(KEY_TableNo, objBillDetail.getTableNo());
+        cvDbValues.put(KEY_Table_Split_No, objBillDetail.getTableSplitNo());
         cvDbValues.put(KEY_InvoiceDate, objBillDetail.getDate());
         cvDbValues.put(KEY_GrandTotal, objBillDetail.getBillAmount());
         cvDbValues.put("TotalItems", objBillDetail.getTotalItems());
         cvDbValues.put("BillAmount", objBillDetail.getBillAmount());
         cvDbValues.put("TotalDiscountAmount", objBillDetail.getTotalDiscountAmount());
+        cvDbValues.put(KEY_DiscPercentage, objBillDetail.getTotalDiscountPercentage());
         cvDbValues.put("TotalServiceTaxAmount", objBillDetail.getTotalServiceTaxAmount());
         cvDbValues.put("TotalTaxAmount", objBillDetail.getTotalTaxAmount());
         cvDbValues.put("CashPayment", objBillDetail.getCashPayment());
@@ -6277,6 +6282,23 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
     public Cursor getUsers(String UserId) {
         return dbFNB.query(TBL_USERS, new String[]{"*"}, "UserId='" + UserId + "'", null, null, null, null);
+
+    }
+    public Cursor getUsers_counter(String UserId) {
+        Cursor cursor = null;
+        try
+        {
+            SQLiteDatabase db = getWritableDatabase();
+            cursor = db.query(TBL_USERS, new String[]{"*"}, "UserId='" + UserId + "'", null, null, null, null);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+            cursor = null;
+        }
+        finally {
+            return cursor;
+        }
 
     }
 

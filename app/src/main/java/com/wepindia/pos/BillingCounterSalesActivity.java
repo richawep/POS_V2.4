@@ -97,7 +97,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private Button btnDept,btnCat,btnItems;
     ArrayAdapter<CharSequence> POS_LIST;
     Spinner spnr_pos;
-    String strUserId = "", strUserName = "", strDate = "";
+    //String strUserId = "", strUserName = "", strDate = "";
     private byte jBillingMode = 2, jWeighScale = 0;
     private TableLayout tblOrderItems;
     private String GSTEnable = "", HSNEnable_out = "", POSEnable = "";
@@ -405,6 +405,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         tvDiscountAmount.setText("0.00");
         tvDiscountPercentage.setText("0.00");
         editTextName.setText("");
+        customerId = "0";
         editTextMobile.setText("");
         editTextAddress.setText("");
         editTextOrderNo.setText("");
@@ -1621,6 +1622,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             Log.v("Debug", "Total Amount:" + tvBillAmount.getText().toString());
             intTender.putExtra("TotalAmount", tvBillAmount.getText().toString());
             intTender.putExtra("phone", editTextMobile.getText().toString());
+            intTender.putExtra("BaseValue", Float.parseFloat(tvSubTotal.getText().toString()));
             intTender.putExtra("USER_NAME", userName);
             startActivityForResult(intTender, 1);
 
@@ -1643,6 +1645,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             intentTender.putExtra("TotalAmount", tvBillAmount.getText().toString());
             intentTender.putExtra("CustId", customerId);
             intentTender.putExtra("phone", editTextMobile.getText().toString());
+            intentTender.putExtra("BaseValue", Float.parseFloat(tvSubTotal.getText().toString()));
             intentTender.putExtra("USER_NAME", userName);
             startActivityForResult(intentTender, 1);
         }
@@ -2452,8 +2455,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBillDetail", "Customer Id:" + customerId);
 
         // User Id
-        objBillDetail.setUserId(strUserId);
-        Log.d("InsertBillDetail", "UserID:" + strUserId);
+        objBillDetail.setUserId(userId);
+        Log.d("InsertBillDetail", "UserID:" + userId);
 
         lResult = db.addBilll(objBillDetail, "");
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
@@ -2487,10 +2490,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             }
             else
             {
-                int tableId = 0, waiterId = 0, orderId = 0;
+                int  waiterId = 0, orderId = 0;
                 if ((!editTextOrderNo.getText().toString().trim().equalsIgnoreCase("")))
                 {
-                    tableId = 0;
+                    String tableId = "0";
                     waiterId = 0;
                     orderId = Integer.parseInt(editTextOrderNo.getText().toString().trim());
                     ArrayList<BillKotItem> billKotItems = billPrint();
@@ -2541,12 +2544,18 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         switch (reprintBillingMode)
                         {
                             case 1 : item.setStrBillingModeName(DineInCaption);
+                                item.setBillingMode("1");
+                                //item.setPaymentStatus(""); // payment status not required for dinein Mode
                                 break;
                             case 2 : item.setStrBillingModeName(CounterSalesCaption);
+                                item.setBillingMode("2");
+                                //item.setPaymentStatus(""); // payment status not required for CounterSales Mode
                                 break;
                             case 3 : item.setStrBillingModeName(TakeAwayCaption);
+                                item.setBillingMode("3");
                                 break;
                             case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
+                                item.setBillingMode("4");
                                 break;
                         }
                         try{
@@ -2562,6 +2571,26 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 String date_s = formatter.format(date);
                                 item.setDate(date_s);
                                 item.setTime(time);
+
+                                if(reprintBillingMode==1)
+                                {
+                                    String tableNo = c.getString(c.getColumnIndex("TableNo"));
+                                    String splitno = c.getString(c.getColumnIndex("TableSplitNo"));
+                                    if(splitno!=null && !splitno.equals(""))
+                                        item.setTableNo(tableNo+" - "+splitno);
+                                    else
+                                        item.setTableNo(tableNo);
+                                }
+                                String userId = c.getString(c.getColumnIndex("UserId"));
+                                if(reprintBillingMode != 0 && userId!=null)
+                                {
+                                    Cursor user_cursor = db.getUsers_counter(userId);
+                                    if(user_cursor!=null && user_cursor.moveToFirst())
+                                    {
+                                        item.setOrderBy(user_cursor.getString(user_cursor.getColumnIndex("Name")));
+                                    }
+                                }
+
                             }}catch(Exception e)
                         {
                             e.printStackTrace();

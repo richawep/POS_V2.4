@@ -21,7 +21,7 @@ public class BillDetail {
 	// Private variables
 	String Custname, CustStateCode, POS,strDate, strTime, strUserId,BusinessType, Amount;
 	int iBillNumber, iBillStatus, iCustId, iEmployeeId, iReprintCount, iTotalItems, iUserId;
-	String BillingMode; // richa_2012
+	String BillingMode, TableNo, TableSplitNo; // richa_2012
 	float fBillAmount, fCardPayment, fCashPayment, fCouponPayment, fPettyCashPayment, fPaidTotalPayment, fChangePayment, fWalletAmount,
 	fDeliveryCharge, fTotalDiscountPercentage,fTotalDiscountAmount, fTotalTaxAmount, fTotalServiceTaxAmount, IGSTAmount, CGSTAmount, SGSTAmount, SubTotal;
 	
@@ -30,6 +30,8 @@ public class BillDetail {
 
 		this.Custname="";
         this.BillingMode  = ""; // richa_2012
+        this.TableNo  = ""; // richa_2012
+        this.TableSplitNo  = ""; // richa_2012
 		this.CustStateCode="";
 		this.POS = "";
 		this.Amount="";
@@ -71,7 +73,7 @@ public class BillDetail {
 	public BillDetail(String Date,String Time,int BillNumber,int BillStatus,int CustId,int EmployeeId,int ReprintCount,int TotalItems,String UserId,
 			float BillAmount,float CardPayment,float CashPayment,float CouponPayment,float DeliveryCharge,
 			float TotalDiscountAmount,float TotalTaxAmount,float TotalServiceTaxAmount, float PettyCashPayment, float PaidTotalPayment,
-                      float ChangePayment,String BusinessType,String Amount,float walletAmount){
+                      float ChangePayment,String BusinessType,String Amount,float walletAmount, String tableNo, String TableSplitNo){
 		this.Amount = Amount;
 		this.strDate = Date;
 		this.strTime = Time;
@@ -97,7 +99,25 @@ public class BillDetail {
         this.fPaidTotalPayment = PaidTotalPayment;
         this.fChangePayment = ChangePayment;
 		this.fWalletAmount = walletAmount;
+		this.TableNo = tableNo;
+		this.TableSplitNo= TableSplitNo;
 		
+	}
+
+	public String getTableNo() {
+		return TableNo;
+	}
+
+	public void setTableNo(String tableNo) {
+		TableNo = tableNo;
+	}
+
+	public String getTableSplitNo() {
+		return TableSplitNo;
+	}
+
+	public void setTableSplitNo(String tableSplitNo) {
+		TableSplitNo = tableSplitNo;
 	}
 
 	public float getTotalDiscountPercentage() {

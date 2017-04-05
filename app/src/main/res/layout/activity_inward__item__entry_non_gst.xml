@@ -295,7 +295,7 @@
                                 android:gravity="center"
                                 android:hint="eg. M.G Road"
                                 android:inputType="text"
-                                android:maxLength="20"
+                                android:maxLength="100"
                                 android:textSize="13dp" />
 
                             <ImageView
