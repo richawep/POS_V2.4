@@ -5053,6 +5053,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                                 break;
                             case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
                                 item.setBillingMode("4");
+                                if(crsrCustomer!=null){
+                                    String CustDetail = crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName"));
+                                    CustDetail = CustDetail +"\n"+crsrCustomer.getString(crsrCustomer.getColumnIndex("CustAddress"));
+                                    item.setCustomerName(CustDetail);
+                                }
                                 break;
                         }
                         try{

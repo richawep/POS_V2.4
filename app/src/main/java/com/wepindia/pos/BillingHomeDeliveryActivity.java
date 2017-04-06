@@ -4963,11 +4963,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     PrintKotBillItem item = new PrintKotBillItem();
 
                     Cursor crsrCustomer = dbBillScreen.getCustomer(Integer.valueOf(edtCustId.getText().toString()));
+                    String CustDetails = "---";
                     if (crsrCustomer.moveToFirst()) {
-                        item.setCustomerName(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName")));
-                    } else {
-                        item.setCustomerName(" - - - ");
+                        CustDetails = crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName"));
+                        if(jBillingMode ==4)
+                        {
+                            CustDetails = CustDetails +"\n"+crsrCustomer.getString(crsrCustomer.getColumnIndex("CustAddress"));
+                        }
                     }
+                    item.setCustomerName(CustDetails);
                     item.setBillKotItems(billKotItems);
                     item.setBillOtherChargesItems(billOtherChargesItems);
                     item.setBillTaxItems(billTaxItems);
@@ -5019,6 +5023,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 break;
                             case 4 : item.setStrBillingModeName(HomeDeliveryCaption);
                                 item.setBillingMode("4");
+                                if(crsrCustomer!=null){
+                                    String CustDetail = crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName"));
+                                    CustDetail = CustDetail +"\n"+crsrCustomer.getString(crsrCustomer.getColumnIndex("CustAddress"));
+                                    item.setCustomerName(CustDetail);
+                                }
                                 break;
                         }
                         try{
