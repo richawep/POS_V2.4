@@ -2131,6 +2131,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         edtCustPhoneNo.setText("");
         edtCustAddress.setText("");
         etCustGSTIN.setText("");
+        chk_interstate.setChecked(false);
+        spnr_pos.setSelection(0);
 
         tvBillNumber.setText(String.valueOf(db.getNewBillNumber()));
         fTotalDiscount =0;
@@ -3509,6 +3511,21 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         return "1";
     }
 
+    private int getIndex_pos(String substring){
+
+        int index = 0;
+        for (int i = 0; index==0 && i < spnr_pos.getCount(); i++){
+
+            if (spnr_pos.getItemAtPosition(i).toString().contains(substring)){
+                index = i;
+            }
+
+        }
+
+        return index;
+
+    }
+
     /*************************************************************************************************************************************
      * Opens tender window in dine in and take away billing mode
      *************************************************************************************************************************************/
@@ -4202,6 +4219,18 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                         MsgBox.Show("Warning", "This bill has been deleted");
                                         return;
                                     }
+                                    String pos = cursor.getString(cursor.getColumnIndex("POS"));
+                                    if(pos!= null && !pos.equals(""))
+                                    {
+                                        chk_interstate.setChecked(true);
+                                        int index = getIndex_pos(pos);
+                                        spnr_pos.setSelection(index);
+                                    }
+                                    else
+                                    {
+                                        chk_interstate.setChecked(false);
+                                        spnr_pos.setSelection(0);
+                                    }
                                     fTotalDiscount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
                                     float discper = cursor.getFloat(cursor.getColumnIndex("DiscPercentage"));
                                     reprintBillingMode = cursor.getInt(cursor.getColumnIndex("BillingMode"));
@@ -4209,6 +4238,13 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                     tvDiscountPercentage.setText(String.format("%.2f",discper));
                                     tvDiscountAmount.setText(String.format("%.2f",fTotalDiscount));
                                     tvBillNumber.setText(txtReprintBillNo.getText().toString());
+
+                                    tvIGSTValue.setText(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("IGSTAmount"))));
+                                    tvTaxTotal.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("CGSTAmount"))));
+                                    tvServiceTaxTotal.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("SGSTAmount"))));
+                                    tvSubTotal.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("TaxableValue"))));
+                                    tvBillAmount.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("BillAmount"))));
+
                                     LoadItemsForReprintBill(LoadItemForReprint);
                                     Cursor crsrBillDetail = dbBillScreen.getBillDetail(Integer.valueOf(txtReprintBillNo.getText().toString()));
                                     if (crsrBillDetail.moveToFirst()) {
@@ -4683,6 +4719,22 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         }
         return billTaxItems;
     }
+    public ArrayList<BillTaxItem> taxPrint_IGST() {
+        ArrayList<BillTaxItem> billTaxItems = new ArrayList<BillTaxItem>();
+
+        Cursor crsrTax = db.getItemsForIGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()));
+        if (crsrTax.moveToFirst()) {
+            do {
+                String taxname = "IGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("IGSTRate"));
+                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("IGSTAmount")));
+
+                BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                billTaxItems.add(taxItem);
+            } while (crsrTax.moveToNext());
+        }
+        return billTaxItems;
+    }
 
     public ArrayList<BillTaxItem> otherChargesPrint() {
         ArrayList<BillTaxItem> billOtherChargesItems = new ArrayList<BillTaxItem>();
@@ -4896,10 +4948,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             proceed =0;
         }else if (tvBillAmount.getText().toString().equals("") ) {
             MsgBox.Show("Warning", "Please add item to make bill");
+            proceed =0;
         } else if ( tvBillAmount.getText().toString().equals("0.00")) {
             MsgBox.Show("Warning", "Please make bill of amount greater than 0.00");
+            proceed =0;
         }else if (edtCustId.getText().toString().equals("0")){
             MsgBox.Show("Warning", "Add customer before Printing Bill");
+            proceed =0;
+        }else if (chk_interstate.isChecked() && spnr_pos.getSelectedItem().equals("")) {
+            MsgBox.Show("Warning", "Please Select Code for Intersate Supply");
             proceed =0;
         }
 
@@ -4955,9 +5012,19 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     waiterId = 0;//Integer.parseInt(tvWaiterNumber.getText().toString().trim());
                     orderId = Integer.parseInt(tvBillNumber.getText().toString().trim());
                     ArrayList<BillKotItem> billKotItems = billPrint();
-                    ArrayList<BillTaxItem> billTaxItems = taxPrint();
                     ArrayList<BillTaxItem> billOtherChargesItems = otherChargesPrint();
-                    ArrayList<BillServiceTaxItem> billServiceTaxItems = SGSTtaxPrint();
+                    ArrayList<BillTaxItem> billTaxItems ;
+                    ArrayList<BillServiceTaxItem> billServiceTaxItems = new ArrayList<BillServiceTaxItem>();;
+                    if(chk_interstate.isChecked())
+                    {
+                        billTaxItems = taxPrint_IGST();
+                    }
+                    else
+                    {
+                        billTaxItems = taxPrint();
+                        billServiceTaxItems = SGSTtaxPrint();
+                    }
+
 
                     ArrayList<BillSubTaxItem> billSubTaxItems = subtaxPrint();
                     PrintKotBillItem item = new PrintKotBillItem();
@@ -5266,15 +5333,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 tvAmount.setWidth(105);
                 tvAmount.setTextSize(11);
                 tvAmount.setText(
-                        String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("SubTotal"))));
+                        String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("TaxableValue"))));
 
                 // Sales Tax%
                 tvTaxPercent = new TextView(myContext);
-                tvTaxPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxPercent")));
+                tvTaxPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("CGSTRate")));
 
                 // Sales Tax Amount
                 tvTaxAmt = new TextView(myContext);
-                tvTaxAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxAmount")));
+                tvTaxAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("CGSTAmount")));
 
                 // Discount %
                 tvDiscPercent = new TextView(myContext);
@@ -5306,11 +5373,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
                 // Service Tax %
                 tvServiceTaxPercent = new TextView(myContext);
-                tvServiceTaxPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ServiceTaxPercent")));
+                tvServiceTaxPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SGSTRate")));
 
                 // Service Tax Amount
                 tvServiceTaxAmt = new TextView(myContext);
-                tvServiceTaxAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ServiceTaxAmount")));
+                tvServiceTaxAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SGSTAmount")));
 
                 // Delete
                 int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
@@ -5344,7 +5411,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
             } while (crsrBillItems.moveToNext());
 
-            CalculateTotalAmountforRePrint();
+            //CalculateTotalAmountforRePrint();
 
         } else {
             Log.d("LoadKOTItems", "No rows in cursor");

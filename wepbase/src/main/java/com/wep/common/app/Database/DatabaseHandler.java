@@ -7105,6 +7105,20 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return cursor;
     }
 
+    public Cursor getItemsForIGSTTaxPrints(int InvoiceNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("Select SUM(IGSTAmount) as IGSTAmount, IGSTRate from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY IGSTRate", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
     public Cursor getItemsForCGSTTaxPrints(int InvoiceNo) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
