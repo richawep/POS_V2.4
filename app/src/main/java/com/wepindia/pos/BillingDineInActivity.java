@@ -4720,12 +4720,12 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
     public ArrayList<BillTaxItem> taxPrint() {
         ArrayList<BillTaxItem> billTaxItems = new ArrayList<BillTaxItem>();
 
-        Cursor crsrTax = dbBillScreen.getItemsForSalesTaxPrint(Integer.valueOf(tvBillNumber.getText().toString()));
+        Cursor crsrTax = db.getItemsForCGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()));
         if (crsrTax.moveToFirst()) {
             do {
-                String taxname = "VAT"; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
-                String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("TaxPercent"));
-                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxAmount")));
+                String taxname = "CGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("CGSTRate"));
+                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("CGSTAmount")));
 
                 BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
                 billTaxItems.add(taxItem);
@@ -4733,7 +4733,6 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         }
         return billTaxItems;
     }
-
     public ArrayList<BillTaxItem> otherChargesPrint() {
         ArrayList<BillTaxItem> billOtherChargesItems = new ArrayList<BillTaxItem>();
 
@@ -4803,6 +4802,22 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             } while (crsrSubTax.moveToNext());
         }
         return billSubTaxItems;
+    }
+
+    public ArrayList<BillServiceTaxItem> SGSTtaxPrint() {
+        ArrayList<BillServiceTaxItem> billServiceTaxItems = new ArrayList<BillServiceTaxItem>();
+        Cursor crsrTax = db.getItemsForSGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()));
+        if (crsrTax.moveToFirst()) {
+            do {
+                String taxname = "SGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("SGSTRate"));
+                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("SGSTAmount")));
+
+                BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                billServiceTaxItems.add(taxItem);
+            } while (crsrTax.moveToNext());
+        }
+        return billServiceTaxItems;
     }
 
     public void printKOT(View view) {
@@ -4972,7 +4987,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     ArrayList<BillKotItem> billKotItems = billPrint();
                     ArrayList<BillTaxItem> billTaxItems = taxPrint();
                     ArrayList<BillTaxItem> billOtherChargesItems = otherChargesPrint();
-                    ArrayList<BillServiceTaxItem> billServiceTaxItems = servicetaxPrint();
+                    ArrayList<BillServiceTaxItem> billServiceTaxItems = SGSTtaxPrint();
 
                     ArrayList<BillSubTaxItem> billSubTaxItems = subtaxPrint();
                     PrintKotBillItem item = new PrintKotBillItem();
@@ -4987,7 +5002,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     item.setBillOtherChargesItems(billOtherChargesItems);
                     item.setBillTaxItems(billTaxItems);
                     item.setBillServiceTaxItems(billServiceTaxItems);
-                    item.setBillSubTaxItems(billSubTaxItems);
+                    //item.setBillSubTaxItems(billSubTaxItems);
                     item.setSubTotal(Double.parseDouble(tvSubTotal.getText().toString().trim()));
                     item.setNetTotal(Double.parseDouble(tvBillAmount.getText().toString().trim()));
                     String tablemsg = String.valueOf(tableId);

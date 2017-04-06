@@ -268,7 +268,10 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                                 InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
                                                                         Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
                                                                         0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-                                                                        2, 0, 0, 0, "", "",0f,0f,"",0f,0f,0f,"",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
+                                                                        2, 0, 0, 0, "", "",0f,0f,"",
+                                                                        Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
+                                                                        Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
+                                                                        "",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
                                                                         Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
                                                             }
                                                             StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
@@ -346,7 +349,10 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                 InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
                                                         Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
                                                         0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-                                                        2, 0, 0, 0, "", "",0f,0f,"",0f,0f,0f,"",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
+                                                        2, 0, 0, 0, "", "",0f,0f,"",
+                                                        Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
+                                                        Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
+                                                        "",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
                                                         Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
                                             }
 

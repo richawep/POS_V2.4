@@ -7105,6 +7105,33 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return cursor;
     }
 
+    public Cursor getItemsForCGSTTaxPrints(int InvoiceNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("Select SUM(CGSTAmount) as CGSTAmount, CGSTRate from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY CGSTRate", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+    /*public Cursor getItemsForCGSTTaxPrint(int InvoiceNo) {
+        //SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = dbFNB.rawQuery("Select SUM(CGSTAmount) as CGSTAmount, CGSTRate from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY CGSTRate", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }*/
+
     // -----Retrieve KOT items for service tax print
     public Cursor getItemsForServiceTaxPrints(int InvoiceNo) {
         SQLiteDatabase db = getWritableDatabase();
@@ -7119,6 +7146,35 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         }
         return cursor;
     }
+
+    public Cursor getItemsForSGSTTaxPrints(int InvoiceNo) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("Select SUM(SGSTAmount) as SGSTAmount, SGSTRate from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY SGSTRate", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
+
+    /*public Cursor getItemsForSGSTTaxPrint(int InvoiceNo) {
+
+        Cursor cursor = null;
+        try{
+            cursor = dbFNB.rawQuery("Select SUM(SGSTAmount) as SGSTAmount, SGSTRate from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY SGSTRate", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }*/
+
 
     // -----Retrieve new bill Number-----
     public int getNewBillNumber() {

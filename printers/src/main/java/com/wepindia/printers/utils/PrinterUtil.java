@@ -556,17 +556,17 @@ public class PrinterUtil {
         }
         // Service Sub Tax Calculation
         double dSerSubTaxPer = 0, dSerSubTaxAmt = 0;
-        ArrayList<BillSubTaxItem> billSubTaxItemsCal = item.getBillSubTaxItems();
+        /*ArrayList<BillSubTaxItem> billSubTaxItemsCal = item.getBillSubTaxItems();
         Iterator itCal = billSubTaxItemsCal.iterator();
         while (itCal.hasNext())
         {
             BillSubTaxItem billKotItem = (BillSubTaxItem) itCal.next();
             dSerSubTaxPer += billKotItem.getPercent();
             dSerSubTaxAmt += billKotItem.getPrice();
-        }
+        }*/
 
         // Service Tax
-        double dServiceTaxPer = 0, dServiceTaxAmt = 0;
+        double dServiceTaxPer = 0, dServiceTaxAmt = 0, dtotalServiceAmt =0;
         boolean isServiceTaxApplied = false;
         ArrayList<BillServiceTaxItem> billServiceTaxItems = item.getBillServiceTaxItems();
         Iterator it2 = billServiceTaxItems.iterator();
@@ -574,11 +574,12 @@ public class PrinterUtil {
 
             BillServiceTaxItem billKotItem = (BillServiceTaxItem) it2.next();
             if (billKotItem.getServicePercent() > 0){
-                isServiceTaxApplied = true;
+                //isServiceTaxApplied = true;
                 dServiceTaxPer = billKotItem.getServicePercent();
                 dServiceTaxAmt = billKotItem.getServicePrice();
                 dServiceTaxPer = dServiceTaxPer - dSerSubTaxPer;
                 dServiceTaxAmt = dServiceTaxAmt - dSerSubTaxAmt;
+                dtotalServiceAmt += dServiceTaxAmt;
                 String TxName = getPostAddedSpaceFormat("", String.valueOf(billKotItem.getServiceTxName()), 23, 1);
                 String TxPercent = getPostAddedSpaceFormat("", "@ " + String.format("%.2f", dServiceTaxPer) + " %", 15, 1);
                 String TxValue = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", dServiceTaxAmt), 7, 1), 8, 1);
@@ -606,7 +607,7 @@ public class PrinterUtil {
         {
             dSerSubTaxAmt = 0;
         }
-        dTotalTaxAmt = dSalesTaxAmt + dServiceTaxAmt + dSerSubTaxAmt;
+        dTotalTaxAmt = dSalesTaxAmt + dtotalServiceAmt + dSerSubTaxAmt;
         if(dTotalTaxAmt >0)
         {   esc.addText(getSpaceFormater("Total Tax Amount",String.format("%.2f",dTotalTaxAmt),45,1)+"\n");}
         esc.addText("==============================================="+"\n");
