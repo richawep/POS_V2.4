@@ -270,7 +270,10 @@
         <activity android:name=".GST.GSTConfiguration_Activity" />
         <activity android:name=".GSTLinkActivity" />
         <activity android:name=".GST.GSTFileActivity" />
-        <activity android:name=".GST.CreditDebitActivity" />
+        <activity android:name=".GST.CreditDebitActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
             android:name=".Inward_Item_Entry_nonGST_Activity"
             android:screenOrientation="landscape"

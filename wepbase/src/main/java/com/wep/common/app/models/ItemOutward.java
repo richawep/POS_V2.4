@@ -21,6 +21,7 @@ public class ItemOutward {
     private int ItemId;
     private float SalesTaxPercent;
     private float ServiceTaxPercent;
+    private float IGSTRate;
     private String UOM;
     private String HSN;
     private String TaxationType;
@@ -41,6 +42,7 @@ public class ItemOutward {
         ItemId = 0;
         SalesTaxPercent = 0;
         ServiceTaxPercent = 0;
+        IGSTRate = 0;
         this.UOM = "";
         this.HSN = "";
         this.TaxationType="GST";
@@ -48,7 +50,7 @@ public class ItemOutward {
 
     public ItemOutward(int menuCode, String longName, float dineIn1, float dineIn2, float dineIn3, float stock,
                        int deptCode, int categCode, int kitchenCode, String barCode, String imageUri, int itemId, float salesTaxPercent,
-                       float serviceTaxPercent, String UOM, String HSN, String taxationType) {
+                       float serviceTaxPercent, String UOM, String HSN, String taxationType, float IGSTRate) {
         this.menuCode = menuCode;
         LongName = longName;
         DineIn1 = dineIn1;
@@ -63,6 +65,7 @@ public class ItemOutward {
         ItemId = itemId;
         SalesTaxPercent = salesTaxPercent;
         ServiceTaxPercent = serviceTaxPercent;
+        this.IGSTRate = IGSTRate;
         this.UOM = UOM;
         this.HSN = HSN;
         TaxationType = taxationType;
@@ -196,6 +199,14 @@ public class ItemOutward {
         ServiceTaxPercent = serviceTaxPercent;
     }
 
+    public float getIGSTRate() {
+        return IGSTRate;
+    }
+
+    public void setIGSTRate(float IGSTRate) {
+        this.IGSTRate = IGSTRate;
+    }
+
     public String getUOM() {
         return UOM;
     }
@@ -203,6 +214,7 @@ public class ItemOutward {
     public void setUOM(String UOM) {
         this.UOM = UOM;
     }
+
 }
 
 

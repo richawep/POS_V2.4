@@ -96,7 +96,7 @@ public class ItemManagementActivity extends WepBaseActivity {
     Spinner spnrG_S, spnrMOU, spnrtaxationtype;
     EditText etRate ,etQuantity ,etHSN ,etGstTax  ;
     FrameLayout frame_rate_nongst, frame_rate_gst, frame_serviceTax, frame_salesTax, frame_GSTTax;
-    EditText edtMenuCode, edtItemCGSTTax, edtItemSGSTTax;
+    EditText edtMenuCode, edtItemCGSTTax, edtItemSGSTTax, edtIGSTTax;
     //TextView tvCaptionSNo,tvCaptionLongName,tvCaptionDineInPrice1,tvCaptionDineInPrice2,tvCaptionDineInPrice3,tvCaptionStock, tvCaptionRate,tvCaptionQuanity,tvCaptionMOU,tvCaptionGSTRate,tvCaptionImage,tvCaptionDelete;
     float fRate =0, fQuantity =0, fGSTTax = 0, fDiscount = 0;
     String txtHSNCode = "";
@@ -172,17 +172,21 @@ public class ItemManagementActivity extends WepBaseActivity {
                         MsgBox.setMessage(" For NilRate, nonGST, Exempt, tax will be 0")
                                 .setPositiveButton("OK",null)
                                 .show();
-                        edtItemCGSTTax.setText("0");
+                        edtItemCGSTTax.setText("0.00");
                         edtItemCGSTTax.setEnabled(false);
-                        edtItemSGSTTax.setText("0");
+                        edtItemSGSTTax.setText("0.00");
                         edtItemSGSTTax.setEnabled(false);
+                        edtIGSTTax.setText("0.00");
+                        edtIGSTTax.setEnabled(false);
                     }
                     else
                     {
-                        edtItemCGSTTax.setText("0");
+                        edtItemCGSTTax.setText("0.00");
                         edtItemCGSTTax.setEnabled(true);
-                        edtItemSGSTTax.setText("0");
+                        edtItemSGSTTax.setText("0.00");
                         edtItemSGSTTax.setEnabled(true);
+                        edtIGSTTax.setText("0.00");
+                        edtIGSTTax.setEnabled(true);
                     }
                 }
 
@@ -584,6 +588,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         edtMenuCode = (EditText) findViewById(R.id.edtMenuCode);
         edtItemCGSTTax = (EditText) findViewById(R.id.edtItemCGSTTax);
         edtItemSGSTTax = (EditText) findViewById(R.id.edtItemSGSTTax);
+        edtIGSTTax = (EditText) findViewById(R.id.edtIGSTTax);
 
         listViewItems = (ListView) findViewById(R.id.listViewItems);
         listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -654,6 +659,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         }
         edtItemCGSTTax.setText(String.format("%.2f",item.getSalesTaxPercent()));
         edtItemSGSTTax.setText(String.format("%.2f",item.getServiceTaxPercent()));
+        edtIGSTTax.setText(String.format("%.2f",item.getIGSTRate()));
 
         String uom_temp = item.getUOM();
         String uom = "("+uom_temp+")";
@@ -768,6 +774,7 @@ public class ItemManagementActivity extends WepBaseActivity {
             item.setUOM(cursorItem.getString(cursorItem.getColumnIndex("UOM")));
             item.setSalesTaxPercent(cursorItem.getFloat(cursorItem.getColumnIndex("CGSTRate")));
             item.setServiceTaxPercent(cursorItem.getFloat(cursorItem.getColumnIndex("SGSTRate")));
+            item.setIGSTRate(cursorItem.getFloat(cursorItem.getColumnIndex("IGSTRate")));
             item.setItemId(cursorItem.getInt(cursorItem.getColumnIndex("ItemId")));
             item.setHSN(cursorItem.getString(cursorItem.getColumnIndex("HSNCode")));
             item.setTaxationType(cursorItem.getString(cursorItem.getColumnIndex("TaxationType")));
@@ -1500,6 +1507,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         float fServiceTax = 0;
         float fCGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtItemCGSTTax.getText().toString())));
         float fSGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtItemSGSTTax.getText().toString())));
+        float fIGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtIGSTTax.getText().toString())));
 
 
         //Cursor crsrSettings = dbItems.getBillSetting();
@@ -1522,7 +1530,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                     InsertItem(strLongName, strLongName, fDineIn1, fDineIn2, fDineIn3, fTakeAway, fPickUp, fDelivery,
                             fStock, iPriceChange, iDiscountEnable, iBillWithStock, iTaxType, iDeptCode, iCategCode,
                             iKitchenCode, iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId,
-                            strBarcode, strImageUri, frate, fquantity, hsnCode, fCGSTTax+fSGSTTax, fCGSTTax, fSGSTTax, g_s, MOU_str, taxationtype_str,
+                            strBarcode, strImageUri, frate, fquantity, hsnCode, fIGSTTax, fCGSTTax, fSGSTTax, g_s, MOU_str, taxationtype_str,
                             fSalesTax, fServiceTax, iMenuCode);
 
 
@@ -1558,7 +1566,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                         iDeptCode, iCategCode, iKitchenCode, fDineIn1, fDineIn2, fDineIn3, fTakeAway, fPickUp, fDelivery,
                         iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId, fStock, iPriceChange,
                         iDiscountEnable, iBillWithStock, strImageUri, iTaxType, frate, hsnCode, g_s, MOU_str,
-                        taxationtype_str, fCGSTTax+fSGSTTax, fCGSTTax, fSGSTTax,
+                        taxationtype_str, fIGSTTax, fCGSTTax, fSGSTTax,
                         fSalesTax, fServiceTax, Integer.valueOf(strItemId));
                 Log.d("updateCategory", "Updated Rows: " + String.valueOf(iRowId));
 
@@ -1615,6 +1623,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         strUploadFilepath="";
         edtItemCGSTTax.setText("0.00");
         edtItemSGSTTax.setText("0.00");
+        edtIGSTTax.setText("0.00");
         edtMenuCode.setText("");
 
         etRate.setText("0");
@@ -1765,7 +1774,7 @@ public class ItemManagementActivity extends WepBaseActivity {
             edtItemCGSTTax.setText("0");
         }else if (Double.parseDouble(salesTax_str)< 0 || Double.parseDouble(salesTax_str)>99.99)
         {
-            MsgBox.Show("Warning","Please enter sales tax percent between 0 and 99.99");
+            MsgBox.Show("Warning","Please enter CGST Rate between 0 and 99.99");
             return;
         }
 
@@ -1774,9 +1783,18 @@ public class ItemManagementActivity extends WepBaseActivity {
             edtItemSGSTTax.setText("0");
         }else if (Double.parseDouble(serviceTax_str) <0 || Double.parseDouble(serviceTax_str)> 99.99)
         {
-            MsgBox.Show("Warning","Please enter service tax percent between 0 and 99.99");
+            MsgBox.Show("Warning","Please enter SGST Rate between 0 and 99.99");
             return;
         }
+
+        String IGST_str = edtIGSTTax.getText().toString();
+                if (IGST_str.equalsIgnoreCase("")) {
+                    edtIGSTTax.setText("0");
+                }else if (Double.parseDouble(IGST_str) <0 || Double.parseDouble(IGST_str)> 99.99)
+                {
+                    MsgBox.Show("Warning","Please enter IGST Rate between 0 and 99.99");
+                    return;
+                }
 
 
         new AsyncTask<Void,Void,Void>(){
@@ -1912,7 +1930,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                 edtItemCGSTTax.setText("0");
             }else if (Double.parseDouble(CGSTTax_str)< 0 || Double.parseDouble(CGSTTax_str)>99.99)
             {
-                MsgBox.Show("Warning","Please enter sales tax percent between 0 and 99.99");
+                MsgBox.Show("Warning","Please enter CST Rate between 0 and 99.99");
                 return;
             }
 
@@ -1921,7 +1939,15 @@ public class ItemManagementActivity extends WepBaseActivity {
                 edtItemSGSTTax.setText("0");
             }else if (Double.parseDouble(SGSTTax_str) <0 || Double.parseDouble(SGSTTax_str)> 99.99)
             {
-                MsgBox.Show("Warning","Please enter service tax percent between 0 and 99.99");
+                MsgBox.Show("Warning","Please enter SGST Rate between 0 and 99.99");
+                return;
+            }
+            String IGSTTax_str = edtIGSTTax.getText().toString();
+            if (IGSTTax_str.equalsIgnoreCase("")) {
+                edtIGSTTax.setText("0.00");
+            }else if (Double.parseDouble(IGSTTax_str) <0 || Double.parseDouble(IGSTTax_str)> 99.99)
+            {
+                MsgBox.Show("Warning","Please enter IGST Rate between 0 and 99.99");
                 return;
             }
 

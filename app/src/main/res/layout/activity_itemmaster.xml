@@ -827,6 +827,36 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:layout_weight="1"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvIGSTTax"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:text="IGST Tax(%)"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                        <EditText
+                            android:id="@+id/edtIGSTTax"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
                         android:visibility="gone"
                         android:weightSum="2">
 
