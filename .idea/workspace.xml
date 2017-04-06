@@ -19,6 +19,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,8 +54,8 @@
       <file leaf-file-name="BillingDineInActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="5060" column="38" selection-start-line="5060" selection-start-column="38" selection-end-line="5060" selection-end-column="38" />
+            <state relative-caret-position="326">
+              <caret line="5134" column="56" selection-start-line="5134" selection-start-column="56" selection-end-line="5134" selection-end-column="56" />
               <folding>
                 <element signature="e#15198#17675#0" expanded="true" />
                 <element signature="e#17674#17675#0" expanded="true" />
@@ -67,12 +68,17 @@
       <file leaf-file-name="BillingCounterSalesActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="2543" column="30" selection-start-line="2543" selection-start-column="30" selection-end-line="2543" selection-end-column="30" />
+            <state relative-caret-position="278">
+              <caret line="2644" column="29" selection-start-line="2644" selection-start-column="29" selection-end-line="2644" selection-end-column="29" />
               <folding>
                 <element signature="e#23745#24811#0" expanded="true" />
                 <element signature="e#24810#24811#0" expanded="true" />
-                <element signature="e#132903#132923#0" expanded="true" />
+                <element signature="e#133352#133372#0" expanded="true" />
+                <marker date="1491469449465" expanded="false" signature="128541:128554" ph="&lt;~&gt;" />
+                <marker date="1491469449465" expanded="false" signature="129836:129849" ph="&lt;~&gt;" />
+                <marker date="1491469449465" expanded="false" signature="130731:130744" ph="&lt;~&gt;" />
+                <marker date="1491469449465" expanded="false" signature="132604:132624" ph="&lt;~&gt;" />
+                <marker date="1491469449465" expanded="false" signature="134274:134290" ph="&lt;~&gt;" />
               </folding>
             </state>
           </provider>
@@ -81,11 +87,34 @@
       <file leaf-file-name="BillingHomeDeliveryActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="5026" column="43" selection-start-line="5025" selection-start-column="32" selection-end-line="5029" selection-end-column="33" />
+            <state relative-caret-position="530">
+              <caret line="5097" column="29" selection-start-line="5097" selection-start-column="29" selection-end-line="5097" selection-end-column="29" />
               <folding>
                 <element signature="e#229431#229451#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomerDetailActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="82" column="52" selection-start-line="82" selection-start-column="52" selection-end-line="82" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_customerdetail.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="295">
+              <caret line="193" column="58" selection-start-line="193" selection-start-column="58" selection-end-line="193" selection-end-column="58" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -5344,7 +5373,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_master.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" />
@@ -5366,6 +5394,7 @@
         <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/utils/PrinterUtil.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
@@ -5977,7 +6006,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491460685349</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="printing cust address in homedelivery in print &amp; reprint bill">
+      <created>1491466867480</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1491466867480</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6055,7 +6091,8 @@
     <MESSAGE value="Billing Screen including GST" />
     <MESSAGE value="defects reported by sargam&#10;1. supplier addres limit extended to 100 character as per BP Inward supplier Item Linkage, goodsinward, purchase order&#10;2. Sales tax is printed insted of VAt in DineIn Bills&#10;3. Discount was not calculating on base amount - all billing modules + paybill activity&#10;4. cashier name not coming corect while reprinting - all billing modules&#10;5. table no coming 0 in reprint , also splitno not displaying. all 4 biiling mod&#10;6. Last Customer name is priniting in countersale bill , even when no cutomer is entered&#10;7. discount percentage not displaying for dinein reprint&#10;7. discount amt not changing when disc option changed from percentage to amount - paybill" />
     <MESSAGE value="Making taxes Print in Bill as CGST &amp; SGST" />
-    <option name="LAST_COMMIT_MESSAGE" value="Making taxes Print in Bill as CGST &amp; SGST" />
+    <MESSAGE value="printing cust address in homedelivery in print &amp; reprint bill" />
+    <option name="LAST_COMMIT_MESSAGE" value="printing cust address in homedelivery in print &amp; reprint bill" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6365,17 +6402,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="319">
           <caret line="46" column="31" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="298" column="64" selection-start-line="298" selection-start-column="64" selection-end-line="298" selection-end-column="64" />
           <folding />
         </state>
       </provider>
@@ -6751,38 +6777,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="662" column="35" selection-start-line="662" selection-start-column="35" selection-end-line="662" selection-end-column="35" />
+        <state relative-caret-position="170">
+          <caret line="82" column="52" selection-start-line="82" selection-start-column="52" selection-end-line="82" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_customerdetail.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="295">
-          <caret line="2543" column="30" selection-start-line="2543" selection-start-column="30" selection-end-line="2543" selection-end-column="30" />
-          <folding>
-            <element signature="e#23745#24811#0" expanded="true" />
-            <element signature="e#24810#24811#0" expanded="true" />
-            <element signature="e#132903#132923#0" expanded="true" />
-          </folding>
+          <caret line="193" column="58" selection-start-line="193" selection-start-column="58" selection-end-line="193" selection-end-column="58" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="5026" column="43" selection-start-line="5025" selection-start-column="32" selection-end-line="5029" selection-end-column="33" />
+        <state relative-caret-position="530">
+          <caret line="5097" column="29" selection-start-line="5097" selection-start-column="29" selection-end-line="5097" selection-end-column="29" />
           <folding>
             <element signature="e#229431#229451#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="2644" column="29" selection-start-line="2644" selection-start-column="29" selection-end-line="2644" selection-end-column="29" />
+          <folding>
+            <element signature="e#23745#24811#0" expanded="true" />
+            <element signature="e#24810#24811#0" expanded="true" />
+            <element signature="e#133352#133372#0" expanded="true" />
+            <marker date="1491469449465" expanded="false" signature="128541:128554" ph="&lt;~&gt;" />
+            <marker date="1491469449465" expanded="false" signature="129836:129849" ph="&lt;~&gt;" />
+            <marker date="1491469449465" expanded="false" signature="130731:130744" ph="&lt;~&gt;" />
+            <marker date="1491469449465" expanded="false" signature="132604:132624" ph="&lt;~&gt;" />
+            <marker date="1491469449465" expanded="false" signature="134274:134290" ph="&lt;~&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="5060" column="38" selection-start-line="5060" selection-start-column="38" selection-end-line="5060" selection-end-column="38" />
+        <state relative-caret-position="326">
+          <caret line="5134" column="56" selection-start-line="5134" selection-start-column="56" selection-end-line="5134" selection-end-column="56" />
           <folding>
             <element signature="e#15198#17675#0" expanded="true" />
             <element signature="e#17674#17675#0" expanded="true" />

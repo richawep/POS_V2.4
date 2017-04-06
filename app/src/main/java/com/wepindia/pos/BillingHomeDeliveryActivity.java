@@ -5091,7 +5091,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             if (!tokens[1].equalsIgnoreCase(""))
                                 item.setAddressLine2(tokens[1]);
                             if (!tokens[2].equalsIgnoreCase(""))
-                                item.setAddressLine3(tokens[2]);
+                            {  if(reprintBillingMode>0) {
+                                item.setAddressLine3(tokens[2]+"\n(Duplicate Bill)");
+                            }else{
+                                item.setAddressLine3(tokens[2]);}
+                            }
                             item.setFooterLine(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText")));
                         } else {
                             Log.d(TAG, "DisplayHeaderFooterSettings No data in BillSettings table");
@@ -5118,7 +5122,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             if (!tokens[1].equalsIgnoreCase(""))
                                 item.setAddressLine2(tokens[1]);
                             if (!tokens[2].equalsIgnoreCase(""))
-                                item.setAddressLine3(tokens[2]);
+                            {  if(reprintBillingMode>0) {
+                                item.setAddressLine3(tokens[2]+"\n(Duplicate Bill)");
+                            }else{
+                                item.setAddressLine3(tokens[2]);}
+                            }
                             item.setFooterLine(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText")));
                         } else {
                             Log.d(TAG, "DisplayHeaderFooterSettings No data in BillSettings table");
