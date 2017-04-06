@@ -8,16 +8,17 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.wep.common.app.Database.BillSetting;
@@ -32,7 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class FragmentSettingsMiscellaneous extends Fragment {
+public class FragmentSettingsMiscellaneous extends Fragment implements AdapterView.OnItemSelectedListener {
 
     Context myContext;
     DatabaseHandler dbMiscellaneousSettings ;
@@ -44,6 +45,7 @@ public class FragmentSettingsMiscellaneous extends Fragment {
     CheckBox chkWeighScale;
     BillSetting objBillSettings = new BillSetting();
     String strBusinessDate = "";
+    Spinner spnrPos;
     private Button btnApplyMiscSettings,btnCloseMiscSettings,btn_BusinessDate;
 
     int DateChange =0;
@@ -92,6 +94,7 @@ public class FragmentSettingsMiscellaneous extends Fragment {
             }
         });
         txtPOSNumber = (EditText)view.findViewById(R.id.etPOSNumber);
+        spnrPos = (Spinner) view.findViewById(R.id.spnr_pos);
         txtTIN = (EditText)view.findViewById(R.id.etTIN);
         txtSubUdfText = (EditText)view.findViewById(R.id.etSubUdfText);
         txtBusinessDate = (EditText)view.findViewById(R.id.etBusinessDate);
@@ -105,6 +108,8 @@ public class FragmentSettingsMiscellaneous extends Fragment {
             dbMiscellaneousSettings.CloseDatabase();
             dbMiscellaneousSettings.CreateDatabase();
             dbMiscellaneousSettings.OpenDatabase();
+            spnrPos.setOnItemSelectedListener(this);
+
             DisplaySettings();
         }
         catch(Exception exp){
@@ -114,6 +119,20 @@ public class FragmentSettingsMiscellaneous extends Fragment {
         return view;
     }
 
+    public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+        String str = spnrPos.getSelectedItem().toString();
+        int length = str.length();
+        String custStateCode = "";
+        if (length > 0) {
+            custStateCode = str.substring(length - 2, length);
+            txtPOSNumber.setText(custStateCode);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 
     public void DateSelection(){
         try {
@@ -191,7 +210,20 @@ public class FragmentSettingsMiscellaneous extends Fragment {
         }
     }
 
+    private int getIndex_pos(String substring){
 
+        int index = 0;
+        for (int i = 0; index==0 && i < spnrPos.getCount(); i++){
+
+            if (spnrPos.getItemAtPosition(i).toString().contains(substring)){
+                index = i;
+            }
+
+        }
+
+        return index;
+
+    }
     private void DisplaySettings(){
 
         Cursor crsrMiscSetting = null;
@@ -202,6 +234,12 @@ public class FragmentSettingsMiscellaneous extends Fragment {
         if(crsrMiscSetting.moveToFirst()){
 
             DateChange = (crsrMiscSetting.getInt(crsrMiscSetting.getColumnIndex("DateAndTime")));
+            String pos_str = crsrMiscSetting.getString(crsrMiscSetting.getColumnIndex("POSNumber"));
+            if(pos_str!=null && !pos_str.equals(""))
+            {
+
+                spnrPos.setSelection(getIndex_pos(pos_str));
+            }
             txtPOSNumber.setText(crsrMiscSetting.getString(crsrMiscSetting.getColumnIndex("POSNumber")));
             txtSubUdfText.setText(crsrMiscSetting.getString(crsrMiscSetting.getColumnIndex("SubUdfText")));
             txtTIN.setText(crsrMiscSetting.getString(crsrMiscSetting.getColumnIndex("TIN")));

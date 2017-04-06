@@ -29,6 +29,14 @@
             android:maxLength="3"
             android:ems="10"
             android:inputType="number" />
+        <Spinner
+            android:id="@+id/spnr_pos"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:entries="@array/poscode"
+            android:layout_weight="1" />
 
     </TableRow>
 

@@ -135,6 +135,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
     public boolean isPrinterAvailable = false;
     private Toolbar toolbar;
     private AppCompatDelegate delegate;
+    String ownerPos= "";
     int reprintBillingMode =0;
     boolean isReprint = false;
     public void onConfigurationRequired() {
@@ -176,7 +177,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 CounterSalesCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeCounterSalesCaption"));
                 HomeDeliveryCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeHomeDeliveryCaption"));
                 TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
-
+                ownerPos = crsrSettings.getString(crsrSettings.getColumnIndex("POSNumber"));
 
                 if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1)
                 {
@@ -3809,6 +3810,21 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         return index;
 
     }
+    private String getState_pos(String substring){
+
+        String  index = "";
+        for (int i = 0; i < spnr_pos.getCount(); i++){
+
+            if (spnr_pos.getItemAtPosition(i).toString().contains(substring)){
+                index = spnr_pos.getItemAtPosition(i).toString();
+                break;
+            }
+
+        }
+
+        return index;
+
+    }
     /*************************************************************************************************************************************
      * Opens tender window in dine in and take away billing mode
      *************************************************************************************************************************************/
@@ -5216,10 +5232,17 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                             if (!tokens[1].equalsIgnoreCase(""))
                                 item.setAddressLine2(tokens[1]);
                             if (!tokens[2].equalsIgnoreCase(""))
-                            {  if(reprintBillingMode>0) {
-                                item.setAddressLine3(tokens[2]+"\n(Duplicate Bill)");
-                            }else{
-                                item.setAddressLine3(tokens[2]);}
+                            {
+                                String addres3= tokens[2];
+                                if(chk_interstate.isChecked())
+                                {
+                                    addres3 = addres3 + " ("+getState_pos(ownerPos)+") ";
+                                }
+                                if(reprintBillingMode>0) {
+                                    item.setAddressLine3(addres3+"\n(Duplicate Bill)");
+                                }else{
+                                    item.setAddressLine3(addres3);
+                                }
                             }
                             item.setFooterLine(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText")));
                         } else {

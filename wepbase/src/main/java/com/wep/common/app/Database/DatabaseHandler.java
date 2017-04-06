@@ -1383,7 +1383,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("KOTType", 1);
         cvDbValues.put("MaximumTables", 12);
         cvDbValues.put("MaximumWaiters", 4);
-        cvDbValues.put("POSNumber", 101);
+        cvDbValues.put("POSNumber", 29);
         cvDbValues.put("PrintKOT", 1);
         cvDbValues.put("SubUdftext", "Seat No.");
         cvDbValues.put("TIN", "123456789");
@@ -6402,7 +6402,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put("KOTType", 1);
         cvDbValues.put("MaximumTables", 12);
         cvDbValues.put("MaximumWaiters", 4);
-        cvDbValues.put("POSNumber", 101);
+        cvDbValues.put("POSNumber", 29);
         cvDbValues.put("PrintKOT", 1);
         cvDbValues.put("SubUdftext", "Seat No.");
         cvDbValues.put("TIN", "123456789");
