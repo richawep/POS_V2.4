@@ -4,12 +4,12 @@ package com.wep.common.app.gst;
  * Created by PriyabratP on 01-12-2016.
  */
 public class GSTR1CDNCDN {
-
+    private int sno;
     private String ntty;
     private double nt_num;
     private String nt_dt;
     private String rsn;
-    private String inum;
+    private String inum;// invoice no
     private String idt;
     private double val;
     private double irt;
@@ -20,6 +20,20 @@ public class GSTR1CDNCDN {
     private double samt;
 
     public GSTR1CDNCDN() {
+        this.ntty = "";
+        this.nt_num = 0.00;
+        this.nt_dt = "";
+        this.rsn = "";
+        this.inum = "";
+        this.idt = "";
+        this.val = 0.00;
+        this.irt = 0.00;
+        this.iamt = 0.00;
+        this.crt = 0.00;
+        this.camt = 0.00;
+        this.srt =0.00;
+        this.samt = 0.00;
+        this.sno = 0;
     }
 
     public GSTR1CDNCDN(String ntty, double nt_num, String nt_dt, String rsn, String inum, String idt, double val, double irt, double iamt, double crt, double camt, double srt, double samt) {
@@ -36,6 +50,15 @@ public class GSTR1CDNCDN {
         this.camt = camt;
         this.srt = srt;
         this.samt = samt;
+        this.sno = 0;
+    }
+
+    public int getSno() {
+        return sno;
+    }
+
+    public void setSno(int sno) {
+        this.sno = sno;
     }
 
     public String getNtty() {

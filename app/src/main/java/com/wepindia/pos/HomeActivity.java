@@ -30,6 +30,7 @@ import com.wep.common.app.gst.get.GetGSTR2B2BInvoice;
 import com.wep.common.app.gst.get.GetGSTR2B2BItem;
 import com.wep.gstcall.api.http.HTTPAsyncTask;
 import com.wepindia.pos.GST.AmmendActivity;
+import com.wepindia.pos.GST.CreditDebitActivity;
 import com.wepindia.pos.GST.GSTHomeActivity;
 import com.wepindia.pos.GenericClasses.BillNoReset;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -231,7 +232,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                 rl_CounterSales.setVisibility(View.VISIBLE);
                 rl_inward_invoice_entry.setVisibility(View.GONE);
                 rl_amend.setVisibility(View.GONE);
-                rl_cdn.setVisibility(View.GONE);
+                //rl_cdn.setVisibility(View.GONE);
             }
         }
         else
@@ -501,15 +502,14 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             startActivity(intentDelivery);
 
         } else if (v.getContentDescription().toString().equalsIgnoreCase("cdn")) {
-            // Launch Billing screen activity in Delivery billing mode
 
-            /*Intent intentDelivery = new Intent(myContext, CreditDebitActivity.class);
+           // Intent intentDelivery = new Intent(myContext, CreditDebitActivity.class);
+            Intent intentDelivery = new Intent(myContext, TabbedCreditDebitNote.class);
             intentDelivery.putExtra("BILLING_MODE", DELIVERY);
             intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
             intentDelivery.putExtra("CUST_ID", 0);
             startActivity(intentDelivery);
-*/
         }
         else if (v.getContentDescription().toString().equalsIgnoreCase("Masters"))
         {

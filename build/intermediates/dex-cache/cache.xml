@@ -70,7 +70,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="09a2497f0edb72448364e85c0f1f9247a73a154f">
+        sha1="bb1398e7498037457a0bc89a6fad9ec0e5e11c63">
         <dex dex="E:\FnbProjects\WepFnB_GST\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_41ff4b607091d166829f275e49ed01095ef4abc8\classes.dex" />
     </item>
     <item
@@ -174,6 +174,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\richaa\.android\build-cache\52b223eb78075ac8643223fb6f9b33e50a341771\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="E:\FnbProjects\WepFnB_GST\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b7d7b8fbdef80d0477821f354c215a9cb0bd122b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="E:\FnbProjects\WepFnB_GST\wepfnb_gst\printers\build\intermediates\bundles\default\libs\commons-lang-2.6.jar"
         jumboMode="true"
         optimize="true"
@@ -237,6 +246,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\richaa\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="E:\FnbProjects\WepFnB_GST\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_ecb2687f0e468cd6120e545d5e89fd5893e75a15\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\richaa\.android\build-cache\2f0cf1c2998ee9ca89cc6997120e70d628ecb688\output\jars\libs\internal_impl-25.0.1.jar"
         jumboMode="true"
         optimize="true"
@@ -268,7 +286,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
         <dex dex="E:\FnbProjects\WepFnB_GST\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_8736c44f5ddb3be5ad0301100efa413ab649a49d\classes.dex" />
     </item>
     <item

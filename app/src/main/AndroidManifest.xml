@@ -120,13 +120,13 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ItemManagementActivity"
-            android:screenOrientation="landscape"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="adjustPan" />
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".FilePickerActivity"
-            android:screenOrientation="landscape"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".StockActivity"
@@ -155,11 +155,12 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".BillingDineInActivity"
+        <activity
+            android:name=".BillingDineInActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
             android:theme="@style/AppThemeWep"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".TableActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
@@ -172,13 +173,13 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".TableShiftMergeActivity"
-            android:screenOrientation="landscape"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ModifyKOTActivity"
-            android:screenOrientation="landscape"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".CustomerOrdersActivity"
@@ -270,42 +271,43 @@
         <activity android:name=".GST.GSTConfiguration_Activity" />
         <activity android:name=".GSTLinkActivity" />
         <activity android:name=".GST.GSTFileActivity" />
-        <activity android:name=".GST.CreditDebitActivity"
-            android:screenOrientation="landscape"
+        <activity
+            android:name=".GST.CreditDebitActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".Inward_Item_Entry_nonGST_Activity"
-            android:screenOrientation="landscape"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".IngredientManagementActivity"
-            android:screenOrientation="landscape"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".ConvertIngredientActivity"
-            android:screenOrientation="landscape"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".PrintIngredients"
-            android:screenOrientation="landscape"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".GoodsInwardNoteActivity"
-            android:screenOrientation="landscape"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".PurchaseOrderActivity"
-            android:screenOrientation="landscape"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
@@ -328,7 +330,6 @@
             android:name="com.wepindia.printers.heydey.PrinterFragment"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Dialog" />
-
         <activity android:name="com.wepindia.printers.heydey.BluetoothDeviceList" />
         <activity
             android:name="com.wepindia.printers.sohamsa.PrinterSohamsaActivity"
@@ -340,18 +341,19 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".PaymentConfirmActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".PaymentConfirmActivity"
+            android:screenOrientation="landscape" />
         <activity android:name="com.wepindia.printers.MainActivity" />
         <activity
             android:name=".TabbedReportActivity"
-            android:screenOrientation="landscape"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".TabbedSettingsActivity"
-            android:screenOrientation="landscape"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name="com.mswipetech.wisepad.sdktest.view.TransactionActivity" />
         <activity
@@ -360,11 +362,12 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".TabbedInwardItem_NonGST"
-            android:screenOrientation="landscape"
+        <activity
+            android:name=".TabbedInwardItem_NonGST"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".TabbedCreditDebitNote"></activity>
     </application>
 
 </manifest>

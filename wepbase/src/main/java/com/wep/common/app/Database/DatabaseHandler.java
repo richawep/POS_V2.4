@@ -20,6 +20,7 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.widget.Toast;
 
+import com.wep.common.app.gst.GSTR1CDNCDN;
 import com.wep.common.app.gst.Model_reconcile;
 import com.wep.common.app.gst.get.GetGSTR1CounterPartySummary;
 import com.wep.common.app.gst.get.GetGSTR1SecSummary;
@@ -882,14 +883,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     String QUERY_CREATE_TABLE_CREDITDEBIT_OUTWARD = " CREATE TABLE " + TBL_CreditDebit_Outward + " (" +
             KEY_GSTIN + "  TEXT, " + KEY_CustName + " TEXT, " + KEY_NoteType + " TEXT, " + KEY_NoteNo + " TEXT, " +
-            KEY_NoteDate + " TEXT, " + KEY_OriginalInvoiceNo + " TEXT , " + KEY_OriginalInvoiceDate + " TEXT , " +
-            KEY_DifferentialValue + " TEXT, " + KEY_CGSTRate + " REAL," +
+            KEY_NoteDate + " TEXT, " + KEY_InvoiceNo + " TEXT , " + KEY_InvoiceDate + " TEXT , " +
+            KEY_AttractsReverseCharge + " TEXT, " + KEY_Reason+" TEXT, "+ KEY_DifferentialValue + " TEXT, " + KEY_CGSTRate + " REAL," +
             KEY_CGSTAmount + " REAL," + KEY_SGSTRate + " REAL, " + KEY_SGSTAmount + " REAL, " + KEY_IGSTRate + " REAL, " +
             KEY_IGSTAmount + " REAL )";
 
     String QUERY_CREATE_TABLE_CREDITDEBIT_Inward = " CREATE TABLE " + TBL_CreditDebit_Inward + " (" +
             KEY_GSTIN + "  TEXT, " + KEY_CustName + " TEXT, " + KEY_NoteType + " TEXT, " + KEY_NoteNo + " TEXT, " +
-            KEY_NoteDate + " TEXT, " + KEY_OriginalInvoiceNo + " TEXT , " + KEY_OriginalInvoiceDate + " TEXT , " +
+            KEY_NoteDate + " TEXT, " + KEY_InvoiceNo + " TEXT , " + KEY_InvoiceDate + " TEXT , " +
+            KEY_AttractsReverseCharge + " TEXT, " + KEY_Reason+" TEXT, "+
             KEY_DifferentialValue + " TEXT, " + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL," + KEY_SGSTRate + " REAL, " +
             KEY_SGSTAmount + " REAL, " + KEY_IGSTRate + " REAL, " + KEY_IGSTAmount + " REAL " + KEY_ITC_Eligible + " TEXT, " +
             KEY_Total_ITC_IGST + " TEXT, " + KEY_Total_ITC_CGST + " TEXT, " + KEY_Total_ITC_SGST + " TEXT, " +
@@ -1738,6 +1740,137 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // richa - gst functions
 
+    public long addDebit(GSTR1CDNCDN note, String name, String reason, String reverseCharge) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_GSTIN, name);
+        contentValues.put(KEY_CustName, name);
+        contentValues.put(KEY_Reason, reason);
+        contentValues.put(KEY_AttractsReverseCharge, reverseCharge);
+        contentValues.put(KEY_InvoiceNo, note.getInum());
+        contentValues.put(KEY_InvoiceDate, note.getIdt());
+        contentValues.put(KEY_NoteType, note.getNtty());
+        contentValues.put(KEY_NoteNo, note.getNt_num());
+        contentValues.put(KEY_NoteDate, note.getNt_dt());
+        contentValues.put(KEY_DifferentialValue, note.getVal());
+        contentValues.put(KEY_IGSTRate, note.getIrt());
+        contentValues.put(KEY_IGSTAmount, note.getIamt());
+
+        contentValues.put(KEY_SGSTRate, note.getSrt());
+        contentValues.put(KEY_SGSTAmount, note.getSamt());
+        contentValues.put(KEY_CGSTRate, note.getCrt());
+        contentValues.put(KEY_CGSTAmount, note.getSamt());
+
+        long result = dbFNB.insert(TBL_CreditDebit_Inward, null, contentValues);
+        return result;
+    }
+    public long editDebit(GSTR1CDNCDN note, String reason) {
+
+        String whereClause = KEY_InvoiceNo+" LIKE '"+note.getInum()+"' AND "+KEY_InvoiceDate+" LIKE '"+note.getIdt()+"' AND "
+                +KEY_NoteNo+" LIKE '"+note.getNt_num()+"' AND "+KEY_NoteDate+" LIKE '"+note.getNt_dt()+"'";
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_Reason, reason);
+        contentValues.put(KEY_DifferentialValue, note.getVal());
+        contentValues.put(KEY_IGSTRate, note.getIrt());
+        contentValues.put(KEY_IGSTAmount, note.getIamt());
+        contentValues.put(KEY_SGSTRate, note.getSrt());
+        contentValues.put(KEY_SGSTAmount, note.getSamt());
+        contentValues.put(KEY_CGSTRate, note.getCrt());
+        contentValues.put(KEY_CGSTAmount, note.getSamt());
+
+        long result = dbFNB.update(TBL_CreditDebit_Inward, contentValues,whereClause,null);
+        return result;
+    }
+    public long addCredit(GSTR1CDNCDN note, String name, String reason, String reverseCharge) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_GSTIN, name);
+        contentValues.put(KEY_CustName, name);
+        contentValues.put(KEY_Reason, reason);
+        contentValues.put(KEY_AttractsReverseCharge, reverseCharge);
+        contentValues.put(KEY_InvoiceNo, note.getInum());
+        contentValues.put(KEY_InvoiceDate, note.getIdt());
+        contentValues.put(KEY_NoteType, note.getNtty());
+        contentValues.put(KEY_NoteNo, note.getNt_num());
+        contentValues.put(KEY_NoteDate, note.getNt_dt());
+        contentValues.put(KEY_DifferentialValue, note.getVal());
+        contentValues.put(KEY_IGSTRate, note.getIrt());
+        contentValues.put(KEY_IGSTAmount, note.getIamt());
+
+        contentValues.put(KEY_SGSTRate, note.getSrt());
+        contentValues.put(KEY_SGSTAmount, note.getSamt());
+        contentValues.put(KEY_CGSTRate, note.getCrt());
+        contentValues.put(KEY_CGSTAmount, note.getSamt());
+
+        long result = dbFNB.insert(TBL_CreditDebit_Outward, null, contentValues);
+        return result;
+    }
+
+    public long editCredit(GSTR1CDNCDN note, String reason) {
+
+        String whereClause = KEY_InvoiceNo+" LIKE '"+note.getInum()+"' AND "+KEY_InvoiceDate+" LIKE '"+note.getIdt()+"' AND "
+                +KEY_NoteNo+" LIKE '"+note.getNt_num()+"' AND "+KEY_NoteDate+" LIKE '"+note.getNt_dt()+"'";
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_Reason, reason);
+        contentValues.put(KEY_DifferentialValue, note.getVal());
+        contentValues.put(KEY_IGSTRate, note.getIrt());
+        contentValues.put(KEY_IGSTAmount, note.getIamt());
+        contentValues.put(KEY_SGSTRate, note.getSrt());
+        contentValues.put(KEY_SGSTAmount, note.getSamt());
+        contentValues.put(KEY_CGSTRate, note.getCrt());
+        contentValues.put(KEY_CGSTAmount, note.getSamt());
+
+        long result = dbFNB.update(TBL_CreditDebit_Outward, contentValues,whereClause,null);
+        return result;
+    }
+
+    public Cursor getCreditDetails(String invoiceNo, String invoiceDate,String type) {
+        String selectQuery = "SELECT * FROM " + TBL_CreditDebit_Outward + " WHERE " + KEY_InvoiceDate + " LIKE '" + invoiceDate +
+                "' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_NoteType+" LIKE '"+type+"'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+    public Cursor getDebitDetails(String invoiceNo, String invoiceDate,String type) {
+        String selectQuery = "SELECT * FROM " + TBL_CreditDebit_Inward + " WHERE " + KEY_InvoiceDate + " LIKE '" + invoiceDate +
+                "' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_NoteType+" LIKE '"+type+"'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+
+    public int DeleteCreditNote(String invoiceNo, String invoiceDate,String creditNo, String creditDate) {
+
+        String deleteQuery = KEY_InvoiceDate + " LIKE '" + invoiceDate +"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+
+                "' AND "+KEY_NoteNo+" LIKE '"+creditNo+"' AND "+KEY_NoteDate+" LIKE '"+creditDate+"'";
+        return dbFNB.delete(TBL_CreditDebit_Outward, deleteQuery, null);
+    }
+    public int DeleteDebitNote(String invoiceNo, String invoiceDate,String creditNo, String creditDate) {
+
+        String deleteQuery = KEY_InvoiceDate + " LIKE '" + invoiceDate +"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+
+                "' AND "+KEY_NoteNo+" LIKE '"+creditNo+"' AND "+KEY_NoteDate+" LIKE '"+creditDate+"'";
+        return dbFNB.delete(TBL_CreditDebit_Inward, deleteQuery, null);
+    }
+
+    public int getMaxCreditNoteNo() {
+        int max = 0;
+        Cursor cursor = dbFNB.rawQuery("SELECT NoteNo FROM "+TBL_CreditDebit_Outward, null);
+        while(cursor.moveToNext())
+            max = cursor.getInt(cursor.getColumnIndex("NoteNo")) ;
+        return max+1;
+    }
+    public int getMaxDebitNoteNo() {
+        int max = 0;
+        Cursor cursor = dbFNB.rawQuery("SELECT NoteNo FROM "+TBL_CreditDebit_Inward, null);
+        while(cursor.moveToNext())
+            max = cursor.getInt(cursor.getColumnIndex("NoteNo")) ;
+        return max+1;
+    }
+
+    public Cursor getdebitdetails(String invoiceNo, String invoiceDate)
+    {
+        String type = "D";
+        String selectQuery = "SELECT * FROM " + TBL_CreditDebit_Inward+ " WHERE " + KEY_InvoiceDate + " LIKE '" + invoiceDate +
+                "' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_NoteType+" LIKE '"+type+"'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
     public Cursor getInward_taxed(String StartDate, String EndDate) {
         String selectQuery = "SELECT * FROM " + TBL_INWARD_SUPPLY_ITEMS_DETAILS + " WHERE " + KEY_InvoiceDate + " BETWEEN '" + StartDate +
                 "' AND '" + EndDate + "'";
@@ -4593,6 +4726,11 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
             return null;
     }
 
+    public Cursor getBillDetail(int InvoiceNumber, String InvoiceDate) {
+        return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber+
+                " AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null, null, null, null);
+    }
+
     // -----Retrieve single bill details by Customer Id-----
     public Cursor getBillDetailByCustomer(int CustId, int BillStatus, float BillAmount) {
         try {
@@ -5738,6 +5876,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         Cursor cursor = dbFNB.rawQuery("SELECT MAX(PurchaseOrderNo) FROM PurchaseOrder", null);
         return cursor;
     }
+
 
     // richa -> same as function getbill_inward
     public Cursor checkDuplicatePurchaseOrder(int suppliercode, int Menucode, int purchaseorder) {

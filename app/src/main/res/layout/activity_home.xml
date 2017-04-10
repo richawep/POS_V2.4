@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="5">
+                    >
 
                     <RelativeLayout
                         android:id="@+id/rl_dinein"
@@ -299,7 +299,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1"
-                        android:visibility="gone">
+                        >
 
                         <ImageButton
                             android:id="@+id/img_cdn"
