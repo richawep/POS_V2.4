@@ -1,20 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.wepindia.pos.GST.fragments.Fragment_GSTR2_B2B_Amend">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/boxBtn"
         android:orientation="vertical"
-        android:layout_marginTop="72dp">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+
             android:layout_weight="1.2"
             >
 
@@ -35,7 +38,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:background="@drawable/border"
+                        android:textSize="14dp"
+                        android:background="@drawable/pinkborder"
+                        android:textColor="@color/txtColorAccent"
                         android:text=" Original Details"/>
 
                 </LinearLayout>
@@ -47,6 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="GSTIN"/>
                     <EditText
                         android:layout_width="match_parent"
@@ -63,6 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="InvoiceNo"/>
                     <EditText
                         android:layout_width="match_parent"
@@ -79,13 +86,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="Invoice Date   "/>
-                    <EditText
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/et_invdate_ori"
-                        android:textSize="14dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/et_invdate_ori"
+                            android:textSize="14dp"
+                            android:hint="dd-MM-yyyy"
+                            android:focusable="false"
+                            android:layout_weight="1"/>
+                        <ImageButton
+                            android:id="@+id/btnCal_ori"
+                            android:background="@drawable/btn_calendar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"/>
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -105,7 +127,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:background="@drawable/border"
+                        android:background="@drawable/pinkborder"
+                        android:textColor="@color/txtColorAccent"
                         android:text=" Revised Details"/>
 
                 </LinearLayout>
@@ -117,6 +140,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="GSTIN"/>
                     <EditText
                         android:layout_width="match_parent"
@@ -133,6 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="Invoice No"/>
                     <EditText
                         android:layout_width="match_parent"
@@ -149,13 +174,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="Invoice Date"/>
-                    <EditText
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textSize="14dp"
-                        android:id="@+id/et_invdate_rev"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="14dp"
+                            android:focusable="false"
+                            android:hint="dd-MM-yyyy"
+                            android:id="@+id/et_invdate_rev"
+                            android:layout_weight="1"/>
+                        <ImageButton
+                            android:id="@+id/btnCal_rev"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/btn_calendar"
+                            android:layout_weight="3"/>
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
@@ -175,6 +214,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="HSN"/>
                     <EditText
                         android:layout_width="match_parent"
@@ -191,12 +231,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="Value"/>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="14dp"
+                        android:inputType="numberDecimal"
                         android:id="@+id/et_value"/>
                 </LinearLayout>
                 <LinearLayout
@@ -207,12 +249,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="Taxable Value"/>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="14dp"
+                        android:inputType="numberDecimal"
                         android:id="@+id/et_taxval"/>
                 </LinearLayout>
 
@@ -224,6 +268,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="G/S"/>
 
                     <Spinner
@@ -234,80 +279,98 @@
                         android:entries="@array/g_s"></Spinner>
                 </LinearLayout>
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linear_4"
+                android:layout_margin="@dimen/activity_horizontal_margin1"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="IGST Rate(%)"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="14dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/et_igstrate"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/linear_4"
-                    android:layout_margin="@dimen/activity_horizontal_margin1"
-                    android:orientation="vertical"
                     android:layout_weight="1">
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="IGST Rate"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textSize="14dp"
-                            android:id="@+id/et_igstrate"/>
-                    </LinearLayout>
-                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="CGST Rate(%)"/>
+                    <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="CGST Rate"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textSize="14dp"
-                            android:id="@+id/et_cgstrate"/>
-                    </LinearLayout>
+                        android:layout_weight="1"
+                        android:textSize="14dp"
+                        android:id="@+id/et_cgstrate"/>
+                </LinearLayout>
 
-                    <LinearLayout
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="SGST Rate"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textSize="14dp"
-                            android:id="@+id/et_sgstrate"/>
-                    </LinearLayout>
-                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="SGST Rate(%)"/>
+                    <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="POS"/>
+                        android:layout_weight="1"
+                        android:textSize="14dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/et_sgstrate"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="POS"/>
 
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textSize="14dp"
-                            android:id="@+id/et_pos"/>
-                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spnr_pos"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:entries="@array/poscode"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="14dp"
+                        android:visibility="gone"
+                        android:id="@+id/et_pos"/>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -324,12 +387,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="IGST Amount"/>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="14dp"
+                        android:inputType="numberDecimal"
                         android:id="@+id/et_igstamt"/>
                 </LinearLayout>
                 <LinearLayout
@@ -340,12 +405,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="CGST Amount"/>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="14dp"
+                        android:inputType="numberDecimal"
                         android:id="@+id/et_cgstamt"/>
                 </LinearLayout>
 
@@ -357,12 +424,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="SGST Amount"/>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="14dp"
+                        android:inputType="numberDecimal"
                         android:id="@+id/et_sgstamt"/>
                 </LinearLayout>
                 <LinearLayout
@@ -389,51 +458,60 @@
 
                 <TextView
                     android:layout_width="55dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
-                    android:text="Sno."/>
+                    android:gravity="center"
+                    android:text="Sno"/>
 
                 <TextView
                     android:layout_width="348dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:text="Original Details"/>
 
                 <TextView
                     android:layout_width="545dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="Revised Details"/>
 
                 <TextView
                     android:layout_width="85dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Taxable "/>
                 <TextView
                     android:layout_width="50dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="IGST"/>
                 <TextView
                     android:layout_width="80dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="CGST"/>
                 <TextView
                     android:layout_width="65dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="SGST"/>
                 <TextView
                     android:layout_width="50dp"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="Delete"/>
@@ -447,98 +525,126 @@
                 <TextView
                     android:layout_width="55dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     />
 
                 <TextView
                     android:layout_width="180dp"
+                    android:gravity="center"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:text="GSTIN"/>
                 <TextView
                     android:layout_width="75dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:text="Inv No"/>
                 <TextView
                     android:layout_width="105dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:text="Inv Date"/>
 
                 <TextView
                     android:layout_width="183dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:text="GSTIN"/>
 
                 <TextView
                     android:layout_width="75dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:text="Inv No"/>
                 <TextView
                     android:layout_width="107dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="Inv Date"/>
                 <TextView
                     android:layout_width="60dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:text="HSN"/>
                 <TextView
                     android:layout_width="51dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:text="G/S"/>
 
                 <TextView
                     android:layout_width="86dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
+                    android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="Value"/>
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="95dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:text="Value"/>
 
                 <TextView
                     android:layout_width="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="Amt"/>
 
                 <TextView
                     android:layout_width="80dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="Amt"/>
 
                 <TextView
                     android:layout_width="80dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="Amt"/>
 
 
                 <ImageButton
                     android:layout_width="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:id="@+id/btndel"/>
             </LinearLayout>
@@ -588,6 +694,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:background="@drawable/background_btn"
+            android:layout_toRightOf="@id/btnLoad"
             android:minHeight="40dp"
             android:minWidth="200dp"
             android:onClick="Add"
@@ -603,6 +710,7 @@
             android:layout_toRightOf="@id/btnAdd"
             android:minWidth="200dp"
             android:onClick="Save"
+            android:visibility="gone"
             android:text="Save" />
 
         <com.wep.common.app.views.WepButton

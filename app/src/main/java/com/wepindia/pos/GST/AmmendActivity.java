@@ -26,7 +26,7 @@ public class AmmendActivity extends TabActivity {
         super.onCreate(savedInstanceState);
 
         // Remove default title bar
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+       // requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_settings);
@@ -68,7 +68,7 @@ public class AmmendActivity extends TabActivity {
         // Dine In settings tab
         TabSpec tabDineInSettings = tabSettings.newTabSpec("DineInSettings");
         tabDineInSettings.setIndicator("GSTR2-B2B");
-        tabDineInSettings.setContent(new Intent(myContext, Ammend_b2b_inward.class));
+        tabDineInSettings.setContent(new Intent(myContext, Ammend_b2b_GSTR2.class));
 
         // Miscellaneous settings tab
         /*TabSpec tabMiscSettings = tabSettings.newTabSpec("MiscSettings");

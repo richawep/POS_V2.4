@@ -264,7 +264,7 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".GST.Ammend_b2b_inward"
+            android:name=".GST.Ammend_b2b_GSTR2"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".GST.InwardInvoiceEntry_Activity" />
@@ -367,7 +367,15 @@
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".TabbedCreditDebitNote"></activity>
+        <activity android:name=".TabbedCreditDebitNote"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".TabbedAmmendActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+        </activity>
     </application>
 
 </manifest>

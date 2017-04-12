@@ -231,7 +231,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                 rl_delivery.setVisibility(View.VISIBLE);
                 rl_CounterSales.setVisibility(View.VISIBLE);
                 rl_inward_invoice_entry.setVisibility(View.GONE);
-                rl_amend.setVisibility(View.GONE);
+                //rl_amend.setVisibility(View.GONE);
                 //rl_cdn.setVisibility(View.GONE);
             }
         }
@@ -494,8 +494,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         }  else if (v.getContentDescription().toString().equalsIgnoreCase("Ammend")) {
             // Launch Billing screen activity in Delivery billing mode
 
-            Intent intentDelivery = new Intent(myContext, AmmendActivity.class);
-            intentDelivery.putExtra("BILLING_MODE", DELIVERY);
+            Intent intentDelivery = new Intent(myContext, TabbedAmmendActivity.class);
             intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
             intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
             intentDelivery.putExtra("CUST_ID", 0);

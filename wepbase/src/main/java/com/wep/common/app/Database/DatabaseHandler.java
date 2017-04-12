@@ -28,10 +28,10 @@ import com.wep.common.app.gst.get.GetGSTR1Summary;
 import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
 import com.wep.common.app.gst.get.GetGSTR2B2BInvoice;
 import com.wep.common.app.gst.get.GetGSTR2B2BItem;
+import com.wep.common.app.models.GSTR2_B2B_Amend;
 import com.wep.common.app.models.ItemOutward;
 import com.wep.common.app.models.ItemStock;
 import com.wep.common.app.models.Items;
-import com.wep.common.app.models.User;
 import com.wep.common.app.print.Payment;
 
 import java.io.File;
@@ -562,10 +562,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     static final String TBL_INWARD_SUPPLY_LEDGER = "InwardSupplyLedger";
     static final String TBL_INWARD_SUPPLY_ITEMS_DETAILS = "InwardSupplyItemsDetails";
-    static final String TBL_INWARD_SUPPLY_LEDGER_AMEND = "InwardSupplyLedgerAmend";
+    static final String TBL_GSTR2_AMEND = "InwardSupplyLedgerAmend";
     static final String TBL_Supplier = "SupplierDetails";
     static final String TBL_OUTWARD_SUPPLY_LEDGER = "OutwardSupplyLedger";
-    static final String TBL_OUTWARD_SUPPLY_LEDGER_AMEND = "OutwardSupplyLedgerAmend";
+    static final String TBL_GSTR1_AMEND = "OutwardSupplyLedgerAmend";
     static final String TBL_OUTWARD_SUPPLY_ITEMS_DETAILS = "OutwardSuppyItemsDetails";
     static final String TBL_CreditDebit_Outward = "CreditDebitOutward";
     static final String TBL_CreditDebit_Inward = "CreditDebitInward";
@@ -588,6 +588,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_ClosingStockValue = "ClosingStockValue";
 
     public static final String KEY_GSTIN = "GSTIN";
+    public static final String KEY_GSTIN_Ori = "GSTIN_Ori";
     public static final String KEY_CustName = "CustName";
     public static final String KEY_InvoiceNo = "InvoiceNo";
     public static final String KEY_CustStateCode = "CustStateCode";
@@ -867,7 +868,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_Table_Split_No+" TEXT "
             +")";
 
-    String QUERY_CREATE_TABLE_OUTWARD_SUPPLY_AMMEND = " CREATE TABLE " + TBL_OUTWARD_SUPPLY_LEDGER_AMEND + " (" +
+    String QUERY_CREATE_TABLE_OUTWARD_SUPPLY_AMMEND = " CREATE TABLE " + TBL_GSTR1_AMEND + " (" +
             KEY_GSTIN + "  TEXT, " + KEY_CustName + " TEXT, " + KEY_MONTH + " TEXT, " + KEY_SupplyType + " TEXT, " +
             KEY_HSNCode + " TEXT, " + KEY_POS + "  TEXT, " + KEY_SupplyType_REV + " TEXT, " +
             KEY_HSNCode_REV + " TEXT, " + KEY_POS_REV + "  TEXT, " + KEY_TaxableValue + " REAL, " + KEY_CGSTRate + " REAL," +
@@ -902,9 +903,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_SupplierType + " TEXT, " + KEY_SupplierPhone + "  TEXT, " + KEY_SupplierAddress + " TEXT)";
 
 
-    String QUERY_CREATE_TABLE_INWARD_SUPPLY_AMMEND = " CREATE TABLE " + TBL_INWARD_SUPPLY_LEDGER_AMEND + " ( " +
-            KEY_GSTIN + " TEXT," + KEY_CustName + " TEXT, " + KEY_SupplierType + " TEXT, " + KEY_SupplyType + "  TEXT, " +
+    String QUERY_CREATE_TABLE_INWARD_SUPPLY_AMMEND = " CREATE TABLE " + TBL_GSTR2_AMEND + " ( " +
+            KEY_GSTIN_Ori + " TEXT," + KEY_CustName + " TEXT, " + KEY_SupplierType + " TEXT, " + KEY_SupplyType + "  TEXT, " +
             KEY_TaxationType + " TEXT, " + KEY_OriginalInvoiceNo + " TEXT, " + KEY_OriginalInvoiceDate + " TEXT, " +
+            KEY_GSTIN+" TEXT, "+
             KEY_InvoiceNo + " TEXT, " + KEY_InvoiceDate + " TEXT, " + KEY_HSNCode + " TEXT, " + KEY_ItemName + " TEXT, " +
             KEY_Quantity + " NUMERIC, " + KEY_UOM + " TEXT, " + KEY_Value + " REAL, " +
             KEY_DiscountPercent + " NUMERIC, " + KEY_TaxableValue + " REAL, " + KEY_IGSTRate + " REAL, " + KEY_IGSTAmount + " REAL, " +
@@ -1235,10 +1237,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TBL_USERROLEACCESS);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_INWARD_SUPPLY_ITEMS_DETAILS);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_INWARD_SUPPLY_LEDGER);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_INWARD_SUPPLY_LEDGER_AMEND);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_GSTR2_AMEND);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_OUTWARD_SUPPLY_LEDGER);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_OUTWARD_SUPPLY_LEDGER_AMEND);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_GSTR1_AMEND);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_READ_FROM_2A);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_READ_FROM_1A);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Inward);
@@ -1905,7 +1907,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public Cursor getInward_taxed_amend() {
         String b2b = "B2B";
-        String selectQuery = "SELECT * FROM " + TBL_INWARD_SUPPLY_LEDGER_AMEND;
+        String selectQuery = "SELECT * FROM " + TBL_GSTR2_AMEND;
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -1928,7 +1930,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public Cursor getOutwardB2ba() {
         String b2b = "B2B";
-        String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER_AMEND + " WHERE BusinessType LIKE '" + b2b + "'";
+        String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE BusinessType LIKE '" + b2b + "'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         // Cursor result = dbFNB.query(TBL_OUTWARD_SUPPLIES_LEDGER_AMEND, new String[] {"*"}, "BusinessType = B2B",  null, null, null, null);
         return result;
@@ -1971,7 +1973,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public Cursor getOutwardB2cla() {
         String b2c = "B2C";
-        String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER_AMEND + " WHERE BusinessType LIKE '" + b2c + "' AND GrandTotal > 250000";
+        String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE BusinessType LIKE '" + b2c + "' AND GrandTotal > 250000";
         //String selectQuery = "SELECT * FROM "+ TBL_OUTWARD_SUPPLIES_LEDGER_AMEND + " WHERE GrandTotal > 250000";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
@@ -2017,35 +2019,208 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public long addB2BAmmend(String gstin_ori, String invno_ori, String invdate_ori, String gstin_rev, String invno_rev,
-                             String invdate_rev, String gs, String hsn, String value, String taxval, String igstrate, String cgstrate,
-                             String sgstrate, String igstamt, String cgstamt, String sgstamt, String pos, String bussinessType,
-                             String date) {
+    public long add_GSTR1_B2CSAmmend(GSTR2_B2B_Amend ammend) {
         ContentValues contentValues = new ContentValues();
+        long result =0;
+        try {
+            contentValues.put(KEY_MONTH, ammend.getTaxMonth());
+            contentValues.put(KEY_HSNCode, ammend.getHsn_ori());
+            contentValues.put(KEY_SupplyType, ammend.getType_ori());
+            contentValues.put(KEY_POS, ammend.getPos_ori());
+            contentValues.put(KEY_HSNCode_REV, ammend.getHsn_rev());
+            contentValues.put(KEY_SupplyType_REV, ammend.getType_rev());
+            contentValues.put(KEY_POS_REV, ammend.getPos_rev());
 
-        contentValues.put(KEY_GSTIN, gstin_ori);
-        contentValues.put(KEY_OriginalInvoiceNo, invno_ori);
-        contentValues.put(KEY_OriginalInvoiceDate, invdate_ori);
-        contentValues.put(KEY_InvoiceNo, invno_rev);
-        contentValues.put(KEY_InvoiceDate, invdate_rev);
-        contentValues.put(KEY_HSNCode, hsn);
-        contentValues.put(KEY_SupplyType, gs);
-        contentValues.put(KEY_Value, value);
-        contentValues.put(KEY_TaxableValue, taxval);
-        contentValues.put(KEY_IGSTRate, igstrate);
-        contentValues.put(KEY_IGSTAmount, igstamt);
-        contentValues.put(KEY_CGSTRate, cgstrate);
-        contentValues.put(KEY_CGSTAmount, cgstamt);
-        contentValues.put(KEY_SGSTRate, sgstrate);
-        contentValues.put(KEY_SGSTAmount, sgstamt);
-        contentValues.put(KEY_POS, pos);
-        //contentValues.put(KEY_BusinessType,bussinessType);
+            contentValues.put(KEY_TaxableValue, ammend.getTaxableValue());
+            contentValues.put(KEY_IGSTRate, ammend.getIgstrate());
+            contentValues.put(KEY_IGSTAmount, ammend.getIgstamt());
+            contentValues.put(KEY_CGSTRate, ammend.getCgstrate());
+            contentValues.put(KEY_CGSTAmount, ammend.getCgstamt());
+            contentValues.put(KEY_SGSTRate, ammend.getSgstrate());
+            contentValues.put(KEY_SGSTAmount, ammend.getSgstamt());
+
+            contentValues.put(KEY_BusinessType, "B2CSA");
+
+            //contentValues.put(KEY_BusinessType,bussinessType);
 
 
-        long result = dbFNB.insert(TBL_INWARD_SUPPLY_LEDGER_AMEND, null, contentValues);
+            result = dbFNB.insert(TBL_GSTR1_AMEND, null, contentValues);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         return result;
 
     }
+    public Cursor getAmmends_GSTR1_b2cs(String hsn_ori, String taxMonth)
+    {
+        String whereClause = "Select * FROM "+TBL_GSTR1_AMEND+" WHERE "+ KEY_MONTH+" LIKE '"+taxMonth+"' AND "
+                +KEY_HSNCode+" LIKE '"+hsn_ori+"' AND "+KEY_BusinessType+" LIKE 'B2CSA'";
+        return dbFNB.rawQuery(whereClause, null);
+    }
+    public long DeleteAmmend_GSTR1_B2CSA(String taxMonth, String hsn_ori, double taxableVal,String pos_ori, String pos_rev)
+    {
+        String deleteClause = KEY_MONTH+" LIKE '"+taxMonth+"' AND "+
+                KEY_HSNCode+" LIKE '"+hsn_ori+"' AND "+KEY_TaxableValue+" = "+taxableVal+" AND "+
+                KEY_POS+" LIKE '"+pos_ori+"' AND "+KEY_POS_REV+" LIKE '"+pos_rev+"' AND "+
+                KEY_BusinessType+" LIKE 'B2CSA'";
+        return dbFNB.delete(TBL_GSTR1_AMEND, deleteClause, null);
+    }
+
+
+    public long add_GSTR2_B2BAmmend(GSTR2_B2B_Amend ammend) {
+        ContentValues contentValues = new ContentValues();
+        long result =0;
+        try {
+            contentValues.put(KEY_GSTIN_Ori, ammend.getGstin_ori());
+            contentValues.put(KEY_OriginalInvoiceNo, ammend.getInvoiceNo_ori());
+            Date  d = new SimpleDateFormat("dd-MM-yyyy").parse(ammend.getInvoiceDate_ori());
+            contentValues.put(KEY_OriginalInvoiceDate, d.getTime());
+            contentValues.put(KEY_GSTIN, ammend.getGstin_rev());
+            contentValues.put(KEY_InvoiceNo, ammend.getInvoiceNo_rev());
+             d = new SimpleDateFormat("dd-MM-yyyy").parse(ammend.getInvoiceDate_rev());
+            contentValues.put(KEY_InvoiceDate, d.getTime());
+            contentValues.put(KEY_HSNCode, ammend.getHSn());
+            contentValues.put(KEY_SupplyType, ammend.getType());
+            contentValues.put(KEY_Value, ammend.getValue());
+            contentValues.put(KEY_TaxableValue, ammend.getTaxableValue());
+            contentValues.put(KEY_IGSTRate, ammend.getIgstrate());
+            contentValues.put(KEY_IGSTAmount, ammend.getIgstamt());
+            contentValues.put(KEY_CGSTRate, ammend.getCgstrate());
+            contentValues.put(KEY_CGSTAmount, ammend.getCgstamt());
+            contentValues.put(KEY_SGSTRate, ammend.getSgstrate());
+            contentValues.put(KEY_SGSTAmount, ammend.getSgstamt());
+            contentValues.put(KEY_POS, ammend.getPOS());
+            //contentValues.put(KEY_BusinessType,bussinessType);
+
+
+             result = dbFNB.insert(TBL_GSTR2_AMEND, null, contentValues);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
+    public long add_GSTR1_B2CLAmmend(GSTR2_B2B_Amend ammend) {
+        ContentValues contentValues = new ContentValues();
+        long result =0;
+        try {
+            contentValues.put(KEY_CustName, ammend.getRecipientName());
+            contentValues.put(KEY_POS, ammend.getRecipientStateCode());
+            contentValues.put(KEY_OriginalInvoiceNo, ammend.getInvoiceNo_ori());
+            Date  d = new SimpleDateFormat("dd-MM-yyyy").parse(ammend.getInvoiceDate_ori());
+            contentValues.put(KEY_OriginalInvoiceDate, d.getTime());
+
+            contentValues.put(KEY_InvoiceNo, ammend.getInvoiceNo_rev());
+            d = new SimpleDateFormat("dd-MM-yyyy").parse(ammend.getInvoiceDate_rev());
+            contentValues.put(KEY_InvoiceDate, d.getTime());
+            contentValues.put(KEY_HSNCode, ammend.getHSn());
+            contentValues.put(KEY_SupplyType, ammend.getType());
+
+            contentValues.put(KEY_TaxableValue, ammend.getTaxableValue());
+            contentValues.put(KEY_IGSTRate, ammend.getIgstrate());
+            contentValues.put(KEY_IGSTAmount, ammend.getIgstamt());
+            contentValues.put(KEY_POS_REV, ammend.getPOS());
+            contentValues.put(KEY_BusinessType, "B2CLA");
+
+            //contentValues.put(KEY_BusinessType,bussinessType);
+
+
+            result = dbFNB.insert(TBL_GSTR1_AMEND, null, contentValues);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+    public Cursor getAmmends_GSTR1_b2cl(String recipientName, String recipientStateCode, String inv_no_ori, String inv_date_ori)
+    {
+        String whereClause = "Select * FROM "+TBL_GSTR1_AMEND+" WHERE "+ KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "
+                +KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+
+                "' AND "+KEY_CustName+" LIKE '"+recipientName+"' AND "+
+                KEY_POS+" LIKE '"+recipientStateCode+"' AND "+KEY_BusinessType+" LIKE 'B2CLA'";
+        return dbFNB.rawQuery(whereClause, null);
+    }
+    public long DeleteAmmend_GSTR1_b2cl(String inv_no_ori, String inv_date_ori,String inv_no_rev,
+                                        String inv_date_rev,String hsn, double taxableVal)
+    {
+        String deleteClause = KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+"' AND "+
+                KEY_InvoiceNo+" LIKE '"+inv_no_rev+"' AND "+KEY_InvoiceDate+" LIKE '"+inv_date_rev+"' AND "+
+                KEY_HSNCode+" LIKE '"+hsn+"' AND "+KEY_TaxableValue+" = "+taxableVal+" AND "+KEY_BusinessType+" LIKE 'B2CLA'";
+        return dbFNB.delete(TBL_GSTR1_AMEND, deleteClause, null);
+    }
+
+
+    public long add_GSTR1_B2BAmmend(GSTR2_B2B_Amend ammend) {
+        ContentValues contentValues = new ContentValues();
+        long result =0;
+        try {
+            contentValues.put(KEY_GSTIN, ammend.getGstin_ori());
+            contentValues.put(KEY_OriginalInvoiceNo, ammend.getInvoiceNo_ori());
+            Date  d = new SimpleDateFormat("dd-MM-yyyy").parse(ammend.getInvoiceDate_ori());
+            contentValues.put(KEY_OriginalInvoiceDate, d.getTime());
+            contentValues.put(KEY_Ecom_GSTIN, ammend.getGstin_rev());
+            contentValues.put(KEY_InvoiceNo, ammend.getInvoiceNo_rev());
+            d = new SimpleDateFormat("dd-MM-yyyy").parse(ammend.getInvoiceDate_rev());
+            contentValues.put(KEY_InvoiceDate, d.getTime());
+            contentValues.put(KEY_HSNCode, ammend.getHSn());
+            contentValues.put(KEY_SupplyType, ammend.getType());
+            contentValues.put(KEY_Value, ammend.getValue());
+            contentValues.put(KEY_TaxableValue, ammend.getTaxableValue());
+            contentValues.put(KEY_IGSTRate, ammend.getIgstrate());
+            contentValues.put(KEY_IGSTAmount, ammend.getIgstamt());
+            contentValues.put(KEY_CGSTRate, ammend.getCgstrate());
+            contentValues.put(KEY_CGSTAmount, ammend.getCgstamt());
+            contentValues.put(KEY_SGSTRate, ammend.getSgstrate());
+            contentValues.put(KEY_SGSTAmount, ammend.getSgstamt());
+            contentValues.put(KEY_POS, ammend.getPOS());
+            contentValues.put(KEY_BusinessType, "B2BA");
+
+            //contentValues.put(KEY_BusinessType,bussinessType);
+
+
+            result = dbFNB.insert(TBL_GSTR1_AMEND, null, contentValues);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+    public Cursor getAmmends_GSTR1_b2b(String gstin, String inv_no_ori, String inv_date_ori)
+    {
+        String whereClause = "Select * FROM "+TBL_GSTR1_AMEND+" WHERE "+ KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+
+                "' AND "+KEY_GSTIN+" LIKE '"+gstin+"' AND "+KEY_BusinessType+" LIKE 'B2BA'";
+        return dbFNB.rawQuery(whereClause, null);
+    }
+    public long DeleteAmmend_GSTR1_B2BA(String inv_no_ori, String inv_date_ori,String inv_no_rev,
+                                        String inv_date_rev,String hsn, double taxableVal)
+    {
+        String deleteClause = KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+"' AND "+
+                KEY_InvoiceNo+" LIKE '"+inv_no_rev+"' AND "+KEY_InvoiceDate+" LIKE '"+inv_date_rev+"' AND "+
+                KEY_HSNCode+" LIKE '"+hsn+"' AND "+KEY_TaxableValue+" = "+taxableVal+" AND "+KEY_BusinessType+" LIKE 'B2BA'";
+        return dbFNB.delete(TBL_GSTR1_AMEND, deleteClause, null);
+    }
+
+    public long DeleteAmmend_GSTR2_B2BA(String inv_no_ori, String inv_date_ori,String inv_no_rev,
+                                        String inv_date_rev,String hsn, double taxableVal)
+    {
+        String deleteClause = KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+"' AND "+
+                KEY_InvoiceNo+" LIKE '"+inv_no_rev+"' AND "+KEY_InvoiceDate+" LIKE '"+inv_date_rev+"' AND "+
+                KEY_HSNCode+" LIKE '"+hsn+"' AND "+KEY_TaxableValue+" = "+taxableVal;
+        return dbFNB.delete(TBL_GSTR2_AMEND, deleteClause, null);
+    }
+
+    public Cursor getAmmends_GSTR2_b2b(String gstin, String inv_no_ori, String inv_date_ori)
+    {
+        String whereClause = "Select * FROM "+TBL_GSTR2_AMEND+" WHERE "+ KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+
+                "' AND "+KEY_GSTIN_Ori+" LIKE '"+gstin+"'  ";
+        return dbFNB.rawQuery(whereClause, null);
+    }
+
 
     public long addB2CsAmmend(String month, String supply_ori, String hsn, String pos_ori, String supply_rev, String hsn_rev,
                               String pos_rev, String aggval, String igstrate, String cgstrate, String sgstrate, String igstamt,
@@ -2070,7 +2245,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(KEY_BusinessType, bussinessType);
         contentValues.put(KEY_InvoiceDate, date);
 
-        long result = dbFNB.insert(TBL_OUTWARD_SUPPLY_LEDGER_AMEND, null, contentValues);
+        long result = dbFNB.insert(TBL_GSTR1_AMEND, null, contentValues);
         return result;
     }
 
