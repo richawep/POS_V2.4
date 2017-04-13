@@ -2624,6 +2624,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     edtCustPhoneNo.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustContactNumber")));
                     edtCustName.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName")));
                     edtCustAddress.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustAddress")));
+                    etCustGSTIN.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("GSTIN")));
                 }
             }
             // Display items in table
@@ -3150,6 +3151,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             objBillItem.setCustName(custname);
             Log.d("InsertBillItems", "CustName :" + custname);
 
+            String custgstin = etCustGSTIN.getText().toString();
+            objBillItem.setCustName(custgstin);
+            Log.d("InsertBillItems", "custgstin :" + custgstin);
+
             // cust StateCode
             String str = spnr_pos.getSelectedItem().toString();
             int length = str.length();
@@ -3296,6 +3301,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         String custname = edtCustName.getText().toString();
         objBillDetail.setCustname(custname);
         Log.d("InsertBillDetail", "CustName :" + custname);
+        // cust gstin
+        String custGSTIN = etCustGSTIN.getText().toString();
+        objBillDetail.setGSTIN(custGSTIN);
+        Log.d("InsertBillDetail", "CustGSTIN :" + custGSTIN);
 
         // cust StateCode
         String str = spnr_pos.getSelectedItem().toString();

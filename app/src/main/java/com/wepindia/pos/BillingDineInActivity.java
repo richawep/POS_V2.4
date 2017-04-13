@@ -589,11 +589,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                             edtCustName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
                             //edtCustPhoneNo.setText(crsrCust.getString(crsrCust.getColumnIndex("CustContactNumber")));
                             edtCustAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
-                            /*String gstin = crsrCust.getString(crsrCust.getColumnIndex("CustAddress"));
+                            String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
                             if (gstin==null)
                                 etCustGSTIN.setText("");
                             else
-                                etCustGSTIN.setText(gstin);*/
+                                etCustGSTIN.setText(gstin);
                             Toast.makeText(myContext, "Customer Fetched Successfully", Toast.LENGTH_LONG).show();
                             //}
                         } else {
@@ -3432,6 +3432,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             objBillItem.setCustName(custname);
             Log.d("InsertBillItems", "CustName :" + custname);
 
+            String custgstin = etCustGSTIN.getText().toString();
+            objBillItem.setGSTIN(custgstin);
+            Log.d("InsertBillItems", "custgstin :" + custgstin);
+
             // cust StateCode
             //String custStateCode =spnr_pos.getSelectedItem().toString();
             String str = spnr_pos.getSelectedItem().toString();
@@ -3580,6 +3584,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         String custname = edtCustName.getText().toString();
         objBillDetail.setCustname(custname);
         Log.d("InsertBillDetail", "CustName :" + custname);
+
+        String custgstin = etCustGSTIN.getText().toString();
+        objBillDetail.setCustname(custgstin);
+        Log.d("InsertBillDetail", "custgstin :" + custgstin);
 
         // cust StateCode
         //String custStateCode =spnr_pos.getSelectedItem().toString();

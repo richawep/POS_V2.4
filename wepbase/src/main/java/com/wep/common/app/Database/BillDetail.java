@@ -19,7 +19,7 @@ package com.wep.common.app.Database;
 public class BillDetail {
 	
 	// Private variables
-	String Custname, CustStateCode, POS,strDate, strTime, strUserId,BusinessType, Amount;
+	String Custname, CustStateCode, POS,strDate, strTime, strUserId,BusinessType, Amount, GSTIN;
 	int iBillNumber, iBillStatus, iCustId, iEmployeeId, iReprintCount, iTotalItems, iUserId;
 	String BillingMode, TableNo, TableSplitNo; // richa_2012
 	float fBillAmount, fCardPayment, fCashPayment, fCouponPayment, fPettyCashPayment, fPaidTotalPayment, fChangePayment, fWalletAmount,
@@ -27,7 +27,7 @@ public class BillDetail {
 	
 	// Default Constructor
 	public BillDetail(){
-
+		this.GSTIN="";
 		this.Custname="";
         this.BillingMode  = ""; // richa_2012
         this.TableNo  = ""; // richa_2012
@@ -102,6 +102,14 @@ public class BillDetail {
 		this.TableNo = tableNo;
 		this.TableSplitNo= TableSplitNo;
 		
+	}
+
+	public String getGSTIN() {
+		return GSTIN;
+	}
+
+	public void setGSTIN(String GSTIN) {
+		this.GSTIN = GSTIN;
 	}
 
 	public String getTableNo() {

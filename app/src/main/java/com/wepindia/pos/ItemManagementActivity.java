@@ -177,7 +177,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                         edtItemSGSTTax.setText("0.00");
                         edtItemSGSTTax.setEnabled(false);
                         edtIGSTTax.setText("0.00");
-                        edtIGSTTax.setEnabled(false);
+                        //edtIGSTTax.setEnabled(false);
                     }
                     else
                     {
@@ -186,7 +186,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                         edtItemSGSTTax.setText("0.00");
                         edtItemSGSTTax.setEnabled(true);
                         edtIGSTTax.setText("0.00");
-                        edtIGSTTax.setEnabled(true);
+                        //edtIGSTTax.setEnabled(true);
                     }
                 }
 
@@ -1632,6 +1632,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         etGstTax.setText("0");
         itemName_beforeChange_in_update="";
         spnrMOU.setSelection(0);
+        spnrG_S.setSelection(0);
         spnrCategory.setSelection(0);
         spnrDepartment.setSelection(0);
         spnrKitchen.setSelection(0);

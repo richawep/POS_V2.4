@@ -183,13 +183,11 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
         reportFragment3.setArguments(bundle3);
         adapter.addFragment(reportFragment3, "Employee/Customer Report");
 
-        if (GSTEnable.equals("1")) {
-            Bundle bundle4=new Bundle();
-            bundle4.putString("REPORT_TYPE", "6");
-            ReportFragment reportFragment4 = new ReportFragment();
-            reportFragment4.setArguments(bundle4);
-            adapter.addFragment(reportFragment4, "GST Link");
-        }
+        Bundle bundle4=new Bundle();
+        bundle4.putString("REPORT_TYPE", "4");
+        ReportFragment reportFragment4 = new ReportFragment();
+        reportFragment4.setArguments(bundle4);
+        adapter.addFragment(reportFragment4, "GST Link");
         viewPager.setAdapter(adapter);
     }
 

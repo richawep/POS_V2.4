@@ -115,14 +115,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             dbReport.OpenDatabase();
             billsettingcursor = dbReport.getBillSetting();
             if ((billsettingcursor != null) && billsettingcursor.moveToFirst()) {
-                GSTEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("GSTEnable"));
+                /*GSTEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("GSTEnable"));
                 if (GSTEnable == null) {
                     GSTEnable = "0";
                 }
                 // Setting Report type as per GST
                 if (GSTEnable.equals("1") && ReportType.equals("1")) {
                     ReportType = "4";
-                }
+                }*/
             }
 
             Cursor BusinessDate = dbReport.getCurrentDate();
@@ -5753,7 +5753,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TableRow rowcursor;
 
                     do {
-                        rowcursor = new TableRow(myContext);
+                         rowcursor = new TableRow(myContext);
                         rowcursor.setLayoutParams(new TableRow.LayoutParams
                                 (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
@@ -5986,126 +5986,128 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    void addb2b_items(String No, String Date, String supp_gstin, String HSNEnable, String POSEnable, String ReverseChargeEnabe)
+    void addb2b_items(String No, String Date1, String supp_gstin, String HSNEnable, String POSEnable, String ReverseChargeEnabe)
     {
         // No.replaceAll("[\n\r]", "");
         //String.replaceAll("[\n\r]", "");
         String count_str[]= {"i","ii","iii","iv","v","vi","vii","viii","ix","x","xi","xii","xiii","xiv","xv","xvi","xvii","xviii","xix","xx"};
-        Cursor cursor = dbReport.getitems_b2b(No, Date, supp_gstin);
+        try{
+            Date dd= new SimpleDateFormat("dd-MM-yyyy").parse(Date1);
+
+        Cursor cursor = dbReport.getitems_b2b(No, String.valueOf(dd.getTime()), supp_gstin);
         if (cursor == null)
         {
             //MsgBox = new AlertDialog.Builder(myContext);
-            MsgBox. setMessage("No items for Invoice No : "+No+" & Invoice Date : "+Date)
+            MsgBox. setMessage("No items for Invoice No : "+No+" & Invoice Date : "+Date1)
                     .setPositiveButton("OK",null)
                     .show();
         }
         else
         {
 
-            try{
+            if (cursor.moveToFirst()) {
 
-                if (cursor.moveToFirst()) {
+                TextView GSTIN, InvoiceNo, InvoiceDate, SupplyType, TaxationType, HSNCode, Description, Price, Quantity,Units,SubValue,DiscountRate,TaxableValue;
+                TextView CGSTRate, CGSTAmount, SGSTRate, SGSTAmount,IGSTRate, IGSTAmount,AdditionalChargeName,AdditionalChargeAmount;
 
-                    TextView GSTIN, InvoiceNo, InvoiceDate, SupplyType, TaxationType, HSNCode, Description, Price, Quantity,Units,SubValue,DiscountRate,TaxableValue;
-                    TextView CGSTRate, CGSTAmount, SGSTRate, SGSTAmount,IGSTRate, IGSTAmount,AdditionalChargeName,AdditionalChargeAmount;
+                int count =0;
+                TableRow rowcursor;
 
-                    int count =0;
-                    TableRow rowcursor;
+                do {
+                    rowcursor = new TableRow(myContext);
+                    rowcursor.setLayoutParams(new TableRow.LayoutParams
+                            (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-                    do {
-                        rowcursor = new TableRow(myContext);
-                        rowcursor.setLayoutParams(new TableRow.LayoutParams
-                                (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                    TextView SNo = new TextView(myContext);
+                    SNo.setLeft(10);
+                    SNo.setText(count_str[count]+" ");
+                    SNo.setWidth(42);
+                    SNo.setGravity(Gravity.RIGHT);
+                    SNo.setTextSize(12);
+                    SNo.setBackgroundResource(R.drawable.border_item);
+                    count++;
 
-                        TextView SNo = new TextView(myContext);
-                        SNo.setLeft(10);
-                        SNo.setText(count_str[count]+" ");
-                        SNo.setWidth(42);
-                        SNo.setGravity(Gravity.RIGHT);
-                        SNo.setTextSize(12);
-                        SNo.setBackgroundResource(R.drawable.border_item);
-                        count++;
-
-                        GSTIN = new TextView(myContext);
-                        GSTIN.setLeft(10);
-                        // GSTIN.setText("GSTIN12345678AB");
-                        GSTIN.setWidth(155);
-                        GSTIN.setTextSize(12);
-                        GSTIN.setBackgroundResource(R.drawable.border_item);
+                    GSTIN = new TextView(myContext);
+                    GSTIN.setLeft(10);
+                    // GSTIN.setText("GSTIN12345678AB");
+                    GSTIN.setWidth(155);
+                    GSTIN.setTextSize(12);
+                    GSTIN.setBackgroundResource(R.drawable.border_item);
 
 
-                        InvoiceNo = new TextView(myContext);
-                        InvoiceNo.setLeft(10);
-                        InvoiceNo.setWidth(70);
-                        InvoiceNo.setTextSize(12);
-                        //Richa to do
-                        //String no = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
-                        //no.trim();
-                        //InvoiceNo.setText(no);
-                        InvoiceNo.setBackgroundResource(R.drawable.border_item);
+                    InvoiceNo = new TextView(myContext);
+                    InvoiceNo.setLeft(10);
+                    InvoiceNo.setWidth(70);
+                    InvoiceNo.setTextSize(12);
+                    //Richa to do
+                    //String no = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                    //no.trim();
+                    //InvoiceNo.setText(no);
+                    InvoiceNo.setBackgroundResource(R.drawable.border_item);
 
-                        InvoiceDate = new TextView(myContext);
-                        InvoiceDate.setLeft(10);
-                        InvoiceDate.setWidth(60);
+                    InvoiceDate = new TextView(myContext);
+                    InvoiceDate.setLeft(10);
+                    InvoiceDate.setWidth(60);
                         /*String date_temp = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
                         date_temp.trim();*/
-                        //InvoiceDate.setText(substr);
-                        String dateInMillis = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-                        String date_temp = formatter.format(Long.parseLong(dateInMillis));
+                    //InvoiceDate.setText(substr);
+                    String dateInMillis = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                    String date_temp = formatter.format(Long.parseLong(dateInMillis));
 
-                        InvoiceDate.setTextSize(12);
-                        InvoiceDate.setBackgroundResource(R.drawable.border_item);
+                    InvoiceDate.setTextSize(12);
+                    InvoiceDate.setBackgroundResource(R.drawable.border_item);
 
-                        SupplyType = new TextView(myContext);
-                        SupplyType.setText(cursor.getString(cursor.getColumnIndex("SupplyType")));
-                        SupplyType.setLeft(10);
-                        SupplyType.setWidth(25);
-                        SupplyType.setTextSize(12);
-                        SupplyType.setBackgroundResource(R.drawable.border_item);
-
-
-                        //TaxationType = new TextView(myContext);
-                        //TaxationType.setText(cursor.getString(cursor.getColumnIndex("TaxationType")));
-
-                        HSNCode = new TextView(myContext);
-                        //HSNCode.setText(cursor.getString(cursor.getColumnIndex("HSNCode")));
-                        String HSN = cursor.getString(cursor.getColumnIndex("HSNCode"));
-                        String desc = cursor.getString(cursor.getColumnIndex("ItemName"));
-                        if (HSN==null || HSN.equals(""))
-                        {
-                            HSN = "_"+desc;
-                        }
-
-                        //HSN =  "h_" + desc;
-                        HSNCode.setText(HSN);
-                        HSNCode.setLeft(10);
-                        HSNCode.setWidth(70);
-                        HSNCode.setTextSize(12);
-                        HSNCode.setBackgroundResource(R.drawable.border_item);
-
-                        TextView Value = new TextView(myContext);
-                        Value.setText(cursor.getString(cursor.getColumnIndex("Value")));
-                        Value.setLeft(10);
-                        Value.setWidth(100);
-                        Value.setTextSize(12);
-                        Value.setBackgroundResource(R.drawable.border_item);
-
-                        Quantity = new TextView(myContext);
-                        Quantity.setText(cursor.getString(cursor.getColumnIndex("Quantity")));
-                        Quantity.setLeft(10);
-                        Quantity.setWidth(50);
-                        Quantity.setTextSize(12);
-                        Quantity.setBackgroundResource(R.drawable.border_item);
+                    SupplyType = new TextView(myContext);
+                    SupplyType.setText(cursor.getString(cursor.getColumnIndex("SupplyType")));
+                    SupplyType.setLeft(10);
+                    SupplyType.setWidth(25);
+                    SupplyType.setTextSize(12);
+                    SupplyType.setBackgroundResource(R.drawable.border_item);
 
 
+                    //TaxationType = new TextView(myContext);
+                    //TaxationType.setText(cursor.getString(cursor.getColumnIndex("TaxationType")));
 
-                        TaxableValue = new TextView(myContext);
-                        TaxableValue.setText(cursor.getString(cursor.getColumnIndex("TaxableValue")));
-                        TaxableValue.setLeft(10);
-                        TaxableValue.setWidth(100);
-                        TaxableValue.setTextSize(12);
-                        TaxableValue.setBackgroundResource(R.drawable.border_item);
+                    HSNCode = new TextView(myContext);
+                    //HSNCode.setText(cursor.getString(cursor.getColumnIndex("HSNCode")));
+                    String HSN = cursor.getString(cursor.getColumnIndex("HSNCode"));
+                    String desc = cursor.getString(cursor.getColumnIndex("ItemName"));
+                    if (HSN==null || HSN.equals(""))
+                    {
+                        //HSN = "_"+desc;
+                        HSN = "";
+                    }
+
+                    //HSN =  "h_" + desc;
+                    HSNCode.setText(HSN);
+                    HSNCode.setLeft(10);
+                    HSNCode.setWidth(70);
+                    HSNCode.setTextSize(12);
+                    HSNCode.setBackgroundResource(R.drawable.border_item);
+
+                    TextView Value = new TextView(myContext);
+                    Value.setText(cursor.getString(cursor.getColumnIndex("Value")));
+                    Value.setLeft(10);
+                    Value.setWidth(100);
+                    Value.setTextSize(12);
+                    Value.setBackgroundResource(R.drawable.border_item);
+
+                    Quantity = new TextView(myContext);
+                    Quantity.setText(cursor.getString(cursor.getColumnIndex("Quantity")));
+                    Quantity.setLeft(10);
+                    Quantity.setWidth(50);
+                    Quantity.setTextSize(12);
+                    Quantity.setBackgroundResource(R.drawable.border_item);
+
+
+
+                    TaxableValue = new TextView(myContext);
+                    TaxableValue.setText(cursor.getString(cursor.getColumnIndex("TaxableValue")));
+                    TaxableValue.setLeft(10);
+                    TaxableValue.setWidth(100);
+                    TaxableValue.setTextSize(12);
+                    TaxableValue.setBackgroundResource(R.drawable.border_item);
 
                         /*CGSTRate = new TextView(myContext);
                         CGSTRate.setText(cursor.getString(cursor.getColumnIndex("CGSTRate")));
@@ -6115,12 +6117,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         CGSTRate.setBackgroundResource(R.drawable.border_item);
 */
 
-                        CGSTAmount = new TextView(myContext);
-                        CGSTAmount.setText(cursor.getString(cursor.getColumnIndex("CGSTAmount")));
-                        CGSTAmount.setLeft(10);
-                        CGSTAmount.setWidth(60);
-                        CGSTAmount.setTextSize(12);
-                        CGSTAmount.setBackgroundResource(R.drawable.border_item);
+                    CGSTAmount = new TextView(myContext);
+                    CGSTAmount.setText(cursor.getString(cursor.getColumnIndex("CGSTAmount")));
+                    CGSTAmount.setLeft(10);
+                    CGSTAmount.setWidth(60);
+                    CGSTAmount.setTextSize(12);
+                    CGSTAmount.setBackgroundResource(R.drawable.border_item);
 
 
                         /*SGSTRate = new TextView(myContext);
@@ -6130,12 +6132,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         SGSTRate.setTextSize(12);
                         SGSTRate.setBackgroundResource(R.drawable.border_item);*/
 
-                        SGSTAmount = new TextView(myContext);
-                        SGSTAmount.setText(cursor.getString(cursor.getColumnIndex("SGSTAmount")));
-                        SGSTAmount.setLeft(10);
-                        SGSTAmount.setWidth(60);
-                        SGSTAmount.setTextSize(12);
-                        SGSTAmount.setBackgroundResource(R.drawable.border_item);
+                    SGSTAmount = new TextView(myContext);
+                    SGSTAmount.setText(cursor.getString(cursor.getColumnIndex("SGSTAmount")));
+                    SGSTAmount.setLeft(10);
+                    SGSTAmount.setWidth(60);
+                    SGSTAmount.setTextSize(12);
+                    SGSTAmount.setBackgroundResource(R.drawable.border_item);
 
                        /* IGSTRate = new TextView(myContext);
                         IGSTRate.setText(cursor.getString(cursor.getColumnIndex("IGSTRate")));
@@ -6144,102 +6146,110 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         IGSTRate.setTextSize(12);
                         IGSTRate.setBackgroundResource(R.drawable.border_item);*/
 
-                        TextView GSTRate = new TextView(myContext);
-                        String gstrate = cursor.getString(cursor.getColumnIndex("IGSTRate"));
-                        if (gstrate== null || gstrate.equals("0"))
+                    TextView GSTRate = new TextView(myContext);
+                    String gstrate = cursor.getString(cursor.getColumnIndex("IGSTRate"));
+                    String sgstrate ="0";
+                    if (gstrate== null || gstrate.equals("0"))
+                    {
+                        gstrate = cursor.getString(cursor.getColumnIndex("CGSTRate"));
+                        if (gstrate==null )
                         {
-                            gstrate = cursor.getString(cursor.getColumnIndex("CGSTRate"));
-                            if (gstrate==null )
-                            {
-                                gstrate="0";
-                            }
-                            float taxrate = Float.parseFloat(gstrate);
-                            taxrate *=2;
-                            gstrate = String.valueOf(taxrate);
-                        }
-                        GSTRate.setText(gstrate);
-                        GSTRate.setLeft(10);
-                        GSTRate.setWidth(60);
-                        GSTRate.setTextSize(12);
-                        GSTRate.setBackgroundResource(R.drawable.border_item);
-
-                        IGSTAmount = new TextView(myContext);
-                        IGSTAmount.setText(cursor.getString(cursor.getColumnIndex("IGSTAmount")));
-                        IGSTAmount.setLeft(10);
-                        IGSTAmount.setWidth(60);
-                        IGSTAmount.setTextSize(12);
-                        IGSTAmount.setBackgroundResource(R.drawable.border_item);
-
-                        TextView SubTotal = new TextView(myContext);
-                        SubTotal.setText(cursor.getString(cursor.getColumnIndex("SubTotal")));
-                        SubTotal.setLeft(10);
-                        SubTotal.setWidth(60);
-                        SubTotal.setTextSize(12);
-                        SubTotal.setBackgroundResource(R.drawable.border_item);
-
-                        TextView Pos  = new TextView(myContext);
-                        //Pos.setText(cursor.getString(cursor.getColumnIndex("POS")));
-                        Pos.setLeft(10);
-                        Pos.setWidth(60);
-                        Pos.setTextSize(12);
-                        Pos.setBackgroundResource(R.drawable.border_item);
-
-                        TextView RevCh = new TextView(myContext);
-                        //RevCh.setText(cursor.getString(cursor.getColumnIndex("ReverseCharge")));
-                        RevCh.setLeft(10);
-                        RevCh.setWidth(60);
-                        RevCh.setTextSize(12);
-                        RevCh.setBackgroundResource(R.drawable.border_item);
-
-                        TextView ProAss = new TextView(myContext);
-                        //ProAss.setText(cursor.getString(cursor.getColumnIndex("ProvisionalAssess")));
-                        ProAss.setLeft(10);
-                        ProAss.setWidth(60);
-                        ProAss.setTextSize(12);
-                        ProAss.setBackgroundResource(R.drawable.border_item);
-
-                        TextView EGSTIN = new TextView(myContext);
-                        //EGSTIN.setText(cursor.getString(cursor.getColumnIndex("EcommerceGSTIN")));
-                        EGSTIN.setLeft(90);
-                        EGSTIN.setWidth(155);
-                        EGSTIN.setTextSize(12);
-                        EGSTIN.setBackgroundResource(R.drawable.border_item);
-
-
-
-                        rowcursor.addView(SNo);
-                        rowcursor.addView(GSTIN);
-                        rowcursor.addView(InvoiceNo);
-                        rowcursor.addView(InvoiceDate);
-                        rowcursor.addView(SupplyType);
-                        if (HSNEnable.equals("1"))
+                            gstrate="0";
+                        }else
                         {
-                            rowcursor.addView(HSNCode);
+                             sgstrate = cursor.getString(cursor.getColumnIndex("SGSTRate"));
+                            if(sgstrate== null)
+                                sgstrate="0";
                         }
-                        rowcursor.addView(Value);
-                        rowcursor.addView(Quantity);
-                        rowcursor.addView(TaxableValue);
-                        rowcursor.addView(GSTRate);
-                        rowcursor.addView(IGSTAmount);
-                        rowcursor.addView(CGSTAmount);
-                        rowcursor.addView(SGSTAmount);
-                        rowcursor.addView(SubTotal);
-                        if (POSEnable.equals("1"))
-                        {
-                            rowcursor.addView(Pos);
-                        }
-                        if (ReverseChargeEnabe.equals("1"))
-                        {
-                            rowcursor.addView(RevCh);
-                            rowcursor.addView(ProAss);
-                        }
+                        float taxrate = Float.parseFloat(gstrate);
+                        float sgsttaxrate = Float.parseFloat(sgstrate);
+
+                        taxrate +=sgsttaxrate;
+                        gstrate = String.valueOf(taxrate);
+                    }
+                    GSTRate.setText(gstrate);
+                    GSTRate.setLeft(10);
+                    GSTRate.setWidth(60);
+                    GSTRate.setTextSize(12);
+                    GSTRate.setBackgroundResource(R.drawable.border_item);
+
+                    IGSTAmount = new TextView(myContext);
+                    IGSTAmount.setText(cursor.getString(cursor.getColumnIndex("IGSTAmount")));
+                    IGSTAmount.setLeft(10);
+                    IGSTAmount.setWidth(60);
+                    IGSTAmount.setTextSize(12);
+                    IGSTAmount.setBackgroundResource(R.drawable.border_item);
+
+                    TextView SubTotal = new TextView(myContext);
+                    SubTotal.setText(cursor.getString(cursor.getColumnIndex("SubTotal")));
+                    SubTotal.setLeft(10);
+                    SubTotal.setWidth(60);
+                    SubTotal.setTextSize(12);
+                    SubTotal.setBackgroundResource(R.drawable.border_item);
+
+                    TextView Pos  = new TextView(myContext);
+                    //Pos.setText(cursor.getString(cursor.getColumnIndex("POS")));
+                    Pos.setLeft(10);
+                    Pos.setWidth(60);
+                    Pos.setTextSize(12);
+                    Pos.setBackgroundResource(R.drawable.border_item);
+
+                    TextView RevCh = new TextView(myContext);
+                    //RevCh.setText(cursor.getString(cursor.getColumnIndex("ReverseCharge")));
+                    RevCh.setLeft(10);
+                    RevCh.setWidth(60);
+                    RevCh.setTextSize(12);
+                    RevCh.setBackgroundResource(R.drawable.border_item);
+
+                    TextView ProAss = new TextView(myContext);
+                    //ProAss.setText(cursor.getString(cursor.getColumnIndex("ProvisionalAssess")));
+                    ProAss.setLeft(10);
+                    ProAss.setWidth(60);
+                    ProAss.setTextSize(12);
+                    ProAss.setBackgroundResource(R.drawable.border_item);
+
+                    TextView EGSTIN = new TextView(myContext);
+                    //EGSTIN.setText(cursor.getString(cursor.getColumnIndex("EcommerceGSTIN")));
+                    EGSTIN.setLeft(90);
+                    EGSTIN.setWidth(155);
+                    EGSTIN.setTextSize(12);
+                    EGSTIN.setBackgroundResource(R.drawable.border_item);
+
+
+
+                    rowcursor.addView(SNo);
+                    rowcursor.addView(GSTIN);
+                    rowcursor.addView(InvoiceNo);
+                    rowcursor.addView(InvoiceDate);
+                    rowcursor.addView(SupplyType);
+                    if (HSNEnable.equals("1"))
+                    {
+                        rowcursor.addView(HSNCode);
+                    }
+                    rowcursor.addView(Value);
+                    rowcursor.addView(Quantity);
+                    rowcursor.addView(TaxableValue);
+                    rowcursor.addView(GSTRate);
+                    rowcursor.addView(IGSTAmount);
+                    rowcursor.addView(CGSTAmount);
+                    rowcursor.addView(SGSTAmount);
+                    rowcursor.addView(SubTotal);
+                    if (POSEnable.equals("1"))
+                    {
+                        rowcursor.addView(Pos);
+                    }
+                    if (ReverseChargeEnabe.equals("1"))
+                    {
+                        rowcursor.addView(RevCh);
+                        rowcursor.addView(ProAss);
+                    }
 
 
                         /*View v1 = new View(this);
                         v1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 3));
                         v1.setBackgroundColor(getResources().getColor(R.color.orange));
                         tblReport.addView(v1);*/
-                        tblReport.addView(rowcursor, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    tblReport.addView(rowcursor, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
 
                         /*View v = new View(this);
@@ -6248,27 +6258,22 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         tblReport.addView(v);*/
 
 
-                        //tblReport.addView(rowcursor, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-                        //add a new line to the TableLayout:
+                    //tblReport.addView(rowcursor, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                    //add a new line to the TableLayout:
                         /*final View vline = new View(this);
                         vline.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,2));
                         tb_b2b.addView(vline);*/
 
 
-                    } while (cursor.moveToNext());
+                } while (cursor.moveToNext());
 
-                }
-
-            }// end try
-            catch (Exception e)
-            {
-                //MsgBox = new AlertDialog.Builder(myContext);
-                MsgBox .setTitle("Error while fetching items details")
-                        .setMessage(e.getMessage())
-                        .setPositiveButton("OK",null)
-                        .show();
             }
+
         } // end else
+        }catch ( Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     void GSTR1_B2Cl()
@@ -6761,7 +6766,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     do {// item_detail table
                         String POS_str = cursor.getString(cursor.getColumnIndex("POS"));
                         float TaxableValue_f = Float.parseFloat(cursor.getString(cursor.getColumnIndex("TaxableValue")));
-                        if ((POS_str.equals("")) || (POS_str.equals("")== false  && TaxableValue_f <=250000 )) {
+                        if ((POS_str.equals("")== false  && TaxableValue_f >250000 )) {
+                        }else{
                             // for interstate + interstate only + <=2.5l
                             String InvNo =cursor.getString(cursor.getColumnIndex("InvoiceNo"));
                             String InvDate1 = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
@@ -6772,7 +6778,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             String custname_str = cursor.getString(cursor.getColumnIndex("CustName"));
                             String statecode_str = cursor.getString(cursor.getColumnIndex("CustStateCode"));
 
-                            Cursor rowcursor = dbReport.getitems_b2cl(InvNo, InvDate,custname_str,statecode_str);
+                            Cursor rowcursor = dbReport.getitems_b2cl(InvNo, InvDate1,custname_str,statecode_str);
                             if (rowcursor == null)
                             {
                                 //MsgBox = new AlertDialog.Builder(myContext);

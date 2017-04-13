@@ -813,7 +813,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // richa_2012
     String QUERY_CREATE_TABLE_Outward_Supply_Ledger = "CREATE TABLE " + TBL_OUTWARD_SUPPLY_LEDGER +
             "( " + KEY_GSTIN + " TEXT, " + KEY_CustName + " TEXT, " + KEY_CustStateCode + " TEXT, " + KEY_InvoiceNo + " TEXT, " +
-            KEY_InvoiceDate + " TEXT, " + KEY_SupplyType + " TEXT, " + KEY_TaxationType + " TEXT, " + KEY_HSNCode + " TEXT, "
+            KEY_InvoiceDate + " TEXT, " + KEY_SupplyType + " TEXT, " +
+            KEY_BusinessType + " TEXT, " + KEY_TaxationType + " TEXT, " + KEY_HSNCode + " TEXT, "
             + KEY_ItemNumber + " NUMERIC, " + KEY_ItemName + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, " +
             KEY_Value + " REAL, " + KEY_TaxableValue + " REAL, " + KEY_IGSTRate + " REAL," +
             KEY_IGSTAmount + " REAL," + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL," +
@@ -1923,7 +1924,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public Cursor getitems_b2b(String No, String Date, String supp_GSTIN) {
         String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " WHERE " + KEY_InvoiceNo + " Like '" + No + "' AND " +
-                KEY_InvoiceDate + " LIKE '" + Date + "' ";//AND "+KEY_GSTIN+" LIKE '"+supp_GSTIN+"'";
+                KEY_InvoiceDate + " LIKE '" + Date + "' AND "+KEY_GSTIN+" LIKE '"+supp_GSTIN+"' AND "+
+                KEY_BusinessType+" LIKE 'B2B'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -5122,6 +5124,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_CustName, objBillItem.getCustName());
         cvDbValues.put(KEY_CustStateCode, objBillItem.getCustStateCode());
         cvDbValues.put(KEY_UOM, objBillItem.getUom());
+        cvDbValues.put(KEY_BusinessType, objBillItem.getBusinessType());
 
         return dbFNB.insert(TBL_BILLITEM, null, cvDbValues);
     }
@@ -7558,8 +7561,10 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
             cvDbValues.put(KEY_SupplyType, objBillItem.getSupplyType());
             cvDbValues.put(KEY_SubTotal, objBillItem.getSubTotal());
             cvDbValues.put(KEY_CustName, objBillItem.getCustName());
+            cvDbValues.put(KEY_GSTIN, objBillItem.getGSTIN());
             cvDbValues.put(KEY_CustStateCode, objBillItem.getCustStateCode());
             cvDbValues.put(KEY_UOM, objBillItem.getUom());
+            cvDbValues.put(KEY_BusinessType, objBillItem.getBusinessType());
             return db.insert(TBL_BILLITEM, null, cvDbValues);
         }catch (Exception e){
             e.printStackTrace();

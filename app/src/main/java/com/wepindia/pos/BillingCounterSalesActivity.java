@@ -360,7 +360,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 }
                 else
                 {
-                    String gstin = null; // etCustGSTIN.getText().toString();
+                    String gstin = etCustGSTIN.getText().toString();
                     if (gstin == null) {
                         gstin = "";
                     }
@@ -537,7 +537,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         } else {
                             messageDialog.Show("", "Customer is not Found, Please Add Customer before Order");
                             btn_DineInAddCustomer.setVisibility(View.VISIBLE);
-                            ControlsSetDisabled();
+                            //ControlsSetDisabled();
                             btn_DineInAddCustomer.setEnabled(true);
                         }
                     } else {
@@ -2212,6 +2212,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             objBillItem.setCustName(custname);
             Log.d("InsertBillItems", "CustName :" + custname);
 
+            String custGstin = etCustGSTIN.getText().toString();
+            objBillItem.setGSTIN(custGstin);
+            Log.d("InsertBillItems", "custGstin :" + custGstin);
+
             // cust StateCode
             String str = spnr_pos.getSelectedItem().toString();
             int length = str.length();
@@ -2358,6 +2362,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         objBillDetail.setCustname(custname);
         Log.d("InsertBillDetail", "CustName :" + custname);
 
+        String custGSTIN = etCustGSTIN.getText().toString();
+        objBillDetail.setGSTIN(custGSTIN);
+        Log.d("InsertBillDetail", "custGSTIN :" + custGSTIN);
+
         // cust StateCode
         String str = spnr_pos.getSelectedItem().toString();
         int length = str.length();
@@ -2493,7 +2501,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         objBillDetail.setUserId(userId);
         Log.d("InsertBillDetail", "UserID:" + userId);
 
-        lResult = db.addBilll(objBillDetail, "");
+        lResult = db.addBilll(objBillDetail, objBillDetail.getGSTIN());
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
