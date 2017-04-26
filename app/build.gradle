@@ -7,7 +7,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.wepindia.pos2017"
+        applicationId "com.wepindia.pos201711"
         minSdkVersion 18
         targetSdkVersion 24
         compileOptions {

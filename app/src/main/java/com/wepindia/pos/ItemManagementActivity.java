@@ -280,6 +280,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                             }
                                                             StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
                                                             stock_outward.saveOpeningStock_Outward(current_date);
+
                                                         } catch (Exception exp) {
                                                             exp.printStackTrace();
                                                             //Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();

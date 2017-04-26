@@ -836,11 +836,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_TaxableValue + " TEXT, "
             + KEY_SubTotal + " REAl, "
             + KEY_BillStatus + " NUMERIC,"
-            + KEY_IGSTRate + " REAL,"
+           // + KEY_IGSTRate + " REAL,"
             + KEY_IGSTAmount + " REAL,"
-            + KEY_CGSTRate + " REAL,"
+           // + KEY_CGSTRate + " REAL,"
             + KEY_CGSTAmount + " REAL, "
-            + KEY_SGSTRate + " REAL,"
+           // + KEY_SGSTRate + " REAL,"
             + KEY_SGSTAmount + " REAL,"
             + KEY_GrandTotal + " REAL, "
             + KEY_ReverseCharge + " TEXT, "
@@ -1416,7 +1416,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HomeTakeAwayCaption, "Take Away");
         cvDbValues.put(KEY_HomeHomeDeliveryCaption, "Home Delivery");
         cvDbValues.put(KEY_CummulativeHeadingEnable, 1); // richa_2012
-        cvDbValues.put(KEY_GSTIN, 1);
+        cvDbValues.put(KEY_GSTIN, 0);
         cvDbValues.put(KEY_POS, 0);
         cvDbValues.put(KEY_HSNCode, 1);
         cvDbValues.put(KEY_ReverseCharge, 0);
@@ -5410,7 +5410,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
        /* return dbFNB.rawQuery("SELECT * FROM OutwardSuppyItemsDetails ,OutwardSupplyLedger,TaxConfig WHERE OutwardSuppyItemsDetails.BillStatus=1 AND\n" +
                 "OutwardSuppyItemsDetails.InvoiceNo=OutwardSupplyLedger.InvoiceNo AND\n" +
                 "OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);*/
-        return dbFNB.rawQuery("SELECT  TaxPercent,TaxAmount,Value FROM OutwardSuppyItemsDetails,OutwardSupplyLedger WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
+        return dbFNB.rawQuery("SELECT  CGSTRate,CGSTAmount,Value FROM OutwardSuppyItemsDetails,OutwardSupplyLedger  WHERE OutwardSuppyItemsDetails.BillStatus =1 " +
                 " AND OutwardSuppyItemsDetails.InvoiceNo = OutwardSupplyLedger.InvoiceNo " +
                 " AND OutwardSuppyItemsDetails.InvoiceDate BETWEEN '"+StartDate+"' AND '"+EndDate+"'", null);
     }
@@ -5471,7 +5471,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         // richa
         return dbFNB.rawQuery("SELECT * FROM " + TBL_BILLITEM + " , " + TBL_BILLDETAIL + " WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
                 + TBL_BILLITEM + ".InvoiceNo= " + TBL_BILLDETAIL + ".InvoiceNo AND " + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '"
-                + EndDate + "'", null);
+                + EndDate + "' ORDER BY ItemNumber ASC", null);
     }
 
     // -----Fast Selling Item wise Report-----
@@ -6748,7 +6748,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_HomeTakeAwayCaption, "Take Away");
         cvDbValues.put(KEY_HomeHomeDeliveryCaption, "Home Delivery");
         cvDbValues.put(KEY_CummulativeHeadingEnable, 1);
-        cvDbValues.put(KEY_GSTIN, 1);
+        cvDbValues.put(KEY_GSTIN, 0);
         cvDbValues.put(KEY_POS, 0);
         cvDbValues.put(KEY_HSNCode, 1);
         cvDbValues.put(KEY_ReverseCharge, 0);

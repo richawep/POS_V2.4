@@ -104,7 +104,10 @@ public class ReportHelper{
 			Date.setWidth(120);
 			Date.setTextSize(15);
 			Date.setTextColor(Color.WHITE);
-			Date.setText("Date");
+			if(ReportName.equalsIgnoreCase("Month wise Report"))
+				Date.setText("Month");
+			else
+				Date.setText("Date");
 			
 			TextView BillNumber = new TextView(activityContext);
 			BillNumber.setWidth(100);
@@ -130,17 +133,23 @@ public class ReportHelper{
 			Amount.setTextColor(Color.WHITE);
 			Amount.setText("Bill Amount");
 			
+			TextView IGSTTax = new TextView(activityContext);
+			IGSTTax.setWidth(100);
+			IGSTTax.setTextSize(15);
+			IGSTTax.setTextColor(Color.WHITE);
+			IGSTTax.setText("IGST Amt");
+
 			TextView SalesTax = new TextView(activityContext);
 			SalesTax.setWidth(100);
 			SalesTax.setTextSize(15);
 			SalesTax.setTextColor(Color.WHITE);
-			SalesTax.setText("Sales Tax");
+			SalesTax.setText("CGST Amt");
 			
 			TextView ServiceTax = new TextView(activityContext);
 			ServiceTax.setWidth(100);
 			ServiceTax.setTextSize(15);
 			ServiceTax.setTextColor(Color.WHITE);
-			ServiceTax.setText("Service Tax");
+			ServiceTax.setText("SGST Amt");
 			
 			TextView Discount = new TextView(activityContext);
 			Discount.setWidth(100);
@@ -164,6 +173,7 @@ public class ReportHelper{
 				rowColumnCaption.addView(TotalItems);
 			}
 			rowColumnCaption.addView(Discount);
+			rowColumnCaption.addView(IGSTTax);
 			rowColumnCaption.addView(SalesTax);
 			rowColumnCaption.addView(ServiceTax);
 			rowColumnCaption.addView(Amount);
@@ -522,7 +532,13 @@ public class ReportHelper{
 			Code.setWidth(100);
 			Code.setTextSize(15);
 			Code.setTextColor(Color.WHITE);
-			Code.setText("Code");
+			if(ReportName.equalsIgnoreCase("Department wise Report"))
+				Code.setText("Dept. Code");
+			else if (ReportName.equalsIgnoreCase("Category wise Report"))
+				Code.setText("Categ. Code");
+			else if (ReportName.equalsIgnoreCase("Kitchen wise Report"))
+				Code.setText("Kitchen Code");
+
 			
 			TextView Name = new TextView(activityContext);
 			Name.setWidth(100);
@@ -540,19 +556,25 @@ public class ReportHelper{
 			Amount.setWidth(100);
 			Amount.setTextSize(15);
 			Amount.setTextColor(Color.WHITE);
-			Amount.setText("Bill Amount");
+			Amount.setText("Taxable Value");
 			
+			TextView IGSTTax = new TextView(activityContext);
+			IGSTTax.setWidth(100);
+			IGSTTax.setTextSize(15);
+			IGSTTax.setTextColor(Color.WHITE);
+			IGSTTax.setText("IGST Amt");
+
 			TextView SalesTax = new TextView(activityContext);
 			SalesTax.setWidth(100);
 			SalesTax.setTextSize(15);
 			SalesTax.setTextColor(Color.WHITE);
-			SalesTax.setText("Sales Tax");
+			SalesTax.setText("CGST Amt");
 			
 			TextView ServiceTax = new TextView(activityContext);
 			ServiceTax.setWidth(100);
 			ServiceTax.setTextSize(15);
 			ServiceTax.setTextColor(Color.WHITE);
-			ServiceTax.setText("Service Tax");
+			ServiceTax.setText("SGST Amt");
 			
 			TextView Discount = new TextView(activityContext);
 			Discount.setWidth(100);
@@ -565,6 +587,7 @@ public class ReportHelper{
 			rowColumnCaption.addView(Name);
 			rowColumnCaption.addView(Items);
 			rowColumnCaption.addView(Discount);
+			rowColumnCaption.addView(IGSTTax);
 			rowColumnCaption.addView(SalesTax);
 			rowColumnCaption.addView(ServiceTax);
 			rowColumnCaption.addView(Amount);
@@ -614,7 +637,7 @@ public class ReportHelper{
 			Id.setWidth(100);
 			Id.setTextSize(15);
 			Id.setTextColor(Color.WHITE);
-			Id.setText("Id");
+			Id.setText("Cust. Id");
 			
 			TextView Name = new TextView(activityContext);
 			Name.setWidth(100);

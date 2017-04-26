@@ -2834,7 +2834,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             TextView ItemNumber = (TextView) tr.getChildAt(0);
 
                             DeletedKOT objDeletedKOT = new DeletedKOT();
-                            objDeletedKOT.setReason("Modified");
+                            objDeletedKOT.setReason("Billing Mode is 3 or 4");
                             objDeletedKOT.setEmployeeId(0);
                             objDeletedKOT.setTableNumber(0);//Integer.parseInt(tvTableNumber.getText().toString()));
                             objDeletedKOT.setSubUdfNumber(Integer.parseInt(tvSubUdfValue.getText().toString()));
