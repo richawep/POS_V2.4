@@ -2640,7 +2640,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 chk_interstate.setChecked(true);
             }
             */// Get waiter Id
-            tvWaiterNumber.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("EmployeeId")));
+            String empId = crsrBillItems.getString(crsrBillItems.getColumnIndex("EmployeeId"));
+            tvWaiterNumber.setText(empId);
+            Cursor cursor = db.getUsers_counter((empId));
+            if(cursor.moveToFirst())
+                tvWaiterName.setText(cursor.getString(cursor.getColumnIndex("Name")));
 
             // Get Table number
             tvTableNumber.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TableNumber")));
@@ -3722,11 +3726,12 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
-        if (String.valueOf(iCustId).equalsIgnoreCase("") || String.valueOf(iCustId).equalsIgnoreCase("0"))
+        if (edtCustId.getText().toString().equalsIgnoreCase("") || edtCustId.getText().toString().equalsIgnoreCase("0"))
         {
         }
         else
         {
+            iCustId = Integer.parseInt(edtCustId.getText().toString());
             float fTotalTransaction = dbBillScreen.getCustomerTotalTransaction(iCustId);
             float fCreditAmount = dbBillScreen.getCustomerCreditAmount(iCustId);
             //fCreditAmount = fCreditAmount - Float.parseFloat(tvBillAmount.getText().toString());

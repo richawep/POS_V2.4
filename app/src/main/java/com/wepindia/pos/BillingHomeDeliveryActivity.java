@@ -3434,6 +3434,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         }
 
         // Customer Id
+
         objBillDetail.setCustId(Integer.valueOf(edtCustId.getText().toString()));
         Log.d("InsertBillDetail", "Customer Id:" + Integer.valueOf(edtCustId.getText().toString()));
 
@@ -3445,8 +3446,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
-        if (String.valueOf(iCustId).equalsIgnoreCase("") || String.valueOf(iCustId).equalsIgnoreCase("0")) {
+        if (edtCustId.getText().toString().equalsIgnoreCase("") || edtCustId.getText().toString().equalsIgnoreCase("0")) {
         } else {
+            iCustId = Integer.valueOf(edtCustId.getText().toString());
             float fTotalTransaction = db.getCustomerTotalTransaction(iCustId);
             float fCreditAmount = db.getCustomerCreditAmount(iCustId);
             fCreditAmount = fCreditAmount - Float.parseFloat(tvBillAmount.getText().toString());

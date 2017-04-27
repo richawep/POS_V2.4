@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.nfc.FormatException;
 import android.os.Bundle;
@@ -4088,7 +4089,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
         if (Report.moveToFirst()) {
             boolean isSupplierExists = false;
-
+            System.out.println(DatabaseUtils.dumpCursorToString(Report));
             TextView EmpId, Name, TotalBills, Amount;
             TableRow rowReport;
 
@@ -4178,7 +4179,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
         if (Report.moveToFirst()) {
             boolean isWaiterExists = false;
-
+            //System.out.println(DatabaseUtils.dumpCursorToString(Report));
             TextView EmpId, Name, TotalBills, Amount;
             TableRow rowReport;
 
@@ -4313,14 +4314,26 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     Discount.setPadding(0,0,50,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                    String igst_str = Report.getString(Report.getColumnIndex("IGSTAmount"));
+                    String cgst_str = Report.getString(Report.getColumnIndex("CGSTAmount"));
+                    String sgst_str = Report.getString(Report.getColumnIndex("SGSTAmount"));
+                    if(igst_str== null || igst_str.equals(""))
+                        igst_str="0";
+                    if(cgst_str== null || cgst_str.equals(""))
+                        cgst_str="0";
+                    if(sgst_str== null || sgst_str.equals(""))
+                        sgst_str="0";
+                    float tottax = Float.parseFloat(igst_str) + Float.parseFloat(cgst_str) + Float.parseFloat(sgst_str);
+                    SalesTax.setText(String.format("%.2f",tottax));
+
+
                     SalesTax.setGravity(Gravity.END);
                     SalesTax.setPadding(0,0,45,0);
 
-                    ServiceTax = new TextView(myContext);
+                    /*ServiceTax = new TextView(myContext);
                     ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
                     ServiceTax.setGravity(Gravity.END);
-                    ServiceTax.setPadding(0,0,35,0);
+                    ServiceTax.setPadding(0,0,35,0);*/
 
                     Amount = new TextView(myContext);
                     Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
@@ -4334,7 +4347,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowReport.addView(TotalItems);
                     rowReport.addView(Discount);
                     rowReport.addView(SalesTax);
-                    rowReport.addView(ServiceTax);
+                    //rowReport.addView(ServiceTax);
                     rowReport.addView(Amount);
 
                     tblReport.addView(rowReport,
@@ -4416,8 +4429,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TotalBills.setText("1");
 
                     Amount = new TextView(myContext);
-                    Amount.setText(Report.getString(Report
-                            .getColumnIndex("BillAmount")));
+                    Amount.setText(String.format("%.2f",
+                            (Report.getDouble(Report.getColumnIndex("BillAmount")))));
+                    Amount.setGravity(Gravity.END);
+                    Amount.setPadding(0,0,30,0);
 
                     rowReport.addView(EmpId);
                     rowReport.addView(Name);
@@ -4480,14 +4495,24 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     Discount.setPadding(0,0,50,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                    String igst_str = Report.getString(Report.getColumnIndex("IGSTAmount"));
+                    String cgst_str = Report.getString(Report.getColumnIndex("CGSTAmount"));
+                    String sgst_str = Report.getString(Report.getColumnIndex("SGSTAmount"));
+                    if(igst_str== null || igst_str.equals(""))
+                        igst_str="0";
+                    if(cgst_str== null || cgst_str.equals(""))
+                        cgst_str="0";
+                    if(sgst_str== null || sgst_str.equals(""))
+                        sgst_str="0";
+                    float tottax = Float.parseFloat(igst_str) + Float.parseFloat(cgst_str) + Float.parseFloat(sgst_str);
+                    SalesTax.setText(String.format("%.2f",tottax));
                     SalesTax.setGravity(Gravity.END);
                     SalesTax.setPadding(0,0,45,0);
 
-                    ServiceTax = new TextView(myContext);
+                   /* ServiceTax = new TextView(myContext);
                     ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
                     ServiceTax.setGravity(Gravity.END);
-                    ServiceTax.setPadding(0,0,35,0);
+                    ServiceTax.setPadding(0,0,35,0);*/
 
                     Amount = new TextView(myContext);
                     Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
@@ -4499,7 +4524,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowReport.addView(TotalItems);
                     rowReport.addView(Discount);
                     rowReport.addView(SalesTax);
-                    rowReport.addView(ServiceTax);
+                    //rowReport.addView(ServiceTax);
                     rowReport.addView(Amount);
 
                     tblReport.addView(rowReport,
@@ -4660,14 +4685,24 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     Discount.setPadding(0,0,50,0);
 
                     SalesTax = new TextView(myContext);
-                    SalesTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalTaxAmount"))));
+                    String igst_str = Report.getString(Report.getColumnIndex("IGSTAmount"));
+                    String cgst_str = Report.getString(Report.getColumnIndex("CGSTAmount"));
+                    String sgst_str = Report.getString(Report.getColumnIndex("SGSTAmount"));
+                    if(igst_str== null || igst_str.equals(""))
+                        igst_str="0";
+                    if(cgst_str== null || cgst_str.equals(""))
+                        cgst_str="0";
+                    if(sgst_str== null || sgst_str.equals(""))
+                        sgst_str="0";
+                    float tottax = Float.parseFloat(igst_str) + Float.parseFloat(cgst_str) + Float.parseFloat(sgst_str);
+                    SalesTax.setText(String.format("%.2f",tottax));
                     SalesTax.setGravity(Gravity.END);
                     SalesTax.setPadding(0,0,45,0);
 
-                    ServiceTax = new TextView(myContext);
+                   /* ServiceTax = new TextView(myContext);
                     ServiceTax.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("TotalServiceTaxAmount"))));
                     ServiceTax.setGravity(Gravity.END);
-                    ServiceTax.setPadding(0,0,35,0);
+                    ServiceTax.setPadding(0,0,35,0);*/
 
                     Amount = new TextView(myContext);
                     Amount.setText(String.format("%.2f",Report.getDouble(Report.getColumnIndex("BillAmount"))));
@@ -4679,7 +4714,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowReport.addView(TotalItems);
                     rowReport.addView(Discount);
                     rowReport.addView(SalesTax);
-                    rowReport.addView(ServiceTax);
+                    //rowReport.addView(ServiceTax);
                     rowReport.addView(Amount);
 
                     tblReport.addView(rowReport,
@@ -4703,8 +4738,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         Cursor Report = dbReport.getCustomerwiseReport(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
         Log.d("CustomerwiseReport", "Rows Count:" + Report.getCount());
 
+        //DatabaseUtils.dumpCursorToString(Report);
         if (Report.moveToFirst())
         {
+
             boolean isCustomerExists = false;
             TextView CustId, CustName, TotalBills, LastTransaction, TotalTransaction;
             TableRow rowReport;
@@ -4722,6 +4759,42 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             TextView Bills = (TextView) rowItem.getChildAt(2);
                             Bills.setText(String.format("%d", Integer.parseInt(Bills.getText().toString()) + 1));
                             isCustomerExists = true;
+
+
+                            TextView cash  = (TextView) rowItem.getChildAt(4);
+                            cash.setText(String.format("%.2f", (Double.parseDouble(cash.getText().toString())+
+                                        Report.getDouble(Report.getColumnIndex("CashPayment")))));
+                            double cashd = Double.parseDouble(cash.getText().toString());
+
+                            TextView card = (TextView) rowItem.getChildAt(5);
+                            card.setText(String.format("%.2f",(Double.parseDouble(card.getText().toString())+
+                                    Report.getDouble(Report.getColumnIndex("CardPayment")))));
+                            double cardd = Double.parseDouble(card.getText().toString());
+
+
+                            TextView coupon = (TextView) rowItem.getChildAt(6);
+                            coupon.setText(String.format("%.2f",(Double.parseDouble(coupon.getText().toString())+
+                                        Report.getDouble(Report.getColumnIndex("CouponPayment")))));
+                            double coupond = Double.parseDouble(coupon.getText().toString());
+
+
+                            TextView credit = (TextView) rowItem.getChildAt(7);
+                            credit.setText(String.format("%.2f",(Double.parseDouble(credit.getText().toString())+
+                                    Report.getDouble(Report.getColumnIndex("PettyCashPayment")))));
+                            double creditd = Double.parseDouble(credit.getText().toString());
+
+                            TextView wallet = (TextView) rowItem.getChildAt(8);
+                            wallet.setText(String.format("%.2f",(Double.parseDouble(wallet.getText().toString())+
+                                        Report.getDouble(Report.getColumnIndex("WalletPayment")))));
+                            double walletd = Double.parseDouble(wallet.getText().toString());
+
+                            double total = cardd+cashd+creditd+coupond+walletd;
+
+                            TextView tot = (TextView) rowItem.getChildAt(9);
+                            tot.setText(String.format("%.2f",total));
+
+
+
                             break;
                         }
                     }

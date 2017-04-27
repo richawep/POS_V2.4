@@ -94,11 +94,11 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
 
     AutoCompleteTextView autocompletetv_supplierPhn, autocompletetv_suppliername,autocomplete_inw_ItemName;
     WepButton btnAddSupplier;
-    EditText et_inw_rate,et_inw_quantity,et_Inw_Amount;
+    EditText et_inw_rate,et_inw_quantity;
     EditText et_Inw_ServiceTax, et_Inw_SalesTax;
     ArrayList<String> labelsSupplierName,labelsSupplierPhn;
     ArrayList<String> itemlist;
-    TextView tv_suppliercode;
+    TextView tv_suppliercode,et_Inw_Amount;
     int count =1;
     String businessDate ="";
     // Variables
@@ -535,10 +535,10 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
         spnrUOM= (Spinner)findViewById(R.id.spnrUOM);
         spnr_supplytype = (Spinner)findViewById(R.id.spnr_supplytype);
         et_inw_rate = (EditText) findViewById(R.id.et_inw_rate);
-        et_Inw_ServiceTax = (EditText) findViewById(R.id.et_Inw_ServiceTax);
-        et_Inw_SalesTax = (EditText) findViewById(R.id.et_Inw_SalesTax);
+        et_Inw_ServiceTax = (EditText) findViewById(R.id.et_Inw_CGSTRate);
+        et_Inw_SalesTax = (EditText) findViewById(R.id.et_Inw_SGSTRate);
         et_inw_quantity = (EditText) findViewById(R.id.et_inw_quantity);
-        et_Inw_Amount = (EditText) findViewById(R.id.et_Inw_Amount);
+        et_Inw_Amount = (TextView) findViewById(R.id.et_Inw_Amount);
         autocompletetv_suppliername = (AutoCompleteTextView) findViewById(R.id.autocompletetv_suppliername);
 
         autocomplete_inw_ItemName= (AutoCompleteTextView) findViewById(R.id.autocomplete_inw_ItemName);

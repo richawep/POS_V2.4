@@ -5530,7 +5530,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return dbFNB.rawQuery(
                 "SELECT * FROM " + TBL_BILLDETAIL + ", "+TBL_USERS+" WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
                         + TBL_BILLDETAIL + "."+KEY_EmployeeId+"="+TBL_USERS+"."+KEY_USER_ID+" AND " + TBL_BILLDETAIL + ".EmployeeId>0 AND "
-                        + KEY_USER_DESIGNATION+" LIKE 'waiter' AND " + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'",
+                        + KEY_ROLE_ID+" LIKE '3' AND " + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'",
                 null);
     }
 
@@ -5563,7 +5563,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     public Cursor getRiderwiseReport(String StartDate, String EndDate) {
         return dbFNB.rawQuery("SELECT * FROM  " + TBL_BILLDETAIL + " , "+TBL_USERS+" WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND "
                         + TBL_BILLDETAIL + ".EmployeeId= "+TBL_USERS+".UserId AND " + TBL_BILLDETAIL + ".EmployeeId>0 AND "
-                        + KEY_USER_DESIGNATION+" LIKE 'rider' AND "  + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'",
+                        + KEY_ROLE_ID+" LIKE '4' AND "  + TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'",
                 null);
     }
 
@@ -5799,8 +5799,9 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_SUPPLIERNAME, objItem.getsupplierName());
         cvDbValues.put(KEY_ItemName, objItem.getItemname());
         cvDbValues.put("ItemBarcode", objItem.getItemBarcode());
-        cvDbValues.put(KEY_SalesTaxPercent, objItem.getSalesTaxPercent());
-        cvDbValues.put(KEY_ServiceTaxPercent, objItem.getServiceTaxPercent());
+        cvDbValues.put(KEY_CGSTRate, objItem.getCGSTRate());
+        cvDbValues.put(KEY_SGSTRate, objItem.getSGSTRate());
+        cvDbValues.put(KEY_IGSTRate, objItem.getIGSTRate());
         cvDbValues.put("Quantity", objItem.getQuantity());
         cvDbValues.put(KEY_Rate, objItem.getRate());
         cvDbValues.put(KEY_SupplyType, objItem.getSupplyType());

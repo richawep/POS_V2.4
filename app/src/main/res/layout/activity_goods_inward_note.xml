@@ -303,7 +303,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/heading_border"
                     android:gravity="center"
-                    android:text="Sales Tax" />
+                    android:text="CGST Amt" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -311,7 +311,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/heading_border"
                     android:gravity="center"
-                    android:text="Service Tax" />
+                    android:text="SGST Amt" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -532,6 +532,7 @@
                             android:id="@+id/autocompletetv_purchase_order"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:inputType="number"
                             android:layout_weight="1" />
                     </LinearLayout>
 

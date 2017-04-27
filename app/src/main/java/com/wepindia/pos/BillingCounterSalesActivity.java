@@ -2505,12 +2505,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
-        if (String.valueOf(iCustId).equalsIgnoreCase("") || String.valueOf(iCustId).equalsIgnoreCase("0"))
+        if (String.valueOf(customerId).equalsIgnoreCase("") || String.valueOf(customerId).equalsIgnoreCase("0"))
         {
             // No customer Details, do nothing
         }
         else
         {
+            iCustId = Integer.valueOf(customerId);
             float fTotalTransaction = db.getCustomerTotalTransaction(iCustId);
             float fCreditAmount = db.getCustomerCreditAmount(iCustId);
             //fCreditAmount = fCreditAmount - Float.parseFloat(tvBillAmount.getText().toString());

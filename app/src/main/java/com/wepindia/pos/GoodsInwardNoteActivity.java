@@ -689,6 +689,11 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 int del = dbGoodsInwardNote.deletePurchaseOrder(suppliercode, Integer.parseInt(purchaseorderno));
                 String info = " No of rows deleted for purchase order "+purchaseorderno+" : "+del;
                 Log.d("GoodsInwardNote :",info);
+            }else
+            {
+
+                //autocompletetv_purchase_order.setText("-100");
+                purchaseorderno = "-100";
             }
 
 
@@ -817,6 +822,11 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 //richa to do purchase order
 
 
+                if(purchaseorderno.equals("-100"))
+                {
+                    lResult = dbGoodsInwardNote.InsertPurchaseOrder(objBillItem);
+                    Log.d("InsertPurchaseOrder", " item inserted at position:" + lResult);
+                }else {
                 Cursor duplicacy_crsr = dbGoodsInwardNote.checkDuplicatePurchaseOrder(suppliercode, menucode,Integer.parseInt(purchaseorderno));
                 if (duplicacy_crsr == null || !duplicacy_crsr.moveToFirst())
                 {
@@ -828,7 +838,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 { // already present
                     lResult = dbGoodsInwardNote.UpdatePurchaseOrder(objBillItem);
                     Log.d("InsertPurchaseOrder", "item updated at position:" + lResult);
-                }
+                }}
             }
         } catch (Exception e) {
             Toast.makeText(myContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -931,11 +941,11 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             }
             if(l>0)
             {
-                if(purchaseorderno.equalsIgnoreCase("NA"))
+                /*if(purchaseorderno.equalsIgnoreCase("NA"))
                 {
                     autocompletetv_purchase_order.setText("-100");
                     savePurchaseOrder(1);
-                }
+                }*/
                 savePurchaseOrder(1);
                 Toast.makeText(myContext, " Item added Successfully", Toast.LENGTH_SHORT).show();
             }
@@ -1366,7 +1376,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
                     float salestax_f =0, servicetax_f =0;
 
-                    String salestax_str = itemdetails.getString(itemdetails.getColumnIndex("SalesTaxPercent"));
+                    String salestax_str = itemdetails.getString(itemdetails.getColumnIndex("CGSTRate"));
                     if (salestax_str== null || salestax_str.equals(""))
                         Salestax.setText("0.00");
                     else
@@ -1376,7 +1386,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                         Salestax.setText(String.format("%.2f", salestaxamount));
                     }
 
-                    String servicetax_str = itemdetails.getString(itemdetails.getColumnIndex("ServiceTaxPercent"));
+                    String servicetax_str = itemdetails.getString(itemdetails.getColumnIndex("SGSTRate"));
                     if (servicetax_str== null || servicetax_str.equals(""))
                         Servicetax.setText("0.00");
                     else

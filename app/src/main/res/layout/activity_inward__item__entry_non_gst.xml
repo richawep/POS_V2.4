@@ -551,14 +551,14 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Sales Tax (%)"
+                            android:text="CGST Rate (%)"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <EditText
-                            android:id="@+id/et_Inw_SalesTax"
+                            android:id="@+id/et_Inw_CGSTRate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.6"
                             android:gravity="center"
                             android:hint="%"
                             android:inputType="numberDecimal"
@@ -577,19 +577,48 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Service Tax (%)"
+                            android:text="SGST Rate (%)"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <EditText
-                            android:id="@+id/et_Inw_ServiceTax"
+                            android:id="@+id/et_Inw_SGSTRate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.6"
                             android:gravity="center"
                             android:hint="%"
                             android:inputType="numberDecimal"
                             android:maxLength="7"
 
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:enabled="false"
+                            android:text="IGST Rate (%)"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <EditText
+                            android:id="@+id/et_Inw_IGSTRate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:hint="%"
+                            android:enabled="false"
+                            android:focusable="false"
+                            android:inputType="numberDecimal"
+                            android:maxLength="7"
                             android:textSize="13dp" />
                     </LinearLayout>
 
@@ -623,6 +652,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
                         <TextView

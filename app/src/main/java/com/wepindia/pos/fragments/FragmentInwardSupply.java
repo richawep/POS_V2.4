@@ -82,7 +82,7 @@ public class FragmentInwardSupply extends Fragment {
     AutoCompleteTextView autocompletetv_supplierPhn, autocompletetv_suppliername,autocomplete_inw_ItemName;
     WepButton btnAddSupplier;
     EditText et_inw_rate,et_inw_quantity;
-    EditText et_Inw_ServiceTax, et_Inw_SalesTax;
+    EditText et_Inw_SGSTRate, et_Inw_CGSTRate,et_Inw_IGSTRate;
     ArrayList<String> labelsSupplierName,labelsSupplierPhn;
     ArrayList<String> itemlist;
     TextView tv_suppliercode, tv_AverageRate,tv_count,et_Inw_Amount;//, spnrUOM_selection_code;
@@ -253,8 +253,8 @@ public class FragmentInwardSupply extends Fragment {
                             et_inw_quantity.setText(String.valueOf(quantity));
                             et_inw_rate.setText(String.valueOf(rate));
                             et_Inw_Amount.setText(String.valueOf(amount));
-                            et_Inw_SalesTax.setText(String.valueOf(saletax));
-                            et_Inw_ServiceTax.setText(String.valueOf(servicetax));
+                            et_Inw_CGSTRate.setText(String.valueOf(saletax));
+                            et_Inw_SGSTRate.setText(String.valueOf(servicetax));
                             if(supplytype.equalsIgnoreCase("G"))
                                 spnr_supplytype.setSelection(0);
                             else
@@ -465,7 +465,52 @@ public class FragmentInwardSupply extends Fragment {
             /*spnrSalesTax.setEnabled(false);
             spnrAdditionalTax.setEnabled(false);*/
 
+            et_Inw_SGSTRate.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                        String sgst_str = et_Inw_SGSTRate.getText().toString();
+                        String cgst_str = et_Inw_CGSTRate.getText().toString();
+                    float sgst_f =0, cgst_f =0, igst_f =0;
+                    if(!(sgst_str== null || sgst_str.equals("")))
+                        sgst_f = Float.parseFloat(sgst_str);
+                    if(!(cgst_str== null || cgst_str.equals("")))
+                        cgst_f = Float.parseFloat(cgst_str);
+                    et_Inw_IGSTRate.setText(String.format("%.2f",sgst_f+cgst_f));
+                }
+            });
+            et_Inw_CGSTRate.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String sgst_str = et_Inw_SGSTRate.getText().toString();
+                    String cgst_str = et_Inw_CGSTRate.getText().toString();
+                    float sgst_f =0, cgst_f =0, igst_f =0;
+                    if(!(sgst_str== null || sgst_str.equals("")))
+                        sgst_f = Float.parseFloat(sgst_str);
+                    if(!(cgst_str== null || cgst_str.equals("")))
+                        cgst_f = Float.parseFloat(cgst_str);
+                    et_Inw_IGSTRate.setText(String.format("%.2f",sgst_f+cgst_f));
+                }
+            });
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -487,8 +532,9 @@ public class FragmentInwardSupply extends Fragment {
         spnrUOM= (Spinner)view.findViewById(R.id.spnrUOM);
         spnr_supplytype = (Spinner)view.findViewById(R.id.spnr_supplytype);
         et_inw_rate = (EditText) view.findViewById(R.id.et_inw_rate);
-        et_Inw_ServiceTax = (EditText) view.findViewById(R.id.et_Inw_ServiceTax);
-        et_Inw_SalesTax = (EditText) view.findViewById(R.id.et_Inw_SalesTax);
+        et_Inw_SGSTRate = (EditText) view.findViewById(R.id.et_Inw_SGSTRate);
+        et_Inw_CGSTRate = (EditText) view.findViewById(R.id.et_Inw_CGSTRate);
+        et_Inw_IGSTRate = (EditText) view.findViewById(R.id.et_Inw_IGSTRate);
         et_inw_quantity = (EditText) view.findViewById(R.id.et_inw_quantity);
         et_Inw_Amount = (TextView) view.findViewById(R.id.et_Inw_Amount);
         autocompletetv_suppliername = (AutoCompleteTextView) view.findViewById(R.id.autocompletetv_suppliername);
@@ -546,8 +592,6 @@ public class FragmentInwardSupply extends Fragment {
                 CloseItem1(v);
             }
         });
-
-
 
     }
     @SuppressWarnings("deprecation")
@@ -796,8 +840,8 @@ public class FragmentInwardSupply extends Fragment {
                                 spnrUOM.setEnabled(false);
                                // spnrUOM_selection_code.setText(index);
 
-                                et_Inw_SalesTax.setText(SalesTax.getText());
-                                et_Inw_ServiceTax.setText(OtherTax.getText());
+                                et_Inw_CGSTRate.setText(SalesTax.getText());
+                                et_Inw_SGSTRate.setText(OtherTax.getText());
 
 
 //                                imgItemImage.setImageURI(null);
@@ -1054,8 +1098,8 @@ public class FragmentInwardSupply extends Fragment {
                             spnrUOM.setEnabled(false);
                             //spnrUOM_selection_code.setText(index);
 
-                            et_Inw_SalesTax.setText(SalesTax.getText());
-                            et_Inw_ServiceTax.setText(OtherTax.getText());
+                            et_Inw_CGSTRate.setText(SalesTax.getText());
+                            et_Inw_SGSTRate.setText(OtherTax.getText());
 
 
 //                            imgItemImage.setImageURI(null);
@@ -1307,8 +1351,8 @@ public class FragmentInwardSupply extends Fragment {
                             spnrUOM.setEnabled(false);
                             //spnrUOM_selection_code.setText(index);
 
-                            et_Inw_SalesTax.setText(SalesTax.getText());
-                            et_Inw_ServiceTax.setText(OtherTax.getText());
+                            et_Inw_CGSTRate.setText(SalesTax.getText());
+                            et_Inw_SGSTRate.setText(OtherTax.getText());
 
 
 //                            imgItemImage.setImageURI(null);
@@ -1563,7 +1607,8 @@ public class FragmentInwardSupply extends Fragment {
     }
 
     private void InsertItem(int suppliercode, String suppliername, String itemName, String strbarCode, float ratef,
-                            float quantity, String mou, String ImageUri, float SalesTax, float ServiceTax,String supplytype) {
+                            float quantity, String mou, String ImageUri, float cgst, float sgst, float igstrate,
+                            String supplytype) {
 
         long lRowId = 0;
 
@@ -1576,8 +1621,9 @@ public class FragmentInwardSupply extends Fragment {
         objItem.setQuantity(quantity);
         objItem.setMOU(mou);
         objItem.setImageId(ImageUri);
-        objItem.setSalesTaxPercent(SalesTax);
-        objItem.setServiceTaxPercent(ServiceTax);
+        objItem.setCGSTRate(cgst);
+        objItem.setSGSTRate(sgst);
+        objItem.setIGSTRate(igstrate);
         objItem.setSupplyType(supplytype);
         objItem.setAverageRate(ratef);
 
@@ -1612,8 +1658,8 @@ public class FragmentInwardSupply extends Fragment {
         strBarcode = et_inw_ItemBarcode.getText().toString();
         rate = Float.parseFloat(et_inw_rate.getText().toString());
         quantity = Float.parseFloat(et_inw_quantity.getText().toString());
-        SalesTax = Float.parseFloat(et_Inw_SalesTax.getText().toString());
-        ServiceTax = Float.parseFloat(et_Inw_ServiceTax.getText().toString());
+        SalesTax = Float.parseFloat(et_Inw_CGSTRate.getText().toString());
+        ServiceTax = Float.parseFloat(et_Inw_SGSTRate.getText().toString());
         String mou_temp = spnrUOM.getSelectedItem().toString();
         int length = mou_temp.length();
         mou = mou_temp.substring(length-3, length-1);
@@ -1711,7 +1757,7 @@ public class FragmentInwardSupply extends Fragment {
         float fDineIn1 = 0, fDineIn2 = 0, fDineIn3 = 0, fTakeAway = 0, fPickUp = 0, fDelivery = 0, fStock = 0;
         String HSNCode = "",TaxationType = ""; //, AMU = "";
         float rate =0, quantity =0,igstRate =0,igstAmount =0, cgstRate =0, cgstAmount=0, sgstRate =0, sgstAmount =0;
-        float SalesTax =0, ServiceTax =0;
+        float SalesTax =0, ServiceTax =0, IGSTRate =0;
 
 
         String suppliername = autocompletetv_suppliername.getText().toString().toUpperCase().toUpperCase();
@@ -1730,8 +1776,9 @@ public class FragmentInwardSupply extends Fragment {
         String rate_str = String.format("%.2f",rate);
         rate = Float.parseFloat(rate_str);
         //quantity =Float.parseFloat(et_inw_quantity.getText().toString());
-        SalesTax = Float.parseFloat(et_Inw_SalesTax.getText().toString());
-        ServiceTax = Float.parseFloat(et_Inw_ServiceTax.getText().toString());
+        SalesTax = Float.parseFloat(et_Inw_CGSTRate.getText().toString());
+        ServiceTax = Float.parseFloat(et_Inw_SGSTRate.getText().toString());
+        IGSTRate = Float.parseFloat(et_Inw_IGSTRate.getText().toString());
         String mou_temp = spnrUOM.getSelectedItem().toString();
         int length = mou_temp.length();
         mou = mou_temp.substring(length-3, length-1);
@@ -1748,7 +1795,7 @@ public class FragmentInwardSupply extends Fragment {
                 // MsgBox.show("Warning", "Item already present");
             }
             else {
-                InsertItem( suppliercode,  suppliername, itemname,  strBarcode, rate,  quantity, mou, ImageUri, SalesTax, ServiceTax,supplytype);
+                InsertItem( suppliercode,  suppliername, itemname,  strBarcode, rate,  quantity, mou, ImageUri, SalesTax, ServiceTax,IGSTRate,supplytype);
                 double rate_new = UpdateGoodsInward(itemname, quantity, mou, Double.parseDouble(et_inw_rate.getText().toString()), true);
                // UpdateStockInward(itemname,quantity,   rate_new);
             }
@@ -1814,12 +1861,13 @@ public class FragmentInwardSupply extends Fragment {
                 SalesTax1 = SalesTax;
                 ServiceTax1 = ServiceTax;
                 supplytype1 = supplytype;
+                final float igstrate = IGSTRate;
 
 
                 MsgBox.setTitle("Item not found in database. Do you want to add it ?")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                InsertItem( suppliercode1,  suppliername1, itemname1,  strBarcode1, rate1,  quantity1, mou1, ImageUri1, SalesTax1, ServiceTax1,supplytype1);
+                                InsertItem( suppliercode1,  suppliername1, itemname1,  strBarcode1, rate1,  quantity1, mou1, ImageUri1, SalesTax1, ServiceTax1,igstrate,supplytype1);
                                 tv_suppliercode.setText(String.valueOf(suppliercode1));
                                 autocompletetv_suppliername.setText(suppliername1);
                                 autocompletetv_supplierPhn.setText(supplierphn1);
@@ -2042,8 +2090,9 @@ public class FragmentInwardSupply extends Fragment {
         tv_AverageRate.setText("0.00"); // no value
         tv_count.setText("0"); // no value
         autocompletetv_suppliername.setText("");
-        et_Inw_ServiceTax.setText("");
-        et_Inw_SalesTax.setText("");
+        et_Inw_SGSTRate.setText("0");
+        et_Inw_CGSTRate.setText("0");
+        et_Inw_IGSTRate.setText("0");
         btnAddSupplier.setEnabled(true);
         btnAdd.setEnabled(true);
         btnEdit.setEnabled(false);
@@ -2133,21 +2182,21 @@ public class FragmentInwardSupply extends Fragment {
         }
 
 
-        String salesTax_str = et_Inw_SalesTax.getText().toString();
+        String salesTax_str = et_Inw_CGSTRate.getText().toString();
         if (salesTax_str.equalsIgnoreCase("")) {
-            et_Inw_SalesTax.setText("0");
+            et_Inw_CGSTRate.setText("0");
         }else if (Double.parseDouble(salesTax_str)< 0 || Double.parseDouble(salesTax_str)>99.99)
         {
-            MsgBox1.Show("Warning","Please enter sales tax percent between 0 and 99.99");
+            MsgBox1.Show("Warning","Please enter CGST Rate between 0 and 99.99");
             return;
         }
 
-        String serviceTax_str = et_Inw_ServiceTax.getText().toString();
+        String serviceTax_str = et_Inw_SGSTRate.getText().toString();
         if (serviceTax_str.equalsIgnoreCase("")) {
-            et_Inw_ServiceTax.setText("0");
+            et_Inw_SGSTRate.setText("0");
         }else if (Double.parseDouble(serviceTax_str) <0 || Double.parseDouble(serviceTax_str)> 99.99)
         {
-            MsgBox1.Show("Warning","Please enter service tax percent between 0 and 99.99");
+            MsgBox1.Show("Warning","Please enter SGST Rate between 0 and 99.99");
             return;
         }
 
@@ -2228,18 +2277,18 @@ public class FragmentInwardSupply extends Fragment {
             return;
         }
 
-        String salesTax_str = et_Inw_SalesTax.getText().toString();
+        String salesTax_str = et_Inw_CGSTRate.getText().toString();
         if (salesTax_str.equalsIgnoreCase("")) {
-            et_Inw_SalesTax.setText("0");
+            et_Inw_CGSTRate.setText("0");
         }else if (Double.parseDouble(salesTax_str)< 0 || Double.parseDouble(salesTax_str)>99.99)
         {
             MsgBox1.Show("Warning","Please enter sales tax percent between 0 and 99.99");
             return;
         }
 
-        String serviceTax_str = et_Inw_ServiceTax.getText().toString();
+        String serviceTax_str = et_Inw_SGSTRate.getText().toString();
         if (serviceTax_str.equalsIgnoreCase("")) {
-            et_Inw_ServiceTax.setText("0");
+            et_Inw_SGSTRate.setText("0");
         }else if (Double.parseDouble(serviceTax_str) <0 || Double.parseDouble(serviceTax_str)> 99.99)
         {
             MsgBox1.Show("Warning","Please enter service tax percent between 0 and 99.99");

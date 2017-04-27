@@ -27,7 +27,28 @@
             android:minHeight="40dp"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:weightSum="8">
+            >
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|end"
+                android:text="Customer GSTIN :" />
+            <EditText
+                android:id="@+id/etCustGSTIN"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:hint="GSTIN"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/tvSubUdfValue"
@@ -109,7 +130,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/background_btn"
-                android:gravity="center"
                 android:minHeight="40dp"
                 android:theme="@style/WepButtonWithMarigin"
                 android:onClick="AddCustomer"
@@ -127,7 +147,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text="0"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 

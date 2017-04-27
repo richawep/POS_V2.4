@@ -56,7 +56,7 @@
                             android:layout_marginRight="3dp"
                             android:orientation="vertical">
 
-                            <EditText
+                            <!--<EditText
                                 android:id="@+id/etCustGSTIN"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -67,7 +67,7 @@
                                 android:minHeight="40dp"
                                 android:selectAllOnFocus="true"
                                 android:textSize="10sp"
-                                 />
+                                 />-->
 
                             <AutoCompleteTextView
                                 android:id="@+id/aCTVSearchItem"

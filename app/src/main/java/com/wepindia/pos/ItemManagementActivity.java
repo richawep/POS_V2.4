@@ -360,7 +360,9 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                         "",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
                                                         Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
                                             }
-
+                                            final String current_date = businessDate;
+                                            StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
+                                            stock_outward.saveOpeningStock_Outward(current_date);
                                         } catch (Exception exp) {
                                             Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
                                         }

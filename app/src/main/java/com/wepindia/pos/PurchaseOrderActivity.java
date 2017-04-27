@@ -1204,7 +1204,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
                     float salestax_f =0, servicetax_f =0;
 
-                    String salestax_str = itemdetails.getString(itemdetails.getColumnIndex("SalesTaxPercent"));
+                    String salestax_str = itemdetails.getString(itemdetails.getColumnIndex("CGSTRate"));
                     if (salestax_str== null || salestax_str.equals(""))
                         Salestax.setText("0.00");
                     else
@@ -1214,7 +1214,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         Salestax.setText(String.format("%.2f", salestaxamount));
                     }
 
-                    String servicetax_str = itemdetails.getString(itemdetails.getColumnIndex("ServiceTaxPercent"));
+                    String servicetax_str = itemdetails.getString(itemdetails.getColumnIndex("SGSTRate"));
                     if (servicetax_str== null || servicetax_str.equals(""))
                         Servicetax.setText("0.00");
                     else

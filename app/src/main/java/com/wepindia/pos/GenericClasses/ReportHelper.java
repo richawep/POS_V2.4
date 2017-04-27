@@ -708,7 +708,9 @@ public class ReportHelper{
 			
 		}
 		
-		else if(ReportName.equalsIgnoreCase("Waiter Detailed Report") || ReportName.equalsIgnoreCase("Rider Detailed Report") || ReportName.equalsIgnoreCase("User Detailed Report"))
+		else if(ReportName.equalsIgnoreCase("Waiter Detailed Report") ||
+				ReportName.equalsIgnoreCase("Rider Detailed Report") ||
+				ReportName.equalsIgnoreCase("User Detailed Report"))
 		{
 			
 			TextView Date = new TextView(activityContext);
@@ -738,14 +740,15 @@ public class ReportHelper{
 			TextView SalesTax = new TextView(activityContext);
 			SalesTax.setWidth(105);
 			SalesTax.setTextSize(15);
+            SalesTax.setGravity(Gravity.CENTER);
 			SalesTax.setTextColor(Color.WHITE);
-			SalesTax.setText("Sales Tax");
+			SalesTax.setText("Tax");
 			
-			TextView ServiceTax = new TextView(activityContext);
+			/*TextView ServiceTax = new TextView(activityContext);
 			ServiceTax.setWidth(115);
 			ServiceTax.setTextSize(15);
 			ServiceTax.setTextColor(Color.WHITE);
-			ServiceTax.setText("Service Tax");
+			ServiceTax.setText("Service Tax");*/
 			
 			TextView Amount = new TextView(activityContext);
 			Amount.setWidth(100);
@@ -759,7 +762,7 @@ public class ReportHelper{
 			rowColumnCaption.addView(TotalItems);
 			rowColumnCaption.addView(Discount);
 			rowColumnCaption.addView(SalesTax);
-			rowColumnCaption.addView(ServiceTax);
+			//rowColumnCaption.addView(ServiceTax);
 			rowColumnCaption.addView(Amount);
 			
 		}
