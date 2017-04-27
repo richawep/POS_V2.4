@@ -49,6 +49,7 @@ android {
 
 
 
+
 dependencies {
     compile project(':mSwipe')
     compile project(':gstAPI')

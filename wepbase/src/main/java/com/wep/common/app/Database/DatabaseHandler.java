@@ -6855,6 +6855,8 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
     public void addGSTR2B2BItems(ArrayList<GetGSTR2B2BFinal> finalsList) {
 
+        if(finalsList == null || finalsList.size() <0)
+            return ;
         Iterator<GetGSTR2B2BFinal> iterator = finalsList.iterator();
         while (iterator.hasNext()) {
             GetGSTR2B2BFinal element = iterator.next();

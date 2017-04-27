@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.fragments.FragmentGSTLink;
 import com.wepindia.pos.fragments.ReportFragment;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.printers.WepPrinterBaseActivity;
@@ -187,7 +188,12 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
         bundle4.putString("REPORT_TYPE", "4");
         ReportFragment reportFragment4 = new ReportFragment();
         reportFragment4.setArguments(bundle4);
-        adapter.addFragment(reportFragment4, "GST Link");
+        adapter.addFragment(reportFragment4, "GST Reports");
+        viewPager.setAdapter(adapter);
+
+        Bundle bundle5=new Bundle();
+        FragmentGSTLink reportFragment5 = new FragmentGSTLink();
+        adapter.addFragment(reportFragment5, "GST Link");
         viewPager.setAdapter(adapter);
     }
 

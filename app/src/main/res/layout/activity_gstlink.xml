@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         android:weightSum="2">
 
@@ -153,12 +153,12 @@
                         android:weightSum="5">
 
                         <RelativeLayout
-                            android:id="@+id/SaveGSTR1"
+                            android:id="@+id/PostGSTR1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
-                            android:onClick="onClickSaveGstr1">
+                            android:onClick="onClickPostGstr1">
 
                             <ImageView
                                 android:id="@+id/img1"
@@ -174,11 +174,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/img1"
                                 android:gravity="center"
-                                android:text="Save GSTR1 Invoices"
+                                android:text="Post GSTR1 Invoices"
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:id="@+id/getGSTR1Summary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
@@ -204,11 +205,12 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:id="@+id/postGSTR1A"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
-                            android:onClick="onClickSaveGstr1A">
+                            android:onClick="onClickPostGstr1A">
 
                             <ImageView
                                 android:id="@+id/img6"
@@ -224,7 +226,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/img6"
                                 android:gravity="center"
-                                android:text="Save GSTR1A Invoices"
+                                android:text="Post GSTR1A Invoices"
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 
@@ -254,7 +256,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/getGSTR1Summery"
+                            android:id="@+id/getGSTR1ASummary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
@@ -393,7 +395,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/fileGSTR2"
+                            android:id="@+id/postGSTR2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
@@ -414,16 +416,17 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/img20"
                                 android:gravity="center"
-                                android:text="Save GSTR2"
+                                android:text="Post GSTR2"
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:id="@+id/fileGSTR2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
-                            android:onClick="onClickFileGstr2">
+                            android:onClick="onClickFileGstr1">
 
                             <ImageView
                                 android:id="@+id/img21"
@@ -528,7 +531,7 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/fileGSTR3"
+                            android:id="@+id/postGSTR3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
@@ -578,10 +581,12 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:id="@+id/fileGSTR3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:onClick="onClickFileGstr1">
 
                             <ImageView
                                 android:id="@+id/img31"
