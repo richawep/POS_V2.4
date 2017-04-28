@@ -23,6 +23,12 @@ public class GSTR1B2CSAData {
     private double srt;
     private double samt;
     private String pro_ass;
+    private double csrt;
+    private double csamt;
+    private String etin;
+    private String etype;
+    private String OrderNumber;
+    private String OrderDate;
 
     public GSTR1B2CSAData() {
     }
@@ -45,6 +51,80 @@ public class GSTR1B2CSAData {
         this.srt = srt;
         this.samt = samt;
         this.pro_ass = pro_ass;
+    }
+
+    public GSTR1B2CSAData(String flag, String chksum, String osupst_cd, String omon, String oty, String ohsn_sc, String state_cd, String ty, String hsn_sc, double txval, double irt, double iamt, double crt, double camt, double srt, double samt, String pro_ass, double csrt, double csamt, String etin, String etype, String orderNumber, String orderDate) {
+        this.flag = flag;
+        this.chksum = chksum;
+        this.osupst_cd = osupst_cd;
+        this.omon = omon;
+        this.oty = oty;
+        this.ohsn_sc = ohsn_sc;
+        this.state_cd = state_cd;
+        this.ty = ty;
+        this.hsn_sc = hsn_sc;
+        this.txval = txval;
+        this.irt = irt;
+        this.iamt = iamt;
+        this.crt = crt;
+        this.camt = camt;
+        this.srt = srt;
+        this.samt = samt;
+        this.pro_ass = pro_ass;
+        this.csrt = csrt;
+        this.csamt = csamt;
+        this.etin = etin;
+        this.etype = etype;
+        OrderNumber = orderNumber;
+        OrderDate = orderDate;
+    }
+
+    public double getCsrt() {
+        return csrt;
+    }
+
+    public void setCsrt(double csrt) {
+        this.csrt = csrt;
+    }
+
+    public double getCsamt() {
+        return csamt;
+    }
+
+    public void setCsamt(double csamt) {
+        this.csamt = csamt;
+    }
+
+    public String getEtin() {
+        return etin;
+    }
+
+    public void setEtin(String etin) {
+        this.etin = etin;
+    }
+
+    public String getEtype() {
+        return etype;
+    }
+
+    public void setEtype(String etype) {
+        this.etype = etype;
+    }
+
+    public String getOrderNumber() {
+        return OrderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        OrderNumber = orderNumber;
+    }
+
+    public String getOrderDate() {
+        return OrderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
+        OrderDate = orderDate;
     }
 
     public String getFlag() {

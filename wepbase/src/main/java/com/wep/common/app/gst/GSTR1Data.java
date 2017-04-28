@@ -11,13 +11,13 @@ public class GSTR1Data {
     private String gstin;
     private String fp;
     private double gt;
+    private ArrayList<GSTR1B2BData> b2b;
     private ArrayList<GSTR1B2CSData> b2cs;
     private ArrayList<GSTR1B2CSAData> b2csa;
     private ArrayList<GSTR1CDN> cdn;
 
     public GSTR1Data() {
     }
-
     public GSTR1Data(String gstin, String fp, double gt, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1CDN> cdn) {
         this.gstin = gstin;
         this.fp = fp;
@@ -25,6 +25,24 @@ public class GSTR1Data {
         this.b2cs = b2cs;
         this.b2csa = b2csa;
         this.cdn = cdn;
+    }
+
+    public GSTR1Data(String gstin, String fp, double gt,ArrayList<GSTR1B2BData> b2b, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1CDN> cdn) {
+        this.gstin = gstin;
+        this.fp = fp;
+        this.gt = gt;
+        this.b2b = b2b;
+        this.b2cs = b2cs;
+        this.b2csa = b2csa;
+        this.cdn = cdn;
+    }
+
+    public ArrayList<GSTR1B2BData> getB2b() {
+        return b2b;
+    }
+
+    public void setB2b(ArrayList<GSTR1B2BData> b2b) {
+        this.b2b = b2b;
     }
 
     public String getGstin() {

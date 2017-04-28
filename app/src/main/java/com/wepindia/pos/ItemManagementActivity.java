@@ -275,7 +275,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                                         2, 0, 0, 0, "", "",0f,0f,"",
                                                                         Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
                                                                         Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
-                                                                        "",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
+                                                                        "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
                                                                         Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
                                                             }
                                                             StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
@@ -357,7 +357,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                         2, 0, 0, 0, "", "",0f,0f,"",
                                                         Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
                                                         Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
-                                                        "",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
+                                                        "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
                                                         Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
                                             }
                                             final String current_date = businessDate;

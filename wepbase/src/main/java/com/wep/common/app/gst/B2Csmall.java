@@ -8,11 +8,18 @@ public class B2Csmall  {
 
     private String SupplyType;
     private String HSNCode;
-    private String PlaceOfSupply, Description;
+    private String PlaceOfSupply, Description,stateCode;
     private float TaxableValue , SubTotal ;
     private float IGSTRate, IGSTAmt, CGSTRate, CGSTAmt, SGSTRate, SGSTAmt;
     private String ProAss;
     private float NilRatedValue, ExemptedValue, NonGSTValue, CompoundingValue,unregisteredValue;
+    private String cessRate ="0";
+    private String cessAmt  ="0";
+    private String Orderno="0";
+    private String OrderDate="0";
+    private String etin="";
+    private String etype="";
+
 
     public B2Csmall() {
         this.Description="";
@@ -33,13 +40,22 @@ public class B2Csmall  {
         this.CompoundingValue=0;
         this.unregisteredValue=0;
         this.SubTotal=0;
+        cessRate ="0";
+        cessAmt  ="0";
+        Orderno="0";
+        OrderDate="0";
+        etin="";
+        etype="";
+        stateCode="";
     }
 
-    public B2Csmall(String supplyType, String HSNCode, String placeOfSupply, float TaxableValue, float IGSTRate, float IGSTAmt, float CGSTRate, float CGSTAmt, float SGSTRate, float SGSTAmt, String proAss, float nilRatedValue, float exemptedValue, float nonGSTValue, float compoundingValue, float unregisteredValue) {
+    public B2Csmall(String supplyType, String HSNCode, String placeOfSupply, String description, float taxableValue, float subTotal, float IGSTRate, float IGSTAmt, float CGSTRate, float CGSTAmt, float SGSTRate, float SGSTAmt, String proAss, float nilRatedValue, float exemptedValue, float nonGSTValue, float compoundingValue, float unregisteredValue, String cessRate, String cessAmt, String orderno, String orderDate, String etin, String etype) {
         SupplyType = supplyType;
         this.HSNCode = HSNCode;
-        PlaceOfSupply = placeOfSupply;
-        this.TaxableValue = TaxableValue;
+        stateCode = stateCode;
+        Description = description;
+        TaxableValue = taxableValue;
+        SubTotal = subTotal;
         this.IGSTRate = IGSTRate;
         this.IGSTAmt = IGSTAmt;
         this.CGSTRate = CGSTRate;
@@ -52,6 +68,89 @@ public class B2Csmall  {
         NonGSTValue = nonGSTValue;
         CompoundingValue = compoundingValue;
         this.unregisteredValue = unregisteredValue;
+        this.cessRate = cessRate;
+        this.cessAmt = cessAmt;
+        Orderno = orderno;
+        OrderDate = orderDate;
+        this.etin = etin;
+        this.etype = etype;
+        //this.stateCode = stateCode;
+    }
+
+    /*public B2Csmall(String supplyType, String HSNCode, String placeOfSupply, float TaxableValue, float IGSTRate, float IGSTAmt, float CGSTRate, float CGSTAmt, float SGSTRate, float SGSTAmt, String proAss, float nilRatedValue, float exemptedValue, float nonGSTValue, float compoundingValue, float unregisteredValue) {
+            SupplyType = supplyType;
+            this.HSNCode = HSNCode;
+            PlaceOfSupply = placeOfSupply;
+            this.TaxableValue = TaxableValue;
+            this.IGSTRate = IGSTRate;
+            this.IGSTAmt = IGSTAmt;
+            this.CGSTRate = CGSTRate;
+            this.CGSTAmt = CGSTAmt;
+            this.SGSTRate = SGSTRate;
+            this.SGSTAmt = SGSTAmt;
+            ProAss = proAss;
+            NilRatedValue = nilRatedValue;
+            ExemptedValue = exemptedValue;
+            NonGSTValue = nonGSTValue;
+            CompoundingValue = compoundingValue;
+            this.unregisteredValue = unregisteredValue;
+        }
+    */
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public String getCessRate() {
+        return cessRate;
+    }
+
+    public void setCessRate(String cessRate) {
+        this.cessRate = cessRate;
+    }
+
+    public String getCessAmt() {
+        return cessAmt;
+    }
+
+    public void setCessAmt(String cessAmt) {
+        this.cessAmt = cessAmt;
+    }
+
+    public String getOrderno() {
+        return Orderno;
+    }
+
+    public void setOrderno(String orderno) {
+        Orderno = orderno;
+    }
+
+    public String getOrderDate() {
+        return OrderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
+        OrderDate = orderDate;
+    }
+
+    public String getEtin() {
+        return etin;
+    }
+
+    public void setEtin(String etin) {
+        this.etin = etin;
+    }
+
+    public String getEtype() {
+        return etype;
+    }
+
+    public void setEtype(String etype) {
+        this.etype = etype;
     }
 
     public float getSubTotal() {

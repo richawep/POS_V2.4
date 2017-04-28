@@ -5,9 +5,12 @@ import android.database.Cursor;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.gst.B2Csmall;
+import com.wep.common.app.gst.GSTR1B2BData;
 import com.wep.common.app.gst.GSTR1B2CSAData;
 import com.wep.common.app.gst.GSTR1CDN;
 import com.wep.common.app.gst.GSTR1CDNCDN;
+import com.wep.common.app.gst.GSTR1_B2B_invoices;
+import com.wep.common.app.gst.GSTR1_B2B_items;
 import com.wep.common.app.gst.GSTR2B2BAData;
 import com.wep.common.app.gst.GSTR2B2BData;
 import com.wep.common.app.gst.GSTR2B2BITCDetails;
@@ -15,6 +18,7 @@ import com.wep.common.app.gst.GSTR2B2BInvoiceItems;
 import com.wep.common.app.gst.GSTR2B2BInvoices;
 import com.wep.common.app.gst.GSTR2B2BItemDetails;
 import com.wep.common.app.gst.GSTR2CDN;
+import com.wep.common.app.gst.get.GSTR1_B2B_item_details;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 
 import java.util.ArrayList;
@@ -37,10 +41,10 @@ public class GSTDataController {
 
 
     public ArrayList<com.wep.common.app.gst.B2Csmall> getGSTR1B2CSDataList(String StartDate, String EndDate) {
-        String GSTEnable = "0", POSEnable = "0", HSNEnable = "0", ReverseChargeEnabe = "0";
+        String GSTEnable = "1", POSEnable = "1", HSNEnable = "1", ReverseChargeEnabe = "0";
         ArrayList<com.wep.common.app.gst.B2Csmall> datalist_s = new ArrayList<com.wep.common.app.gst.B2Csmall>();
         try {
-            Cursor billsettingcursor = dbReport.getBillSetting();
+            /*Cursor billsettingcursor = dbReport.getBillSetting();
             if (billsettingcursor != null && billsettingcursor.moveToFirst()) {
                 GSTEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("GSTEnable"));
                 if (GSTEnable == null) {
@@ -59,7 +63,7 @@ public class GSTDataController {
                         ReverseChargeEnabe = "0";
                     }
                 }
-            }
+            }*/
             //String StartDate = txtReportDateStart.getText().toString();
             //String EndDate = txtReportDateEnd.getText().toString();
             Cursor cursor = dbReport.getOutwardB2Cs(StartDate, EndDate);
@@ -74,10 +78,12 @@ public class GSTDataController {
                     int count = 1;
 
                     do {// item_detail table
-                        String POS_str = cursor.getString(cursor.getColumnIndex("POS"));
+                        String stateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
+                        if(stateCode== null)
+                            stateCode = "";
                         float TaxableValue_f = Float.parseFloat(cursor.getString(cursor.getColumnIndex("TaxableValue")));
-                        if ((POS_str.equals("")) || (POS_str.equals("") == false && TaxableValue_f <= 250000)) {
-                            // for interstate + interstate only + <=2.5l
+                        if ((stateCode.equals("")) || (!(stateCode.equals("") && TaxableValue_f <= 250000))) {
+                            // for intrastate + interstate only  <=2.5L
                             String InvNo = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
                             String InvDate = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
                             String custname_str = cursor.getString(cursor.getColumnIndex("CustName"));
@@ -109,7 +115,7 @@ public class GSTDataController {
                                         //HSNCode_str = HSN;
 
 
-                                        //CustStateCode_str  = rowcursor.getString(rowcursor.getColumnIndex("CustStateCode"));
+                                        String CustStateCode_str  = rowcursor.getString(rowcursor.getColumnIndex("CustStateCode"));
                                         //String POS_str1 = rowcursor.getString(rowcursor.getColumnIndex("POS"));
 
 
@@ -157,15 +163,23 @@ public class GSTDataController {
                                             SGSTAmount_f = Float.parseFloat(sgstamt_str);
                                         }
 
+                                        String cessRate ="0";
+                                        String cessAmt  ="0";
+                                        String Orderno="0";
+                                        String OrderDate="0";
+                                        String etin="";
+                                        String eType = "";
+                                        String ProAss = "";
 
                                         subtotal_f = Float.parseFloat(rowcursor.getString(rowcursor.getColumnIndex("SubTotal")));
 
-                                        String ProAss = "";
+
 
                                         B2Csmall obj = new B2Csmall();
                                         obj.setSupplyType(SupplyType_str);
                                         obj.setHSNCode(HSN);
-                                        obj.setPlaceOfSupply(POS_str);
+                                        obj.setStateCode(stateCode);
+                                        //obj.setPlaceOfSupply(POS_str);
                                         obj.setTaxableValue(taxablevalue_f);
                                         obj.setIGSTRate(IGSTRate_f);
                                         obj.setIGSTAmt(IGSTAmount_f);
@@ -175,13 +189,20 @@ public class GSTDataController {
                                         obj.setSGSTAmt(SGSTAmount_f);
                                         obj.setProAss(ProAss);
                                         obj.setSubTotal(subtotal_f);
+                                        obj.setCessRate(cessRate);
+                                        obj.setCessAmt(cessAmt);
+                                        obj.setOrderno(Orderno);
+                                        obj.setOrderDate(OrderDate);
+                                        obj.setEtin(etin);
+                                        obj.setEtype(eType);
+
                                         if (datalist_s.size() == 0) // empty list
                                         {
                                             datalist_s.add(obj);
                                         } else {
                                             found = 0;
                                             for (B2Csmall data_s : datalist_s) {
-                                                if (data_s.getHSNCode().equalsIgnoreCase(HSN) && data_s.getPlaceOfSupply().equalsIgnoreCase(POS_str)) {
+                                                if (data_s.getHSNCode().equalsIgnoreCase(HSN) && data_s.getStateCode().equalsIgnoreCase(stateCode)) {
                                                     // taxval
                                                     float taxableval = data_s.getTaxableValue();
                                                     taxableval += taxablevalue_f;
@@ -201,6 +222,11 @@ public class GSTDataController {
                                                     float sgstamt_temp = data_s.getSGSTAmt();
                                                     sgstamt_temp += SGSTAmount_f;
                                                     data_s.setSGSTAmt(sgstamt_temp);
+
+                                                    // cess Amt
+                                                    float cessamt_temp = Float.parseFloat(data_s.getCessAmt());
+                                                    cessamt_temp += Float.parseFloat(cessAmt);
+                                                    data_s.setSGSTAmt(cessamt_temp);
 
                                                     //SubTotal
                                                     float subtot = data_s.getSubTotal();
@@ -375,6 +401,89 @@ public class GSTDataController {
         return gstr2B2BInvoiceItemsList;
     }
 
+    public ArrayList<GSTR1B2BData> getGSTR1B2BList(String startDate, String endDate) {
+        ArrayList<GSTR1B2BData> b2BDataList = new ArrayList<GSTR1B2BData>();
+        try {
+            ArrayList<String > gstinList = dbReport.getGSTR1B2B_gstinList(startDate,endDate);
+            if(gstinList.size() ==0)
+            {
+                MsgBox.Show("","No records for B2B");
+                return b2BDataList;
+            }
+            for (String gstin_str  : gstinList )
+            {
+                Cursor cursor = dbReport.getGSTR1B2b_for_gstin(startDate,endDate,gstin_str);
+                int c = cursor.getCount();
+                int i = 0;
+                String cessRate ="0";
+                String cessAmt  ="0";
+                String Orderno="0";
+                String OrderDate="0";
+                String etin="";
+                String eType = "";
+                ArrayList<GSTR1_B2B_invoices> invoiceList = new ArrayList<>();
+                if (cursor != null &&  cursor.moveToFirst() )
+                {
+                    GSTR1B2BData b2BData = new GSTR1B2BData();
+                    b2BData.setCtin(cursor.getString(cursor.getColumnIndex("GSTIN")));
+
+                    do {
+                        ArrayList<GSTR1_B2B_items> item_list = new ArrayList<>();
+
+                        //item details
+                        String invno = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                        String invdt = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                        String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+                        Cursor cursor_b2bitems_for_inv = dbReport.getitems_b2b(invno, invdt, gstin);
+
+                        while (cursor_b2bitems_for_inv!=null && cursor_b2bitems_for_inv.moveToNext())
+                        {
+                            GSTR1_B2B_item_details item_details = new GSTR1_B2B_item_details(
+                                    cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("SupplyType")),
+                                    cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("HSNCode")),
+                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("TaxableValue")),
+                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate")),
+                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTAmount")),
+                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTRate")),
+                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTAmount")),
+                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTRate")),
+                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTAmount")),
+                                    0,0
+                            );
+                            GSTR1_B2B_items item= new GSTR1_B2B_items(++i,item_details);
+                            item_list.add(item);
+                        }
+
+                        if(item_list!=null && item_list.size()>0) {
+                            GSTR1_B2B_invoices inv = new GSTR1_B2B_invoices(
+                                    cursor.getString(cursor.getColumnIndex("InvoiceNumber")),
+                                    cursor.getString(cursor.getColumnIndex("InvoiceDate")),
+                                    cursor.getDouble(cursor.getColumnIndex("TaxableValue")),
+                                    cursor.getString(cursor.getColumnIndex("POS")),
+                                    cursor.getString(cursor.getColumnIndex("ReverseCharge")),
+                                    cursor.getString(cursor.getColumnIndex("ProvisionalAssess")),
+                                    "",
+                                    "",
+                                    cursor.getString(cursor.getColumnIndex("EcommerceGSTIN")),
+                                    item_list
+                            );
+                            invoiceList.add(inv);
+                        }
+                    }while (cursor.moveToNext());
+                }
+                if(invoiceList!=null && invoiceList.size()>0)
+                {
+                    GSTR1B2BData b2BData = new GSTR1B2BData(gstin_str,invoiceList);
+                    b2BDataList.add(b2BData);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            b2BDataList = null;
+        }
+        return b2BDataList;
+    }
+
     public ArrayList<GSTR1B2CSAData> getGSTR1B2CSAList(String startDate, String endDate) {
         ArrayList<GSTR1B2CSAData> list = new ArrayList<GSTR1B2CSAData>();
         try {
@@ -385,22 +494,29 @@ public class GSTDataController {
             }
             else
             {
+                String cessRate ="0";
+                String cessAmt  ="0";
+                String Orderno="0";
+                String OrderDate="0";
+                String etin="";
+                String eType = "";
+                String ProAss = "";
                 int i = 0;
+                int c = cursor.getCount();
                 if (cursor.moveToFirst()) {
                     do {
                         i++;
-                        String date = cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
-                        String str[] = date.split("-");
+
                         GSTR1B2CSAData gstr1B2CSAData = new GSTR1B2CSAData(
                                 "*flag*",
                                 "*chksum*",
                                 cursor.getString(cursor.getColumnIndex("POS")),
-                                str[2]+str[0],
+                                cursor.getString(cursor.getColumnIndex("Month")),
                                 cursor.getString(cursor.getColumnIndex("SupplyType")),
                                 cursor.getString(cursor.getColumnIndex("HSNCode")),
                                 cursor.getString(cursor.getColumnIndex("RevisedPOS")),
                                 cursor.getString(cursor.getColumnIndex("RevisedSupplyType")),
-                                cursor.getString(cursor.getColumnIndex("HSNCode")),
+                                cursor.getString(cursor.getColumnIndex("ReviseHSNCode")),
                                 cursor.getDouble(cursor.getColumnIndex("TaxableValue")),
                                 cursor.getDouble(cursor.getColumnIndex("IGSTRate")),
                                 cursor.getDouble(cursor.getColumnIndex("IGSTAmount")),
@@ -408,7 +524,13 @@ public class GSTDataController {
                                 cursor.getDouble(cursor.getColumnIndex("CGSTAmount")),
                                 cursor.getDouble(cursor.getColumnIndex("SGSTRate")),
                                 cursor.getDouble(cursor.getColumnIndex("SGSTAmount")),
-                                cursor.getString(cursor.getColumnIndex("SupplyType"))
+                                cursor.getString(cursor.getColumnIndex("ProvisionalAssess")),
+                                Double.parseDouble(cessRate),
+                                Double.parseDouble(cessAmt),
+                                etin,
+                                eType,
+                                Orderno,
+                                OrderDate
                                 );
                         list.add(gstr1B2CSAData);
                     } while (cursor.moveToNext()) ;
@@ -416,6 +538,7 @@ public class GSTDataController {
             }
         }
         catch (Exception e) {
+           e.printStackTrace();
             list = null;
         }
         return list;

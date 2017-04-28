@@ -109,7 +109,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
         et_sgstamt = (EditText) view.findViewById (R.id.et_sgstamt);
 
         btnAdd = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnAdd);
-        btnSave = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnSave);
+       //btnSave = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnSave);
         btnClear = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnClear);
         btnClose = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnClose);
         btnLoad = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnLoad);
@@ -325,6 +325,10 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
                 ammend.setCgstamt(Float.parseFloat(cgstamt));
                 ammend.setSgstrate(Float.parseFloat(sgstrate));
                 ammend.setSgstamt(Float.parseFloat(sgstamt));
+                Date dd = new Date();
+                String dd1 = new SimpleDateFormat("dd-MM-yyyy").format(dd);
+                Date dd2 = new SimpleDateFormat("dd-MM-yyyy").parse(dd1);
+                ammend.setInvoiceDate_ori(String.valueOf(dd2.getTime()));
 
                 long lResult = dbAmmend_b2cs_GSTR1.add_GSTR1_B2CSAmmend(ammend);
                 if(lResult>0)

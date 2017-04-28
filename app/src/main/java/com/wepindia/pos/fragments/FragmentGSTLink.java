@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
@@ -16,22 +15,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.mswipetech.wisepad.sdktest.view.Constants;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.gst.B2Csmall;
 import com.wep.common.app.gst.GSTR1AB2BSData;
 import com.wep.common.app.gst.GSTR1AData;
 import com.wep.common.app.gst.GSTR1B2BAInvoiceItems;
+import com.wep.common.app.gst.GSTR1B2BData;
 import com.wep.common.app.gst.GSTR1B2CSAData;
 import com.wep.common.app.gst.GSTR1B2CSData;
 import com.wep.common.app.gst.GSTR1CDN;
@@ -53,7 +50,6 @@ import com.wep.gstcall.api.util.GstJsonEncoder;
 import com.wepindia.pos.GST.GSTFileActivity;
 import com.wepindia.pos.GST.controlers.GSTDataController;
 import com.wepindia.pos.GST.fragments.AuthFragment;
-import com.wepindia.pos.GSTLinkActivity;
 import com.wepindia.pos.GSTSupport.HTTPAsyncTask_Frag;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -67,6 +63,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -326,52 +323,82 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
     }
 
 
-    public void saveGSTR1(String userName) {
+    public void postGSTR1Invoices(String userName) {
         //Toast.makeText(myContext, "hello", Toast.LENGTH_SHORT).show();
-        String startDate = DateUtil.getDateForDatePicker(etReportDateStart.getText().toString()) ;
-        String endDate = DateUtil.getDateForDatePicker(etReportDateEnd.getText().toString()) ;
-        if(ConnectionDetector.isInternetConnection(myContext))
-        {
+        String startDate_str = (etReportDateStart.getText().toString()) ;
+        String endDate_str = (etReportDateEnd.getText().toString()) ;
+        try{
+            String start_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(startDate_str)).getTime());
+            String end_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(endDate_str)).getTime());
+        if(ConnectionDetector.isInternetConnection(myContext)) {
             progressDialog.show();
-            ArrayList<GSTR1B2CSData> list = new ArrayList<GSTR1B2CSData>();
-            ArrayList<B2Csmall> b2CsmallsList = dataController.getGSTR1B2CSDataList(startDate,endDate);
-            double gt = 0;
-            for(B2Csmall b2Csmall : b2CsmallsList)
-            {
-                gt = gt+b2Csmall.getSubTotal();
-                GSTR1B2CSData b2CSData = new GSTR1B2CSData(
-                        "*flag*"/*"A"*/,
-                        "*chksum*"/*"HHJJHJJHJJJJJJ"*/,
-                        b2Csmall.getPlaceOfSupply(),
-                        b2Csmall.getSupplyType(),
-                        b2Csmall.getHSNCode().substring(0,b2Csmall.getHSNCode().indexOf("-")),
-                        b2Csmall.getTaxableValue(),
-                        b2Csmall.getIGSTRate(),
-                        b2Csmall.getIGSTAmt(),
-                        b2Csmall.getCGSTRate(),
-                        b2Csmall.getCGSTAmt(),
-                        b2Csmall.getSGSTRate(),
-                        b2Csmall.getSGSTAmt(),
-                        /*"Y"*/(b2Csmall.getProAss().equalsIgnoreCase(""))? "*pro_ass*" : b2Csmall.getProAss()
-                );
-                list.add(b2CSData);
-            }
-            String str[] = startDate.split("-");
-            // Get All B2CSA data
-            ArrayList<GSTR1B2CSAData> b2CSADataArrayList =null;//dataController.getGSTR1B2CSAList(startDate,endDate);
+            String str[] = startDate_str.split("-");
+            ArrayList<GSTR1B2BData> list_b2b = makeGSTR1B2B( start_milli,  end_milli);
+            ArrayList<GSTR1B2CSData> list_b2cs = makeGSTR1B2CS( start_milli,  end_milli);
+            ArrayList<GSTR1B2CSAData> list_b2csA = makeGSTR1B2CSA( start_milli,  end_milli);;//dataController.getGSTR1B2CSAList(startDate,endDate);
             // Get All CDN Data
             ArrayList<GSTR1CDN> cdnList = null;// dataController.getGSTR1CDNData(startDate,endDate);
-            GSTR1Data gstr1Data = new GSTR1Data(dbGSTLink.getGSTIN(),str[2]+str[0],gt,list,b2CSADataArrayList,cdnList);
-            GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1Data);
+            // GSTR1Data(String gstin, String fp, double gt, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1CDN> cdn) {
+            GSTR1Data gstr1Data = new GSTR1Data(dbGSTLink.getGSTIN(), str[1] + str[2], 0, list_b2b, list_b2cs, list_b2csA, cdnList);
+            GSTRData gstrData = new GSTRData(userName, dbGSTLink.getGSTIN(), gstr1Data);
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
-            new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1, Config.GSTR1_URL).execute();
+            new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST, strJson, REQUEST_SAVE_GSTR1, Config.GSTR1_URL).execute();
+
         }
+
         else
         {
             Toast.makeText(myContext, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
         }
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            MsgBox.Show("Error", "An error occured while uploading the data");
+        }
     }
 
+    private ArrayList<GSTR1B2BData> makeGSTR1B2B(String start_milli, String end_milli){
+        ArrayList<GSTR1B2BData> list = dataController.getGSTR1B2BList(start_milli,end_milli);
+        return list;
+    }
+
+    private ArrayList<GSTR1B2CSAData> makeGSTR1B2CSA(String start_milli, String end_milli){
+        ArrayList<GSTR1B2CSAData> list = new ArrayList<GSTR1B2CSAData>();
+        list = dataController.getGSTR1B2CSAList(start_milli,end_milli);
+        return list;
+    }
+    private ArrayList<GSTR1B2CSData> makeGSTR1B2CS(String start_milli, String end_milli)
+    {
+        ArrayList<GSTR1B2CSData> list = new ArrayList<GSTR1B2CSData>();
+        ArrayList<B2Csmall> b2CsmallsList = dataController.getGSTR1B2CSDataList(start_milli, end_milli);
+        double gt = 0;
+        for (B2Csmall b2Csmall : b2CsmallsList) {
+            gt = gt + b2Csmall.getSubTotal();
+            GSTR1B2CSData b2CSData = new GSTR1B2CSData(
+                    "*flag*"/*"A"*/,
+                    "*chksum*"/*"HHJJHJJHJJJJJJ"*/,
+                    b2Csmall.getStateCode(),
+                    b2Csmall.getSupplyType(),
+                    b2Csmall.getHSNCode().substring(0, b2Csmall.getHSNCode().indexOf("-")),
+                    b2Csmall.getTaxableValue(),
+                    b2Csmall.getIGSTRate(),
+                    b2Csmall.getIGSTAmt(),
+                    b2Csmall.getCGSTRate(),
+                    b2Csmall.getCGSTAmt(),
+                    b2Csmall.getSGSTRate(),
+                    b2Csmall.getSGSTAmt(),
+                    Double.parseDouble(b2Csmall.getCessRate()),
+                    Double.parseDouble(b2Csmall.getCessAmt()),
+                    (b2Csmall.getProAss().equalsIgnoreCase("")) ? "*pro_ass*" : b2Csmall.getProAss(),
+                    b2Csmall.getEtin(),
+                    b2Csmall.getEtype(),
+                    b2Csmall.getOrderno(),
+                    b2Csmall.getOrderDate()
+            );
+            list.add(b2CSData);
+        }
+        return list;
+    }
     public void onClickDownloadGSTR2A(View view) {
         pDialog.show();
         new DownloadFileFromURL(myActivity,pDialog,"B2B", Config.GSTR_GET_API).execute();
@@ -478,10 +505,18 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
     public void onClickPostGstr1(View view) {
         String startDate = etReportDateStart.getText().toString() ;
         String endDate = etReportDateEnd.getText().toString() ;
+        String token1[] = startDate.split("-");
+        String token2[] = endDate.split("-");
         if(startDate.equalsIgnoreCase("") || endDate.equalsIgnoreCase(""))
         {
             //disMiss();
             MsgBox.setMessage("Please select Date")
+                    .setPositiveButton("OK", null)
+                    .show();
+        }
+        else if (!token1[1].equals(token2[1]))
+        {
+            MsgBox.setMessage("Please select Date range for one month at a time")
                     .setPositiveButton("OK", null)
                     .show();
         }
@@ -595,7 +630,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
             {
                 if(code == REQUEST_SAVE_GSTR1)
                 {
-                    saveGSTR1(userName);
+                    postGSTR1Invoices(userName);
                 }
                 if(code == REQUEST_SAVE_GSTR1A)
                 {

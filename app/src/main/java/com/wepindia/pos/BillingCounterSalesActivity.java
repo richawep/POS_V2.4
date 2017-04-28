@@ -2286,7 +2286,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
 
         // pos
-        if (chk_interstate.isChecked()) {
+        /*if (chk_interstate.isChecked()) {
             String str = spnr_pos.getSelectedItem().toString();
             int length = str.length();
             String sub = "";
@@ -2296,9 +2296,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             objBillDetail.setPOS(sub);
             Log.d("InsertBillDetail", "POS :" + sub+" - "+str);
         } else {
-            objBillDetail.setPOS("");
-            Log.d("InsertBillDetail", "POS :");
-        }
+            objBillDetail.setPOS("56");// to be retrieved from database later -- richa to do
+            Log.d("InsertBillDetail", "POS : "+objBillDetail.getPOS());
+        }*/
+        objBillDetail.setPOS("56");// to be retrieved from database later -- richa to do
+        Log.d("InsertBillDetail", "POS : "+objBillDetail.getPOS());
 
 
 
@@ -2367,14 +2369,27 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBillDetail", "custGSTIN :" + custGSTIN);
 
         // cust StateCode
-        String str = spnr_pos.getSelectedItem().toString();
+        if (chk_interstate.isChecked()) {
+            String str = spnr_pos.getSelectedItem().toString();
+            int length = str.length();
+            String sub = "";
+            if (length > 0) {
+                sub = str.substring(length - 2, length);
+            }
+            objBillDetail.setCustStateCode(sub);
+            Log.d("InsertBillDetail", "CustStateCode :" + sub+" - "+str);
+        } else {
+            objBillDetail.setCustStateCode("56");// to be retrieved from database later -- richa to do
+            Log.d("InsertBillDetail", "CustStateCode :"+objBillDetail.getCustStateCode());
+        }
+        /*String str = spnr_pos.getSelectedItem().toString();
         int length = str.length();
         String custStateCode = "";
         if (length > 0) {
             custStateCode = str.substring(length - 2, length);
-        }
-        objBillDetail.setCustStateCode(custStateCode);
-        Log.d("InsertBillDetail", "CustStateCode :" + custStateCode);
+        }*/
+        /*objBillDetail.setCustStateCode(custStateCode);
+        Log.d("InsertBillDetail", "CustStateCode :" + custStateCode);*/
 
 
         // BusinessType
