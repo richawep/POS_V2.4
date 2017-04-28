@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
+import com.wepindia.pos.GST.fragments.Fragment_GSTR1_B2B_Amend;
 import com.wepindia.pos.GST.fragments.Fragment_GSTR1_B2CS_Amend;
 import com.wepindia.pos.GST.fragments.Fragment_GSTR1_B2CL_Amend;
 import com.wepindia.pos.GST.fragments.Fragment_GSTR2_B2B_Amend;
@@ -76,7 +77,7 @@ public class TabbedAmmendActivity extends WepBaseActivity {
 
         Bundle bundle2=new Bundle();
         bundle2.putString("REPORT_TYPE", "2");
-        Fragment_GSTR1_B2CS_Amend reportFragment2 = new Fragment_GSTR1_B2CS_Amend();
+        Fragment_GSTR1_B2B_Amend reportFragment2 = new Fragment_GSTR1_B2B_Amend();
         reportFragment2.setArguments(bundle2);
         adapter.addFragment(reportFragment2, "GSTR1_B2B ");
 
