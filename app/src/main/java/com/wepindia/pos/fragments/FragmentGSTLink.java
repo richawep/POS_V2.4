@@ -333,7 +333,10 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         if(ConnectionDetector.isInternetConnection(myContext)) {
             progressDialog.show();
             String str[] = startDate_str.split("-");
-            ArrayList<GSTR1B2BData> list_b2b = makeGSTR1B2B( start_milli,  end_milli);
+            //ArrayList<GSTR1B2BData> list_b2b = makeGSTR1B2B( start_milli,  end_milli);
+            ArrayList<GSTR1B2BData> list_b2b = dataController.getGSTR1B2BList(start_milli,end_milli);
+            //ArrayList<GSTR1B2BAData> list_b2ba = dataController.getGSTR1B2BList(start_milli,end_milli);
+
             ArrayList<GSTR1B2CSData> list_b2cs = makeGSTR1B2CS( start_milli,  end_milli);
             ArrayList<GSTR1B2CSAData> list_b2csA = makeGSTR1B2CSA( start_milli,  end_milli);;//dataController.getGSTR1B2CSAList(startDate,endDate);
             // Get All CDN Data

@@ -1926,7 +1926,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public Cursor getitems_b2b(String No, String Date, String cust_GSTIN) {
         String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " WHERE " + KEY_InvoiceNo + " Like '" + No + "' AND " +
-                KEY_InvoiceDate + " LIKE '" + Date + "' AND "+KEY_GSTIN+" LIKE '"+cust_GSTIN+"' AND "+
+                KEY_InvoiceDate + " LIKE '" + Date + "' AND "/*+KEY_GSTIN+" LIKE '"+cust_GSTIN+"' AND "+*/+
                 KEY_BusinessType+" LIKE 'B2B'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
@@ -7072,7 +7072,9 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     }
 
     public ArrayList<String> getGSTR1B2B_gstinList(String startDate, String endDate) {
-        String selectQuery = "SELECT DISTINCT GSTIN FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE  " + KEY_BusinessType + " = 'B2B' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        String selectQuery = "SELECT DISTINCT GSTIN FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE  " +
+                KEY_BusinessType + " = 'B2B' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" + endDate + "' AND "+
+                KEY_BillStatus+" = 1";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);
         ArrayList<String> list = new ArrayList<>();
         while(cursor!=null && cursor.moveToNext())

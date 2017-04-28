@@ -3152,7 +3152,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             Log.d("InsertBillItems", "CustName :" + custname);
 
             String custgstin = etCustGSTIN.getText().toString();
-            objBillItem.setCustName(custgstin);
+            objBillItem.setGSTIN(custgstin);
             Log.d("InsertBillItems", "custgstin :" + custgstin);
 
             // cust StateCode
@@ -3305,7 +3305,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         objBillDetail.setCustname(custname);
         Log.d("InsertBillDetail", "CustName :" + custname);
         // cust gstin
-        String custGSTIN = etCustGSTIN.getText().toString();
+        String custGSTIN = etCustGSTIN.getText().toString().trim();
         objBillDetail.setGSTIN(custGSTIN);
         Log.d("InsertBillDetail", "CustGSTIN :" + custGSTIN);
 

@@ -21,7 +21,9 @@ import com.wep.common.app.gst.GSTR2CDN;
 import com.wep.common.app.gst.get.GSTR1_B2B_item_details;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by PriyabratP on 24-11-2016.
@@ -413,17 +415,18 @@ public class GSTDataController {
             for (String gstin_str  : gstinList )
             {
                 Cursor cursor = dbReport.getGSTR1B2b_for_gstin(startDate,endDate,gstin_str);
-                int c = cursor.getCount();
-                int i = 0;
+                //int c = cursor.getCount();
+
                 String cessRate ="0";
                 String cessAmt  ="0";
                 String Orderno="0";
                 String OrderDate="0";
                 String etin="";
-                String eType = "";
+                //String eType = "";
                 ArrayList<GSTR1_B2B_invoices> invoiceList = new ArrayList<>();
                 if (cursor != null &&  cursor.moveToFirst() )
                 {
+
                     GSTR1B2BData b2BData = new GSTR1B2BData();
                     b2BData.setCtin(cursor.getString(cursor.getColumnIndex("GSTIN")));
 
@@ -435,7 +438,7 @@ public class GSTDataController {
                         String invdt = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
                         String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
                         Cursor cursor_b2bitems_for_inv = dbReport.getitems_b2b(invno, invdt, gstin);
-
+                        int i = 0;
                         while (cursor_b2bitems_for_inv!=null && cursor_b2bitems_for_inv.moveToNext())
                         {
                             GSTR1_B2B_item_details item_details = new GSTR1_B2B_item_details(
@@ -455,19 +458,26 @@ public class GSTDataController {
                         }
 
                         if(item_list!=null && item_list.size()>0) {
-                            GSTR1_B2B_invoices inv = new GSTR1_B2B_invoices(
-                                    cursor.getString(cursor.getColumnIndex("InvoiceNumber")),
-                                    cursor.getString(cursor.getColumnIndex("InvoiceDate")),
-                                    cursor.getDouble(cursor.getColumnIndex("TaxableValue")),
-                                    cursor.getString(cursor.getColumnIndex("POS")),
-                                    cursor.getString(cursor.getColumnIndex("ReverseCharge")),
-                                    cursor.getString(cursor.getColumnIndex("ProvisionalAssess")),
-                                    "",
-                                    "",
-                                    cursor.getString(cursor.getColumnIndex("EcommerceGSTIN")),
-                                    item_list
-                            );
-                            invoiceList.add(inv);
+                            try {
+                                String date_str = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                                Date newD = new Date(Long.parseLong(date_str));
+                                String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
+                                GSTR1_B2B_invoices inv = new GSTR1_B2B_invoices(
+                                        cursor.getString(cursor.getColumnIndex("InvoiceNo")),
+                                        newDate,
+                                        cursor.getDouble(cursor.getColumnIndex("TaxableValue")),
+                                        cursor.getString(cursor.getColumnIndex("POS")),
+                                        cursor.getString(cursor.getColumnIndex("ReverseCharge")),
+                                        cursor.getString(cursor.getColumnIndex("ProvisionalAssess")),
+                                        "",
+                                        "",
+                                        cursor.getString(cursor.getColumnIndex("EcommerceGSTIN")),
+                                        item_list
+                                );
+                                invoiceList.add(inv);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     }while (cursor.moveToNext());
                 }
