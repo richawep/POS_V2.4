@@ -127,7 +127,7 @@ public class MasterActivity extends WepBaseActivity {
 
         } else if(v.getContentDescription().toString().equalsIgnoreCase("Stock")){
             // Launch stock activity
-            if (GSTEnable.equals("0"))
+            /*if (GSTEnable.equals("0"))
             {
                 // nongst
 //                Intent intentStock = new Intent(myContext,Inward_Item_Entry_nonGST_Activity.class);
@@ -142,7 +142,10 @@ public class MasterActivity extends WepBaseActivity {
                 Intent intentStock = new Intent(myContext,Inward_Item_Entry_Activity.class);
                 intentStock.putExtra("USER_NAME", strUserName);
                 startActivity(intentStock);
-            }
+            }*/
+            Intent intentStock = new Intent(myContext,TabbedInwardItem_NonGST.class);
+            intentStock.putExtra("USER_NAME", strUserName);
+            startActivity(intentStock);
         } else if(v.getContentDescription().toString().equalsIgnoreCase("PriceStock")){
             // Launch stock activity
             Intent intentStock = new Intent(myContext,StockActivity.class);
