@@ -1932,6 +1932,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor getitems_b2ba(String No_ori, String Date_ori,String No, String Date, String cust_GSTIN) {
+        String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE " + KEY_InvoiceNo + " Like '" + No + "' AND " +
+                KEY_InvoiceDate + " LIKE '" + Date + "' AND "+KEY_GSTIN+" LIKE '"+cust_GSTIN+"' AND "+ KEY_OriginalInvoiceNo+" LIKE '"+No_ori+"' AND "+KEY_OriginalInvoiceDate
+                +" LIKE '"+Date_ori+"' AND "+KEY_BusinessType+" LIKE 'B2BA'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+
     public Cursor getOutwardB2ba() {
         String b2b = "B2B";
         String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE BusinessType LIKE '" + b2b + "'";
@@ -7071,6 +7079,53 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return cursor;
     }
 
+    public ArrayList<String> getGSTR1B2B_A_gstinList(String startDate, String endDate) {
+        String selectQuery = "SELECT DISTINCT GSTIN FROM " + TBL_GSTR1_AMEND + " WHERE  " +
+                KEY_BusinessType + " = 'B2BA' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" +
+                endDate + "'  ";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);
+        ArrayList<String> list = new ArrayList<>();
+        while(cursor!=null && cursor.moveToNext())
+        {
+            String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+            list.add(gstin);
+        }
+
+        return list;
+    }
+    public Cursor getGSTR1B2b_A_for_gstin(String StartDate, String EndDate, String gstin) {
+        String b2b = "B2B";
+
+        String selectQuery = "SELECT InvoiceNo, InvoiceDate, GSTIN,OriginalInvoiceNo,InvoiceNo," +
+                " InvoiceDate, OriginalInvoiceDate, TaxableValue , POS, ReverseCharge,ProvisionalAssess,EcommerceGSTIN FROM " + TBL_GSTR1_AMEND + " WHERE " + KEY_InvoiceDate + " BETWEEN '" + StartDate +
+                "' AND '" + EndDate + "' AND " + KEY_BusinessType + " LIKE 'B2BA' AND "+KEY_GSTIN+" LIKE '"+gstin+"'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+    public Cursor getGSTR1B2b_A_for_gstin(String StartDate, String EndDate, String gstin, String invoiceNo) {
+        String b2b = "B2B";
+        // csrate & csAmount is not extracted as not implemented for now - richa
+        String selectQuery = "SELECT DISTINCT InvoiceNo, InvoiceDate, GSTIN,OriginalInvoiceNo,InvoiceNo," +
+                " InvoiceDate, OriginalInvoiceDate, TaxableValue , POS, ReverseCharge,ProvisionalAssess,EcommerceGSTIN FROM " + TBL_GSTR1_AMEND + " WHERE " + KEY_InvoiceDate + " BETWEEN '" + StartDate +
+                "' AND '" + EndDate + "' AND " + KEY_BusinessType + " LIKE 'B2BA' AND "+KEY_GSTIN+" LIKE '"+gstin+"' AND "
+                +KEY_InvoiceNo+" LIKE '"+invoiceNo+"'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+    public ArrayList<String> getGSTR1B2B_A_invoiceListList(String startDate, String endDate, String gstin) {
+        String selectQuery = "SELECT DISTINCT InvoiceNo FROM " + TBL_GSTR1_AMEND + " WHERE  " +
+                KEY_BusinessType + " = 'B2BA' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" + endDate +
+                "' AND "+ KEY_GSTIN+" LIKE '"+gstin+"'";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);
+        ArrayList<String> list = new ArrayList<>();
+        while(cursor!=null && cursor.moveToNext())
+        {
+            String invoiceNo = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+            list.add(invoiceNo);
+        }
+
+        return list;
+    }
     public ArrayList<String> getGSTR1B2B_gstinList(String startDate, String endDate) {
         String selectQuery = "SELECT DISTINCT GSTIN FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE  " +
                 KEY_BusinessType + " = 'B2B' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" + endDate + "' AND "+
@@ -7094,8 +7149,13 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
-    public Cursor getGSTR2B2BAItems(String startDate, String endDate) {
+    public Cursor getGSTR1B2CSAItems(String startDate, String endDate) {
         String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE  " + KEY_BusinessType + " = 'B2CSA' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+    public Cursor getGSTR1B2BAItems(String startDate, String endDate) {
+        String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE  " + KEY_BusinessType + " = 'B2BA' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
