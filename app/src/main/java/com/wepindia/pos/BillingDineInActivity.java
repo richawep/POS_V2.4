@@ -1017,7 +1017,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
         public void onClick(View v) {
             // TODO Auto-generated method stub
-            ((EditText) v).setSelection(0, ((EditText) v).getText().length());
+            ((EditText) v).setSelection(((EditText) v).getText().length());
         }
 
     };
@@ -3532,7 +3532,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             objBillDetail.setPOS("56");// to be retrieved from database later -- richa to do
             Log.d("InsertBillDetail", "POS : "+objBillDetail.getPOS());
         }*/
-        objBillDetail.setPOS("56");// to be retrieved from database later -- richa to do
+        objBillDetail.setPOS("29");// to be retrieved from database later -- richa to do
         Log.d("InsertBillDetail", "POS : "+objBillDetail.getPOS());
 
 
@@ -3607,7 +3607,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             objBillDetail.setCustStateCode(sub);
             Log.d("InsertBillDetail", "CustStateCode :" + sub+" - "+str);
         } else {
-            objBillDetail.setCustStateCode("56");// to be retrieved from database later -- richa to do
+            objBillDetail.setCustStateCode("29");// to be retrieved from database later -- richa to do
             Log.d("InsertBillDetail", "CustStateCode :"+objBillDetail.getCustStateCode());
         }
         /*String str = spnr_pos.getSelectedItem().toString();

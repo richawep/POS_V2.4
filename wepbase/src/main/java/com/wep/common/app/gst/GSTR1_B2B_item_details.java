@@ -1,4 +1,4 @@
-package com.wep.common.app.gst.get;
+package com.wep.common.app.gst;
 
 /**
  * Created by RichaA on 4/28/2017.

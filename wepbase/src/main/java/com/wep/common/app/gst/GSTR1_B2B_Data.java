@@ -6,17 +6,17 @@ import java.util.ArrayList;
  * Created by RichaA on 4/28/2017.
  */
 
-public class GSTR1_B2BData {
+public class GSTR1_B2B_Data {
 
    private String ctin;
    private ArrayList<GSTR1_B2B_invoices> inv;
 
-    public GSTR1_B2BData(String ctin, ArrayList<GSTR1_B2B_invoices> inv) {
+    public GSTR1_B2B_Data(String ctin, ArrayList<GSTR1_B2B_invoices> inv) {
         this.ctin = ctin;
         this.inv = inv;
     }
 
-    public GSTR1_B2BData() {
+    public GSTR1_B2B_Data() {
         this.ctin = "";
         this.inv = null;
     }

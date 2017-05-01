@@ -5,7 +5,7 @@ import android.database.Cursor;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.gst.B2Csmall;
-import com.wep.common.app.gst.GSTR1_B2BData;
+import com.wep.common.app.gst.GSTR1_B2B_Data;
 import com.wep.common.app.gst.GSTR1B2CSAData;
 import com.wep.common.app.gst.GSTR1CDN;
 import com.wep.common.app.gst.GSTR1CDNCDN;
@@ -13,6 +13,12 @@ import com.wep.common.app.gst.GSTR1_B2B_A_Data;
 import com.wep.common.app.gst.GSTR1_B2B_A_invoices;
 import com.wep.common.app.gst.GSTR1_B2B_invoices;
 import com.wep.common.app.gst.GSTR1_B2B_items;
+import com.wep.common.app.gst.GSTR1_B2CL_A_Data;
+import com.wep.common.app.gst.GSTR1_B2CL_A_invoices;
+import com.wep.common.app.gst.GSTR1_B2CL_Data;
+import com.wep.common.app.gst.GSTR1_B2CL_invoices;
+import com.wep.common.app.gst.GSTR1_B2CL_item_details;
+import com.wep.common.app.gst.GSTR1_B2CL_items;
 import com.wep.common.app.gst.GSTR2B2BAData;
 import com.wep.common.app.gst.GSTR2B2BData;
 import com.wep.common.app.gst.GSTR2B2BITCDetails;
@@ -20,13 +26,12 @@ import com.wep.common.app.gst.GSTR2B2BInvoiceItems;
 import com.wep.common.app.gst.GSTR2B2BInvoices;
 import com.wep.common.app.gst.GSTR2B2BItemDetails;
 import com.wep.common.app.gst.GSTR2CDN;
-import com.wep.common.app.gst.get.GSTR1_B2B_item_details;
+import com.wep.common.app.gst.GSTR1_B2B_item_details;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.StreamHandler;
 
 /**
  * Created by PriyabratP on 24-11-2016.
@@ -406,6 +411,203 @@ public class GSTDataController {
         return gstr2B2BInvoiceItemsList;
     }
 
+    public ArrayList<GSTR1_B2CL_Data> getGSTR1B2CLList(String startDate, String endDate) {
+        ArrayList<GSTR1_B2CL_Data> b2CL_DataList = new ArrayList<GSTR1_B2CL_Data>();
+        try
+        {
+            ArrayList<String> stateCd_List = dbReport.getGSTR1B2CL_stateCodeList(startDate,endDate);
+            for (String state_cd : stateCd_List )
+            {
+                Cursor cursor_billDetail = dbReport.getGSTR1B2CL_stateCodeCursor(startDate,endDate,state_cd);
+                if(cursor_billDetail ==null || !cursor_billDetail.moveToFirst())
+                {
+                    MsgBox.Show("","No records for B2CL");
+                    return b2CL_DataList;
+                }
+                ArrayList<GSTR1_B2CL_invoices> invoiceList = new ArrayList<>();
+                String custStateCd_temp="";
+                do
+                {
+                    String invoiceNo = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("InvoiceNo"));
+                    String invoiceDate = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("InvoiceDate"));
+                    String custName = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("CustName"));
+                    String provisionalAssess = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("ProvisionalAssess"));
+                    String etin = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("EcommerceGSTIN"));
+                    double taxableValue = cursor_billDetail.getDouble(cursor_billDetail.getColumnIndex("TaxableValue"));
+                    String pos_temp = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("POS"));
+                    custStateCd_temp = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("CustStateCode"));
+
+                    if(pos_temp.equals(custStateCd_temp))
+                        continue;
+
+                    double cessRate =0;
+                    double cessAmt  =0;
+                    String Orderno="0";
+                    String OrderDate="0";
+
+                    //String eType = "";
+
+                    ArrayList<GSTR1_B2CL_items> item_list = new ArrayList<>();
+                    Cursor cursor_b2clitems_for_inv = dbReport.getGSTR1B2CL_invoices(invoiceNo,invoiceDate,custStateCd_temp,custName);
+                    if (cursor_b2clitems_for_inv != null &&  cursor_b2clitems_for_inv.moveToFirst() ) {
+                        int i =0;
+                        do
+                        {//item details
+                            GSTR1_B2CL_item_details item_details = new GSTR1_B2CL_item_details(
+                                    cursor_b2clitems_for_inv.getString(cursor_b2clitems_for_inv.getColumnIndex("SupplyType")),
+                                    cursor_b2clitems_for_inv.getString(cursor_b2clitems_for_inv.getColumnIndex("HSNCode")),
+                                    cursor_b2clitems_for_inv.getDouble(cursor_b2clitems_for_inv.getColumnIndex("TaxableValue")),
+                                    cursor_b2clitems_for_inv.getDouble(cursor_b2clitems_for_inv.getColumnIndex("IGSTRate")),
+                                    cursor_b2clitems_for_inv.getDouble(cursor_b2clitems_for_inv.getColumnIndex("IGSTAmount")),
+                                    cessRate, cessAmt
+                            );
+                            GSTR1_B2CL_items item = new GSTR1_B2CL_items(++i, item_details);
+                            item_list.add(item);
+                        } while (cursor_b2clitems_for_inv.moveToNext());
+                    }
+
+                    if(item_list!=null && item_list.size()>0) {
+                        try {
+                            Date newD = new Date(Long.parseLong(invoiceDate));
+                            String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
+                            GSTR1_B2CL_invoices inv = new GSTR1_B2CL_invoices(
+                                    custName,
+                                    invoiceNo,
+                                    newDate,
+                                    taxableValue,
+                                    pos_temp,
+                                    provisionalAssess,
+                                    Orderno,
+                                    OrderDate,
+                                    etin,
+                                    item_list
+                            );
+                            invoiceList.add(inv);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                }while (cursor_billDetail.moveToNext());
+                if(invoiceList!=null && invoiceList.size()>0)
+                {
+                    GSTR1_B2CL_Data b2CL_data = new GSTR1_B2CL_Data(custStateCd_temp,invoiceList);
+                    b2CL_DataList.add(b2CL_data);
+                }
+            }// end of for
+        } catch (Exception e) {
+            e.printStackTrace();
+            b2CL_DataList = null;
+        }
+        return b2CL_DataList;
+    }
+
+    public ArrayList<GSTR1_B2CL_A_Data> getGSTR1B2CL_A_List(String startDate, String endDate) {
+        ArrayList<GSTR1_B2CL_A_Data> b2CL_DataList_ammend = new ArrayList<>();
+        try
+        {
+            ArrayList<String> stateCd_List_ammend= dbReport.getGSTR1B2CL_stateCodeList_ammend(startDate,endDate);
+            for (String state_cd : stateCd_List_ammend )
+            {
+                Cursor cursor_billDetail = dbReport.getGSTR1B2CL_stateCodeCursor_ammend(startDate,endDate,state_cd);
+                if(cursor_billDetail ==null || !cursor_billDetail.moveToFirst())
+                {
+                    MsgBox.Show("","No records for B2CLA");
+                    return b2CL_DataList_ammend;
+                }
+                ArrayList<GSTR1_B2CL_A_invoices> invoiceList = new ArrayList<>();
+                String custStateCd_temp="";
+                ArrayList<String> alreadyAddedAmmendBill = new ArrayList<>();
+                do
+                {
+                    String invoiceNo = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("InvoiceNo"));
+                    String invoiceDate = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("InvoiceDate"));
+                    String invoiceNo_ori = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("OriginalInvoiceNo"));
+                    String invoiceDate_ori = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("OriginalInvoiceDate"));
+                    String custName = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("CustName"));
+                    String provisionalAssess = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("ProvisionalAssess"));
+                    String etin = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("EcommerceGSTIN"));
+                    double taxableValue = cursor_billDetail.getDouble(cursor_billDetail.getColumnIndex("TaxableValue"));
+                    String pos_temp = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("POS"));
+                    custStateCd_temp = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("CustStateCode"));
+
+                    String str = invoiceNo+invoiceDate+ invoiceNo_ori + invoiceDate_ori+pos_temp+custStateCd_temp;
+                    if(!alreadyAddedAmmendBill.contains(str))
+                        alreadyAddedAmmendBill.add(str);
+                    else
+                        continue;
+
+                    if(pos_temp.equals(custStateCd_temp))
+                        continue;
+
+                    double cessRate =0;
+                    double cessAmt  =0;
+                    String Orderno="0";
+                    String OrderDate="0";
+
+                    //String eType = "";
+
+                    ArrayList<GSTR1_B2CL_items> item_list = new ArrayList<>();
+                    Cursor cursor_b2clitems_Ammned_for_inv = dbReport.getGSTR1B2CL_invoices_ammend(invoiceNo,invoiceDate,
+                            custStateCd_temp,custName,pos_temp);
+                    if (cursor_b2clitems_Ammned_for_inv != null &&  cursor_b2clitems_Ammned_for_inv.moveToFirst() ) {
+                        int i =0;
+                        do
+                        {//item details
+                            GSTR1_B2CL_item_details item_details = new GSTR1_B2CL_item_details(
+                                    cursor_b2clitems_Ammned_for_inv.getString(cursor_b2clitems_Ammned_for_inv.getColumnIndex("SupplyType")),
+                                    cursor_b2clitems_Ammned_for_inv.getString(cursor_b2clitems_Ammned_for_inv.getColumnIndex("HSNCode")),
+                                    cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("TaxableValue")),
+                                    cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("IGSTRate")),
+                                    cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("IGSTAmount")),
+                                    cessRate, cessAmt
+                            );
+                            GSTR1_B2CL_items item = new GSTR1_B2CL_items(++i, item_details);
+                            item_list.add(item);
+                        } while (cursor_b2clitems_Ammned_for_inv.moveToNext());
+                    }
+
+                    if(item_list!=null && item_list.size()>0) {
+                        try {
+                            Date newD = new Date(Long.parseLong(invoiceDate));
+                            String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
+                            Date newD_ori = new Date(Long.parseLong(invoiceDate_ori));
+                            String newDate_ori = new SimpleDateFormat("dd-MM-yyyy").format(newD_ori);
+                            GSTR1_B2CL_A_invoices inv = new GSTR1_B2CL_A_invoices(
+                                    invoiceNo_ori,
+                                    newDate_ori,
+                                    custName,
+                                    invoiceNo,
+                                    newDate,
+                                    taxableValue,
+                                    pos_temp,
+                                    provisionalAssess,
+                                    Orderno,
+                                    OrderDate,
+                                    etin,
+                                    item_list
+                            );
+                            invoiceList.add(inv);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                }while (cursor_billDetail.moveToNext());
+                if(invoiceList!=null && invoiceList.size()>0)
+                {
+                    GSTR1_B2CL_A_Data b2CL_A_data = new GSTR1_B2CL_A_Data(custStateCd_temp,invoiceList);
+                    b2CL_DataList_ammend.add(b2CL_A_data);
+                }
+            }// end of for
+        } catch (Exception e) {
+            e.printStackTrace();
+            b2CL_DataList_ammend = null;
+        }
+        return b2CL_DataList_ammend;
+    }
+
+
     public ArrayList<GSTR1_B2B_A_Data> getGSTR1B2BAList(String startDate, String endDate) {
         ArrayList<GSTR1_B2B_A_Data> b2bADataList = new ArrayList<GSTR1_B2B_A_Data>();
         try {
@@ -628,9 +830,8 @@ public class GSTDataController {
         }
         return b2bADataList;
     }
-
-    public ArrayList<GSTR1_B2BData> getGSTR1B2BList(String startDate, String endDate) {
-        ArrayList<GSTR1_B2BData> b2BDataList = new ArrayList<GSTR1_B2BData>();
+    public ArrayList<GSTR1_B2B_Data> getGSTR1B2BList(String startDate, String endDate) {
+        ArrayList<GSTR1_B2B_Data> b2BDataList = new ArrayList<GSTR1_B2B_Data>();
         try {
             ArrayList<String > gstinList = dbReport.getGSTR1B2B_gstinList(startDate,endDate);
             if(gstinList.size() ==0)
@@ -703,7 +904,7 @@ public class GSTDataController {
                         }
                         if(invoiceList!=null && invoiceList.size()>0)
                         {
-                            GSTR1_B2BData b2BData = new GSTR1_B2BData(gstin_str,invoiceList);
+                            GSTR1_B2B_Data b2BData = new GSTR1_B2B_Data(gstin_str,invoiceList);
                             b2BDataList.add(b2BData);
                         }
                     }while (cursor.moveToNext());

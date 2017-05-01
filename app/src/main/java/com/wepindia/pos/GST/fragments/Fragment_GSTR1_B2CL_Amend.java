@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,7 +29,9 @@ import com.wepindia.pos.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 public class Fragment_GSTR1_B2CL_Amend extends Fragment {
@@ -228,27 +231,25 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
         String recipientName = et_recipientName.getText().toString();
         String invoiceNo = et_invno_ori.getText().toString();
         String invoiceDate = et_invdate_ori.getText().toString();
+        String pos_str = spnr_pos.getSelectedItem().toString();
+        String pos = pos_str.substring(pos_str.length()-2, pos_str.length());
         Date dd  = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
-        Cursor cursor = dbAmmend_b2cl_GSTR1.getAmmends_GSTR1_b2cl(recipientName,recipientStateCode,invoiceNo, String.valueOf(dd.getTime()));
+        Cursor cursor = dbAmmend_b2cl_GSTR1.getAmmends_GSTR1_b2cl(recipientName,recipientStateCode,invoiceNo,String.valueOf(dd.getTime()),pos);
         int count =1;
         while (cursor != null && cursor.moveToNext()) {
             GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
             ammend.setSno(count++);
             ammend.setRecipientName(cursor.getString(cursor.getColumnIndex("CustName")));
             ammend.setRecipientStateCode(cursor.getString(cursor.getColumnIndex("POS")));
-
             long invdate_ori = cursor.getLong(cursor.getColumnIndex("OriginalInvoiceDate"));
             Date date = new Date(invdate_ori);
             String dd1 = new SimpleDateFormat("dd-MM-yyyy").format(date);
             ammend.setInvoiceDate_ori(dd1);
-
             ammend.setInvoiceNo_ori(cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo")));
-
             ammend.setInvoiceNo_rev(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
             long invdate_rev = cursor.getLong(cursor.getColumnIndex("InvoiceDate"));
             dd1 = new SimpleDateFormat("dd-MM-yyyy").format(invdate_rev);
             ammend.setInvoiceDate_rev(dd1);
-
             ammend.setType(cursor.getString(cursor.getColumnIndex("SupplyType")));
             ammend.setHSn(cursor.getString(cursor.getColumnIndex("HSNCode")));
             ammend.setTaxableValue(cursor.getDouble(cursor.getColumnIndex("TaxableValue")));
@@ -277,19 +278,33 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
     }
     }
 
+    public int getIndexPOS(String item)
+    {
+
+        List<String> posList = Arrays.asList(getResources().getStringArray(R.array.poscode));
+        int index =0;
+        for (String poscode:posList) {
+            if(poscode.contains(item))
+                return index;
+            index++;
+        }
+
+        return 0;
+    }
+
     void Reset()
     {
         //et_gstin_ori.setText("12ANTPA0870E1A1");
-        et_recipientStateCode.setText("0");
+        et_recipientStateCode.setText("12");
         et_recipientName.setText("neha");
         et_invno_ori.setText("23");
-        et_invdate_ori.setText("12-11-2016");
+        et_invdate_ori.setText("01-05-2017");
 
         et_invno_rev.setText("50");
-        et_invdate_rev.setText("22-11-2016");
+        et_invdate_rev.setText("01-05-2017");
         //et_value.setText("500");
         //et_pos.setText("14");
-        spnr_pos.setSelection(0);
+        spnr_pos.setSelection(getIndexPOS("29"));
         spnr_g_s.setSelection(0);
         et_taxval.setText("1000");
         et_hsn.setText("h5");

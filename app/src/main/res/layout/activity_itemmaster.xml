@@ -401,7 +401,7 @@
                             android:gravity="center"
                             android:hint="0.0"
                             android:inputType="numberDecimal"
-                            android:maxLength="7"
+                            android:maxLength="10"
                             android:selectAllOnFocus="true"
                             android:textSize="13dp" />
                     </LinearLayout>
@@ -431,7 +431,7 @@
                             android:gravity="center"
                             android:hint="0.0"
                             android:inputType="numberDecimal"
-                            android:maxLength="7"
+                            android:maxLength="10"
                             android:selectAllOnFocus="true"
                             android:textSize="13dp" />
                     </LinearLayout>
@@ -461,7 +461,7 @@
                             android:gravity="center"
                             android:hint="0.0"
                             android:inputType="numberDecimal"
-                            android:maxLength="7"
+                            android:maxLength="10"
                             android:selectAllOnFocus="true"
                             android:textSize="13dp" />
                     </LinearLayout>

@@ -182,6 +182,7 @@ public class FragmentDebitNote extends Fragment {
                 String invoiceDate = tv_InvoiceDate.getText().toString().trim();
                 if (!(invoiceNo != null && invoiceDate != null && !invoiceNo.equals("") && !invoiceDate.equals(""))) {
                     MsgBox.Show("Error", "Please enter invoice no and date for which debit note is to be issued");
+                    return;
                 }
                 try {
                     Date date = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
@@ -295,9 +296,32 @@ public class FragmentDebitNote extends Fragment {
 
     private void AddDebit()
     {
-        if (tv_recipientName.getText().toString().equals("") || tv_billamount.getText().toString().equals("0")|| tv_reverseCharge.getText().toString().equals("") )
+        if (tv_recipientName.getText().toString().equals(""))
         {
-            MsgBox.Show("Error", " Please fill invoice details.");
+            MsgBox.Show("Error", " Please fill recipient's Name or GSTIN.");
+            return;
+        }
+        if (tv_billamount.getText().toString().equals(""))
+        {
+            MsgBox.Show("Error", " Please fill Total Invoice Amount.");
+            return;
+        }
+        if ( tv_reverseCharge.getText().toString().equals("") )
+        {
+            MsgBox.Show("Error", " Please fill Attracts reverse charge as y or n.");
+            return;
+        }
+        if(edt_IGSTRate.getText().toString().equals("") || edt_IGSTAmount.getText().toString().equals(""))
+        {
+            MsgBox.Show("Error", "Please fill IGST Rate and Amount. If IGST is not applicable, then fill IGST Rate and Amount as zero");
+            return;
+        }if(edt_CGSTRate.getText().toString().equals("") || edt_CGSTAmount.getText().toString().equals(""))
+        {
+            MsgBox.Show("Error", "Please fill CGST Rate and Amount. If CGST is not applicable, then fill CGST Rate and Amount as zero");
+            return;
+        }if(edt_SGSTRate.getText().toString().equals("") || edt_SGSTAmount.getText().toString().equals(""))
+        {
+            MsgBox.Show("Error", "Please fill SGST Rate and Amount. If SGST is not applicable, then fill SGST Rate and Amount as zero");
             return;
         }
         try {
@@ -387,9 +411,9 @@ public class FragmentDebitNote extends Fragment {
         edt_SGSTAmount.setText("0.00");
         edt_Value.setText("0.00");
         edt_reason.setText("");
-        tv_note_no.setText("");
+        /*tv_note_no.setText("");
         tv_note_date.setText("");
-
+*/
 
         tv_totalIGSTVal.setText("0.00");
         tv_totalCGSTVal.setText("0.00");

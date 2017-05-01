@@ -28,7 +28,9 @@ import com.wepindia.pos.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 public class Fragment_GSTR1_B2B_Amend extends Fragment {
@@ -282,17 +284,30 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
         }
     }
 
+    public int getIndexPOS(String item)
+    {
+
+        List<String> posList = Arrays.asList(getResources().getStringArray(R.array.poscode));
+        int index =0;
+        for (String poscode:posList) {
+            if(poscode.contains(item))
+                return index;
+            index++;
+        }
+
+        return 0;
+    }
     void Reset()
     {
         et_gstin_ori.setText("12ANTPA0870E1A1");
         et_invno_ori.setText("23");
-        et_invdate_ori.setText("12-11-2016");
+        et_invdate_ori.setText("01-04-2017");
         et_gstin_ecom.setText("");
         et_invno_rev.setText("50");
-        et_invdate_rev.setText("22-11-2016");
+        et_invdate_rev.setText("01-05-2017");
         et_value.setText("500");
         //et_pos.setText("14");
-        spnr_pos.setSelection(0);
+        spnr_pos.setSelection(getIndexPOS("29"));
         spnr_g_s.setSelection(0);
         et_taxval.setText("1000");
         et_hsn.setText("h5");

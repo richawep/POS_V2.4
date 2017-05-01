@@ -1,9 +1,5 @@
 package com.wep.common.app.gst;
 
-import com.wep.common.app.gst.get.GSTR1_B2B_item_details;
-
-import java.util.ArrayList;
-
 /**
  * Created by RichaA on 4/28/2017.
  */

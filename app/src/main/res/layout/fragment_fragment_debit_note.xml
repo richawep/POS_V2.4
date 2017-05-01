@@ -412,6 +412,7 @@
                         android:text="Total Invoice Amount:"/>
                     <EditText
                         android:id="@+id/tv_billamount"
+                        android:inputType="numberDecimal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"/>
