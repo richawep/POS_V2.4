@@ -19,7 +19,8 @@ package com.wep.common.app.Database;
 public class BillItem {
 	
 	// Private variables
-	String CustName, CustStateCode,Uom,strItemName, HSNCode, BusinessType, iBillNumber,  SupplyType, SupplierPhone, SupplierName, SupplierAddress,
+	String CustName, CustStateCode,Uom,strItemName, HSNCode, BusinessType, iBillNumber,  SupplyType,
+			SupplierPhone, SupplierName, SupplierAddress,SupplierGSTIN,
             GSTIN;
 	int  iItemNumber, iDeptCode, iCategCode, iKitchenCode, iTaxType;
 	float fAmount, fDiscountAmount, fDiscountPercent, fQuantity, fvalue,fTaxAmount, fTaxPercent, fServiceTaxPercent, fServiceTaxAmount, fModifierAmount,
@@ -69,6 +70,7 @@ public class BillItem {
 		this.fServiceTaxPercent = 0;
 		this.fModifierAmount = 0;
 		this.BusinessType= "";
+		this.SupplierGSTIN= "";
 		this.InvoiceDate= "";
 		this.HSNCode="";
 		this.IGSTAmount=0;
@@ -79,6 +81,14 @@ public class BillItem {
 		this.SGSTAmount=0;
 		this.isGoodInwarded=0;
 		this.SupplierType="";
+	}
+
+	public String getSupplierGSTIN() {
+		return SupplierGSTIN;
+	}
+
+	public void setSupplierGSTIN(String supplierGSTIN) {
+		SupplierGSTIN = supplierGSTIN;
 	}
 
 	public int getIsGoodInwarded() {

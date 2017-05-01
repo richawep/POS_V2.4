@@ -414,23 +414,28 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
 
 
     public void PostGSTR2(String userName) {
-        String startDate = DateUtil.getDateForDatePicker(etReportDateStart.getText().toString()) ;
-        String endDate = DateUtil.getDateForDatePicker(etReportDateEnd.getText().toString()) ;
-        if(ConnectionDetector.isInternetConnection(myContext))
+        String startDate_str = (etReportDateStart.getText().toString()) ;
+        String endDate_str = (etReportDateEnd.getText().toString()) ;
+        try {
+            String start_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(startDate_str)).getTime());
+            String end_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(endDate_str)).getTime());
+            if (ConnectionDetector.isInternetConnection(myContext)) {
+                ArrayList<GSTR2B2BData> gstr2B2BDatasList = dataController.getB2BItems(start_milli, end_milli);
+                String str[] = startDate_str.split("-");
+                ArrayList<GSTR2B2BAData> b2baList = null;//dataController.getGSTR2B2BSaveData();
+                ArrayList<GSTR2CDN> gstr2cdnList = null;
+                ;//dataController.getGSTR2CDNSaveData();
+                GSTR2Data gstr1Data = new GSTR2Data(dbGSTLink.getGSTIN(), str[2] + str[0], 123, 234, gstr2B2BDatasList, b2baList, gstr2cdnList);
+                progressDialog.show();
+                GSTRData gstrData = new GSTRData(userName, dbGSTLink.getGSTIN(), gstr1Data);
+                String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
+                new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST, strJson, REQUEST_SAVE_GSTR2, Config.GSTR2_URL).execute();
+            } else {
+                Toast.makeText(myContext, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e)
         {
-            ArrayList<GSTR2B2BData> gstr2B2BDatasList = dataController.getB2BItems(startDate,endDate);
-            String str[] = startDate.split("-");
-            ArrayList<GSTR2B2BAData> b2baList = null;//dataController.getGSTR2B2BSaveData();
-            ArrayList<GSTR2CDN> gstr2cdnList = null;;//dataController.getGSTR2CDNSaveData();
-            GSTR2Data gstr1Data = new GSTR2Data(dbGSTLink.getGSTIN(),str[2]+str[0],123,234,gstr2B2BDatasList,b2baList,gstr2cdnList);
-            progressDialog.show();
-            GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1Data);
-            String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
-            new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR2, Config.GSTR2_URL).execute();
-        }
-        else
-        {
-            Toast.makeText(myContext, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 

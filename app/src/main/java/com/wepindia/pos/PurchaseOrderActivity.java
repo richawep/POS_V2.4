@@ -43,6 +43,8 @@ import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +60,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
     public MessageDialog MsgBox;
     long edit = 0;
     Spinner spnr_inwalrd_item_list;
-    EditText et_inward_item_quantity, et_inward_sub_total,tx_inward_supply_invoice_number,et_inward_grand_total, et_inward_additionalchargename,
+    EditText et_inward_item_quantity,et_supplier_GSTIN, et_inward_sub_total,tx_inward_supply_invoice_number,et_inward_grand_total, et_inward_additionalchargename,
             et_inward_additionalchargeamount,et_supplier_address,et_supplier_phone,et_supplier_code;
 
     TextView tx_inward_invoice_date;
@@ -125,6 +127,9 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         et_supplier_phone.setText(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierPhone")));
                         et_supplier_address.setText(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierAddress")));
                         suppliercode= supplierdetail_cursor.getInt(supplierdetail_cursor.getColumnIndex("SupplierCode"));
+                        String suppliergstin= supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("GSTIN"));
+                        if(suppliergstin!=null)
+                            et_supplier_GSTIN.setText(suppliergstin);
                         et_supplier_code.setText(String.valueOf(suppliercode));
                         loadAutoCompleteData_item(suppliercode);
                         loadAutoCompleteData_purchaseOrder(suppliercode);
@@ -617,6 +622,10 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             int suppliercode  = Integer.parseInt(et_supplier_code.getText().toString());
             String sup_phone = et_supplier_phone.getText().toString();
             String sup_address = et_supplier_address.getText().toString();
+            String sup_gstin = et_supplier_GSTIN.getText().toString();
+            String sup_type = "UnRegistered";
+            if(sup_gstin!=null && !sup_gstin.equals(""))
+                sup_type = "Registered";
             int deletedrows = dbPurchaseOrder.deletePurchaseOrder( suppliercode,Integer.parseInt(purchaseorderno));
             Log.d("InsertPurchaseOrder", deletedrows+" Rows deleted for Purchase Order "+purchaseorderno);
 
@@ -633,6 +642,10 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 Log.d("InsertPurchaseOrder", "SupplierCode : " + suppliercode);
                 objBillItem.setSupplierName(supp_name);
                 Log.d("InsertPurchaseOrder", "SupplierName : " + supp_name);
+                objBillItem.setSupplierGSTIN(sup_gstin);
+                Log.d("InsertPurchaseOrder", "SupplierGSTIN : " + sup_gstin);
+                objBillItem.setSupplierType(sup_type);
+                Log.d("InsertPurchaseOrder", "SupplierType : " + sup_type);
                 objBillItem.setSupplierPhone(sup_phone);
                 Log.d("InsertPurchaseOrder", "SupplierPhone : " + sup_phone);
                 objBillItem.setSupplierAddress(sup_address);
@@ -850,6 +863,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         et_inward_additionalchargeamount = (EditText) findViewById(R.id.et_inward_additionalchargeamount);
         et_inward_additionalchargename  = (EditText) findViewById(R.id.et_inward_additionalchargename);
         et_inward_sub_total = (EditText) findViewById(R.id.et_inward_sub_total);
+        et_supplier_GSTIN = (EditText) findViewById(R.id.et_supplier_GSTIN);
         et_inward_grand_total = (EditText) findViewById(R.id.et_inward_grand_total);
 
     }
@@ -1445,6 +1459,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
     void reset_inward(int type)
     {
         et_supplier_code.setText("0");
+        et_supplier_GSTIN.setText("");
         autocompletetv_suppliername.setText("");
         et_supplier_address.setText("");
         et_supplier_phone.setText("");
@@ -1515,9 +1530,13 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 Cursor cursor = dbPurchaseOrder.getAllSupplierName_nonGST();
                 //labelsSupplierName = dbPurchaseOrder.getAllSupplierName_nonGST();
                 labelsSupplierName = new ArrayList<String>();
+                ArrayList<String>labelsSupplierGSTIN = new ArrayList<String>();
                 if (cursor != null && cursor.moveToFirst()) {
                     do {
                         labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+                        String gstin =(cursor.getString(cursor.getColumnIndex("GSTIN")));
+                        if(gstin!=null && !gstin.equals(""))
+                            labelsSupplierGSTIN.add(gstin);
                     } while (cursor.moveToNext());
                 }
 
@@ -1530,8 +1549,22 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         return;
                     }
                 }
+                String gstin = et_supplier_GSTIN.getText().toString();
+                if(gstin!=null && !gstin.equals("") && labelsSupplierGSTIN.contains(gstin))
+                {
+                    MsgBox.setTitle("Warning")
+                            .setMessage("Supplier already present in list")
+                            .setPositiveButton("OK", null)
+                            .show();
+                    return;
+                }
 
-                long l = dbPurchaseOrder.saveSupplierDetails("UnRegistered", "", suppliername, supplierphone, supplieradress);
+                long l =0;
+                if(gstin!=null && !gstin.equals(""))
+                    l = dbPurchaseOrder.saveSupplierDetails("Registered", gstin, suppliername, supplierphone, supplieradress);
+                else
+                    l = dbPurchaseOrder.saveSupplierDetails("UnRegistered", "", suppliername, supplierphone, supplieradress);
+
                 if (l > 0) {
                     Log.d("Inward_Item_Entry", " Supplier details saved at " + l);
                     Toast.makeText(myContext, "Supplier details saved at " + l, Toast.LENGTH_SHORT).show();

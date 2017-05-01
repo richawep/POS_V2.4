@@ -41,6 +41,7 @@ import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 import com.wepindia.pos.UploadFilePickerActivity;
+import com.wepindia.printers.utils.StringUtil;
 
 import org.w3c.dom.Text;
 
@@ -81,7 +82,7 @@ public class FragmentInwardSupply extends Fragment {
 
     AutoCompleteTextView autocompletetv_supplierPhn, autocompletetv_suppliername,autocomplete_inw_ItemName;
     WepButton btnAddSupplier;
-    EditText et_inw_rate,et_inw_quantity;
+    EditText et_inw_rate,et_inw_quantity,edt_supplierGSTIN;
     EditText et_Inw_SGSTRate, et_Inw_CGSTRate,et_Inw_IGSTRate;
     ArrayList<String> labelsSupplierName,labelsSupplierPhn;
     ArrayList<String> itemlist;
@@ -165,8 +166,12 @@ public class FragmentInwardSupply extends Fragment {
                     {
                         SupplierPhone = supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierPhone"));
                         SupplierAddress = supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierAddress"));
+                        String supp_gstin  = supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("GSTIN"));
                         autocompletetv_supplierPhn.setText(SupplierPhone);
                         et_inw_supplierAddress.setText(SupplierAddress);
+                        if(supp_gstin!=null )
+                            edt_supplierGSTIN.setText(supp_gstin);
+
                         suppliercode = supplierdetail_cursor.getInt(supplierdetail_cursor.getColumnIndex("SupplierCode"));
                         tv_suppliercode.setText(String.valueOf(suppliercode));
                         sema_display = SUPPLIERWISE;
@@ -536,6 +541,7 @@ public class FragmentInwardSupply extends Fragment {
         et_Inw_CGSTRate = (EditText) view.findViewById(R.id.et_Inw_CGSTRate);
         et_Inw_IGSTRate = (EditText) view.findViewById(R.id.et_Inw_IGSTRate);
         et_inw_quantity = (EditText) view.findViewById(R.id.et_inw_quantity);
+        edt_supplierGSTIN = (EditText) view.findViewById(R.id.edt_supplierGSTIN);
         et_Inw_Amount = (TextView) view.findViewById(R.id.et_Inw_Amount);
         autocompletetv_suppliername = (AutoCompleteTextView) view.findViewById(R.id.autocompletetv_suppliername);
         autocomplete_inw_ItemName= (AutoCompleteTextView) view.findViewById(R.id.autocomplete_inw_ItemName);
@@ -726,11 +732,11 @@ public class FragmentInwardSupply extends Fragment {
                     rowItems.addView(imgIcon);
 
                     tvSalesTax = new TextView(myContext);
-                    tvSalesTax.setText(crsrItems.getString(crsrItems.getColumnIndex("SalesTaxPercent")));
+                    tvSalesTax.setText(crsrItems.getString(crsrItems.getColumnIndex("CGSTRate")));
                     rowItems.addView(tvSalesTax);
 
                     tvOtherTax = new TextView(myContext);
-                    tvOtherTax.setText(crsrItems.getString(crsrItems.getColumnIndex("ServiceTaxPercent")));
+                    tvOtherTax.setText(crsrItems.getString(crsrItems.getColumnIndex("SGSTRate")));
                     rowItems.addView(tvOtherTax);
 
 
@@ -812,6 +818,8 @@ public class FragmentInwardSupply extends Fragment {
                                 autocompletetv_supplierPhn.setText(Supplierphn.getText().toString());
                                 et_inw_supplierAddress.setText(SupplierAddr.getText().toString());
                                 tv_suppliercode.setText(SupplierCode.getText().toString());
+                                String gstin_sup = dbInwardItem.getSupplierGSTIN((SupplierCode.getText().toString()));
+                                edt_supplierGSTIN.setText(gstin_sup);
                                 String supplyType = SupplyType.getText().toString();
                                 if (supplyType.equalsIgnoreCase("g"))
                                     spnr_supplytype.setSelection(0);
@@ -842,6 +850,10 @@ public class FragmentInwardSupply extends Fragment {
 
                                 et_Inw_CGSTRate.setText(SalesTax.getText());
                                 et_Inw_SGSTRate.setText(OtherTax.getText());
+                                double cgstrate = Double.parseDouble(SalesTax.getText().toString());
+                                double sgstrate = Double.parseDouble(OtherTax.getText().toString());
+                                et_Inw_IGSTRate.setText(String.format("%.2f",cgstrate+sgstrate));
+
 
 
 //                                imgItemImage.setImageURI(null);
@@ -1760,7 +1772,8 @@ public class FragmentInwardSupply extends Fragment {
         float SalesTax =0, ServiceTax =0, IGSTRate =0;
 
 
-        String suppliername = autocompletetv_suppliername.getText().toString().toUpperCase().toUpperCase();
+        String suppliername = autocompletetv_suppliername.getText().toString().toUpperCase();
+        String suppliergstin = edt_supplierGSTIN.getText().toString();
         int suppliercode = dbInwardItem.getSuppliercode(suppliername);
         if (suppliercode<0)
         {
@@ -1994,9 +2007,13 @@ public class FragmentInwardSupply extends Fragment {
         Cursor cursor = dbInwardItem.getAllSupplierName_nonGST();
         //labelsSupplierName = dbInwardItem.getAllSupplierName_nonGST();
         labelsSupplierName = new ArrayList<String>();
+        ArrayList<String>labelsSupplierGSTIN = new ArrayList<String>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+                String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+                if(gstin!=null && !gstin.equals(""))
+                    labelsSupplierGSTIN.add(gstin);
             } while (cursor.moveToNext());
         }
 
@@ -2007,18 +2024,33 @@ public class FragmentInwardSupply extends Fragment {
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
         String supplierphn_str = autocompletetv_supplierPhn.getText().toString();
         String supplieraddress_str = et_inw_supplierAddress.getText().toString();
+        String suppliergstin_str = edt_supplierGSTIN.getText().toString();
+        if(suppliergstin_str!=null && !suppliergstin_str.equals(""))
+            supplierType_str="Registered";
+        else
+            suppliergstin_str="";
+
+        if(labelsSupplierGSTIN.contains(suppliergstin_str))
+        {
+            MsgBox.setTitle("Warning")
+                    .setMessage("Supplier with gstin already present in list")
+                    .setPositiveButton("OK",null)
+                    .show();
+            return;
+        }
 
         for (String supplier : labelsSupplierName)
         {
             if (suppliername_str.equalsIgnoreCase(supplier))
             {
                 MsgBox.setTitle("Warning")
-                        .setMessage("Supplier already present in list")
+                        .setMessage("Supplier with name already present in list")
                         .setPositiveButton("OK",null)
                         .show();
                 return;
             }
         }
+
 
         if (suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn_str.equals(""))
         {
@@ -2027,7 +2059,8 @@ public class FragmentInwardSupply extends Fragment {
         }
         else
         {
-            l = dbInwardItem.saveSupplierDetails(supplierType_str, "",suppliername_str, supplierphn_str, supplieraddress_str);
+            l = dbInwardItem.saveSupplierDetails(supplierType_str, suppliergstin_str,suppliername_str,
+                    supplierphn_str, supplieraddress_str);
             if (l>0)
             {
                 Log.d("Inward_Item_Entry"," Supplier details saved at "+l);
@@ -2080,6 +2113,7 @@ public class FragmentInwardSupply extends Fragment {
         //tvFileName.setText("FileName");
         et_inw_ItemBarcode.setText("");
         autocomplete_inw_ItemName.setText("");
+        edt_supplierGSTIN.setText("");
         et_inw_rate.setText("");
         et_inw_quantity.setText("");
         et_Inw_Amount.setText("");
@@ -2107,21 +2141,30 @@ public class FragmentInwardSupply extends Fragment {
         Cursor cursor = dbInwardItem.getAllSupplierName_nonGST();
         //labelsSupplierName = dbInwardItem.getAllSupplierName_nonGST();
         labelsSupplierName = new ArrayList<String>();
+        ArrayList<String>labelsSupplierGSTIN = new ArrayList<String>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+                String gstin = (cursor.getString(cursor.getColumnIndex("GSTIN")));// adding
+                if(gstin!=null && !gstin.equals(""))
+                    labelsSupplierGSTIN.add(gstin);
             } while (cursor.moveToNext());
         }
 
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
+        String suppliergstin_str = edt_supplierGSTIN.getText().toString();
         int flag =0;
         for (String supplier : labelsSupplierName)
-        {            if (supplier.equalsIgnoreCase(suppliername_str))
         {
+            if (supplier.equalsIgnoreCase(suppliername_str))
+            {
+                flag =1;
+                break;
+            }
+        }
+        if(labelsSupplierGSTIN.contains(suppliergstin_str))
             flag =1;
-            break;
-        }
-        }
+
         if (flag ==0)
         {
             MsgBox.setTitle("Warning")
@@ -2274,6 +2317,35 @@ public class FragmentInwardSupply extends Fragment {
         if (autocomplete_inw_ItemName.getText().toString().equalsIgnoreCase("")) {
             /*MsgBox.Show("Warning", "Please enter item full name");*/
             Toast.makeText(myContext, "Please enter item name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Cursor cursor = dbInwardItem.getAllSupplierName_nonGST();
+        ArrayList<String>labelsSupplierGSTIN = new ArrayList<String>();
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+                String gstin = (cursor.getString(cursor.getColumnIndex("GSTIN")));// adding
+                if(gstin!=null && !gstin.equals(""))
+                    labelsSupplierGSTIN.add(gstin);
+            } while (cursor.moveToNext());
+        }
+
+        String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
+        String suppliergstin_str = edt_supplierGSTIN.getText().toString();
+        int flag =0;
+        for (String supplier : labelsSupplierName)
+        {
+            if (supplier.equalsIgnoreCase(suppliername_str))
+            {
+                flag =1;
+                break;
+            }
+        }
+        if(labelsSupplierGSTIN.contains(suppliergstin_str))
+            flag =1;
+        if(flag==0)
+        {
+            MsgBox1.Show("Error","Supplier not in list.");
             return;
         }
 

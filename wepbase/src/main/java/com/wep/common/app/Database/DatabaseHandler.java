@@ -946,7 +946,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     String QUERY_CREATE_TABLE_PURCHASE_ORDER = " CREATE TABLE " + TBL_PURCHASEORDER + " ( " +
             KEY_PurchaseOrderNo + " INTEGER, " + KEY_InvoiceNo + " TEXT, " + KEY_InvoiceDate + " TEXT, " +
-            KEY_SupplierCode + " INTEGER, " + KEY_SUPPLIERNAME + " TEXT, " + KEY_SupplierPhone + " TEXT, " + KEY_SupplierAddress + " TEXT, " +
+            KEY_SupplierCode + " INTEGER, " + KEY_SUPPLIERNAME + " TEXT, " + KEY_SupplierPhone + " TEXT, " +
+            KEY_SupplierAddress + " TEXT, " + KEY_GSTIN+" TEXT, "+KEY_SupplierType+" TEXT, "+
             KEY_MenuCode + " INTEGER, " + KEY_SupplyType + " TEXT , " +
             KEY_ItemName + " TEXT, " + KEY_Value + " REAL, " + KEY_Quantity + " REAL, " + KEY_UOM + "  TEXT, " + KEY_TaxableValue + " REAL, " +
             KEY_SalesTax + " REAL," + KEY_ServiceTaxAmount + " REAl, " + KEY_Amount + " REAL," + KEY_AdditionalChargeName + " TEXT, " +
@@ -2220,6 +2221,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.delete(TBL_GSTR1_AMEND, deleteClause, null);
     }
 
+    public  String getSupplierGSTIN(String supplierCode)
+    {
+        String whereClause = "Select  GSTIN from "+TBL_Supplier+" WHERE "+KEY_SupplierCode+" LIKE '"+supplierCode+"'";
+        Cursor cursor = dbFNB.rawQuery(whereClause,null);
+        String gstin = "";
+        if(cursor!=null && cursor.moveToFirst())
+            gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+        if(gstin==null)
+            gstin="";
+        return gstin;
+
+    }
     public long DeleteAmmend_GSTR2_B2BA(String inv_no_ori, String inv_date_ori,String inv_no_rev,
                                         String inv_date_rev,String hsn, double taxableVal)
     {
@@ -5874,7 +5887,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     public Cursor getAllSupplierName_nonGST() {
 
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TBL_Supplier + " WHERE " + KEY_SupplierType + " LIKE 'UnRegistered'";
+        String selectQuery = "SELECT  * FROM " + TBL_Supplier/* + " WHERE " + KEY_SupplierType + " LIKE 'UnRegistered'"*/;
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArgument
         return cursor;
     }
@@ -6103,6 +6116,8 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_SUPPLIERNAME, objBillItem.getSupplierName());
         cvDbValues.put(KEY_SupplierCode, objBillItem.getSuppliercode());
         cvDbValues.put(KEY_SupplierPhone, objBillItem.getSupplierPhone());
+        cvDbValues.put(KEY_SupplierType, objBillItem.getSupplierType());
+        cvDbValues.put(KEY_GSTIN, objBillItem.getSupplierGSTIN());
         cvDbValues.put(KEY_InvoiceNo, objBillItem.getBillNumber());
         cvDbValues.put(KEY_InvoiceDate, objBillItem.getInvoiceDate());
         cvDbValues.put(KEY_PurchaseOrderNo, objBillItem.getPurchaseOrderNo());
