@@ -3,7 +3,7 @@ package com.wep.common.app.gst;
 /**
  * Created by PriyabratP on 01-12-2016.
  */
-public class GSTR1CDNCDN {
+public class GSTR1_CDN_Details {
     private int sno;
     private String ntty;
     private double nt_num;
@@ -11,6 +11,7 @@ public class GSTR1CDNCDN {
     private String rsn;
     private String inum;// invoice no
     private String idt;
+    private String rchrg;
     private double val;
     private double irt;
     private double iamt;
@@ -18,14 +19,18 @@ public class GSTR1CDNCDN {
     private double camt;
     private double srt;
     private double samt;
+    private double csrt;
+    private double csamt;
+    private String etin;
 
-    public GSTR1CDNCDN() {
+    public GSTR1_CDN_Details() {
         this.ntty = "";
         this.nt_num = 0.00;
         this.nt_dt = "";
         this.rsn = "";
         this.inum = "";
         this.idt = "";
+        this.rchrg = "";
         this.val = 0.00;
         this.irt = 0.00;
         this.iamt = 0.00;
@@ -33,16 +38,21 @@ public class GSTR1CDNCDN {
         this.camt = 0.00;
         this.srt =0.00;
         this.samt = 0.00;
+        this.csrt =0.00;
+        this.csamt = 0.00;
+        this.etin="";
         this.sno = 0;
+
     }
 
-    public GSTR1CDNCDN(String ntty, double nt_num, String nt_dt, String rsn, String inum, String idt, double val, double irt, double iamt, double crt, double camt, double srt, double samt) {
+    public GSTR1_CDN_Details(String ntty, double nt_num, String nt_dt, String rsn, String inum, String idt, double val, double irt, double iamt, double crt, double camt, double srt, double samt) {
         this.ntty = ntty;
         this.nt_num = nt_num;
         this.nt_dt = nt_dt;
         this.rsn = rsn;
         this.inum = inum;
         this.idt = idt;
+        this.rchrg = "";
         this.val = val;
         this.irt = irt;
         this.iamt = iamt;
@@ -50,7 +60,63 @@ public class GSTR1CDNCDN {
         this.camt = camt;
         this.srt = srt;
         this.samt = samt;
+        this.csrt =0.00;
+        this.csamt = 0.00;
+        this.etin="";
         this.sno = 0;
+    }
+
+    public GSTR1_CDN_Details(String ntty, double nt_num, String nt_dt, String rsn, String inum, String idt, String rchrg, double val, double irt, double iamt, double crt, double camt, double srt, double samt, double csrt, double csamt, String etin) {
+        this.sno = 0;
+        this.ntty = ntty;
+        this.nt_num = nt_num;
+        this.nt_dt = nt_dt;
+        this.rsn = rsn;
+        this.inum = inum;
+        this.idt = idt;
+        this.rchrg = rchrg;
+        this.val = val;
+        this.irt = irt;
+        this.iamt = iamt;
+        this.crt = crt;
+        this.camt = camt;
+        this.srt = srt;
+        this.samt = samt;
+        this.csrt = csrt;
+        this.csamt = csamt;
+        this.etin = etin;
+    }
+
+    public String getRchrg() {
+        return rchrg;
+    }
+
+    public void setRchrg(String rchrg) {
+        this.rchrg = rchrg;
+    }
+
+    public double getCsrt() {
+        return csrt;
+    }
+
+    public void setCsrt(double csrt) {
+        this.csrt = csrt;
+    }
+
+    public double getCsamt() {
+        return csamt;
+    }
+
+    public void setCsamt(double csamt) {
+        this.csamt = csamt;
+    }
+
+    public String getEtin() {
+        return etin;
+    }
+
+    public void setEtin(String etin) {
+        this.etin = etin;
     }
 
     public int getSno() {

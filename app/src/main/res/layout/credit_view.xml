@@ -20,6 +20,13 @@
             android:layout_weight="1.07"
             android:gravity="center"
             android:text="Sno" />
+        <TextView
+            android:id="@+id/tvNotetype"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.07"
+            android:gravity="center"
+            android:text="C/D" />
 
 
         <TextView

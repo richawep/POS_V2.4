@@ -436,9 +436,9 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1">
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/tv_totalIGSTVal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -452,7 +452,18 @@
                         android:id="@+id/tv_totalSGSTVal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"/>
+                        android:visibility="gone"/>-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Note Type (Credit/Debit)"/>
+                    <Spinner
+                        android:id="@+id/spnrNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"  />
                 </LinearLayout>
 
             </LinearLayout>
@@ -488,6 +499,15 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/txtColorAccent"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.07"
+                    android:text="NoteType"
+                    android:gravity="center"
+                    android:background="@color/colorPrimaryLight"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/txtColorAccent"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

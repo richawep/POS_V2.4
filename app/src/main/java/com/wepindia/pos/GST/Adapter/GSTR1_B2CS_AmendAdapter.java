@@ -86,7 +86,7 @@ public class GSTR1_B2CS_AmendAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         GSTR1_B2CS_AmendAdapter.ViewHolder viewHolder = null;
-        int count = 1;
+        int count = 0;
         if (true) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.amend_gstr1_b2cs_view, null);

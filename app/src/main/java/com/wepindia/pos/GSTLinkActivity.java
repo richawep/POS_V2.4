@@ -28,7 +28,7 @@ import com.wep.common.app.gst.GSTR1AData;
 import com.wep.common.app.gst.GSTR1B2BAInvoiceItems;
 import com.wep.common.app.gst.GSTR1B2CSAData;
 import com.wep.common.app.gst.GSTR1B2CSData;
-import com.wep.common.app.gst.GSTR1CDN;
+import com.wep.common.app.gst.GSTR1_CDN_Data;
 import com.wep.common.app.gst.GSTR1Data;
 import com.wep.common.app.gst.GSTR2B2BAData;
 import com.wep.common.app.gst.GSTR2B2BAItemDetails;
@@ -465,7 +465,7 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
             // Get All B2CSA data
             ArrayList<GSTR1B2CSAData> b2CSADataArrayList =null;//dataController.getGSTR1B2CSAList(startDate,endDate);
             // Get All CDN Data
-            ArrayList<GSTR1CDN> cdnList = null;// dataController.getGSTR1CDNData(startDate,endDate);
+            ArrayList<GSTR1_CDN_Data> cdnList = null;// dataController.getGSTR1CDNData(startDate,endDate);
             GSTR1Data gstr1Data = new GSTR1Data(dbGSTLink.getGSTIN(),str[2]+str[0],gt,list,b2CSADataArrayList,cdnList);
             GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1Data);
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);

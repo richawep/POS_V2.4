@@ -20,7 +20,7 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.widget.Toast;
 
-import com.wep.common.app.gst.GSTR1CDNCDN;
+import com.wep.common.app.gst.GSTR1_CDN_Details;
 import com.wep.common.app.gst.Model_reconcile;
 import com.wep.common.app.gst.get.GetGSTR1CounterPartySummary;
 import com.wep.common.app.gst.get.GetGSTR1SecSummary;
@@ -663,7 +663,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     String QUERY_CREATE_TABLE_OWNER_DETAILS = "CREATE TABLE " + TBL_OWNER_DETAILS + " ( " +
             KEY_GSTIN + " TEXT, " + KEY_Owner_Name + "  TEXT, " + KEY_FIRM_NAME + " TEXT, " + KEY_PhoneNo + " TEXT, " +
-            KEY_POS +"TEXT,"+
+            KEY_POS +" TEXT,"+
             KEY_Address + " TEXT, " + KEY_TINCIN + " TEXT, " + KEY_IsMainOffice + "  TEXT ) ";
 
     String QUERY_CREATE_TABLE_Stock_Outward = "CREATE TABLE " + TBL_StockOutward + " ( " +
@@ -1248,7 +1248,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TBL_READ_FROM_1A);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Inward);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Outward);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_OWNER_DETAILS);
+        //db.execSQL("DROP TABLE IF EXISTS " + TBL_OWNER_DETAILS);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Inward);
         db.execSQL("DROP TABLE IF EXIXTS " + TBL_CreditDebit_Outward);
         db.execSQL("DROP TABLE IF EXIXTS " + TBL_PURCHASEORDER);
@@ -1276,7 +1276,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues = new ContentValues();
         //cvDbValues.put(KEY_GSTIN, "G12345678901234");
         cvDbValues.put(KEY_GSTIN, "04AABFN9870CMZT");
-        cvDbValues.put(KEY_POS, "56");
+        cvDbValues.put(KEY_POS, "29");
         cvDbValues.put(KEY_Owner_Name, "Anuj Sharma");
         cvDbValues.put(KEY_FIRM_NAME, "Sharma & Sons");
         cvDbValues.put(KEY_PhoneNo, "1234567890");
@@ -1746,7 +1746,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // richa - gst functions
 
-    public long addDebit(GSTR1CDNCDN note, String name, String reason, String reverseCharge) {
+    public long addDebit(GSTR1_CDN_Details note, String name, String reason, String reverseCharge) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_GSTIN, name);
         contentValues.put(KEY_CustName, name);
@@ -1768,7 +1768,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         long result = dbFNB.insert(TBL_CreditDebit_Inward, null, contentValues);
         return result;
     }
-    public long editDebit(GSTR1CDNCDN note, String reason) {
+    public long editDebit(GSTR1_CDN_Details note, String reason) {
 
         String whereClause = KEY_InvoiceNo+" LIKE '"+note.getInum()+"' AND "+KEY_InvoiceDate+" LIKE '"+note.getIdt()+"' AND "
                 +KEY_NoteNo+" LIKE '"+note.getNt_num()+"' AND "+KEY_NoteDate+" LIKE '"+note.getNt_dt()+"'";
@@ -1785,7 +1785,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         long result = dbFNB.update(TBL_CreditDebit_Inward, contentValues,whereClause,null);
         return result;
     }
-    public long addCredit(GSTR1CDNCDN note, String name, String reason, String reverseCharge) {
+    public long addCredit(GSTR1_CDN_Details note, String name, String reason, String reverseCharge) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_GSTIN, name);
         contentValues.put(KEY_CustName, name);
@@ -1803,13 +1803,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(KEY_SGSTRate, note.getSrt());
         contentValues.put(KEY_SGSTAmount, note.getSamt());
         contentValues.put(KEY_CGSTRate, note.getCrt());
-        contentValues.put(KEY_CGSTAmount, note.getSamt());
+        contentValues.put(KEY_CGSTAmount, note.getCamt());
 
         long result = dbFNB.insert(TBL_CreditDebit_Outward, null, contentValues);
         return result;
     }
 
-    public long editCredit(GSTR1CDNCDN note, String reason) {
+    public long editCredit(GSTR1_CDN_Details note, String reason) {
 
         String whereClause = KEY_InvoiceNo+" LIKE '"+note.getInum()+"' AND "+KEY_InvoiceDate+" LIKE '"+note.getIdt()+"' AND "
                 +KEY_NoteNo+" LIKE '"+note.getNt_num()+"' AND "+KEY_NoteDate+" LIKE '"+note.getNt_dt()+"'";
@@ -1827,9 +1827,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public Cursor getCreditDetails(String invoiceNo, String invoiceDate,String type) {
+    public Cursor getCreditDetails(String invoiceNo, String invoiceDate,String type,String custgstin) {
         String selectQuery = "SELECT * FROM " + TBL_CreditDebit_Outward + " WHERE " + KEY_InvoiceDate + " LIKE '" + invoiceDate +
-                "' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_NoteType+" LIKE '"+type+"'";
+                "' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_NoteType+" LIKE '"+type+"' AND "+
+                KEY_CustName+" LIKE '"+custgstin+"'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -7235,10 +7236,26 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return cursor;
     }
 
-    public Cursor getGSTR1GSTR1CDNCDN(String startDate, String endDate, String num) {
-        String selectQuery = "SELECT * FROM CreditDebitOutward WHERE  " + KEY_GSTIN + " = '" + num + "' and " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+    public Cursor getGSTR1_CDN_forgstin(String startDate, String endDate, String gstin) {
+        String selectQuery = "SELECT * FROM CreditDebitOutward WHERE  " + KEY_GSTIN + " = '" + gstin +
+                "' and " + KEY_NoteDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
+    }
+    public ArrayList<String> getGSTR1_CDN_gstinlist(String startDate, String endDate) {
+        String selectQuery = "SELECT DISTINCT GSTIN FROM CreditDebitOutward WHERE  " + KEY_NoteDate +
+                " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);
+        ArrayList<String> list = new ArrayList<>();
+        while(cursor!=null && cursor.moveToNext())
+        {
+            String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+            if(gstin==null)
+                continue;
+            else
+                list.add(gstin);
+        }
+        return list;
     }
 
     // All New Methods

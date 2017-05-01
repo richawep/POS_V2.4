@@ -73,7 +73,7 @@ public class TabbedCreditDebitNote extends WepBaseActivity {
         bundle2.putString("REPORT_TYPE", "2");
         FragmentCreditNote reportFragment2 = new FragmentCreditNote();
         reportFragment2.setArguments(bundle2);
-        adapter.addFragment(reportFragment2, "Credit Note");
+        adapter.addFragment(reportFragment2, "Outward C/D Note");
 
         Bundle bundle1=new Bundle();
         bundle1.putString("REPORT_TYPE", "1");

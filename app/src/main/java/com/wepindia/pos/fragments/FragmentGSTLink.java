@@ -28,10 +28,10 @@ import com.wep.common.app.gst.B2Csmall;
 import com.wep.common.app.gst.GSTR1AB2BSData;
 import com.wep.common.app.gst.GSTR1AData;
 import com.wep.common.app.gst.GSTR1B2BAInvoiceItems;
+import com.wep.common.app.gst.GSTR1_CDN_Data;
 import com.wep.common.app.gst.GSTR1_B2B_Data;
 import com.wep.common.app.gst.GSTR1B2CSAData;
 import com.wep.common.app.gst.GSTR1B2CSData;
-import com.wep.common.app.gst.GSTR1CDN;
 import com.wep.common.app.gst.GSTR1Data;
 import com.wep.common.app.gst.GSTR1_B2B_A_Data;
 import com.wep.common.app.gst.GSTR1_B2CL_A_Data;
@@ -342,12 +342,12 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
             ArrayList<GSTR1_B2CL_Data> list_b2cl = dataController.getGSTR1B2CLList(start_milli,end_milli);
             ArrayList<GSTR1_B2CL_A_Data> list_b2cla = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
             ArrayList<GSTR1B2CSData> list_b2cs = makeGSTR1B2CS( start_milli,  end_milli);
-            ArrayList<GSTR1B2CSAData> list_b2csA = makeGSTR1B2CSA( start_milli,  end_milli);;//dataController.getGSTR1B2CSAList(startDate,endDate);
+            ArrayList<GSTR1B2CSAData> list_b2csA = makeGSTR1B2CSA( start_milli,  end_milli);
 
-            ArrayList<GSTR1CDN> cdnList = null;// dataController.getGSTR1CDNData(startDate,endDate);
-            // GSTR1Data(String gstin, String fp, double gt, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1CDN> cdn) {
-            GSTR1Data gstr1Data = new GSTR1Data(dbGSTLink.getGSTIN(), str[1] + str[2], 0, list_b2b, list_b2ba,list_b2cl,
-                    list_b2cla,list_b2cs, list_b2csA, cdnList);
+            ArrayList<GSTR1_CDN_Data> cdnList = dataController.getGSTR1CDNData(start_milli,end_milli);
+            // GSTR1Data(String gstin, String fp, double gt, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1_CDN_Data> cdn) {
+            GSTR1Data gstr1Data = new GSTR1Data(dbGSTLink.getGSTIN(), str[1] + str[2], 0, list_b2b, list_b2ba,
+                    list_b2cl,list_b2cla,list_b2cs, list_b2csA, cdnList);
             GSTRData gstrData = new GSTRData(userName, dbGSTLink.getGSTIN(), gstr1Data);
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
             new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST, strJson, REQUEST_SAVE_GSTR1, Config.GSTR1_URL).execute();

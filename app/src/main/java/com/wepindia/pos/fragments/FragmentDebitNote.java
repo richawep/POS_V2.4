@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
-import com.wep.common.app.gst.GSTR1CDNCDN;
+import com.wep.common.app.gst.GSTR1_CDN_Details;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -52,7 +52,7 @@ public class FragmentDebitNote extends Fragment {
     Context myContext;
     DatabaseHandler dbDebit;
     MessageDialog MsgBox;
-    ArrayList<GSTR1CDNCDN> noteList;
+    ArrayList<GSTR1_CDN_Details> noteList;
     CDNoteAdapter noteAdapter = null;
     Date date;
     public FragmentDebitNote() {
@@ -205,7 +205,7 @@ public class FragmentDebitNote extends Fragment {
         rl_debitDisplay = (RelativeLayout) v.findViewById(R.id.rl_debitDisplay) ;
     }
 
-    private void listViewItemClickEvent(GSTR1CDNCDN note)
+    private void listViewItemClickEvent(GSTR1_CDN_Details note)
     {
         try {
             edt_IGSTRate.setText(String.valueOf(note.getIrt()));
@@ -257,12 +257,12 @@ public class FragmentDebitNote extends Fragment {
     {
         try {
             int count = 1;
-            noteList = new ArrayList<GSTR1CDNCDN>();
+            noteList = new ArrayList<GSTR1_CDN_Details>();
             String date_str = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate)).getTime());
 
             Cursor cursor = dbDebit.getDebitDetails(invoiceNo, date_str, "D");
             while (cursor != null && cursor.moveToNext()) {
-                GSTR1CDNCDN note = new GSTR1CDNCDN();
+                GSTR1_CDN_Details note = new GSTR1_CDN_Details();
                 long milli_note = cursor.getLong(cursor.getColumnIndex("NoteDate"));
                 Date date=new Date(milli_note);
                 String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
@@ -325,7 +325,7 @@ public class FragmentDebitNote extends Fragment {
             return;
         }
         try {
-            GSTR1CDNCDN note = new GSTR1CDNCDN();
+            GSTR1_CDN_Details note = new GSTR1_CDN_Details();
             String date_temp = new SimpleDateFormat("dd-MM-yyyy").format(date);
             Date date_new = new SimpleDateFormat("dd-MM-yyyy").parse(date_temp);
             long milii = date_new.getTime();
@@ -368,7 +368,7 @@ public class FragmentDebitNote extends Fragment {
     private void EditDebit()
     {
         try {
-            GSTR1CDNCDN note = new GSTR1CDNCDN();
+            GSTR1_CDN_Details note = new GSTR1_CDN_Details();
 
             String invoiceDate = tv_InvoiceDate.getText().toString();
             Date date_inv = (new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate));

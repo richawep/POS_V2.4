@@ -5,10 +5,10 @@ import android.database.Cursor;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.gst.B2Csmall;
+import com.wep.common.app.gst.GSTR1_CDN_Data;
 import com.wep.common.app.gst.GSTR1_B2B_Data;
 import com.wep.common.app.gst.GSTR1B2CSAData;
-import com.wep.common.app.gst.GSTR1CDN;
-import com.wep.common.app.gst.GSTR1CDNCDN;
+import com.wep.common.app.gst.GSTR1_CDN_Details;
 import com.wep.common.app.gst.GSTR1_B2B_A_Data;
 import com.wep.common.app.gst.GSTR1_B2B_A_invoices;
 import com.wep.common.app.gst.GSTR1_B2B_invoices;
@@ -978,42 +978,73 @@ public class GSTDataController {
         return list;
     }
 
-    public ArrayList<GSTR1CDN> getGSTR1CDNData(String startDate, String endDate) {
-        ArrayList<GSTR1CDN> list = new ArrayList<GSTR1CDN>();
+    public ArrayList<GSTR1_CDN_Data> getGSTR1CDNData(String startDate, String endDate) {
+        ArrayList<GSTR1_CDN_Data> cdn_list = new ArrayList<GSTR1_CDN_Data>();
         try {
-            Cursor cursor = dbReport.getGSTR2CDNGSTNs();
-            if (cursor == null)
-            {
-                list = null;
-            }
-            else
-            {
-                if (cursor.moveToFirst()) {
-                    do {
-                        String num = cursor.getString(cursor.getColumnIndex("GSTIN"));
-                        ArrayList<GSTR1CDNCDN> cdnList = getGSTR1CDNsList(startDate,endDate,num);
-                        GSTR1CDN cdn = new GSTR1CDN(
-                                num,
-                                "b2cs",
-                                cursor.getString(cursor.getColumnIndex("CustName")),
-                                cdnList
-                                );
-                        list.add(cdn);
-                    } while (cursor.moveToNext()) ;
+            ArrayList<String> counterPartyGSTIN_list = dbReport.getGSTR1_CDN_gstinlist(startDate, endDate);
+            for (String gstin : counterPartyGSTIN_list) {
+                Cursor cursor = dbReport.getGSTR1_CDN_forgstin(startDate,endDate,gstin);
+                if (cursor == null || !cursor.moveToFirst())
+                {
+                    MsgBox.Show("", "No data for Credit / Debit note");
+                    return cdn_list;
                 }
+                ArrayList<GSTR1_CDN_Details> notelist = new ArrayList<>();
+                do
+                {
+                    String reason = cursor.getString(cursor.getColumnIndex("Reason"));
+                    if(reason== null)
+                        reason="";
+                    String etin = "";
+                    double cessrate =0, cessamt =0;
+                    String notedate_str = cursor.getString(cursor.getColumnIndex("NoteDate"));
+                    Date dd_note = new Date(Long.parseLong(notedate_str));
+                    String dd_note_str = new SimpleDateFormat("dd-MM-yyyy").format(dd_note);
+                    String Invdate_str = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                    Date dd_inv =new Date(Long.parseLong(Invdate_str));
+                    String dd_inv_str =  new SimpleDateFormat("dd-MM-yyyy").format(dd_inv);
+                    GSTR1_CDN_Details nt_det = new GSTR1_CDN_Details(
+                            cursor.getString(cursor.getColumnIndex("NoteType")),
+                            cursor.getDouble(cursor.getColumnIndex("NoteNo")),
+                            dd_note_str,
+                            reason,
+                            cursor.getString(cursor.getColumnIndex("InvoiceNo")),
+                            dd_inv_str,
+                            cursor.getString(cursor.getColumnIndex("AttractsReverseCharge")),
+                            cursor.getDouble(cursor.getColumnIndex("DifferentialValue")),
+                            cursor.getDouble(cursor.getColumnIndex("IGSTRate")),
+                            cursor.getDouble(cursor.getColumnIndex("IGSTAmount")),
+                            cursor.getDouble(cursor.getColumnIndex("CGSTRate")),
+                            cursor.getDouble(cursor.getColumnIndex("CGSTAmount")),
+                            cursor.getDouble(cursor.getColumnIndex("SGSTRate")),
+                            cursor.getDouble(cursor.getColumnIndex("SGSTAmount")),
+                            cessamt,
+                            cessamt,
+                            etin
+                             );
+                    notelist.add(nt_det);
+                }while(cursor.moveToNext());
+                if(notelist!=null && notelist.size()>0)
+                {
+                    GSTR1_CDN_Data cdn_entry =  new GSTR1_CDN_Data(gstin,notelist);
+                    cdn_list.add(cdn_entry);
+                }
+
             }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return cdn_list;
         }
-        catch (Exception e) {
-            list = null;
-        }
-        return list;
+
+        return cdn_list;
     }
 
-    private ArrayList<GSTR1CDNCDN> getGSTR1CDNsList(String startDate, String endDate, String num) {
-        ArrayList<GSTR1CDNCDN> list = new ArrayList<GSTR1CDNCDN>();
+    private ArrayList<GSTR1_CDN_Details> getGSTR1CDNsList(String startDate, String endDate, String num) {
+        ArrayList<GSTR1_CDN_Details> list = new ArrayList<GSTR1_CDN_Details>();
         try {
 
-            Cursor cursor = dbReport.getGSTR1GSTR1CDNCDN(startDate, endDate,num);
+            Cursor cursor = null;//dbReport.getGSTR1GSTR1CDNCDN(startDate, endDate,num);
             if (cursor == null)
             {
                 list = null;
@@ -1023,7 +1054,7 @@ public class GSTDataController {
                 if (cursor.moveToFirst()) {
                     do {
                         //String num = cursor.getString(cursor.getColumnIndex("GSTIN"));
-                        GSTR1CDNCDN cdncdn =  new GSTR1CDNCDN(
+                        GSTR1_CDN_Details cdncdn =  new GSTR1_CDN_Details(
                                 cursor.getString(cursor.getColumnIndex("NoteType")),
                                 cursor.getDouble(cursor.getColumnIndex("NoteNo")),
                                 cursor.getString(cursor.getColumnIndex("NoteDate")),

@@ -13,7 +13,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.wep.common.app.Database.DatabaseHandler;
-import com.wep.common.app.gst.GSTR1CDNCDN;
+import com.wep.common.app.gst.GSTR1_CDN_Details;
 import com.wepindia.pos.R;
 
 import java.text.SimpleDateFormat;
@@ -26,11 +26,11 @@ import java.util.Date;
 
 public class CDNoteAdapter extends BaseAdapter {
     private Activity activity;
-    private ArrayList<GSTR1CDNCDN> creditdebitArrayList;
+    private ArrayList<GSTR1_CDN_Details> creditdebitArrayList;
     private DatabaseHandler handler;
     private String type;
 
-    public CDNoteAdapter(Activity activity, ArrayList<GSTR1CDNCDN> itemOutwardsArrayList, DatabaseHandler handler, String type){
+    public CDNoteAdapter(Activity activity, ArrayList<GSTR1_CDN_Details> itemOutwardsArrayList, DatabaseHandler handler, String type){
         this.activity = activity;
         this. creditdebitArrayList = itemOutwardsArrayList;
         this.handler = handler;
@@ -43,7 +43,7 @@ public class CDNoteAdapter extends BaseAdapter {
     public Object getItem(int i) {
         return  creditdebitArrayList.get(i);
     }
-    public GSTR1CDNCDN getItems(int i) {
+    public GSTR1_CDN_Details getItems(int i) {
         return  creditdebitArrayList.get(i);
     }
 
@@ -51,16 +51,16 @@ public class CDNoteAdapter extends BaseAdapter {
         return i;
     }
 
-    public void notifyNewDataAdded(ArrayList<GSTR1CDNCDN> list) {
+    public void notifyNewDataAdded(ArrayList<GSTR1_CDN_Details> list) {
         this. creditdebitArrayList = list;
         notifyDataSetChanged();
     }
 
-    public ArrayList<GSTR1CDNCDN> getItems() {
+    public ArrayList<GSTR1_CDN_Details> getItems() {
         return  creditdebitArrayList;
     }
 
-    public void notifyDataSetChanged(ArrayList<GSTR1CDNCDN> allItem) {
+    public void notifyDataSetChanged(ArrayList<GSTR1_CDN_Details> allItem) {
         this. creditdebitArrayList = allItem;
         notifyDataSetChanged();
     }
@@ -76,6 +76,7 @@ public class CDNoteAdapter extends BaseAdapter {
         TextView CGSTAmount;
         TextView SGSTRate;
         TextView SGSTAmount;
+        TextView tvNotetype;
         ImageView btndel;
     }
 
@@ -88,6 +89,7 @@ public class CDNoteAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.credit_view,null);
             viewHolder = new CDNoteAdapter.ViewHolder();
             viewHolder.SNo = (TextView) convertView.findViewById(R.id.tvSNo);
+            viewHolder.tvNotetype = (TextView) convertView.findViewById(R.id.tvNotetype);
             viewHolder.CreditNo = (TextView) convertView.findViewById(R.id.tvCreditNo);
             viewHolder.CreditDate = (TextView) convertView.findViewById(R.id.tvCreditDate);
             viewHolder.DifferentialValue = (TextView) convertView.findViewById(R.id.tvDifferentialValue);
@@ -107,8 +109,9 @@ public class CDNoteAdapter extends BaseAdapter {
         {
             viewHolder = (CDNoteAdapter.ViewHolder) convertView.getTag();
         }
-        GSTR1CDNCDN itemOutward =  creditdebitArrayList.get(i);
+        GSTR1_CDN_Details itemOutward =  creditdebitArrayList.get(i);
         viewHolder.SNo.setText(String.valueOf(itemOutward.getSno()));
+        viewHolder.tvNotetype.setText(String.valueOf(itemOutward.getNtty()));
         viewHolder.CreditNo.setText(String.valueOf(itemOutward.getNt_num()));
         viewHolder.CreditDate.setText(itemOutward.getNt_dt());
         viewHolder.DifferentialValue.setText(String.format("%.2f",itemOutward.getVal()));
@@ -132,7 +135,7 @@ public class CDNoteAdapter extends BaseAdapter {
 
 
             final int i  = Integer.parseInt(v.getTag().toString());
-            final GSTR1CDNCDN obj = getItems(i);
+            final GSTR1_CDN_Details obj = getItems(i);
             //String ItemName = obj.getLongName();
             AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                     .setTitle("Delete")

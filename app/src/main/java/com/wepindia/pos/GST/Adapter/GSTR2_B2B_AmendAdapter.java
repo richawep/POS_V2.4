@@ -9,14 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.wep.common.app.Database.DatabaseHandler;
-import com.wep.common.app.gst.GSTR1CDNCDN;
 import com.wep.common.app.models.GSTR2_B2B_Amend;
-import com.wepindia.pos.GST.fragments.Fragment_GSTR2_B2B_Amend;
 import com.wepindia.pos.R;
 
 import java.text.SimpleDateFormat;
