@@ -210,6 +210,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
+                            android:visibility="gone"
                             android:onClick="onClickPostGstr1A">
 
                             <ImageView
@@ -518,7 +519,7 @@
                                 android:layout_height="wrap_content"
                                 android:contentDescription="DineIn"
                                 android:padding="3dp"
-                                android:src="@drawable/ic_upload" />
+                                android:src="@drawable/ic_download" />
 
                             <TextView
                                 android:id="@+id/tv1ww2"
