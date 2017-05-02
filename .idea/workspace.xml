@@ -15,36 +15,9 @@
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/PurchaseOrderAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_purchaseorder.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/PurchaseOrder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2_B2B_Data_registered.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2_B2B_ITC_details.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2_B2B_invoices_registered.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2_B2B_item_details.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2_B2B_items.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2B2BAData.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2B2BAITCDetails.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2B2BAInvoiceItems.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2B2BAInvoices.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2B2BData.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2B2BInvoices.java" afterPath="" />
+    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="goodsinward(partial)">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTDataController.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTDataController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTLinkActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTLinkActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_goods_inward_note.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_goods_inward_note.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_purchase_order.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_purchase_order.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/MainActivity.java" afterPath="$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2Data.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2Data.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -102,11 +75,13 @@
       <file leaf-file-name="PurchaseOrderActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="672" column="13" selection-start-line="633" selection-start-column="12" selection-end-line="672" selection-end-column="13" />
+            <state relative-caret-position="283">
+              <caret line="1534" column="70" selection-start-line="1528" selection-start-column="8" selection-end-line="1534" selection-end-column="70" />
               <folding>
                 <element signature="e#37452#37600#0" expanded="true" />
                 <element signature="e#37599#37600#0" expanded="true" />
+                <element signature="e#37835#37984#0" expanded="true" />
+                <element signature="e#37983#37984#0" expanded="true" />
                 <element signature="e#38967#41162#0" expanded="true" />
                 <element signature="e#41161#41162#0" expanded="true" />
               </folding>
@@ -132,11 +107,11 @@
       <file leaf-file-name="GoodsInwardNoteActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="972" column="23" selection-start-line="972" selection-start-column="23" selection-end-line="972" selection-end-column="23" />
+            <state relative-caret-position="402">
+              <caret line="1549" column="16" selection-start-line="1549" selection-start-column="16" selection-end-line="1549" selection-end-column="16" />
               <folding>
-                <element signature="e#54429#54574#0" expanded="true" />
-                <element signature="e#54573#54574#0" expanded="true" />
+                <element signature="e#53937#54082#0" expanded="true" />
+                <element signature="e#54081#54082#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -6096,7 +6071,21 @@
       <option name="project" value="LOCAL" />
       <updated>1493369768616</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="purchase order &amp; goodsinward(partial)">
+      <created>1493733823446</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1493733823446</updated>
+    </task>
+    <task id="LOCAL-00033" summary="goodsinward(partial)">
+      <created>1493735132233</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1493735132233</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6212,8 +6201,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;Fixed: Wallet Payment&#10;Change: Credit Customer Validation Changed&#10;Progress: Card payment&#10;" />
-    <MESSAGE value="changing name to Wep_FnB_GST&#10;" />
     <MESSAGE value="Displaying Customer's GSTIN in customer detail module&#10;" />
     <MESSAGE value="Commenting unused code in customer detail module&#10;" />
     <MESSAGE value="making look of master and home screen  compatible with 7&quot; tab" />
@@ -6237,7 +6224,9 @@
     <MESSAGE value="bringing up the GST Link screen" />
     <MESSAGE value="GSTR1 B2BA" />
     <MESSAGE value="inward" />
-    <option name="LAST_COMMIT_MESSAGE" value="inward" />
+    <MESSAGE value="purchase order &amp; goodsinward(partial)" />
+    <MESSAGE value="goodsinward(partial)" />
+    <option name="LAST_COMMIT_MESSAGE" value="goodsinward(partial)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6765,11 +6754,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="672" column="13" selection-start-line="633" selection-start-column="12" selection-end-line="672" selection-end-column="13" />
+        <state relative-caret-position="283">
+          <caret line="1534" column="70" selection-start-line="1528" selection-start-column="8" selection-end-line="1534" selection-end-column="70" />
           <folding>
             <element signature="e#37452#37600#0" expanded="true" />
             <element signature="e#37599#37600#0" expanded="true" />
+            <element signature="e#37835#37984#0" expanded="true" />
+            <element signature="e#37983#37984#0" expanded="true" />
             <element signature="e#38967#41162#0" expanded="true" />
             <element signature="e#41161#41162#0" expanded="true" />
           </folding>
@@ -6778,11 +6769,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="972" column="23" selection-start-line="972" selection-start-column="23" selection-end-line="972" selection-end-column="23" />
+        <state relative-caret-position="402">
+          <caret line="1549" column="16" selection-start-line="1549" selection-start-column="16" selection-end-line="1549" selection-end-column="16" />
           <folding>
-            <element signature="e#54429#54574#0" expanded="true" />
-            <element signature="e#54573#54574#0" expanded="true" />
+            <element signature="e#53937#54082#0" expanded="true" />
+            <element signature="e#54081#54082#0" expanded="true" />
           </folding>
         </state>
       </provider>

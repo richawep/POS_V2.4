@@ -227,7 +227,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                             String suppliercode = po.getSupplierCode();
                             String itemname = po.getItemName();
 
-                            Cursor crsr = dbPurchaseOrder.getItemdetailsforSupplier( Integer.parseInt(suppliercode),  itemname);
+                            Cursor crsr = dbGoodsInwardNote.getItemdetailsforSupplier( Integer.parseInt(suppliercode),  itemname);
                             if(crsr!=null && crsr.moveToNext())
                             {
                                 double cgstRate = crsr.getDouble(crsr.getColumnIndex("CGSTRate"));
@@ -1039,7 +1039,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 {
                     // new entry
                     //richa_todo
-                    l = dbGoodsInwardNote.addIngredient(itemname_str, quantity_f, uom_str,0,0);
+                    l = dbGoodsInwardNote.addIngredient(itemname_str, quantity_f, uom_str,po.getValue(),0);
                     if (l > 0) {
                         Log.d(" GoodsInwardNote ", itemname_str + " added  successfully at " + l);
 
@@ -1050,7 +1050,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                         if(goodsInward_cursor!=null && goodsInward_cursor.moveToFirst()) {
                             menuCode = goodsInward_cursor.getInt(goodsInward_cursor.getColumnIndex("MenuCode"));}
                         stock_inward.addIngredientToStock_Inward(invoicedate,menuCode,itemname_str,
-                                Double.parseDouble(qty),Double.parseDouble(Rate.getText().toString()));
+                                Double.parseDouble(qty),po.getValue());
 
                     }
                 }
@@ -1533,19 +1533,13 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         float additionalcharge_f = 0;
         TextView Amount;
         String amount_str = "0";
-        for (int i =0;i<tbl_inward_item_details.getChildCount(); i++)
+        for (PurchaseOrder po : dataList)
         {
-            TableRow row = (TableRow) tbl_inward_item_details.getChildAt(i);
-            Amount = (TextView) row.getChildAt(9);
-            if (Amount != null)
-            {
-                amount_str  = Amount.getText().toString();
-            }
 
-            subtotal_f += Float.parseFloat(amount_str);
+            subtotal_f += po.getAmount();
 
         }
-        et_inward_sub_total.setText(String.valueOf(subtotal_f));
+        et_inward_sub_total.setText(String.format("%.2f",subtotal_f));
 
         // addtional charge
         if (chk_inward_additional_charge.isChecked())
@@ -1628,7 +1622,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
     public void Clear_inward(View v)
     {
-        for (int i = tbl_inward_item_details.getChildCount(); i >0;  i--) {
+       /*for (int i = tbl_inward_item_details.getChildCount(); i >0;  i--) {
             View Row = tbl_inward_item_details.getChildAt(i-1);
             if (Row instanceof TableRow) {
                 ((TableRow) Row).removeAllViews();
@@ -1637,7 +1631,9 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             container.removeView(Row);
             container.invalidate();
             count--;
-        }
+        }*/
+        purchaseOrderAdapter = null;
+        lv_inward_item_details.setAdapter(purchaseOrderAdapter);
         count=0;
         set_list_spnr();
 
