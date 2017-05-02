@@ -78,7 +78,7 @@ public class FragmentInwardSupply extends Fragment {
     //TextView tvFileName;
 
     Spinner spnrUOM,spnr_supplytype;
-    EditText et_inw_supplierAddress,et_inw_ItemBarcode;
+    EditText et_inw_supplierAddress,et_inw_ItemBarcode,et_inw_HSNCode;
 
     AutoCompleteTextView autocompletetv_supplierPhn, autocompletetv_suppliername,autocomplete_inw_ItemName;
     WepButton btnAddSupplier;
@@ -548,6 +548,7 @@ public class FragmentInwardSupply extends Fragment {
         autocompletetv_supplierPhn = (AutoCompleteTextView) view.findViewById(R.id.autocompletetv_supplierPhn);
         et_inw_supplierAddress = (EditText) view.findViewById(R.id.et_inw_supplierAddress);
         et_inw_ItemBarcode = (EditText) view.findViewById(R.id.et_inw_ItemBarcode);
+        et_inw_HSNCode = (EditText) view.findViewById(R.id.et_inw_HSNCode);
         tv_suppliercode  = (TextView)view.findViewById(R.id.tv_suppliercode);
         tv_AverageRate  = (TextView)view.findViewById(R.id.tv_AverageRate);
         tv_count  = (TextView)view.findViewById(R.id.tv_count);
@@ -625,7 +626,7 @@ public class FragmentInwardSupply extends Fragment {
             TextView tvSno, tvMenuCode, tvHSN, tvLongName, tvShortName, tvDineIn1, tvDineIn2, tvDineIn3, tvTakeAway, tvPickUp, tvDelivery,
                     tvStock, tvPriceChange, tvDiscountEnable, tvBillWithStock, tvTaxType, tvDeptCode, tvCategCode,
                     tvKitchenCode, tvSalesTaxId, tvServicetax, tvAdditionalTaxId, tvOptionalTaxId1, tvOptionalTaxId2, tvDiscountId,
-                    tvItemBarcode, tvImageUri, tvSpace, tvDeptName, tvCategName;
+                    tvItemBarcode, tvImageUri, tvSpace, tvDeptName, tvCategName, tvHSNCode;
             TextView tvSupplierType, tvSuppliergstin, tvSupplierName, tvSupplierPhone, tvSupplierAddress,tvSupplyType,tvTaxationType;
 
             TextView tvQuantity, tvRate, tvAMU, tvSalesTax, tvOtherTax;
@@ -778,7 +779,9 @@ public class FragmentInwardSupply extends Fragment {
                     Count_i.setText(crsrItems.getString(crsrItems.getColumnIndex("Count")));
                     rowItems.addView(Count_i);
 
-
+                    tvHSN = new TextView(myContext);
+                    tvHSN.setText(crsrItems.getString(crsrItems.getColumnIndex("HSNCode")));
+                    rowItems.addView(tvHSN);
                     rowItems.setOnClickListener(new View.OnClickListener() {
 
                         public void onClick(View v) {
@@ -802,6 +805,7 @@ public class FragmentInwardSupply extends Fragment {
                                 TextView SupplierCode = (TextView) Row.getChildAt(16);
                                 TextView AverageRate = (TextView) Row.getChildAt(17);
                                 TextView Count = (TextView) Row.getChildAt(18);
+                                TextView hsnCode = (TextView) Row.getChildAt(19);
 
                                 tv_AverageRate.setText(AverageRate.getText().toString());
                                 tv_count.setText(Count.getText().toString());
@@ -832,6 +836,7 @@ public class FragmentInwardSupply extends Fragment {
                                 autocomplete_inw_ItemName.setFocusable(true);
                                 autocomplete_inw_ItemName.setFocusableInTouchMode(true);
 
+                                et_inw_HSNCode.setText(hsnCode.getText().toString());
                                 //autocomplete_inw_ItemName.setText(LongName.getText());
                                 et_inw_rate.setText(Rate.getText().toString());
                                 rate_prev_for_touched_item = Float.parseFloat(et_inw_rate.getText().toString());
@@ -1047,6 +1052,10 @@ public class FragmentInwardSupply extends Fragment {
                 rowItems.addView(SupplierCode);
 
 
+                tvHSN = new TextView(myContext);
+                tvHSN.setText(crsrItems.getString(crsrItems.getColumnIndex("HSNCode")));
+                rowItems.addView(tvHSN);
+
                 rowItems.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
@@ -1068,7 +1077,10 @@ public class FragmentInwardSupply extends Fragment {
                             TextView SalesTax = (TextView) Row.getChildAt(12);
                             TextView OtherTax = (TextView) Row.getChildAt(13);
                             TextView SupplierCode = (TextView) Row.getChildAt(16);
+                            TextView HSN = (TextView) Row.getChildAt(17);
 
+
+                            et_inw_HSNCode.setText(HSN.getText().toString());
 
                             strMenuCode = MenuCode.getText().toString();
                             autocompletetv_suppliername.setFocusable(false);
@@ -1076,6 +1088,7 @@ public class FragmentInwardSupply extends Fragment {
                             autocompletetv_suppliername.setText(Suppliername.getText().toString());
                             autocompletetv_suppliername.setFocusable(true);
                             autocompletetv_suppliername.setFocusableInTouchMode(true);
+
 
 
                             /*autocompletetv_suppliername.setText(Suppliername.getText().toString());*/
@@ -1299,6 +1312,10 @@ public class FragmentInwardSupply extends Fragment {
                 Suppliercode.setText(String.valueOf(suppliercode));
                 rowItems.addView(Suppliercode);
 
+                tvHSN = new TextView(myContext);
+                tvHSN.setText(crsrItems.getString(crsrItems.getColumnIndex("HSNCode")));
+                rowItems.addView(tvHSN);
+
                 rowItems.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
@@ -1320,7 +1337,10 @@ public class FragmentInwardSupply extends Fragment {
                             TextView SalesTax = (TextView) Row.getChildAt(12);
                             TextView OtherTax = (TextView) Row.getChildAt(13);
                             TextView SupplierCode = (TextView) Row.getChildAt(16);
+                            TextView HSN = (TextView) Row.getChildAt(17);
 
+
+                            et_inw_HSNCode.setText(HSN.getText().toString());
 
                             strMenuCode = MenuCode.getText().toString();
                             autocompletetv_suppliername.setFocusable(false);
@@ -1620,7 +1640,7 @@ public class FragmentInwardSupply extends Fragment {
 
     private void InsertItem(int suppliercode, String suppliername, String itemName, String strbarCode, float ratef,
                             float quantity, String mou, String ImageUri, float cgst, float sgst, float igstrate,
-                            String supplytype) {
+                            String supplytype, String hsnCode) {
 
         long lRowId = 0;
 
@@ -1638,6 +1658,7 @@ public class FragmentInwardSupply extends Fragment {
         objItem.setIGSTRate(igstrate);
         objItem.setSupplyType(supplytype);
         objItem.setAverageRate(ratef);
+        objItem.setHSNCode(hsnCode);
 
 
         lRowId = dbInwardItem.addItem_Inw_nonGST(objItem);
@@ -1797,6 +1818,7 @@ public class FragmentInwardSupply extends Fragment {
         mou = mou_temp.substring(length-3, length-1);
         String supplytype = spnr_supplytype.getSelectedItem().toString();
         String ImageUri= "" ;
+        String hsnCode = et_inw_HSNCode.getText().toString();
 
 
         // Type 1 - addItem, Type 2 - updateItem
@@ -1808,7 +1830,7 @@ public class FragmentInwardSupply extends Fragment {
                 // MsgBox.show("Warning", "Item already present");
             }
             else {
-                InsertItem( suppliercode,  suppliername, itemname,  strBarcode, rate,  quantity, mou, ImageUri, SalesTax, ServiceTax,IGSTRate,supplytype);
+                InsertItem( suppliercode,  suppliername, itemname,  strBarcode, rate,  quantity, mou, ImageUri, SalesTax, ServiceTax,IGSTRate,supplytype,hsnCode);
                 double rate_new = UpdateGoodsInward(itemname, quantity, mou, Double.parseDouble(et_inw_rate.getText().toString()), true);
                // UpdateStockInward(itemname,quantity,   rate_new);
             }
@@ -1831,6 +1853,7 @@ public class FragmentInwardSupply extends Fragment {
             objItem.setServiceTaxPercent(ServiceTax);
             objItem.setSupplyType(supplytype);
             objItem.setMenuCode(menucode);
+            objItem.setHSNCode(hsnCode);
 
             int count = Integer.parseInt(tv_count.getText().toString());
             float averageRate_f = Float.parseFloat(tv_AverageRate.getText().toString());
@@ -1874,13 +1897,14 @@ public class FragmentInwardSupply extends Fragment {
                 SalesTax1 = SalesTax;
                 ServiceTax1 = ServiceTax;
                 supplytype1 = supplytype;
+                final String HSNCode1 = hsnCode;
                 final float igstrate = IGSTRate;
 
 
                 MsgBox.setTitle("Item not found in database. Do you want to add it ?")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                InsertItem( suppliercode1,  suppliername1, itemname1,  strBarcode1, rate1,  quantity1, mou1, ImageUri1, SalesTax1, ServiceTax1,igstrate,supplytype1);
+                                InsertItem( suppliercode1,  suppliername1, itemname1,  strBarcode1, rate1,  quantity1, mou1, ImageUri1, SalesTax1, ServiceTax1,igstrate,supplytype1,HSNCode1);
                                 tv_suppliercode.setText(String.valueOf(suppliercode1));
                                 autocompletetv_suppliername.setText(suppliername1);
                                 autocompletetv_supplierPhn.setText(supplierphn1);
@@ -2117,6 +2141,7 @@ public class FragmentInwardSupply extends Fragment {
         et_inw_rate.setText("");
         et_inw_quantity.setText("");
         et_Inw_Amount.setText("");
+        et_inw_HSNCode.setText("");
         et_inw_supplierAddress.setText("");
         autocompletetv_supplierPhn.setText("");
         et_inw_supplierAddress.setText("");

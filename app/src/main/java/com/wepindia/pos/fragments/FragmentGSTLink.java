@@ -36,11 +36,10 @@ import com.wep.common.app.gst.GSTR1Data;
 import com.wep.common.app.gst.GSTR1_B2B_A_Data;
 import com.wep.common.app.gst.GSTR1_B2CL_A_Data;
 import com.wep.common.app.gst.GSTR1_B2CL_Data;
-import com.wep.common.app.gst.GSTR2B2BAData;
 import com.wep.common.app.gst.GSTR2B2BAItemDetails;
-import com.wep.common.app.gst.GSTR2B2BData;
 import com.wep.common.app.gst.GSTR2CDN;
 import com.wep.common.app.gst.GSTR2Data;
+import com.wep.common.app.gst.GSTR2_B2B_Data_registered;
 import com.wep.common.app.gst.GSTRData;
 import com.wep.common.app.gst.get.GetGSTR1Summary;
 import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
@@ -413,19 +412,20 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
     }
 
 
-    public void PostGSTR2(String userName) {
+    public void PostGSTR2Invoices(String userName) {
         String startDate_str = (etReportDateStart.getText().toString()) ;
         String endDate_str = (etReportDateEnd.getText().toString()) ;
         try {
             String start_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(startDate_str)).getTime());
             String end_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(endDate_str)).getTime());
             if (ConnectionDetector.isInternetConnection(myContext)) {
-                ArrayList<GSTR2B2BData> gstr2B2BDatasList = dataController.getB2BItems(start_milli, end_milli);
+
                 String str[] = startDate_str.split("-");
-                ArrayList<GSTR2B2BAData> b2baList = null;//dataController.getGSTR2B2BSaveData();
+                ArrayList<GSTR2_B2B_Data_registered> b2bList_registered = dataController.getGSTR2B2BDataList_registered(start_milli, end_milli);
+                ArrayList<GSTR2_B2B_Data_registered> b2baList = null;//dataController.getGSTR2B2BDataList_registered();
                 ArrayList<GSTR2CDN> gstr2cdnList = null;
                 ;//dataController.getGSTR2CDNSaveData();
-                GSTR2Data gstr1Data = new GSTR2Data(dbGSTLink.getGSTIN(), str[2] + str[0], 123, 234, gstr2B2BDatasList, b2baList, gstr2cdnList);
+                GSTR2Data gstr1Data = new GSTR2Data(dbGSTLink.getGSTIN(), str[2] + str[0], 123, 234, b2bList_registered, b2baList, gstr2cdnList);
                 progressDialog.show();
                 GSTRData gstrData = new GSTRData(userName, dbGSTLink.getGSTIN(), gstr1Data);
                 String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
@@ -651,7 +651,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
                 }
                 else if(code == REQUEST_SAVE_GSTR2)
                 {
-                    PostGSTR2(userName);
+                    PostGSTR2Invoices(userName);
                 }
             }
             else

@@ -298,7 +298,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="center_vertical|center_horizontal"
+                            android:gravity="bottom"
+                            android:paddingBottom="5dp"
                             android:text="Supplier Name "
                             android:textStyle="bold" />
 
@@ -326,10 +327,12 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/textView2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="center"
+                            android:gravity="bottom"
+                            android:paddingBottom="5dp"
                             android:text="Supplier Phone "
                             android:textStyle="bold" />
 
@@ -338,6 +341,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:maxLength="10"
                             android:inputType="number" />
                     </LinearLayout>
 
@@ -352,7 +356,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:gravity="center"
+                            android:gravity="bottom"
+                            android:paddingBottom="5dp"
                             android:text="Supplier Address "
                             android:textStyle="bold" />
 
@@ -387,8 +392,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center"
+                            android:layout_weight="4"
+                            android:gravity="bottom"
+                            android:paddingBottom="5dp"
                             android:text="Purchase Order "
                             android:textStyle="bold" />
 
@@ -421,15 +427,17 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
+                                android:layout_weight="2"
+                                android:gravity="bottom"
+                                android:textStyle="bold"
+                                android:paddingBottom="5dp"
                                 android:text="Item Name " />
 
                             <AutoCompleteTextView
                                 android:id="@+id/autocompletetv_itemlist"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="0.7">
+                                android:layout_weight="1">
 
                             </AutoCompleteTextView>
 
@@ -468,22 +476,48 @@
                         android:layout_marginLeft="@dimen/activity_horizontal_margin1"
                         android:layout_marginTop="@dimen/activity_horizontal_margin1"
                         android:layout_weight="1"
-                        android:weightSum="3">
-
-                        <TextView
+                        >
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:text="Supplier GSTIN "
-                            android:textStyle="bold" />
+                            android:layout_weight="1">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="bottom"
+                                android:paddingBottom="5dp"
+                                android:text="Supplier GSTIN "
+                                android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/et_supplier_GSTIN"
+                            <EditText
+                                android:id="@+id/et_supplier_GSTIN"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:maxLength="15"
+                                android:paddingLeft="5dp"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:maxLength="100"
-                            android:layout_weight="1" />
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1">
+                            <CheckBox
+                                android:id="@+id/chk_interState"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="OtherState"
+                                android:checked="false"/>
+                            <Spinner
+                                android:id="@+id/spnrSupplierStateCode"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:entries="@array/poscode"/>
+                        </LinearLayout>
+
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -605,8 +639,7 @@
                 android:id="@+id/linear_table_heading"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="5dp"
                 android:layout_weight="6">
 
                 <TextView
@@ -624,6 +657,13 @@
                     android:background="@drawable/heading_border"
                     android:gravity="center"
                     android:text="G/S" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.01"
+                    android:background="@drawable/heading_border"
+                    android:gravity="center"
+                    android:text="HSNCode" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -671,6 +711,14 @@
                     android:layout_weight="1"
                     android:background="@drawable/heading_border"
                     android:gravity="center"
+                    android:text="IGST Amt" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/heading_border"
+                    android:gravity="center"
                     android:text="CGST Amt" />
 
                 <TextView
@@ -695,29 +743,29 @@
                     android:layout_weight="1.05"
                     android:background="@drawable/heading_border"
                     android:gravity="center"
-                    android:text="Delete" />
+                    android:text="Del" />
             </LinearLayout>
             <!-- end of child 1 : table_heading layout -->
-            <ScrollView
-                android:id="@+id/scrlItemTable"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="2dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1">
 
-                <TableLayout
-                    android:id="@+id/tbl_inward_item_details"
+
+                <ListView
+                    android:id="@+id/lv_inward_item_details"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
-                    android:collapseColumns="10">
+                    >
 
-                </TableLayout>
+                </ListView>
 
                 <!-- end of child 2 : table_values layout -->
-            </ScrollView>
+            </LinearLayout>
         </LinearLayout>
         <!-- end of table_content layout-->
         <!-- end of main layout-->

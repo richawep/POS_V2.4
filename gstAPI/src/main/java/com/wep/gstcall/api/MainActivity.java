@@ -1,3 +1,4 @@
+/*
 package com.wep.gstcall.api;
 
 import android.app.ProgressDialog;
@@ -8,15 +9,9 @@ import android.widget.Toast;
 
 import com.wep.common.app.gst.GSTR1B2CSData;
 import com.wep.common.app.gst.GSTR1Data;
-import com.wep.common.app.gst.GSTR2B2BAData;
-import com.wep.common.app.gst.GSTR2B2BAITCDetails;
-import com.wep.common.app.gst.GSTR2B2BAInvoiceItems;
-import com.wep.common.app.gst.GSTR2B2BAInvoices;
 import com.wep.common.app.gst.GSTR2B2BAItemDetails;
-import com.wep.common.app.gst.GSTR2B2BData;
 import com.wep.common.app.gst.GSTR2B2BITCDetails;
 import com.wep.common.app.gst.GSTR2B2BInvoiceItems;
-import com.wep.common.app.gst.GSTR2B2BInvoices;
 import com.wep.common.app.gst.GSTR2B2BItemDetails;
 import com.wep.common.app.gst.GSTR2Data;
 import com.wep.common.app.gst.GSTRData;
@@ -62,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements HTTPAsyncTask.OnH
         progressDialog.dismiss();
         if(data!=null)
         {
-            if(/*requestCode == 0*/true) // GSTR1
+            if(*/
+/*requestCode == 0*//*
+true) // GSTR1
             {
                 if(data.equalsIgnoreCase(""))
                 {
@@ -141,3 +138,4 @@ public class MainActivity extends AppCompatActivity implements HTTPAsyncTask.OnH
     }
 
 }
+*/

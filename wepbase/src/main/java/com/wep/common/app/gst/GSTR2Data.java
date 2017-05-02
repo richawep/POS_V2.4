@@ -12,14 +12,14 @@ public class GSTR2Data {
     private String fp; //Financial period
     private double gt; //Gross Turn Over
     private double ttl; // Total Tax Liability
-    private ArrayList<GSTR2B2BData> b2b; //B2B Invoice Data
-    private ArrayList<GSTR2B2BAData> b2ba;
+    private ArrayList<GSTR2_B2B_Data_registered> b2b; //B2B Invoice Data
+    private ArrayList<GSTR2_B2B_Data_registered> b2ba;
     private ArrayList<GSTR2CDN> cdn;
 
     public GSTR2Data() {
     }
 
-    public GSTR2Data(String gstin, String fp, double gt, double ttl, ArrayList<GSTR2B2BData> b2b, ArrayList<GSTR2B2BAData> b2ba, ArrayList<GSTR2CDN> cdn) {
+    public GSTR2Data(String gstin, String fp, double gt, double ttl, ArrayList<GSTR2_B2B_Data_registered> b2b, ArrayList<GSTR2_B2B_Data_registered> b2ba, ArrayList<GSTR2CDN> cdn) {
         this.gstin = gstin;
         this.fp = fp;
         this.gt = gt;
@@ -61,19 +61,19 @@ public class GSTR2Data {
         this.ttl = ttl;
     }
 
-    public ArrayList<GSTR2B2BData> getB2b() {
+    public ArrayList<GSTR2_B2B_Data_registered> getB2b() {
         return b2b;
     }
 
-    public void setB2b(ArrayList<GSTR2B2BData> b2b) {
+    public void setB2b(ArrayList<GSTR2_B2B_Data_registered> b2b) {
         this.b2b = b2b;
     }
 
-    public ArrayList<GSTR2B2BAData> getB2ba() {
+    public ArrayList<GSTR2_B2B_Data_registered> getB2ba() {
         return b2ba;
     }
 
-    public void setB2ba(ArrayList<GSTR2B2BAData> b2ba) {
+    public void setB2ba(ArrayList<GSTR2_B2B_Data_registered> b2ba) {
         this.b2ba = b2ba;
     }
 

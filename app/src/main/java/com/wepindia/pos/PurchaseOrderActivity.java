@@ -27,11 +27,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,13 +40,16 @@ import android.widget.Toast;
 import com.wep.common.app.Database.BillItem;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.Item;
+import com.wep.common.app.Database.PurchaseOrder;
 import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.adapters.PurchaseOrderAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +60,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
     Context myContext;
     // DatabaseHandler_gst object
     DatabaseHandler dbPurchaseOrder;
+    ArrayList<PurchaseOrder> dataList;
     //Message dialog object
     public MessageDialog MsgBox;
     long edit = 0;
@@ -67,10 +72,10 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
     ImageButton btnimage_new_item ;
     AutoCompleteTextView autocompletetv_suppliername, autocompletetv_invoiceno,autocompletetv_itemlist, autocompletetv_purchase_order;
-    TableLayout tbl_inward_item_details;
+    ListView lv_inward_item_details;
     CheckBox chk_inward_additional_charge;
     com.wep.common.app.views.WepButton btnEditPO,btnGeneratePO,btnAddSupplier, btnClearItem, btnCloseItem;
-
+    PurchaseOrderAdapter purchaseOrderAdapter = null;
 
     ArrayList<String> labelsSupplierName;
     int count =0;
@@ -79,6 +84,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
     String strDate= "";
     String strUserName="", strUserId ="";
     Date d;
+    CheckBox chk_interState;
+    Spinner spnrSupplierStateCode;
 
     Cursor purchase_crsr;
     private Toolbar toolbar;
@@ -354,19 +361,12 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 Cursor purchaseorder_crsr = dbPurchaseOrder.getPurchaseOrderDetails(suppliercode,Integer.parseInt(purchaseOrder));
                 int flag =0;
                 count =0;
+
                 while (purchaseorder_crsr != null &&  purchaseorder_crsr.moveToNext())
                 {
                     if (flag ==0)
                     {
                         ClearTable();
-                        /*tx_inward_supply_invoice_number.setText(purchaseorder_crsr.getString(purchaseorder_crsr.getColumnIndex("InvoiceNo")));
-                        // richa to do
-                        Date d = new  Date();
-                        tx_inward_invoice_date.setText(String.valueOf(d));
-                        String millisec = purchaseorder_crsr.getString(purchaseorder_crsr.getColumnIndex("InvoiceDate"));
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-                        String dateString = formatter.getDateTimeInstance().format(new Date(millisec)); //formatter.parse(millisec);
-                         dateString = "Hello"; //DateFormat.format(formatter, Long.parseLong(millisec)).toString();*/
 
                         String additionalamount = purchaseorder_crsr.getString(purchaseorder_crsr.getColumnIndex("AdditionalChargeAmount"));
                         if(additionalamount== null || additionalamount.equals("") || additionalamount.equals("0"))
@@ -381,7 +381,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                             et_inward_additionalchargename.setText(purchaseorder_crsr.getString(purchaseorder_crsr.getColumnIndex("AdditionalChargeName")));
                             et_inward_additionalchargeamount.setText(additionalamount);
                         }
-                        ;                        flag = 1;
+                                                flag = 1;
                     }
                     purchase_crsr = null;
                     purchase_crsr = purchaseorder_crsr;
@@ -548,8 +548,11 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             MsgBox.Show(" Insufficient Information ","Please fill Supplier Details");
         } else if (suppliercode< 0) { // details are filled but supplier not in database
             MsgBox.Show("Error ", " Supplier is not in Database. Please add supplier");
-        } else if (tbl_inward_item_details.getChildCount() < 1){
+        } else if (purchaseOrderAdapter == null){
             MsgBox.Show("Insufficient Information ", " Please add item");
+        }else if (chk_interState.isChecked() && spnrSupplierStateCode.getSelectedItem().toString().equals(""))
+        {
+            MsgBox.Show("Insufficient Information ", " Please select state for supplier");
         }else
         {
             String purchaseorderno = autocompletetv_purchase_order.getText().toString();
@@ -558,8 +561,11 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 Cursor crsr = dbPurchaseOrder.getMaxPurchaseOrderNo();
                 int Max =1;
                 if (crsr != null && crsr.moveToFirst())
-                {  Max = crsr.getInt(0);
-                    Max++;
+                {
+                    if(crsr.getInt(0) != -100)
+                    {
+                        Max = crsr.getInt(0)+1;
+                    }
                 }
                 autocompletetv_purchase_order.setText(String.valueOf(Max));
 
@@ -604,154 +610,65 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         // Inserted Row Id in database table
         long lResult = 0;
 
-        // Bill item object
-        BillItem objBillItem;
+
         long result = 1;
         int menucode = 0;
         String additionalchargename = "", additionalCharge = "";
 
         try
         {
-            //String invoiceno= autocompletetv_invoiceno.getText().toString();
 
             String purchaseorderno = autocompletetv_purchase_order.getText().toString();
-            /*String invoiceno= tx_inward_supply_invoice_number.getText().toString();
-            String invodate = tx_inward_invoice_date.getText().toString();*/
-
             String supp_name = autocompletetv_suppliername.getText().toString();
             int suppliercode  = Integer.parseInt(et_supplier_code.getText().toString());
             String sup_phone = et_supplier_phone.getText().toString();
             String sup_address = et_supplier_address.getText().toString();
             String sup_gstin = et_supplier_GSTIN.getText().toString();
-            String sup_type = "UnRegistered";
-            if(sup_gstin!=null && !sup_gstin.equals(""))
-                sup_type = "Registered";
+
+
+
             int deletedrows = dbPurchaseOrder.deletePurchaseOrder( suppliercode,Integer.parseInt(purchaseorderno));
             Log.d("InsertPurchaseOrder", deletedrows+" Rows deleted for Purchase Order "+purchaseorderno);
 
 
-            for (int iRow = 0; iRow < tbl_inward_item_details.getChildCount(); iRow++) {
-                objBillItem = new BillItem();
+            for (PurchaseOrder po :dataList) {
 
-                TableRow RowBillItem = (TableRow) tbl_inward_item_details.getChildAt(iRow);
-
-                objBillItem.setPurchaseOrderNo(Integer.parseInt(purchaseorderno));
-                Log.d("InsertPurchaseOrder", "Purchase Order No :" + purchaseorderno);
-
-                objBillItem.setSuppliercode(suppliercode);
-                Log.d("InsertPurchaseOrder", "SupplierCode : " + suppliercode);
-                objBillItem.setSupplierName(supp_name);
-                Log.d("InsertPurchaseOrder", "SupplierName : " + supp_name);
-                objBillItem.setSupplierGSTIN(sup_gstin);
-                Log.d("InsertPurchaseOrder", "SupplierGSTIN : " + sup_gstin);
-                objBillItem.setSupplierType(sup_type);
-                Log.d("InsertPurchaseOrder", "SupplierType : " + sup_type);
-                objBillItem.setSupplierPhone(sup_phone);
-                Log.d("InsertPurchaseOrder", "SupplierPhone : " + sup_phone);
-                objBillItem.setSupplierAddress(sup_address);
-                Log.d("InsertPurchaseOrder", "SupplierAddress : " + sup_address);
-
-                // Item Number
-                if (RowBillItem.getChildAt(1) != null) {
-                    TextView Supplytype = (TextView) RowBillItem.getChildAt(1);
-                    objBillItem.setSupplyType(Supplytype.getText().toString());
-                    Log.d("InsertPurchaseOrder", "Supply Type:" + Supplytype.getText().toString());
-                }
-
-                // Menu Code
-                if (RowBillItem.getChildAt(10) != null) {
-                    TextView MenuCode = (TextView) RowBillItem.getChildAt(10);
-                    objBillItem.setItemNumber(Integer.parseInt(MenuCode.getText().toString()));
-                    Log.d("InsertPurchaseOrder", "Menu Code:" + MenuCode.getText().toString());
-                    menucode = Integer.parseInt(MenuCode.getText().toString());
-                }
-
-                // Item Name
-
-                if (RowBillItem.getChildAt(2) != null) {
-                    TextView ItemName = (TextView) RowBillItem.getChildAt(2);
-                    objBillItem.setItemName(ItemName.getText().toString());
-                    Log.d("InsertPurchaseOrder", "Item Name:" + ItemName.getText().toString());
-                }
-
-
-                // Rate
-                if (RowBillItem.getChildAt(3) != null) {
-                    TextView Value = (TextView) RowBillItem.getChildAt(3);
-                    objBillItem.setValue(Float.parseFloat(Value.getText().toString()));
-                    Log.d("InsertPurchaseOrder", "Rate :" + Value.getText().toString());
-                }
-
-                // Quantity
-                if (RowBillItem.getChildAt(4) != null) {
-                    TextView Quantity = (TextView) RowBillItem.getChildAt(4);
-                    objBillItem.setQuantity(Float.parseFloat(Quantity.getText().toString()));
-                    Log.d("InsertPurchaseOrder", "Quantity:" + Quantity.getText().toString());
-                }
-
-
-                // UoM
-                if (RowBillItem.getChildAt(5) != null) {
-                    TextView uom = (TextView) RowBillItem.getChildAt(5);
-                    objBillItem.setUom(uom.getText().toString());
-                    Log.d("InsertPurchaseOrder", "UoM:" + uom.getText().toString());
-                }
-
-
-                // taxable value
-                if (RowBillItem.getChildAt(6) != null) {
-                    TextView TaxValue = (TextView) RowBillItem.getChildAt(6);
-                    objBillItem.setTaxableValue(Float.parseFloat(TaxValue.getText().toString()));
-                    Log.d("InsertPurchaseOrder", "Taxable Value:" + TaxValue.getText().toString());
-                }
-
-
-                // SalesTax Amt
-                if (RowBillItem.getChildAt(7) != null) {
-                    TextView SalesTax = (TextView) RowBillItem.getChildAt(7);
-                    objBillItem.setTaxAmount(Float.parseFloat(SalesTax.getText().toString()));
-                    Log.d("InsertPurchaseOrder", "SalesTax:" + SalesTax.getText().toString());
-                }
-                // ServiceTax Amt
-                if (RowBillItem.getChildAt(8) != null) {
-                    TextView ServiceTax = (TextView) RowBillItem.getChildAt(8);
-                    objBillItem.setServiceTaxAmount(Float.parseFloat(ServiceTax.getText().toString()));
-                    Log.d("InsertPurchaseOrder", "ServiceTax :" + ServiceTax.getText().toString());
-                }
-                // Amount
-                if (RowBillItem.getChildAt(9) != null) {
-                    TextView Amount = (TextView) RowBillItem.getChildAt(9);
-                    objBillItem.setAmount(Float.parseFloat(Amount.getText().toString()));
-                    Log.d("InsertPurchaseOrder", "Amount:" + Amount.getText().toString());
-                }
-                if (chk_inward_additional_charge.isChecked())
+                po.setPurchaseOrderNo(purchaseorderno);
+                if(chk_interState.isChecked())
                 {
-                    additionalchargename = et_inward_additionalchargename.getText().toString();
-                    additionalCharge = et_inward_additionalchargeamount.getText().toString();
-
-                    objBillItem.setAdditionalChargeName(additionalchargename);
-                    Log.d("InsertPurchaseOrder", "Additional Charge Name :" + additionalchargename);
-                    objBillItem.setAdditionalChargeAmount(Float.parseFloat(additionalCharge));
-                    Log.d("InsertPurchaseOrder", "Additional Charge Amount :" + additionalCharge);
-                }
-
-
-                /*Cursor duplicacy_crsr = dbPurchaseOrder.checkDuplicatePurchaseOrder(suppliercode,menucode,Integer.parseInt(purchaseorderno));
-                if (duplicacy_crsr == null || !duplicacy_crsr.moveToFirst())
+                    String supplier_stateCode = spnrSupplierStateCode.getSelectedItem().toString();
+                    int l = supplier_stateCode.length();
+                    String state_cd = supplier_stateCode.substring(l-2,l);
+                    po.setSupplierPOS(state_cd);
+                }else
                 {
-                    // item not present for that purchase order
-                    lResult = dbPurchaseOrder.InsertPurchaseOrder(objBillItem);
-                    Log.d("InsertPurchaseOrder", " item inserted at position:" + lResult);
+                    po.setSupplierPOS("");
+                }
+                if(chk_inward_additional_charge.isChecked())
+                {
+                    po.setAdditionalCharge(et_inward_additionalchargename.getText().toString());
+                    po.setAdditionalChargeAmount(Double.parseDouble(et_inward_additionalchargeamount.getText().toString()));
                 }
                 else
-                { // already present
-                    lResult = dbPurchaseOrder.UpdatePurchaseOrder(objBillItem);
-                    Log.d("InsertPurchaseOrder", "item updated at position:" + lResult);
-                }*/
-
-                objBillItem.setIsGoodInwarded(0);
-                result = dbPurchaseOrder.InsertPurchaseOrder(objBillItem);
-                Log.d("InsertPurchaseOrder", " item inserted at position:" + result);
+                {
+                    po.setAdditionalCharge("");
+                    po.setAdditionalChargeAmount(0);
+                }
+                lResult = dbPurchaseOrder.InsertPurchaseOrder(po);
+                if(lResult>0)
+                    Log.d("InsertPurchaseOrder", " item inserted at position:" + lResult);
+                //Cursor duplicacy_crsr = dbPurchaseOrder.checkDuplicatePurchaseOrder(suppliercode,menucode,Integer.parseInt(purchaseorderno));
+//                if (duplicacy_crsr == null || !duplicacy_crsr.moveToFirst())
+//                {
+//                    // item not present for that purchase order
+//                    lResult = dbPurchaseOrder.InsertPurchaseOrder(po);
+//                    Log.d("InsertPurchaseOrder", " item inserted at position:" + lResult);
+//                }
+//                else
+//                { // already present
+//                    lResult = dbPurchaseOrder.UpdatePurchaseOrder(po);
+//                    Log.d("InsertPurchaseOrder", "item updated at position:" + lResult);
+//                }
 
             }
         } catch (Exception e) {
@@ -775,10 +692,13 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             MsgBox.Show(" Insufficient Information ","Please fill Supplier Details");
         } else if (suppliercode< 0) { // details are filled but supplier not in database
             MsgBox.Show("Error ", " Supplier is not in Database. Please add supplier");
-        } else if (tbl_inward_item_details.getChildCount() < 1){
+        } else if (purchaseOrderAdapter == null){
             MsgBox.Show("Insufficient Information ", " Please add item");
         }else if (purchaseorder.equals(""))
         { MsgBox.Show(" Insufficent Information", " Please Select Purchase Order");
+        }else if (chk_interState.isChecked() && spnrSupplierStateCode.getSelectedItem().toString().equals(""))
+        {
+            MsgBox.Show("Insufficient Information ", " Please select state for supplier");
         }else
         {
             Cursor duplicacy_crsr = dbPurchaseOrder.checkduplicatePO(suppliercode, Integer.parseInt(purchaseorder));
@@ -808,7 +728,9 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
     void InitializeViews()
     {
-        tbl_inward_item_details = (TableLayout) findViewById(R.id.tbl_inward_item_details);
+        lv_inward_item_details = (ListView) findViewById(R.id.lv_inward_item_details);
+        chk_interState = (CheckBox) findViewById(R.id.chk_interState);
+        spnrSupplierStateCode = (Spinner) findViewById(R.id.spnrSupplierStateCode);
         et_supplier_code = (EditText) findViewById(R.id.et_supplier_code);
         autocompletetv_suppliername = (AutoCompleteTextView)findViewById(R.id.autocompletetv_suppliername);
         et_supplier_address = (EditText) findViewById(R.id.et_supplier_address);
@@ -866,12 +788,62 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         et_supplier_GSTIN = (EditText) findViewById(R.id.et_supplier_GSTIN);
         et_inward_grand_total = (EditText) findViewById(R.id.et_inward_grand_total);
 
+        chk_interState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
+                    return;
+                if(!isChecked)
+                {
+
+                    spnrSupplierStateCode.setSelection(0);
+                    spnrSupplierStateCode.setEnabled(false);
+                    for(PurchaseOrder po : dataList)
+                    {
+                        double sgstAmt =0, cgstAmt =0;
+                        double taxval = po.getTaxableValue();
+                        String suppliercode = po.getSupplierCode();
+                        String itemname = po.getItemName();
+
+                        Cursor crsr = dbPurchaseOrder.getItemdetailsforSupplier( Integer.parseInt(suppliercode),  itemname);
+                        if(crsr!=null && crsr.moveToNext())
+                        {
+                            double cgstRate = crsr.getDouble(crsr.getColumnIndex("CGSTRate"));
+                            double sgstRate = crsr.getDouble(crsr.getColumnIndex("SGSTRate"));
+                            sgstAmt= taxval*sgstRate/100;
+                            cgstAmt= taxval*cgstRate/100;
+                        }
+                        po.setIgstAmount(0);
+                        po.setCgstAmount(cgstAmt);
+                        po.setSgstAmount(sgstAmt);
+                    }
+                    purchaseOrderAdapter.notifyNewDataAdded(dataList);
+
+                }
+                else
+                {
+                    spnrSupplierStateCode.setSelection(0);
+                    spnrSupplierStateCode.setEnabled(true);
+                    for(PurchaseOrder po : dataList)
+                    {
+                        double sgst = po.getSgstAmount();
+                        double cgst = po.getCgstAmount();
+                        po.setIgstAmount(sgst+cgst);
+                        po.setCgstAmount(0);
+                        po.setSgstAmount(0);
+                    }
+                    purchaseOrderAdapter.notifyNewDataAdded(dataList);
+                }
+
+            }
+        });
+
     }
 
     private void loadAutoCompleteData_purchaseOrder(int suppliercode) {
         // loading Purchase order for that supplier
         List<String> invoicelist = dbPurchaseOrder.getPurchaseOrderlist(suppliercode);
-        ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,invoicelist);
+        final ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,invoicelist);
         dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
         // attaching data adapter to spinner
         autocompletetv_purchase_order.setAdapter(dataAdapter11);
@@ -894,9 +866,268 @@ public class PurchaseOrderActivity extends WepBaseActivity {
     }
 
 
-
+    public int getIndex_POS(String item)
+    {
+        List<String> pos = Arrays.asList(getResources().getStringArray(R.array.poscode));
+        int count =0;
+        for (String pos_temp : pos)
+        {
+            if(pos_temp.contains(item))
+                return count;
+            count++;
+        }
+        return 0;
+    }
 
     void populate(int type)
+    {
+        //1 - new item entry
+        //2 - existing item in database
+        // 3 - popualte table from saved purchase order
+
+
+        try {
+
+            if (type == 3)
+            {
+                if (purchase_crsr ==null)
+                {
+                    return;
+                }
+
+                PurchaseOrder po = new PurchaseOrder();
+
+                String gstin = et_supplier_GSTIN.getText().toString();
+                po.setSupplierCode((et_supplier_code.getText().toString()));
+                po.setSupplierGSTIN(gstin);
+                po.setSupplierName(autocompletetv_suppliername.getText().toString());
+                po.setSupplierPhone(et_supplier_phone.getText().toString());
+                po.setSupplierAddress(et_supplier_address.getText().toString());
+                po.setSupplierPOS(purchase_crsr.getString(purchase_crsr.getColumnIndex("SupplierPOS")));
+                if(po.getSupplierPOS()== null || po.getSupplierPOS().equals(""))
+                {
+                    chk_interState.setChecked(false);
+                    spnrSupplierStateCode.setEnabled(false);
+                }
+                else
+                {
+                    chk_interState.setChecked(true);
+                    spnrSupplierStateCode.setEnabled(true);
+                    spnrSupplierStateCode.setSelection(getIndex_POS(po.getSupplierPOS()));
+                }
+
+
+                if(gstin.equals(""))
+                    po.setSupplierType("UnRegistered");
+                else
+                    po.setSupplierType("Registered");
+
+                po.setMenuCode(purchase_crsr.getInt(purchase_crsr.getColumnIndex("MenuCode")));
+                po.setItemName(purchase_crsr.getString(purchase_crsr.getColumnIndex("ItemName")));
+                po.setSupplyType(purchase_crsr.getString(purchase_crsr.getColumnIndex("SupplyType")));
+                po.setHSNCode(purchase_crsr.getString(purchase_crsr.getColumnIndex("HSNCode")));
+                String quantity_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("Quantity"));
+                po.setQuantity(Double.parseDouble(String.format("%.2f", Float.parseFloat(quantity_str))));
+
+
+                String Rate = purchase_crsr.getString(purchase_crsr.getColumnIndex("Value"));
+                if (Rate == null || Rate.equals(""))
+                    po.setValue(0.00);
+                else
+                    po.setValue(Double.parseDouble(String.format("%.2f", Float.parseFloat(Rate))));
+
+
+                Item_quantity = purchase_crsr.getString(purchase_crsr.getColumnIndex("Quantity"));
+                if (Item_quantity == null || Item_quantity.equals(""))
+                    po.setQuantity(0);
+                else
+                    po.setQuantity(Double.parseDouble(String.format("%.2f", Float.parseFloat(Item_quantity))));
+
+                double taxval = purchase_crsr.getDouble(purchase_crsr.getColumnIndex("TaxableValue"));
+                po.setTaxableValue(Double.parseDouble(String.format("%.2f", taxval)));
+
+                String uom_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("UOM"));
+                po.setUOM(uom_str);
+
+
+
+                String cgstRate_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("CGSTRate"));
+                if (cgstRate_str== null || cgstRate_str.equals(""))
+                    cgstRate_str ="0.00";
+
+                String sgstRate_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("SGSTRate"));
+                if (sgstRate_str== null || sgstRate_str.equals(""))
+                    sgstRate_str =("0.00");
+
+                String cgstAmt_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("CGSTAmount"));
+                if (cgstAmt_str== null || cgstAmt_str.equals(""))
+                    cgstAmt_str ="0.00";
+
+                String sgstAmt_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("SGSTAmount"));
+                if (sgstAmt_str== null || sgstAmt_str.equals(""))
+                    sgstAmt_str =("0.00");
+
+                String igstRate_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("IGSTRate"));
+                if (igstRate_str== null || igstRate_str.equals(""))
+                    igstRate_str =("0.00");
+
+                String igstAmt_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("IGSTAmount"));
+                if (igstAmt_str== null || igstAmt_str.equals(""))
+                    igstAmt_str ="0.00";
+
+                po.setIgstRate(Double.parseDouble(igstRate_str));
+                po.setIgstAmount(Double.parseDouble(igstAmt_str));
+                po.setCgstRate(Double.parseDouble(cgstRate_str));
+                po.setCgstAmount(Double.parseDouble(cgstAmt_str));
+                po.setSgstRate(Double.parseDouble(sgstRate_str));
+                po.setSgstAmount(Double.parseDouble(sgstAmt_str));
+                po.setCsRate(0);
+                po.setCsAmount(0);
+
+                double amt = purchase_crsr.getDouble(purchase_crsr.getColumnIndex("Amount"));
+                po.setAmount(amt);
+                po.setIsgoodInward(purchase_crsr.getString(purchase_crsr.getColumnIndex("isGoodinward")));
+                String add_amt = purchase_crsr.getString(purchase_crsr.getColumnIndex("AdditionalChargeAmount"));
+                if(add_amt!=null && !add_amt.equals("")&& !add_amt.equals("0"))
+                {
+                    et_inward_additionalchargename.setText(purchase_crsr.getString(purchase_crsr.getColumnIndex("AdditionalChargeName")));
+                    et_inward_additionalchargeamount.setText(add_amt);
+                    chk_inward_additional_charge.setChecked(true);
+                    po.setAdditionalCharge(et_inward_additionalchargename.getText().toString());
+                    po.setAdditionalChargeAmount(Double.parseDouble(et_inward_additionalchargeamount.getText().toString()));
+                }
+                dataList.add(po);
+
+                set_list_spnr();
+                calculateSubTotal();
+                if (purchaseOrderAdapter == null) {
+                    purchaseOrderAdapter = new PurchaseOrderAdapter(PurchaseOrderActivity.this, dbPurchaseOrder,dataList);
+                    lv_inward_item_details.setAdapter(purchaseOrderAdapter);
+                } else {
+                    purchaseOrderAdapter.notifyNewDataAdded(dataList);
+                }
+            }
+            else if(type ==2) // item existing in database
+            {
+                if (dataList== null)
+                    dataList = new ArrayList<PurchaseOrder>();
+                Item_name = autocompletetv_itemlist.getText().toString().toUpperCase();
+                int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
+                if (suppliercode <0)
+                {
+                    MsgBox = new MessageDialog(myContext);
+                    MsgBox.Show("Insufficient Information ", " Please fill Supplier Details ");
+                    return;
+                }
+                Cursor itemdetails = dbPurchaseOrder.getItemdetailsforSupplier(suppliercode,Item_name);
+                if (itemdetails!=null && itemdetails.moveToFirst()) {
+                    PurchaseOrder po = new PurchaseOrder();
+                    //po.setSn(dataList.size()+1);
+                    String gstin = et_supplier_GSTIN.getText().toString();
+                    po.setSupplierCode((et_supplier_code.getText().toString()));
+                    po.setSupplierGSTIN(gstin);
+                    po.setSupplierName(autocompletetv_suppliername.getText().toString());
+                    po.setSupplierPhone(et_supplier_phone.getText().toString());
+                    po.setSupplierAddress(et_supplier_address.getText().toString());
+                    if(gstin.equals(""))
+                        po.setSupplierType("UnRegistered");
+                    else
+                        po.setSupplierType("Registered");
+                    po.setMenuCode(itemdetails.getInt(itemdetails.getColumnIndex("MenuCode")));
+                    po.setItemName(Item_name);
+                    po.setSupplyType(itemdetails.getString(itemdetails.getColumnIndex("SupplyType")));
+                    po.setHSNCode(itemdetails.getString(itemdetails.getColumnIndex("HSNCode")));
+
+
+                    String Rate = itemdetails.getString(itemdetails.getColumnIndex("Rate"));
+                    if (Rate == null || Rate.equals(""))
+                        po.setValue(0.00);
+                    else
+                        po.setValue(Double.parseDouble(String.format("%.2f", Float.parseFloat(Rate))));
+
+
+                    Item_quantity = et_inward_item_quantity.getText().toString();
+                    if (Item_quantity == null || Item_quantity.equals(""))
+                        po.setQuantity(0);
+                    else
+                        po.setQuantity(Double.parseDouble(String.format("%.2f", Float.parseFloat(Item_quantity))));
+
+
+                    float rate_f = Float.parseFloat(Rate);
+                    float qty_f = Float.parseFloat(Item_quantity);
+                    float taxval_f = rate_f * qty_f;
+                    po.setTaxableValue(Double.parseDouble(String.format("%.2f", taxval_f)));
+
+                    String uom_str = itemdetails.getString(itemdetails.getColumnIndex("UOM"));
+                    po.setUOM(uom_str);
+
+                    double cgstRate_d =0, sgstRate_d =0, igstRate_d = 0;
+                    double cgstAmt_d =0, sgstAmt_d =0, igstAmt_d = 0;
+
+                    String cgstRate_str = itemdetails.getString(itemdetails.getColumnIndex("CGSTRate"));
+                    if (cgstRate_str== null || cgstRate_str.equals(""))
+                        cgstRate_str ="0.00";
+
+                    String sgstRate_str = itemdetails.getString(itemdetails.getColumnIndex("SGSTRate"));
+                    if (sgstRate_str== null || sgstRate_str.equals(""))
+                        sgstRate_str =("0.00");
+
+                    cgstRate_d = Double.parseDouble(cgstRate_str);
+                    sgstRate_d = Double.parseDouble(sgstRate_str);
+                    if(chk_interState.isChecked())
+                    {
+                        igstRate_d = cgstRate_d+sgstRate_d;
+                        igstAmt_d = igstRate_d *taxval_f/100;
+                        cgstRate_d = 0;
+                        cgstAmt_d = 0;
+                        sgstRate_d = 0;
+                        sgstAmt_d = 0;
+
+                    }
+                    else
+                    {
+                        cgstAmt_d = cgstRate_d*taxval_f/100;
+                        sgstAmt_d = sgstRate_d*taxval_f/100;
+                    }
+                    po.setIgstRate(igstRate_d);
+                    po.setIgstAmount(igstAmt_d);
+                    po.setCgstRate(cgstRate_d);
+                    po.setCgstAmount(cgstAmt_d);
+                    po.setSgstRate(sgstRate_d);
+                    po.setSgstAmount(sgstAmt_d);
+                    po.setCsRate(0);
+                    po.setCsAmount(0);
+                    double amount_f = taxval_f + cgstAmt_d +sgstAmt_d+igstAmt_d;
+                    po.setAmount(amount_f);
+                    po.setIsgoodInward("0");
+                    if(chk_inward_additional_charge.isChecked())
+                    {
+                        po.setAdditionalCharge(et_inward_additionalchargename.getText().toString());
+                        po.setAdditionalChargeAmount(Double.parseDouble(et_inward_additionalchargeamount.getText().toString()));
+                    }
+                    dataList.add(po);
+                }
+                set_list_spnr();
+                calculateSubTotal();
+                if (purchaseOrderAdapter == null) {
+                    purchaseOrderAdapter = new PurchaseOrderAdapter(PurchaseOrderActivity.this, dbPurchaseOrder,dataList);
+                    lv_inward_item_details.setAdapter(purchaseOrderAdapter);
+                } else {
+                    purchaseOrderAdapter.notifyNewDataAdded(dataList);
+                }
+
+            }// end of if(type ==2)
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(myContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+
+    }
+/*
+void populate_old(int type)
     {
         //1 - new item entry
         //2 - existing item in database
@@ -1013,7 +1244,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                                 container.removeView(row);
                                 container.invalidate();
                                 calculateSubTotal();
-                                int child = tbl_inward_item_details.getChildCount();
+                                */
+/*int child = tbl_inward_item_details.getChildCount();
                                 for(int i =0;i< child ;i++)
                                 {
                                     if(i==0)
@@ -1023,7 +1255,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                                     TextView Sn = (TextView) row1.getChildAt(0);
                                     count++;
                                     Sn.setText(String.valueOf(count));
-                                }
+                                }*//*
+
                             }
                         })
                         .show();
@@ -1031,7 +1264,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             }
         });
 
-        /*ImgDelete.setOnClickListener(new View.OnClickListener() {
+        */
+/*ImgDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 View row = (View) v.getParent();
                 ViewGroup container = ((ViewGroup) row.getParent());
@@ -1050,7 +1284,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                     Sn.setText(String.valueOf(count));
                 }
             }
-        });*/
+        });*//*
+
 
         TextView spc = new TextView(myContext);
         spc.setWidth(5);
@@ -1077,7 +1312,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         .show();
             }
         });
-        /*btndel.setOnClickListener(new View.OnClickListener() {
+        */
+/*btndel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final View v1 = v;
                 AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
@@ -1108,8 +1344,10 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         .show();
 
             }
-        });*/
-        /*btndel.setOnClickListener(new View.OnClickListener() {
+        });*//*
+
+        */
+/*btndel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 View row = (View) v.getParent();
                 ViewGroup container = ((ViewGroup) row.getParent());
@@ -1117,7 +1355,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 container.invalidate();
                 calculateSubTotal();
             }
-        });*/
+        });*//*
+
 
         try {
 
@@ -1174,7 +1413,9 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                // tr.addView(btndel);
                 tr.addView(ImgDelete);
 
-                tbl_inward_item_details.addView(tr);
+               */
+/* tbl_inward_item_details.addView(tr);*//*
+
 
             } else if(type ==2) // item existing in database
             {
@@ -1263,7 +1504,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
 
 
-                tbl_inward_item_details.addView(tr);
+//                tbl_inward_item_details.addView(tr);
                 set_list_spnr();
                 calculateSubTotal();
 
@@ -1276,27 +1517,22 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
 
     }
+*/
 
-    void calculateSubTotal()
+    public void calculateSubTotal()
     {
         float grandtotal_f =0;
         float subtotal_f =0;
         float additionalcharge_f = 0;
         TextView Amount;
         String amount_str = "0";
-        for (int i =0;i<tbl_inward_item_details.getChildCount(); i++)
+        for (PurchaseOrder po : dataList)
         {
-            TableRow row = (TableRow) tbl_inward_item_details.getChildAt(i);
-            Amount = (TextView) row.getChildAt(9);
-            if (Amount != null)
-            {
-                amount_str  = Amount.getText().toString();
-            }
 
-            subtotal_f += Float.parseFloat(amount_str);
+            subtotal_f += po.getAmount();
 
         }
-        et_inward_sub_total.setText(String.valueOf(subtotal_f));
+        et_inward_sub_total.setText(String.format("%.2f",subtotal_f));
 
         // addtional charge
         if (chk_inward_additional_charge.isChecked())
@@ -1310,7 +1546,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             }
 
         grandtotal_f = subtotal_f+ additionalcharge_f;
-        et_inward_grand_total.setText(String.valueOf(grandtotal_f));
+        et_inward_grand_total.setText(String.format("%.2f",grandtotal_f));
 
     }
 
@@ -1379,7 +1615,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
     public void Clear_inward(View v)
     {
-        for (int i = tbl_inward_item_details.getChildCount(); i >0;  i--) {
+        /*for (int i = tbl_inward_item_details.getChildCount(); i >0;  i--) {
             View Row = tbl_inward_item_details.getChildAt(i-1);
             if (Row instanceof TableRow) {
                 ((TableRow) Row).removeAllViews();
@@ -1388,7 +1624,9 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             container.removeView(Row);
             container.invalidate();
             count--;
-        }
+        }*/
+        purchaseOrderAdapter = null;
+        lv_inward_item_details.setAdapter(purchaseOrderAdapter);
         count=0;
         autocompletetv_purchase_order.setText("");
         set_list_spnr();
@@ -1463,6 +1701,9 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         autocompletetv_suppliername.setText("");
         et_supplier_address.setText("");
         et_supplier_phone.setText("");
+        chk_interState.setChecked(false);
+        spnrSupplierStateCode.setSelection(0);
+        spnrSupplierStateCode.setEnabled(false);
 
         et_inward_sub_total.setText("");
         autocompletetv_invoiceno.setText("");
@@ -1495,16 +1736,22 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
     public  void ClearTable()
     {
-        for (int i = tbl_inward_item_details.getChildCount(); i >0;  i--) {
-            View Row = tbl_inward_item_details.getChildAt(i-1);
-            if (Row instanceof TableRow) {
-                ((TableRow) Row).removeAllViews();
-            }
-            ViewGroup container = ((ViewGroup) Row.getParent());
-            container.removeView(Row);
-            container.invalidate();
-            count--;
-        }
+//        for (int i = tbl_inward_item_details.getChildCount(); i >0;  i--) {
+//            View Row = tbl_inward_item_details.getChildAt(i-1);
+//            if (Row instanceof TableRow) {
+//                ((TableRow) Row).removeAllViews();
+//            }
+//            ViewGroup container = ((ViewGroup) Row.getParent());
+//            container.removeView(Row);
+//            container.invalidate();
+//            count--;
+//        }
+        if(dataList!=null)
+            dataList.clear();
+        dataList= new ArrayList<>();
+        purchaseOrderAdapter= null;
+        lv_inward_item_details.setAdapter(purchaseOrderAdapter);
+
         count=0;
     }
     public void Close_inward(View v) {

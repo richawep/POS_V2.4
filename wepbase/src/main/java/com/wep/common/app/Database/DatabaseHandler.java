@@ -633,6 +633,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_Total_ITC_CGST = "Total_ITC_CGST";
     public static final String KEY_Total_ITC_SGST = "Total_ITC_SGST";
     public static final String KEY_SupplierType = "SupplierType";
+    public static final String KEY_SupplierPOS = "SupplierPOS";
     public static final String KEY_AttractsReverseCharge = "AttractsReverseCharge";
     public static final String KEY_AdditionalChargeName = "AdditionalChargeName";
     public static final String KEY_AdditionalChargeAmount = "AdditionalChargeAmount";
@@ -948,8 +949,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_PurchaseOrderNo + " INTEGER, " + KEY_InvoiceNo + " TEXT, " + KEY_InvoiceDate + " TEXT, " +
             KEY_SupplierCode + " INTEGER, " + KEY_SUPPLIERNAME + " TEXT, " + KEY_SupplierPhone + " TEXT, " +
             KEY_SupplierAddress + " TEXT, " + KEY_GSTIN+" TEXT, "+KEY_SupplierType+" TEXT, "+
-            KEY_MenuCode + " INTEGER, " + KEY_SupplyType + " TEXT , " +
+            KEY_SupplierPOS+" TEXT, "+
+            KEY_MenuCode + " INTEGER, " + KEY_SupplyType + " TEXT , " + KEY_HSNCode+" TEXT, "+
             KEY_ItemName + " TEXT, " + KEY_Value + " REAL, " + KEY_Quantity + " REAL, " + KEY_UOM + "  TEXT, " + KEY_TaxableValue + " REAL, " +
+            KEY_IGSTRate + " REAL," + KEY_IGSTAmount + " REAl, "+KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAl, "+
+            KEY_SGSTRate + " REAL," + KEY_SGSTAmount + " REAl, "+
             KEY_SalesTax + " REAL," + KEY_ServiceTaxAmount + " REAl, " + KEY_Amount + " REAL," + KEY_AdditionalChargeName + " TEXT, " +
             KEY_AdditionalChargeAmount + " REAL , " + KEY_isGoodinward + " INTEGER )";
 
@@ -5792,6 +5796,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues = new ContentValues();
 
         cvDbValues.put("ItemName", objItem.getItemname());
+        cvDbValues.put(KEY_HSNCode, objItem.getHSNCode());
         cvDbValues.put(KEY_MenuCode, objItem.getMenuCode());
         cvDbValues.put(KEY_SUPPLIERNAME, objItem.getsupplierName());
         cvDbValues.put(KEY_SupplierCode, objItem.getsuppliercode());
@@ -5824,6 +5829,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         cvDbValues.put(KEY_SupplierCode, objItem.getsuppliercode());
         cvDbValues.put(KEY_SUPPLIERNAME, objItem.getsupplierName());
         cvDbValues.put(KEY_ItemName, objItem.getItemname());
+        cvDbValues.put(KEY_HSNCode, objItem.getHSNCode());
         cvDbValues.put("ItemBarcode", objItem.getItemBarcode());
         cvDbValues.put(KEY_CGSTRate, objItem.getCGSTRate());
         cvDbValues.put(KEY_SGSTRate, objItem.getSGSTRate());
@@ -6052,6 +6058,14 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
         return dbFNB.delete(TBL_PURCHASEORDER, KEY_SupplierCode + "=" + suppliercode + " AND " + KEY_PurchaseOrderNo + " = " + purchaseorder, null);
     }
+    public long deletePurchaseOrderEntry(String puchaseOrderNo, String supplierCode,String itemname,
+                                        double rate, double quantity) {
+
+        String deleteClause = KEY_SupplierCode + " Like '" + supplierCode + "' AND " +KEY_PurchaseOrderNo +
+                " LIKE '" + puchaseOrderNo+"' AND "+KEY_ItemName+" LIKE '"+itemname+"' AND "+KEY_Rate+"="+rate+
+                " AND "+KEY_Quantity+"="+quantity;
+        return dbFNB.delete(TBL_PURCHASEORDER, deleteClause, null);
+    }
 
     public List<String> getPurchaseOrderlist_inward_nonGST(int suppliercode) {
         List<String> list = new ArrayList<String>();
@@ -6108,8 +6122,95 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         result = dbFNB.rawQuery(queryString, null);
         return result;
     }
+    public Cursor getPurchaseOrder_for_gstin(String startDate, String endDate,String gstin ) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " + KEY_GSTIN + " Like '" + gstin + "' AND " +
+                KEY_InvoiceDate+" BETWEEN '"+startDate+"' AND '"+endDate+"' AND "+KEY_isGoodinward+" LIKE '1'";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
+    public Cursor getPurchaseOrder_for_gstin(String invoiceNo,String invoiceDate,String gstin,String purchaseorder ) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " + KEY_GSTIN + " Like '" + gstin + "' AND " +
+                KEY_PurchaseOrderNo+" LIKE '"+purchaseorder+"' AND "+
+                KEY_InvoiceDate+" LIKE '"+invoiceDate+"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_isGoodinward+" LIKE '1'";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
 
     // -----Insert Purchase Order-----
+    public long InsertPurchaseOrder(PurchaseOrder po) {
+        cvDbValues = new ContentValues();
+
+        cvDbValues.put(KEY_SUPPLIERNAME, po.getSupplierName());
+        cvDbValues.put(KEY_SupplierCode, po.getSupplierCode());
+        cvDbValues.put(KEY_SupplierPhone, po.getSupplierPhone());
+        cvDbValues.put(KEY_SupplierAddress, po.getSupplierAddress());
+        cvDbValues.put(KEY_SupplierType, po.getSupplierType());
+        cvDbValues.put(KEY_SupplierPOS, po.getSupplierPOS());
+        cvDbValues.put(KEY_GSTIN, po.getSupplierGSTIN());
+        cvDbValues.put(KEY_PurchaseOrderNo, po.getPurchaseOrderNo());
+        cvDbValues.put(KEY_InvoiceNo, po.getInvoiceNo());
+        cvDbValues.put(KEY_InvoiceDate, po.getInvoiceDate());
+
+        cvDbValues.put(KEY_MenuCode, po.getMenuCode());
+        cvDbValues.put(KEY_SupplyType, po.getSupplyType());
+        cvDbValues.put(KEY_HSNCode, po.getHSNCode());
+        cvDbValues.put(KEY_ItemName, po.getItemName());
+        cvDbValues.put(KEY_Quantity, po.getQuantity());
+        cvDbValues.put(KEY_UOM, po.getUOM());
+        cvDbValues.put(KEY_Value, po.getValue());
+        cvDbValues.put(KEY_TaxableValue, po.getTaxableValue());
+        cvDbValues.put(KEY_IGSTRate,po.getIgstRate());
+        cvDbValues.put(KEY_IGSTAmount,po.getIgstAmount());
+        cvDbValues.put(KEY_CGSTRate,po.getCgstRate());
+        cvDbValues.put(KEY_CGSTAmount,po.getCgstAmount());
+        cvDbValues.put(KEY_SGSTRate,po.getSgstRate());
+        cvDbValues.put(KEY_SGSTAmount,po.getSgstAmount());
+
+        cvDbValues.put(KEY_Amount, po.getAmount());
+        cvDbValues.put(KEY_AdditionalChargeName, po.getAdditionalCharge());
+        cvDbValues.put(KEY_AdditionalChargeAmount, po.getAdditionalChargeAmount());
+        cvDbValues.put(KEY_isGoodinward, po.getIsgoodInward());
+
+
+        return dbFNB.insert(TBL_PURCHASEORDER, null, cvDbValues);
+    }
+    public long UpdatePurchaseOrder(PurchaseOrder po) {
+        cvDbValues = new ContentValues();
+
+        cvDbValues.put(KEY_SUPPLIERNAME, po.getSupplierName());
+        cvDbValues.put(KEY_SupplierCode, po.getSupplierCode());
+        cvDbValues.put(KEY_SupplierPhone, po.getSupplierPhone());
+        cvDbValues.put(KEY_SupplierAddress, po.getSupplierAddress());
+        cvDbValues.put(KEY_SupplierType, po.getSupplierType());
+        cvDbValues.put(KEY_GSTIN, po.getSupplierGSTIN());
+
+        cvDbValues.put(KEY_PurchaseOrderNo, po.getPurchaseOrderNo());
+        cvDbValues.put(KEY_MenuCode, po.getMenuCode());
+        cvDbValues.put(KEY_SupplyType, po.getSupplyType());
+        cvDbValues.put(KEY_ItemName, po.getItemName());
+        cvDbValues.put(KEY_Quantity, po.getQuantity());
+        cvDbValues.put(KEY_UOM, po.getUOM());
+        cvDbValues.put(KEY_Value, po.getValue());
+        cvDbValues.put(KEY_TaxableValue, po.getTaxableValue());
+        cvDbValues.put(KEY_IGSTRate,po.getIgstRate());
+        cvDbValues.put(KEY_IGSTAmount,po.getIgstAmount());
+        cvDbValues.put(KEY_CGSTRate,po.getCgstRate());
+        cvDbValues.put(KEY_CGSTAmount,po.getCgstAmount());
+        cvDbValues.put(KEY_SGSTRate,po.getSgstRate());
+        cvDbValues.put(KEY_SGSTAmount,po.getSgstAmount());
+        cvDbValues.put(KEY_Amount, po.getAmount());
+        cvDbValues.put(KEY_AdditionalChargeName, po.getAdditionalCharge());
+        cvDbValues.put(KEY_AdditionalChargeAmount, po.getAdditionalChargeAmount());
+        cvDbValues.put(KEY_isGoodinward, po.getIsgoodInward());
+
+        String whereClause = KEY_PurchaseOrderNo + " = " + po.getPurchaseOrderNo() + " AND " +
+                KEY_SupplierCode + " = " + po.getSupplierCode() + " AND " + KEY_MenuCode + " = " + po.getMenuCode();
+
+        return dbFNB.update(TBL_PURCHASEORDER, cvDbValues, whereClause, null);
+    }
+
     public long InsertPurchaseOrder(BillItem objBillItem) {
         cvDbValues = new ContentValues();
 
@@ -7081,6 +7182,15 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         }
         return gstin;
     }
+    public String getOwnerPOS() {
+        String pos = "";
+        String selectQuery = "Select POS FROM " + TBL_OWNER_DETAILS;
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        if (result != null && result.moveToFirst()) {
+            pos = result.getString(result.getColumnIndex("POS"));
+        }
+        return pos;
+    }
 
     public Cursor getInvoice_inward(String date) {
         String selectQuery = " Select " + KEY_TaxableValue + " FROM " + TBL_INWARD_SUPPLY_ITEMS_DETAILS + " WHERE "
@@ -7260,6 +7370,22 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     public ArrayList<String> getGSTR1_CDN_gstinlist(String startDate, String endDate) {
         String selectQuery = "SELECT DISTINCT GSTIN FROM CreditDebitOutward WHERE  " + KEY_NoteDate +
                 " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);
+        ArrayList<String> list = new ArrayList<>();
+        while(cursor!=null && cursor.moveToNext())
+        {
+            String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+            if(gstin==null)
+                continue;
+            else
+                list.add(gstin);
+        }
+        return list;
+    }
+    public ArrayList<String> getGSTR2_b2b_gstinList(String startDate, String endDate) {
+        String selectQuery = "SELECT DISTINCT GSTIN FROM "+TBL_PURCHASEORDER+" WHERE  " + KEY_InvoiceDate +
+                " BETWEEN '" + startDate + "' AND '" + endDate + "' AND "+KEY_SupplierType+" LIKE 'Registered' AND "+
+                KEY_isGoodinward+" LIKE '1'";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);
         ArrayList<String> list = new ArrayList<>();
         while(cursor!=null && cursor.moveToNext())

@@ -30,9 +30,7 @@ import com.wep.common.app.gst.GSTR1B2CSAData;
 import com.wep.common.app.gst.GSTR1B2CSData;
 import com.wep.common.app.gst.GSTR1_CDN_Data;
 import com.wep.common.app.gst.GSTR1Data;
-import com.wep.common.app.gst.GSTR2B2BAData;
 import com.wep.common.app.gst.GSTR2B2BAItemDetails;
-import com.wep.common.app.gst.GSTR2B2BData;
 import com.wep.common.app.gst.GSTR2CDN;
 import com.wep.common.app.gst.GSTR2Data;
 import com.wep.common.app.gst.GSTRData;
@@ -500,16 +498,16 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
         String endDate = DateUtil.getDateForDatePicker(etReportDateEnd.getText().toString()) ;
         if(ConnectionDetector.isInternetConnection(GSTLinkActivity.this))
         {
-            ArrayList<GSTR2B2BData> gstr2B2BDatasList = dataController.getB2BItems(startDate,endDate);
+            /*ArrayList<GSTR2B2BData> gstr2B2BDatasList = dataController.getB2BItems(startDate,endDate);
             String str[] = startDate.split("-");
-            ArrayList<GSTR2B2BAData> b2baList = null;//dataController.getGSTR2B2BSaveData();
+            ArrayList<GSTR2B2BAData> b2baList = null;//dataController.getGSTR2B2BDataList_registered();
             ArrayList<GSTR2CDN> gstr2cdnList = null;;//dataController.getGSTR2CDNSaveData();
             GSTR2Data gstr1Data = new GSTR2Data(dbGSTLink.getGSTIN(),str[2]+str[0],123,234,gstr2B2BDatasList,b2baList,gstr2cdnList);
             progressDialog.show();
             GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1Data);
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
             new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR2, Config.GSTR2_URL).execute();
-        }
+        */}
         else
         {
             Toast.makeText(GSTLinkActivity.this, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();

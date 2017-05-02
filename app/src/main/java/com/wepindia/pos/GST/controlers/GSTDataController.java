@@ -19,14 +19,13 @@ import com.wep.common.app.gst.GSTR1_B2CL_Data;
 import com.wep.common.app.gst.GSTR1_B2CL_invoices;
 import com.wep.common.app.gst.GSTR1_B2CL_item_details;
 import com.wep.common.app.gst.GSTR1_B2CL_items;
-import com.wep.common.app.gst.GSTR2B2BAData;
-import com.wep.common.app.gst.GSTR2B2BData;
-import com.wep.common.app.gst.GSTR2B2BITCDetails;
-import com.wep.common.app.gst.GSTR2B2BInvoiceItems;
-import com.wep.common.app.gst.GSTR2B2BInvoices;
-import com.wep.common.app.gst.GSTR2B2BItemDetails;
 import com.wep.common.app.gst.GSTR2CDN;
 import com.wep.common.app.gst.GSTR1_B2B_item_details;
+import com.wep.common.app.gst.GSTR2_B2B_Data_registered;
+import com.wep.common.app.gst.GSTR2_B2B_ITC_details;
+import com.wep.common.app.gst.GSTR2_B2B_invoices_registered;
+import com.wep.common.app.gst.GSTR2_B2B_item_details;
+import com.wep.common.app.gst.GSTR2_B2B_items;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 
 import java.text.SimpleDateFormat;
@@ -284,7 +283,7 @@ public class GSTDataController {
         return datalist_s;
     }
 
-    public ArrayList<GSTR2B2BData> getB2BItems(String StartDate, String EndDate)
+    /*public ArrayList<GSTR2B2BData> getB2BItems(String StartDate, String EndDate)
     {
         ArrayList<GSTR2B2BData> b2bDataList = new ArrayList<GSTR2B2BData>();
         try {
@@ -310,7 +309,6 @@ public class GSTDataController {
         }
         return b2bDataList;
     }
-
     public ArrayList<GSTR2B2BInvoices> getGSTR2B2BGSTR2B2BInvoices(String StartDate, String EndDate, String gstn)
     {
         ArrayList<GSTR2B2BInvoices> gstr2B2BInvoicesList = new ArrayList<GSTR2B2BInvoices>();
@@ -410,7 +408,7 @@ public class GSTDataController {
         }
         return gstr2B2BInvoiceItemsList;
     }
-
+*/
     public ArrayList<GSTR1_B2CL_Data> getGSTR1B2CLList(String startDate, String endDate) {
         ArrayList<GSTR1_B2CL_Data> b2CL_DataList = new ArrayList<GSTR1_B2CL_Data>();
         try
@@ -716,7 +714,7 @@ public class GSTDataController {
         }
         return b2bADataList;
     }
-    public ArrayList<GSTR1_B2B_A_Data> getGSTR1B2BAList_old(String startDate, String endDate) {
+    /*public ArrayList<GSTR1_B2B_A_Data> getGSTR1B2BAList_old(String startDate, String endDate) {
         ArrayList<GSTR1_B2B_A_Data> b2bADataList = new ArrayList<GSTR1_B2B_A_Data>();
         try {
             ArrayList<String > gstinList = dbReport.getGSTR1B2B_A_gstinList(startDate,endDate);
@@ -829,7 +827,7 @@ public class GSTDataController {
             b2bADataList = null;
         }
         return b2bADataList;
-    }
+    }*/
     public ArrayList<GSTR1_B2B_Data> getGSTR1B2BList(String startDate, String endDate) {
         ArrayList<GSTR1_B2B_Data> b2BDataList = new ArrayList<GSTR1_B2B_Data>();
         try {
@@ -1040,7 +1038,7 @@ public class GSTDataController {
         return cdn_list;
     }
 
-    private ArrayList<GSTR1_CDN_Details> getGSTR1CDNsList(String startDate, String endDate, String num) {
+    /*private ArrayList<GSTR1_CDN_Details> getGSTR1CDNsList(String startDate, String endDate, String num) {
         ArrayList<GSTR1_CDN_Details> list = new ArrayList<GSTR1_CDN_Details>();
         try {
 
@@ -1078,10 +1076,80 @@ public class GSTDataController {
             list = null;
         }
         return list;
-    }
+    }*/
 
-    public ArrayList<GSTR2B2BAData> getGSTR2B2BSaveData() {
-        return null;
+    public ArrayList<GSTR2_B2B_Data_registered> getGSTR2B2BDataList_registered(String startDate, String endDate) {
+        ArrayList<GSTR2_B2B_Data_registered> dataList_registered = new ArrayList<>();
+        try
+        {
+            ArrayList<String> gstinList = dbReport.getGSTR2_b2b_gstinList(startDate, endDate);
+            for (String gstin : gstinList)
+            {
+                Cursor cursor = dbReport.getPurchaseOrder_for_gstin(startDate,endDate,gstin);
+                ArrayList<String> po_list = new ArrayList<>();
+                ArrayList<GSTR2_B2B_invoices_registered> invoiceList = new ArrayList<>();
+                while(cursor!=null && cursor.moveToNext())
+                {
+                    String purchaseorder = cursor.getString(cursor.getColumnIndex("PurchaseOrderNo"));
+                    String invoiceNo = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                    String invoiceDate = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                    String str = gstin+purchaseorder+invoiceNo+invoiceDate;
+                    if(!po_list.contains(str))
+                        po_list.add(str);
+                    else
+                        continue;
+                    Cursor cursor_item = dbReport.getPurchaseOrder_for_gstin(invoiceNo,invoiceDate,gstin,purchaseorder);
+                    int i=1;
+                    double totval = 0;
+                    ArrayList<GSTR2_B2B_items> itms_list = new ArrayList<>();
+                    while (cursor_item!=null && cursor_item.moveToNext())
+                    {
+                        totval += cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue"));
+                        GSTR2_B2B_item_details item_details = new GSTR2_B2B_item_details(
+                                cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
+                                cursor_item.getString(cursor_item.getColumnIndex("HSNCode")),
+                                cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue")),
+                                cursor_item.getDouble(cursor_item.getColumnIndex("IGSTRate")),
+                                cursor_item.getDouble(cursor_item.getColumnIndex("IGSTAmount")),
+                                cursor_item.getDouble(cursor_item.getColumnIndex("CGSTRate")),
+                                cursor_item.getDouble(cursor_item.getColumnIndex("CGSTAmount")),
+                                cursor_item.getDouble(cursor_item.getColumnIndex("SGSTRate")),
+                                cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount")),
+                                0,
+                                0,
+                                "ip"
+                        );
+                        GSTR2_B2B_ITC_details itc = new GSTR2_B2B_ITC_details();
+                        GSTR2_B2B_items itm = new GSTR2_B2B_items(i++, item_details,itc);
+                        itms_list.add(itm);
+                    }
+                    if(itms_list!=null && itms_list.size()>0)
+                    {
+                        String pos = dbReport.getOwnerPOS();
+                        Date newD = new Date(Long.parseLong(invoiceDate));
+                        String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
+                        GSTR2_B2B_invoices_registered inv = new GSTR2_B2B_invoices_registered(
+                                invoiceNo,
+                                newDate,
+                                totval,
+                                pos,
+                                "N",
+                                itms_list
+                        );
+                        invoiceList.add(inv);
+                    }
+                }
+                GSTR2_B2B_Data_registered b2B_data_registered = new GSTR2_B2B_Data_registered(gstin, invoiceList);
+                dataList_registered.add(b2B_data_registered);
+            }// end for
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            dataList_registered= null;
+        }
+        finally {
+            return dataList_registered;
+        }
     }
 
     public ArrayList<GSTR2CDN> getGSTR2CDNSaveData() {

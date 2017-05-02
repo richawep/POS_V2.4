@@ -130,7 +130,7 @@
                     android:id="@+id/tblItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:collapseColumns="2,3,4,6,10,11,12,13,16,17,18">
+                    android:collapseColumns="2,3,4,6,10,11,12,13,16,17,18,19">
 
 
                 </TableLayout>
@@ -644,6 +644,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
+                        android:visibility="gone"
                         android:layout_weight="1">
 
                         <TextView
@@ -662,6 +663,29 @@
                             android:gravity="center"
                             android:hint="0.00"
                             android:inputType="numberDecimal"
+                            android:maxLength="7"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="HSNCode"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <EditText
+                            android:id="@+id/et_inw_HSNCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
                             android:maxLength="7"
                             android:textSize="13dp" />
                     </LinearLayout>
