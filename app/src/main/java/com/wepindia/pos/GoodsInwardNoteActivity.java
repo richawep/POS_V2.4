@@ -997,20 +997,15 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
         long l =0;
         try {
+            for(PurchaseOrder po : dataList)
+            {
 
-            for (int i = 0; i < tbl_inward_item_details.getChildCount(); i++) {
-                TableRow row = (TableRow) tbl_inward_item_details.getChildAt(i);
-                TextView ItemName = (TextView) row.getChildAt(2);
-                TextView Rate = (TextView) row.getChildAt(3);
-                TextView Quantity = (TextView) row.getChildAt(4);
-                TextView UOM = (TextView) row.getChildAt(5);
+                String itemname_str = po.getItemName();
+                double quantity_d = po.getQuantity();
+                String qty = String.format("%.2f",quantity_d);
+                float quantity_f = Float.parseFloat(qty);
 
-                String itemname_str = ItemName.getText().toString();
-                float quantity_f = Float.parseFloat(Quantity.getText().toString());
-                String qty = String.format("%.2f",quantity_f);
-                quantity_f = Float.parseFloat(qty);
-
-                String uom_str = UOM.getText().toString();
+                String uom_str = po.getUOM();
 
                 Cursor item_present_crsr = dbGoodsInwardNote.getItem_GoodsInward(itemname_str);
                 if (item_present_crsr != null && item_present_crsr.moveToFirst()) {
@@ -1033,9 +1028,9 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                             closingStock = crsr_inward_stock.getDouble(crsr_inward_stock.getColumnIndex("ClosingStock"));
                             menuCode = crsr_inward_stock.getInt(crsr_inward_stock.getColumnIndex("MenuCode"));
                         }
-                        double additionalQty = Double.parseDouble(Quantity.getText().toString());
+                        double additionalQty =po.getQuantity();
                         stock_inward.updateOpeningStock_Inward(invoicedate,menuCode,itemname_str,
-                                openingStock+additionalQty,Double.parseDouble(Rate.getText().toString()));
+                                openingStock+additionalQty,po.getValue());
                         stock_inward.updateClosingStock_Inward(invoicedate,menuCode,itemname_str,
                                 closingStock+additionalQty);
                     }
