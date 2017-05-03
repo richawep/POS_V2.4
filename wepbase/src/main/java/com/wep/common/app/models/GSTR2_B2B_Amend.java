@@ -21,6 +21,7 @@ public class GSTR2_B2B_Amend {
     private String POS;
     private String RecipientName;
     private String RecipientStateCode;
+    private String supplierType;
 
     private String taxMonth, type_ori, type_rev,hsn_ori, hsn_rev,pos_ori,pos_rev;
 
@@ -35,6 +36,7 @@ public class GSTR2_B2B_Amend {
         this.gstin_rev="";
         this.invoiceNo_rev ="";
         this.invoiceDate_rev = "";
+        this.supplierType = "";
         this.value= 0;
         this.type="";
         this.HSn= "";
@@ -53,6 +55,14 @@ public class GSTR2_B2B_Amend {
         this.hsn_rev="";
         this.pos_ori= "";
         this.pos_rev="";
+    }
+
+    public String getSupplierType() {
+        return supplierType;
+    }
+
+    public void setSupplierType(String supplierType) {
+        this.supplierType = supplierType;
     }
 
     public String getTaxMonth() {

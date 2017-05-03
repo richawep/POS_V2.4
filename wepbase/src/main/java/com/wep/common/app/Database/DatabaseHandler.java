@@ -907,7 +907,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_SupplierType + " TEXT, " + KEY_SupplierPhone + "  TEXT, " + KEY_SupplierAddress + " TEXT)";
 
 
-    String QUERY_CREATE_TABLE_INWARD_SUPPLY_AMMEND = " CREATE TABLE " + TBL_GSTR2_AMEND + " ( " +
+    String QUERY_CREATE_TABLE_GSTR2_AMMEND = " CREATE TABLE " + TBL_GSTR2_AMEND + " ( " +
             KEY_GSTIN_Ori + " TEXT," + KEY_CustName + " TEXT, " + KEY_SupplierType + " TEXT, " + KEY_SupplyType + "  TEXT, " +
             KEY_TaxationType + " TEXT, " + KEY_OriginalInvoiceNo + " TEXT, " + KEY_OriginalInvoiceDate + " TEXT, " +
             KEY_GSTIN+" TEXT, "+
@@ -1186,7 +1186,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TABLE_USER_ROLE);
             db.execSQL(QUERY_CREATE_TABLE_INWARD_SUPPLY_LEDGER);
             db.execSQL(QUERY_CREATE_TABLE_INWARD_SUPPLY_ITEM_DETAILS);
-            db.execSQL(QUERY_CREATE_TABLE_INWARD_SUPPLY_AMMEND);
+            db.execSQL(QUERY_CREATE_TABLE_GSTR2_AMMEND);
             db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Ledger);
             db.execSQL(QUERY_CREATE_TABLE_Outward_Supply_Items_Details);
             db.execSQL(QUERY_CREATE_TABLE_OUTWARD_SUPPLY_AMMEND);
@@ -1839,23 +1839,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
-    public Cursor getDebitDetails(String invoiceNo, String invoiceDate,String type) {
+    public Cursor getDebitDetails(String invoiceNo, String invoiceDate,String type,String supplier_gstin) {
         String selectQuery = "SELECT * FROM " + TBL_CreditDebit_Inward + " WHERE " + KEY_InvoiceDate + " LIKE '" + invoiceDate +
-                "' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_NoteType+" LIKE '"+type+"'";
+                "' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_NoteType+" LIKE '"+type+"' AND "+KEY_GSTIN+" LIKE '"+supplier_gstin+"'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
 
-    public int DeleteCreditNote(String invoiceNo, String invoiceDate,String creditNo, String creditDate) {
+    public int DeleteOutwardNote(String invoiceNo, String invoiceDate,String creditNo, String creditDate, String noteType) {
 
         String deleteQuery = KEY_InvoiceDate + " LIKE '" + invoiceDate +"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+
-                "' AND "+KEY_NoteNo+" LIKE '"+creditNo+"' AND "+KEY_NoteDate+" LIKE '"+creditDate+"'";
+                "' AND "+KEY_NoteNo+" LIKE '"+creditNo+"' AND "+KEY_NoteDate+" LIKE '"+creditDate+"' AND "+KEY_NoteType+" LIKE '"+noteType+"'";
         return dbFNB.delete(TBL_CreditDebit_Outward, deleteQuery, null);
     }
-    public int DeleteDebitNote(String invoiceNo, String invoiceDate,String creditNo, String creditDate) {
+    public int DeleteInwardNote(String invoiceNo, String invoiceDate, String creditNo, String creditDate, String noteType) {
 
         String deleteQuery = KEY_InvoiceDate + " LIKE '" + invoiceDate +"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+
-                "' AND "+KEY_NoteNo+" LIKE '"+creditNo+"' AND "+KEY_NoteDate+" LIKE '"+creditDate+"'";
+                "' AND "+KEY_NoteNo+" LIKE '"+creditNo+"' AND "+KEY_NoteDate+" LIKE '"+creditDate+"' AND "+KEY_NoteType+" LIKE '"+noteType+"'";
         return dbFNB.delete(TBL_CreditDebit_Inward, deleteQuery, null);
     }
 
@@ -1874,11 +1874,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return max+1;
     }
 
-    public Cursor getdebitdetails(String invoiceNo, String invoiceDate)
+    public Cursor getdebitdetails(String invoiceNo, String invoiceDate,String supplierGSTIN)
     {
-        String type = "D";
+
         String selectQuery = "SELECT * FROM " + TBL_CreditDebit_Inward+ " WHERE " + KEY_InvoiceDate + " LIKE '" + invoiceDate +
-                "' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_NoteType+" LIKE '"+type+"'";
+                "' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_GSTIN+" LIKE '"+supplierGSTIN+"'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -2110,6 +2110,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put(KEY_SGSTRate, ammend.getSgstrate());
             contentValues.put(KEY_SGSTAmount, ammend.getSgstamt());
             contentValues.put(KEY_POS, ammend.getPOS());
+            contentValues.put(KEY_SupplierType, ammend.getSupplierType());
             //contentValues.put(KEY_BusinessType,bussinessType);
 
 
@@ -2246,10 +2247,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.delete(TBL_GSTR2_AMEND, deleteClause, null);
     }
 
-    public Cursor getAmmends_GSTR2_b2b(String gstin, String inv_no_ori, String inv_date_ori)
+    public Cursor getAmmends_GSTR2_b2b(String gstin, String inv_no_ori, String inv_date_ori,String supplierType)
     {
-        String whereClause = "Select * FROM "+TBL_GSTR2_AMEND+" WHERE "+ KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+
-                "' AND "+KEY_GSTIN_Ori+" LIKE '"+gstin+"'  ";
+        String whereClause = "Select * FROM "+TBL_GSTR2_AMEND+" WHERE "+ KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+
+                KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+"' AND "+KEY_GSTIN_Ori+" LIKE '"+gstin+"'  AND "+
+                KEY_SupplierType+" LIKE '"+supplierType+"'";
         return dbFNB.rawQuery(whereClause, null);
     }
 
@@ -6291,6 +6293,24 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return dbFNB.update(TBL_PURCHASEORDER, cvDbValues, whereClause, null);
     }
 
+    public Cursor getGSTR2_b2bA_invoices_for_gstin_registered(String startDate, String endDate,String gstin ) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_GSTR2_AMEND + " WHERE " + KEY_GSTIN + " Like '" + gstin + "' AND " +
+                KEY_InvoiceDate+" BETWEEN '"+startDate+"' AND '"+endDate+"' AND  "+KEY_SupplierType+" LIKE 'Registered'";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
+    public Cursor getGSTR2_b2bA_ammends_for_gstin_registered(String invoiceNo,String invoiceDate,String gstin,String invoiceNo_ori,
+                                                  String invoicedate_ori)
+    {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_GSTR2_AMEND + " WHERE " + KEY_GSTIN + " Like '" + gstin + "' AND " +
+                KEY_InvoiceDate+" LIKE '"+invoiceDate+"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_SupplierType+
+                " LIKE 'Registred' AND "+KEY_OriginalInvoiceNo+" LIKE '"+invoiceNo_ori+"' AND  "+KEY_OriginalInvoiceDate+" LIKE '"
+                +invoicedate_ori+"'";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
     // richa 2712_inward
     public ArrayList<String> getAllSupplierName() {
         ArrayList<String> list = new ArrayList<String>();
@@ -7400,6 +7420,12 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         }
         return list;
     }
+    public Cursor getGSTR2_CDN_forgstin(String startDate, String endDate, String gstin) {
+        String selectQuery = "SELECT * FROM CreditDebitInward WHERE  " + KEY_GSTIN + " = '" + gstin +
+                "' and " + KEY_NoteDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
     public ArrayList<String> getGSTR2_b2b_gstinList(String startDate, String endDate) {
         String selectQuery = "SELECT DISTINCT GSTIN FROM "+TBL_PURCHASEORDER+" WHERE  " + KEY_InvoiceDate +
                 " BETWEEN '" + startDate + "' AND '" + endDate + "' AND "+KEY_SupplierType+" LIKE 'Registered' AND "+
@@ -7415,6 +7441,41 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
                 list.add(gstin);
         }
         return list;
+    }
+    public ArrayList<String> getGSTR2_b2b_A_gstinList(String startDate, String endDate) {
+        String selectQuery = "SELECT DISTINCT GSTIN FROM "+TBL_GSTR2_AMEND+" WHERE  " + KEY_InvoiceDate +
+                " BETWEEN '" + startDate + "' AND '" + endDate + "' AND "+KEY_SupplierType+" LIKE 'Registered' ";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);
+        ArrayList<String> list = new ArrayList<>();
+        while(cursor!=null && cursor.moveToNext())
+        {
+            String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+            if(gstin==null)
+                continue;
+            else
+                list.add(gstin);
+        }
+        return list;
+    }
+    public Cursor getGSTR2_b2b_A_List(String startDate,String endDate ) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " +
+                /*KEY_PurchaseOrderNo+" LIKE '"+purchaseorder+"' AND "+*/
+                KEY_SupplierType+" LIKE 'UnRegistered' AND "+
+                KEY_InvoiceDate+" BETWEEN '"+startDate+"' AND '"+endDate+"' AND "+KEY_isGoodinward+" LIKE '1'";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
+
+    public Cursor getGSTR2_A_ammend_for_supplierName(String invoiceNo,String invoiceDate,String invoiceNo_ori,String invoiceDate_ori,
+                                                     String supplierName, String pos_supplier ) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_GSTR2_AMEND + " WHERE " + KEY_OriginalInvoiceNo + " Like '" + invoiceNo_ori + "' AND " +
+                KEY_OriginalInvoiceDate+" LIKE '"+invoiceDate_ori+"' AND "+ KEY_SupplierType+" LIKE 'UnRegistered' AND "+
+                KEY_InvoiceDate+" LIKE '"+invoiceDate+"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+
+                KEY_GSTIN+" LIKE '"+supplierName+"' AND "+KEY_POS+" LIKE '"+pos_supplier+"'";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
     }
 
     // All New Methods

@@ -145,7 +145,7 @@ public class Ammend_b2b_GSTR2 extends Activity{
         String gstin = et_gstin_ori.getText().toString();
         String invoiceNo = et_invno_ori.getText().toString();
         String invoiceDate = et_invdate_ori.getText().toString();
-        Cursor cursor = dbAmmend_b2b_GSTR2.getAmmends_GSTR2_b2b(gstin, invoiceNo, invoiceDate);
+        Cursor cursor = dbAmmend_b2b_GSTR2.getAmmends_GSTR2_b2b(gstin, invoiceNo, invoiceDate,"");
         int count =1;
         while(cursor!=null && cursor.moveToNext())
         {

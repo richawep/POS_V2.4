@@ -30,7 +30,9 @@ import com.wepindia.pos.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 public class Fragment_GSTR2_B2B_Amend extends Fragment {
@@ -42,7 +44,7 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
     EditText et_igstamt, et_cgstamt, et_sgstamt;
     Spinner spnr_g_s;
     ImageButton btnCal_ori, btnCal_rev;
-    Spinner spnr_pos;
+    Spinner spnr_pos,spnr_SupplierType;
 
     com.wep.common.app.views.WepButton btnAdd, btnSave, btnClear,btnClose,btnLoad;
     ListView listview_gstr2_amend;
@@ -110,6 +112,7 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
 
         spnr_g_s = (Spinner) view.findViewById(R.id.spnr_g_s);
         spnr_pos = (Spinner) view.findViewById(R.id.spnr_pos);
+        spnr_SupplierType = (Spinner) view.findViewById(R.id.spnr_SupplierType);
         btnAdd = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnAdd);
         btnSave = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnSave);
         btnClear = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnClear);
@@ -226,14 +229,22 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
     }
 
     public void load(View v,int from)
-    {   try{
+    {   String pos = "";
+        try{
+            String supplierType = spnr_SupplierType.getSelectedItem().toString();
+            if(supplierType.equals(""))
+            {
+                MsgBox.Show("Insufficient Information", "Please select supplier type");
+                return;
+            }
+
             if(ammendList == null)
                 ammendList = new ArrayList<GSTR2_B2B_Amend>();
             String gstin = et_gstin_ori.getText().toString();
             String invoiceNo = et_invno_ori.getText().toString();
             String invoiceDate = et_invdate_ori.getText().toString();
             Date dd  = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
-            Cursor cursor = dbAmmend_b2b_GSTR2.getAmmends_GSTR2_b2b(gstin, invoiceNo, String.valueOf(dd.getTime()));
+            Cursor cursor = dbAmmend_b2b_GSTR2.getAmmends_GSTR2_b2b(gstin, invoiceNo, String.valueOf(dd.getTime()),supplierType);
             int count =1;
             while (cursor != null && cursor.moveToNext()) {
                 GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
@@ -262,6 +273,7 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
                 ammend.setCgstamt(cursor.getFloat(cursor.getColumnIndex("CGSTAmount")));
                 ammend.setSgstamt(cursor.getFloat(cursor.getColumnIndex("SGSTAmount")));
                 ammend.setPOS(cursor.getString(cursor.getColumnIndex("POS")));
+                pos = ammend.getPOS();
                 ammendList.add(ammend);
             }
         }catch (Exception e)
@@ -282,17 +294,31 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
         else
         {
             ammendAdapter.notifyNewDataAdded(ammendList);
+            spnr_pos.setSelection(getIndexPOS(pos));
         }
     }
 
+    private int getIndexPOS(String pos)
+    {
+        List<String> posList = Arrays.asList(getResources().getStringArray(R.array.poscode));
+        int count =0;
+        for (String pos_temp : posList)
+        {
+            if(pos_temp.contains(pos))
+                return count;
+            count++;
+        }
+        return 0;
+    }
     void Reset()
     {
+        spnr_SupplierType.setSelection(0);
         et_gstin_ori.setText("12ANTPA0870E1A1");
         et_invno_ori.setText("23");
-        et_invdate_ori.setText("12-11-2016");
+        et_invdate_ori.setText("01-04-2017");
         et_gstin_rev.setText("12ANTPA0870E1A1");
         et_invno_rev.setText("50");
-        et_invdate_rev.setText("22-11-2016");
+        et_invdate_rev.setText("02-05-2017");
         et_value.setText("500");
         //et_pos.setText("14");
         spnr_pos.setSelection(0);
@@ -320,6 +346,12 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
 
     public void Add(View v)
     {
+        String supplierType = spnr_SupplierType.getSelectedItem().toString();
+        if(supplierType.equals(""))
+        {
+            MsgBox.Show("Insufficient Information", "Please select supplier type");
+            return;
+        }
         String gstin_ori = et_gstin_ori.getText().toString();
         String gstin_rev = et_gstin_rev.getText().toString();
         String invno_ori = et_invno_ori.getText().toString();
@@ -381,6 +413,7 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
                 ammend.setCgstamt(Float.parseFloat(cgstamt));
                 ammend.setSgstrate(Float.parseFloat(sgstrate));
                 ammend.setSgstamt(Float.parseFloat(sgstamt));
+                ammend.setSupplierType(supplierType);
                 long lResult = dbAmmend_b2b_GSTR2.add_GSTR2_B2BAmmend(ammend);
                 if(lResult>0)
                 {

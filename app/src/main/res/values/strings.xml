@@ -46,6 +46,11 @@
         <item>NilRate</item>
         <item>nonGST</item>
     </string-array>
+ <string-array name="suppliertypes">
+        <item> </item>
+        <item>Registered</item>
+        <item>UnRegistered</item>
+    </string-array>
 
     <string-array name="poscode">
         <item> </item>

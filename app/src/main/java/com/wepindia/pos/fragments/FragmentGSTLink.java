@@ -37,8 +37,10 @@ import com.wep.common.app.gst.GSTR1_B2B_A_Data;
 import com.wep.common.app.gst.GSTR1_B2CL_A_Data;
 import com.wep.common.app.gst.GSTR1_B2CL_Data;
 import com.wep.common.app.gst.GSTR2B2BAItemDetails;
-import com.wep.common.app.gst.GSTR2CDN;
+import com.wep.common.app.gst.GSTR2_CDN_Data;
 import com.wep.common.app.gst.GSTR2Data;
+import com.wep.common.app.gst.GSTR2_B2B_A_Data_Unregistered;
+import com.wep.common.app.gst.GSTR2_B2B_A_Data_registered;
 import com.wep.common.app.gst.GSTR2_B2B_Data_Unregistered;
 import com.wep.common.app.gst.GSTR2_B2B_Data_registered;
 import com.wep.common.app.gst.GSTRData;
@@ -422,14 +424,17 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
             if (ConnectionDetector.isInternetConnection(myContext)) {
 
                 String str[] = startDate_str.split("-");
-                ArrayList<GSTR2_B2B_Data_registered> b2bList_registered = dataController.getGSTR2_B2B_DataList_registered(start_milli, end_milli);
+                ArrayList<GSTR2_B2B_Data_registered> b2bList_registered =     dataController.getGSTR2_B2B_DataList_registered(start_milli, end_milli);
                 ArrayList<GSTR2_B2B_Data_Unregistered> b2bList_Unregistered = dataController.getGSTR2_B2B_DataList_Unregistered(start_milli, end_milli);
-                ArrayList<GSTR2_B2B_Data_registered> b2baList = null;//dataController.getGSTR2B2BDataList_registered();
-                ArrayList<GSTR2CDN> gstr2cdnList = null;
-                ;//dataController.getGSTR2CDNSaveData();
-                GSTR2Data gstr1Data = new GSTR2Data(dbGSTLink.getGSTIN(), str[2] + str[0], 123, 234, b2bList_registered, b2baList, gstr2cdnList);
+                ArrayList<GSTR2_B2B_A_Data_registered> b2baList_registered =  dataController.getGSTR2_B2B_A_DataList_registered(start_milli, end_milli);
+                ArrayList<GSTR2_B2B_A_Data_Unregistered> b2baList_Unregistered = dataController.getGSTR2_B2B_A_DataList_Unregistered(start_milli, end_milli);
+                ArrayList<GSTR2_CDN_Data> gstr2_cdn_list = dataController.getGSTR2_CDNData(start_milli, end_milli);
+
+
+                GSTR2Data gstr2Data = new GSTR2Data(dbGSTLink.getGSTIN(), str[1] + str[2], "N", b2bList_registered,
+                        b2bList_Unregistered,b2baList_registered, b2baList_Unregistered,gstr2_cdn_list);
                 progressDialog.show();
-                GSTRData gstrData = new GSTRData(userName, dbGSTLink.getGSTIN(), gstr1Data);
+                GSTRData gstrData = new GSTRData(userName, dbGSTLink.getGSTIN(), gstr2Data);
                 String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
                 new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST, strJson, REQUEST_SAVE_GSTR2, Config.GSTR2_URL).execute();
             } else {

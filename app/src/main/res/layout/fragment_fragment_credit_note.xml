@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="75dp"
-    tools:context="com.wepindia.pos.fragments.FragmentCreditNote">
+    tools:context="com.wepindia.pos.fragments.Fragment_Outward_Credit_Debit_Note">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -512,7 +512,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Credit Date"
+                    android:text="Note Date"
                     android:gravity="center"
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -522,7 +522,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Credit No"
+                    android:text="Note No"
                     android:gravity="center_vertical"
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"

@@ -5,6 +5,7 @@
     tools:context="com.wepindia.pos.GST.fragments.Fragment_GSTR2_B2B_Amend">
 
     <LinearLayout
+        android:layout_above="@id/boxBtn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -14,426 +15,501 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
 
-            android:layout_weight="1.2"
-            >
+            android:layout_weight="1.2">
 
 
             <LinearLayout
+                android:id="@+id/linear_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_margin="@dimen/activity_horizontal_margin1"
-                android:id="@+id/linear_1"
-                android:layout_weight="0.9">
+                android:layout_weight="0.9"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="0.98"
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="14dp"
                         android:background="@drawable/pinkborder"
+                        android:gravity="center"
+                        android:text=" Original Details"
                         android:textColor="@color/txtColorAccent"
-                        android:text=" Original Details"/>
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Supplier Type"
+                             />
+
+                        <Spinner
+                            android:id="@+id/spnr_SupplierType"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:entries="@array/suppliertypes" />
+                    </LinearLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="GSTIN"/>
+                        android:text="GSTIN/Name" />
+
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
                         android:id="@+id/et_gstin_ori"
-                        android:textSize="14dp"
-                        android:layout_weight="1"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="14dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="InvoiceNo"/>
+                        android:text="InvoiceNo" />
+
                     <EditText
+                        android:id="@+id/et_invno_ori"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/et_invno_ori"
-                        android:textSize="14dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:textSize="14dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Invoice Date   "/>
+                        android:text="Invoice Date   " />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <EditText
+                            android:id="@+id/et_invdate_ori"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/et_invdate_ori"
-                            android:textSize="14dp"
-                            android:hint="dd-MM-yyyy"
+                            android:layout_weight="1"
                             android:focusable="false"
-                            android:layout_weight="1"/>
+                            android:hint="dd-MM-yyyy"
+                            android:textSize="14dp" />
+
                         <ImageButton
                             android:id="@+id/btnCal_ori"
-                            android:background="@drawable/btn_calendar"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="3"/>
+                            android:layout_weight="3"
+                            android:background="@drawable/btn_calendar" />
                     </LinearLayout>
 
 
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/linear_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/linear_2"
                 android:layout_margin="@dimen/activity_horizontal_margin1"
-                android:layout_weight="0.9">
+                android:layout_weight="0.9"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:background="@drawable/pinkborder"
-                        android:textColor="@color/txtColorAccent"
-                        android:text=" Revised Details"/>
+                        android:gravity="center"
+                        android:text=" Revised Details"
+                        android:textColor="@color/txtColorAccent" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="GSTIN"/>
+                        android:text="GSTIN/Name" />
+
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="14dp"
                         android:id="@+id/et_gstin_rev"
-                        android:layout_weight="1"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="14dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Invoice No"/>
+                        android:text="Invoice No" />
+
                     <EditText
+                        android:id="@+id/et_invno_rev"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/et_invno_rev"
-                        android:textSize="14dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:textSize="14dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Invoice Date"/>
+                        android:text="Invoice Date" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <EditText
+                            android:id="@+id/et_invdate_rev"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textSize="14dp"
+                            android:layout_weight="1"
                             android:focusable="false"
                             android:hint="dd-MM-yyyy"
-                            android:id="@+id/et_invdate_rev"
-                            android:layout_weight="1"/>
+                            android:textSize="14dp" />
+
                         <ImageButton
                             android:id="@+id/btnCal_rev"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/btn_calendar"
-                            android:layout_weight="3"/>
+                            android:layout_weight="3"
+                            android:background="@drawable/btn_calendar" />
                     </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linear_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/linear_3"
                 android:layout_margin="@dimen/activity_horizontal_margin1"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="HSN"/>
+                        android:text="HSN" />
+
                     <EditText
+                        android:id="@+id/et_hsn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="14dp"
-                        android:id="@+id/et_hsn"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="Value"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="14dp"
-                        android:inputType="numberDecimal"
-                        android:id="@+id/et_value"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="Taxable Value"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="14dp"
-                        android:inputType="numberDecimal"
-                        android:id="@+id/et_taxval"/>
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="G/S"/>
+                        android:text="Value" />
+
+                    <EditText
+                        android:id="@+id/et_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="numberDecimal"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Taxable Value" />
+
+                    <EditText
+                        android:id="@+id/et_taxval"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="numberDecimal"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="G/S" />
 
                     <Spinner
+                        android:id="@+id/spnr_g_s"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:id="@+id/spnr_g_s"
                         android:entries="@array/g_s"></Spinner>
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/linear_4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/linear_4"
                 android:layout_margin="@dimen/activity_horizontal_margin1"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="IGST Rate(%)"/>
+                        android:text="IGST Rate(%)" />
+
                     <EditText
+                        android:id="@+id/et_igstrate"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="14dp"
                         android:inputType="numberDecimal"
-                        android:id="@+id/et_igstrate"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="CGST Rate(%)"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="14dp"
-                        android:id="@+id/et_cgstrate"/>
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="SGST Rate(%)"/>
+                        android:text="CGST Rate(%)" />
+
                     <EditText
+                        android:id="@+id/et_cgstrate"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="14dp"
-                        android:inputType="numberDecimal"
-                        android:id="@+id/et_sgstrate"/>
+                        android:textSize="14dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="POS"/>
+                        android:text="SGST Rate(%)" />
+
+                    <EditText
+                        android:id="@+id/et_sgstrate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="numberDecimal"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Supplier's POS" />
 
 
                     <Spinner
                         android:id="@+id/spnr_pos"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:entries="@array/poscode"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
-                        />
+                        android:layout_weight="1"
+                        android:entries="@array/poscode" />
 
                     <EditText
+                        android:id="@+id/et_pos"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="14dp"
-                        android:visibility="gone"
-                        android:id="@+id/et_pos"/>
+                        android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_margin="@dimen/activity_horizontal_margin1"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="IGST Amount"/>
+                        android:text="IGST Amount" />
+
                     <EditText
+                        android:id="@+id/et_igstamt"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="14dp"
                         android:inputType="numberDecimal"
-                        android:id="@+id/et_igstamt"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="CGST Amount"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="14dp"
-                        android:inputType="numberDecimal"
-                        android:id="@+id/et_cgstamt"/>
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="SGST Amount"/>
+                        android:text="CGST Amount" />
+
                     <EditText
+                        android:id="@+id/et_cgstamt"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="14dp"
                         android:inputType="numberDecimal"
-                        android:id="@+id/et_sgstamt"/>
+                        android:textSize="14dp" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="SGST Amount" />
+
+                    <EditText
+                        android:id="@+id/et_sgstamt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="numberDecimal"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -442,6 +518,7 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -651,17 +728,29 @@
         </LinearLayout>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:orientation="vertical"
             android:layout_weight="1">
 
             <ListView
                 android:id="@+id/listview_gstr2_amend"
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="match_parent">
 
             </ListView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_weight="7"
+                android:gravity="center_vertical"
+                android:text="*For registered supplier , please enter GSTIN. For unregistered supplier, please enter supplier's name"
+                android:textColor="@color/darkred"/>
+                textC
         </LinearLayout>
 
 

@@ -28,13 +28,13 @@ public class CDNoteAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList<GSTR1_CDN_Details> creditdebitArrayList;
     private DatabaseHandler handler;
-    private String type;
+    private String GSTR_type;
 
-    public CDNoteAdapter(Activity activity, ArrayList<GSTR1_CDN_Details> itemOutwardsArrayList, DatabaseHandler handler, String type){
+    public CDNoteAdapter(Activity activity, ArrayList<GSTR1_CDN_Details> itemOutwardsArrayList, DatabaseHandler handler, String GSTR_type){
         this.activity = activity;
         this. creditdebitArrayList = itemOutwardsArrayList;
         this.handler = handler;
-        this.type = type;
+        this.GSTR_type = GSTR_type;
     }
     public int getCount() {
         return  creditdebitArrayList.size();
@@ -148,11 +148,12 @@ public class CDNoteAdapter extends BaseAdapter {
                                 Date date_note = (new SimpleDateFormat("dd-MM-yyyy")).parse(noteDate);
                                 String invoiceNo = (obj.getInum());
                                 String invoiceDate = (obj.getIdt());
+                                String notyType = obj.getNtty();
                                 int lResult =0;
-                                if(type.equalsIgnoreCase("C"))
-                                    lResult = handler.DeleteCreditNote(invoiceNo, invoiceDate,noteNo,String.valueOf(date_note.getTime()));
+                                if(GSTR_type.equalsIgnoreCase("Outward"))
+                                    lResult = handler.DeleteOutwardNote(invoiceNo, invoiceDate,noteNo,String.valueOf(date_note.getTime()),notyType);
                                 else
-                                    lResult = handler.DeleteDebitNote(invoiceNo, invoiceDate,noteNo,String.valueOf(date_note.getTime()));
+                                    lResult = handler.DeleteInwardNote(invoiceNo, invoiceDate,noteNo,String.valueOf(date_note.getTime()),notyType);
                             if(lResult>0)
                             {
                                 creditdebitArrayList.remove(i);

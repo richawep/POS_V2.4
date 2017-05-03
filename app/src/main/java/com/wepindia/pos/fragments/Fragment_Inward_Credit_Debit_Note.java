@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +35,10 @@ import com.wepindia.pos.adapters.CDNoteAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
-public class FragmentDebitNote extends Fragment {
+public class Fragment_Inward_Credit_Debit_Note extends Fragment {
 
 
     EditText edt_IGSTRate,edt_IGSTAmount,edt_CGSTRate,edt_CGSTAmount,edt_SGSTRate,edt_SGSTAmount,edt_Value;
@@ -47,7 +50,7 @@ public class FragmentDebitNote extends Fragment {
     WepButton btnAddDebit,btnEditDebit,btnClearDebit,btnPrintDebit,btnCloseDebit,btnDebitOk;
     LinearLayout linear_tax,linear_recipient;
     RelativeLayout rl_debitDisplay;
-
+    Spinner spnrNote ;
     private static final String TAG = FragmentDepartment.class.getSimpleName();
     Context myContext;
     DatabaseHandler dbDebit;
@@ -55,7 +58,7 @@ public class FragmentDebitNote extends Fragment {
     ArrayList<GSTR1_CDN_Details> noteList;
     CDNoteAdapter noteAdapter = null;
     Date date;
-    public FragmentDebitNote() {
+    public Fragment_Inward_Credit_Debit_Note() {
         // Required empty public constructor
     }
 
@@ -106,6 +109,16 @@ public class FragmentDebitNote extends Fragment {
         edt_Value = (EditText) v.findViewById(R.id.edt_Value);
         edt_InvoiceNo = (EditText) v.findViewById(R.id.edt_InvoiceNo);
         edt_reason = (EditText) v.findViewById(R.id.edt_reason);
+
+        spnrNote = (Spinner) v.findViewById(R.id.spnrNote);
+        List<String> list = new ArrayList<String>();
+        list.add("");
+        list.add("Credit");
+        list.add("Debit");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(myContext,android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnrNote.setAdapter(dataAdapter);
 
         tv_InvoiceDate = (TextView) v.findViewById(R.id.tv_InvoiceDate);
         tv_recipientName = (TextView) v.findViewById(R.id.tv_recipientName);
@@ -180,15 +193,20 @@ public class FragmentDebitNote extends Fragment {
             public void onClick(View v) {
                 String invoiceNo = edt_InvoiceNo.getText().toString().trim();
                 String invoiceDate = tv_InvoiceDate.getText().toString().trim();
+                String supplierGSTIN = tv_recipientName.getText().toString().trim();
                 if (!(invoiceNo != null && invoiceDate != null && !invoiceNo.equals("") && !invoiceDate.equals(""))) {
-                    MsgBox.Show("Error", "Please enter invoice no and date for which debit note is to be issued");
+                    MsgBox.Show("Error", "Please enter invoice no and date for which  note is to be issued");
+                    return;
+                }
+                if (supplierGSTIN.equals("")) {
+                    MsgBox.Show("Error", "Since you have not saved Recipient's GSTIN/Name, you cannot make  note for this invoice");
                     return;
                 }
                 try {
                     Date date = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
-                    Cursor cursor = dbDebit.getdebitdetails((invoiceNo), String.valueOf(date.getTime()));
+                    Cursor cursor = dbDebit.getdebitdetails((invoiceNo), String.valueOf(date.getTime()),supplierGSTIN);
                     if (cursor != null && cursor.moveToFirst()) {
-                        int result = fillData(cursor);
+                        //int result = fillData(cursor);
                         loadDebits(invoiceNo, invoiceDate);
                     }
                     removeOpacity();
@@ -205,6 +223,21 @@ public class FragmentDebitNote extends Fragment {
         rl_debitDisplay = (RelativeLayout) v.findViewById(R.id.rl_debitDisplay) ;
     }
 
+    public int getIndexNote(String item)
+    {
+        ArrayList<String> pos = new ArrayList<>();
+        pos.add("");
+        pos.add("Credit");
+        pos.add("Debit");
+        int count =0;
+        for (String pos_temp : pos)
+        {
+            if(pos_temp.contains(item))
+                return count;
+            count++;
+        }
+        return 0;
+    }
     private void listViewItemClickEvent(GSTR1_CDN_Details note)
     {
         try {
@@ -217,7 +250,8 @@ public class FragmentDebitNote extends Fragment {
             edt_Value.setText(String.valueOf(note.getVal()));
             edt_reason.setText(note.getRsn());
             tv_note_no.setText(String.valueOf(note.getNt_num()));
-
+            String notetype = note.getNtty();
+            spnrNote.setSelection(getIndexNote(notetype));
             Date date_note = (new SimpleDateFormat("dd-MM-yyyy")).parse(note.getNt_dt());
             tv_note_date.setText(String.valueOf(date_note.getTime()));
             btnAddDebit.setEnabled(false);
@@ -236,12 +270,12 @@ public class FragmentDebitNote extends Fragment {
             name = cursor.getString(cursor.getColumnIndex("CustName"));
             if(name== null || name.trim().equals(""))
             {
-                MsgBox.Show("Error","Since you have not saved Recipient's GSTIN/Name, you cannot make debit note for this invoice");
+                MsgBox.Show("Error","Since you have not saved Recipient's GSTIN/Name, you cannot make  note for this invoice");
                 return 0;
             }
         }
         tv_recipientName.setText(name);
-        tv_billamount.setText(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("GrandTotal"))));
+        //tv_billamount.setText(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("GrandTotal"))));
         String reverseCharge = cursor.getString(cursor.getColumnIndex("ReverseCharge"));
         if(reverseCharge== null || reverseCharge.equalsIgnoreCase("No")|| reverseCharge.equalsIgnoreCase("N")|| reverseCharge.equals(""))
         { tv_reverseCharge.setText("N");
@@ -256,38 +290,107 @@ public class FragmentDebitNote extends Fragment {
     private  void loadDebits(String invoiceNo,String invoiceDate)
     {
         try {
+            String supplier_gstin = tv_recipientName.getText().toString();
+            if(supplier_gstin.equals(""))
+            {
+                MsgBox.Show("Insufficient Information"," Please enter supplier's gstin");
+                return;
+            }
             int count = 1;
             noteList = new ArrayList<GSTR1_CDN_Details>();
             String date_str = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate)).getTime());
+            String notety = spnrNote.getSelectedItem().toString();
+            if(notety.equals(""))
+            {
+                Cursor cursor = dbDebit.getDebitDetails(invoiceNo, date_str, "C",supplier_gstin);
+                while (cursor != null && cursor.moveToNext()) {
+                    GSTR1_CDN_Details note = new GSTR1_CDN_Details();
+                    long milli_note = cursor.getLong(cursor.getColumnIndex("NoteDate"));
+                    Date date=new Date(milli_note);
+                    String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
+                    note.setSno(count++);
+                    note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
+                    note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
+                    note.setNt_dt(date_str1);
+                    note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
+                    note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
+                    note.setVal(cursor.getDouble(cursor.getColumnIndex("DifferentialValue")));
+                    note.setIrt(cursor.getDouble(cursor.getColumnIndex("IGSTRate")));
+                    note.setIamt(cursor.getDouble(cursor.getColumnIndex("IGSTAmount")));
+                    note.setCrt(cursor.getDouble(cursor.getColumnIndex("CGSTRate")));
+                    note.setCamt(cursor.getDouble(cursor.getColumnIndex("CGSTAmount")));
+                    note.setSrt(cursor.getDouble(cursor.getColumnIndex("SGSTRate")));
+                    note.setSamt(cursor.getDouble(cursor.getColumnIndex("SGSTAmount")));
+                    note.setRsn(cursor.getString(cursor.getColumnIndex("Reason")));
+                    noteList.add(note);
+                }
+                if (noteAdapter == null) {
+                    noteAdapter = new CDNoteAdapter(getActivity(), noteList, dbDebit,"Inward");
+                    listview_debit.setAdapter(noteAdapter);
+                } else {
+                    noteAdapter.notifyNewDataAdded(noteList);
+                }
+                cursor = dbDebit.getDebitDetails(invoiceNo, date_str, "D",supplier_gstin);
+                while (cursor != null && cursor.moveToNext()) {
+                    GSTR1_CDN_Details note = new GSTR1_CDN_Details();
+                    long milli_note = cursor.getLong(cursor.getColumnIndex("NoteDate"));
+                    Date date=new Date(milli_note);
+                    String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
+                    note.setSno(count++);
+                    note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
+                    note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
+                    note.setNt_dt(date_str1);
+                    note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
+                    note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
+                    note.setVal(cursor.getDouble(cursor.getColumnIndex("DifferentialValue")));
+                    note.setIrt(cursor.getDouble(cursor.getColumnIndex("IGSTRate")));
+                    note.setIamt(cursor.getDouble(cursor.getColumnIndex("IGSTAmount")));
+                    note.setCrt(cursor.getDouble(cursor.getColumnIndex("CGSTRate")));
+                    note.setCamt(cursor.getDouble(cursor.getColumnIndex("CGSTAmount")));
+                    note.setSrt(cursor.getDouble(cursor.getColumnIndex("SGSTRate")));
+                    note.setSamt(cursor.getDouble(cursor.getColumnIndex("SGSTAmount")));
+                    note.setRsn(cursor.getString(cursor.getColumnIndex("Reason")));
+                    noteList.add(note);
+                }
+                if (noteAdapter == null) {
+                    noteAdapter = new CDNoteAdapter(getActivity(), noteList, dbDebit,"Inward");
+                    listview_debit.setAdapter(noteAdapter);
+                } else {
+                    noteAdapter.notifyNewDataAdded(noteList);
+                }
+            }
+            else
+            {
+                Cursor cursor = dbDebit.getDebitDetails(invoiceNo, date_str, notety.substring(0,1),supplier_gstin);
+                while (cursor != null && cursor.moveToNext()) {
+                    GSTR1_CDN_Details note = new GSTR1_CDN_Details();
+                    long milli_note = cursor.getLong(cursor.getColumnIndex("NoteDate"));
+                    Date date=new Date(milli_note);
+                    String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
+                    note.setSno(count++);
+                    note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
+                    note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
+                    note.setNt_dt(date_str1);
+                    note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
+                    note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
+                    note.setVal(cursor.getDouble(cursor.getColumnIndex("DifferentialValue")));
+                    note.setIrt(cursor.getDouble(cursor.getColumnIndex("IGSTRate")));
+                    note.setIamt(cursor.getDouble(cursor.getColumnIndex("IGSTAmount")));
+                    note.setCrt(cursor.getDouble(cursor.getColumnIndex("CGSTRate")));
+                    note.setCamt(cursor.getDouble(cursor.getColumnIndex("CGSTAmount")));
+                    note.setSrt(cursor.getDouble(cursor.getColumnIndex("SGSTRate")));
+                    note.setSamt(cursor.getDouble(cursor.getColumnIndex("SGSTAmount")));
+                    note.setRsn(cursor.getString(cursor.getColumnIndex("Reason")));
+                    noteList.add(note);
+                }
+                if (noteAdapter == null) {
+                    noteAdapter = new CDNoteAdapter(getActivity(), noteList, dbDebit,"Inward");
+                    listview_debit.setAdapter(noteAdapter);
+                } else {
+                    noteAdapter.notifyNewDataAdded(noteList);
+                }
+            }
 
-            Cursor cursor = dbDebit.getDebitDetails(invoiceNo, date_str, "D");
-            while (cursor != null && cursor.moveToNext()) {
-                GSTR1_CDN_Details note = new GSTR1_CDN_Details();
-                long milli_note = cursor.getLong(cursor.getColumnIndex("NoteDate"));
-                Date date=new Date(milli_note);
-                String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
-                note.setSno(count++);
-                note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
-                note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
-                note.setNt_dt(date_str1);
-                note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
-                note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
-                note.setVal(cursor.getDouble(cursor.getColumnIndex("DifferentialValue")));
-                note.setIrt(cursor.getDouble(cursor.getColumnIndex("IGSTRate")));
-                note.setIamt(cursor.getDouble(cursor.getColumnIndex("IGSTAmount")));
-                note.setCrt(cursor.getDouble(cursor.getColumnIndex("CGSTRate")));
-                note.setCamt(cursor.getDouble(cursor.getColumnIndex("CGSTAmount")));
-                note.setSrt(cursor.getDouble(cursor.getColumnIndex("SGSTRate")));
-                note.setSamt(cursor.getDouble(cursor.getColumnIndex("SGSTAmount")));
-                note.setRsn(cursor.getString(cursor.getColumnIndex("Reason")));
-                noteList.add(note);
-            }
-            if (noteAdapter == null) {
-                noteAdapter = new CDNoteAdapter(getActivity(), noteList, dbDebit,"D");
-                listview_debit.setAdapter(noteAdapter);
-            } else {
-                noteAdapter.notifyNewDataAdded(noteList);
-            }
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -324,6 +427,12 @@ public class FragmentDebitNote extends Fragment {
             MsgBox.Show("Error", "Please fill SGST Rate and Amount. If SGST is not applicable, then fill SGST Rate and Amount as zero");
             return;
         }
+        if(spnrNote.getSelectedItem().toString().equals(""))
+        {
+            MsgBox.Show("Error", "Please Note type as Credit or Debit");
+            return ;
+        }
+
         try {
             GSTR1_CDN_Details note = new GSTR1_CDN_Details();
             String date_temp = new SimpleDateFormat("dd-MM-yyyy").format(date);
@@ -337,7 +446,8 @@ public class FragmentDebitNote extends Fragment {
             String reverseCharge = tv_reverseCharge.getText().toString();
 
             note.setSno(listview_debit.getCount());
-            note.setNtty("D");
+            String notety = spnrNote.getSelectedItem().toString();
+            note.setNtty(notety.substring(0,1));
             note.setNt_num(notenum);
             note.setNt_dt(String.valueOf(milii));
             note.setInum(edt_InvoiceNo.getText().toString());
@@ -352,11 +462,11 @@ public class FragmentDebitNote extends Fragment {
 
             long lResult = dbDebit.addDebit(note, name,reason, reverseCharge);
             if(lResult>0) {
-                Log.d(TAG, " Debit Note inserted Successfully @" + lResult);
-                Toast.makeText(myContext, "Debit Note inserted Successfully", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "  Note inserted Successfully @" + lResult);
+                Toast.makeText(myContext, " Note inserted Successfully", Toast.LENGTH_SHORT).show();
             }
             else
-                Log.d(TAG, " Debit Note insertion failed !!");
+                Log.d(TAG, "  Note insertion failed !!");
 
         }catch (Exception e)
         {
@@ -367,6 +477,40 @@ public class FragmentDebitNote extends Fragment {
 
     private void EditDebit()
     {
+        if (tv_recipientName.getText().toString().equals(""))
+        {
+            MsgBox.Show("Error", " Please fill recipient's Name or GSTIN.");
+            return;
+        }
+        if (tv_billamount.getText().toString().equals(""))
+        {
+            MsgBox.Show("Error", " Please fill Total Invoice Amount.");
+            return;
+        }
+        if ( tv_reverseCharge.getText().toString().equals("") )
+        {
+            MsgBox.Show("Error", " Please fill Attracts reverse charge as y or n.");
+            return;
+        }
+        if(edt_IGSTRate.getText().toString().equals("") || edt_IGSTAmount.getText().toString().equals(""))
+        {
+            MsgBox.Show("Error", "Please fill IGST Rate and Amount. If IGST is not applicable, then fill IGST Rate and Amount as zero");
+            return;
+        }if(edt_CGSTRate.getText().toString().equals("") || edt_CGSTAmount.getText().toString().equals(""))
+        {
+            MsgBox.Show("Error", "Please fill CGST Rate and Amount. If CGST is not applicable, then fill CGST Rate and Amount as zero");
+            return;
+        }if(edt_SGSTRate.getText().toString().equals("") || edt_SGSTAmount.getText().toString().equals(""))
+        {
+            MsgBox.Show("Error", "Please fill SGST Rate and Amount. If SGST is not applicable, then fill SGST Rate and Amount as zero");
+            return;
+        }
+        if(spnrNote.getSelectedItem().toString().equals(""))
+        {
+            MsgBox.Show("Error", "Please Note type as Credit or Debit");
+            return ;
+        }
+
         try {
             GSTR1_CDN_Details note = new GSTR1_CDN_Details();
 
@@ -388,11 +532,11 @@ public class FragmentDebitNote extends Fragment {
 
             long lResult = dbDebit.editDebit(note, reason);
             if(lResult>0) {
-                Log.d(TAG, " Debit Note updated Successfully @" + lResult);
-                Toast.makeText(myContext, "Debit Note updated Successfully", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "  Note updated Successfully @" + lResult);
+                Toast.makeText(myContext, " Note updated Successfully", Toast.LENGTH_SHORT).show();
             }
             else
-                Log.d(TAG, " Debit Note updation failed !!");
+                Log.d(TAG, "  Note updation failed !!");
 
         }catch (Exception e)
         {
@@ -414,7 +558,7 @@ public class FragmentDebitNote extends Fragment {
         /*tv_note_no.setText("");
         tv_note_date.setText("");
 */
-
+        spnrNote.setSelection(0);
         tv_totalIGSTVal.setText("0.00");
         tv_totalCGSTVal.setText("0.00");
         tv_totalSGSTVal.setText("0.00");

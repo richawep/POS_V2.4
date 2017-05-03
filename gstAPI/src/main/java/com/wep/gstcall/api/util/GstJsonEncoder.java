@@ -21,6 +21,7 @@ public class GstJsonEncoder {
         try {
             Gson gson = new Gson();
             jsonInString = gson.toJson(gstrData);
+            int i;
             return jsonInString;
 
         } catch (Exception e) {

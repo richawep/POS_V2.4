@@ -31,8 +31,6 @@ import com.wep.common.app.gst.GSTR1B2CSData;
 import com.wep.common.app.gst.GSTR1_CDN_Data;
 import com.wep.common.app.gst.GSTR1Data;
 import com.wep.common.app.gst.GSTR2B2BAItemDetails;
-import com.wep.common.app.gst.GSTR2CDN;
-import com.wep.common.app.gst.GSTR2Data;
 import com.wep.common.app.gst.GSTRData;
 import com.wep.common.app.gst.get.GetGSTR1Summary;
 import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
@@ -501,7 +499,7 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
             /*ArrayList<GSTR2B2BData> gstr2B2BDatasList = dataController.getB2BItems(startDate,endDate);
             String str[] = startDate.split("-");
             ArrayList<GSTR2B2BAData> b2baList = null;//dataController.getGSTR2B2BDataList_registered();
-            ArrayList<GSTR2CDN> gstr2cdnList = null;;//dataController.getGSTR2CDNSaveData();
+            ArrayList<GSTR2_CDN_Data> gstr2cdnList = null;;//dataController.getGSTR2CDNSaveData();
             GSTR2Data gstr1Data = new GSTR2Data(dbGSTLink.getGSTIN(),str[2]+str[0],123,234,gstr2B2BDatasList,b2baList,gstr2cdnList);
             progressDialog.show();
             GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1Data);

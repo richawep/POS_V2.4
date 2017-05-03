@@ -12,11 +12,11 @@ public class Config {
 
     public static final String BASE_URL = "http://103.230.84.67";
 
-    public static final String GSTR1_URL = BASE_URL+"/GstAPI/API/GSTR1B2CS/sendB2csDatagstvalue";
+    public static final String GSTR1_URL = "http://13.71.118.152/AndroWeb/API/GSTR1Save/SendGSTR1Save";
 
     public static final String GSTR1A_URL = BASE_URL+"/GstAPI/API/GSTR1/sendGstr1A";
 
-    public static final String GSTR2_URL = BASE_URL+"/GstAPI/API/GSTR2/sendGstr";
+    public static final String GSTR2_URL = "http://13.71.118.152/AndroWeb/API/GSTR2Save/SendGSTR2Save";
 
     public static final String GSTR_GET_API = BASE_URL+"/API/API/GSTR2A?gstin=04AABFN9870CMZT&ret_period=072016&action=B2B&action_required=Y";
 

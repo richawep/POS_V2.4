@@ -34,11 +34,12 @@ import com.wepindia.pos.adapters.CDNoteAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 
-public class FragmentCreditNote extends Fragment {
+public class Fragment_Outward_Credit_Debit_Note extends Fragment {
 
 
     EditText edt_IGSTRate,edt_IGSTAmount,edt_CGSTRate,edt_CGSTAmount,edt_SGSTRate,edt_SGSTAmount,edt_Value;
@@ -60,7 +61,7 @@ public class FragmentCreditNote extends Fragment {
     ArrayList<GSTR1_CDN_Details> noteList;
     CDNoteAdapter noteAdapter = null;
     Date date;
-    public FragmentCreditNote() {
+    public Fragment_Outward_Credit_Debit_Note() {
         // Required empty public constructor
     }
 
@@ -197,7 +198,7 @@ public class FragmentCreditNote extends Fragment {
                 String invoiceNo = edt_InvoiceNo.getText().toString().trim();
                 String invoiceDate = tv_InvoiceDate.getText().toString().trim();
                 if (!(invoiceNo != null && invoiceDate != null && !invoiceNo.equals("") && !invoiceDate.equals(""))) {
-                    MsgBox.Show("Error", "Please enter invoice no and date for which credit note is to be issued");
+                    MsgBox.Show("Error", "Please enter invoice no and date for which  note is to be issued");
                 } else {
                     try {
                         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
@@ -239,7 +240,8 @@ public class FragmentCreditNote extends Fragment {
             edt_Value.setText(String.valueOf(note.getVal()));
             edt_reason.setText(note.getRsn());
             tv_note_no.setText(String.valueOf(note.getNt_num()));
-
+            String notetype = note.getNtty();
+            spnrNote.setSelection(getIndexNote(notetype));
             Date date_note = (new SimpleDateFormat("dd-MM-yyyy")).parse(note.getNt_dt());
             tv_note_date.setText(String.valueOf(date_note.getTime()));
             btnAddCredit.setEnabled(false);
@@ -258,7 +260,7 @@ public class FragmentCreditNote extends Fragment {
             name = cursor.getString(cursor.getColumnIndex("CustName"));
             if(name== null || name.trim().equals(""))
             {
-                MsgBox.Show("Error","Since you have not saved Recipient's GSTIN/Name, you cannot make credit note for this invoice");
+                MsgBox.Show("Error","Since you have not saved Recipient's GSTIN/Name, you cannot make  note for this invoice");
                 return 0;
             }
         }
@@ -358,7 +360,7 @@ public class FragmentCreditNote extends Fragment {
             }
 
             if (noteAdapter == null) {
-                noteAdapter = new CDNoteAdapter(getActivity(), noteList, dbCredit,"C");
+                noteAdapter = new CDNoteAdapter(getActivity(), noteList, dbCredit,"Outward");
                 listview_credit.setAdapter(noteAdapter);
             } else {
                 noteAdapter.notifyNewDataAdded(noteList);
@@ -439,11 +441,11 @@ public class FragmentCreditNote extends Fragment {
 
             long lResult = dbCredit.addCredit(note, name,reason, reverseCharge);
             if(lResult>0) {
-                Log.d(TAG, " Credit Note inserted Successfully @" + lResult);
-                Toast.makeText(myContext, "Credit Note inserted Successfully", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "  Note inserted Successfully @" + lResult);
+                Toast.makeText(myContext, " Note inserted Successfully", Toast.LENGTH_SHORT).show();
             }
             else
-                Log.d(TAG, " Credit Note insertion failed !!");
+                Log.d(TAG, "  Note insertion failed !!");
 
         }catch (Exception e)
         {
@@ -454,9 +456,26 @@ public class FragmentCreditNote extends Fragment {
         return 1;
     }
 
+    public int getIndexNote(String item)
+    {
+        ArrayList<String> pos = new ArrayList<>();
+        pos.add("");
+        pos.add("Credit");
+        pos.add("Debit");
+        int count =0;
+        for (String pos_temp : pos)
+        {
+            if(pos_temp.contains(item))
+                return count;
+            count++;
+        }
+        return 0;
+    }
     private void EditCredit()
     {
         try {
+            if(CheckNoteDetails() ==0)
+                return  ;
             GSTR1_CDN_Details note = new GSTR1_CDN_Details();
 
             String invoiceDate = tv_InvoiceDate.getText().toString();
@@ -475,13 +494,14 @@ public class FragmentCreditNote extends Fragment {
             note.setSrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTRate.getText().toString()))));
             note.setSamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTAmount.getText().toString()))));
 
+
             long lResult = dbCredit.editCredit(note, reason);
             if(lResult>0) {
-                Log.d(TAG, " Credit Note updated Successfully @" + lResult);
-                Toast.makeText(myContext, "Credit Note updated Successfully", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "  Note updated Successfully @" + lResult);
+                Toast.makeText(myContext, " Note updated Successfully", Toast.LENGTH_SHORT).show();
             }
             else
-                Log.d(TAG, " Credit Note updation failed !!");
+                Log.d(TAG, "  Note updation failed !!");
 
         }catch (Exception e)
         {
@@ -502,7 +522,7 @@ public class FragmentCreditNote extends Fragment {
         edt_reason.setText("");
         tv_note_no.setText("");
         tv_note_date.setText("");
-
+        spnrNote.setSelection(0);
 
         /*tv_totalIGSTVal.setText("0.00");
         tv_totalCGSTVal.setText("0.00");

@@ -105,7 +105,7 @@ true) // GSTR1
     }
 
     private ArrayList<GSTR2B2BData> getGSTR2B2BData() {
-        GSTR2B2BITCDetails gstr2B2BITCDetails = new GSTR2B2BITCDetails(0,23,23,0,23,23);
+        GSTR2_ITC_Details gstr2B2BITCDetails = new GSTR2_ITC_Details(0,23,23,0,23,23);
         GSTR2B2BItemDetails gstr2B2BItemDetails = new GSTR2B2BItemDetails("S","H724",5589.87,0,0,87.92,579475625.68,86.56,50.74,"ip");
         GSTR2B2BInvoiceItems gstr2InvoiceItems1 = new GSTR2B2BInvoiceItems(1,"A",gstr2B2BITCDetails,gstr2B2BItemDetails);
         //GSTR2InvoiceItems gstr2InvoiceItems2 = new GSTR2InvoiceItems(1,"A",gstr2B2BITCDetails,gstr2B2BItemDetails);

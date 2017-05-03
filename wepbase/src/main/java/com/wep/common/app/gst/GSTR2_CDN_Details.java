@@ -5,16 +5,16 @@ import java.util.ArrayList;
 /**
  * Created by PriyabratP on 01-12-2016.
  */
-public class GSTR2CDNCDN {
+public class GSTR2_CDN_Details {
 
-    private String flag;
-    private String chksum;
-    private String ty;
+
+    private String ntty;
     private double nt_num;
     private String nt_dt;
-    private String i_num;
-    private String i_dt;
     private String rsn;
+    private String inum;
+    private String idt;
+    private String rchrg;
     private double val;
     private double irt;
     private double iamt;
@@ -22,20 +22,19 @@ public class GSTR2CDNCDN {
     private double camt;
     private double srt;
     private double samt;
+    private double csrt;
+    private double csamt;
     private String elg;
-    private ArrayList<GSTR2B2BITCDetails> itc;
+    private GSTR2_ITC_Details itc;
 
-    public GSTR2CDNCDN(){}
-
-    public GSTR2CDNCDN(String flag, String chksum, String ty, double nt_num, String nt_dt, String i_num, String i_dt, String rsn, double val, double irt, double iamt, double crt, double camt, double srt, double samt, String elg, ArrayList<GSTR2B2BITCDetails> itc) {
-        this.flag = flag;
-        this.chksum = chksum;
-        this.ty = ty;
+    public GSTR2_CDN_Details(String ntty, double nt_num, String nt_dt, String rsn, String inum, String idt, String rchrg, double val, double irt, double iamt, double crt, double camt, double srt, double samt, double csrt, double csamt, String elg, GSTR2_ITC_Details itc) {
+        this.ntty = ntty;
         this.nt_num = nt_num;
         this.nt_dt = nt_dt;
-        this.i_num = i_num;
-        this.i_dt = i_dt;
         this.rsn = rsn;
+        this.inum = inum;
+        this.idt = idt;
+        this.rchrg = rchrg;
         this.val = val;
         this.irt = irt;
         this.iamt = iamt;
@@ -43,32 +42,18 @@ public class GSTR2CDNCDN {
         this.camt = camt;
         this.srt = srt;
         this.samt = samt;
+        this.csrt = csrt;
+        this.csamt = csamt;
         this.elg = elg;
         this.itc = itc;
     }
 
-    public String getFlag() {
-        return flag;
+    public String getNtty() {
+        return ntty;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
-
-    public String getChksum() {
-        return chksum;
-    }
-
-    public void setChksum(String chksum) {
-        this.chksum = chksum;
-    }
-
-    public String getTy() {
-        return ty;
-    }
-
-    public void setTy(String ty) {
-        this.ty = ty;
+    public void setNtty(String ntty) {
+        this.ntty = ntty;
     }
 
     public double getNt_num() {
@@ -87,28 +72,36 @@ public class GSTR2CDNCDN {
         this.nt_dt = nt_dt;
     }
 
-    public String getI_num() {
-        return i_num;
-    }
-
-    public void setI_num(String i_num) {
-        this.i_num = i_num;
-    }
-
-    public String getI_dt() {
-        return i_dt;
-    }
-
-    public void setI_dt(String i_dt) {
-        this.i_dt = i_dt;
-    }
-
     public String getRsn() {
         return rsn;
     }
 
     public void setRsn(String rsn) {
         this.rsn = rsn;
+    }
+
+    public String getInum() {
+        return inum;
+    }
+
+    public void setInum(String inum) {
+        this.inum = inum;
+    }
+
+    public String getIdt() {
+        return idt;
+    }
+
+    public void setIdt(String idt) {
+        this.idt = idt;
+    }
+
+    public String getRchrg() {
+        return rchrg;
+    }
+
+    public void setRchrg(String rchrg) {
+        this.rchrg = rchrg;
     }
 
     public double getVal() {
@@ -167,6 +160,22 @@ public class GSTR2CDNCDN {
         this.samt = samt;
     }
 
+    public double getCsrt() {
+        return csrt;
+    }
+
+    public void setCsrt(double csrt) {
+        this.csrt = csrt;
+    }
+
+    public double getCsamt() {
+        return csamt;
+    }
+
+    public void setCsamt(double csamt) {
+        this.csamt = csamt;
+    }
+
     public String getElg() {
         return elg;
     }
@@ -175,11 +184,11 @@ public class GSTR2CDNCDN {
         this.elg = elg;
     }
 
-    public ArrayList<GSTR2B2BITCDetails> getItc() {
+    public GSTR2_ITC_Details getItc() {
         return itc;
     }
 
-    public void setItc(ArrayList<GSTR2B2BITCDetails> itc) {
+    public void setItc(GSTR2_ITC_Details itc) {
         this.itc = itc;
     }
 }

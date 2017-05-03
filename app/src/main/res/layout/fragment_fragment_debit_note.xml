@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="75dp"
-    tools:context="com.wepindia.pos.fragments.FragmentDebitNote">
+    tools:context="com.wepindia.pos.fragments.Fragment_Inward_Credit_Debit_Note">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -193,15 +193,17 @@
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Reason"/>
+                        android:text="Supplier GSTIN* :"/>
                     <EditText
-                        android:id="@+id/edt_reason"
+                        android:id="@+id/tv_recipientName"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"  />
+                        android:maxLength="15"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -390,15 +392,15 @@
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Recipient Name/GSTIN :"/>
+                        android:text="Reason"/>
                     <EditText
-                        android:id="@+id/tv_recipientName"
+                        android:id="@+id/edt_reason"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"  />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -452,6 +454,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="gone"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Note Type (Credit/Debit)"/>
+                    <Spinner
+                        android:id="@+id/spnrNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"  />
                 </LinearLayout>
 
             </LinearLayout>
@@ -490,8 +503,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1.07"
+                    android:text="NoteType"
+                    android:gravity="center"
+                    android:background="@color/colorPrimaryLight"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/txtColorAccent"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Debit Date"
+                    android:text="Note Date"
                     android:gravity="center"
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -501,7 +523,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Debit No"
+                    android:text="Note No"
                     android:gravity="center_vertical"
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"

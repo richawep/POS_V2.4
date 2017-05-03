@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
@@ -21,10 +20,8 @@ import android.widget.TextView;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.MessageDialog;
-import com.wepindia.pos.fragments.FragmentCreditNote;
-import com.wepindia.pos.fragments.FragmentDebitNote;
-import com.wepindia.pos.fragments.FragmentInwardStock;
-import com.wepindia.pos.fragments.FragmentInwardSupply;
+import com.wepindia.pos.fragments.Fragment_Outward_Credit_Debit_Note;
+import com.wepindia.pos.fragments.Fragment_Inward_Credit_Debit_Note;
 import com.wepindia.pos.utils.ActionBarUtils;
 
 
@@ -69,17 +66,12 @@ public class TabbedCreditDebitNote extends WepBaseActivity {
     private void setupViewPager(ViewPager viewPager) {
         TabbedCreditDebitNote.ViewPagerAdapter adapter = new TabbedCreditDebitNote.ViewPagerAdapter(getSupportFragmentManager());
 
-        Bundle bundle2=new Bundle();
-        bundle2.putString("REPORT_TYPE", "2");
-        FragmentCreditNote reportFragment2 = new FragmentCreditNote();
-        reportFragment2.setArguments(bundle2);
+        Fragment_Outward_Credit_Debit_Note reportFragment2 = new Fragment_Outward_Credit_Debit_Note();
         adapter.addFragment(reportFragment2, "Outward C/D Note");
 
-        Bundle bundle1=new Bundle();
-        bundle1.putString("REPORT_TYPE", "1");
-        FragmentDebitNote reportFragment1 = new FragmentDebitNote();
-        reportFragment1.setArguments(bundle1);
-        adapter.addFragment(reportFragment1, "Debit Note ");
+
+        Fragment_Inward_Credit_Debit_Note reportFragment1 = new Fragment_Inward_Credit_Debit_Note();
+        adapter.addFragment(reportFragment1, "Inward C/D Note ");
 
         viewPager.setAdapter(adapter);
     }

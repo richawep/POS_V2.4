@@ -8,13 +8,13 @@ public class GSTR2B2BInvoiceItems {
 
     private int lineno; //Serial no
     private String status;//Status of invoice
-    private GSTR2B2BITCDetails itc;//itc Details
+    private GSTR2_ITC_Details itc;//itc Details
     private GSTR2B2BItemDetails itm_det;//Item Details
 
     public GSTR2B2BInvoiceItems() {
     }
 
-    public GSTR2B2BInvoiceItems(int lineno, String status, GSTR2B2BITCDetails itc, GSTR2B2BItemDetails itm_det) {
+    public GSTR2B2BInvoiceItems(int lineno, String status, GSTR2_ITC_Details itc, GSTR2B2BItemDetails itm_det) {
         this.lineno = lineno;
         this.status = status;
         this.itc = itc;
@@ -37,11 +37,11 @@ public class GSTR2B2BInvoiceItems {
         this.status = status;
     }
 
-    public GSTR2B2BITCDetails getItcDetails() {
+    public GSTR2_ITC_Details getItcDetails() {
         return itc;
     }
 
-    public void setItcDetails(GSTR2B2BITCDetails itc) {
+    public void setItcDetails(GSTR2_ITC_Details itc) {
         this.itc = itc;
     }
 
