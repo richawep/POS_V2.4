@@ -39,6 +39,7 @@ import com.wep.common.app.gst.GSTR1_B2CL_Data;
 import com.wep.common.app.gst.GSTR2B2BAItemDetails;
 import com.wep.common.app.gst.GSTR2CDN;
 import com.wep.common.app.gst.GSTR2Data;
+import com.wep.common.app.gst.GSTR2_B2B_Data_Unregistered;
 import com.wep.common.app.gst.GSTR2_B2B_Data_registered;
 import com.wep.common.app.gst.GSTRData;
 import com.wep.common.app.gst.get.GetGSTR1Summary;
@@ -421,7 +422,8 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
             if (ConnectionDetector.isInternetConnection(myContext)) {
 
                 String str[] = startDate_str.split("-");
-                ArrayList<GSTR2_B2B_Data_registered> b2bList_registered = dataController.getGSTR2B2BDataList_registered(start_milli, end_milli);
+                ArrayList<GSTR2_B2B_Data_registered> b2bList_registered = dataController.getGSTR2_B2B_DataList_registered(start_milli, end_milli);
+                ArrayList<GSTR2_B2B_Data_Unregistered> b2bList_Unregistered = dataController.getGSTR2_B2B_DataList_Unregistered(start_milli, end_milli);
                 ArrayList<GSTR2_B2B_Data_registered> b2baList = null;//dataController.getGSTR2B2BDataList_registered();
                 ArrayList<GSTR2CDN> gstr2cdnList = null;
                 ;//dataController.getGSTR2CDNSaveData();

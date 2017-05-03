@@ -143,6 +143,11 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         autocompletetv_purchase_order.setText("");
                         autocompletetv_itemlist.setText("");
                         btnAddSupplier.setEnabled(false);
+                        if(dataList!=null ) {
+                            dataList.clear();
+                            if(purchaseOrderAdapter!=null)
+                                purchaseOrderAdapter.notifyDataSetChanged(dataList);
+                        }
                     }
                 }
             });

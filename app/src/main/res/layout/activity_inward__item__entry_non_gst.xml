@@ -301,7 +301,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Supplier Adress "
+                                android:text="Supplier Address "
                                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
                             <EditText

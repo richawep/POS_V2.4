@@ -6132,8 +6132,26 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     public Cursor getPurchaseOrder_for_gstin(String invoiceNo,String invoiceDate,String gstin,String purchaseorder ) {
         Cursor result = null;
         String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " + KEY_GSTIN + " Like '" + gstin + "' AND " +
-                KEY_PurchaseOrderNo+" LIKE '"+purchaseorder+"' AND "+
+                /*KEY_PurchaseOrderNo+" LIKE '"+purchaseorder+"' AND "+*/
                 KEY_InvoiceDate+" LIKE '"+invoiceDate+"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_isGoodinward+" LIKE '1'";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
+    public Cursor getPurchaseOrder_for_unregisteredSupplier(String invoiceNo,String invoiceDate,String purchaseorder, String supplierCode ) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " + KEY_SupplierCode + " Like '" + supplierCode + "' AND " +
+                KEY_SupplierType+" LIKE 'UnRegistered' AND "+
+                /*KEY_PurchaseOrderNo+" LIKE '"+purchaseorder+"' AND "+*/
+                KEY_InvoiceDate+" LIKE '"+invoiceDate+"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_isGoodinward+" LIKE '1'";
+        result = dbFNB.rawQuery(queryString, null);
+        return result;
+    }
+    public Cursor getPurchaseOrder_for_unregistered(String startDate,String endDate ) {
+        Cursor result = null;
+        String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " +
+                /*KEY_PurchaseOrderNo+" LIKE '"+purchaseorder+"' AND "+*/
+                KEY_SupplierType+" LIKE 'UnRegistered' AND "+
+                KEY_InvoiceDate+" BETWEEN '"+startDate+"' AND '"+endDate+"' AND "+KEY_isGoodinward+" LIKE '1'";
         result = dbFNB.rawQuery(queryString, null);
         return result;
     }

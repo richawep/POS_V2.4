@@ -151,6 +151,11 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                         autocompletetv_purchase_order.setText("");
                         autocompletetv_itemlist.setText("");
                         btnAddSupplier.setEnabled(false);
+                        if(dataList!=null ) {
+                            dataList.clear();
+                            if(purchaseOrderAdapter!=null)
+                                purchaseOrderAdapter.notifyDataSetChanged(dataList);
+                        }
 
                     }
                 }
@@ -213,13 +218,14 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             chk_interState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
-                        return;
+
                     if(!isChecked)
                     {
 
                         spnrSupplierStateCode.setSelection(0);
                         spnrSupplierStateCode.setEnabled(false);
+                        if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
+                            return;
                         for(PurchaseOrder po : dataList)
                         {
                             double sgstAmt =0, cgstAmt =0;
@@ -246,6 +252,8 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                     {
                         spnrSupplierStateCode.setSelection(0);
                         spnrSupplierStateCode.setEnabled(true);
+                        if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
+                            return;
                         for(PurchaseOrder po : dataList)
                         {
                             double sgst = po.getSgstAmount();
@@ -992,6 +1000,14 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         if(invoiceno.equals("")|| invoicedate.equals(""))
         {
             MsgBox.Show(" Insufficent Information ", " Please Enter Invoice Details ");
+            return;
+        }if(dataList== null || dataList.size()==0)
+        {
+            MsgBox.Show(" Insufficent Information ", " Please add item ");
+            return;
+        }if(chk_interState.isChecked() && spnrSupplierStateCode.getSelectedItem().toString().trim().equals(""))
+        {
+            MsgBox.Show(" Insufficent Information ", " Please select state for supplier ");
             return;
         }
 
