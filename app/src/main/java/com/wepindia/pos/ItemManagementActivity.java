@@ -1622,7 +1622,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         txtStock.setText("0.00");
         btnAdd.setEnabled(true);
         btnEdit.setEnabled(false);
-        tvFileName.setText("");
+        tvFileName.setText("FileName");
         strUploadFilepath="";
         edtItemCGSTTax.setText("0.00");
         edtItemSGSTTax.setText("0.00");
