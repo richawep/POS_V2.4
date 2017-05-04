@@ -17,17 +17,10 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedInwardItem_NonGST.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedInwardItem_NonGST.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gstAPI/gstAPI.iml" afterPath="$PROJECT_DIR$/gstAPI/gstAPI.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mSwipe/mSwipe.iml" afterPath="$PROJECT_DIR$/mSwipe/mSwipe.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -6283,7 +6276,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493875762572</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="item quantity for supplier in inwarditem was not increasing from goods inward">
+      <created>1493887333277</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1493887333277</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6399,7 +6399,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Commenting unused code in customer detail module&#10;" />
     <MESSAGE value="making look of master and home screen  compatible with 7&quot; tab" />
     <MESSAGE value="item not getting selected in price &amp; stock - priyabrat has not pushed full code" />
     <MESSAGE value="updating itemmanagement as per GST" />
@@ -6424,7 +6423,8 @@
     <MESSAGE value="purchase order &amp; goodsinward(partial)" />
     <MESSAGE value="goodsinward(partial)" />
     <MESSAGE value="display filename statement in ItemMaster- Outward&#10;increase hsncode limit from 7 to 10" />
-    <option name="LAST_COMMIT_MESSAGE" value="display filename statement in ItemMaster- Outward&#10;increase hsncode limit from 7 to 10" />
+    <MESSAGE value="item quantity for supplier in inwarditem was not increasing from goods inward" />
+    <option name="LAST_COMMIT_MESSAGE" value="item quantity for supplier in inwarditem was not increasing from goods inward" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

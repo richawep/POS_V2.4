@@ -136,13 +136,9 @@ public class LoginActivity extends Activity {
     // About button
     public void About(View v) {
         String strAboutMsg = "WeP Touch POS\nVersion:1.1.0\n\nAbout WeP Solutions Limited." +
-                "\n\n\tWeP group of companies is into design, manufacturing and distribution of various types of printers & IT peripherals. " +
-                "The group companies also offer managed printing solutions, UPS & energy solutions, information security software products." +
-                "\n\n\tWeP Group of companies has an interesting past and even more exciting future. " +
-                "It is one of the top Small Giants in the Indian IT space and features at rank 175 in the Data Quest (Sept 2012) " +
-                "listing of IT companies in India with a group turnover of over Rs 3000 mn( USD 60Mn) . " +
-                "WeP Group have been re-inventing itself every few years, from the last 12 years, " +
-                "by bringing in new disruptive products in the market and is poised to make significant change in next few years.";
+                "\n\n\tWeP Digital is the Digital Services arm of WeP Solutions Limited (WeP). WeP is an innovative, reliable and a dynamic company. WeP came into being as a result of entrepreneurial work culture in Wipro. It has a committed and experienced team, helping the company grow leaps and bounds. We have grown and diversified, having spread our roots in an array of different areas like Managed Printing Solutions (MPS), Manufacturing and distribution of IT peripherals, Retail Billing solutions, and Document Management Solutions." +
+                "\n\n\tWeP has been a very dynamic and adaptable organization. We keep reinventing ourselves to adapt to the ever-changing technology by introducing new products to the market, based on the need of the hour. We are a self-reliant company for technology for both new products and its manufacturing." +
+                "\n\n\tWe are the pioneers of retail printers and billing solutions. We have a large presence in the retail automation space in select segments. We have introduced a lot of innovative products in the retail space which help the small time store owners as well as high-end supermarkets to support their customers. We have innovative business models suiting all kinds of consumers based on their requirements. We are known for our reliability and dependability in the market. We are a pan-India company. So our clients can seek our support across the country and we will be there to serve them.";
         AlertDialog.Builder PickUpTender = new AlertDialog.Builder(this);
         PickUpTender
                 .setIcon(R.drawable.ic_launcher)
