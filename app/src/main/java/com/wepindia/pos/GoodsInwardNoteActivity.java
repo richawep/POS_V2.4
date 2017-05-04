@@ -1070,6 +1070,24 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
                     }
                 }
+                // updating quantity in inward item stock
+                int SupplierCode = Integer.parseInt(et_supplier_code.getText().toString());
+                Cursor item_inward_det = dbGoodsInwardNote.getItemdetailsforSupplier(suppliercode,itemname_str);
+                if(item_inward_det!=null && item_inward_det.moveToNext())
+                {
+                    double qty_prev = item_inward_det.getDouble(item_inward_det.getColumnIndex("Quantity"));
+                    qty_prev += quantity_d;
+                    int menuCode = item_inward_det.getInt(item_inward_det.getColumnIndex("MenuCode"));
+                    double rate = po.getValue();
+                    long ll = dbGoodsInwardNote.updateItem_Inw(SupplierCode, menuCode, itemname_str ,
+                            Float.parseFloat(String.format("%.2f",qty_prev)), Float.parseFloat(String.format("%.2f", rate) ));
+                    if(ll>0)
+                    {
+                        Toast.makeText(myContext, itemname_str+" is updated in Inward item as "+qty_prev+" "+po.getUOM(), Toast.LENGTH_SHORT).show();
+                        Log.d("GoodsInward : ",itemname_str+" is updated in Inward item as "+qty_prev+" "+po.getUOM());
+                    }
+
+                }
             }
             if(l>0)
             {
