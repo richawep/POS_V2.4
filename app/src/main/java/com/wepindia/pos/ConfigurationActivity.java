@@ -59,6 +59,7 @@ public class ConfigurationActivity extends WepBaseActivity{
     String strUserName = "";
     DatabaseHandler dbReportTab;
     MessageDialog MsgBox;
+    ConfigurationActivity.ViewPagerAdapter adapter;
 
 
     @Override
@@ -70,6 +71,7 @@ public class ConfigurationActivity extends WepBaseActivity{
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         init();
         setupViewPager(viewPager);
+        viewPager.addOnPageChangeListener (myOnPageChangeListener);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -85,7 +87,7 @@ public class ConfigurationActivity extends WepBaseActivity{
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ConfigurationActivity.ViewPagerAdapter adapter = new ConfigurationActivity.ViewPagerAdapter(getSupportFragmentManager());
+         adapter = new ConfigurationActivity.ViewPagerAdapter(getSupportFragmentManager());
 
         Bundle bundle1=new Bundle();
         bundle1.putString("REPORT_TYPE", "1");
@@ -168,6 +170,31 @@ public class ConfigurationActivity extends WepBaseActivity{
             return mFragmentTitleList.get(position);
         }
     }
+
+    ViewPager.OnPageChangeListener myOnPageChangeListener =
+            new ViewPager.OnPageChangeListener(){
+
+                @Override
+                public void onPageScrolled(final int i, final float v, final int i2) {
+                }
+                @Override
+                public void onPageSelected(final int i) {
+                    if(adapter!=null){
+                        switch(i)
+                        {
+
+                            case 1:  FragmentCategory fragment = (FragmentCategory) adapter.instantiateItem(viewPager, i);
+                                fragment.onResume();
+                                break;
+                        }
+
+                    }
+
+                }
+                @Override
+                public void onPageScrollStateChanged(final int i) {
+                }
+            };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

@@ -601,6 +601,29 @@ public class FragmentInwardSupply extends Fragment {
         });
 
     }
+
+    /*@Override
+    public void onResume() {
+        super.onResume();
+        ClearItem1(null);
+    }*/
+
+    /*@Override
+    public void onPause() {
+        super.onPause();
+        ClearItem1(null);
+
+    }
+*/
+    /* @Override
+    public void setMenuVisibility(boolean menuVisible) {
+        super.setMenuVisibility(menuVisible);
+        InitializeViewVariables(onCreateView());
+        ResetItem();
+        DisplayItems(-1);
+    }
+*/
+
     @SuppressWarnings("deprecation")
     private void  DisplayItems(int suppliercode_recv ) {
         // if suppliercode_recv == -1 , then display all whole data , i.e. all items for all the suppliers
@@ -2419,7 +2442,7 @@ public class FragmentInwardSupply extends Fragment {
         }
     }
 
-    void ClearingAndDisplaying()
+    public void ClearingAndDisplaying()
     {
         ClearItemTable();
         if(sema_display == ALL)

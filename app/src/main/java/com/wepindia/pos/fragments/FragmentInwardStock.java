@@ -141,7 +141,7 @@ public class FragmentInwardStock extends Fragment {
         
         
     }
-   private void btnItemClick()
+   public void btnItemClick()
    {
        listViewSupplier.setVisibility(View.INVISIBLE);
        tvItemNewStock.setEnabled(false);

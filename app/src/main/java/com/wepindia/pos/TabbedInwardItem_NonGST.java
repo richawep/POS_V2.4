@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
@@ -41,6 +42,7 @@ public class TabbedInwardItem_NonGST extends WepBaseActivity {
     String strUserName = "";
     DatabaseHandler dbTabbedInward;
     MessageDialog MsgBox;
+    ViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class TabbedInwardItem_NonGST extends WepBaseActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         init();
         setupViewPager(viewPager);
+        viewPager.addOnPageChangeListener (myOnPageChangeListener);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -66,7 +69,7 @@ public class TabbedInwardItem_NonGST extends WepBaseActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Bundle bundle2=new Bundle();
         bundle2.putString("REPORT_TYPE", "2");
@@ -81,8 +84,34 @@ public class TabbedInwardItem_NonGST extends WepBaseActivity {
         adapter.addFragment(reportFragment1, "Supplier Item Linkage ");
 
         viewPager.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
     }
+    ViewPager.OnPageChangeListener myOnPageChangeListener =
+            new ViewPager.OnPageChangeListener(){
 
+                @Override
+                public void onPageScrolled(final int i, final float v, final int i2) {
+                }
+                @Override
+                public void onPageSelected(final int i) {
+                    if(adapter!=null){
+                        switch(i)
+                        {
+                            case 0 : FragmentInwardStock fragment0 = (FragmentInwardStock) adapter.instantiateItem(viewPager, i);
+                                fragment0.btnItemClick();
+                                break;
+                            case 1:  FragmentInwardSupply fragment = (FragmentInwardSupply) adapter.instantiateItem(viewPager, i);
+                                fragment.ClearingAndDisplaying();
+                                    break;
+                        }
+
+                    }
+
+                }
+                @Override
+                public void onPageScrollStateChanged(final int i) {
+                }
+    };
 
     class ViewPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<Fragment>();
@@ -111,7 +140,11 @@ public class TabbedInwardItem_NonGST extends WepBaseActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
+
     }
+
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
