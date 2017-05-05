@@ -369,6 +369,12 @@ public class ReportHelper{
 		else if(ReportName.equalsIgnoreCase("Tax Report") ||
 				ReportName.equalsIgnoreCase("Service Tax Report")){
 			
+			TextView SNo = new TextView(activityContext);
+			SNo.setWidth(130);
+			SNo.setTextSize(15);
+			SNo.setTextColor(Color.WHITE);
+			SNo.setText("SNo");
+
 			TextView Percent = new TextView(activityContext);
 			Percent.setWidth(130);
 			Percent.setTextSize(15);
@@ -396,8 +402,9 @@ public class ReportHelper{
 			Amount.setText("Total Amount");
 									
 			// Add views to row
-			rowColumnCaption.addView(Percent);
+			rowColumnCaption.addView(SNo);
 			rowColumnCaption.addView(Description);
+			rowColumnCaption.addView(Percent);
 			rowColumnCaption.addView(Tax);
 			rowColumnCaption.addView(Amount);
 			

@@ -5429,6 +5429,20 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     }
 
     // -----Tax Report-----
+    public Cursor getBillsforTaxReports(String StartDate, String EndDate)
+    {
+        String selectQuery = "Select "+KEY_InvoiceNo+" , "+KEY_InvoiceDate+" FROM "+TBL_OUTWARD_SUPPLY_ITEMS_DETAILS+
+                " WHERE "+KEY_BillStatus+" = 1 AND "+KEY_InvoiceDate+" BETWEEN '"+StartDate+"' AND '"+EndDate+"'";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);
+        return cursor;
+    }
+    public Cursor getTaxDetailforBill(String Invoiceno, String Invoicedate, String taxPercentName, String taxAmountName)
+    {
+        String selectQuery = "Select "+taxPercentName+" , "+taxAmountName+" ,"+KEY_TaxableValue+" FROM "+TBL_OUTWARD_SUPPLY_LEDGER+
+                " WHERE "+KEY_InvoiceNo+" LIKE '"+Invoiceno+"' AND "+KEY_InvoiceDate+" LIKE '"+Invoicedate+"'";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);
+        return cursor;
+    }
     public Cursor getTaxReport(String StartDate, String EndDate) {
         /*return dbFNB.rawQuery("SELECT * FROM BillDetail, BillItem, TaxConfig WHERE BillDetail.BillStatus=1 AND "
                 + "BillItem.BillNumber=BillDetail.BillNumber AND BillItem.TaxPercent=TaxConfig.TaxPercentage AND "

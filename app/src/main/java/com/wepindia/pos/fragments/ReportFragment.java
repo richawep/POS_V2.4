@@ -1740,136 +1740,19 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     }
 
     private void TaxReport() {
-        /*Cursor Report = dbReport.getTaxReport(
-                txtReportDateStart.getText().toString(), txtReportDateEnd.getText().toString());
-        */
-        Cursor Report = dbReport.getTaxReport(
-                String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+        int i =1;
+        i =getTaxReport("IGSTRate", "IGSTAmount",i);
+        i = getTaxReport("CGSTRate", "CGSTAmount",i);
+        i =getTaxReport("SGSTRate", "SGSTAmount",i);
 
-
-        Log.d("TaxReport", "Rows Count:" + Report.getCount());
-
-        float  totbillAmt =0, totSalesTax =0;
-        if (Report.moveToFirst()) {
-            boolean isTaxExists = false;
-
-            TextView Percent, Description, TaxAmount, TotalAmount;
-            TableRow rowReport;
-
-
-            do {
-                for (int iPosition = 1; iPosition < tblReport.getChildCount(); iPosition++) {
-
-                    TableRow rowItem = (TableRow) tblReport.getChildAt(iPosition);
-                    if (rowItem.getChildAt(0) != null) {
-
-                        TextView TaxPercent = (TextView) rowItem.getChildAt(0);
-
-                        if (Double.parseDouble(TaxPercent.getText().toString()) ==
-                                Report.getDouble(Report.getColumnIndex("CGSTRate"))) {
-                            TextView TaxDes = (TextView) rowItem.getChildAt(1);
-
-                            if (TaxDes.getText().toString().equalsIgnoreCase("CGST Rate")) {
-                                // Sales Tax
-                                TextView Tax = (TextView) rowItem.getChildAt(2);
-                                Tax.setText(String.format("%.2f",
-                                        Double.parseDouble(Tax.getText().toString()) +
-                                                Report.getDouble(Report.getColumnIndex("CGSTAmount"))));
-                                Tax.setGravity(Gravity.END);
-                                Tax.setPadding(0,0,30,0);
-
-                                // Amount
-                                TextView Amt = (TextView) rowItem.getChildAt(3);
-                                Amt.setText(String.format("%.2f",
-                                        Double.parseDouble(Amt.getText().toString()) +
-                                                Report.getDouble(Report.getColumnIndex("Value"))));
-                                Amt.setGravity(Gravity.END);
-                                Amt.setPadding(0,0,25,0);
-                                isTaxExists = true;
-                                break;
-                            }
-                            /*TextView Percent1= (TextView) rowItem.getChildAt(1);
-                            if (Percent1.getText().toString().equalsIgnoreCase(Report.getString(Report.getColumnIndex("TaxDescription"))))
-                            {
-                                // Sales Tax
-                                TextView Tax = (TextView) rowItem.getChildAt(2);
-                                Tax.setText(String.format("%.2f",
-                                        Double.parseDouble(Tax.getText().toString()) +
-                                                Report.getDouble(Report.getColumnIndex("TaxAmount"))));
-
-                                // Amount
-                                TextView Amt = (TextView) rowItem.getChildAt(3);
-                                Amt.setText(String.format("%.2f",
-                                        Double.parseDouble(Amt.getText().toString()) +
-                                                Report.getDouble(Report.getColumnIndex("BillAmount"))));
-                                isTaxExists = true;
-                                break;
-
-                            }*/
-
-                        }
-                    }
-                }
-
-                if (isTaxExists == false) {
-
-                    rowReport = new TableRow(myContext);
-                    rowReport.setLayoutParams(new ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                    Percent = new TextView(myContext);
-                    Percent.setText(String.format("%.2f",Report.getFloat(Report.getColumnIndex("CGSTRate"))));
-
-
-                    Description = new TextView(myContext);
-                    Description.setText("CGST Rate");
-
-                    TaxAmount = new TextView(myContext);
-                    TaxAmount.setText(String.format("%.2f",Float.parseFloat(Report.getString(Report
-                            .getColumnIndex("CGSTAmount")))));
-                    TaxAmount.setGravity(Gravity.END);
-                    TaxAmount.setPadding(0,0,30,0);
-
-                    TotalAmount = new TextView(myContext);
-                    TotalAmount.setText(String.format("%.2f",Report.getDouble(Report
-                            .getColumnIndex("Value"))));
-                    totbillAmt = totbillAmt +Float.parseFloat(TotalAmount.getText().toString());
-                    TotalAmount.setGravity(Gravity.END);
-                    TotalAmount.setPadding(0,0,25,0);
-
-                    rowReport.addView(Percent);
-                    rowReport.addView(Description);
-                    rowReport.addView(TaxAmount);
-                    rowReport.addView(TotalAmount);
-
-                    tblReport.addView(rowReport, new ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT));
-                }
-
-
-                isTaxExists = false;
-
-            } while (Report.moveToNext());
-
-            btnPrint.setEnabled(true);
-            btnExport.setEnabled(true);
-
-        } else {
-            MsgBox.Show("Warning", "No transaction has been done");
-        }
-        ServiceTaxReport();
-
-        int count = tblReport.getChildCount();
-        if(count>1)
+        if(i>1)
         {
             float totTax =0, totAmt =0;
-            for(int i =1;i<count;i++)
+            for(int ii =1;ii<i;ii++)
             {
-                TableRow row = (TableRow) tblReport.getChildAt(i);
-                TextView tax = (TextView) row.getChildAt(2);
-                TextView amt = (TextView) row.getChildAt(3);
+                TableRow row = (TableRow) tblReport.getChildAt(ii);
+                TextView tax = (TextView) row.getChildAt(3);
+                TextView amt = (TextView) row.getChildAt(4);
 
                 totTax += Float.parseFloat(tax.getText().toString());
                 totAmt += Float.parseFloat(amt.getText().toString());
@@ -1886,9 +1769,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             Percent.setTextSize(15);
 
             TextView Description = new TextView(myContext);
+            TextView Sno = new TextView(myContext);
 
             TextView TotalAmount = new TextView(myContext);
-            //TotalAmount.setText(String.format("%.2f",totbillAmt));
+            TotalAmount.setText(String.format("%.2f",totAmt));
             TotalAmount.setTextColor(Color.WHITE);
             TotalAmount.setTextSize(15);
             TotalAmount.setGravity(Gravity.END);
@@ -1904,6 +1788,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
             rowReport.addView(Percent);
+            rowReport.addView(Sno);
             rowReport.addView(Description);
             rowReport.addView(TaxAmount);
             rowReport.addView(TotalAmount);
@@ -1912,6 +1797,122 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT));
         }
+
+    }
+
+    private int getTaxReport(String TaxPercentName, String TaxAmountName, int i) {
+        /*Cursor Report = dbReport.getTaxReport(
+                txtReportDateStart.getText().toString(), txtReportDateEnd.getText().toString());
+        */
+        Cursor Report_detail = dbReport.getBillsforTaxReports(
+                String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+
+
+        Log.d("TaxReport ", TaxPercentName+" : Rows Count:" + Report_detail.getCount());
+
+        float  totbillAmt =0, totSalesTax =0;
+
+        while (Report_detail.moveToNext()) {
+            boolean isTaxExists = false;
+
+            TextView Percent, Description, TaxAmount, TotalAmount;
+            TableRow rowReport;
+
+            String inv_no = Report_detail.getString(Report_detail.getColumnIndex("InvoiceNo"));
+            String inv_date = Report_detail.getString(Report_detail.getColumnIndex("InvoiceDate"));
+            Cursor Report = dbReport.getTaxDetailforBill(inv_no, inv_date,TaxPercentName,TaxAmountName);
+            while (Report.moveToNext()) {
+                for (int iPosition = 1; iPosition < tblReport.getChildCount(); iPosition++) {
+
+                    TableRow rowItem = (TableRow) tblReport.getChildAt(iPosition);
+                    if (rowItem.getChildAt(0) != null) {
+
+                        TextView TaxPercent = (TextView) rowItem.getChildAt(2);
+
+                        if (Double.parseDouble(TaxPercent.getText().toString()) ==
+                                Report.getDouble(Report.getColumnIndex(TaxPercentName))) {
+
+                            TextView TaxDes = (TextView) rowItem.getChildAt(1);
+
+                            if (TaxDes.getText().toString().equalsIgnoreCase(TaxPercentName)) {
+                                // Sales Tax
+                                TextView Tax = (TextView) rowItem.getChildAt(3);
+                                Tax.setText(String.format("%.2f",
+                                        Double.parseDouble(Tax.getText().toString()) +
+                                                Report.getDouble(Report.getColumnIndex(TaxAmountName))));
+                                Tax.setGravity(Gravity.END);
+                                Tax.setPadding(0,0,30,0);
+
+                                // Amount
+                                TextView Amt = (TextView) rowItem.getChildAt(4);
+                                Amt.setText(String.format("%.2f",
+                                        Double.parseDouble(Amt.getText().toString()) +
+                                                Report.getDouble(Report.getColumnIndex("TaxableValue"))));
+                                Amt.setGravity(Gravity.END);
+                                Amt.setPadding(0,0,25,0);
+                                isTaxExists = true;
+                                break;
+                            }
+
+                        }
+                    }
+                }
+
+                if (isTaxExists == false) {
+
+                    rowReport = new TableRow(myContext);
+                    rowReport.setLayoutParams(new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+
+
+
+                    Percent = new TextView(myContext);
+                    Percent.setText(String.format("%.2f",Report.getFloat(Report.getColumnIndex(TaxPercentName))));
+                    if(Percent.getText().toString().equals("")|| (Double.parseDouble(Percent.getText().toString()) == 0))
+                        continue;
+
+                    TextView Sno = new TextView(myContext);
+                    Sno.setText(String.valueOf(i++));
+
+
+                    Description = new TextView(myContext);
+                    Description.setText(TaxPercentName);
+
+                    TaxAmount = new TextView(myContext);
+                    TaxAmount.setText(String.format("%.2f",Float.parseFloat(Report.getString(Report
+                            .getColumnIndex(TaxAmountName)))));
+                    TaxAmount.setGravity(Gravity.END);
+                    TaxAmount.setPadding(0,0,30,0);
+
+                    TotalAmount = new TextView(myContext);
+                    TotalAmount.setText(String.format("%.2f",Report.getDouble(Report
+                            .getColumnIndex("TaxableValue"))));
+                    totbillAmt = totbillAmt +Float.parseFloat(TotalAmount.getText().toString());
+                    TotalAmount.setGravity(Gravity.END);
+                    TotalAmount.setPadding(0,0,25,0);
+
+                    rowReport.addView(Sno);
+                    rowReport.addView(Description);
+                    rowReport.addView(Percent);
+                    rowReport.addView(TaxAmount);
+                    rowReport.addView(TotalAmount);
+
+                    tblReport.addView(rowReport, new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+                }
+
+
+                isTaxExists = false;
+
+            }
+
+            btnPrint.setEnabled(true);
+            btnExport.setEnabled(true);
+
+        }
+        return i;
 
     }
 
