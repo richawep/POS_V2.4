@@ -211,13 +211,14 @@
                                 android:layout_height="wrap_content"
                                 android:ems="5"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:inputType="numberDecimal"
+                                android:inputType="numberDecimal|numberSigned"
                                 android:selectAllOnFocus="true" />
                         </TableRow>
 
                         <TableRow
                             android:id="@+id/rowItemRate1"
                             android:layout_width="wrap_content"
+                            android:visibility="invisible"
                             android:layout_height="wrap_content">
 
                             <TextView

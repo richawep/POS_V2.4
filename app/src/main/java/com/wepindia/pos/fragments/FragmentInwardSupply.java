@@ -722,6 +722,7 @@ public class FragmentInwardSupply extends Fragment {
                     tvQuantity.setGravity(Gravity.RIGHT|Gravity.END);
                     tvQuantity.setWidth(130);
                     tvQuantity.setTextSize(18);
+                    tvQuantity.setVisibility(View.INVISIBLE);
                     tvQuantity.setText(crsrItems.getString(crsrItems.getColumnIndex("Quantity")));
                     rowItems.addView(tvQuantity);
 
@@ -1005,6 +1006,7 @@ public class FragmentInwardSupply extends Fragment {
                 tvQuantity.setGravity(Gravity.RIGHT | Gravity.END);
                 tvQuantity.setWidth(130);
                 tvQuantity.setTextSize(18);
+                tvQuantity.setVisibility(View.INVISIBLE);
                 tvQuantity.setText(crsrItems.getString(crsrItems.getColumnIndex("Quantity")));
                 rowItems.addView(tvQuantity);
 
@@ -1264,6 +1266,7 @@ public class FragmentInwardSupply extends Fragment {
                 tvQuantity.setGravity(Gravity.RIGHT|Gravity.END);
                 tvQuantity.setWidth(130);
                 tvQuantity.setTextSize(18);
+                tvQuantity.setVisibility(View.INVISIBLE);
                 tvQuantity.setText(crsrItems.getString(crsrItems.getColumnIndex("Quantity")));
                 rowItems.addView(tvQuantity);
 

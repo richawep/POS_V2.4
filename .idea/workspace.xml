@@ -15,16 +15,12 @@
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="Spinner not having border around it">
+    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConfigurationActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConfigurationActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTDataController.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTDataController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_inward_stock.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_inward_stock.xml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,96 +52,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DatabaseHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+      <file leaf-file-name="FragmentInwardStock.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125341">
-              <caret line="7422" column="51" selection-start-line="7422" selection-start-column="29" selection-end-line="7422" selection-end-column="51" />
-              <folding>
-                <element signature="e#0#313#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#188687#188688#0" expanded="false" />
-                <element signature="e#188752#188753#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FragmentGSTLink.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6885">
-              <caret line="429" column="103" selection-start-line="429" selection-start-column="103" selection-end-line="429" selection-end-column="103" />
-              <folding>
-                <element signature="e#6901#6902#0" expanded="false" />
-                <element signature="e#6948#6949#0" expanded="false" />
-                <element signature="e#7113#7114#0" expanded="false" />
-                <element signature="e#7158#7159#0" expanded="false" />
-                <element signature="e#7316#7317#0" expanded="false" />
-                <element signature="e#7375#7376#0" expanded="false" />
-                <element signature="e#7533#7534#0" expanded="false" />
-                <element signature="e#7592#7593#0" expanded="false" />
-                <element signature="e#7750#7751#0" expanded="false" />
-                <element signature="e#7809#7810#0" expanded="false" />
-                <element signature="e#7967#7968#0" expanded="false" />
-                <element signature="e#8026#8027#0" expanded="false" />
-                <element signature="e#8184#8185#0" expanded="false" />
-                <element signature="e#8243#8244#0" expanded="false" />
-                <element signature="e#8407#8408#0" expanded="false" />
-                <element signature="e#8472#8473#0" expanded="false" />
-                <element signature="e#8631#8632#0" expanded="false" />
-                <element signature="e#8691#8692#0" expanded="false" />
-                <element signature="e#8856#8857#0" expanded="false" />
-                <element signature="e#8922#8923#0" expanded="false" />
-                <element signature="e#9083#9084#0" expanded="false" />
-                <element signature="e#9144#9145#0" expanded="false" />
-                <element signature="e#12922#12923#0" expanded="false" />
-                <element signature="e#12954#12955#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GstJsonEncoder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/util/GstJsonEncoder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GSTDataController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTDataController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="1328" column="18" selection-start-line="1328" selection-start-column="18" selection-end-line="1328" selection-end-column="18" />
+            <state relative-caret-position="164">
+              <caret line="158" column="4" selection-start-line="158" selection-start-column="4" selection-end-line="158" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StockActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java">
+      <file leaf-file-name="FragmentInwardSupply.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="90" column="40" selection-start-line="90" selection-start-column="40" selection-end-line="90" selection-end-column="40" />
+            <state relative-caret-position="249">
+              <caret line="730" column="40" selection-start-line="730" selection-start-column="40" selection-end-line="730" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_stock.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml">
+      <file leaf-file-name="fragment_fragment_inward_stock.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_inward_stock.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="341" column="42" selection-start-line="341" selection-start-column="42" selection-end-line="341" selection-end-column="42" />
+            <state relative-caret-position="334">
+              <caret line="226" column="41" selection-start-line="226" selection-start-column="41" selection-end-line="226" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -5409,7 +5343,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GSTLinkActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/row_purchaseorder.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_purchase_order.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/PurchaseOrderAdapter.java" />
@@ -5447,19 +5380,20 @@
         <option value="$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/util/Config.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/LoginActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedInwardItem_NonGST.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentCategory.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_report.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConfigurationActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java" />
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTDataController.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_inward_stock.xml" />
       </list>
     </option>
   </component>
@@ -6312,7 +6246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493889858841</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Bug fixing - srikanth &#10;1. Rate3 is wriiten as Rate 2 in Price &amp; Stock&#10;2. modification - item masters - cateregory dropdown ad &quot;Select dept&quot;&#10;3. Tax fragment removed from configuration&#10;">
+      <created>1493968970725</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1493968970725</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6342,7 +6283,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2221374" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26946566" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -6428,7 +6369,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="GST setting fragment addition" />
     <MESSAGE value="1. removing settings of home during GST presentation&#10;2. controlling visibility if HSN as configured for item outward management" />
     <MESSAGE value="HSN code was not updating. Also making default HSN code as 0." />
     <MESSAGE value="Billing Screen including GST" />
@@ -6453,7 +6393,8 @@
     <MESSAGE value="about wep information on login page" />
     <MESSAGE value="fragments updation issue - configuration.java  &amp; Inwarditem management" />
     <MESSAGE value="Spinner not having border around it" />
-    <option name="LAST_COMMIT_MESSAGE" value="Spinner not having border around it" />
+    <MESSAGE value="Bug fixing - srikanth &#10;1. Rate3 is wriiten as Rate 2 in Price &amp; Stock&#10;2. modification - item masters - cateregory dropdown ad &quot;Select dept&quot;&#10;3. Tax fragment removed from configuration&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixing - srikanth &#10;1. Rate3 is wriiten as Rate 2 in Price &amp; Stock&#10;2. modification - item masters - cateregory dropdown ad &quot;Select dept&quot;&#10;3. Tax fragment removed from configuration&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6551,14 +6492,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR2_B2B_A_invoices_Unregistered.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/Fragment_Outward_Credit_Debit_Note.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-22">
@@ -6913,17 +6846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="319" column="11" selection-start-line="319" selection-start-column="11" selection-end-line="319" selection-end-column="11" />
-          <folding>
-            <element signature="e#4544#4673#0" expanded="false" />
-            <element signature="e#4672#4673#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/MasterActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
@@ -7034,24 +6956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="120" column="75" selection-start-line="120" selection-start-column="75" selection-end-line="120" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="765" column="5" selection-start-line="765" selection-start-column="5" selection-end-line="765" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedInwardItem_NonGST.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -7147,6 +7051,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
           <caret line="341" column="42" selection-start-line="341" selection-start-column="42" selection-end-line="341" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward__item__entry_non_gst.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="123" column="30" selection-start-line="123" selection-start-column="30" selection-end-line="123" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardStock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="158" column="4" selection-start-line="158" selection-start-column="4" selection-end-line="158" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentInwardSupply.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="730" column="40" selection-start-line="730" selection-start-column="40" selection-end-line="730" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_inward_stock.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="226" column="41" selection-start-line="226" selection-start-column="41" selection-end-line="226" selection-end-column="41" />
           <folding />
         </state>
       </provider>

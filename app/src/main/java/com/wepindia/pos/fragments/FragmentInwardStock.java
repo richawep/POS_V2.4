@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class FragmentInwardStock extends Fragment {
     TextView tvExistingStock,tvItemNewStock, txtRate1, tvItemRate1, tvItemExistingStock;
     EditText txtNewStock;
     WepButton btnUpdate,btnClearStock,btnCloseStock,btn_InwardItem,btn_Supplier;
+    TableRow rowItemExistingStock;
 
     private ItemInwardAdapter itemsAdapter;
     private SupplierAdapter supplierAdapter;
@@ -102,6 +104,7 @@ public class FragmentInwardStock extends Fragment {
         txtRate1 = (TextView) view.findViewById(R.id.etItemRate1);
         tvItemRate1 = (TextView) view.findViewById(R.id.tvItemRate1);
 
+        rowItemExistingStock = (TableRow) view.findViewById(R.id.rowItemExistingStock);
         listViewItem = (ListView) view.findViewById(R.id.listViewFilter3);
         listViewItem.setOnItemClickListener(itemsClick);
         listViewSupplier = (ListView) view.findViewById(R.id.listViewFilter1);
@@ -148,6 +151,7 @@ public class FragmentInwardStock extends Fragment {
        txtNewStock.setEnabled(false);
        tvItemRate1.setText("Weighted Avg Rate");
        tvItemExistingStock.setText("Existing Stock");
+       rowItemExistingStock.setVisibility(View.VISIBLE);
        loadItems(0);
        ResetStock();
        SUPPLIER_MODE = false;
@@ -160,6 +164,7 @@ public class FragmentInwardStock extends Fragment {
         txtNewStock.setEnabled(true);
         tvItemRate1.setText("Prev. Rate");
         tvItemExistingStock.setText("Stock purchased till now for supplier");
+        rowItemExistingStock.setVisibility(View.INVISIBLE);
         loadSupplier();
         ResetStock();
         SUPPLIER_MODE = true;

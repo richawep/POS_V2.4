@@ -72,7 +72,7 @@
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="Quantity"
+                    android:text=""
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/txtColorAccent" />
 
@@ -124,7 +124,6 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="30dp"
                 android:background="@color/colorGreyBackground">
-
 
 
                 <TableLayout
@@ -493,6 +492,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
+                        android:visibility="invisible"
                         android:layout_weight="1">
 
                         <TextView
@@ -1042,6 +1042,7 @@
                             android:background="@drawable/background_btn"
                             android:onClick="ResetQty"
                             android:text="Reset Qty"
+                            android:visibility="gone"
                             android:textColor="@android:color/white"
                             android:theme="@style/WepButtonWithMarigin" />
 
