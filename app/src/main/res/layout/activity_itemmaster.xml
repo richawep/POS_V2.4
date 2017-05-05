@@ -817,6 +817,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:hint="0.00"
+                            android:text="0.00"
                             android:inputType="numberDecimal"
                             android:selectAllOnFocus="true"
                             android:textSize="13dp" />
@@ -848,6 +849,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:hint="0.00"
+                            android:text="0.00"
                             android:inputType="numberDecimal"
                             android:selectAllOnFocus="true"
                             android:textSize="13dp" />
@@ -880,6 +882,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:hint="0.00"
+                            android:text="0.00"
                             android:inputType="numberDecimal"
                             android:selectAllOnFocus="true"
                             android:textSize="13dp" />

@@ -873,13 +873,13 @@ public class GSTDataController {
                             GSTR1_B2B_item_details item_details = new GSTR1_B2B_item_details(
                                     cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("SupplyType")),
                                     cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("HSNCode")),
-                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("TaxableValue")),
-                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate")),
-                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTAmount")),
-                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTRate")),
-                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTAmount")),
-                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTRate")),
-                                    cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTAmount")),
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("TaxableValue")))),
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate")))),
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTAmount")))),
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTRate")))),
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTAmount")))),
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTRate")))),
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTAmount")))),
                                     0,0
                             );
                             GSTR1_B2B_items item= new GSTR1_B2B_items(++i,item_details);
@@ -894,12 +894,12 @@ public class GSTDataController {
                                 GSTR1_B2B_invoices inv = new GSTR1_B2B_invoices(
                                         cursor.getString(cursor.getColumnIndex("InvoiceNo")),
                                         newDate,
-                                        cursor.getDouble(cursor.getColumnIndex("TaxableValue")),
+                                        Double.parseDouble(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("BillAmount")))),
                                         cursor.getString(cursor.getColumnIndex("POS")),
                                         cursor.getString(cursor.getColumnIndex("ReverseCharge")),
                                         cursor.getString(cursor.getColumnIndex("ProvisionalAssess")),
-                                        "",
-                                        "",
+                                        "",//order_num
+                                        "",//order_date
                                         cursor.getString(cursor.getColumnIndex("EcommerceGSTIN")),
                                         item_list
                                 );
@@ -908,12 +908,13 @@ public class GSTDataController {
                                 e.printStackTrace();
                             }
                         }
-                        if(invoiceList!=null && invoiceList.size()>0)
-                        {
-                            GSTR1_B2B_Data b2BData = new GSTR1_B2B_Data(gstin_str,invoiceList);
-                            b2BDataList.add(b2BData);
-                        }
+
                     }while (cursor.moveToNext());
+                    if(invoiceList!=null && invoiceList.size()>0)
+                    {
+                        GSTR1_B2B_Data b2BData = new GSTR1_B2B_Data(gstin_str,invoiceList);
+                        b2BDataList.add(b2BData);
+                    }
                 }
 
             }

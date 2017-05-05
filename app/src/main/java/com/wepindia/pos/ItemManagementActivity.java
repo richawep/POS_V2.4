@@ -611,6 +611,69 @@ public class ItemManagementActivity extends WepBaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listItemClickEvent(itemListAdapter.getItems(position));
             }});
+
+
+        edtItemSGSTTax.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String SGST = edtItemSGSTTax.getText().toString();
+                String CGST = edtItemCGSTTax.getText().toString();
+                if(SGST.equals("")){
+                    //edtItemSGSTTax.setText("0");
+                    SGST = ("0");
+                }
+                if(CGST.equals("")){
+                    //edtItemCGSTTax.setText("0");
+                    CGST = ("0");}
+
+                double sgst_d = Double.parseDouble(SGST);
+                double cgst_d = Double.parseDouble(CGST);
+                double igst_d = sgst_d+cgst_d;
+                edtIGSTTax.setText(String.format("%.2f",igst_d));
+
+            }
+        });
+        edtItemCGSTTax.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String SGST = edtItemSGSTTax.getText().toString();
+                String CGST = edtItemCGSTTax.getText().toString();
+                if(CGST.equals("")) {
+                    //edtItemCGSTTax.setText("0");
+                    CGST = ("0");
+                }
+                if(SGST.equals("")) {
+                    //edtItemSGSTTax.setText("0");
+                    SGST = ("0");
+                }
+
+                double sgst_d = Double.parseDouble(SGST);
+                double cgst_d = Double.parseDouble(CGST);
+                double igst_d = sgst_d+cgst_d;
+                edtIGSTTax.setText(String.format("%.2f",igst_d));
+
+            }
+        });
     }
 
     private void listItemClickEvent(ItemOutward item) {
@@ -1523,7 +1586,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         float fServiceTax = 0;
         float fCGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtItemCGSTTax.getText().toString())));
         float fSGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtItemSGSTTax.getText().toString())));
-        float fIGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtIGSTTax.getText().toString())));
+        //float fIGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtIGSTTax.getText().toString())));
 
 
         //Cursor crsrSettings = dbItems.getBillSetting();
@@ -1546,7 +1609,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                     InsertItem(strLongName, strLongName, fDineIn1, fDineIn2, fDineIn3, fTakeAway, fPickUp, fDelivery,
                             fStock, iPriceChange, iDiscountEnable, iBillWithStock, iTaxType, iDeptCode, iCategCode,
                             iKitchenCode, iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId,
-                            strBarcode, strImageUri, frate, fquantity, hsnCode, fIGSTTax, fCGSTTax, fSGSTTax, g_s, MOU_str, taxationtype_str,
+                            strBarcode, strImageUri, frate, fquantity, hsnCode, fCGSTTax+fSGSTTax, fCGSTTax, fSGSTTax, g_s, MOU_str, taxationtype_str,
                             fSalesTax, fServiceTax, iMenuCode);
 
 
@@ -1582,7 +1645,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                         iDeptCode, iCategCode, iKitchenCode, fDineIn1, fDineIn2, fDineIn3, fTakeAway, fPickUp, fDelivery,
                         iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId, fStock, iPriceChange,
                         iDiscountEnable, iBillWithStock, strImageUri, iTaxType, frate, hsnCode, g_s, MOU_str,
-                        taxationtype_str, fIGSTTax, fCGSTTax, fSGSTTax,
+                        taxationtype_str, fCGSTTax+fSGSTTax, fCGSTTax, fSGSTTax,
                         fSalesTax, fServiceTax, Integer.valueOf(strItemId));
                 Log.d("updateCategory", "Updated Rows: " + String.valueOf(iRowId));
 
