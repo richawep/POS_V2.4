@@ -17,9 +17,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,7 +73,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="44" column="27" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="27" />
+              <caret line="365" column="58" selection-start-line="365" selection-start-column="48" selection-end-line="365" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -5389,7 +5387,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_report.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ConfigurationActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTDataController.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml" />
@@ -5400,6 +5397,7 @@
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
       </list>
     </option>
   </component>
@@ -5592,7 +5590,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../FnB_Datamini/wepfnb_datamini" />
-    <property name="device.picker.selection" value="Baytrail2B001957" />
+    <property name="device.picker.selection" value="0123456789ABCDEF" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPropertiesWindowManager-NlEditorPanel.SHOW" value="false" />
     <property name="DEBUGGABLE_DEVICE" value="intel-twg10-Baytrail2B001957" />
@@ -6273,7 +6271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493973322256</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Tax Report Done">
+      <created>1493982650157</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1493982650157</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6303,7 +6308,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27251908" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15725191" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -6389,7 +6394,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="HSN code was not updating. Also making default HSN code as 0." />
     <MESSAGE value="Billing Screen including GST" />
     <MESSAGE value="defects reported by sargam&#10;1. supplier addres limit extended to 100 character as per BP Inward supplier Item Linkage, goodsinward, purchase order&#10;2. Sales tax is printed insted of VAt in DineIn Bills&#10;3. Discount was not calculating on base amount - all billing modules + paybill activity&#10;4. cashier name not coming corect while reprinting - all billing modules&#10;5. table no coming 0 in reprint , also splitno not displaying. all 4 biiling mod&#10;6. Last Customer name is priniting in countersale bill , even when no cutomer is entered&#10;7. discount percentage not displaying for dinein reprint&#10;7. discount amt not changing when disc option changed from percentage to amount - paybill" />
     <MESSAGE value="Making taxes Print in Bill as CGST &amp; SGST" />
@@ -6414,7 +6418,8 @@
     <MESSAGE value="Spinner not having border around it" />
     <MESSAGE value="Bug fixing - srikanth &#10;1. Rate3 is wriiten as Rate 2 in Price &amp; Stock&#10;2. modification - item masters - cateregory dropdown ad &quot;Select dept&quot;&#10;3. Tax fragment removed from configuration&#10;" />
     <MESSAGE value="removing quantity from inward item supply/Stock" />
-    <option name="LAST_COMMIT_MESSAGE" value="removing quantity from inward item supply/Stock" />
+    <MESSAGE value="Tax Report Done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tax Report Done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7109,7 +7114,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="44" column="27" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="27" />
+          <caret line="365" column="58" selection-start-line="365" selection-start-column="48" selection-end-line="365" selection-end-column="58" />
           <folding />
         </state>
       </provider>

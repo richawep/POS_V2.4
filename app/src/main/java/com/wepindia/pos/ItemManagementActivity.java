@@ -257,7 +257,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                         try {
                                                             String line = "";
                                                             int iteration = 0;
-
+                                                            int i =1;
                                                             while ((line = buffer.readLine()) != null) {
                                                                 final String[] colums = line.split(",");
                                                                 if (colums.length != 9) {
@@ -269,14 +269,25 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                                     iteration++;
                                                                     continue;
                                                                 }
+
+
                                                                 InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
+                                                                        Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
+                                                                        0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
+                                                                        2, 0, 0, 0, "", "",0f,0f,"HSN_"+i,
+                                                                        Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
+                                                                        Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
+                                                                        "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
+                                                                        Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
+                                                                i++;
+                                                                /*InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
                                                                         Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
                                                                         0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
                                                                         2, 0, 0, 0, "", "",0f,0f,"",
                                                                         Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
                                                                         Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
                                                                         "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
-                                                                        Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
+                                                                        Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));*/
                                                             }
                                                             StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
                                                             stock_outward.saveOpeningStock_Outward(current_date);
@@ -339,6 +350,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                                         try {
                                             String line = "";
                                             int iteration = 0;
+                                            int i = 1;
 
                                             while ((line = buffer.readLine()) != null) {
                                                 final String[] colums = line.split(",");
@@ -354,11 +366,12 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                 InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
                                                         Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
                                                         0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-                                                        2, 0, 0, 0, "", "",0f,0f,"",
+                                                        2, 0, 0, 0, "", "",0f,0f,"HSN_"+i,
                                                         Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
                                                         Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
                                                         "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
                                                         Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
+                                                i++;
                                             }
                                             final String current_date = businessDate;
                                             StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
@@ -391,7 +404,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                         e.printStackTrace();
                     }
                     finally {
-                        tvFileName.setText("");
+                        tvFileName.setText("Select FileName");
                         strUploadFilepath="";
                     }
                 }
@@ -1622,7 +1635,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         txtStock.setText("0.00");
         btnAdd.setEnabled(true);
         btnEdit.setEnabled(false);
-        tvFileName.setText("FileName");
+        tvFileName.setText("Select FileName");
         strUploadFilepath="";
         edtItemCGSTTax.setText("0.00");
         edtItemSGSTTax.setText("0.00");
