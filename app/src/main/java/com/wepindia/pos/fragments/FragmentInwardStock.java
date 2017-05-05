@@ -39,7 +39,7 @@ public class FragmentInwardStock extends Fragment {
     TextView tvExistingStock,tvItemNewStock, txtRate1, tvItemRate1, tvItemExistingStock;
     EditText txtNewStock;
     WepButton btnUpdate,btnClearStock,btnCloseStock,btn_InwardItem,btn_Supplier;
-    TableRow rowItemExistingStock;
+    TableRow rowItemExistingStock,rowItemRate1;
 
     private ItemInwardAdapter itemsAdapter;
     private SupplierAdapter supplierAdapter;
@@ -105,6 +105,7 @@ public class FragmentInwardStock extends Fragment {
         tvItemRate1 = (TextView) view.findViewById(R.id.tvItemRate1);
 
         rowItemExistingStock = (TableRow) view.findViewById(R.id.rowItemExistingStock);
+        rowItemRate1 = (TableRow) view.findViewById(R.id.rowItemRate1);
         listViewItem = (ListView) view.findViewById(R.id.listViewFilter3);
         listViewItem.setOnItemClickListener(itemsClick);
         listViewSupplier = (ListView) view.findViewById(R.id.listViewFilter1);
@@ -152,6 +153,7 @@ public class FragmentInwardStock extends Fragment {
        tvItemRate1.setText("Weighted Avg Rate");
        tvItemExistingStock.setText("Existing Stock");
        rowItemExistingStock.setVisibility(View.VISIBLE);
+       rowItemRate1.setVisibility(View.INVISIBLE);
        loadItems(0);
        ResetStock();
        SUPPLIER_MODE = false;
@@ -164,7 +166,8 @@ public class FragmentInwardStock extends Fragment {
         txtNewStock.setEnabled(true);
         tvItemRate1.setText("Prev. Rate");
         tvItemExistingStock.setText("Stock purchased till now for supplier");
-        rowItemExistingStock.setVisibility(View.INVISIBLE);
+        rowItemExistingStock.setVisibility(View.GONE);
+        rowItemRate1.setVisibility(View.VISIBLE);
         loadSupplier();
         ResetStock();
         SUPPLIER_MODE = true;
