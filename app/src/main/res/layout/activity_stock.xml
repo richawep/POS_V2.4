@@ -332,7 +332,7 @@
                                            android:id="@+id/tvItemRate3"
                                            android:layout_width="200dp"
                                            android:layout_height="wrap_content"
-                                           android:text="Rate2"
+                                           android:text="Rate3"
                                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
                                        <EditText

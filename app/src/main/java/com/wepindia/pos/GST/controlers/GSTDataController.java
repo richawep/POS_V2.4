@@ -1179,7 +1179,7 @@ public class GSTDataController {
                     String invoiceDate_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
                     String invoiceNo = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
                     String invoiceDate = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
-                    String pos_supplier = cursor.getString(cursor.getColumnIndex("SupplierPOS"));
+                    String pos_supplier = cursor.getString(cursor.getColumnIndex("POS"));
 
                     if(pos_supplier==null)
                         pos_supplier="";
@@ -1324,7 +1324,7 @@ public class GSTDataController {
         ArrayList<GSTR2_B2B_A_Data_Unregistered> dataList_Unregistered = new ArrayList<>();
         try
         {
-            Cursor cursor = dbReport.getGSTR2_b2b_A_List(startDate,endDate);
+            Cursor cursor = dbReport.getGSTR2_b2b_A_unregisteredSupplierList(startDate,endDate);
             ArrayList<GSTR2_B2B_A_invoices_Unregistered> invoiceList = new ArrayList<>();
             ArrayList<String>custname_list = new ArrayList<>();
             while(cursor!=null && cursor.moveToNext())
@@ -1333,7 +1333,7 @@ public class GSTDataController {
                 String invoiceDate = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
                 String invoiceNo_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo"));
                 String invoiceDate_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
-                String pos_supplier = cursor.getString(cursor.getColumnIndex("SupplierPOS"));
+                String pos_supplier = cursor.getString(cursor.getColumnIndex("POS"));
                 String supplierName = cursor.getString(cursor.getColumnIndex("GSTIN"));
                 if(pos_supplier==null)
                     pos_supplier="";
@@ -1349,7 +1349,11 @@ public class GSTDataController {
                 ArrayList<GSTR2_B2B_items> itms_list = new ArrayList<>();
                 while (cursor_item!=null && cursor_item.moveToNext())
                 {
-                    totval += cursor_item.getDouble(cursor_item.getColumnIndex("Amount"));
+                    double taxval = cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue"));
+                    double igstAmt = cursor_item.getDouble(cursor_item.getColumnIndex("IGSTAmount"));
+                    double cgstAmt = cursor_item.getDouble(cursor_item.getColumnIndex("CGSTAmount"));
+                    double sgstAmt = cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"));
+                    totval +=taxval+igstAmt+cgstAmt+sgstAmt;
                     GSTR2_B2B_item_details item_details = new GSTR2_B2B_item_details(
                             cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
                             cursor_item.getString(cursor_item.getColumnIndex("HSNCode")),
@@ -1404,7 +1408,7 @@ public class GSTDataController {
     public ArrayList<GSTR2_CDN_Data> getGSTR2_CDNData(String startDate, String endDate) {
         ArrayList<GSTR2_CDN_Data> cdn_list = new ArrayList<>();
         try {
-            ArrayList<String> counterPartyGSTIN_list = dbReport.getGSTR1_CDN_gstinlist(startDate, endDate);
+            ArrayList<String> counterPartyGSTIN_list = dbReport.getGSTR2_CDN_gstinlist(startDate, endDate);
             for (String gstin : counterPartyGSTIN_list) {
                 Cursor cursor = dbReport.getGSTR2_CDN_forgstin(startDate,endDate,gstin);
                 if (cursor == null || !cursor.moveToFirst())

@@ -2976,7 +2976,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             Cursor cursor = dbFNB.query(TBL_CATEGORY, null, "DeptCode=?", new String[]{String.valueOf(name)}, null, null, null, null);
             //if (cursor != null)
-            list.add("Select department");
+            list.add("Select department first");
             while (cursor != null && cursor.moveToNext()) {
                 list.add(cursor.getString(cursor.getColumnIndex("CategName")));
             }
@@ -7420,6 +7420,21 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         }
         return list;
     }
+    public ArrayList<String> getGSTR2_CDN_gstinlist(String startDate, String endDate) {
+        String selectQuery = "SELECT DISTINCT GSTIN FROM CreditDebitInward WHERE  " + KEY_NoteDate +
+                " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);
+        ArrayList<String> list = new ArrayList<>();
+        while(cursor!=null && cursor.moveToNext())
+        {
+            String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+            if(gstin==null)
+                continue;
+            else
+                list.add(gstin);
+        }
+        return list;
+    }
     public Cursor getGSTR2_CDN_forgstin(String startDate, String endDate, String gstin) {
         String selectQuery = "SELECT * FROM CreditDebitInward WHERE  " + KEY_GSTIN + " = '" + gstin +
                 "' and " + KEY_NoteDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
@@ -7457,12 +7472,12 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         }
         return list;
     }
-    public Cursor getGSTR2_b2b_A_List(String startDate,String endDate ) {
+    public Cursor getGSTR2_b2b_A_unregisteredSupplierList(String startDate,String endDate ) {
         Cursor result = null;
-        String queryString = "Select * FROM " + TBL_PURCHASEORDER + " WHERE " +
+        String queryString = "Select * FROM " + TBL_GSTR2_AMEND + " WHERE " +
                 /*KEY_PurchaseOrderNo+" LIKE '"+purchaseorder+"' AND "+*/
                 KEY_SupplierType+" LIKE 'UnRegistered' AND "+
-                KEY_InvoiceDate+" BETWEEN '"+startDate+"' AND '"+endDate+"' AND "+KEY_isGoodinward+" LIKE '1'";
+                KEY_InvoiceDate+" BETWEEN '"+startDate+"' AND '"+endDate+"'";
         result = dbFNB.rawQuery(queryString, null);
         return result;
     }

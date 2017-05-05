@@ -1480,7 +1480,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
         if(!spnrDepartment.getSelectedItem().toString().equalsIgnoreCase("Select"))
             iDeptCode = dbItems.getDepartmentIdByName(labelsDept.get(spnrDepartment.getSelectedItemPosition()));
-        if(!spnrCategory.getSelectedItem().toString().equalsIgnoreCase("Select department"))
+        if(!spnrCategory.getSelectedItem().toString().equalsIgnoreCase("Select department first"))
             iCategCode = dbItems.getCategoryIdByName(String.valueOf(spnrCategory.getSelectedItem()));
         iKitchenCode = spnrKitchen.getSelectedItemPosition() ;
 
@@ -2027,7 +2027,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         if (spnrDepartment.getSelectedItem().toString().equals("Select"))
         {
             labelsCateg = new ArrayList<String>();
-            labelsCateg.add("Select department");
+            labelsCateg.add("Select department first");
         }
         else
         {

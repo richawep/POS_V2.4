@@ -754,7 +754,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="*Compulsory Fields\n**Please note any value entered is taken upto 2 digits after decimal"
+                            android:text="*To enter/update quantity , kindly goto INWARD STOCK page \n**Please note any value entered is taken upto 2 digits after decimal"
                             android:layout_gravity="bottom"
                             android:textColor="@color/red"/>
 

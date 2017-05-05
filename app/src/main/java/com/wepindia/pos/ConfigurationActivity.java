@@ -113,12 +113,12 @@ public class ConfigurationActivity extends WepBaseActivity{
         reportFragment1.setArguments(bundle4);
         adapter.addFragment(reportFragment4, "Payment/Receipt");
 
-        Bundle bundle5=new Bundle();
+       /* Bundle bundle5=new Bundle();
         bundle5.putString("REPORT_TYPE", "5");
         bundle5.putString("USER_NAME", strUserName);
         FragmentTax reportFragment5 = new FragmentTax();
         reportFragment5.setArguments(bundle5);
-        adapter.addFragment(reportFragment5, "Tax");
+        adapter.addFragment(reportFragment5, "Tax");*/
 
         Bundle bundle6=new Bundle();
         bundle6.putString("REPORT_TYPE", "6");
