@@ -21,6 +21,7 @@ import android.util.SparseBooleanArray;
 import android.widget.Toast;
 
 import com.wep.common.app.gst.GSTR1_CDN_Details;
+import com.wep.common.app.gst.GSTR1_HSN_Details;
 import com.wep.common.app.gst.Model_reconcile;
 import com.wep.common.app.gst.get.GetGSTR1CounterPartySummary;
 import com.wep.common.app.gst.get.GetGSTR1SecSummary;
@@ -1429,7 +1430,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HSNCode, 1);
         cvDbValues.put(KEY_ReverseCharge, 0);
         cvDbValues.put(KEY_GSTIN_OUT, 0);
-        cvDbValues.put(KEY_POS_OUT, 0);
+        cvDbValues.put(KEY_POS_OUT, 1);
         cvDbValues.put(KEY_HSNCode_OUT, 1);
         cvDbValues.put(KEY_ReverseCharge_OUT, 0);
         cvDbValues.put(KEY_GSTEnable, 0);
@@ -1984,7 +1985,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String b2c = "B2C";
         /*String selectQuery = "SELECT * FROM "+ TBL_OUTWARD_SUPPLY_LEDGER + " WHERE BusinessType LIKE '"+b2c+"'"; // AND GrandTotal > 250000 AND IGSTRate > 0";*/
         String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE " + KEY_InvoiceDate + " BETWEEN '" + startDate +
-                "' AND '" + endDate + "' AND " + KEY_BusinessType + " LIKE 'B2C' ";
+                "' AND '" + endDate + "' AND " + KEY_BusinessType + " LIKE 'B2C' AND BillStatus = 1";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -7419,6 +7420,46 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
+    public Cursor getInvoices_outward(String startDate, String endDate)
+    {
+        String selectQuery = "Select * from "+TBL_OUTWARD_SUPPLY_ITEMS_DETAILS+" WHERE BillStatus =1 AND "+KEY_InvoiceDate+
+                " BETWEEN '"+startDate+"' AND '"+endDate+"'";
+        return dbFNB.rawQuery(selectQuery, null);
+    }
+
+    public ArrayList<String> gethsn_list_for_invoices(Cursor cursor) {
+        ArrayList<String > list = new ArrayList<>();
+        while (cursor!=null && cursor.moveToNext())
+        {
+            String invNo = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+            String invDt = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+
+            String selectQuery = "SELECT  HSNCode FROM "+TBL_OUTWARD_SUPPLY_LEDGER+" WHERE  "
+                    + KEY_InvoiceDate + " LIKE '" + invDt + "' AND " + KEY_InvoiceNo +" LIKE '"+invNo+"'";
+            Cursor result = dbFNB.rawQuery(selectQuery, null);
+            while (result!=null && result.moveToNext())
+            {
+                String hsn_new = result.getString(result.getColumnIndex("HSNCode"));
+                if(!list.contains(hsn_new))
+                {
+                    list.add(hsn_new);
+                }
+            }
+        }
+        return list;
+    }
+
+    public Cursor gethsn(String startDate , String endDate, String hsn , String BusinessType)
+    {
+        String selectQuery = "Select OutwardSuppyItemsDetails.POS, OutwardSupplyLedger.* from "+TBL_OUTWARD_SUPPLY_LEDGER+", " +TBL_OUTWARD_SUPPLY_ITEMS_DETAILS+" Where  OutwardSupplyLedger."+KEY_InvoiceDate+
+                " BETWEEN '"+startDate+"' AND '"+endDate+"' AND OutwardSupplyLedger."+KEY_HSNCode+" LIKE '"+hsn+"' AND OutwardSupplyLedger."+
+                KEY_BusinessType+" LIKE '" +BusinessType+"' "+
+                "AND "+TBL_OUTWARD_SUPPLY_ITEMS_DETAILS+".InvoiceNo = OutwardSupplyLedger.InvoiceNo AND " +
+                "OutwardSuppyItemsDetails.InvoiceDate =OutwardSupplyLedger.InvoiceDate  AND OutwardSuppyItemsDetails.BillStatus = 1 ";
+        return dbFNB.rawQuery(selectQuery, null);
+    }
+
+
     public ArrayList<String> getGSTR1_CDN_gstinlist(String startDate, String endDate) {
         String selectQuery = "SELECT DISTINCT GSTIN FROM CreditDebitOutward WHERE  " + KEY_NoteDate +
                 " BETWEEN '" + startDate + "' AND '" + endDate + "'";

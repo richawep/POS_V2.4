@@ -2217,15 +2217,19 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             Log.d("InsertBillItems", "custGstin :" + custGstin);
 
             // cust StateCode
-            String str = spnr_pos.getSelectedItem().toString();
-            int length = str.length();
-            String custStateCode = "";
-            if (length > 0) {
-                custStateCode = str.substring(length - 2, length);
+            if (chk_interstate.isChecked()) {
+                String str = spnr_pos.getSelectedItem().toString();
+                int length = str.length();
+                String sub = "";
+                if (length > 0) {
+                    sub = str.substring(length - 2, length);
+                }
+                objBillItem.setCustStateCode(sub);
+                Log.d("InsertBillItems", "CustStateCode :" + sub+" - "+str);
+            } else {
+                objBillItem.setCustStateCode("29");// to be retrieved from database later -- richa to do
+                Log.d("InsertBillItems", "CustStateCode :"+objBillItem.getCustStateCode());
             }
-            objBillItem.setCustStateCode(custStateCode);
-            Log.d("InsertBillItems", "CustStateCode :" + custStateCode);
-
 
             // BusinessType
             if (etCustGSTIN.getText().toString().equals("")) {

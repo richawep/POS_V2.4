@@ -18,6 +18,7 @@ public class GSTR1Data {
     private ArrayList<GSTR1B2CSData> b2cs;
     private ArrayList<GSTR1B2CSAData> b2csa;
     private ArrayList<GSTR1_CDN_Data> cdn;
+    private ArrayList<GSTR1_HSN_Data> hsn;
 
     public GSTR1Data() {
     }
@@ -30,7 +31,8 @@ public class GSTR1Data {
         this.cdn = cdn;
     }
 
-    public GSTR1Data(String gstin, String fp, double gt, ArrayList<GSTR1_B2B_Data> b2b, ArrayList<GSTR1_B2B_A_Data> b2ba, ArrayList<GSTR1_B2CL_Data> b2cl, ArrayList<GSTR1_B2CL_A_Data> b2cla, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1_CDN_Data> cdn) {
+
+    public GSTR1Data(String gstin, String fp, double gt, ArrayList<GSTR1_B2B_Data> b2b, ArrayList<GSTR1_B2B_A_Data> b2ba, ArrayList<GSTR1_B2CL_Data> b2cl, ArrayList<GSTR1_B2CL_A_Data> b2cla, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1_CDN_Data> cdn, ArrayList<GSTR1_HSN_Data> hsn) {
         this.gstin = gstin;
         this.fp = fp;
         this.gt = gt;
@@ -41,6 +43,31 @@ public class GSTR1Data {
         this.b2cs = b2cs;
         this.b2csa = b2csa;
         this.cdn = cdn;
+        this.hsn = hsn;
+    }
+
+    public ArrayList<GSTR1_B2CL_Data> getB2cl() {
+        return b2cl;
+    }
+
+    public void setB2cl(ArrayList<GSTR1_B2CL_Data> b2cl) {
+        this.b2cl = b2cl;
+    }
+
+    public ArrayList<GSTR1_B2CL_A_Data> getB2cla() {
+        return b2cla;
+    }
+
+    public void setB2cla(ArrayList<GSTR1_B2CL_A_Data> b2cla) {
+        this.b2cla = b2cla;
+    }
+
+    public ArrayList<GSTR1_HSN_Data> getHsn() {
+        return hsn;
+    }
+
+    public void setHsn(ArrayList<GSTR1_HSN_Data> hsn) {
+        this.hsn = hsn;
     }
 
     public ArrayList<GSTR1_B2B_A_Data> getB2ba() {

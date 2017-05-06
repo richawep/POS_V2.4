@@ -70,8 +70,8 @@ public class TabbedCreditDebitNote extends WepBaseActivity {
         adapter.addFragment(reportFragment2, "Outward C/D Note");
 
 
-        Fragment_Inward_Credit_Debit_Note reportFragment1 = new Fragment_Inward_Credit_Debit_Note();
-        adapter.addFragment(reportFragment1, "Inward C/D Note ");
+        /*Fragment_Inward_Credit_Debit_Note reportFragment1 = new Fragment_Inward_Credit_Debit_Note();
+        adapter.addFragment(reportFragment1, "Inward C/D Note ");*/
 
         viewPager.setAdapter(adapter);
     }
