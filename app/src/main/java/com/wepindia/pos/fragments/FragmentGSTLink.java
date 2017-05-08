@@ -205,10 +205,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
             });
             getGSTR1Summary.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    onClickGetGstr1Summary(v);
-                }
-            });
+                public void onClick(View v) { onClickGetGstr1Summary(v); }});
             postGSTR1A.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

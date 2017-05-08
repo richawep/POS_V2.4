@@ -1178,7 +1178,7 @@ public class ReportHelper{
 			TaxableValue.setText("Taxable Value");
 
 			TextView GSTRate = new TextView(activityContext);
-			GSTRate.setWidth(65);
+			GSTRate.setWidth(75);
 			GSTRate.setTextSize(15);
 			GSTRate.setTextColor(Color.WHITE);
 			GSTRate.setText("GST Rate");
@@ -1189,7 +1189,7 @@ public class ReportHelper{
 			IGSTRate.setTextColor(Color.WHITE);
 			IGSTRate.setText("IGST Rate");*/
 			TextView IGSTAmt = new TextView(activityContext);
-			IGSTAmt.setWidth(70);
+			IGSTAmt.setWidth(75);
 			IGSTAmt.setTextSize(15);
 			IGSTAmt.setTextColor(Color.WHITE);
 			IGSTAmt.setText("IGST Amt");
@@ -1201,7 +1201,7 @@ public class ReportHelper{
 			CGSTRate.setText("CGST Rate");*/
 
 			TextView CGSTAmt = new TextView(activityContext);
-			CGSTAmt.setWidth(70);
+			CGSTAmt.setWidth(75);
 			CGSTAmt.setTextSize(15);
 			CGSTAmt.setTextColor(Color.WHITE);
 			CGSTAmt.setText("CGST Amt");
@@ -1213,7 +1213,7 @@ public class ReportHelper{
 			SGSTRate.setText("SGST Rate");*/
 
 			TextView SGSTAmt = new TextView(activityContext);
-			SGSTAmt.setWidth(70);
+			SGSTAmt.setWidth(75);
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setTextColor(Color.WHITE);
 			SGSTAmt.setText("SGST Amt");
@@ -1228,7 +1228,7 @@ public class ReportHelper{
 			POS.setWidth(50);
 			POS.setTextSize(15);
 			POS.setTextColor(Color.WHITE);
-			POS.setText("POS");
+			POS.setText("CustStateCode");
 
 			TextView RevCh = new TextView(activityContext);
 			RevCh.setWidth(50);

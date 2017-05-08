@@ -6098,10 +6098,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
     void GSTR1_B2B()
     {
-        String GSTEnable="0", POSEnable="0",HSNEnable="0",ReverseChargeEnabe="0";
+        String GSTEnable="1", POSEnable="1",HSNEnable="1",ReverseChargeEnabe="0";
         try
         {
-            Cursor billsettingcursor = dbReport.getBillSetting();
+            /*Cursor billsettingcursor = dbReport.getBillSetting();
             if (billsettingcursor!=null && billsettingcursor.moveToFirst())
             {
                 GSTEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("GSTEnable"));
@@ -6127,7 +6127,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         ReverseChargeEnabe="0";
                     }
                 }
-            }
+            }*/
            /* String StartDate = txtReportDateStart.getText().toString();
             String EndDate = txtReportDateEnd.getText().toString();*/
             Cursor cursor = dbReport.getOutwardB2b(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
