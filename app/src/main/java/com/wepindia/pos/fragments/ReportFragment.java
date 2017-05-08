@@ -542,16 +542,19 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     GSTR1_B2B();
                     break;
                 case 27: // GSTR1-B2BA
+                    GSTR1_B2BA();
                     break;
                 case 28:// GSTR1-B2C
                     GSTR1_B2Cs();
                     break;
                 case 29:// GSTR1-B2ClA
+
                     break;
                 case 30:// GSTR1-B2Cl
                     GSTR1_B2Cl();
                     break;
-                case 31:// GSTR1-B2CsA
+                case 31:// GSTR1-B2ClA
+                    GSTR1_B2CLA();
                     break;
                 case 32: // GSTR2-B2B
                     GSTR2_registered();
@@ -7094,6 +7097,258 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     }
 
 
+
+    void GSTR1_B2BA()
+    {
+        try {
+            String startDate = String.valueOf(startDate_date.getTime());
+            String endDate = String.valueOf(endDate_date.getTime());
+            int i =1;
+            ArrayList<String > gstinList = dbReport.getGSTR1B2B_A_gstinList(startDate,endDate);
+            if(gstinList.size() ==0)
+            {
+                MsgBox.Show("","No records for B2BA");
+                return ;
+            }
+            for (String gstin_str  : gstinList )
+            {
+                Cursor cursor = dbReport.getGSTR1B2b_A_for_gstin(startDate,endDate,gstin_str);
+                ArrayList<String> ammendRecords = new ArrayList<>();
+
+                //ArrayList<GSTR1_B2B_A_invoices> invoiceList = new ArrayList<>();
+                while (cursor!=null && cursor.moveToNext()) {
+                    TableRow rowcursor = new TableRow(myContext);
+                    rowcursor.setLayoutParams(new TableRow.LayoutParams
+                            (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                    String str = cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo"));
+                    str += cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
+                    str += cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                    str += cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                    if (ammendRecords != null && !(ammendRecords.contains(str)))
+                        ammendRecords.add(str);
+                    else
+                        continue;
+
+                    //item details
+                    String invno = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                    String invdt = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                    String invno_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo"));
+                    String invdt_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
+                    String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+                    Cursor cursor_b2bitems_for_inv = dbReport.getitems_b2ba(invno_ori, invdt_ori, invno, invdt, gstin);
+
+                    while (cursor_b2bitems_for_inv != null && cursor_b2bitems_for_inv.moveToNext()) {
+
+                        String date_str = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                        Date newD = new Date(Long.parseLong(date_str));
+                        String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
+
+                        String date_str_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
+                        Date newD_ori = new Date(Long.parseLong(date_str_ori));
+                        String newDate_ori = new SimpleDateFormat("dd-MM-yyyy").format(newD_ori);
+
+                        TextView Sno = new TextView(myContext);
+                        Sno.setText(String.valueOf(i++));
+
+                        TextView GSTIN = new TextView(myContext);
+                        GSTIN.setText(gstin);
+
+                        TextView OriginalInvNo = new TextView(myContext);
+                        OriginalInvNo.setText(invno_ori);
+
+                        TextView OriginalDate = new TextView(myContext);
+                        OriginalDate.setText(newDate_ori);
+
+                        TextView InvNo = new TextView(myContext);
+                        InvNo.setText(invno);
+
+                        TextView Date = new TextView(myContext);
+                        Date.setText(newDate);
+
+                        TextView SupplyType = new TextView(myContext);
+                        SupplyType.setText(cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("SupplyType")));
+
+                        TextView HSNCode = new TextView(myContext);
+                        HSNCode.setText(cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("HSNCode")));
+
+//                          TextView Rate = new TextView (myContext);
+//                        Rate.setText(String.format("%.2f",cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("Rate"))));
+
+                        TextView taxVal = new TextView(myContext);
+                        taxVal.setText(String.format("%.2f", cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("TaxableValue"))));
+
+                        TextView IRate = new TextView(myContext);
+                        IRate.setText(String.format("%.2f", cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate"))));
+
+                        TextView IAmt = new TextView(myContext);
+                        IAmt.setText(String.format("%.2f", cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTAmount"))));
+
+                        TextView CRate = new TextView(myContext);
+                        CRate.setText(String.format("%.2f", cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTRate"))));
+
+                        TextView CAmt = new TextView(myContext);
+                        CAmt.setText(String.format("%.2f", cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTAmount"))));
+
+                        TextView SRate = new TextView(myContext);
+                        SRate.setText(String.format("%.2f", cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTRate"))));
+
+                        TextView SAmt = new TextView(myContext);
+                        SAmt.setText(String.format("%.2f", cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTAmount"))));
+
+                        rowcursor.addView(Sno);
+                        rowcursor.addView(OriginalInvNo);
+                        rowcursor.addView(OriginalDate);
+                        rowcursor.addView(GSTIN);
+                        rowcursor.addView(InvNo);
+                        rowcursor.addView(Date);
+                        rowcursor.addView(SupplyType);
+                        rowcursor.addView(HSNCode);
+                        //rowcursor.addView(Value);
+                        rowcursor.addView(taxVal);
+                        rowcursor.addView(IAmt);
+                        //rowcursor.addView(CRate);
+                        rowcursor.addView(CAmt);
+                        //rowcursor.addView(SRate);
+                        rowcursor.addView(SAmt);
+
+                        tblReport.addView(rowcursor);
+                    }
+
+                }
+            }
+        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+    }
+
+
+    void GSTR1_B2CLA()
+    {
+        try
+        {
+            String startDate_milli = String.valueOf(startDate_date.getTime());
+            String endDate_milli = String.valueOf(endDate_date.getTime());
+            ArrayList<String> stateCd_List_ammend= dbReport.getGSTR1B2CL_stateCodeList_ammend(startDate_milli,endDate_milli);
+            int i =0;
+            for (String state_cd : stateCd_List_ammend )
+            {
+                Cursor cursor_billDetail = dbReport.getGSTR1B2CL_stateCodeCursor_ammend(startDate_milli,endDate_milli,state_cd);
+                if(cursor_billDetail ==null || !cursor_billDetail.moveToFirst())
+                {
+                    //MsgBox.Show("","No records for B2CLA");
+                    return ;
+                }
+
+                String custStateCd_temp="";
+                ArrayList<String> alreadyAddedAmmendBill = new ArrayList<>();
+                do {
+                    String invoiceNo = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("InvoiceNo"));
+                    String invoiceDate = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("InvoiceDate"));
+                    String invoiceNo_ori = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("OriginalInvoiceNo"));
+                    String invoiceDate_ori = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("OriginalInvoiceDate"));
+                    String custName = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("CustName"));
+                    String provisionalAssess = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("ProvisionalAssess"));
+                    String etin = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("EcommerceGSTIN"));
+                    double taxableValue = cursor_billDetail.getDouble(cursor_billDetail.getColumnIndex("TaxableValue"));
+                    String pos_temp = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("POS"));
+                    custStateCd_temp = cursor_billDetail.getString(cursor_billDetail.getColumnIndex("CustStateCode"));
+
+                    if (provisionalAssess == null)
+                        provisionalAssess = "N";
+                    String str = invoiceNo + invoiceDate + invoiceNo_ori + invoiceDate_ori + pos_temp + custStateCd_temp;
+                    if (!alreadyAddedAmmendBill.contains(str))
+                        alreadyAddedAmmendBill.add(str);
+                    else
+                        continue;
+
+                    if (pos_temp.equals(custStateCd_temp))
+                        continue;
+
+
+                    Cursor cursor_b2clitems_Ammned_for_inv = dbReport.getGSTR1B2CL_invoices_ammend(invoiceNo, invoiceDate,
+                            custStateCd_temp, custName, pos_temp);
+                    if (cursor_b2clitems_Ammned_for_inv != null && cursor_b2clitems_Ammned_for_inv.moveToFirst()) {
+                        do {//item details
+                            TableRow rowcursor = new TableRow(myContext);
+                            rowcursor.setLayoutParams(new TableRow.LayoutParams
+                                    (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                            Date newD = new Date(Long.parseLong(invoiceDate));
+                            String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
+                            Date newD_ori = new Date(Long.parseLong(invoiceDate_ori));
+                            String newDate_ori = new SimpleDateFormat("dd-MM-yyyy").format(newD_ori);
+
+
+                            TextView Sno = new TextView(myContext);
+                            Sno.setText(Integer.toString(i++));
+
+                            TextView InvNo_ori = new TextView(myContext);
+                            InvNo_ori.setText(invoiceNo_ori);
+
+                            TextView inv = new TextView(myContext);
+                            inv.setText(invoiceNo);
+
+                            TextView inv_dt_ori = new TextView(myContext);
+                            inv_dt_ori.setText(newDate_ori);
+
+                            TextView invdt = new TextView(myContext);
+                            invdt.setText(newDate);
+
+                            TextView supplyType = new TextView(myContext);
+                            supplyType.setText(cursor_b2clitems_Ammned_for_inv.getString(cursor_b2clitems_Ammned_for_inv.getColumnIndex("SupplyType")));
+
+                            TextView HSNCode = new TextView(myContext);
+                            HSNCode.setText(cursor_b2clitems_Ammned_for_inv.getString(cursor_b2clitems_Ammned_for_inv.getColumnIndex("HSNCode")));
+
+                            TextView taxVal = new TextView(myContext);
+                            taxVal.setText(String.format("%.2f", cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("TaxableValue"))));
+
+                            TextView IRate = new TextView(myContext);
+                            IRate.setText(String.format("%.2f", cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("IGSTRate"))));
+
+                            TextView IAmt = new TextView(myContext);
+                            IAmt.setText(String.format("%.2f", cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("IGSTAmount"))));
+
+
+                            TextView custStateCode = new TextView(myContext);
+                            custStateCode.setText(cursor_b2clitems_Ammned_for_inv.getString(cursor_b2clitems_Ammned_for_inv.getColumnIndex("CustStateCode")));
+
+                            TextView CustName = new TextView(myContext);
+                            CustName.setText(cursor_b2clitems_Ammned_for_inv.getString(cursor_b2clitems_Ammned_for_inv.getColumnIndex("CustName")));
+
+                            rowcursor.addView(Sno);
+                            rowcursor.addView(InvNo_ori);
+                            rowcursor.addView(inv_dt_ori);
+                            rowcursor.addView(custStateCode);
+                            rowcursor.addView(CustName);
+                           // rowcursor.addView(GSTIN);
+                            rowcursor.addView(inv);
+                            rowcursor.addView(invdt);
+                            rowcursor.addView(supplyType);
+                            rowcursor.addView(HSNCode);
+                            //rowcursor.addView(Value);
+                            rowcursor.addView(taxVal);
+                            rowcursor.addView(IRate);
+                            rowcursor.addView(IAmt);
+                            //rowcursor.addView(CRate);
+                            //rowcursor.addView(CAmt);
+                            //rowcursor.addView(SRate);
+                            //rowcursor.addView(SAmt);
+
+                            tblReport.addView(rowcursor);
+
+                        } while (cursor_b2clitems_Ammned_for_inv.moveToNext());
+                    }
+
+                }while (cursor_billDetail.moveToNext());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
+
+    }
     void GSTR1_B2Cs()
     {
         String GSTEnable="1", POSEnable="1",HSNEnable="1",ReverseChargeEnabe="0";
