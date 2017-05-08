@@ -1926,7 +1926,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String b2b = "B2B";
 
         String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE " + KEY_InvoiceDate + " BETWEEN '" + StartDate +
-                "' AND '" + EndDate + "' AND " + KEY_BusinessType + " LIKE 'B2B'";
+                "' AND '" + EndDate + "' AND " + KEY_BusinessType + " LIKE 'B2B' AND BillStatus =1"+
+                " order by GSTIN asc";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -1959,7 +1960,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String b2c = "B2C";
         /*String selectQuery = "SELECT * FROM "+ TBL_OUTWARD_SUPPLY_LEDGER + " WHERE BusinessType LIKE '"+b2c+"'"; // AND GrandTotal > 250000 AND IGSTRate > 0";*/
         String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE " + KEY_InvoiceDate + " BETWEEN '" + startDate +
-                "' AND '" + endDate + "' AND " + KEY_BusinessType + " LIKE 'B2C' AND " + KEY_SubTotal + " > 250000 ";
+                "' AND '" + endDate + "' AND " + KEY_BusinessType + " LIKE 'B2C' AND " + KEY_SubTotal + " > 250000 "
+                +" AND BillStatus =1 Order By CustStateCode asc";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -1968,6 +1970,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //No = String.valueOf(160005);
         String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " WHERE " + KEY_InvoiceNo + " LIKE '" + No + "' AND " +
                 KEY_InvoiceDate + " LIKE '" + Date + "' AND " + KEY_CustName + "  LIKE '" + custname_str + "' AND " + KEY_CustStateCode + " LIKE '" +
+                statecode_str + "'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+    public Cursor getitems_b2cl_withoutCustName(String No, String Date,  String statecode_str) {
+        //No = String.valueOf(160005);
+        String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " WHERE " + KEY_InvoiceNo + " LIKE '" + No + "' AND " +
+                KEY_InvoiceDate + " LIKE '" + Date + "' AND " +  KEY_CustStateCode + " LIKE '" +
                 statecode_str + "'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
@@ -1985,7 +1995,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String b2c = "B2C";
         /*String selectQuery = "SELECT * FROM "+ TBL_OUTWARD_SUPPLY_LEDGER + " WHERE BusinessType LIKE '"+b2c+"'"; // AND GrandTotal > 250000 AND IGSTRate > 0";*/
         String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + " WHERE " + KEY_InvoiceDate + " BETWEEN '" + startDate +
-                "' AND '" + endDate + "' AND " + KEY_BusinessType + " LIKE 'B2C' AND BillStatus = 1";
+                "' AND '" + endDate + "' AND " + KEY_BusinessType + " LIKE 'B2C' AND BillStatus = 1 ";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -6847,7 +6857,8 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     public Cursor getReportsNameCursor(String ReportsType) {
 
         return dbFNB.rawQuery("Select ReportsId as _id, ReportsName FROM ReportsMaster where ReportsType=" +
-                ReportsType + " AND ReportsName not in ('Service Tax Report','Kitchen wise Report') order by ReportsName asc", null);
+                ReportsType + " AND ReportsName not in ('Service Tax Report','Kitchen wise Report'," +
+                " 'GSTR1-1A Validation','GSTR2-2A Validation','Modified GSTR2A') order by ReportsName asc", null);
     }
 
     // Getting Values for PAYBILL

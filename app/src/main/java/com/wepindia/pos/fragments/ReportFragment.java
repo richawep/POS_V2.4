@@ -6313,24 +6313,18 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         rowcursor.addView(InvoiceNo);
                         rowcursor.addView(InvoiceDate);
                         rowcursor.addView(SupplyType);
-                        if (HSNEnable.equals("1"))
-                        {
-                            rowcursor.addView(HSNCode);
-                        }
+                        rowcursor.addView(HSNCode);
                         rowcursor.addView(Value);
                         rowcursor.addView(Quantity);
                         rowcursor.addView(TaxableValue);
-                        rowcursor.addView(GSTRate);
+                        //rowcursor.addView(GSTRate);
                         rowcursor.addView(IGSTAmount);
                         //rowcursor.addView(CGSTRate);
                         rowcursor.addView(CGSTAmount);
                         //rowcursor.addView(SGSTRate);
                         rowcursor.addView(SGSTAmount);
                         rowcursor.addView(SubTotal);
-                        if (POSEnable.equals("1"))
-                        {
-                            rowcursor.addView(Pos);
-                        }
+                        rowcursor.addView(Pos);
                         if (ReverseChargeEnabe.equals("1"))
                         {
                             rowcursor.addView(RevCh);
@@ -6617,22 +6611,16 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowcursor.addView(InvoiceNo);
                     rowcursor.addView(InvoiceDate);
                     rowcursor.addView(SupplyType);
-                    if (HSNEnable.equals("1"))
-                    {
-                        rowcursor.addView(HSNCode);
-                    }
+                    rowcursor.addView(HSNCode);
                     rowcursor.addView(Value);
                     rowcursor.addView(Quantity);
                     rowcursor.addView(TaxableValue);
-                    rowcursor.addView(GSTRate);
+                    //rowcursor.addView(GSTRate);
                     rowcursor.addView(IGSTAmount);
                     rowcursor.addView(CGSTAmount);
                     rowcursor.addView(SGSTAmount);
                     rowcursor.addView(SubTotal);
-                    if (POSEnable.equals("1"))
-                    {
-                        rowcursor.addView(Pos);
-                    }
+                    rowcursor.addView(Pos);
                     if (ReverseChargeEnabe.equals("1"))
                     {
                         rowcursor.addView(RevCh);
@@ -6673,36 +6661,36 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
     void GSTR1_B2Cl()
     {
-        String GSTEnable="0", POSEnable="0",HSNEnable="0",ReverseChargeEnabe="0";
+        String GSTEnable="1", POSEnable="1",HSNEnable="1",ReverseChargeEnabe="0";
         try
         {
-            Cursor billsettingcursor = dbReport.getBillSetting();
-            if (billsettingcursor!=null && billsettingcursor.moveToFirst())
-            {
-                GSTEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("GSTEnable"));
-                if (GSTEnable == null )
-                {
-                    GSTEnable="0";
-                }
-                else if (GSTEnable.equals("1"))
-                {
-                    HSNEnable= billsettingcursor.getString(billsettingcursor.getColumnIndex("HSNCode_Out"));
-                    if (HSNEnable==null)
-                    {
-                        HSNEnable="0";
-                    }
-                    POSEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("POS_Out"));
-                    if (POSEnable== null)
-                    {
-                        POSEnable= "0";
-                    }
-                    ReverseChargeEnabe = billsettingcursor.getString(billsettingcursor.getColumnIndex("ReverseCharge_Out"));
-                    if (ReverseChargeEnabe == null)
-                    {
-                        ReverseChargeEnabe="0";
-                    }
-                }
-            }
+//            Cursor billsettingcursor = dbReport.getBillSetting();
+//            if (billsettingcursor!=null && billsettingcursor.moveToFirst())
+//            {
+//                GSTEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("GSTEnable"));
+//                if (GSTEnable == null )
+//                {
+//                    GSTEnable="0";
+//                }
+//                else if (GSTEnable.equals("1"))
+//                {
+//                    HSNEnable= billsettingcursor.getString(billsettingcursor.getColumnIndex("HSNCode_Out"));
+//                    if (HSNEnable==null)
+//                    {
+//                        HSNEnable="0";
+//                    }
+//                    POSEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("POS_Out"));
+//                    if (POSEnable== null)
+//                    {
+//                        POSEnable= "0";
+//                    }
+//                    ReverseChargeEnabe = billsettingcursor.getString(billsettingcursor.getColumnIndex("ReverseCharge_Out"));
+//                    if (ReverseChargeEnabe == null)
+//                    {
+//                        ReverseChargeEnabe="0";
+//                    }
+//                }
+         //   }
             /*String StartDate = txtReportDateStart.getText().toString();
             String EndDate = txtReportDateEnd.getText().toString();*/
             Cursor cursor = dbReport.getOutwardB2Cl(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
@@ -6724,7 +6712,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     do {
                         String POS_str = cursor.getString(cursor.getColumnIndex("POS"));
-                        if (POS_str.equals("")== false) { // for interstate only + >2.5l
+                        String custStateCode_str = cursor.getString(cursor.getColumnIndex("CustStateCode"));
+                        if (POS_str.equals("")== false && !POS_str.equals(custStateCode_str))  { // for interstate only + >2.5l
                             rowcursor = new TableRow(myContext);
                             rowcursor.setLayoutParams(new TableRow.LayoutParams
                                     (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -6811,7 +6800,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                             IGSTRate = new TextView(myContext);
-                            IGSTRate.setText(cursor.getString(cursor.getColumnIndex("IGSTRate")));
+                            //IGSTRate.setText(cursor.getString(cursor.getColumnIndex("IGSTRate")));
                             IGSTRate.setLeft(10);
                             IGSTRate.setWidth(60);
                             IGSTRate.setTextSize(12);
@@ -6853,18 +6842,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             rowcursor.addView(InvoiceNo);
                             rowcursor.addView(InvoiceDate);
                             rowcursor.addView(SupplyType);
-                            if (HSNEnable.equals("1")) {
-                                rowcursor.addView(HSNCode);
-                            }
+                            rowcursor.addView(HSNCode);
                             rowcursor.addView(Value);
                             rowcursor.addView(Quantity);
                             rowcursor.addView(TaxableValue);
                             rowcursor.addView(IGSTRate);
                             rowcursor.addView(IGSTAmount);
-                            rowcursor.addView(SubTotal);
-                            if (POSEnable.equals("1")) {
-                                rowcursor.addView(Pos);
-                            }
+                            //rowcursor.addView(SubTotal);
+                            rowcursor.addView(Pos);
                             if (ReverseChargeEnabe.equals("1")) {
                                 rowcursor.addView(ProAss);
                             }
@@ -6885,10 +6870,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                             //tblReport.addView(rowcursor, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                             //add a new line to the TableLayout:
-                            String custname_str = CustName.getText().toString();
-                            String statecode_str = CustStateCode.getText().toString();
+                            String custname_str = cursor.getString(cursor.getColumnIndex("CustName"));
+                            //String statecode_str = CustStateCode.getText().toString();
 
-                            addb2cl_items(no, dateString, custname_str, statecode_str, HSNEnable, POSEnable, ReverseChargeEnabe);
+                            addb2cl_items(no, dateInMillis, custname_str, custStateCode_str, HSNEnable, POSEnable, ReverseChargeEnabe);
                             View v11 = new View(getActivity());
                             v11.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 2));
                             v11.setBackgroundColor(getResources().getColor(R.color.orange));
@@ -6918,7 +6903,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         //String.replaceAll("[\n\r]", "");
 
         String count_str[]= {"i","ii","iii","iv","v","vi","vii","viii","ix","x","xi","xii","xiii","xiv","xv","xvi","xvii","xviii","xix","xx"};
-        Cursor cursor = dbReport.getitems_b2cl(No, Date, custname_str,statecode_str);
+        Cursor cursor = null;
+        /*if(custname_str!=null && !custname_str.equals(""))
+             cursor = dbReport.getitems_b2cl(No, Date, custname_str,statecode_str);
+        else
+            cursor = dbReport.getitems_b2cl_withoutCustName(No, Date,statecode_str);*/
+        cursor = dbReport.getitems_b2cl(No, Date, custname_str,statecode_str);
         if (cursor == null)
         {
             //MsgBox = new AlertDialog.Builder(myContext);
@@ -7028,7 +7018,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                         IGSTRate = new TextView(myContext);
-                        IGSTRate.setText(cursor.getString(cursor.getColumnIndex("IGSTRate")));
+                        IGSTRate.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("IGSTRate"))));
                         IGSTRate.setLeft(10);
                         IGSTRate.setWidth(60);
                         IGSTRate.setTextSize(12);
@@ -7036,7 +7026,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                         IGSTAmount = new TextView(myContext);
-                        IGSTAmount.setText(cursor.getString(cursor.getColumnIndex("IGSTAmount")));
+                        IGSTAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));
                         IGSTAmount.setLeft(10);
                         IGSTAmount.setWidth(60);
                         IGSTAmount.setTextSize(12);
@@ -7072,20 +7062,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         rowcursor.addView(InvoiceNo);
                         rowcursor.addView(InvoiceDate);
                         rowcursor.addView(SupplyType);
-                        if (HSNEnable.equals("1"))
-                        {
-                            rowcursor.addView(HSNCode);
-                        }
+                        rowcursor.addView(HSNCode);
                         rowcursor.addView(Value);
                         rowcursor.addView(Quantity);
                         rowcursor.addView(TaxableValue);
                         rowcursor.addView(IGSTRate);
                         rowcursor.addView(IGSTAmount);
-                        rowcursor.addView(SubTotal);
-                        if (POSEnable.equals("1"))
-                        {
-                            rowcursor.addView(Pos);
-                        }
+                        //rowcursor.addView(SubTotal);
+                        rowcursor.addView(Pos);
                         if (ReverseChargeEnabe.equals("1"))
                         {
                             rowcursor.addView(ProAss);
@@ -7112,37 +7096,37 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
     void GSTR1_B2Cs()
     {
-        String GSTEnable="0", POSEnable="0",HSNEnable="0",ReverseChargeEnabe="0";
+        String GSTEnable="1", POSEnable="1",HSNEnable="1",ReverseChargeEnabe="0";
         ArrayList<B2Csmall> datalist_s = new ArrayList<B2Csmall>();
         try
         {
-            Cursor billsettingcursor = dbReport.getBillSetting();
-            if (billsettingcursor!=null && billsettingcursor.moveToFirst())
-            {
-                GSTEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("GSTEnable"));
-                if (GSTEnable == null )
-                {
-                    GSTEnable="0";
-                }
-                else if (GSTEnable.equals("1"))
-                {
-                    HSNEnable= billsettingcursor.getString(billsettingcursor.getColumnIndex("HSNCode_Out"));
-                    if (HSNEnable==null)
-                    {
-                        HSNEnable="0";
-                    }
-                    POSEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("POS_Out"));
-                    if (POSEnable== null)
-                    {
-                        POSEnable= "0";
-                    }
-                    ReverseChargeEnabe = billsettingcursor.getString(billsettingcursor.getColumnIndex("ReverseCharge_Out"));
-                    if (ReverseChargeEnabe == null)
-                    {
-                        ReverseChargeEnabe="0";
-                    }
-                }
-            }
+//            Cursor billsettingcursor = dbReport.getBillSetting();
+//            if (billsettingcursor!=null && billsettingcursor.moveToFirst())
+//            {
+//                GSTEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("GSTEnable"));
+//                if (GSTEnable == null )
+//                {
+//                    GSTEnable="0";
+//                }
+//                else if (GSTEnable.equals("1"))
+//                {
+//                    HSNEnable= billsettingcursor.getString(billsettingcursor.getColumnIndex("HSNCode_Out"));
+//                    if (HSNEnable==null)
+//                    {
+//                        HSNEnable="0";
+//                    }
+//                    POSEnable = billsettingcursor.getString(billsettingcursor.getColumnIndex("POS_Out"));
+//                    if (POSEnable== null)
+//                    {
+//                        POSEnable= "0";
+//                    }
+//                    ReverseChargeEnabe = billsettingcursor.getString(billsettingcursor.getColumnIndex("ReverseCharge_Out"));
+//                    if (ReverseChargeEnabe == null)
+//                    {
+//                        ReverseChargeEnabe="0";
+//                    }
+//                }
+//            }
 /*            String StartDate = txtReportDateStart.getText().toString();
             String EndDate = txtReportDateEnd.getText().toString();*/
             Cursor cursor = dbReport.getOutwardB2Cs(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
@@ -7160,8 +7144,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     do {// item_detail table
                         String POS_str = cursor.getString(cursor.getColumnIndex("POS"));
+                        String custStateCode_str = cursor.getString(cursor.getColumnIndex("CustStateCode"));
                         float TaxableValue_f = Float.parseFloat(cursor.getString(cursor.getColumnIndex("TaxableValue")));
-                        if ((POS_str.equals("")== false  && TaxableValue_f >250000 )) {
+                        if ((POS_str.equals("")== false  && !POS_str.equals(custStateCode_str)&& TaxableValue_f >250000 )) {
                         }else{
                             // for interstate + interstate only + <=2.5l
                             String InvNo =cursor.getString(cursor.getColumnIndex("InvoiceNo"));
@@ -7280,6 +7265,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                         obj.setSupplyType(SupplyType_str);
                                         obj.setHSNCode(HSN);
                                         obj.setPlaceOfSupply(POS_str);
+                                        obj.setStateCode(custStateCode_str);
                                         obj.setTaxableValue(taxablevalue_f);
                                         obj.setIGSTRate(IGSTRate_f);
                                         obj.setIGSTAmt(IGSTAmount_f);
@@ -7297,7 +7283,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                         {
                                             found = 0;
                                             for(B2Csmall data_s: datalist_s){
-                                                if(data_s.getHSNCode().equalsIgnoreCase(HSN) && data_s.getPlaceOfSupply().equalsIgnoreCase(POS_str) ){
+                                                if(data_s.getHSNCode().equalsIgnoreCase(HSN) && data_s.getStateCode().equalsIgnoreCase(custStateCode_str) ){
                                                     // taxval
                                                     float taxableval = data_s.getTaxableValue();
                                                     taxableval += taxablevalue_f;
@@ -7396,7 +7382,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     POS.setBackgroundResource(R.drawable.border);
 
                     TextView TaxableValue = new TextView(myContext);
-                    TaxableValue.setText(String.valueOf(obj.getTaxableValue()));
+                    TaxableValue.setText(String.format("%.2f",obj.getTaxableValue()));
                     TaxableValue.setLeft(10);
                     TaxableValue.setWidth(100);
                     TaxableValue.setTextSize(12);
@@ -7404,7 +7390,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     TextView IGSTRate = new TextView(myContext);
-                    IGSTRate.setText(String.valueOf(obj.getIGSTRate()));
+                    IGSTRate.setText(String.format("%.2f",obj.getIGSTRate()));
                     IGSTRate.setLeft(10);
                     IGSTRate.setWidth(60);
                     IGSTRate.setTextSize(12);
@@ -7412,14 +7398,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     TextView IGSTAmount = new TextView(myContext);
-                    IGSTAmount.setText(String.valueOf(obj.getIGSTAmt()));
+                    IGSTAmount.setText(String.format("%.2f",obj.getIGSTAmt()));
                     IGSTAmount.setLeft(10);
                     IGSTAmount.setWidth(60);
                     IGSTAmount.setTextSize(12);
                     IGSTAmount.setBackgroundResource(R.drawable.border);
 
                     TextView CGSTRate = new TextView(myContext);
-                    CGSTRate.setText(String.valueOf(obj.getCGSTRate()));
+                    CGSTRate.setText(String.format("%.2f",obj.getCGSTRate()));
                     CGSTRate.setLeft(10);
                     CGSTRate.setWidth(60);
                     CGSTRate.setTextSize(12);
@@ -7427,14 +7413,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     TextView CGSTAmount = new TextView(myContext);
-                    CGSTAmount.setText(String.valueOf(obj.getCGSTAmt()));
+                    CGSTAmount.setText(String.format("%.2f",obj.getCGSTAmt()));
                     CGSTAmount.setLeft(10);
                     CGSTAmount.setWidth(60);
                     CGSTAmount.setTextSize(12);
                     CGSTAmount.setBackgroundResource(R.drawable.border);
 
                     TextView SGSTRate = new TextView(myContext);
-                    SGSTRate.setText(String.valueOf(obj.getSGSTRate()));
+                    SGSTRate.setText(String.format("%.2f",obj.getSGSTRate()));
                     SGSTRate.setLeft(10);
                     SGSTRate.setWidth(60);
                     SGSTRate.setTextSize(12);
@@ -7442,14 +7428,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     TextView SGSTAmount = new TextView(myContext);
-                    SGSTAmount.setText(String.valueOf(obj.getSGSTAmt()));
+                    SGSTAmount.setText(String.format("%.2f",(obj.getSGSTAmt())));
                     SGSTAmount.setLeft(10);
                     SGSTAmount.setWidth(60);
                     SGSTAmount.setTextSize(12);
                     SGSTAmount.setBackgroundResource(R.drawable.border);
 
                     TextView SubTotal = new TextView(myContext);
-                    SubTotal.setText(String.valueOf(obj.getSubTotal()));
+                    SubTotal.setText(String.valueOf(obj.getStateCode()));
                     SubTotal.setLeft(10);
                     SubTotal.setWidth(60);
                     SubTotal.setTextSize(12);
@@ -7467,13 +7453,15 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     rowcursor.addView(SNo);
                     rowcursor.addView(SupplyType);
+                    rowcursor.addView(HSNCode);
+                    rowcursor.addView(POS);
                     if (POSEnable.equals("1"))
                     {
-                        rowcursor.addView(POS);
+
                     }
                     if (HSNEnable.equals("1"))
                     {
-                        rowcursor.addView(HSNCode);
+
                     }
                     rowcursor.addView(TaxableValue);
                     rowcursor.addView(IGSTRate);

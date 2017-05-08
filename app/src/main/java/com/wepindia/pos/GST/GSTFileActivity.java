@@ -24,7 +24,7 @@ public class GSTFileActivity extends Activity {
         webView = (WebView) findViewById(R.id.webView1);
         webView.setWebViewClient(new myWebClient());
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://103.230.84.67/GSP/Login.aspx");
+        webView.loadUrl("http://http://www.wepaspservices.com/");
     }
 
     public class myWebClient extends WebViewClient
