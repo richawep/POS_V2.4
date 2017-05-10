@@ -17,11 +17,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_gstlink.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_gstlink.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -6136,7 +6131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1494276239681</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="GSTR reports">
+      <created>1494398879598</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1494398879598</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6252,7 +6254,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="item not getting selected in price &amp; stock - priyabrat has not pushed full code" />
     <MESSAGE value="updating itemmanagement as per GST" />
     <MESSAGE value="GST setting fragment addition" />
     <MESSAGE value="1. removing settings of home during GST presentation&#10;2. controlling visibility if HSN as configured for item outward management" />
@@ -6277,7 +6278,8 @@
     <MESSAGE value="b2b regustered &amp; unregistered - GSTR2" />
     <MESSAGE value="GSTR reports - GSTR1-b2b, bcl, bcs" />
     <MESSAGE value="GSTR reports - GSTR1-b2ba, bcla" />
-    <option name="LAST_COMMIT_MESSAGE" value="GSTR reports - GSTR1-b2ba, bcla" />
+    <MESSAGE value="GSTR reports" />
+    <option name="LAST_COMMIT_MESSAGE" value="GSTR reports" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
