@@ -993,7 +993,7 @@ public class ReportHelper{
 			rowColumnCaption.addView(NilRated);
 			rowColumnCaption.addView(NonGST);
 		}
-		else if(ReportName.equalsIgnoreCase("GSTR2-B2B")){
+		else if(ReportName.equalsIgnoreCase("GSTR2-Registered") || ReportName.equalsIgnoreCase("GSTR2-UnRegistered")){
 
 			TextView SNo = new TextView(activityContext);
 			SNo.setWidth(60);
@@ -1007,7 +1007,11 @@ public class ReportHelper{
 			GSTIN.setTextSize(15);
 			//GSTIN.setBackgroundResource(R.drawable.border_tab_heading);
 			GSTIN.setTextColor(Color.WHITE);
-			GSTIN.setText("Supplier GSTIN/Name");
+			if(ReportName.equalsIgnoreCase("GSTR2-Registered"))
+				GSTIN.setText("Supplier GSTIN");
+			else
+				GSTIN.setText("Supplier Name");
+
 
 			TextView InvNo = new TextView(activityContext);
 			InvNo.setWidth(85);
@@ -1031,13 +1035,13 @@ public class ReportHelper{
 			HSN.setWidth(70);
 			HSN.setTextSize(15);
 			HSN.setTextColor(Color.WHITE);
-			HSN.setText("HSN/SAC");
+			HSN.setText("HSNCode");
 
 			TextView Value = new TextView(activityContext);
 			Value.setWidth(100);
 			Value.setTextSize(15);
 			Value.setTextColor(Color.WHITE);
-			Value.setText("Value");
+			Value.setText("  Value");
 
 			TextView TaxableValue = new TextView(activityContext);
 			TaxableValue.setWidth(100);
@@ -1055,7 +1059,7 @@ public class ReportHelper{
 			IGSTAmt.setWidth(65);
 			IGSTAmt.setTextSize(15);
 			IGSTAmt.setTextColor(Color.WHITE);
-			IGSTAmt.setText("IGST Amt");
+			IGSTAmt.setText("IGST   Amt");
 
 			TextView CGSTRate = new TextView(activityContext);
 			CGSTRate.setWidth(65);
@@ -1085,7 +1089,7 @@ public class ReportHelper{
 			SubTotal.setWidth(100);
 			SubTotal.setTextSize(15);
 			SubTotal.setTextColor(Color.WHITE);
-			SubTotal.setText("SubTotal");
+			SubTotal.setText("Amount");
 
 			TextView POS = new TextView(activityContext);
 			POS.setWidth(50);
@@ -1101,7 +1105,7 @@ public class ReportHelper{
 
 
 			// Add views to row
-			//rowColumnCaption.addView(SNo);
+			rowColumnCaption.addView(SNo);
 			rowColumnCaption.addView(GSTIN);
 			rowColumnCaption.addView(InvNo);
 			rowColumnCaption.addView(InvDate);
@@ -1110,16 +1114,16 @@ public class ReportHelper{
 
 			rowColumnCaption.addView(Value);
 			rowColumnCaption.addView(TaxableValue);
-			rowColumnCaption.addView(IGSTRate);
+			//rowColumnCaption.addView(IGSTRate);
 			rowColumnCaption.addView(IGSTAmt);
-			rowColumnCaption.addView(CGSTRate);
+			//rowColumnCaption.addView(CGSTRate);
 			rowColumnCaption.addView(CGSTAmt);
 
-			rowColumnCaption.addView(SGSTRate);
+			//rowColumnCaption.addView(SGSTRate);
 			rowColumnCaption.addView(SGSTAmt);
             rowColumnCaption.addView(SubTotal);
-			rowColumnCaption.addView(POS);
-			rowColumnCaption.addView(ITC);
+			/*rowColumnCaption.addView(POS);
+			rowColumnCaption.addView(ITC);*/
 
 		} else if(ReportName.equalsIgnoreCase("GSTR1-B2B")){
 

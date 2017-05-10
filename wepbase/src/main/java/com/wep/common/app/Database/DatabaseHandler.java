@@ -1648,7 +1648,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
 
         cvDbValues = new ContentValues();
-        cvDbValues.put("ReportsName", "GSTR2-B2B");
+        cvDbValues.put("ReportsName", "GSTR2-Registered");
         cvDbValues.put("ReportsType", 4);
         cvDbValues.put("Status", 0);
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
@@ -1660,7 +1660,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
 
         cvDbValues = new ContentValues();
-        cvDbValues.put("ReportsName", "GSTR2-B2C");
+        cvDbValues.put("ReportsName", "GSTR2-UnRegistered");
         cvDbValues.put("ReportsType", 4);
         cvDbValues.put("Status", 0);
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
@@ -6858,7 +6858,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
         return dbFNB.rawQuery("Select ReportsId as _id, ReportsName FROM ReportsMaster where ReportsType=" +
                 ReportsType + " AND ReportsName not in ('Service Tax Report','Kitchen wise Report'," +
-                " 'GSTR1-1A Validation','GSTR2-2A Validation','Modified GSTR2A', 'GSTR2A','GSTR2-B2B','GSTR2-B2BA','GSTR2-B2CA','GSTR2-B2C','GSTR2-B2BA') order by ReportsName asc", null);
+                " 'GSTR1-1A Validation','GSTR2-2A Validation','Modified GSTR2A', 'GSTR2A','GSTR2-B2BA','GSTR2-B2CA','GSTR2-B2C','GSTR2-B2BA') order by ReportsName asc", null);
     }
 
     // Getting Values for PAYBILL

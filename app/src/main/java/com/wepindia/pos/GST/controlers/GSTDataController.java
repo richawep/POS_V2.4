@@ -429,7 +429,7 @@ public class GSTDataController {
                 Cursor cursor_billDetail = dbReport.getGSTR1B2CL_stateCodeCursor(startDate,endDate,state_cd);
                 if(cursor_billDetail ==null || !cursor_billDetail.moveToFirst())
                 {
-                    MsgBox.Show("","No records for B2CL");
+                    //MsgBox.Show("","No records for B2CL");
                     return b2CL_DataList;
                 }
                 ArrayList<GSTR1_B2CL_invoices> invoiceList = new ArrayList<>();
@@ -522,7 +522,7 @@ public class GSTDataController {
                 Cursor cursor_billDetail = dbReport.getGSTR1B2CL_stateCodeCursor_ammend(startDate,endDate,state_cd);
                 if(cursor_billDetail ==null || !cursor_billDetail.moveToFirst())
                 {
-                    MsgBox.Show("","No records for B2CLA");
+                    //MsgBox.Show("","No records for B2CLA");
                     return b2CL_DataList_ammend;
                 }
                 ArrayList<GSTR1_B2CL_A_invoices> invoiceList = new ArrayList<>();
@@ -626,7 +626,7 @@ public class GSTDataController {
             ArrayList<String > gstinList = dbReport.getGSTR1B2B_A_gstinList(startDate,endDate);
             if(gstinList.size() ==0)
             {
-                MsgBox.Show("","No records for B2BA");
+                //MsgBox.Show("","No records for B2BA");
                 return b2bADataList;
             }
             for (String gstin_str  : gstinList )
@@ -853,7 +853,7 @@ public class GSTDataController {
             ArrayList<String > gstinList = dbReport.getGSTR1B2B_gstinList(startDate,endDate);
             if(gstinList.size() ==0)
             {
-                MsgBox.Show("","No records for B2B");
+                //MsgBox.Show("","No records for B2B");
                 return b2BDataList;
             }
             for (String gstin_str  : gstinList )
