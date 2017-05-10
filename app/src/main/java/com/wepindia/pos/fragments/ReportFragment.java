@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.nfc.FormatException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.text.format.DateFormat;
@@ -44,6 +45,8 @@ import com.wepindia.pos.GenericClasses.ReportHelper;
 import com.wepindia.pos.R;
 import com.wepindia.pos.TabbedReportActivity;
 import com.wepindia.pos.utils.DateUtil;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -548,7 +551,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     GSTR1_B2Cs();
                     break;
                 case 29:// GSTR1-B2ClA
-
+                    GSTR1_B2CSA();
                     break;
                 case 30:// GSTR1-B2Cl
                     GSTR1_B2Cl();
@@ -7117,9 +7120,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                 //ArrayList<GSTR1_B2B_A_invoices> invoiceList = new ArrayList<>();
                 while (cursor!=null && cursor.moveToNext()) {
-                    TableRow rowcursor = new TableRow(myContext);
-                    rowcursor.setLayoutParams(new TableRow.LayoutParams
-                            (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
 
                     String str = cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo"));
                     str += cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
@@ -7139,7 +7140,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     Cursor cursor_b2bitems_for_inv = dbReport.getitems_b2ba(invno_ori, invdt_ori, invno, invdt, gstin);
 
                     while (cursor_b2bitems_for_inv != null && cursor_b2bitems_for_inv.moveToNext()) {
-
+                        TableRow rowcursor = new TableRow(myContext);
+                        rowcursor.setLayoutParams(new TableRow.LayoutParams
+                                (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
                         String date_str = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
                         Date newD = new Date(Long.parseLong(date_str));
                         String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
@@ -7222,6 +7225,95 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         }
     }
 
+    void GSTR1_B2CSA()
+    {
+        try {
+            String str_start = new SimpleDateFormat("dd-MM-yyyy").format(startDate_date);
+
+            String s = str_start.substring(3,5)+ str_start.substring(6,str_start.length());
+            Cursor cursor = dbReport.getGSTR1B2CSAItems1(s);
+            if (cursor == null)
+            {
+                return;
+            }
+            else {
+
+                int c = cursor.getCount();
+                int i = 1;
+                if (cursor.moveToFirst()) {
+                    do {
+
+                        TableRow rowcursor = new TableRow(myContext);
+                        rowcursor.setLayoutParams(new TableRow.LayoutParams
+                                (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                        TextView Sno = new TextView(myContext);
+                        Sno.setText(String.valueOf(i++));
+
+                        TextView supplyType_ori = new TextView(myContext);
+                        supplyType_ori.setText(cursor.getString(cursor.getColumnIndex("SupplyType")));
+
+                        TextView hsn_ori = new TextView(myContext);
+                        hsn_ori.setText(cursor.getString(cursor.getColumnIndex("HSNCode")));
+
+                        TextView custCode_ori = new TextView(myContext);
+                        custCode_ori.setText(cursor.getString(cursor.getColumnIndex("POS")));
+
+                        TextView supplyType_rev = new TextView(myContext);
+                        supplyType_rev.setText(cursor.getString(cursor.getColumnIndex("RevisedSupplyType")));
+
+                        TextView hsn_rev = new TextView(myContext);
+                        hsn_rev.setText(cursor.getString(cursor.getColumnIndex("ReviseHSNCode")));
+
+                        TextView custCode_rev = new TextView(myContext);
+                        custCode_rev.setText(cursor.getString(cursor.getColumnIndex("RevisedPOS")));
+
+                        TextView taxVal = new TextView(myContext);
+                        taxVal.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("TaxableValue"))));
+
+                        TextView IRate = new TextView(myContext);
+                        IRate.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("IGSTRate"))));
+
+                        TextView IAmt = new TextView(myContext);
+                        IAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));
+
+                        TextView CRate = new TextView(myContext);
+                        CRate.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("CGSTRate"))));
+
+                        TextView CAmt = new TextView(myContext);
+                        CAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("CGSTAmount"))));
+
+                        TextView SRate = new TextView(myContext);
+                        SRate.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTRate"))));
+
+                        TextView SAmt = new TextView(myContext);
+                        SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));
+
+                        rowcursor.addView(Sno);
+                        rowcursor.addView(supplyType_ori);
+                        rowcursor.addView(hsn_ori);
+                        rowcursor.addView(custCode_ori);
+                        rowcursor.addView(supplyType_rev);
+                        rowcursor.addView(hsn_rev);
+                        rowcursor.addView(custCode_rev);
+                        rowcursor.addView(taxVal);
+                        rowcursor.addView(IRate);
+                        rowcursor.addView(IAmt);
+                        rowcursor.addView(CRate);
+                        rowcursor.addView(CAmt);
+                        rowcursor.addView(SRate);
+                        rowcursor.addView(SAmt);
+
+                        tblReport.addView(rowcursor);
+                    } while (cursor.moveToNext());
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
 
     void GSTR1_B2CLA()
     {
@@ -7230,7 +7322,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             String startDate_milli = String.valueOf(startDate_date.getTime());
             String endDate_milli = String.valueOf(endDate_date.getTime());
             ArrayList<String> stateCd_List_ammend= dbReport.getGSTR1B2CL_stateCodeList_ammend(startDate_milli,endDate_milli);
-            int i =0;
+            int i =1;
             for (String state_cd : stateCd_List_ammend )
             {
                 Cursor cursor_billDetail = dbReport.getGSTR1B2CL_stateCodeCursor_ammend(startDate_milli,endDate_milli,state_cd);

@@ -79,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
+                android:visibility="invisible"
                 android:layout_toRightOf="@+id/rowReportDateSelection"
                 android:text="Read from External Device" />
 
@@ -92,6 +93,7 @@
                 android:background="@drawable/background_btn"
                 android:textColor="@color/white"
                 android:minHeight="48dp"
+                android:visibility="invisible"
                 android:minWidth="150dp"
                 android:text="GSTR1" />
 
@@ -106,6 +108,7 @@
                 android:textColor="@color/white"
                 android:minHeight="48dp"
                 android:minWidth="150dp"
+                android:visibility="invisible"
                 android:text="GSTR2" />
         </RelativeLayout>
 
@@ -184,6 +187,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
+                            android:visibility="gone"
                             android:onClick="onClickGetGstr1Summary">
 
                             <ImageView
@@ -262,6 +266,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
+                            android:visibility="gone"
                             android:onClick="onClickGetGstr1ASummary">
 
                             <ImageView
@@ -342,14 +347,14 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:weightSum="5">
+                        >
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
-                            android:visibility="invisible">
+                            android:visibility="gone">
 
                             <ImageView
                                 android:id="@+id/img12"
@@ -375,6 +380,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
+                            android:visibility="gone"
                             android:onClick="onClickGetGstr2B2B">
 
                             <ImageView
@@ -477,6 +483,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="invisible"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
                         android:weightSum="6">

@@ -1010,7 +1010,7 @@ public class ReportHelper{
 			GSTIN.setText("Supplier GSTIN/Name");
 
 			TextView InvNo = new TextView(activityContext);
-			InvNo.setWidth(80);
+			InvNo.setWidth(85);
 			InvNo.setTextSize(15);
 			InvNo.setTextColor(Color.WHITE);
 			InvNo.setText("Invoice No.");
@@ -1043,7 +1043,7 @@ public class ReportHelper{
 			TaxableValue.setWidth(100);
 			TaxableValue.setTextSize(15);
 			TaxableValue.setTextColor(Color.WHITE);
-			TaxableValue.setText("Taxable Value");
+			TaxableValue.setText("Taxable   Value");
 
 			TextView IGSTRate = new TextView(activityContext);
 			IGSTRate.setWidth(65);
@@ -1133,13 +1133,13 @@ public class ReportHelper{
 			GSTIN.setWidth(140);
 			GSTIN.setTextSize(15);
 			GSTIN.setTextColor(Color.WHITE);
-			GSTIN.setText("Supplier GSTIN");
+			GSTIN.setText("Recipient GSTIN");
 
 			TextView InvNo = new TextView(activityContext);
 			InvNo.setWidth(80);
 			InvNo.setTextSize(15);
 			InvNo.setTextColor(Color.WHITE);
-			InvNo.setText("Invoice No.");
+			InvNo.setText("Invoice    No.");
 
 			TextView InvDate = new TextView(activityContext);
 			InvDate.setWidth(110);
@@ -1175,7 +1175,7 @@ public class ReportHelper{
 			TaxableValue.setWidth(100);
 			TaxableValue.setTextSize(15);
 			TaxableValue.setTextColor(Color.WHITE);
-			TaxableValue.setText("Taxable Value");
+			TaxableValue.setText("Taxble   Value");
 
 			TextView GSTRate = new TextView(activityContext);
 			GSTRate.setWidth(75);
@@ -1192,7 +1192,7 @@ public class ReportHelper{
 			IGSTAmt.setWidth(75);
 			IGSTAmt.setTextSize(15);
 			IGSTAmt.setTextColor(Color.WHITE);
-			IGSTAmt.setText("IGST Amt");
+			IGSTAmt.setText("IGST   Amt");
 
 			/*TextView CGSTRate = new TextView(activityContext);
 			CGSTRate.setWidth(65);
@@ -1204,7 +1204,7 @@ public class ReportHelper{
 			CGSTAmt.setWidth(75);
 			CGSTAmt.setTextSize(15);
 			CGSTAmt.setTextColor(Color.WHITE);
-			CGSTAmt.setText("CGST Amt");
+			CGSTAmt.setText("CGST   Amt");
 
 			/*TextView SGSTRate = new TextView(activityContext);
 			SGSTRate.setWidth(65);
@@ -1216,19 +1216,19 @@ public class ReportHelper{
 			SGSTAmt.setWidth(75);
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setTextColor(Color.WHITE);
-			SGSTAmt.setText("SGST Amt");
+			SGSTAmt.setText("SGST      Amt");
 
 			TextView SubTotal = new TextView(activityContext);
 			SubTotal.setWidth(105);
 			SubTotal.setTextSize(15);
 			SubTotal.setTextColor(Color.WHITE);
-			SubTotal.setText("SubTotal");
+			SubTotal.setText("Sub Total");
 
 			TextView POS = new TextView(activityContext);
-			POS.setWidth(50);
+			POS.setWidth(70);
 			POS.setTextSize(15);
 			POS.setTextColor(Color.WHITE);
-			POS.setText("CustStateCode");
+			POS.setText("Cust StateCode");
 
 			TextView RevCh = new TextView(activityContext);
 			RevCh.setWidth(50);
@@ -1343,7 +1343,7 @@ public class ReportHelper{
 			IGSTAmt.setWidth(70);
 			IGSTAmt.setTextSize(15);
 			IGSTAmt.setTextColor(Color.WHITE);
-			IGSTAmt.setText("IGST Amt");
+			IGSTAmt.setText("IGST   Amt");
 
 			TextView SubTotal = new TextView(activityContext);
 			SubTotal.setWidth(105);
@@ -1612,7 +1612,7 @@ public class ReportHelper{
 			GSTIN.setWidth(140);
 			GSTIN.setTextSize(15);
 			GSTIN.setTextColor(Color.WHITE);
-			GSTIN.setText("Supplier GSTIN");
+			GSTIN.setText("Recipient GSTIN");
 
 			TextView InvNo = new TextView(activityContext);
 			InvNo.setWidth(80);
@@ -1654,7 +1654,7 @@ public class ReportHelper{
 			TaxableValue.setWidth(100);
 			TaxableValue.setTextSize(15);
 			TaxableValue.setTextColor(Color.WHITE);
-			TaxableValue.setText("Tax. Value");
+			TaxableValue.setText("Taxable   Value");
 
 			TextView GSTRate = new TextView(activityContext);
 			GSTRate.setWidth(65);
@@ -1877,7 +1877,7 @@ public class ReportHelper{
 			rowColumnCaption.addView(HSN);
 			if (HSNEnable.equals("1"))
 			{
-				rowColumnCaption.addView(HSN);
+				//rowColumnCaption.addView(HSN);
 			}
 
 			//rowColumnCaption.addView(Value);
@@ -1907,7 +1907,7 @@ public class ReportHelper{
 			G_S_ori.setWidth(75);
 			G_S_ori.setTextSize(15);
 			G_S_ori.setTextColor(Color.WHITE);
-			G_S_ori.setText("Original G/S");
+			G_S_ori.setText("Original    G/S");
 
 			TextView HSN_ori = new TextView(activityContext);
 			HSN_ori.setWidth(150);
@@ -1998,22 +1998,26 @@ public class ReportHelper{
 			// Add views to row
 			rowColumnCaption.addView(SNo);
 			rowColumnCaption.addView(G_S_ori);
+			rowColumnCaption.addView(HSN_ori);
+			rowColumnCaption.addView(POS_ori);
 			if (POSEnable.equals("1"))
 			{
-				rowColumnCaption.addView(POS_ori);
+
 			}
 			if (HSNEnable.equals("1"))
 			{
-				rowColumnCaption.addView(HSN_ori);
+
 			}
 			rowColumnCaption.addView(G_S);
+			rowColumnCaption.addView(HSN);
+			rowColumnCaption.addView(POS);
 			if (POSEnable.equals("1"))
 			{
-				rowColumnCaption.addView(POS);
+
 			}
 			if (HSNEnable.equals("1"))
 			{
-				rowColumnCaption.addView(HSN);
+
 			}
 			rowColumnCaption.addView(TaxableValue);
 			rowColumnCaption.addView(IGSTRate);
@@ -2022,7 +2026,7 @@ public class ReportHelper{
 			rowColumnCaption.addView(CGSTAmt);
 			rowColumnCaption.addView(SGSTRate);
 			rowColumnCaption.addView(SGSTAmt);
-			rowColumnCaption.addView(SubTotal);
+			//rowColumnCaption.addView(SubTotal);
 			if (ReverseChargeEnabe.equals("1"))
 			{
 				rowColumnCaption.addView((Pro));

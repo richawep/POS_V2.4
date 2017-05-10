@@ -6858,7 +6858,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
         return dbFNB.rawQuery("Select ReportsId as _id, ReportsName FROM ReportsMaster where ReportsType=" +
                 ReportsType + " AND ReportsName not in ('Service Tax Report','Kitchen wise Report'," +
-                " 'GSTR1-1A Validation','GSTR2-2A Validation','Modified GSTR2A') order by ReportsName asc", null);
+                " 'GSTR1-1A Validation','GSTR2-2A Validation','Modified GSTR2A', 'GSTR2A','GSTR2-B2B','GSTR2-B2BA','GSTR2-B2CA','GSTR2-B2C','GSTR2-B2BA') order by ReportsName asc", null);
     }
 
     // Getting Values for PAYBILL
@@ -7342,6 +7342,11 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     }
     public Cursor getGSTR1B2CSAItems(String startDate, String endDate) {
         String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE  " + KEY_BusinessType + " = 'B2CSA' AND " + KEY_InvoiceDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+    public Cursor getGSTR1B2CSAItems1(String startDate) {
+        String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE  " + KEY_BusinessType + " = 'B2CSA' AND " + KEY_MONTH + " LIKE '" + startDate + "'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
