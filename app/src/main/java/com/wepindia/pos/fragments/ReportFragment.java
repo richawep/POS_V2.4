@@ -52,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -563,11 +564,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     GSTR2_Registered_Report();
                     break;
                 case 33:// GSTR2-B2BA
+                    GSTR2_Registered_Amend();
                     break;
                 case 34: // GTR2-B2C
                     GSTR2_UnRegistered_Report();
                     break;
                 case 35: // GTR2-B2cA
+                    GSTR2_UnRegistered_Amend();
                     break;
                 case 36: //2A
                     break;
@@ -986,6 +989,592 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private  void GSTR2_UnRegistered_Amend()
+    {
+        try
+        {
+            String str_dt = String.valueOf(startDate_date.getTime());
+            String end_dt = String.valueOf(endDate_date.getTime());
+            Cursor cursor = dbReport.getGSTR2_b2b_A_unregisteredSupplierList(str_dt,end_dt);
+
+            int i =1;
+            ArrayList<String>custname_list = new ArrayList<>();
+            while(cursor!=null && cursor.moveToNext())
+            {
+                String invoiceNo = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                String invoiceDate = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                String invoiceNo_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo"));
+                String invoiceDate_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
+                String pos_supplier = cursor.getString(cursor.getColumnIndex("POS"));
+                String supplierName = cursor.getString(cursor.getColumnIndex("GSTIN"));
+                if(pos_supplier==null)
+                    pos_supplier="";
+                String str = invoiceNo_ori+invoiceDate_ori+invoiceNo+invoiceDate+pos_supplier+supplierName;
+                if(custname_list.contains(str))
+                    continue;
+
+                custname_list.add(str);
+
+
+                TableRow rowReport = new TableRow(myContext);
+                rowReport.setLayoutParams(new ViewGroup.LayoutParams
+                        (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+
+                TextView Sno = new TextView(myContext);
+                Sno.setText(String.valueOf(i++));
+                Sno.setBackgroundResource(R.drawable.border);
+                Sno.setPadding(5,0,0,0);
+
+                TextView GSTIN = new TextView(myContext);
+                GSTIN.setText(supplierName);
+                GSTIN.setBackgroundResource(R.drawable.border);
+
+                TextView InvoiceNo_ori = new TextView(myContext);
+                InvoiceNo_ori.setText(invoiceNo_ori);
+                InvoiceNo_ori.setBackgroundResource(R.drawable.border);
+                InvoiceNo_ori.setPadding(5,0,0,0);
+
+                TextView InvoiceNo_rev= new TextView(myContext);
+                InvoiceNo_rev.setText(invoiceNo);
+                InvoiceNo_rev.setBackgroundResource(R.drawable.border);
+                InvoiceNo_rev.setPadding(5,0,0,0);
+
+
+                TextView InvoiceDate_ori = new TextView(myContext);
+                Date dd_milli = new Date(Long.parseLong(invoiceDate_ori));
+                String dd  = new SimpleDateFormat("dd-MM-yyyy").format(dd_milli);
+                InvoiceDate_ori.setText(dd);
+                InvoiceDate_ori.setBackgroundResource(R.drawable.border);
+                InvoiceDate_ori.setPadding(5,0,0,0);
+
+                TextView InvoiceDate_rev = new TextView(myContext);
+                Date dd_milli_rev = new Date(Long.parseLong(invoiceDate));
+                String dd_rev  = new SimpleDateFormat("dd-MM-yyyy").format(dd_milli_rev);
+                InvoiceDate_rev.setText(dd_rev);
+                InvoiceDate_rev.setBackgroundResource(R.drawable.border);
+                InvoiceDate_rev.setPadding(5,0,0,0);
+
+                TextView SupplyType = new TextView(myContext);
+                SupplyType.setBackgroundResource(R.drawable.border);
+                TextView HSNCode = new TextView(myContext);
+                HSNCode.setBackgroundResource(R.drawable.border);
+                TextView Rate = new TextView(myContext);
+                Rate.setBackgroundResource(R.drawable.border);
+
+                TextView TaxableValue = new TextView(myContext);
+                    /*TaxableValue.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("TaxableValue"))));*/
+                TaxableValue.setBackgroundResource(R.drawable.border);
+                TaxableValue.setPadding(0,0,5,0);
+                TaxableValue.setGravity(Gravity.END);
+
+
+                TextView IAmt = new TextView(myContext);
+                   /* IAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));*/
+                IAmt.setBackgroundResource(R.drawable.border);
+                IAmt.setPadding(0,0,5,0);
+                IAmt.setGravity(Gravity.END);
+
+                TextView CAmt = new TextView(myContext);
+                    /*CAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("CGSTAmount"))));*/
+                CAmt.setBackgroundResource(R.drawable.border);
+                CAmt.setPadding(0,0,5,0);
+                CAmt.setGravity(Gravity.END);
+
+                TextView SAmt = new TextView(myContext);
+                    /*SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));*/
+                SAmt.setBackgroundResource(R.drawable.border);
+                SAmt.setPadding(0,0,5,0);
+                SAmt.setGravity(Gravity.END);
+
+                TextView SubTot = new TextView(myContext);
+                   /* SubTot.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("Amount"))));*/
+                SubTot.setBackgroundResource(R.drawable.border);
+                SubTot.setPadding(0,0,5,0);
+                SubTot.setGravity(Gravity.END);
+
+                TextView supplPOS = new TextView(myContext);
+                supplPOS.setText(pos_supplier);
+                supplPOS.setBackgroundResource(R.drawable.border);
+                supplPOS.setPadding(10,0,0,0);
+
+
+                rowReport.addView(Sno);
+                rowReport.addView(GSTIN);
+                rowReport.addView(InvoiceNo_ori);
+                rowReport.addView(InvoiceDate_ori);
+                rowReport.addView(InvoiceNo_rev);
+                rowReport.addView(InvoiceDate_rev);
+                rowReport.addView(SupplyType);
+                rowReport.addView(HSNCode);
+                rowReport.addView(Rate);
+                rowReport.addView(TaxableValue);
+                rowReport.addView(IAmt);
+                rowReport.addView(CAmt);
+                rowReport.addView(SAmt);
+                rowReport.addView(SubTot);
+                rowReport.addView(supplPOS);
+
+                View v1 = new View(getActivity());
+                v1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 5));
+                v1.setBackgroundColor(getResources().getColor(R.color.orange));
+                tblReport.addView(v1);
+
+               tblReport.addView(rowReport);
+
+
+                View v = new View(getActivity());
+                v.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 5));
+                v.setBackgroundColor(getResources().getColor(R.color.orange));
+                tblReport.addView(v);
+
+
+
+
+                String subNo[] = {"i","ii","iii","iv","v","vi","vii","viii","ix","x","xi","xii","xiii","xiv","xv","xvi","xvii","xviii","xix","xx"};
+
+
+                int ii =0;
+                double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0;
+
+                Cursor cursor_item = dbReport.getGSTR2_A_ammend_for_supplierName(invoiceNo,invoiceDate,invoiceNo_ori,
+                        invoiceDate_ori,supplierName,pos_supplier);
+
+
+
+                while (cursor_item!=null && cursor_item.moveToNext())
+                {
+                    TableRow rowReport1 = new TableRow(myContext);
+                    rowReport1.setLayoutParams(new ViewGroup.LayoutParams
+                            (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                    TextView Sno1 = new TextView(myContext);
+                    Sno1.setText(subNo[ii++]);
+                    Sno1.setBackgroundResource(R.drawable.border_item);
+                    Sno1.setPadding(5,0,0,0);
+
+                    TextView GSTIN1 = new TextView(myContext);
+                    GSTIN1.setBackgroundResource(R.drawable.border_item);
+
+                    TextView InvoiceNo1_ori = new TextView(myContext);
+                    InvoiceNo1_ori.setBackgroundResource(R.drawable.border_item);
+
+                    TextView InvoiceDate1_ori = new TextView(myContext);
+                    InvoiceDate1_ori.setBackgroundResource(R.drawable.border_item);
+
+                    TextView InvoiceNo1 = new TextView(myContext);
+                    InvoiceNo1.setBackgroundResource(R.drawable.border_item);
+
+                    TextView InvoiceDate1 = new TextView(myContext);
+                    InvoiceDate1.setBackgroundResource(R.drawable.border_item);
+
+                    TextView SupplyType1 = new TextView(myContext);
+                    SupplyType1.setText(cursor_item.getString(cursor_item.getColumnIndex("SupplyType")));
+                    SupplyType1.setBackgroundResource(R.drawable.border_item);
+                    SupplyType1.setPadding(5,0,0,0);
+
+                    TextView HSNCode1 = new TextView(myContext);
+                    HSNCode1.setText(cursor_item.getString(cursor_item.getColumnIndex("HSNCode")));
+                    HSNCode1.setBackgroundResource(R.drawable.border_item);
+                    HSNCode1.setPadding(5,0,0,0);
+
+                    TextView Value1 = new TextView(myContext);
+                    Value1.setText(String.format("%.2f",cursor_item.getDouble(cursor_item.getColumnIndex("Value"))));
+                    Value1.setBackgroundResource(R.drawable.border_item);
+                    Value1.setPadding(0,0,5,0);
+                    Value1.setGravity(Gravity.END);
+                    //valtot += cursor_item.getDouble(cursor_item.getColumnIndex("Value"));
+
+                    TextView TaxableValue1 = new TextView(myContext);
+                    TaxableValue1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue"))));
+                    TaxableValue1.setBackgroundResource(R.drawable.border_item);
+                    TaxableValue1.setPadding(0,0,5,0);
+                    TaxableValue1.setGravity(Gravity.END);
+                    taxvaltot +=  cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue"));
+
+                    TextView IAmt1 = new TextView(myContext);
+                    IAmt1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("IGSTAmount"))));
+                    IAmt1.setBackgroundResource(R.drawable.border_item);
+                    IAmt1.setPadding(0,0,5,0);
+                    IAmt1.setGravity(Gravity.END);
+                    Itot += cursor_item.getDouble(cursor_item.getColumnIndex("IGSTAmount"));
+
+
+                    TextView CAmt1 = new TextView(myContext);
+                    CAmt1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("CGSTAmount"))));
+                    CAmt1.setBackgroundResource(R.drawable.border_item);
+                    CAmt1.setPadding(0,0,5,0);
+                    CAmt1.setGravity(Gravity.END);
+                    Ctot += cursor_item.getDouble(cursor_item.getColumnIndex("CGSTAmount"));
+
+
+                    TextView SAmt1 = new TextView(myContext);
+                    SAmt1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"))));
+                    SAmt1.setBackgroundResource(R.drawable.border_item);
+                    SAmt1.setPadding(0,0,5,0);
+                    SAmt1.setGravity(Gravity.END);
+                    Stot += cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"));
+
+
+                    TextView SubTot1 = new TextView(myContext);
+                    double sub = cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue")) +
+                            cursor_item.getDouble(cursor_item.getColumnIndex("IGSTAmount"))+
+                            cursor_item.getDouble(cursor_item.getColumnIndex("CGSTAmount"))+
+                            cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"));
+                    SubTot1.setText(String.format("%.2f", sub));
+                    SubTot1.setBackgroundResource(R.drawable.border_item);
+                    SubTot1.setPadding(0,0,5,0);
+                    SubTot1.setGravity(Gravity.END);
+                    Amttot += sub;
+
+                    TextView supplPOS1 = new TextView(myContext);
+                    supplPOS1.setBackgroundResource(R.drawable.border_item);
+
+
+                    rowReport1.addView(Sno1);//0
+                    rowReport1.addView(GSTIN1);//1
+                    rowReport1.addView(InvoiceNo1_ori);//2
+                    rowReport1.addView(InvoiceDate1_ori);//3
+                    rowReport1.addView(InvoiceNo1);//4
+                    rowReport1.addView(InvoiceDate1);//5
+                    rowReport1.addView(SupplyType1);//6
+                    rowReport1.addView(HSNCode1);//7
+                    rowReport1.addView(Value1);//8
+                    rowReport1.addView(TaxableValue1);//9
+                    rowReport1.addView(IAmt1);//10
+                    rowReport1.addView(CAmt1);//11
+                    rowReport1.addView(SAmt1);//12
+                    rowReport1.addView(SubTot1);//13
+                    rowReport1.addView(supplPOS1);//13
+
+                    tblReport.addView(rowReport1);
+
+                }
+                    /*TextView val = (TextView)rowReport.getChildAt(6);
+                    val.setText(String.format("%.2f",valtot));*/
+
+                TextView taxVal = (TextView)rowReport.getChildAt(9);
+                taxVal.setText(String.format("%.2f",taxvaltot));
+
+                TextView iamt = (TextView)rowReport.getChildAt(10);
+                iamt.setText(String.format("%.2f",Itot));
+
+                TextView camt = (TextView)rowReport.getChildAt(11);
+                camt.setText(String.format("%.2f",Ctot));
+
+                TextView Samt = (TextView)rowReport.getChildAt(12);
+                Samt.setText(String.format("%.2f",Stot));
+
+                TextView sub = (TextView)rowReport.getChildAt(13);
+                sub.setText(String.format("%.2f",Amttot));
+
+
+
+
+            }
+
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+    private  void GSTR2_Registered_Amend()
+    {
+        String str_dt = String.valueOf(startDate_date.getTime());
+        String end_dt = String.valueOf(endDate_date.getTime());
+        try
+        {
+            int i =1;
+            ArrayList<String> gstinList = dbReport.getGSTR2_b2b_A_gstinList(str_dt, end_dt);
+            for (String gstin : gstinList)
+            {
+                Cursor cursor = dbReport.getGSTR2_b2bA_invoices_for_gstin_registered(str_dt,end_dt,gstin);
+                ArrayList<String> record_list = new ArrayList<>();
+                while(cursor!=null && cursor.moveToNext())
+                {
+                    String invoiceNo_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo"));
+                    String invoiceDate_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
+                    String invoiceNo = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                    String invoiceDate = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                    String pos_supplier = cursor.getString(cursor.getColumnIndex("POS"));
+
+                    if(pos_supplier==null)
+                        pos_supplier="";
+                    String str = gstin+invoiceNo_ori+invoiceDate_ori+invoiceNo+invoiceDate+pos_supplier;
+                    if(record_list.contains(str))
+                        continue;
+
+                    record_list.add(str);
+
+
+                    TableRow rowReport = new TableRow(myContext);
+                    rowReport.setLayoutParams(new ViewGroup.LayoutParams
+                            (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+
+                    TextView Sno = new TextView(myContext);
+                    Sno.setText(String.valueOf(i++));
+                    Sno.setBackgroundResource(R.drawable.border);
+                    Sno.setPadding(5,0,0,0);
+
+                    TextView GSTIN = new TextView(myContext);
+                    GSTIN.setText(gstin);
+                    GSTIN.setBackgroundResource(R.drawable.border);
+
+                    TextView InvoiceNo_ori = new TextView(myContext);
+                    InvoiceNo_ori.setText(invoiceNo_ori);
+                    InvoiceNo_ori.setBackgroundResource(R.drawable.border);
+                    InvoiceNo_ori.setPadding(5,0,0,0);
+
+                    TextView InvoiceNo_rev= new TextView(myContext);
+                    InvoiceNo_rev.setText(invoiceNo);
+                    InvoiceNo_rev.setBackgroundResource(R.drawable.border);
+                    InvoiceNo_rev.setPadding(5,0,0,0);
+
+
+                    TextView InvoiceDate_ori = new TextView(myContext);
+                    Date dd_milli = new Date(Long.parseLong(invoiceDate_ori));
+                    String dd  = new SimpleDateFormat("dd-MM-yyyy").format(dd_milli);
+                    InvoiceDate_ori.setText(dd);
+                    InvoiceDate_ori.setBackgroundResource(R.drawable.border);
+                    InvoiceDate_ori.setPadding(5,0,0,0);
+
+                    TextView InvoiceDate_rev = new TextView(myContext);
+                    Date dd_milli_rev = new Date(Long.parseLong(invoiceDate));
+                    String dd_rev  = new SimpleDateFormat("dd-MM-yyyy").format(dd_milli_rev);
+                    InvoiceDate_rev.setText(dd_rev);
+                    InvoiceDate_rev.setBackgroundResource(R.drawable.border);
+                    InvoiceDate_rev.setPadding(5,0,0,0);
+
+                    TextView SupplyType = new TextView(myContext);
+                    SupplyType.setBackgroundResource(R.drawable.border);
+                    TextView HSNCode = new TextView(myContext);
+                    HSNCode.setBackgroundResource(R.drawable.border);
+                    TextView Rate = new TextView(myContext);
+                    Rate.setBackgroundResource(R.drawable.border);
+
+                    TextView TaxableValue = new TextView(myContext);
+                    /*TaxableValue.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("TaxableValue"))));*/
+                    TaxableValue.setBackgroundResource(R.drawable.border);
+                    TaxableValue.setPadding(0,0,5,0);
+                    TaxableValue.setGravity(Gravity.END);
+
+
+                    TextView IAmt = new TextView(myContext);
+                   /* IAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));*/
+                    IAmt.setBackgroundResource(R.drawable.border);
+                    IAmt.setPadding(0,0,5,0);
+                    IAmt.setGravity(Gravity.END);
+
+                    TextView CAmt = new TextView(myContext);
+                    /*CAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("CGSTAmount"))));*/
+                    CAmt.setBackgroundResource(R.drawable.border);
+                    CAmt.setPadding(0,0,5,0);
+                    CAmt.setGravity(Gravity.END);
+
+                    TextView SAmt = new TextView(myContext);
+                    /*SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));*/
+                    SAmt.setBackgroundResource(R.drawable.border);
+                    SAmt.setPadding(0,0,5,0);
+                    SAmt.setGravity(Gravity.END);
+
+                    TextView SubTot = new TextView(myContext);
+                   /* SubTot.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("Amount"))));*/
+                    SubTot.setBackgroundResource(R.drawable.border);
+                    SubTot.setPadding(0,0,5,0);
+                    SubTot.setGravity(Gravity.END);
+
+                    TextView supplPOS = new TextView(myContext);
+                    supplPOS.setText(pos_supplier);
+                    supplPOS.setBackgroundResource(R.drawable.border);
+                    supplPOS.setPadding(10,0,0,0);
+
+
+                    rowReport.addView(Sno);
+                    rowReport.addView(GSTIN);
+                    rowReport.addView(InvoiceNo_ori);
+                    rowReport.addView(InvoiceDate_ori);
+                    rowReport.addView(InvoiceNo_rev);
+                    rowReport.addView(InvoiceDate_rev);
+                    rowReport.addView(SupplyType);
+                    rowReport.addView(HSNCode);
+                    rowReport.addView(Rate);
+                    rowReport.addView(TaxableValue);
+                    rowReport.addView(IAmt);
+                    rowReport.addView(CAmt);
+                    rowReport.addView(SAmt);
+                    rowReport.addView(SubTot);
+                    rowReport.addView(supplPOS);
+
+                    View v1 = new View(getActivity());
+                    v1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 5));
+                    v1.setBackgroundColor(getResources().getColor(R.color.orange));
+                    tblReport.addView(v1);
+
+                    //tblReport.addView(rowcursor, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    tblReport.addView(rowReport);
+
+
+                    View v = new View(getActivity());
+                    v.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 5));
+                    v.setBackgroundColor(getResources().getColor(R.color.orange));
+                    tblReport.addView(v);
+
+
+
+
+                    String subNo[] = {"i","ii","iii","iv","v","vi","vii","viii","ix","x","xi","xii","xiii","xiv","xv","xvi","xvii","xviii","xix","xx"};
+
+
+                    int ii =0;
+                    double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0;
+
+
+                    Cursor cursor_item = dbReport.getGSTR2_b2bA_ammends_for_gstin_registered(invoiceNo,invoiceDate,gstin,
+                            invoiceNo_ori,invoiceDate_ori);
+
+                    double totval = 0;
+
+                    while (cursor_item!=null && cursor_item.moveToNext())
+                    {
+
+                        TableRow rowReport1 = new TableRow(myContext);
+                        rowReport1.setLayoutParams(new ViewGroup.LayoutParams
+                                (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                        TextView Sno1 = new TextView(myContext);
+                        Sno1.setText(subNo[ii++]);
+                        Sno1.setBackgroundResource(R.drawable.border_item);
+                        Sno1.setPadding(5,0,0,0);
+
+                        TextView GSTIN1 = new TextView(myContext);
+                        GSTIN1.setBackgroundResource(R.drawable.border_item);
+
+                        TextView InvoiceNo1_ori = new TextView(myContext);
+                        InvoiceNo1_ori.setBackgroundResource(R.drawable.border_item);
+
+                        TextView InvoiceDate1_ori = new TextView(myContext);
+                        InvoiceDate1_ori.setBackgroundResource(R.drawable.border_item);
+
+                        TextView InvoiceNo1 = new TextView(myContext);
+                        InvoiceNo1.setBackgroundResource(R.drawable.border_item);
+
+                        TextView InvoiceDate1 = new TextView(myContext);
+                        InvoiceDate1.setBackgroundResource(R.drawable.border_item);
+
+                        TextView SupplyType1 = new TextView(myContext);
+                        SupplyType1.setText(cursor_item.getString(cursor_item.getColumnIndex("SupplyType")));
+                        SupplyType1.setBackgroundResource(R.drawable.border_item);
+                        SupplyType1.setPadding(5,0,0,0);
+
+                        TextView HSNCode1 = new TextView(myContext);
+                        HSNCode1.setText(cursor_item.getString(cursor_item.getColumnIndex("HSNCode")));
+                        HSNCode1.setBackgroundResource(R.drawable.border_item);
+                        HSNCode1.setPadding(5,0,0,0);
+
+                        TextView Value1 = new TextView(myContext);
+                        Value1.setText(String.format("%.2f",cursor_item.getDouble(cursor_item.getColumnIndex("Value"))));
+                        Value1.setBackgroundResource(R.drawable.border_item);
+                        Value1.setPadding(0,0,5,0);
+                        Value1.setGravity(Gravity.END);
+                        //valtot += cursor_item.getDouble(cursor_item.getColumnIndex("Value"));
+
+                        TextView TaxableValue1 = new TextView(myContext);
+                        TaxableValue1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue"))));
+                        TaxableValue1.setBackgroundResource(R.drawable.border_item);
+                        TaxableValue1.setPadding(0,0,5,0);
+                        TaxableValue1.setGravity(Gravity.END);
+                        taxvaltot +=  cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue"));
+
+                        TextView IAmt1 = new TextView(myContext);
+                        IAmt1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("IGSTAmount"))));
+                        IAmt1.setBackgroundResource(R.drawable.border_item);
+                        IAmt1.setPadding(0,0,5,0);
+                        IAmt1.setGravity(Gravity.END);
+                        Itot += cursor_item.getDouble(cursor_item.getColumnIndex("IGSTAmount"));
+
+
+                        TextView CAmt1 = new TextView(myContext);
+                        CAmt1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("CGSTAmount"))));
+                        CAmt1.setBackgroundResource(R.drawable.border_item);
+                        CAmt1.setPadding(0,0,5,0);
+                        CAmt1.setGravity(Gravity.END);
+                        Ctot += cursor_item.getDouble(cursor_item.getColumnIndex("CGSTAmount"));
+
+
+                        TextView SAmt1 = new TextView(myContext);
+                        SAmt1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"))));
+                        SAmt1.setBackgroundResource(R.drawable.border_item);
+                        SAmt1.setPadding(0,0,5,0);
+                        SAmt1.setGravity(Gravity.END);
+                        Stot += cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"));
+
+
+                        TextView SubTot1 = new TextView(myContext);
+                        double sub = cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue")) +
+                                cursor_item.getDouble(cursor_item.getColumnIndex("IGSTAmount"))+
+                                cursor_item.getDouble(cursor_item.getColumnIndex("CGSTAmount"))+
+                                cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"));
+                        SubTot1.setText(String.format("%.2f", sub));
+                        SubTot1.setBackgroundResource(R.drawable.border_item);
+                        SubTot1.setPadding(0,0,5,0);
+                        SubTot1.setGravity(Gravity.END);
+                        Amttot += sub;
+
+                        TextView supplPOS1 = new TextView(myContext);
+                        supplPOS1.setBackgroundResource(R.drawable.border_item);
+
+
+                        rowReport1.addView(Sno1);//0
+                        rowReport1.addView(GSTIN1);//1
+                        rowReport1.addView(InvoiceNo1_ori);//2
+                        rowReport1.addView(InvoiceDate1_ori);//3
+                        rowReport1.addView(InvoiceNo1);//4
+                        rowReport1.addView(InvoiceDate1);//5
+                        rowReport1.addView(SupplyType1);//6
+                        rowReport1.addView(HSNCode1);//7
+                        rowReport1.addView(Value1);//8
+                        rowReport1.addView(TaxableValue1);//9
+                        rowReport1.addView(IAmt1);//10
+                        rowReport1.addView(CAmt1);//11
+                        rowReport1.addView(SAmt1);//12
+                        rowReport1.addView(SubTot1);//13
+                        rowReport1.addView(supplPOS1);//13
+
+                        tblReport.addView(rowReport1);
+
+                    }
+                    /*TextView val = (TextView)rowReport.getChildAt(6);
+                    val.setText(String.format("%.2f",valtot));*/
+
+                    TextView taxVal = (TextView)rowReport.getChildAt(9);
+                    taxVal.setText(String.format("%.2f",taxvaltot));
+
+                    TextView iamt = (TextView)rowReport.getChildAt(10);
+                    iamt.setText(String.format("%.2f",Itot));
+
+                    TextView camt = (TextView)rowReport.getChildAt(11);
+                    camt.setText(String.format("%.2f",Ctot));
+
+                    TextView Samt = (TextView)rowReport.getChildAt(12);
+                    Samt.setText(String.format("%.2f",Stot));
+
+                    TextView sub = (TextView)rowReport.getChildAt(13);
+                    sub.setText(String.format("%.2f",Amttot));
+
+
+                }
+
+            }// end for
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+
+        }
+
+    }
     private void GSTR2_UnRegistered_Report()
     {
 
@@ -1223,9 +1812,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 TextView sub = (TextView)rowReport.getChildAt(11);
                 sub.setText(String.format("%.2f",Amttot));
 
-
             }
-
 
         }catch (Exception e)
         {
@@ -8190,6 +8777,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                         }
                     } while (cursor.moveToNext());
+
+                    Collections.sort(datalist_s, B2Csmall.HSNComparator);
 
                 }
                 // now displaying the content

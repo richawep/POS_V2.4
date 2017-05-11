@@ -1,5 +1,7 @@
 package com.wep.common.app.gst;
 
+import java.util.Comparator;
+
 /**
  * Created by welcome on 21-11-2016.
  */
@@ -296,4 +298,17 @@ public class B2Csmall  {
     public void setUnregisteredValue(float unregisteredValue) {
         this.unregisteredValue = unregisteredValue;
     }
+
+    public static Comparator<B2Csmall>  HSNComparator = new Comparator<B2Csmall>() {
+        @Override
+        public int compare(B2Csmall o1, B2Csmall o2) {
+
+            String B2Csmall1 = o1.getHSNCode();
+            String B2Csmall2 = o2.getHSNCode();
+
+            //ascending order
+            return B2Csmall1.compareTo(B2Csmall2);
+        }
+    };
+
 }

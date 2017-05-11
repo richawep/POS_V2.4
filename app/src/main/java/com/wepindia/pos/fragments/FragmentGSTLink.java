@@ -71,6 +71,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPRequestCompletedListener, DownloadFileFromURL.OnFileDownloadCompletedListener,AuthFragment.OnAuthCompletedListener {
@@ -367,11 +368,11 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         }
     }
 
-    private ArrayList<GSTR1_B2B_Data> makeGSTR1B2B(String start_milli, String end_milli){
+    /*private ArrayList<GSTR1_B2B_Data> makeGSTR1B2B(String start_milli, String end_milli){
         ArrayList<GSTR1_B2B_Data> list = dataController.getGSTR1B2BList(start_milli,end_milli);
         return list;
     }
-
+*/
     private ArrayList<GSTR1B2CSAData> makeGSTR1B2CSA(String start_milli, String end_milli){
         ArrayList<GSTR1B2CSAData> list = new ArrayList<GSTR1B2CSAData>();
         list = dataController.getGSTR1B2CSAList(start_milli,end_milli);
@@ -382,6 +383,8 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         ArrayList<GSTR1B2CSData> list = new ArrayList<GSTR1B2CSData>();
         ArrayList<B2Csmall> b2CsmallsList = dataController.getGSTR1B2CSDataList(start_milli, end_milli);
         double gt = 0;
+       // Collections.sort(b2CsmallsList, B2Csmall.HSNComparator);
+
         for (B2Csmall b2Csmall : b2CsmallsList) {
             gt = gt + b2Csmall.getSubTotal();
             GSTR1B2CSData b2CSData = new GSTR1B2CSData(

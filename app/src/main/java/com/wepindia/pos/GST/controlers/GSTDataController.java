@@ -40,6 +40,7 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -279,7 +280,7 @@ public class GSTDataController {
                             } // end else bill level
                         }
                     } while (cursor.moveToNext());
-
+                    Collections.sort(datalist_s, B2Csmall.HSNComparator);
                 }
             }
         }// end try

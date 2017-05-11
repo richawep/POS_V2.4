@@ -992,6 +992,123 @@ public class ReportHelper{
 			rowColumnCaption.addView(ExemptSupply);
 			rowColumnCaption.addView(NilRated);
 			rowColumnCaption.addView(NonGST);
+		}else if(ReportName.equalsIgnoreCase("GSTR2_Registered_Amend") ||
+                ReportName.equalsIgnoreCase("GSTR2_UnRegistered_Amend")) {
+
+			TextView SNo = new TextView(activityContext);
+			SNo.setWidth(60);
+			SNo.setTextSize(15);
+			SNo.setTextColor(Color.WHITE);
+			SNo.setText("S.No");
+
+			TextView GSTIN = new TextView(activityContext);
+			GSTIN.setWidth(120);
+            GSTIN.setTextSize(15);
+            GSTIN.setTextColor(Color.WHITE);
+            if(ReportName.equalsIgnoreCase("GSTR2-B2BA"))
+                GSTIN.setText("GSTIN");
+            else
+                GSTIN.setText("Supplier Name");
+
+            TextView InvoiceNo_ori = new TextView(activityContext);
+			InvoiceNo_ori.setWidth(90);
+			InvoiceNo_ori.setTextSize(15);
+			InvoiceNo_ori.setTextColor(Color.WHITE);
+			InvoiceNo_ori.setText("Ori. Invoice No");
+
+			TextView InvoiceDate_ori = new TextView(activityContext);
+			InvoiceDate_ori.setWidth(110);
+			InvoiceDate_ori.setTextSize(15);
+			InvoiceDate_ori.setTextColor(Color.WHITE);
+			InvoiceDate_ori.setText("Ori. Invoice  Date");
+
+			TextView InvoiceNo = new TextView(activityContext);
+			InvoiceNo.setWidth(85);
+			InvoiceNo.setTextSize(15);
+			InvoiceNo.setTextColor(Color.WHITE);
+			InvoiceNo.setText("Invoice No");
+
+			TextView InvoiceDate = new TextView(activityContext);
+			InvoiceDate.setWidth(110);
+			InvoiceDate.setTextSize(15);
+			InvoiceDate.setTextColor(Color.WHITE);
+			InvoiceDate.setText("Invoice Date");
+
+			TextView HSN = new TextView(activityContext);
+			HSN.setWidth(70);
+			HSN.setTextSize(15);
+			HSN.setTextColor(Color.WHITE);
+			HSN.setText("HSNCode");
+
+			TextView SupplyType = new TextView(activityContext);
+			SupplyType.setWidth(50);
+			SupplyType.setTextSize(15);
+			SupplyType.setTextColor(Color.WHITE);
+			SupplyType.setText("G/S");
+
+			TextView Value = new TextView(activityContext);
+			Value.setWidth(100);
+			Value.setTextSize(15);
+			Value.setTextColor(Color.WHITE);
+			Value.setText("Value");
+            Value.setGravity(Gravity.CENTER);
+
+			TextView TaxableValue = new TextView(activityContext);
+			TaxableValue.setWidth(100);
+			TaxableValue.setTextSize(15);
+			TaxableValue.setTextColor(Color.WHITE);
+			TaxableValue.setText("Taxable   Value");
+
+			TextView IAMT = new TextView(activityContext);
+			IAMT.setWidth(65);
+			IAMT.setTextSize(15);
+			IAMT.setTextColor(Color.WHITE);
+			IAMT.setText("IGST   Amount");
+
+			TextView CAMT = new TextView(activityContext);
+			CAMT.setWidth(65);
+			CAMT.setTextSize(15);
+			CAMT.setTextColor(Color.WHITE);
+			CAMT.setText("CGST   Amount");
+
+			TextView SAMT = new TextView(activityContext);
+			SAMT.setWidth(65);
+			SAMT.setTextSize(15);
+			SAMT.setTextColor(Color.WHITE);
+			SAMT.setText("SGST   Amount");
+
+            TextView Subtotal = new TextView(activityContext);
+            Subtotal.setWidth(100);
+            Subtotal.setTextSize(15);
+            Subtotal.setGravity(Gravity.CENTER);
+            Subtotal.setTextColor(Color.WHITE);
+            Subtotal.setText("Sub Total");
+
+            TextView SupplierPOS = new TextView(activityContext);
+            SupplierPOS.setWidth(60);
+            SupplierPOS.setTextSize(15);
+            SupplierPOS.setGravity(Gravity.CENTER);
+            SupplierPOS.setTextColor(Color.WHITE);
+            SupplierPOS.setText("Supplier POS ");
+
+
+
+			// Add views to row
+			rowColumnCaption.addView(SNo);
+			rowColumnCaption.addView(GSTIN);
+			rowColumnCaption.addView(InvoiceNo_ori);
+			rowColumnCaption.addView(InvoiceDate_ori);
+			rowColumnCaption.addView(InvoiceNo);
+			rowColumnCaption.addView(InvoiceDate);
+			rowColumnCaption.addView(SupplyType);
+			rowColumnCaption.addView(HSN);
+			rowColumnCaption.addView(Value);
+			rowColumnCaption.addView(TaxableValue);
+			rowColumnCaption.addView(IAMT);
+			rowColumnCaption.addView(CAMT);
+			rowColumnCaption.addView(SAMT);
+			rowColumnCaption.addView(Subtotal);
+			rowColumnCaption.addView(SupplierPOS);
 		}
 		else if(ReportName.equalsIgnoreCase("GSTR2-Registered") || ReportName.equalsIgnoreCase("GSTR2-UnRegistered")){
 

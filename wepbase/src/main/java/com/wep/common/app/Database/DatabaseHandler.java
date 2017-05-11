@@ -1654,7 +1654,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
 
         cvDbValues = new ContentValues();
-        cvDbValues.put("ReportsName", "GSTR2-B2BA");
+        cvDbValues.put("ReportsName", "GSTR2_Registered_Amend");
         cvDbValues.put("ReportsType", 4);
         cvDbValues.put("Status", 0);
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
@@ -1666,7 +1666,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
 
         cvDbValues = new ContentValues();
-        cvDbValues.put("ReportsName", "GSTR2-B2CA");
+        cvDbValues.put("ReportsName", "GSTR2_UnRegistered_Amend");
         cvDbValues.put("ReportsType", 4);
         cvDbValues.put("Status", 0);
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
@@ -6331,7 +6331,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         Cursor result = null;
         String queryString = "Select * FROM " + TBL_GSTR2_AMEND + " WHERE " + KEY_GSTIN + " Like '" + gstin + "' AND " +
                 KEY_InvoiceDate+" LIKE '"+invoiceDate+"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+"' AND "+KEY_SupplierType+
-                " LIKE 'Registred' AND "+KEY_OriginalInvoiceNo+" LIKE '"+invoiceNo_ori+"' AND  "+KEY_OriginalInvoiceDate+" LIKE '"
+                " LIKE 'Registered' AND "+KEY_OriginalInvoiceNo+" LIKE '"+invoiceNo_ori+"' AND  "+KEY_OriginalInvoiceDate+" LIKE '"
                 +invoicedate_ori+"'";
         result = dbFNB.rawQuery(queryString, null);
         return result;
@@ -6858,7 +6858,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
 
         return dbFNB.rawQuery("Select ReportsId as _id, ReportsName FROM ReportsMaster where ReportsType=" +
                 ReportsType + " AND ReportsName not in ('Service Tax Report','Kitchen wise Report'," +
-                " 'GSTR1-1A Validation','GSTR2-2A Validation','Modified GSTR2A', 'GSTR2A','GSTR2-B2BA','GSTR2-B2CA','GSTR2-B2C','GSTR2-B2BA') order by ReportsName asc", null);
+                " 'GSTR1-1A Validation','GSTR2-2A Validation','Modified GSTR2A', 'GSTR2A','GSTR2-B2C') order by ReportsName asc", null);
     }
 
     // Getting Values for PAYBILL
