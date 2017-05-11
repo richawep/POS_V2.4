@@ -1940,10 +1940,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public Cursor getitems_b2ba(String No_ori, String Date_ori,String No, String Date, String cust_GSTIN) {
+    public Cursor getitems_b2ba(String No_ori, String Date_ori,String No, String Date, String cust_GSTIN, String pos) {
         String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE " + KEY_InvoiceNo + " Like '" + No + "' AND " +
                 KEY_InvoiceDate + " LIKE '" + Date + "' AND "+KEY_GSTIN+" LIKE '"+cust_GSTIN+"' AND "+ KEY_OriginalInvoiceNo+" LIKE '"+No_ori+"' AND "+KEY_OriginalInvoiceDate
-                +" LIKE '"+Date_ori+"' AND "+KEY_BusinessType+" LIKE 'B2BA'";
+                +" LIKE '"+Date_ori+"' AND "+KEY_BusinessType+" LIKE 'B2BA' AND POS LIKE '"+pos+"'";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
@@ -7346,7 +7346,8 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return result;
     }
     public Cursor getGSTR1B2CSAItems1(String startDate) {
-        String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE  " + KEY_BusinessType + " = 'B2CSA' AND " + KEY_MONTH + " LIKE '" + startDate + "'";
+        String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE  " + KEY_BusinessType + " = 'B2CSA' AND " + KEY_MONTH +
+                " LIKE '" + startDate + "' ORDER BY ReviseHSNCode ASC";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }

@@ -643,10 +643,13 @@ public class GSTDataController {
                 ArrayList<GSTR1_B2B_A_invoices> invoiceList = new ArrayList<>();
                 while (cursor!=null && cursor.moveToNext())
                 {
+                    String pos = cursor.getString(cursor.getColumnIndex("POS"));
                     String str = cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo"));
                     str += cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
                     str += cursor.getString(cursor.getColumnIndex("InvoiceNo"));
                     str += cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                    str +=pos;
+
                     if(ammendRecords!=null && !(ammendRecords.contains(str)))
                        ammendRecords.add(str);
                     else
@@ -665,7 +668,8 @@ public class GSTDataController {
                     String invno_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo"));
                     String invdt_ori = cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
                     String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
-                    Cursor cursor_b2bitems_for_inv = dbReport.getitems_b2ba(invno_ori, invdt_ori,invno, invdt, gstin);
+
+                    Cursor cursor_b2bitems_for_inv = dbReport.getitems_b2ba(invno_ori, invdt_ori,invno, invdt, gstin,pos);
                     int i = 0;
 
                     while (cursor_b2bitems_for_inv!=null && cursor_b2bitems_for_inv.moveToNext())

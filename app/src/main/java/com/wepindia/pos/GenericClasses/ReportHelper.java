@@ -1711,7 +1711,7 @@ public class ReportHelper{
 		}else if(ReportName.equalsIgnoreCase("GSTR1-B2BA")){
 
 			TextView SNo = new TextView(activityContext);
-			SNo.setWidth(60);
+			SNo.setWidth(50);
 			SNo.setTextSize(15);
 			SNo.setTextColor(Color.WHITE);
 			SNo.setText("S.No");
@@ -1764,6 +1764,7 @@ public class ReportHelper{
 			Value.setTextSize(15);
 			Value.setTextColor(Color.WHITE);
 			Value.setText("Value");
+			Value.setGravity(Gravity.CENTER);
 
 			TextView Quantity = new TextView(activityContext);
 			Quantity.setWidth(40);
@@ -1774,6 +1775,7 @@ public class ReportHelper{
 			TextView TaxableValue = new TextView(activityContext);
 			TaxableValue.setWidth(100);
 			TaxableValue.setTextSize(15);
+			TaxableValue.setGravity(Gravity.CENTER);
 			TaxableValue.setTextColor(Color.WHITE);
 			TaxableValue.setText("Taxable   Value");
 
@@ -1821,6 +1823,7 @@ public class ReportHelper{
 			TextView SubTotal = new TextView(activityContext);
 			SubTotal.setWidth(105);
 			SubTotal.setTextSize(15);
+			SubTotal.setGravity(Gravity.CENTER);
 			SubTotal.setTextColor(Color.WHITE);
 			SubTotal.setText("SubTotal");
 
@@ -1869,7 +1872,8 @@ public class ReportHelper{
 
 			//rowColumnCaption.addView(SGSTRate);
 			rowColumnCaption.addView(SGSTAmt);
-			//rowColumnCaption.addView(SubTotal);
+			rowColumnCaption.addView(SubTotal);
+            rowColumnCaption.addView(POS);
 			if (POSEnable.equals("1"))
 			{
 				//rowColumnCaption.addView(POS);
@@ -1968,6 +1972,7 @@ public class ReportHelper{
 
 			TextView SubTotal = new TextView(activityContext);
 			SubTotal.setWidth(105);
+			SubTotal.setGravity(Gravity.CENTER);
 			SubTotal.setTextSize(15);
 			SubTotal.setTextColor(Color.WHITE);
 			SubTotal.setText("SubTotal");
@@ -2006,14 +2011,14 @@ public class ReportHelper{
 			rowColumnCaption.addView(TaxableValue);
 			rowColumnCaption.addView(IGSTRate);
 			rowColumnCaption.addView(IGSTAmt);
-			//rowColumnCaption.addView(SubTotal);
+			rowColumnCaption.addView(SubTotal);
 			if (POSEnable.equals("1"))
 			{
 				//rowColumnCaption.addView(POS);
 			}
 			if (ReverseChargeEnabe.equals("1"))
 			{
-				rowColumnCaption.addView((Pro));
+				//rowColumnCaption.addView((Pro));
 			}
 
 		} else if(ReportName.equalsIgnoreCase("GSTR1-B2CsA")){
