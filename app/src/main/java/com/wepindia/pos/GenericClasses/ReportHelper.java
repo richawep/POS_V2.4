@@ -992,6 +992,88 @@ public class ReportHelper{
 			rowColumnCaption.addView(ExemptSupply);
 			rowColumnCaption.addView(NilRated);
 			rowColumnCaption.addView(NonGST);
+		}else if(ReportName.equalsIgnoreCase("GSTR1-CDN")) {
+
+			TextView SNo = new TextView(activityContext);
+			SNo.setWidth(50);
+			SNo.setTextSize(15);
+			SNo.setTextColor(Color.WHITE);
+			SNo.setText("S.No");
+
+			TextView NoteType = new TextView(activityContext);
+            NoteType.setWidth(60);
+            NoteType.setTextSize(15);
+            NoteType.setTextColor(Color.WHITE);
+            NoteType.setText("Note Type");
+
+			TextView NoteNo = new TextView(activityContext);
+            NoteNo.setWidth(85);
+            NoteNo.setTextSize(15);
+            NoteNo.setTextColor(Color.WHITE);
+            NoteNo.setText("Note No");
+
+			TextView NoteDate = new TextView(activityContext);
+            NoteDate.setWidth(110);
+            NoteDate.setTextSize(15);
+            NoteDate.setTextColor(Color.WHITE);
+            NoteDate.setText("Note Date");
+
+			TextView InvoiceNo = new TextView(activityContext);
+            InvoiceNo.setWidth(85);
+            InvoiceNo.setTextSize(15);
+            InvoiceNo.setTextColor(Color.WHITE);
+            InvoiceNo.setText("Invoice No");
+
+			TextView InvoiceDate = new TextView(activityContext);
+            InvoiceDate.setWidth(110);
+            InvoiceDate.setTextSize(15);
+            InvoiceDate.setTextColor(Color.WHITE);
+            InvoiceDate.setText("Invoice Date");
+
+			TextView Reason = new TextView(activityContext);
+            Reason.setWidth(180);
+            Reason.setTextSize(15);
+            Reason.setTextColor(Color.WHITE);
+            Reason.setText("Reason");
+
+			TextView DifferentialValue = new TextView(activityContext);
+            DifferentialValue.setWidth(100);
+            DifferentialValue.setTextSize(15);
+            DifferentialValue.setTextColor(Color.WHITE);
+            DifferentialValue.setText("Differential Value");
+
+			TextView IAmt = new TextView(activityContext);
+            IAmt.setWidth(65);
+            IAmt.setTextSize(15);
+            IAmt.setTextColor(Color.WHITE);
+            IAmt.setText("IGST   Amt");
+
+			TextView CAmt = new TextView(activityContext);
+            CAmt.setWidth(65);
+            CAmt.setTextSize(15);
+            CAmt.setTextColor(Color.WHITE);
+            CAmt.setText("CGST Amt");
+
+			TextView SAmt = new TextView(activityContext);
+            SAmt.setWidth(65);
+            SAmt.setTextSize(15);
+            SAmt.setTextColor(Color.WHITE);
+            SAmt.setText("SGST Amt");
+
+
+
+			// Add views to row
+			rowColumnCaption.addView(SNo);
+            rowColumnCaption.addView(NoteType);
+            rowColumnCaption.addView(NoteNo);
+            rowColumnCaption.addView(NoteDate);
+            rowColumnCaption.addView(InvoiceNo);
+            rowColumnCaption.addView(InvoiceDate);
+            rowColumnCaption.addView(Reason);
+            rowColumnCaption.addView(DifferentialValue);
+            rowColumnCaption.addView(IAmt);
+            rowColumnCaption.addView(CAmt);
+            rowColumnCaption.addView(SAmt);
 		}else if(ReportName.equalsIgnoreCase("GSTR2_Registered_Amend") ||
                 ReportName.equalsIgnoreCase("GSTR2_UnRegistered_Amend")) {
 
