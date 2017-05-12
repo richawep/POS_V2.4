@@ -7461,6 +7461,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     } while (cursor.moveToNext());
                 }
+                btnExport.setEnabled(true);
             }
         }// end try
         catch(Exception e)
@@ -7982,6 +7983,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     } while (cursor.moveToNext());
 
                 }
+                btnExport.setEnabled(true);
             }
         }// end try
         catch(Exception e)
@@ -8520,6 +8522,11 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TextView sub = (TextView)rowReport.getChildAt(12);
                     sub.setText(String.format("%.2f",Amttot));
             }}
+            if(tblReport.getChildCount()>1)
+            {
+                btnExport.setEnabled(true);
+            }
+
         }catch (Exception e){
                             e.printStackTrace();
                         }
@@ -8772,6 +8779,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             Samt.setText(String.format("%.2f",Stot));
 
         }
+            if(tblReport.getChildCount()>1)
+            {
+                btnExport.setEnabled(true);
+            }
     }catch (Exception e)
     {
         e.printStackTrace();
@@ -8862,6 +8873,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         tblReport.addView(rowcursor);
                     } while (cursor.moveToNext());
                 }
+            }
+            if(tblReport.getChildCount()>1)
+            {
+                btnExport.setEnabled(true);
             }
         }
         catch (Exception e) {
@@ -9172,7 +9187,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TextView sub = (TextView)rowReport.getChildAt(12);
                     sub.setText(String.format("%.2f",Amttot));
                 }while (cursor_billDetail.moveToNext());
-
+                if(tblReport.getChildCount()>1)
+                {
+                    btnExport.setEnabled(true);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
