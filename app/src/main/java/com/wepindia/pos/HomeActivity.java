@@ -29,6 +29,7 @@ import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
 import com.wep.common.app.gst.get.GetGSTR2B2BInvoice;
 import com.wep.common.app.gst.get.GetGSTR2B2BItem;
 import com.wep.gstcall.api.http.HTTPAsyncTask;
+import com.wep.gstcall.api.util.Config;
 import com.wepindia.pos.GST.AmmendActivity;
 import com.wepindia.pos.GST.CreditDebitActivity;
 import com.wepindia.pos.GST.GSTHomeActivity;
@@ -57,6 +58,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     private static final String TAKEAWAY = "2";
     private static final String PICKUP = "3";
     private static final String DELIVERY = "4";
+    public static int Upload_Invoice_Count = 1010;
     String strUserId = "", strUserName = "";
     int strUserRole = 0;
     RelativeLayout rl_dinein, rl_CounterSales,rl_pickup,rl_delivery,rl_inward_invoice_entry,rl_amend,rl_cdn;
@@ -158,6 +160,38 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                     BillNoReset bs = new BillNoReset();
                     bs.setBillNo(dbHomeScreen);
 
+                    try
+                    {
+                        Date dd = new SimpleDateFormat("dd-MM-yyyy").parse(businessdate);
+                        long milli = dd.getTime();
+                        Cursor cursor = dbHomeScreen.getInvoice_outward(Long.toString(milli));
+                        if(cursor!=null && cursor.moveToNext())
+                        {
+                            int billcount = cursor.getCount();
+                            Cursor cursor_owner = dbHomeScreen.getOwnerDetail();
+                            if(cursor_owner!= null && cursor_owner.moveToNext())
+                            {
+                                String deviceid = cursor_owner.getString(cursor_owner.getColumnIndex("DeviceId"));
+                                String deviceName = cursor_owner.getString(cursor_owner.getColumnIndex("DeviceName"));
+                                String Email = cursor_owner.getString(cursor_owner.getColumnIndex("Email"));
+                                String paramStr ="data="+deviceid+","+Email+","+businessdate+","+billcount+","+deviceName;
+                                new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",Upload_Invoice_Count, Config.Upload_No_of_Invoices+paramStr).execute();
+                            }
+                            else
+                            {
+                                Log.d("TAG", "Cannot upload invoices count due to insufficient owners details");
+                            }
+
+                        }else
+                        {
+                            Toast.makeText(myContext, "No Invoice count to send for businessDate :"+businessdate, Toast.LENGTH_SHORT).show();
+                            Log.d("TAG", "No Invoice count to send for businessDate :"+businessdate);
+                        }
+
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
 
                 }
 
@@ -320,6 +354,47 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 						e.printStackTrace();
 					}*/
 
+                            try
+                            {   Cursor businessdate_cursor = getDb().getCurrentDate();
+                                if(businessdate_cursor != null && businessdate_cursor.moveToNext())
+                                {
+                                    String businessdate =  businessdate_cursor.getString(businessdate_cursor.getColumnIndex("BusinessDate"));
+                                    Date dd = new SimpleDateFormat("dd-MM-yyyy").parse(businessdate);
+                                    long milli = dd.getTime();
+                                    Cursor cursor = getDb().getInvoice_outward(Long.toString(milli));
+                                    if(cursor!=null && cursor.moveToNext())
+                                    {
+                                        int billcount = cursor.getCount();
+                                        Cursor cursor_owner = getDb().getOwnerDetail();
+                                        if(cursor_owner!= null && cursor_owner.moveToNext())
+                                        {
+                                            String deviceid = cursor_owner.getString(cursor_owner.getColumnIndex("DeviceId"));
+                                            String deviceName = cursor_owner.getString(cursor_owner.getColumnIndex("DeviceName"));
+                                            String Email = cursor_owner.getString(cursor_owner.getColumnIndex("Email"));
+                                            //Date newDate = new Date(milli);
+                                            //String dd1 = new SimpleDateFormat("yyyy-MM-dd").format(newDate);
+                                            String paramStr ="data="+deviceid+","+Email+","+businessdate+","+billcount+","+deviceName;
+                                            //String paramStr ="data="+deviceid+","+Email+","+dd1+","+billcount+","+deviceName;
+                                            new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",Upload_Invoice_Count, Config.Upload_No_of_Invoices+paramStr).execute();
+                                        }
+                                        else
+                                        {
+                                            Log.d("TAG", "Cannot upload invoices count due to insufficient owners details");
+                                        }
+
+                                    }else
+                                    {
+                                        Toast.makeText(myContext, "No Invoice count to send for businessDate :"+businessdate, Toast.LENGTH_SHORT).show();
+                                        Log.d("TAG", "No Invoice count to send for businessDate :"+businessdate);
+                                    }
+                                }
+
+
+                            }catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
                             String strNextDate = "";
 
 
@@ -369,6 +444,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                             } else {
                                 MsgBox.Show("Warning", "Error: DayEnd is not done");
                             }
+
 
 
 
@@ -693,6 +769,17 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 //                } else {
 //                    Toast.makeText(this, "Error due to empty response", Toast.LENGTH_SHORT).show();
 //                }
+            } else if (requestCode == Upload_Invoice_Count) // Upload_invoice count for metering
+            {
+                if(data.contains("\"success\":true,\"message\":\"Data Updated Successfully\""))
+                {
+                    Toast.makeText(myContext, "No of invoices uploaded sucessfully.", Toast.LENGTH_SHORT).show();
+                }
+                else if (data.contains("\"success\":false,\"message\":\"Check Parameters\""))
+                {
+                    Toast.makeText(myContext, "No of invoices uploading failed.", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG,"No of invoices uploading failed.");
+                }
             } else if (requestCode == 2) // REQUEST_GET_GSTR2_B2B
             {
                 //GetGSTR2B2BFinal getGSTR2B2BFinal = null;

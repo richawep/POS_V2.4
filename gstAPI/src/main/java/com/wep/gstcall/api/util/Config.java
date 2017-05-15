@@ -31,4 +31,8 @@ public class Config {
     public static final String GSTR2_DAY= BASE_URL+"/API/API/Inward?";
 
     public static final String GSTR1_DAY= BASE_URL+"/API/API/Outward?";
+
+
+    public static final String Upload_No_of_Invoices = "http://192.168.1.6/WepMetering/api/addBillCount?";
+
 }

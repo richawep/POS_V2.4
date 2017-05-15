@@ -608,6 +608,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_SGSTAmount = "SGSTAmount";
     public static final String KEY_CGSTAmount = "CGSTAmount";
     public static final String KEY_POS = "POS";
+    public static final String KEY_DeviceId = "DeviceId";
+    public static final String KEY_DeviceName = "DeviceName";
     public static final String KEY_BillingMode = "BillingMode"; // richa_2012
     public static final String KEY_MONTH = "Month";
     public static final String KEY_SupplyType_REV = "RevisedSupplyType";
@@ -665,7 +667,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     String QUERY_CREATE_TABLE_OWNER_DETAILS = "CREATE TABLE " + TBL_OWNER_DETAILS + " ( " +
             KEY_GSTIN + " TEXT, " + KEY_Owner_Name + "  TEXT, " + KEY_FIRM_NAME + " TEXT, " + KEY_PhoneNo + " TEXT, " +
-            KEY_POS +" TEXT,"+
+            KEY_POS +" TEXT,"+ KEY_DeviceId+" Text, "+KEY_DeviceName+" Text, "+KEY_USER_EMAIL+" TEXT, "+
             KEY_Address + " TEXT, " + KEY_TINCIN + " TEXT, " + KEY_IsMainOffice + "  TEXT ) ";
 
     String QUERY_CREATE_TABLE_Stock_Outward = "CREATE TABLE " + TBL_StockOutward + " ( " +
@@ -1284,6 +1286,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_GSTIN, "04AABFN9870CMZT");
         cvDbValues.put(KEY_POS, "29");
         cvDbValues.put(KEY_Owner_Name, "Anuj Sharma");
+        cvDbValues.put(KEY_DeviceId, "MACID_00");
+        cvDbValues.put(KEY_DeviceName, "TAB2200+");
+        cvDbValues.put(KEY_USER_EMAIL, "abc@xyz.com");
         cvDbValues.put(KEY_FIRM_NAME, "Sharma & Sons");
         cvDbValues.put(KEY_PhoneNo, "1234567890");
         cvDbValues.put(KEY_Address, "Bangalore");
@@ -2305,9 +2310,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return gstin;
 
     }
+    public Cursor getOwnerDetail() {
+        String Selectquery = "Select * FROM " + TBL_OWNER_DETAILS ;
+        Cursor result = dbFNB.rawQuery(Selectquery, null);
+
+        return result;
+
+    }
 
     public String gettaxeename() {
-        String Selectquery = "Select " + TBL_OWNER_DETAILS + " FROM " + TBL_OWNER_DETAILS + " WHERE " + KEY_IsMainOffice + " LIKE 'yes'";
+        String Selectquery = "Select " + KEY_Owner_Name + " FROM " + TBL_OWNER_DETAILS + " WHERE " + KEY_IsMainOffice + " LIKE 'yes'";
         Cursor result = dbFNB.rawQuery(Selectquery, null);
         String gstin = null;
         if (result != null)
