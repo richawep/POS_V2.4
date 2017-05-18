@@ -2314,6 +2314,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             // Make the item grid invisible
             grdItems.setVisibility(View.INVISIBLE);
         }*/
+        fTotalDiscount =0;
     }
 
 
@@ -4282,8 +4283,9 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                                         return;
                                     }
                                     String pos = cursor.getString(cursor.getColumnIndex("POS"));
-                                    if(pos!= null && !pos.equals(""))
-                                      {
+                                    String custStateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
+                                    if(pos!= null && !pos.equals("") && custStateCode!=null && !custStateCode.equals("") && !custStateCode.equalsIgnoreCase(pos))
+                                    {
                                         chk_interstate.setChecked(true);
                                         int index = getIndex_pos(pos);
                                         spnr_pos.setSelection(index);
@@ -4848,9 +4850,9 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 {
                     BillTaxItem taxItem = new BillTaxItem(taxname, (taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
                     billOtherChargesItems.add(taxItem);
-                    double totalamt = Double.parseDouble(tvBillAmount.getText().toString().trim());
+                    /*double totalamt = Double.parseDouble(tvBillAmount.getText().toString().trim());
                     totalamt+= taxvalue;
-                    tvBillAmount.setText(String.format("%.2f", totalamt));
+                    tvBillAmount.setText(String.format("%.2f", totalamt));*/
                 }
             }
 

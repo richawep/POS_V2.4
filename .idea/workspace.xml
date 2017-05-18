@@ -20,9 +20,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -6319,7 +6316,14 @@
       <option name="project" value="LOCAL" />
       <updated>1494834691462</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="allowing new item to be inserted i outward item database even if bill is made for the day - issue reported">
+      <created>1495090889550</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1495090889550</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6435,7 +6439,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Making taxes Print in Bill as CGST &amp; SGST" />
     <MESSAGE value="printing cust address in homedelivery in print &amp; reprint bill" />
     <MESSAGE value="mentioning &quot;Duplicate bill&quot; on reprint" />
     <MESSAGE value="integrating IGST calculation in bill print &amp; reprint" />
@@ -6460,7 +6463,8 @@
     <MESSAGE value="GSTR1 - CDN Report" />
     <MESSAGE value="GSTR reports - enabling export button" />
     <MESSAGE value="integrating API for uploading of no of invoice at end" />
-    <option name="LAST_COMMIT_MESSAGE" value="integrating API for uploading of no of invoice at end" />
+    <MESSAGE value="allowing new item to be inserted i outward item database even if bill is made for the day - issue reported" />
+    <option name="LAST_COMMIT_MESSAGE" value="allowing new item to be inserted i outward item database even if bill is made for the day - issue reported" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

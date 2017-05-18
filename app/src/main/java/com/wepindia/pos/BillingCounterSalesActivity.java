@@ -417,6 +417,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         chk_interstate.setChecked(false);
         spnr_pos.setSelection(0);
         editTextOrderNo.setText(String.valueOf(db.getNewBillNumber()));
+        fTotalDiscount =0;
     }
 
     private void initViews() {
@@ -2854,9 +2855,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 {
                     BillTaxItem taxItem = new BillTaxItem(taxname, (taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
                     billOtherChargesItems.add(taxItem);
-                    double totalamt = Double.parseDouble(tvBillAmount.getText().toString().trim());
-                    totalamt+= taxvalue;
-                    tvBillAmount.setText(String.format("%.2f", totalamt));
+                    /*double totalamt = Double.parseDouble(tvBillAmount.getText().toString().trim());
+                    totalamt+= taxvalue;*/
+                    //tvBillAmount.setText(String.format("%.2f", totalamt));
                 }
             }
 
@@ -3333,7 +3334,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                         return;
                                     }
                                     String pos = cursor.getString(cursor.getColumnIndex("POS"));
-                                    if(pos!= null && !pos.equals(""))
+                                    String custStateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
+                                    if(pos!= null && !pos.equals("") && custStateCode!=null && !custStateCode.equals("") && !custStateCode.equalsIgnoreCase(pos))
                                     {
                                         chk_interstate.setChecked(true);
                                         int index = getIndex_pos(pos);
