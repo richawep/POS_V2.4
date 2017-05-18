@@ -456,7 +456,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         txtStock.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if(hasFocus && btnEdit.isEnabled() ){
                     try{
                         Date d = new SimpleDateFormat("dd-MM-yyyy").parse(businessDate);
                         int invoiceno = dbItems.getLastBillNoforDate(String.valueOf(d.getTime()));
