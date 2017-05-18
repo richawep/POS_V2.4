@@ -1565,6 +1565,19 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         etRate.setOnClickListener(Qty_Rate_Click);
                         etRate.setOnKeyListener(Qty_Rate_KeyPressEvent);
                         etInputValidate.ValidateDecimalInput(etRate);
+                        etRate.addTextChangedListener(new TextWatcher() {
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                            }
+
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            }
+
+                            public void afterTextChanged(Editable s) {
+                                Qty_Rate_Edit();
+                            }
+                        });
                     }
 
                     // Amount
@@ -1802,7 +1815,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
      *************************************************************************************************************************************/
     private void Qty_Rate_Edit() {
 
-        String strQty = "0";
+        double strQty = 0;
         double dTaxPercent = 0, dDiscPercent = 0, dDiscAmt = 0, dTempAmt = 0, dTaxAmt = 0;
         double dRate;
         try {
@@ -1820,7 +1833,9 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     // Quantity
                     EditText Qty = (EditText) Row.getChildAt(3);
                     Qty.setSelectAllOnFocus(true);
-                    strQty = Qty.getText().toString().equalsIgnoreCase("") ? "0" : Qty.getText().toString(); // Temp
+                    strQty = Double.parseDouble(
+                            Qty.getText().toString().equalsIgnoreCase("") ? "0" : Qty.getText().toString()); // Temp
+
                     Cursor crsrSett = dbBillScreen.getBillSetting();
                     if(crsrSett!=null && crsrSett.moveToFirst())
                     {
@@ -1830,7 +1845,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                             if(ItemCrsr!=null && ItemCrsr.moveToFirst())
                             {
                                 double availableStock = ItemCrsr.getDouble(ItemCrsr.getColumnIndex("Quantity"));
-                                if ( availableStock < Float.valueOf(Qty.getText().toString())) {
+                                if ( availableStock < strQty) {
                                     MsgBox.Show("Warning", "Stock is less, present stock quantity is "
                                             + String.valueOf(availableStock));
                                     Qty.setText(String.format("%.2f", availableStock));
@@ -1851,7 +1866,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     dRate = Double.parseDouble(
                             Rate.getText().toString().equalsIgnoreCase("") ? "0" : Rate.getText().toString()); // Temp
                     Amount.setText(
-                            String.format("%.2f", (Double.parseDouble(Qty.getText().toString()) * dRate)));
+                            String.format("%.2f", (strQty * dRate)));
+
 
                     // Tax and Discount Amount
                     TextView TaxPer = (TextView) Row.getChildAt(6);
@@ -1871,11 +1887,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         // Discount
                         dDiscAmt = dRate * (dDiscPercent / 100);
                         dTempAmt = dDiscAmt;
-                        dDiscAmt = dDiscAmt * Double.parseDouble(Qty.getText().toString());
+                        dDiscAmt = dDiscAmt * strQty;
 
                         // Tax
                         dTaxAmt = (dRate - dTempAmt) * (dTaxPercent / 100);
-                        dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
+                        dTaxAmt = dTaxAmt * strQty;
 
                         TaxAmt.setText(String.format("%.2f", dTaxAmt));
                         DiscAmt.setText(String.format("%.2f", dDiscAmt));
@@ -1887,11 +1903,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         // Discount
                         dDiscAmt = dBasePrice * (dDiscPercent / 100);
                         dTempAmt = dDiscAmt;
-                        dDiscAmt = dDiscAmt * Double.parseDouble(Qty.getText().toString());
+                        dDiscAmt = dDiscAmt * strQty;
 
                         // Tax
                         dTaxAmt = (dBasePrice - dTempAmt) * (dTaxPercent / 100);
-                        dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
+                        dTaxAmt = dTaxAmt * strQty;
 
                         TaxAmt.setText(String.format("%.2f", dTaxAmt));
                         DiscAmt.setText(String.format("%.2f", dDiscAmt));
@@ -1900,7 +1916,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     // Service Tax charge
                     dTaxAmt = dRate * (Double.parseDouble(ServiceTax.getText().toString()) / 100);
                     ServiceTaxAmt.setText(
-                            String.format("%.2f", (Double.parseDouble(Qty.getText().toString()) * dTaxAmt)));
+                            String.format("%.2f", (strQty * dTaxAmt)));
 
                     // // delete
                     // Delete.setText("Hi");
@@ -2498,14 +2514,33 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             }
 
             // Quantity
+            // Quantity
             if (RowKOTItem.getChildAt(3) != null) {
-                objPendingKOT.setQuantity(Float.parseFloat(Quantity.getText().toString()));
+                String qty_str = Quantity.getText().toString();
+                double qty_d = 0.00;
+                if(qty_str.equals("")) {
+                    Quantity.setText("0.00");
+                }else
+                {
+                    qty_d = Double.parseDouble(qty_str);
+                }
+
+                objPendingKOT.setQuantity(Float.parseFloat(String.format("%.2f",qty_d)));
             }
 
             // Rate
             if (RowKOTItem.getChildAt(4) != null) {
-                objPendingKOT.setRate(Float.parseFloat(Rate.getText().toString()));
+                String rate_str = Rate.getText().toString();
+                double rate_d = 0.00;
+                if(rate_str.equals("")) {
+                    Rate.setText("0.00");
+                }else
+                {
+                    rate_d = Double.parseDouble(rate_str);
+                }
+                objPendingKOT.setRate(Float.parseFloat(String.format("%.2f",rate_d)));
             }
+
 
             // Amount
             if (RowKOTItem.getChildAt(5) != null) {
@@ -3223,7 +3258,16 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             // Quantity
             if (RowBillItem.getChildAt(3) != null) {
                 EditText Quantity = (EditText) RowBillItem.getChildAt(3);
-                objBillItem.setQuantity(Float.parseFloat(Quantity.getText().toString()));
+                String qty_str = Quantity.getText().toString();
+                double qty_d = 0.00;
+                if(qty_str==null || qty_str.equals(""))
+                {
+                    Quantity.setText("0.00");
+                }else
+                {
+                    qty_d = Double.parseDouble(qty_str);
+                }
+                objBillItem.setQuantity(Float.parseFloat(String.format("%.2f",qty_d)));
                 Log.d("InsertBillItems", "Quantity:" + Quantity.getText().toString());
 
                 if (crsrUpdateItemStock!=null && crsrUpdateItemStock.moveToFirst()) {
@@ -3244,7 +3288,17 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             // Rate
             if (RowBillItem.getChildAt(4) != null) {
                 EditText Rate = (EditText) RowBillItem.getChildAt(4);
-                objBillItem.setValue(Float.parseFloat(Rate.getText().toString()));
+                String rate_str = Rate.getText().toString();
+                double rate_d = 0.00;
+                if((rate_str==null || rate_str.equals("")))
+                {
+                    Rate.setText("0.00");
+                }else
+                {
+                    rate_d = Double.parseDouble(rate_str);
+                }
+
+                objBillItem.setValue(Float.parseFloat(String.format("%.2f",rate_d)));
                 Log.d("InsertBillItems", "Rate:" + Rate.getText().toString());
             }
 
