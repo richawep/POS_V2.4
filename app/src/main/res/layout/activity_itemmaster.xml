@@ -12,10 +12,11 @@
         android:id="@+id/lnrItemMaster"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
         android:background="#FFFFFF"
         android:orientation="vertical"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -1002,7 +1003,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:hint=" "
-                            android:maxLength="7"
+                            android:maxLength="8"
                             android:selectAllOnFocus="true"
                             android:textSize="13dp" />
                     </LinearLayout>
