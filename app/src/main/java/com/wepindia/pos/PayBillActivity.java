@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteQuery;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +15,6 @@ import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -36,7 +34,6 @@ import android.widget.Toast;
 
 import com.mswipetech.wisepad.payment.MSwipePaymentActivity;
 import com.mswipetech.wisepad.payment.PasswordChangeActivity;
-import com.mswipetech.wisepad.payment.PaymentActivity;
 import com.mswipetech.wisepad.payment.fragments.FragmentLogin;
 import com.mswipetech.wisepad.sdk.MswipeWisepadController;
 import com.mswipetech.wisepad.sdktest.data.AppPrefrences;
@@ -47,11 +44,11 @@ import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.print.Payment;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
-import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.AddedItemsToOrderTableClass;
 
-import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class PayBillActivity extends FragmentActivity implements FragmentLogin.OnLoginCompletedListener,PaymentResultListener {
@@ -74,10 +71,17 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     TableLayout tblPayBill;
     String strTotal, strCustId = "0";
     float baseValue_recieved =0;
+    int taxType_recieved =0;
     double dRoundoffTotal;
     float dWalletPayment =0;
     int RESETCALLED =0;
     float discPercent =0;
+    double otherCharges_recieved =0;
+    double totalCGSTAmount =0;
+    double totalSGSTAmount =0;
+    double totalBillAmount =0;
+
+
 
     // Variables
     public static final String IS_COMPLIMENTARY_BILL = "false";
@@ -105,8 +109,10 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     private String phone;
     String strUserName = "";
     Cursor crsrCustomer;
+    ArrayList<AddedItemsToOrderTableClass> orderList_recieved;
     Date d;
     private double toPayAmount;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,6 +129,9 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             strTotal = intentt.getStringExtra("TotalAmount");
             strCustId = intentt.getStringExtra("CustId");
             baseValue_recieved = intentt.getFloatExtra("BaseValue",0);
+            otherCharges_recieved = intentt.getDoubleExtra("OtherCharges",0);
+            taxType_recieved = intentt.getIntExtra("TaxType",1); // forward ->1, reverse -> 0
+            orderList_recieved = intentt.getParcelableArrayListExtra("OrderList");
             strOrderDelivered = intentt.getBooleanExtra(ORDER_DELIVERED,false);
             if(strCustId==null)
                 strCustId = "0";
@@ -230,6 +239,70 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         }
     };
 
+    private void RecalculateBillAmount() {
+        double dTotalValue = 0.00, dPaidTotal = 0.00;
+        double dTenderAmount = 0.00, dChangeAmount = 0.00, dDiscAmt = 0.00;
+        totalCGSTAmount = totalSGSTAmount =totalBillAmount=0;
+
+        dDiscAmt = edtDiscount.getText().toString().equalsIgnoreCase("") ? 0.00 : Double.parseDouble(edtDiscount.getText().toString());
+        //dTotalValue = edtTotalValue.getText().toString().equalsIgnoreCase("") ? 0.00 : Double.parseDouble(edtTotalValue.getText().toString());
+
+        if(discPercent>0){
+            for(AddedItemsToOrderTableClass item : orderList_recieved)
+            {
+                double rate= item.getRate();
+                double quantity = item.getQuantity();
+                double igstRate = item.getIgstRate();
+                double cgstRate = item.getCgstRate();
+                double sgstRate = item.getSgstRate();
+                if(taxType_recieved ==1 ) // forward
+                {
+                    double discountedrate_item = rate*(1-(discPercent/100));
+                    double discountedrate = discountedrate_item*quantity;
+                    double igstAmt_new = discountedrate*igstRate/100;
+                    double cgstAmt_new = discountedrate*cgstRate/100;
+                    double sgstAmt_new = discountedrate*sgstRate/100;
+                    totalCGSTAmount += cgstAmt_new;
+                    totalSGSTAmount += sgstAmt_new;
+
+                    dTotalValue += discountedrate+igstAmt_new + cgstAmt_new +sgstAmt_new;
+
+                    item.setIgstAmt(igstAmt_new);
+                    item.setCgstAmt(cgstAmt_new);
+                    item.setSgstAmt(sgstAmt_new);
+                }
+                else if(taxType_recieved ==0 )// reverse
+                {
+                    double basePrice = rate/(1+ (igstRate/100)+(cgstRate/100)+(sgstRate/100));
+                    double discountedrate_item = basePrice*(1-(discPercent/100));
+                    double discountedrate = discountedrate_item*quantity;
+                    double igstAmt_new = item.getIgstAmt();
+                    double cgstAmt_new = item.getCgstAmt();
+                    double sgstAmt_new = item.getSgstAmt();
+                    totalCGSTAmount += cgstAmt_new;
+                    totalSGSTAmount += sgstAmt_new;
+
+                    dTotalValue += discountedrate+igstAmt_new + cgstAmt_new +sgstAmt_new;
+
+                    item.setIgstAmt(igstAmt_new);
+                    item.setCgstAmt(cgstAmt_new);
+                    item.setSgstAmt(sgstAmt_new);
+
+
+                }
+            }  // end of for
+            dTotalValue+= otherCharges_recieved;
+            totalBillAmount = dTotalValue;
+            dRoundoffTotal = Math.round(dTotalValue);
+            String str = String.format("%.2f",dTotalValue);
+            edtTotalValue.setText(String.format( "%.2f", dRoundoffTotal ));
+            edtRoundOff.setText("0" + str.substring(str.indexOf(".")));
+        }
+
+
+
+    }
+
     private void TenderChange() {
         double dTotalValue = 0.00, dPaidTotal = 0.00;
         double dTenderAmount = 0.00, dChangeAmount = 0.00;
@@ -281,7 +354,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         }
         else
         {
-            if (dTenderAmount < Double.parseDouble(strTotal)) {
+            if (dTenderAmount < dTotalValue) {
                 edtTenderTotalValue.setTextColor(Color.RED);
             } else {
                 edtTenderTotalValue.setTextColor(Color.GREEN);
@@ -320,10 +393,10 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         /*Intent intentDineIn = new Intent(myContext, PayBillActivity.class);
         intentDineIn.putExtra("amount", edtTotalValue.getText().toString());
         startActivity(intentDineIn);*/
-        makePayment();
+        makePayment_Card();
     }
 
-    public void makePayment() {
+    public void makePayment_Card() {
         txt = edtTotalValue.getText().toString().trim();
         txt = getCardPaybles()+"";
         if (txt.equalsIgnoreCase(""))
@@ -416,6 +489,10 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         intentResult.putExtra(TENDER_WALLET_VALUE, dWalletPayment);
         intentResult.putExtra(ORDER_DELIVERED, strOrderDelivered);
         intentResult.putExtra("CUST_ID", Integer.parseInt(tvCustId.getText().toString()));
+        intentResult.putParcelableArrayListExtra("OrderList", orderList_recieved);
+        intentResult.putExtra("TotalBillAmount", totalBillAmount);
+        intentResult.putExtra("TotalCGSTAmount", totalCGSTAmount);
+        intentResult.putExtra("TotalSGSTAmount", totalSGSTAmount);
         return intentResult;
     }
 
@@ -505,19 +582,10 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                     TextView DiscountPercent = (TextView) Row.getChildAt(2);
                                     TextView DiscountAmount = (TextView) Row.getChildAt(3);
                                     if (rbDiscPercent.isChecked() == true) {
-                                       // float discPercent = Float.parseFloat(edtTotalValue.getText().toString()) * (Float.parseFloat(DiscountPercent.getText().toString()) / 100);
                                         discPercent = (Float.parseFloat(DiscountPercent.getText().toString()));
-                                        //float disc_amt = Float.parseFloat(strTotal) *  (discPercent/ 100);
                                         float disc_amt = baseValue_recieved *  (discPercent/ 100);
                                         edtDiscount.setText(String.format("%.2f",disc_amt));
-//                                        float total = Float.parseFloat(strTotal);
-//                                        total -= Float.parseFloat(edtDiscount.getText().toString());
-//                                        Log.v("Debug", "Total Amount after Discount:" + total);
-//                                        dRoundoffTotal = Math.round(total);
-//                                        edtTotalValue.setText(String.format( "%.2f", dRoundoffTotal ));
-//                                        String strtotal_afterDiscount = String.format("%.2f",total);
-//                                        edtRoundOff.setText("0" + strtotal_afterDiscount.substring(strtotal_afterDiscount.indexOf(".")));
-
+//
                                     }
                                     if (rbDiscAmount.isChecked() == true) {
                                         double discAmt = Double.parseDouble(DiscountAmount.getText().toString());
@@ -530,6 +598,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                             Toast.makeText(myContext, "Discount is not applicable as bill amount is less than "+discAmt, Toast.LENGTH_LONG).show();
                                         }
                                     }
+                                    RecalculateBillAmount();
                                     TenderChange();
                                     PayBillDialog.dismiss();
                                 } else {

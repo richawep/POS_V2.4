@@ -293,7 +293,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="*Please not discount is calculated on subtotal"
+                        android:text="*Please note discount is calculated on subtotal"
                         android:textColor="@color/white"/>
                 </LinearLayout>
             </LinearLayout>

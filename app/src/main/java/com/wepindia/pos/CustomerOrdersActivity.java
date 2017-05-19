@@ -75,7 +75,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 	ListView lstvwOrderCustName;
 	ScrollView scrlOrderDetail;
 	TableLayout tblOrderDetails, tblRider;
-
+	ArrayList<Integer> menuCodeList ;
 	// Variables
 	//private static final String FILE_SHARED_PREFERENCE = "WeP_FnB";
 	Cursor crsrCustomer = null, crsrPendingOrderItems = null;
@@ -296,7 +296,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
             btnOrder.setEnabled(true);
             btnOrder.setTextColor(Color.WHITE);
-            int billstatus =1;
+            /*int billstatus =1;
             if (BILLING_MODE.equals("4"))
                 billstatus =2;
             int paid  = dbCustomerOrder.getBillDetailByCustomerWithTime1(Integer.valueOf(txtCustId.getText().toString()),
@@ -320,7 +320,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                 }
                 txtBillNo.setText("0");
                 //txtAmountDue.setText(txtBillAmount.getText().toString());
-            }
+            }*/
             if(BILLING_MODE.equalsIgnoreCase("4"))
             {
                 lnrboxx6.setVisibility(View.VISIBLE);
@@ -377,8 +377,10 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 	private void LoadPendingOrderItems(int CustId){
 		TextView tvSno, tvItemName, tvQty;
 		TableRow rowItem = null;
+		menuCodeList = new ArrayList<>();
+
 		crsrPendingOrderItems = dbCustomerOrder.getKOTItems(CustId,BILLING_MODE);
-        int i = 1;
+		int i = 1;
 		if(crsrPendingOrderItems.moveToFirst()){
 			do{
 				rowItem = new TableRow(myContext);
@@ -386,6 +388,8 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 						LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 				rowItem.setBackgroundResource(R.drawable.row_background);
 
+				int menuCode = crsrPendingOrderItems.getInt(crsrPendingOrderItems.getColumnIndex("ItemNumber"));
+				menuCodeList.add(menuCode);
                 // S.No
                 tvSno = new TextView(myContext);
                 tvSno.setGravity(1);
@@ -497,20 +501,35 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         Cursor cursor = dbCustomerOrder.getBillDetailByCustomerIdTime(
                 Integer.valueOf(txtCustId.getText().toString()),billstatus,time, billingMode);
         discountAmount =0;
+		int found =0;
         while(cursor!=null && cursor.moveToNext() )
         {
-            double subtot = (cursor.getDouble(cursor.getColumnIndex("SubTotal")));
-            subtot+= dOtherChrgs;
-            String strsubtot = String.format("%.2f",subtot);
-            String strtot = String.format("%.2f",dBillTotal);
-            if(strsubtot.equals(strtot))
+            double taxVal = (cursor.getDouble(cursor.getColumnIndex("TaxableValue")));
+            String strtaxVal = String.format("%.2f",taxVal);
+            String strtot = String.format("%.2f",dSubTotal);
+            if(strtaxVal.equals(strtot))
             {
+
+
+				found =1;
                 discountAmount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
+				txtBillAmount.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("BillAmount"))));
+				txtPaidStatus.setText("Paid");
+				strPaymentStatus= "Paid";
+				txtBillNo.setText(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
                 break;
             }
+        }if(0 == found){
+        	txtBillAmount.setText(String.format("%.2f", dBillTotal));
+			if(BILLING_MODE.equals("3")) {
+				txtPaidStatus.setText("Not Paid");
+				strPaymentStatus = "Not Paid";
+			}else if(BILLING_MODE.equals("4")) {
+				txtPaidStatus.setText("Cash On Delivery");
+				strPaymentStatus = "Cash On Delivery";
+			}
+			txtBillNo.setText("0");
         }
-
-        txtBillAmount.setText(String.format("%.2f", dBillTotal-discountAmount));
 	}
 
 	private void ResetCustomerOrder(){
@@ -525,6 +544,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         btnOrder.setTextColor(Color.GRAY);
 		btnTender.setEnabled(true);
 		btnDelivery.setEnabled(true);
+		menuCodeList=null;
 
 		for(int iPosition = tblOrderDetails.getChildCount() -1; iPosition >= 1; iPosition--){
 			TableRow rowOrderItem = (TableRow)tblOrderDetails.getChildAt(iPosition);

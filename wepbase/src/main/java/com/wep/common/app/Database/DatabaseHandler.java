@@ -4962,6 +4962,14 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber+
                 " AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null, null, null, null);
     }
+    public Cursor getBillDetail_counter(int InvoiceNumber, String InvoiceDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        if(db!=null)
+            return db.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber+
+                " AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null, null, null, null);
+        else
+            return null;
+    }
 
     // -----Retrieve single bill details by Customer Id-----
     public Cursor getBillDetailByCustomer(int CustId, int BillStatus, float BillAmount) {
