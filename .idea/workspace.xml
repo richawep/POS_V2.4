@@ -6101,13 +6101,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00003" summary="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;Fixed: Wallet Payment&#10;Change: Credit Customer Validation Changed&#10;Progress: Card payment&#10;">
-      <created>1490964886319</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1490964886319</updated>
-    </task>
     <task id="LOCAL-00004" summary="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;Fixed: Wallet Payment&#10;Change: Credit Customer Validation Changed&#10;Progress: Card payment&#10;">
       <created>1490965016871</created>
       <option name="number" value="00004" />
@@ -6444,7 +6437,14 @@
       <option name="project" value="LOCAL" />
       <updated>1495189630703</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="1. qty not taken in decimal in printing bill">
+      <created>1495190419931</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1495190419931</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TodoView">
