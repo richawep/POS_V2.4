@@ -17,11 +17,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/utils/PrinterUtil.java" afterPath="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/utils/PrinterUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/BillKotItem.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/BillKotItem.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -6106,13 +6101,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00002" summary="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;">
-      <created>1490939174146</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1490939174146</updated>
-    </task>
     <task id="LOCAL-00003" summary="Fixed: Handling Null pointer Exception fastBillingMode check&#10;Fixed: Screenshot issue Overlapping&#10;Fixed: Grid Issue Fixed&#10;Fixed: Wallet Payment&#10;Change: Credit Customer Validation Changed&#10;Progress: Card payment&#10;">
       <created>1490964886319</created>
       <option name="number" value="00003" />
@@ -6449,7 +6437,14 @@
       <option name="project" value="LOCAL" />
       <updated>1495188909336</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="1. qty not taken in decimal in printing bill">
+      <created>1495189630703</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1495189630703</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TodoView">
@@ -6565,7 +6560,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="IGSTRate implementation in outward itemDatabase" />
     <MESSAGE value="implementing credit/debit note module" />
     <MESSAGE value="implementing amendment module for GSTR1 &amp; GSTR2" />
     <MESSAGE value="reports" />
@@ -6590,7 +6584,8 @@
     <MESSAGE value="limiting hsncode length to 8, earlier it was 7 for outward items and 10 for inward items&#10;- issues reported" />
     <MESSAGE value="1. on Enabling price change, amount was not updating immediately durinf price change in billing screens&#10;- issues reported" />
     <MESSAGE value="1. calculating forward tax with discount percent&#10;2. reverse tax implemented as per low&#10;3. discount amount yet to be implemented." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. calculating forward tax with discount percent&#10;2. reverse tax implemented as per low&#10;3. discount amount yet to be implemented." />
+    <MESSAGE value="1. qty not taken in decimal in printing bill" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. qty not taken in decimal in printing bill" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
