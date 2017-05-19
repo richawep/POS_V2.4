@@ -8,45 +8,30 @@ import java.io.Serializable;
 public class BillKotItem implements Serializable {
     private int itemId;
     private String itemName;
-    private int qty;
-    private double qty1;
+    private double qty;
     private double rate;
     private double amount;
 
     public BillKotItem() {
     }
 
-    public BillKotItem(String itemName, int qty, double rate, double amount) {
+    public BillKotItem(String itemName, double qty, double rate, double amount) {
         this.itemName = itemName;
         this.qty = qty;
         this.rate = rate;
         this.amount = amount;
-    }
-
-    public BillKotItem(int itemId, String itemName, int qty, double rate, double amount) {
-        this.itemId = itemId;
-        this.itemName = itemName;
-        this.qty = qty;
-        this.rate = rate;
-        this.amount = amount;
-        this.qty1 = 0.00;
     }
 
     public BillKotItem(int itemId, String itemName, double qty, double rate, double amount) {
         this.itemId = itemId;
         this.itemName = itemName;
-        this.qty1 = qty;
+        this.qty = qty;
         this.rate = rate;
         this.amount = amount;
+
     }
 
-    public double getQty1() {
-        return qty1;
-    }
 
-    public void setQty1(double qty1) {
-        this.qty1 = qty1;
-    }
 
     public int getItemId() {
         return itemId;
@@ -64,11 +49,11 @@ public class BillKotItem implements Serializable {
         this.itemName = itemName;
     }
 
-    public int getQty() {
+    public double getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(double qty) {
         this.qty = qty;
     }
 

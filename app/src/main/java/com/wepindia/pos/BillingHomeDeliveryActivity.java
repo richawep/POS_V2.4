@@ -5083,7 +5083,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             Double qty = Double.parseDouble(itemQty.getText().toString().trim());
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
             double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-            BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount);
+            BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount);
             billKotItems.add(billKotItem);
             count++;
 
