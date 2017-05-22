@@ -31,6 +31,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -59,6 +60,7 @@ import com.wep.common.app.print.BillTaxItem;
 import com.wep.common.app.print.PrintKotBillItem;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
+import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -171,6 +173,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             com.wep.common.app.ActionBarUtils.setupToolbar(BillingDineInActivity.this,toolbar,getSupportActionBar(),"",strUserName," Date:"+s.toString());
             IntializeViewVariables();
             dbBillScreen.OpenDatabase();
+            ClearAll();
             crsrSettings = dbBillScreen.getBillSetting();
             if (crsrSettings.moveToFirst())
             {
@@ -180,31 +183,6 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
                 ownerPos = crsrSettings.getString(crsrSettings.getColumnIndex("POSNumber"));
 
-                if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1)
-                {
-                    Date date1 = new Date();
-                    try {
-                        CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
-                        tvDate.setText(String.valueOf(sdate));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                else
-                {
-                    String strDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
-                    try {
-                        tvDate.setText(String.valueOf(strDate));
-                        Date date1 = new Date();
-                        CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
-                        if(strDate.equals(sdate.toString()))
-                            idd_date.setVisibility(View.INVISIBLE);
-                        else
-                            idd_date.setVisibility(View.VISIBLE);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
                 BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
 				tableSplit = crsrSettings.getInt(crsrSettings.getColumnIndex("TableSpliting"));
@@ -543,6 +521,38 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         }
     }
 
+    void setInvoiceDate()
+    {
+        Cursor crsrSetting = dbBillScreen.getBillSetting();
+        if (crsrSetting.moveToFirst())
+        {
+            if (crsrSetting.getInt(crsrSetting.getColumnIndex("DateAndTime")) == 1)
+            {
+                Date date1 = new Date();
+                try {
+                    CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
+                    tvDate.setText(String.valueOf(sdate));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                String strDate = crsrSetting.getString(crsrSetting.getColumnIndex("BusinessDate"));
+                try {
+                    tvDate.setText(String.valueOf(strDate));
+                    Date date1 = new Date();
+                    CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
+                    if(strDate.equals(sdate.toString()))
+                        idd_date.setVisibility(View.INVISIBLE);
+                    else
+                        idd_date.setVisibility(View.VISIBLE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+    }
+    }
     /*************************************************************************************************************************************
      * Initializes all view handlers present in the billing screen with
      * appropriate controls
@@ -2299,6 +2309,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             // Make the item grid invisible
             grdItems.setVisibility(View.INVISIBLE);
         }*/
+        setInvoiceDate();
         fTotalDiscount =0;
     }
 
@@ -4409,9 +4420,20 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
         View vwAuthorization = UserAuthorization.inflate(R.layout.dinein_reprint, null);
 
-        final EditText txtReprintBillNo = (EditText) vwAuthorization.findViewById(R.id.txtDineInReprintBillNumber);
+        final ImageButton btnCal_reprint = (ImageButton) vwAuthorization.findViewById(R.id.btnCal_reprint);
 
-        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("Print Bill").setMessage("Enter Bill Number")
+        final EditText txtReprintBillNo = (EditText) vwAuthorization.findViewById(R.id.txtDineInReprintBillNumber);
+        final TextView tv_inv_date = (TextView) vwAuthorization.findViewById(R.id.tv_inv_date);
+        tv_inv_date.setText(tvDate.getText().toString());
+        btnCal_reprint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateSelection(tv_inv_date);
+            }
+        });
+
+
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("RePrint Bill")
                 .setView(vwAuthorization).setNegativeButton("Cancel", null)
                 .setPositiveButton("RePrint", new DialogInterface.OnClickListener() {
 
@@ -4419,79 +4441,133 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         // TODO Auto-generated method stub
 
                         if (txtReprintBillNo.getText().toString().equalsIgnoreCase("")) {
-                            MsgBox.Show("Warning", "Please enter Bill Number");
+                            MsgBox.Show("Warning", "Please enter Invoice Number");
+                            setInvoiceDate();
                             return;
-                        } else {
-                            int billNo = Integer.valueOf(txtReprintBillNo.getText().toString());
-                            Cursor LoadItemForReprint = dbBillScreen.getItemsForReprintBill_new(billNo);
-                            if (LoadItemForReprint.moveToFirst()) {
-                                Cursor cursor = dbBillScreen.getBillDetail(billNo);
-                                if(cursor!= null && cursor.moveToFirst())
+                        }else if (tv_inv_date.getText().toString().equalsIgnoreCase("")) {
+                            MsgBox.Show("Warning", "Please enter Invoice Date");
+                            setInvoiceDate();
+                            return;
+                        }  else {
+                            try
+                            {
+                                int billNo = Integer.valueOf(txtReprintBillNo.getText().toString());
+                                String date_reprint = tv_inv_date.getText().toString();
+                                tvDate.setText(date_reprint);
+                                Date date = new SimpleDateFormat("dd-MM-yyyy").parse(date_reprint);
+                                Cursor LoadItemForReprint = dbBillScreen.getItemsForReprintBill_new(
+                                                                            billNo, String.valueOf(date.getTime()));
+                                if (LoadItemForReprint.moveToFirst())
                                 {
-//                                    fTotalDiscount =  db.getDiscountAmountForBillNumber(billNo);
-//                                    float discper = db.getDiscountPercentForBillNumber(billNo);
-//                                    reprintBillingMode = db.getBillingModeBillNumber(billNo);
-//                                    tvDiscountPercentage.setText(String.format("%.2f",discper));
-//                                    tvDiscountAmount.setText(String.format("%.2f",fTotalDiscount));
-//                                    tvBillNumber.setText(txtReprintBillNo.getText().toString());
-                                    int billStatus = cursor.getInt(cursor.getColumnIndex("BillStatus"));
-                                    if(billStatus==0)
-                                    {
-                                        MsgBox.Show("Warning", "This bill has been deleted");
-                                        return;
-                                    }
-                                    String pos = cursor.getString(cursor.getColumnIndex("POS"));
-                                    String custStateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
-                                    if(pos!= null && !pos.equals("") && custStateCode!=null && !custStateCode.equals("") && !custStateCode.equalsIgnoreCase(pos))
-                                    {
-                                        chk_interstate.setChecked(true);
-                                        int index = getIndex_pos(pos);
-                                        spnr_pos.setSelection(index);
-                                    }
-                                    else
-                                    {
-                                        chk_interstate.setChecked(false);
-                                        spnr_pos.setSelection(0);
-                                    }
-                                    fTotalDiscount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
-                                    float discper = cursor.getFloat(cursor.getColumnIndex("DiscPercentage"));
-                                    reprintBillingMode = cursor.getInt(cursor.getColumnIndex("BillingMode"));
+                                    Cursor cursor = dbBillScreen.getBillDetail(billNo,String.valueOf(date.getTime()));
+                                    if (cursor != null && cursor.moveToFirst()) {
+                                        int billStatus = cursor.getInt(cursor.getColumnIndex("BillStatus"));
+                                        if (billStatus == 0) {
+                                            MsgBox.Show("Warning", "This bill has been deleted");
+                                            setInvoiceDate();
+                                            return;
+                                        }
+                                        String pos = cursor.getString(cursor.getColumnIndex("POS"));
+                                        String custStateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
+                                        if (pos != null && !pos.equals("") && custStateCode != null && !custStateCode.equals("") && !custStateCode.equalsIgnoreCase(pos)) {
+                                            chk_interstate.setChecked(true);
+                                            int index = getIndex_pos(pos);
+                                            spnr_pos.setSelection(index);
+                                        } else {
+                                            chk_interstate.setChecked(false);
+                                            spnr_pos.setSelection(0);
+                                        }
+                                        fTotalDiscount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
+                                        float discper = cursor.getFloat(cursor.getColumnIndex("DiscPercentage"));
+                                        reprintBillingMode = cursor.getInt(cursor.getColumnIndex("BillingMode"));
 
-                                    tvDiscountPercentage.setText(String.format("%.2f",discper));
-                                    tvDiscountAmount.setText(String.format("%.2f",fTotalDiscount));
-                                    tvBillNumber.setText(txtReprintBillNo.getText().toString());
+                                        tvDiscountPercentage.setText(String.format("%.2f", discper));
+                                        tvDiscountAmount.setText(String.format("%.2f", fTotalDiscount));
+                                        tvBillNumber.setText(txtReprintBillNo.getText().toString());
 
-                                    tvIGSTValue.setText(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("IGSTAmount"))));
-                                    tvTaxTotal.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("CGSTAmount"))));
-                                    tvServiceTaxTotal.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("SGSTAmount"))));
-                                    tvSubTotal.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("TaxableValue"))));
-                                    tvBillAmount.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("BillAmount"))));
+                                        tvIGSTValue.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("IGSTAmount"))));
+                                        tvTaxTotal.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("CGSTAmount"))));
+                                        tvServiceTaxTotal.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("SGSTAmount"))));
+                                        tvSubTotal.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("TaxableValue"))));
+                                        tvBillAmount.setText(String.format("%.2f", cursor.getFloat(cursor.getColumnIndex("BillAmount"))));
+                                        edtCustId.setText(cursor.getString(cursor.getColumnIndex("CustId")));
 
-                                    LoadItemsForReprintBill(LoadItemForReprint);
-                                    Cursor crsrBillDetail = dbBillScreen.getBillDetail(Integer.valueOf(txtReprintBillNo.getText().toString()));
-                                    if (crsrBillDetail.moveToFirst()) {
-                                        edtCustId.setText(crsrBillDetail.getString(crsrBillDetail.getColumnIndex("CustId")));
+                                        LoadItemsForReprintBill(LoadItemForReprint);
+
                                     }
+
+                                } else {
+                                    MsgBox.Show("Warning",
+                                            "No Item is present for the Bill Number " + txtReprintBillNo.getText().toString() +", Dated :"+tv_inv_date.getText().toString());
+                                    setInvoiceDate();
+                                    return;
                                 }
+                                strPaymentStatus = "Paid";
+                                isReprint = true;
+                                PrintNewBill();
+                                // update bill reprint count
+                                int Result = dbBillScreen
+                                        .updateBillRepintCount(Integer.parseInt(txtReprintBillNo.getText().toString()));
+                                ClearAll();
 
-                            } else {
-                                MsgBox.Show("Warning",
-                                        "No Item is present for the Bill Number " + txtReprintBillNo.getText().toString());
-                                return;
-                            }
-                            strPaymentStatus = "Paid";
-                            isReprint = true;
-                            PrintNewBill();
-                            // update bill reprint count
-                            int Result = dbBillScreen
-                                    .updateBillRepintCount(Integer.parseInt(txtReprintBillNo.getText().toString()));
-                            ClearAll();
-
+                            }catch(Exception e)
+                            {
+                                e.printStackTrace();
+                        }
                         }
                     }
                 }).show();
+
+
     }
 
+    private void DateSelection(final TextView tv_inv_date) {        // StartDate: DateType = 1 EndDate: DateType = 2
+        try {
+            AlertDialog.Builder dlgReportDate = new AlertDialog.Builder(myContext);
+            final DatePicker dateReportDate = new DatePicker(myContext);
+            String date_str = tvDate.getText().toString();
+            String dd = date_str.substring(6,10)+"-"+date_str.substring(3,5)+"-"+date_str.substring(0,2);
+            DateTime objDate = new DateTime(dd);
+            dateReportDate.updateDate(objDate.getYear(), objDate.getMonth(), objDate.getDay());
+            String strMessage = "";
+
+
+            dlgReportDate
+                    .setIcon(R.drawable.ic_launcher)
+                    .setTitle("Date Selection")
+                    .setMessage(strMessage)
+                    .setView(dateReportDate)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        String strDd = "";
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (dateReportDate.getDayOfMonth() < 10) {
+                                strDd = "0" + String.valueOf(dateReportDate.getDayOfMonth())+"-";
+                            } else {
+                                strDd = String.valueOf(dateReportDate.getDayOfMonth())+"-";
+                            }
+                            if (dateReportDate.getMonth() < 9) {
+                                strDd += "0" + String.valueOf(dateReportDate.getMonth() + 1) + "-";
+                            } else {
+                                strDd += String.valueOf(dateReportDate.getMonth() + 1) + "-";
+                            }
+
+                            strDd += String.valueOf(dateReportDate.getYear());
+                            tv_inv_date.setText(strDd);
+                            Log.d("ReprintDate", "Selected Date:" + strDd);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+
+                        }
+                    })
+                    .show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /*************************************************************************************************************************************
      * Void Bill Button Click event, opens a dialog to enter admin user id and
      * password for voiding bill if user is admin then bill will be voided
@@ -5009,35 +5085,54 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
     public ArrayList<BillTaxItem> taxPrint() {
         ArrayList<BillTaxItem> billTaxItems = new ArrayList<BillTaxItem>();
+        try {
 
-        Cursor crsrTax = db.getItemsForCGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()));
-        if (crsrTax.moveToFirst()) {
-            do {
-                String taxname = "CGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
-                String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("CGSTRate"));
-                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("CGSTAmount")));
+            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(tvDate.getText().toString());
+            Cursor crsrTax = db.getItemsForCGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            if (crsrTax.moveToFirst()) {
+                do {
+                    String taxname = "CGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                    String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("CGSTRate"));
+                    Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("CGSTAmount")));
 
-                BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
-                billTaxItems.add(taxItem);
-            } while (crsrTax.moveToNext());
+                    BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                    billTaxItems.add(taxItem);
+                } while (crsrTax.moveToNext());
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            billTaxItems = new ArrayList<BillTaxItem>();
         }
-        return billTaxItems;
+        finally
+        {
+            return billTaxItems;
+        }
     }
     public ArrayList<BillTaxItem> taxPrint_IGST() {
         ArrayList<BillTaxItem> billTaxItems = new ArrayList<BillTaxItem>();
+        try {
+            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(tvDate.getText().toString());
+            Cursor crsrTax = db.getItemsForIGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            if (crsrTax.moveToFirst()) {
+                do {
+                    String taxname = "IGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                    String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("IGSTRate"));
+                    Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("IGSTAmount")));
 
-        Cursor crsrTax = db.getItemsForIGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()));
-        if (crsrTax.moveToFirst()) {
-            do {
-                String taxname = "IGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
-                String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("IGSTRate"));
-                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("IGSTAmount")));
-
-                BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
-                billTaxItems.add(taxItem);
-            } while (crsrTax.moveToNext());
+                    BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                    billTaxItems.add(taxItem);
+                } while (crsrTax.moveToNext());
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            billTaxItems = new ArrayList<BillTaxItem>();
         }
-        return billTaxItems;
+        finally
+        {
+            return billTaxItems;
+        }
     }
     public ArrayList<BillTaxItem> otherChargesPrint() {
         ArrayList<BillTaxItem> billOtherChargesItems = new ArrayList<BillTaxItem>();
@@ -5112,19 +5207,30 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
     public ArrayList<BillServiceTaxItem> SGSTtaxPrint() {
         ArrayList<BillServiceTaxItem> billServiceTaxItems = new ArrayList<BillServiceTaxItem>();
-        Cursor crsrTax = db.getItemsForSGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()));
-        if (crsrTax.moveToFirst()) {
-            do {
-                String taxname = "SGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
-                String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("SGSTRate"));
-                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("SGSTAmount")));
+        try {
+            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(tvDate.getText().toString());
+            Cursor crsrTax = db.getItemsForSGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            if (crsrTax.moveToFirst()) {
+                do {
+                    String taxname = "SGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                    String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("SGSTRate"));
+                    Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("SGSTAmount")));
 
-                BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
-                billServiceTaxItems.add(taxItem);
-            } while (crsrTax.moveToNext());
+                    BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                    billServiceTaxItems.add(taxItem);
+                } while (crsrTax.moveToNext());
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            billServiceTaxItems = new ArrayList<BillServiceTaxItem>();
         }
-        return billServiceTaxItems;
+        finally
+        {
+            return billServiceTaxItems;
+        }
     }
+
 
     public void printKOT(View view) {
         int proceed = 1;
@@ -5343,8 +5449,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     } else {
                         item.setPaymentStatus(strPaymentStatus);
                     }
-                    item.setDate(tvDate.getText().toString());
-                    item.setTime(TimeUtil.getTime());
+
 
                     item.setdiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
                     item.setFdiscount(fTotalDiscount);
@@ -5384,18 +5489,13 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                                 break;
                         }
                         try{
-                            Cursor c  = db.getBillDetail_counter(orderId);
+                            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(tvDate.getText().toString());
+                            Cursor c  = db.getBillDetail_counter(orderId,String.valueOf(date.getTime()));
                             if(c!=null && c.moveToNext()){
 
                                 String time = c.getString(c.getColumnIndex("Time"));
                                 item.setTime(time);
-                                String milli = c.getString(c.getColumnIndex("InvoiceDate"));
-                                long ldate = Long.parseLong(milli);
-                                Date date = new Date(ldate);
-                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-                                String date_s = formatter.format(date);
-                                item.setDate(date_s);
-                                item.setTime(time);
+                                item.setDate(tvDate.getText().toString());
 
                                 if(reprintBillingMode==1)
                                 {

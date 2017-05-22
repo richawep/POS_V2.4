@@ -4479,13 +4479,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "'", null);
     }
 
-    public Cursor getItemsForReprintBill_new(int InvoiceNo) {
+    public Cursor getItemsForReprintBill_new(int InvoiceNo, String InvoiceDate) {
         // return dbFNB.rawQuery("Select * from BillItem, BillDetail where BillDetail.BillNumber = '" + BillNumber + "' AND BillItem.BillNumber = BillDetail.BillNumber", null);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor crsr = null;
         try
         {
-            crsr = db.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "'", null);
+            crsr = db.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' AND "
+                    +KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null);
         }
         catch(Exception e)
         {
@@ -7930,11 +7931,12 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return cursor;
     }
 
-    public Cursor getItemsForIGSTTaxPrints(int InvoiceNo) {
+    public Cursor getItemsForIGSTTaxPrints(int InvoiceNo, String InvoiceDate) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
         try{
-            cursor = db.rawQuery("Select SUM(IGSTAmount) as IGSTAmount, IGSTRate from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY IGSTRate", null);
+            cursor = db.rawQuery("Select SUM(IGSTAmount) as IGSTAmount, IGSTRate from " + TBL_BILLITEM +
+                    " where InvoiceNo = '" + InvoiceNo + "' AND +"+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"' GROUP BY IGSTRate", null);
         }catch (Exception e){
             e.printStackTrace();
             cursor = null;
@@ -7944,11 +7946,12 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return cursor;
     }
 
-    public Cursor getItemsForCGSTTaxPrints(int InvoiceNo) {
+    public Cursor getItemsForCGSTTaxPrints(int InvoiceNo, String InvoiceDate) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
         try{
-            cursor = db.rawQuery("Select SUM(CGSTAmount) as CGSTAmount, CGSTRate from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY CGSTRate", null);
+            cursor = db.rawQuery("Select SUM(CGSTAmount) as CGSTAmount, CGSTRate from " + TBL_BILLITEM +
+                    " where InvoiceNo = '" + InvoiceNo + "' AND InvoiceDate LIKE '"+InvoiceDate+"' GROUP BY CGSTRate", null);
         }catch (Exception e){
             e.printStackTrace();
             cursor = null;
@@ -7986,11 +7989,12 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         return cursor;
     }
 
-    public Cursor getItemsForSGSTTaxPrints(int InvoiceNo) {
+    public Cursor getItemsForSGSTTaxPrints(int InvoiceNo, String InvoiceDate) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
         try{
-            cursor = db.rawQuery("Select SUM(SGSTAmount) as SGSTAmount, SGSTRate from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' GROUP BY SGSTRate", null);
+            cursor = db.rawQuery("Select SUM(SGSTAmount) as SGSTAmount, SGSTRate from " + TBL_BILLITEM +
+                    " where InvoiceNo = '" + InvoiceNo + "' AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"' GROUP BY SGSTRate", null);
         }catch (Exception e){
             e.printStackTrace();
             cursor = null;
