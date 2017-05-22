@@ -4364,9 +4364,20 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
         View vwAuthorization = UserAuthorization.inflate(R.layout.dinein_reprint, null);
 
-        final EditText txtReprintBillNo = (EditText) vwAuthorization.findViewById(R.id.txtDineInReprintBillNumber);
+        final ImageButton btnCal_reprint = (ImageButton) vwAuthorization.findViewById(R.id.btnCal_reprint);
 
-        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill").setMessage("Enter Bill Number")
+        final EditText txtReprintBillNo = (EditText) vwAuthorization.findViewById(R.id.txtDineInReprintBillNumber);
+        final TextView tv_inv_date = (TextView) vwAuthorization.findViewById(R.id.tv_inv_date);
+        tv_inv_date.setText(tvDate.getText().toString());
+        btnCal_reprint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateSelection(tv_inv_date);
+            }
+        });
+
+
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill")
                 .setView(vwAuthorization).setNegativeButton("Cancel", null)
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
@@ -4376,28 +4387,41 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         if (txtReprintBillNo.getText().toString().equalsIgnoreCase("")) {
                             MsgBox.Show("Warning", "Please enter Bill Number");
                             return;
-                        } else {
-                            String InvoiceNo = txtReprintBillNo.getText().toString();
-                            Cursor result = dbBillScreen.getBillDetail(Integer.parseInt(InvoiceNo));
+                        } else if (tv_inv_date.getText().toString().equalsIgnoreCase("")) {
+                            MsgBox.Show("Warning", "Please enter Bill Date");
+                            setInvoiceDate();
+                            return;
+                        }  else {
+                            try
+                            {
+                                int InvoiceNo = Integer.valueOf(txtReprintBillNo.getText().toString());
+                                String date_reprint = tv_inv_date.getText().toString();
+                                tvDate.setText(date_reprint);
+                                Date date = new SimpleDateFormat("dd-MM-yyyy").parse(date_reprint);
+                                Cursor result = dbBillScreen.getBillDetail(InvoiceNo, String.valueOf(date.getTime()));
 
-                            if (result.moveToFirst()) {
-                                if (result.getInt(result.getColumnIndex("BillStatus")) != 0) {
-                                    VoidBill(Integer.parseInt(InvoiceNo));
+                                if (result.moveToFirst()) {
+                                    if (result.getInt(result.getColumnIndex("BillStatus")) != 0) {
+                                        VoidBill(InvoiceNo,String.valueOf(date.getTime()));
+                                    } else {
+
+                                        Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
+                                        String msg = "Bill Number "+InvoiceNo+ " is already voided";
+                                        //MsgBox.Show("VoidBill",msg);
+                                        Log.d("VoidBill",msg);
+                                    }
                                 } else {
-
-                                    Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
-                                    String msg = "Bill Number "+InvoiceNo+ " is already voided";
+                                    Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
+                                    String msg = "No bill found with bill number " + InvoiceNo;
                                     //MsgBox.Show("VoidBill",msg);
                                     Log.d("VoidBill",msg);
                                 }
-                            } else {
-                                Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
-                                String msg = "No bill found with bill number " + InvoiceNo;
-                                //MsgBox.Show("VoidBill",msg);
-                                Log.d("VoidBill",msg);
-                            }
-                            ClearAll();
+                                ClearAll();
 
+                        }catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }).show();
@@ -4441,11 +4465,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         // TODO Auto-generated method stub
 
                         if (txtReprintBillNo.getText().toString().equalsIgnoreCase("")) {
-                            MsgBox.Show("Warning", "Please enter Invoice Number");
+                            MsgBox.Show("Warning", "Please enter Bill Number");
                             setInvoiceDate();
                             return;
                         }else if (tv_inv_date.getText().toString().equalsIgnoreCase("")) {
-                            MsgBox.Show("Warning", "Please enter Invoice Date");
+                            MsgBox.Show("Warning", "Please enter Bill Date");
                             setInvoiceDate();
                             return;
                         }  else {
@@ -4573,7 +4597,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
      * password for voiding bill if user is admin then bill will be voided
      *
      *************************************************************************************************************************************/
-    public void VoidBill(final int invoiceno) {
+    public void VoidBill(final int invoiceno , final String Invoicedate) {
 
         AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
 
@@ -4594,10 +4618,12 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 if (User.moveToFirst()) {
                     if (User.getInt(User.getColumnIndex("RoleId")) == 1) {
                         //ReprintVoid(Byte.parseByte("2"));
-                        int result = dbBillScreen.makeBillVoid(invoiceno);
+                        int result = db.makeBillVoids(invoiceno, Invoicedate);
                         if(result >0)
                         {
-                            String msg = "Bill Number "+invoiceno+" voided successfully";
+                            Date dd = new Date(Long.parseLong(Invoicedate));
+                            String dd_str = new SimpleDateFormat("dd-MM-yyyy").format(dd);
+                            String msg = "Bill Number "+invoiceno+" , Dated : "+dd_str+" voided successfully";
                             // MsgBox.Show("Warning", msg);
                             Toast.makeText(myContext, msg, Toast.LENGTH_SHORT).show();
                             Log.d("VoidBill", msg);

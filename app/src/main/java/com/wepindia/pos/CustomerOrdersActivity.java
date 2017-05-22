@@ -52,6 +52,7 @@ import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -901,38 +902,48 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             if(txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))
             {
 
-				MessageDialog msg1 = new MessageDialog(myContext);
-                msg1.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill")
-						.setMessage("Payment for this order has been done. Are you sure to delete this order.")
-                        .setNegativeButton("Cancel", null)
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+				final Cursor cursor = dbCustomerOrder.getCurrentDate();
+				if(cursor!=null && cursor.moveToNext())
+				{
+					MessageDialog msg1 = new MessageDialog(myContext);
+					msg1.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill")
+							.setMessage("Payment for this order has been done. Are you sure to delete this order.")
+							.setNegativeButton("Cancel", null)
+							.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
+								public void onClick(DialogInterface dialog, int which) {
 
-//								Cursor result = dbCustomerOrder.getBillDetailByCustomerIdTime(Integer.valueOf(txtCustId.getText().toString()),
-//										2, txtTime.getText().toString(),Integer.parseInt(BILLING_MODE));
-								int InvoiceNo = Integer.parseInt(txtBillNo.getText().toString());
-								if (InvoiceNo>0) {
-									Cursor result = dbCustomerOrder.getBillDetail(InvoiceNo);
-									if(result.moveToFirst()){
-									if (result.getInt(result.getColumnIndex("BillStatus")) != 0) {
-										VoidBill((InvoiceNo));
-									} else {
+									try {
+										int InvoiceNo = Integer.parseInt(txtBillNo.getText().toString());
+										if (InvoiceNo>0) {
+											Date dd = new SimpleDateFormat("dd-MM-yyyy").parse(cursor.getString(cursor.getColumnIndex("BusinessDate")));
+											Cursor result = dbCustomerOrder.getBillDetail(InvoiceNo,String.valueOf(dd.getTime()));
+											if(result.moveToFirst()){
+												if (result.getInt(result.getColumnIndex("BillStatus")) != 0) {
+													VoidBill((InvoiceNo));
+												} else {
 
-										Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
-										String msg = "Bill Number "+InvoiceNo+ " is already voided";
-										//MsgBox.Show("VoidBill",msg);
-										Log.d("VoidBill",msg);
-									}}
-								} else {
-									Toast.makeText(myContext, "No bill found ", Toast.LENGTH_SHORT).show();
+													Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
+													String msg = "Bill Number "+InvoiceNo+ " is already voided";
+													//MsgBox.Show("VoidBill",msg);
+													Log.d("VoidBill",msg);
+												}}
+										} else {
+											Toast.makeText(myContext, "No bill found ", Toast.LENGTH_SHORT).show();
+
+										}
+									}catch (Exception e)
+									{
+										e.printStackTrace();
+									}
 
 								}
-
-                            }
-                        })
-						.show();
+							})
+							.show();
+            	}else {
+					MsgBox.Show("Insufficient Information", "Cannot delete bill as business date is not set");
+					return;
+				}
             }else
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(myContext)

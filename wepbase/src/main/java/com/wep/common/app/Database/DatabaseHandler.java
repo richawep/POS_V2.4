@@ -5094,7 +5094,27 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         }
     }
     // -----Void Bill-----
-    public int makeBillVoid(int InvoiceNo) {
+    public int makeBillVoids(int InvoiceNo , String InvoiceDate) {
+        SQLiteDatabase db ;
+        int result = 0;
+        try
+        {
+            db = this.getReadableDatabase();
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_BillStatus, 0);
+            result =db.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo+" AND "+
+                    KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null);
+        }catch (Exception e)
+        {
+           e.printStackTrace();
+            result =0;
+        }
+        finally {
+             return result;
+        }
+
+    }
+public int makeBillVoid(int InvoiceNo ) {
         SQLiteDatabase db ;
         int result = 0;
         try
