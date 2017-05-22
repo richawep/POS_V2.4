@@ -5181,8 +5181,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     item.setBillNo(String.valueOf(iKOTNo));
                     item.setOrderBy(strUserName);
                     item.setBillingMode(String.valueOf(jBillingMode));
-                    item.setDate(TimeUtil.getDate());
-                    item.setTime(TimeUtil.getTime());
+                    item.setDate(tvDate.getText().toString());
+                    item.setTime(String.format("%tR", Time));
+                    /*item.setDate(TimeUtil.getDate());
+                    item.setTime(TimeUtil.getTime());*/
             /*Intent intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);
             intent.putExtra("printType", "KOT");
             intent.putExtra("printData", item);
