@@ -19,10 +19,11 @@ public class AddedItemsToOrderTableClass implements Parcelable {
     double cgstAmt;
     double sgstRate;
     double sgstAmt;
+    double taxableValue;
     double subtotal;
     double billamount;
 
-    public AddedItemsToOrderTableClass(int menuCode, String itemName, double quantity, double rate, double igstRate, double igstAmt, double cgstRate, double cgstAmt, double sgstRate, double sgstAmt, double subtotal, double billamount) {
+    public AddedItemsToOrderTableClass(int menuCode, String itemName, double quantity, double rate, double igstRate, double igstAmt, double cgstRate, double cgstAmt, double sgstRate, double sgstAmt, double taxableValue, double subtotal, double billamount) {
         this.menuCode = menuCode;
         this.itemName = itemName;
         this.quantity = quantity;
@@ -33,6 +34,7 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         this.cgstAmt = cgstAmt;
         this.sgstRate = sgstRate;
         this.sgstAmt = sgstAmt;
+        this.taxableValue = taxableValue;
         this.subtotal = subtotal;
         this.billamount = billamount;
     }
@@ -48,6 +50,7 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         this.cgstAmt = 0.00;
         this.sgstRate = 0.00;
         this.sgstAmt = 0.00;
+        this.taxableValue = 0.00;
         this.subtotal = 0.00;
         this.billamount = 0.00;
     }
@@ -66,6 +69,7 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         dest.writeDouble(cgstAmt);
         dest.writeDouble(sgstRate);
         dest.writeDouble(sgstAmt);
+        dest.writeDouble(taxableValue);
         dest.writeDouble(subtotal);
         dest.writeDouble(billamount);
     }
@@ -80,6 +84,7 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         cgstAmt = in.readDouble();
         sgstRate = in.readDouble();
         sgstAmt = in.readDouble();
+        taxableValue = in.readDouble();
         subtotal = in.readDouble();
         billamount = in.readDouble();
     }
@@ -98,7 +103,16 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         }
     };
 
+    public double getTaxableValue() {
+        return taxableValue;
+    }
+
+    public void setTaxableValue(double taxableValue) {
+        this.taxableValue = taxableValue;
+    }
+
     @Override
+
     public int describeContents() {
         return 0;
     }

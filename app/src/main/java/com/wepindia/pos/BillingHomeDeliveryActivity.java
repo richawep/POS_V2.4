@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
@@ -74,7 +73,6 @@ import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.AddedItemsToOrderTableClass;
 import com.wepindia.pos.utils.StockOutwardMaintain;
 import com.wepindia.printers.WepPrinterBaseActivity;
-import com.wepindia.printers.utils.TimeUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1378,7 +1376,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
                                 } else {// reverse tax
                                     double dBasePrice = 0;
-                                    dBasePrice = dRate / (1 + (dTaxPercent / 100)+(dServiceTaxPercent/100));
+                                    dBasePrice = dRate *(1-(dDiscPercent/100))/ (1 + (dTaxPercent / 100)+(dServiceTaxPercent/100));
 
                                     // Discount
                                     dDiscAmt = dBasePrice * (dDiscPercent / 100);
@@ -1386,13 +1384,13 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                     dDiscAmt = dDiscAmt * Double.parseDouble(Qty.getText().toString());
 
                                     // Tax
-                                    dTaxAmt = (dBasePrice - dTempAmt) * (dTaxPercent / 100);
+                                    dTaxAmt = (dBasePrice ) * (dTaxPercent / 100);
                                     dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
                                     //Service tax
-                                    dServiceTaxAmt = (dBasePrice - dTempAmt) * (dServiceTaxPercent / 100);
+                                    dServiceTaxAmt = (dBasePrice ) * (dServiceTaxPercent / 100);
                                     dServiceTaxAmt = dServiceTaxAmt * Double.parseDouble(Qty.getText().toString());
-                                    ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
 
+                                    ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
                                     TaxAmt.setText(String.format("%.2f", dTaxAmt));
                                     DiscAmt.setText(String.format("%.2f", dDiscAmt));
                                 }
@@ -1599,15 +1597,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                         dTaxAmt = (dRate - dDiscAmt) * (dTaxPercent / 100);
                         dServiceTaxAmt = (dRate - dDiscAmt) * (dServiceTaxPercent / 100);
                     } else { // Reverse Tax
-                        double dBasePrice = dRate / (1 + (dTaxPercent / 100)+(dServiceTaxPercent / 100));
-                        dTaxAmt = (dBasePrice - dDiscAmt) * (dTaxPercent / 100);
-                        dServiceTaxAmt = (dBasePrice - dDiscAmt) * (dServiceTaxPercent / 100);
+                        double dBasePrice = dRate *(1-(dDiscPercent/100))/ (1 + (dTaxPercent / 100)+(dServiceTaxPercent / 100));
+                        dTaxAmt = (dBasePrice) * (dTaxPercent / 100);
+                        dServiceTaxAmt = (dBasePrice ) * (dServiceTaxPercent / 100);
                     }
                     tvTaxAmt = new TextView(myContext);
                     tvTaxAmt.setWidth(50);
                     tvTaxAmt.setText(String.format("%.2f", dTaxAmt));
 
-                    tvServiceTaxAmt = new TextView(BillingHomeDeliveryActivity.this);
+                    tvServiceTaxAmt = new TextView(myContext);
                     tvServiceTaxAmt.setWidth(50);
                     tvServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
 //                    MsgBox.Show("", tvServiceTaxAmt.getText().toString());
@@ -3757,7 +3755,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 subtotal = (rate*quantity) + igstAmt+cgstAmt+sgstAmt;
 
                 AddedItemsToOrderTableClass orderItem = new AddedItemsToOrderTableClass( menuCode, itemName, quantity, rate,
-                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt, subtotal, billamount);
+                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt, rate*quantity,subtotal, billamount);
                 orderItemList.add(orderItem);
             }
 
@@ -4425,7 +4423,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 subtotal = (rate*quantity) + igstAmt+cgstAmt+sgstAmt;
 
                 AddedItemsToOrderTableClass orderItem = new AddedItemsToOrderTableClass( menuCode, itemName, quantity, rate,
-                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt, subtotal, billamount);
+                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt,rate*quantity, subtotal, billamount);
                 orderItemList.add(orderItem);
             }
 
@@ -4889,7 +4887,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                         fCardPayment = data.getFloatExtra(PayBillActivity.TENDER_CARD_VALUE, 0);
                         fCouponPayment = data.getFloatExtra(PayBillActivity.TENDER_COUPON_VALUE, 0);
                         fTotalDiscount = 0;
-                        fTotalDiscount = data.getFloatExtra(PayBillActivity.DISCOUNT_PERCENT, 0);
+                        fTotalDiscount = data.getFloatExtra(PayBillActivity.DISCOUNT_AMOUNT, 0);
 
                         fPettCashPayment = data.getFloatExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
                         fPaidTotalPayment = data.getFloatExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
@@ -4903,10 +4901,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             Log.v("Tender Result", "Discount Amount:" + fTotalDiscount);
                             tvDiscountAmount.setText(String.valueOf(fTotalDiscount));
                             tvDiscountPercentage.setText(String.valueOf(dDiscPercent));
-                            float total = Float.parseFloat(tvBillAmount.getText().toString());
+                            /*float total = Float.parseFloat(tvBillAmount.getText().toString());
                             //total = Math.round(total);
                             total -= fTotalDiscount;
-                            tvBillAmount.setText(String.format("%.2f",total));
+                            tvBillAmount.setText(String.format("%.2f",total));*/
                             double cgst = data.getDoubleExtra("TotalCGSTAmount",0);
                             double sgst = data.getDoubleExtra("TotalSGSTAmount",0);
                             double billtot = data.getDoubleExtra("TotalBillAmount",0);

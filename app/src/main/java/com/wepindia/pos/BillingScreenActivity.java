@@ -4780,11 +4780,11 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                     isDiscounted = data.getBooleanExtra(PayBillActivity.IS_DISCOUNTED, false);
                     isPrintBill = data.getBooleanExtra(PayBillActivity.IS_PRINT_BILL, true);
                     strComplimentaryReason = data.getStringExtra(PayBillActivity.COMPLIMENTARY_REASON);
-                    dDiscPercent = data.getFloatExtra(PayBillActivity.DISCOUNT_PERCENT, 0);
+                    dDiscPercent = data.getFloatExtra(PayBillActivity.DISCOUNT_AMOUNT, 0);
                     fCashPayment = data.getFloatExtra(PayBillActivity.TENDER_CASH_VALUE, 0);
                     fCardPayment = data.getFloatExtra(PayBillActivity.TENDER_CARD_VALUE, 0);
                     fCouponPayment = data.getFloatExtra(PayBillActivity.TENDER_COUPON_VALUE, 0);
-                    fTotalDiscount = data.getFloatExtra(PayBillActivity.DISCOUNT_PERCENT, 0);
+                    fTotalDiscount = data.getFloatExtra(PayBillActivity.DISCOUNT_AMOUNT, 0);
 
                     fPettCashPayment = data.getFloatExtra(PayBillActivity.TENDER_PETTYCASH_VALUE, 0);
                     fPaidTotalPayment = data.getFloatExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
