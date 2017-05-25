@@ -768,7 +768,23 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 try {
                     /*Toast.makeText(BillingDineInActivity.this, aTViewSearchItem.getText().toString(),
                             Toast.LENGTH_SHORT).show();*/
-                    if ((aTViewSearchItem.getText().toString().equals(""))) {
+                    if (tvTableNumber.getText().toString().equalsIgnoreCase("")
+                            || tvWaiterNumber.getText().toString().equalsIgnoreCase("")
+                            || tvTableNumber.getText().toString().equalsIgnoreCase("0")
+                            || tvWaiterNumber.getText().toString().equalsIgnoreCase("0"))
+                    {
+                        Toast.makeText(myContext, "Select waiter and table before adding item to bill",Toast.LENGTH_LONG).show();
+
+                        //Table_Waiter(null);
+                        Intent intentDineIn = new Intent(myContext, TableActivity.class);
+                        intentDineIn.putExtra("BILLING_MODE", String.valueOf(jBillingMode));
+                        intentDineIn.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+                        intentDineIn.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+                        intentDineIn.putExtra("CUST_ID", 0);
+                        startActivity(intentDineIn);
+                        finish();
+                        return;
+                    }else if ((aTViewSearchItem.getText().toString().equals(""))) {
                         MsgBox.Show("Warning", "Enter Item Name");
                     } else {
                         Cursor MenucodeItem = dbBillScreen.getItemList(aTViewSearchItem.getText().toString().trim());
@@ -796,7 +812,23 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 try {
                     /*Toast.makeText(BillingDineInActivity.this, aTViewSearchMenuCode.getText().toString(),
                             Toast.LENGTH_SHORT).show();*/
-                    if ((aTViewSearchMenuCode.getText().toString().equals(""))) {
+                    if (tvTableNumber.getText().toString().equalsIgnoreCase("")
+                            || tvWaiterNumber.getText().toString().equalsIgnoreCase("")
+                            || tvTableNumber.getText().toString().equalsIgnoreCase("0")
+                            || tvWaiterNumber.getText().toString().equalsIgnoreCase("0"))
+                    {
+                        Toast.makeText(myContext, "Select waiter and table before adding item to bill",Toast.LENGTH_LONG).show();
+
+                        //Table_Waiter(null);
+                        Intent intentDineIn = new Intent(myContext, TableActivity.class);
+                        intentDineIn.putExtra("BILLING_MODE", String.valueOf(jBillingMode));
+                        intentDineIn.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+                        intentDineIn.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+                        intentDineIn.putExtra("CUST_ID", 0);
+                        startActivity(intentDineIn);
+                        finish();
+                        return;
+                    }else if ((aTViewSearchMenuCode.getText().toString().equals(""))) {
                         MsgBox.Show("Warning", "Enter Menu Code");
                     } else {
                         Cursor MenucodeItem = dbBillScreen
@@ -1681,8 +1713,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     // Tax Type [itemwise - 1/ billwise - 2]
                     tvTaxType = new TextView(myContext);
                     tvTaxType.setWidth(50);
-                    tvTaxType.setText(crsrItem.getString(crsrItem.getColumnIndex("TaxType")));
-                    //tvTaxType.setText(crsrSettings.getString(crsrSettings.getColumnIndex("Tax")));
+                    //tvTaxType.setText(crsrItem.getString(crsrItem.getColumnIndex("TaxType")));
+                    tvTaxType.setText(crsrSettings.getString(crsrSettings.getColumnIndex("Tax")));
 
                     // Modifier Charge
                     tvModifierCharge = new TextView(myContext);
