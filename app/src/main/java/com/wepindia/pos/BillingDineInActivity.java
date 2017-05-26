@@ -4956,7 +4956,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                             if(chk_interstate.isChecked())
                             {
                                 tvTaxTotal.setText(String.format("%.2f", cgst+sgst));
-                                tvServiceTaxTotal.setText(String.format("%.2f", 0));
+                                tvServiceTaxTotal.setText("0.00");
                             }else {
                                 tvTaxTotal.setText(String.format("%.2f", cgst));
                                 tvServiceTaxTotal.setText(String.format("%.2f", sgst));
