@@ -130,7 +130,7 @@
             android:id="@+id/homeParent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_screen">
+           >
 
             <RelativeLayout
                 android:id="@+id/boxContent"
@@ -187,7 +187,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
-                            android:onClick="onClickGetGstr1Summary">
+                            >
 
                             <ImageView
                                 android:id="@+id/img5"
@@ -208,56 +208,31 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/postGSTR1A"
+                            android:id="@+id/getGSTR1A"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
                             android:layout_weight="1"
-                            android:visibility="gone"
-                            android:onClick="onClickPostGstr1A">
+                            >
 
                             <ImageView
-                                android:id="@+id/img6"
+                                android:id="@+id/img55"
                                 android:layout_width="140dp"
                                 android:layout_height="wrap_content"
                                 android:contentDescription="DineIn"
                                 android:padding="3dp"
-                                android:src="@drawable/ic_upload" />
+                                android:src="@drawable/ic_download" />
 
                             <TextView
-                                android:id="@+id/tv6"
+                                android:id="@+id/tv55"
                                 android:layout_width="140dp"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/img6"
+                                android:layout_below="@+id/img55"
                                 android:gravity="center"
-                                android:text="Post GSTR1A Invoices"
+                                android:text="Get GSTR1A "
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1"
-                            android:visibility="gone">
-
-                            <ImageView
-                                android:id="@+id/img3"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:contentDescription="DineIn"
-                                android:padding="3dp"
-                                android:src="@drawable/ic_upload" />
-
-                            <TextView
-                                android:id="@+id/tv3"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img3"
-                                android:gravity="center"
-                                android:text="Upload GSTR1"
-                                android:textSize="@dimen/menu_box_font_size" />
-                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/getGSTR1ASummary"
@@ -312,31 +287,7 @@
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1"
-                            android:visibility="gone"
-                            android:onClick="onClickFileGstr1A">
 
-                            <ImageView
-                                android:id="@+id/img11"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:contentDescription="DineIn"
-                                android:padding="3dp"
-                                android:src="@drawable/icon_file" />
-
-                            <TextView
-                                android:id="@+id/tv11"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img11"
-                                android:gravity="center"
-                                android:text="File GSTR1A"
-                                android:textSize="@dimen/menu_box_font_size" />
-                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -414,7 +365,10 @@
                                 android:layout_height="wrap_content"
                                 android:contentDescription="DineIn"
                                 android:padding="3dp"
-                                android:src="@drawable/ic_upload" />
+                                android:src="@drawable/ic_upload"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="12dp" />
 
                             <TextView
                                 android:id="@+id/tv20"
@@ -423,6 +377,57 @@
                                 android:layout_below="@+id/img20"
                                 android:gravity="center"
                                 android:text="Post GSTR2"
+                                android:textSize="@dimen/menu_box_font_size" />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/getGSTR2A"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/menu_box_marigin"
+                            android:layout_weight="1"
+                            >
+
+                            <ImageView
+                                android:id="@+id/img2A"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="DineIn"
+                                android:padding="3dp"
+                                android:src="@drawable/ic_download" />
+
+                            <TextView
+
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/img2A"
+                                android:gravity="center"
+                                android:text="Get GSTR2A"
+                                android:textSize="@dimen/menu_box_font_size" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/getGSTR2Reconcile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/menu_box_marigin"
+                            android:layout_weight="1"
+                            >
+
+                            <ImageView
+                                android:id="@+id/img555"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="DineIn"
+                                android:padding="3dp"
+                                android:src="@drawable/ic_download" />
+
+                            <TextView
+                                android:id="@+id/tv555"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/img555"
+                                android:gravity="center"
+                                android:text="Reconciled GSTR2 "
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 
@@ -452,72 +457,24 @@
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1"
-                            android:visibility="invisible">
 
-                            <ImageView
-                                android:id="@+id/img13"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:contentDescription="DineIn"
-                                android:padding="3dp"
-                                android:src="@drawable/ic_upload" />
-
-                            <TextView
-                                android:id="@+id/tv13"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img13"
-                                android:gravity="center"
-                                android:text="Save GSTR1A Invoices"
-                                android:textSize="@dimen/menu_box_font_size" />
-                        </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:visibility="invisible"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:weightSum="6">
+                        >
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1"
-                            android:visibility="invisible">
 
-                            <ImageView
-                                android:id="@+id/img311"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:contentDescription="DineIn"
-                                android:padding="3dp"
-                                android:src="@drawable/icon_file" />
-
-                            <TextView
-                                android:id="@+id/tv311"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img311"
-                                android:gravity="center"
-                                android:text="File GSTR3"
-                                android:textSize="@dimen/menu_box_font_size" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1"
-                            android:visibility="visible">
+                            android:id="@+id/getGSTR3"
+                            >
 
                             <ImageView
                                 android:id="@+id/img1ww2"
@@ -537,62 +494,13 @@
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:id="@+id/postGSTR3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:id="@+id/img30"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:contentDescription="DineIn"
-                                android:padding="3dp"
-                                android:src="@drawable/ic_upload" />
-
-                            <TextView
-                                android:id="@+id/tv30"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img30"
-                                android:gravity="center"
-                                android:text="Save GSTR3 "
-                                android:textSize="@dimen/menu_box_font_size" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1"
-                            android:visibility="visible">
-
-                            <ImageView
-                                android:id="@+id/img113"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:contentDescription="DineIn"
-                                android:padding="3dp"
-                                android:src="@drawable/ic_upload" />
-
-                            <TextView
-                                android:id="@+id/tv113"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img113"
-                                android:gravity="center"
-                                android:text="Generate GSTR3"
-                                android:textSize="@dimen/menu_box_font_size" />
-                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/fileGSTR3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1"
+
                             android:onClick="onClickFileGstr1">
 
                             <ImageView
@@ -613,30 +521,7 @@
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/menu_box_marigin"
-                            android:layout_weight="1"
-                            android:visibility="invisible">
 
-                            <ImageView
-                                android:id="@+id/img321"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:contentDescription="DineIn"
-                                android:padding="3dp"
-                                android:src="@drawable/icon_file" />
-
-                            <TextView
-                                android:id="@+id/tv321"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/img321"
-                                android:gravity="center"
-                                android:text="File GSTR3"
-                                android:textSize="@dimen/menu_box_font_size" />
-                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>

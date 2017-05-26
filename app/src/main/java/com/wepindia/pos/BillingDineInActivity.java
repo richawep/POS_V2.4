@@ -12,7 +12,9 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -59,6 +61,7 @@ import com.wep.common.app.print.PrintKotBillItem;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.DateTime;
+import com.wepindia.pos.GenericClasses.DecimalDigitsInputFilter;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -72,6 +75,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -1556,6 +1560,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     etQty.setWidth(55); // 57px ~= 85dp
                     etQty.setTextSize(11);
                     etQty.setSelectAllOnFocus(true);
+                    etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     // Read quantity from weighing scale if read from weigh
                     // scale is set in settings
@@ -1597,6 +1602,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     etRate = new EditText(myContext);
                     etRate.setWidth(70); // 74px ~= 110dp
                     etRate.setTextSize(11);
+                    etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etRate.setSelectAllOnFocus(true);
                     etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     etRate.setText(String.format("%.2f", dRate));
@@ -1820,6 +1826,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             Log.d("AddItemToOrderTable", "ItemNotFound Exception");
         }
     }
+
+
 
     /*************************************************************************************************************************************
      * Calculates all values such as Tax, Discount, Sub Total and grand total
@@ -2730,24 +2738,20 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 tvHSn = new TextView(myContext);
                 tvHSn.setWidth(67); // 154px ~= 230dp
                 tvHSn.setTextSize(11);
-                if (GSTEnable.equalsIgnoreCase("1") && (HSNEnable_out != null) && HSNEnable_out.equals("1")) {
+                if ((HSNEnable_out != null) && HSNEnable_out.equals("1")) {
                     tvHSn.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("HSNCode")));
                 }
+
+
+
                 // Quantity
                 etQty = new EditText(myContext);
                 etQty.setWidth(55);
                 etQty.setTextSize(11);
                 if (crsrBillItems.getString(crsrBillItems.getColumnIndex("PrintKOTStatus")).equalsIgnoreCase("1")) {
                     etQty.setEnabled(true);
-                } else {
-                    etQty.setEnabled(false);
-                }
-                etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
-                etQty.setSelectAllOnFocus(true);
-                etQty.setTag("QTY_RATE");
-                if(jBillingMode ==2 || jBillingMode ==3 || jBillingMode ==4)
-                {
                     etQty.setOnClickListener(Qty_Rate_Click);
+                    etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
                     etInputValidate.ValidateDecimalInput(etQty);
@@ -2764,16 +2768,43 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                             Qty_Rate_Edit();
                         }
                     });
+                } else {
+                    etQty.setEnabled(false);
                 }
+                etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
+                etQty.setSelectAllOnFocus(true);
+                etQty.setTag("QTY_RATE");
+
 
 
                 // Rate
                 etRate = new EditText(myContext);
                 etRate.setWidth(70);
-                etRate.setEnabled(false);
                 etRate.setTextSize(11);
+                etRate.setTag("QTY_RATE");
+                etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                 etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 etRate.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Rate"))));
+                    if (crsrSettings.getInt(crsrSettings.getColumnIndex("PriceChange")) == 0) {
+                        etRate.setEnabled(false);
+                    } else {
+                        etRate.setEnabled(true);
+                        etRate.setOnClickListener(Qty_Rate_Click);
+                        etRate.setOnKeyListener(Qty_Rate_KeyPressEvent);
+                        etInputValidate.ValidateDecimalInput(etRate);
+                        etRate.addTextChangedListener(new TextWatcher() {
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                            }
+
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            }
+
+                            public void afterTextChanged(Editable s) {
+                                Qty_Rate_Edit();
+                            }
+                        });}
 
                 // Amount
                 tvAmount = new TextView(myContext);
@@ -2955,44 +2986,70 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 tvHSn = new TextView(myContext);
                 tvHSn.setWidth(67); // 154px ~= 230dp
                 tvHSn.setTextSize(11);
-                if (GSTEnable.equalsIgnoreCase("1") && (HSNEnable_out != null) && HSNEnable_out.equals("1")) {
+                if ((HSNEnable_out != null) && HSNEnable_out.equals("1")) {
                     tvHSn.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("HSNCode")));
                 }
                 // Quantity
                 etQty = new EditText(myContext);
                 etQty.setWidth(55);
                 etQty.setTextSize(11);
+                etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
+                etQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 if (crsrBillItems.getString(crsrBillItems.getColumnIndex("PrintKOTStatus")).equalsIgnoreCase("1")) {
                     etQty.setEnabled(true);
+                    etQty.setSelectAllOnFocus(true);
+                    etQty.setTag("QTY_RATE");
+                    etQty.setOnClickListener(Qty_Rate_Click);
+                    etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
+                    etInputValidate.ValidateDecimalInput(etQty);
+                    etQty.addTextChangedListener(new TextWatcher() {
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        public void afterTextChanged(Editable s) {
+                            Qty_Rate_Edit();
+                        }
+                    });
+
                 } else {
                     etQty.setEnabled(false);
                 }
                 etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
-                etQty.setSelectAllOnFocus(true);
-                etQty.setTag("QTY_RATE");
-                etQty.setOnClickListener(Qty_Rate_Click);
-                etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
-                etInputValidate.ValidateDecimalInput(etQty);
-                etQty.addTextChangedListener(new TextWatcher() {
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    public void afterTextChanged(Editable s) {
-                        Qty_Rate_Edit();
-                    }
-                });
 
                 // Rate
                 etRate = new EditText(myContext);
                 etRate.setWidth(70);
                 etRate.setEnabled(false);
                 etRate.setTextSize(11);
+                etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                 etRate.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Rate"))));
+                etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                if (crsrSettings.getInt(crsrSettings.getColumnIndex("PriceChange")) == 0) {
+                    etRate.setEnabled(false);
+                } else {
+                    etRate.setEnabled(true);
+                    etRate.setTag("QTY_RATE");
+                    etRate.setOnClickListener(Qty_Rate_Click);
+                    etRate.setOnKeyListener(Qty_Rate_KeyPressEvent);
+                    etInputValidate.ValidateDecimalInput(etRate);
+                    etRate.addTextChangedListener(new TextWatcher() {
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        public void afterTextChanged(Editable s) {
+                            Qty_Rate_Edit();
+                        }
+                    });}
 
                 // Amount
                 tvAmount = new TextView(myContext);
@@ -4097,6 +4154,9 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
         if (LoadModifyKOT.moveToFirst()) {
             LoadModifyKOTItems(LoadModifyKOT);
+            btnPrintBill.setEnabled(false);
+            btnPayBill.setEnabled(false);
+
             // btnDeleteKOT.setEnabled(true);
         } else {
             Log.v("Load Modify KOT", "ERROR: No items found");
@@ -5105,7 +5165,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 Double qty = Double.parseDouble(itemQty.getText().toString().trim());
                 double rate = Double.parseDouble(itemRate.getText().toString().trim());
                 double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-                BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount);
+                BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount);
                 billKotItems.add(billKotItem);
                 count++;
             }
@@ -5667,7 +5727,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
     public void ReprintKOT(final View v) {
         //takeScreenshot();
-        tblOrderItems.removeAllViews();
+
 
         AlertDialog.Builder DineInTenderDialog = new AlertDialog.Builder(myContext);
 
@@ -5695,12 +5755,14 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                             return;
                         } else {
 
-                            tvTableNumber.setText(txtTblNo.getText().toString());
-                            tvTableSplitNo.setText(txtTblSplitNo.getText().toString());
-                            tvSubUdfValue.setText("1");
+
                             Cursor BillItems = dbBillScreen.getKOTItems(Integer.parseInt(txtTblNo.getText().toString()),
                                     1, Integer.parseInt(txtTblSplitNo.getText().toString()));
                             if (BillItems.moveToFirst()) {
+                                tvTableNumber.setText(txtTblNo.getText().toString());
+                                tvTableSplitNo.setText(txtTblSplitNo.getText().toString());
+                                tvSubUdfValue.setText("1");
+                                tblOrderItems.removeAllViews();
                                 REPRINT_KOT =1;
                                 LoadKOTItems(BillItems);
 

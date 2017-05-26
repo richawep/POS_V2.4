@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
@@ -63,6 +64,7 @@ import com.wep.common.app.print.PrintKotBillItem;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.DateTime;
+import com.wepindia.pos.GenericClasses.DecimalDigitsInputFilter;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -1482,6 +1484,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     }
                     etQty.setTag("QTY_RATE");
                     etQty.setOnClickListener(Qty_Rate_Click);
+                    etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
                     etInputValidate.ValidateDecimalInput(etQty);
                     etQty.addTextChangedListener(new TextWatcher() {
@@ -1514,6 +1517,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     etRate.setWidth(70); // 74px ~= 110dp
                     etRate.setTextSize(11);
                     etRate.setSelectAllOnFocus(true);
+                    etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     etRate.setText(String.format("%.2f", dRate));
                     etRate.setTag("QTY_RATE");
@@ -2461,6 +2465,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
                 etQty.setSelectAllOnFocus(true);
                 etQty.setTag("QTY_RATE");
+                etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                 if(jBillingMode ==2 || jBillingMode ==3 || jBillingMode ==4)
                 {
                     etQty.setOnClickListener(Qty_Rate_Click);
@@ -2488,6 +2493,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 etRate.setWidth(70);
                 etRate.setEnabled(false);
                 etRate.setTextSize(11);
+                etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                 etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 etRate.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Rate"))));
 
@@ -2690,6 +2696,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 etQty.setSelectAllOnFocus(true);
                 etQty.setTag("QTY_RATE");
                 etQty.setOnClickListener(Qty_Rate_Click);
+                etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                 etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
                 etInputValidate.ValidateDecimalInput(etQty);
                 etQty.addTextChangedListener(new TextWatcher() {
@@ -2711,6 +2718,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 etRate.setWidth(70);
                 etRate.setEnabled(false);
                 etRate.setTextSize(11);
+                etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                 etRate.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Rate"))));
 
                 // Amount
@@ -5165,7 +5173,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 Double qty = Double.parseDouble(itemQty.getText().toString().trim());
                 double rate = Double.parseDouble(itemRate.getText().toString().trim());
                 double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-                BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount);
+                BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount);
                 billKotItems.add(billKotItem);
                 count++;
             }

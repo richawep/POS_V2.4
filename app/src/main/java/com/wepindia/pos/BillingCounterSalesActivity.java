@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
@@ -58,6 +59,7 @@ import com.wep.common.app.print.PrintKotBillItem;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.DateTime;
+import com.wepindia.pos.GenericClasses.DecimalDigitsInputFilter;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.CategoryAdapter;
@@ -1032,6 +1034,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     etQty.setTag("QTY_RATE");
                     etQty.setOnClickListener(Qty_Rate_Click);
                     etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
+                    etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etInputValidate.ValidateDecimalInput(etQty);
                     etQty.addTextChangedListener(new TextWatcher() {
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1062,6 +1065,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     etRate.setWidth(70); // 74px ~= 110dp
                     etRate.setTextSize(11);
                     etRate.setSelectAllOnFocus(true);
+                    etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     etRate.setText(String.format("%.2f", dRate));
                     etRate.setTag("QTY_RATE");

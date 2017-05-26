@@ -550,9 +550,12 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
     }
 
     public void onClickGetGstr1Summary(View view) {
-        progressDialog.show();
-        new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, Config.GSTR1_SUMMERY_GET_API).execute();
+        startActivity(new Intent(getApplicationContext(),GSTFileActivity.class));
     }
+// public void onClickGetGstr1Summary(View view) {
+//        progressDialog.show();
+//        new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, Config.GSTR1_SUMMERY_GET_API).execute();
+//    }
 
     public void onClickGetGstr1ASummary(View view) {
         progressDialog.show();

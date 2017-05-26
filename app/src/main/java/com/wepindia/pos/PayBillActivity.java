@@ -531,7 +531,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         }
 
 
-        edtDiscount.setEnabled(true);
+       // edtDiscount.setEnabled(true);
         // custom dialog
         PayBillDialog = new Dialog(myContext);
         PayBillDialog.setContentView(R.layout.paybill_tablelist);

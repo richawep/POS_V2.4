@@ -2,13 +2,17 @@ package com.wepindia.pos.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -18,9 +22,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.wep.common.app.Database.DatabaseHandler;
@@ -68,11 +74,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPRequestCompletedListener, DownloadFileFromURL.OnFileDownloadCompletedListener,AuthFragment.OnAuthCompletedListener {
 
@@ -86,7 +95,9 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
     private static final int REQUEST_SAVE_GSTR1 = 1;
     private static final int REQUEST_SAVE_GSTR2 = 2;
     private static final int REQUEST_GET_GSTR1_SUMMARY = 1006;
-    private static final int REQUEST_GET_GSTR1A_SUMMARY = 1007;
+    private static final int REQUEST_GET_GSTR1A = 1007;
+    private static final int REQUEST_GET_GSTR2A = 1008;
+    private static final int REQUEST_GET_GSTR2_Reconcile = 1009;
     private static final int REQUEST_SAVE_GSTR1A = 11;
     private String strDate = "";
     private EditText etReportDateStart,etReportDateEnd;
@@ -97,11 +108,11 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
     private GSTDataController dataController;
     private ProgressDialog progressDialog,pDialog;
     private SharedPreferences sharedPreferences;
-    private RelativeLayout PostGSTR1,fileGSTR1,getGSTRR2B2B,postGSTR2,getGSTR1ASummary,getGSTR3;
-    private RelativeLayout fileGSTR2, fileGSTR3, getGSTR1Summary,postGSTR1A;
+    private RelativeLayout PostGSTR1,fileGSTR1,getGSTRR2B2B,postGSTR2,getGSTR3;
+    private RelativeLayout fileGSTR2, fileGSTR3, getGSTR1Summary,getGSTR1A, getGSTR2A,getGSTR2Reconcile;
 
 
-    private static int REQUEST_GET_GSTR2_B2B = 1001;
+    private static final int REQUEST_GET_GSTR2_B2B = 1001;
 
     Context myContext ;
     public Activity myActivity ;
@@ -126,7 +137,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         return view;
     }
 
-    private void getGSTR3All() {
+    private void getGSTR3() {
         progressDialog.show();
         new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR3, Config.GSTR3_GET).execute();
     }
@@ -149,8 +160,10 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         postGSTR2 = (RelativeLayout) view.findViewById(R.id.postGSTR2);
         PostGSTR1 = (RelativeLayout) view.findViewById(R.id.PostGSTR1);
         getGSTR1Summary = (RelativeLayout) view.findViewById(R.id.getGSTR1Summary);
-        getGSTR1ASummary = (RelativeLayout) view.findViewById(R.id.getGSTR1ASummary);
-        postGSTR1A = (RelativeLayout) view.findViewById(R.id.postGSTR1A);
+        getGSTR1A = (RelativeLayout) view.findViewById(R.id.getGSTR1A);
+        getGSTR2A = (RelativeLayout) view.findViewById(R.id.getGSTR2A);
+        getGSTR2Reconcile = (RelativeLayout) view.findViewById(R.id.getGSTR2Reconcile);
+        getGSTR3 = (RelativeLayout) view.findViewById(R.id.getGSTR3);
         getGSTRR2B2B = (RelativeLayout) view.findViewById(R.id.getGSTRR2B2B);
         dbGSTLink = new DatabaseHandler(myContext);
         sharedPreferences = myActivity.getSharedPreferences("com.wepindia.pos",Context.MODE_PRIVATE);
@@ -177,19 +190,19 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
             fileGSTR1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickFileGstr1(v);
+                    onClickFileGstr(v);
                 }
             });
             fileGSTR2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickFileGstr1(v);
+                    onClickFileGstr(v);
                 }
             });
             fileGSTR3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClickFileGstr1(v);
+                    onClickFileGstr(v);
                 }
             });
             postGSTR2.setOnClickListener(new View.OnClickListener() {
@@ -207,24 +220,25 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
             getGSTR1Summary.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { onClickGetGstr1Summary(v); }});
-            postGSTR1A.setOnClickListener(new View.OnClickListener() {
+            getGSTR1A.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    onClickPostGstr1A(v);
-                }
-            });
-            getGSTR1ASummary.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) { onClickGetGstr1A(v); }});
+            getGSTR2A.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    onClickGetGstr1ASummary(v);
-                }
-            });
-            getGSTRR2B2B.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) { onClickGetGstr2A(v); }});
+            getGSTR2Reconcile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { onClickGetGstr2Reconcile(v); }});
+            getGSTR3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { onClickGetGstr3(v); }});
+
+           /* getGSTRR2B2B.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onClickGetGstr2B2B(v);
                 }
-            });
+            });*/
 
 
 
@@ -516,14 +530,35 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
 
 
     public void onClickGetGstr1Summary(View view) {
-        progressDialog.show();
-        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, Config.GSTR1_SUMMERY_GET_API).execute();
+        /*progressDialog.show();
+        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx").execute();*/
+        onHttpRequestComplete(REQUEST_GET_GSTR1_SUMMARY, "Helloe");
+    }
+    public void onClickGetGstr1A(View view) {
+        /*progressDialog.show();
+        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx").execute();*/
+        onHttpRequestComplete(REQUEST_GET_GSTR1A, "Helloe");
+    }
+    public void onClickGetGstr2A(View view) {
+        /*progressDialog.show();
+        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx").execute();*/
+        onHttpRequestComplete(REQUEST_GET_GSTR2A, "Helloe");
+    }
+    public void onClickGetGstr2Reconcile(View view) {
+        /*progressDialog.show();
+        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx").execute();*/
+        onHttpRequestComplete(REQUEST_GET_GSTR2_Reconcile, "Helloe");
+    }
+    public void onClickGetGstr3(View view) {
+        /*progressDialog.show();
+        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx").execute();*/
+        onHttpRequestComplete(REQUEST_GET_GSTR3, "Helloe");
     }
 
-    public void onClickGetGstr1ASummary(View view) {
+    /*public void onClickGetGstr1ASummary(View view) {
         progressDialog.show();
         new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1A_SUMMARY, Config.GSTR1A_SUMMERY_GET_API).execute();
-    }
+    }*/
 
     public void onClickPostGstr1(View view) {
         String startDate = etReportDateStart.getText().toString() ;
@@ -593,13 +628,12 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         }
     }
 
-    public void onClickFileGstr1(View view) {
-        startActivity(new Intent(myContext,GSTFileActivity.class));
+    public void onClickFileGstr(View view) {
+        //startActivity(new Intent(myContext,GSTFileActivity.class));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.wepaspservices.com/"));
+        startActivity(browserIntent);
     }
 
-    public void onClickFileGstr1A(View view) {
-        startActivity(new Intent(myContext,GSTFileActivity.class));
-    }
 
     public void onClickGetGstr2B2B(View view) {
         progressDialog.show();
@@ -622,10 +656,6 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         {
             promptAuthFragment(REQUEST_SAVE_GSTR2);
         }
-    }
-
-    public void onClickFileGstr2(View view) {
-        startActivity(new Intent(myContext,GSTFileActivity.class));
     }
 
     @Override
@@ -688,72 +718,167 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         //@Override
         public void onHttpRequestComplete(int requestCode, String data) {
             progressDialog.dismiss();
-            if(data!=null)
-            {
-                if(requestCode == REQUEST_SAVE_GSTR1)
-                {
-                    if(data.equalsIgnoreCase(""))
-                    {
+            if(data!=null) {
+                if (requestCode == REQUEST_SAVE_GSTR1 || requestCode == REQUEST_SAVE_GSTR2) {
+                    if (data.equalsIgnoreCase("")) {
                         Toast.makeText(myContext, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
+                    } else {
                         try {
                             JSONObject jsonObject = new JSONObject(data);
-                            if(jsonObject.getBoolean("success")){
+                            if (jsonObject.getBoolean("success")) {
                                 Toast.makeText(myContext, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(myContext, "Error due to "+e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(myContext, "Error due to " + e, Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }
                 }
 
-                if(requestCode == REQUEST_SAVE_GSTR1A)
-                {
-                    if(data.equalsIgnoreCase(""))
-                    {
-                        Toast.makeText(myContext, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        try {
-                            JSONObject jsonObject = new JSONObject(data);
-                            if(jsonObject.getBoolean("success")){
-                                Toast.makeText(myContext, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            Toast.makeText(myContext, "Error due to "+e, Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                else if(requestCode == REQUEST_SAVE_GSTR2) // GSTR2REQUEST_GET_GSTR2_B2B
-                {
-                    if(data.equalsIgnoreCase(""))
-                    {
-                        Toast.makeText(myContext, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        try {
-                            JSONObject jsonObject = new JSONObject(data);
-                            if(jsonObject.getBoolean("success")){
-                                Toast.makeText(myContext, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            Toast.makeText(myContext, "Error due to "+e, Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
-                    }
-                }
 
-                else if(requestCode == REQUEST_GET_GSTR1A_SUMMARY) // REQUEST_GET_GSTR1A_SUMMARY
+                /*else if(requestCode == REQUEST_GET_GSTR1A_SUMMARY) // REQUEST_GET_GSTR1A_SUMMARY
                 {
+                  String  data1 = "{\n" +
+                            "  \"gstin\": \"25ABCDE1028F6Z4\",\n" +
+                            "  \"fp\": \"062016\",\n" +
+                            "  \"b2b\": [\n" +
+                            "    {\n" +
+                            "      \"ctin\": \"21ABCDE3180F8Z6\",\n" +
+                            "      \"inv\": [\n" +
+                            "        {\n" +
+                            "          \"inum\": \"98678\",\n" +
+                            "          \"idt\": \"25-10-2016\",\n" +
+                            "          \"val\": 776522.02,\n" +
+                            "          \"pos\": \"01\",\n" +
+                            "          \"rchrg\": \"N\",\n" +
+                            "          \"prs\": \"Y\",\n" +
+                            "          \"od_num\": \"S008400\",\n" +
+                            "          \"od_dt\": \"03-02-2016\",\n" +
+                            "          \"etin\": \"01AABCE5507R1Z4\",\n" +
+                            "          \"itms\": [\n" +
+                            "            {\n" +
+                            "              \"num\": 1,\n" +
+                            "              \"itm_det\": {\n" +
+                            "                \"ty\": \"G\",\n" +
+                            "                \"hsn_sc\": \"G1221\",\n" +
+                            "                \"txval\": 10000,\n" +
+                            "                \"irt\": 3,\n" +
+                            "                \"iamt\": 833.33,\n" +
+                            "                \"crt\": 4,\n" +
+                            "                \"camt\": 500,\n" +
+                            "                \"srt\": 5,\n" +
+                            "                \"samt\": 900,\n" +
+                            "                \"csrt\": 2,\n" +
+                            "                \"csamt\": 500\n" +
+                            "              }\n" +
+                            "            }\n" +
+                            "          ]\n" +
+                            "        }\n" +
+                            "      ]\n" +
+                            "    }\n" +
+                            "  ],\n" +
+                            "  \"b2ba\": [\n" +
+                            "    {\n" +
+                            "      \"ctin\": \"76ABCDE3548F4Z8\",\n" +
+                            "      \"inv\": [\n" +
+                            "        {\n" +
+                            "          \"inum\": \"27686\",\n" +
+                            "          \"idt\": \"16-04-2016\",\n" +
+                            "          \"val\": 142244.71,\n" +
+                            "          \"pos\": \"01\",\n" +
+                            "          \"rchrg\": \"N\",\n" +
+                            "          \"oinum\": \"S008400\",\n" +
+                            "          \"oidt\": \"03-01-2016\",\n" +
+                            "          \"prs\": \"Y\",\n" +
+                            "          \"od_num\": \"S008400\",\n" +
+                            "          \"od_dt\": \"03-02-2016\",\n" +
+                            "          \"etin\": \"01AABCE5507R1Z4\",\n" +
+                            "          \"itms\": [\n" +
+                            "            {\n" +
+                            "              \"num\": 1,\n" +
+                            "              \"itm_det\": {\n" +
+                            "                \"ty\": \"G\",\n" +
+                            "                \"hsn_sc\": \"G1221\",\n" +
+                            "                \"txval\": 10000,\n" +
+                            "                \"irt\": 3,\n" +
+                            "                \"iamt\": 833.33,\n" +
+                            "                \"crt\": 4,\n" +
+                            "                \"camt\": 500,\n" +
+                            "                \"srt\": 5,\n" +
+                            "                \"samt\": 900,\n" +
+                            "                \"csrt\": 2,\n" +
+                            "                \"csamt\": 500\n" +
+                            "              }\n" +
+                            "            }\n" +
+                            "          ]\n" +
+                            "        }\n" +
+                            "      ]\n" +
+                            "    }\n" +
+                            "  ],\n" +
+                            "  \"cdnr\": [\n" +
+                            "    {\n" +
+                            "      \"ctin\": \"01AAAAP1208Q1ZS\",\n" +
+                            "      \"nt\": [\n" +
+                            "        {\n" +
+                            "          \"ntty\": \"C\",\n" +
+                            "          \"nt_num\": \"533515\",\n" +
+                            "          \"nt_dt\": \"23-09-2016\",\n" +
+                            "          \"rsn\": \"Not mentioned\",\n" +
+                            "          \"inum\": \"915914\",\n" +
+                            "          \"idt\": \"23-09-2016\",\n" +
+                            "          \"rchrg\": \"N\",\n" +
+                            "          \"val\": 10000,\n" +
+                            "          \"irt\": 3,\n" +
+                            "          \"iamt\": 833.33,\n" +
+                            "          \"crt\": 4,\n" +
+                            "          \"camt\": 500,\n" +
+                            "          \"srt\": 5,\n" +
+                            "          \"samt\": 900,\n" +
+                            "          \"csrt\": 2,\n" +
+                            "          \"csamt\": 500,\n" +
+                            "          \"etin\": \"01AAAAP1208Q1Z7\"\n" +
+                            "        }\n" +
+                            "      ]\n" +
+                            "    }\n" +
+                            "  ],\n" +
+                            "  \"cdnra\": [\n" +
+                            "    {\n" +
+                            "      \"ctin\": \"01AAAAP1208Q1ZS\",\n" +
+                            "      \"nt\": [\n" +
+                            "        {\n" +
+                            "          \"ntty\": \"C\",\n" +
+                            "          \"rsn\": \"Not mentioned\",\n" +
+                            "          \"ont_num\": \"533515\",\n" +
+                            "          \"ont_dt\": \"23-09-2016\",\n" +
+                            "          \"nt_num\": \"533515\",\n" +
+                            "          \"nt_dt\": \"23-09-2016\",\n" +
+                            "          \"inum\": \"915914\",\n" +
+                            "          \"idt\": \"23-09-2016\",\n" +
+                            "          \"rchrg\": \"N\",\n" +
+                            "          \"val\": 5225.28,\n" +
+                            "          \"irt\": 3,\n" +
+                            "          \"iamt\": 833.33,\n" +
+                            "          \"crt\": 4,\n" +
+                            "          \"camt\": 500,\n" +
+                            "          \"srt\": 5,\n" +
+                            "          \"samt\": 900,\n" +
+                            "          \"csrt\": 2,\n" +
+                            "          \"csamt\": 500,\n" +
+                            "          \"etin\": \"01AAAAP1208Q1Z7\"\n" +
+                            "        }\n" +
+                            "      ]\n" +
+                            "    }\n" +
+                            "  ]\n" +
+                            "}";
                     ArrayList<GetGSTR2B2BFinal> finalsList = new ArrayList<GetGSTR2B2BFinal>();
-                    data = data.replaceAll("\\\\", "");
-                    data = data.substring(1,data.length()-1);
+                    data1.trim();
+                    //data1 = data.replaceAll("\\\\", "");
+                    Gson gson = new Gson();
+                    data = gson.toJson(data1);
+
+
+                    //data = data.substring(1,data.length()-1);
+
                     if(data.equalsIgnoreCase(""))
                     {
                         Toast.makeText(myContext, "Error due to empty response", Toast.LENGTH_SHORT).show();
@@ -761,8 +886,11 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
                     else
                     {
                         try {
-                            JSONObject jsonObject = new JSONObject(data);
-                            JSONArray jsonarray = jsonObject.getJSONArray("gstr1summary");
+
+                            JSONObject jsonObject = new JSONObject(data1);
+                            String gstin_recvd =jsonObject.getString("gstin");
+                            String fp_recvd =jsonObject.getString("fp");
+                            JSONArray jsonarray = jsonObject.getJSONArray("b2b");
                             Type listType = new TypeToken<ArrayList<GetGSTR1Summary>>(){}.getType();
                             ArrayList<GetGSTR1Summary> dataList = new GsonBuilder().create().fromJson(jsonarray.toString(), listType);
                             dbGSTLink.saveGSTR1ASummary(dataList);
@@ -771,34 +899,80 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
                             Toast.makeText(myContext, "Error due to "+e, Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
+                    }*/
+
+                else if (requestCode == REQUEST_GET_GSTR1_SUMMARY || requestCode == REQUEST_GET_GSTR1A ||
+                        requestCode == REQUEST_GET_GSTR2A|| requestCode == REQUEST_GET_GSTR2_Reconcile ||
+                         requestCode == REQUEST_GET_GSTR3)
+                {
+                    String URL = "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx";
+                    String Filename = "sample.xlsx";
+                    switch (requestCode) {
+                        case REQUEST_GET_GSTR1_SUMMARY:
+                            URL = "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx";
+                            Filename = "sample.xlsx";
+                            break;
+                        case REQUEST_GET_GSTR2_B2B:
+                            URL = "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx";
+                            Filename = "sample.xlsx";
+                            break;
                     }
+                    File direct1 = new File(Environment.getExternalStorageDirectory()
+                            + "/WeP_DownloadReports");
+
+                    if (!direct1.exists()) {
+                        direct1.mkdirs();
+                    }
+                    String dd = "";
+                    Cursor cc = dbGSTLink.getCurrentDate();
+                    if (cc != null && cc.moveToNext())
+                        dd = cc.getString(cc.getColumnIndex("BusinessDate"));
+                    File direct = new File(direct1 + "/" + dd.substring(3, 5) + dd.substring(6));
+                    if (!direct.exists()) {
+                        direct.mkdirs();
+                    }
+
+                    final DownloadManager dm = (DownloadManager) getActivity().getSystemService(DOWNLOAD_SERVICE);
+                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(URL));
+                    request.allowScanningByMediaScanner();
+                    request.setDestinationInExternalPublicDir("/WeP_DownloadReports/"+dd.substring(3, 5) + dd.substring(6), Filename);
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    final long enqueue = dm.enqueue(request);
+
+                    BroadcastReceiver receiver = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                            String action = intent.getAction();
+                            if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+
+                                long downloadId = intent.getLongExtra(
+                                        DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+
+                                DownloadManager.Query query = new DownloadManager.Query();
+                                query.setFilterById(enqueue);
+                                Cursor c = dm.query(query);
+                                if (c.moveToFirst()) {
+                                    int columnIndex = c
+                                            .getColumnIndex(DownloadManager.COLUMN_STATUS);
+                                    if (DownloadManager.STATUS_SUCCESSFUL == c
+                                            .getInt(columnIndex)) {
+
+
+                            /*ImageView view = (ImageView) findViewById(R.id.imageView1);
+                            String uriString = c
+                                    .getString(c
+                                            .getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                            view.setImageURI(Uri.parse(uriString));*/
+                                    }
+                                }
+                            }
+                        }
+                    };
+
                 }
 
-                else if(requestCode == REQUEST_GET_GSTR1_SUMMARY) // REQUEST_GET_GSTR1A_SUMMARY
-                {
-                    ArrayList<GetGSTR2B2BFinal> finalsList = new ArrayList<GetGSTR2B2BFinal>();
-                    data = data.replaceAll("\\\\", "");
-                    data = data.substring(1,data.length()-1);
-                    if(data.equalsIgnoreCase(""))
-                    {
-                        Toast.makeText(myContext, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        try {
-                            JSONObject jsonObject = new JSONObject(data);
-                            JSONArray jsonarray = jsonObject.getJSONArray("gstr1summary");
-                            Type listType = new TypeToken<ArrayList<GetGSTR1Summary>>(){}.getType();
-                            ArrayList<GetGSTR1Summary> dataList = new GsonBuilder().create().fromJson(jsonarray.toString(), listType);
-                            dbGSTLink.saveGSTR1ASummary(dataList);
-                            Toast.makeText(myContext, "Data loaded successfully", Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
-                            Toast.makeText(myContext, "Error due to "+e, Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                else if(requestCode == REQUEST_GET_GSTR2_B2B) // REQUEST_GET_GSTR2_B2B
+
+               /* else if(requestCode == REQUEST_GET_GSTR2_B2B) // REQUEST_GET_GSTR2_B2B
                 {
                     //GetGSTR2B2BFinal getGSTR2B2BFinal = null;
                     ArrayList<GetGSTR2B2BFinal> finalsList = new ArrayList<GetGSTR2B2BFinal>();
@@ -870,30 +1044,10 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
                         if(progressDialog.isShowing())
                             progressDialog.dismiss();
                     }
-                }
-                else if(requestCode == REQUEST_GET_GSTR3) // GSTR2REQUEST_GET_GSTR2_B2B
-                {
-                    if(data.equalsIgnoreCase(""))
-                    {
-                        Toast.makeText(myContext, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                    /*try {
-                        JSONObject jsonObject = new JSONObject(data);
-                        if(jsonObject.getBoolean("success")){
-                            Toast.makeText(myContext, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        Toast.makeText(myContext, "Error due to "+e, Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }*/
-                    }
-                }
-            }
-            else
+                }*/
+            }else
             {
-                Toast.makeText(myContext, "Sending error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(myContext, "Error", Toast.LENGTH_SHORT).show();
             }
         }
     //}
