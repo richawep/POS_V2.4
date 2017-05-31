@@ -4377,6 +4377,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 if (RowBillItem.getChildAt(15) != null) {
                     TextView ServiceTaxPercent = (TextView) RowBillItem.getChildAt(15);
                     if (chk_interstate.isChecked()) {
+                        igstRate += (Double.parseDouble(String.format("%.2f",
+                                Double.parseDouble(ServiceTaxPercent.getText().toString()))));
                         sgstRate = 0.00;
                     } else {
                         sgstRate = (Double.parseDouble(String.format("%.2f",
@@ -4388,6 +4390,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 if (RowBillItem.getChildAt(16) != null) {
                     TextView ServiceTaxAmount = (TextView) RowBillItem.getChildAt(16);
                     if (chk_interstate.isChecked()) {
+                        igstAmt += Double.parseDouble(String.format("%.2f",
+                                Double.parseDouble(ServiceTaxAmount.getText().toString())));
                         sgstAmt = 0.00;
                     } else {
                         sgstAmt =  Double.parseDouble(String.format("%.2f",
@@ -4402,7 +4406,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             Double.parseDouble(SalesTaxPercent.getText().toString())));
 
                     if (chk_interstate.isChecked()) {
-                        igstRate = (Float.parseFloat(String.format("%.2f", cgstRate + sgstRate)));
+                        igstRate += (Float.parseFloat(String.format("%.2f", cgstRate)));
                         cgstRate= 0.00;
                     }else{
                         igstRate = 0.00;
@@ -4415,7 +4419,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             Double.parseDouble(SalesTaxAmount.getText().toString())));
 
                     if (chk_interstate.isChecked()) {
-                        igstAmt = (Double.parseDouble(String.format("%.2f",cgstAmt+sgstAmt)));
+                        igstAmt += (Double.parseDouble(String.format("%.2f",cgstAmt)));
                         cgstAmt = 0.00;
                     } else {
                         igstAmt = 0.00;
@@ -4913,6 +4917,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             //total = Math.round(total);
                             total -= fTotalDiscount;
                             tvBillAmount.setText(String.format("%.2f",total));*/
+                            double igst = data.getDoubleExtra("TotalIGSTAmount",0);
                             double cgst = data.getDoubleExtra("TotalCGSTAmount",0);
                             double sgst = data.getDoubleExtra("TotalSGSTAmount",0);
                             double billtot = data.getDoubleExtra("TotalBillAmount",0);
@@ -4921,7 +4926,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 tvBillAmount.setText(String.format("%.2f",billtot));
                                 if(chk_interstate.isChecked())
                                 {
-                                    tvTaxTotal.setText(String.format("%.2f", cgst+sgst));
+                                    tvTaxTotal.setText(String.format("%.2f", igst));
                                     tvServiceTaxTotal.setText("0.00");
                                 }else {
                                     tvTaxTotal.setText(String.format("%.2f", cgst));
@@ -4950,7 +4955,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                             if (RowBillItem.getChildAt(7) != null) {
                                                 TextView SalesTaxAmount = (TextView) RowBillItem.getChildAt(7);
                                                 if (chk_interstate.isChecked()) {
-                                                    SalesTaxAmount.setText("0.00");
+                                                    SalesTaxAmount.setText(String.format("%.2f",item.getIgstAmt()));
                                                 } else {
                                                     SalesTaxAmount.setText(String.format("%.2f",item.getCgstAmt()));
                                                 }
@@ -5083,7 +5088,23 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                             tvDiscountPercentage.setText(String.format("%.2f", cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("DiscPercentage"))));
                                             tvBillAmount.setText(String.format("%.2f", cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("BillAmount"))));
                                             txtOthercharges.setText(String.format("%.2f", cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("DeliveryCharge"))));
-
+                                            String pos = cursorBillInfo.getString(cursorBillInfo.getColumnIndex("POS"));
+                                            String custStateCode = cursorBillInfo.getString(cursorBillInfo.getColumnIndex("CustStateCode"));
+                                            if(pos!=null && custStateCode!=null && pos.trim().equalsIgnoreCase(custStateCode.trim())) // cgst+sgst
+                                            {
+                                                tvIGSTValue.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+                                                tvTaxTotal.setTextColor(Color.WHITE);
+                                                tvServiceTaxTotal.setTextColor(Color.WHITE);
+                                                tvTaxTotal.setText(String.format("%.2f",cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("CGSTAmount"))));
+                                                tvServiceTaxTotal.setText(String.format("%.2f",cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("SGSTAmount"))));
+                                            }else
+                                            {
+                                                chk_interstate.setChecked(true);
+                                                tvTaxTotal.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+                                                tvServiceTaxTotal.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+                                                tvIGSTValue.setTextColor(Color.WHITE);
+                                                tvIGSTValue.setText(String.format("%.2f",cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("IGSTAmount"))));
+                                            }
                                         }
                                     }
                                     else{

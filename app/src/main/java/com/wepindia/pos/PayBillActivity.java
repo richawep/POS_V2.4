@@ -77,6 +77,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     int RESETCALLED =0;
     float discPercent =0;
     double otherCharges_recieved =0;
+    double totalIGSTAmount =0;
     double totalCGSTAmount =0;
     double totalSGSTAmount =0;
     double totalBillAmount =0;
@@ -242,10 +243,8 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     private void RecalculateBillAmount() {
         double dTotalValue = 0.00, dPaidTotal = 0.00;
         double dTenderAmount = 0.00, dChangeAmount = 0.00, dDiscAmt = 0.00;
-        totalCGSTAmount = totalSGSTAmount =totalBillAmount=0;
+        totalIGSTAmount=totalCGSTAmount = totalSGSTAmount =totalBillAmount=0;
 
-        dDiscAmt = edtDiscount.getText().toString().equalsIgnoreCase("") ? 0.00 : Double.parseDouble(edtDiscount.getText().toString());
-        //dTotalValue = edtTotalValue.getText().toString().equalsIgnoreCase("") ? 0.00 : Double.parseDouble(edtTotalValue.getText().toString());
         if(discPercent>0){
             for(AddedItemsToOrderTableClass item : orderList_recieved)
             {
@@ -261,6 +260,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     double igstAmt_new = discountedrate*igstRate/100;
                     double cgstAmt_new = discountedrate*cgstRate/100;
                     double sgstAmt_new = discountedrate*sgstRate/100;
+                    totalIGSTAmount += igstAmt_new;
                     totalCGSTAmount += cgstAmt_new;
                     totalSGSTAmount += sgstAmt_new;
 
@@ -317,8 +317,36 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             }
         }
 
+    }
 
+    private  void restoretoPreviousValue()
+    {
+        double dTotalValue = 0.00;
+        totalIGSTAmount=totalCGSTAmount = totalSGSTAmount =totalBillAmount=0;
+        for(AddedItemsToOrderTableClass item : orderList_recieved) {
+            double rate = item.getRate();
+            double quantity = item.getQuantity();
+            double igstRate = item.getIgstRate();
+            double cgstRate = item.getCgstRate();
+            double sgstRate = item.getSgstRate();
+            if (taxType_recieved == 1) // forward
+            {
 
+                double igstAmt_new = rate*quantity * igstRate / 100;
+                double cgstAmt_new = rate*quantity * cgstRate / 100;
+                double sgstAmt_new = rate*quantity * sgstRate / 100;
+                totalIGSTAmount += igstAmt_new;
+                totalCGSTAmount += cgstAmt_new;
+                totalSGSTAmount += sgstAmt_new;
+
+                dTotalValue += rate*quantity + igstAmt_new + cgstAmt_new + sgstAmt_new;
+                item.setSubtotal(rate*quantity + igstAmt_new + cgstAmt_new + sgstAmt_new);
+                item.setIgstAmt(igstAmt_new);
+                item.setCgstAmt(cgstAmt_new);
+                item.setSgstAmt(sgstAmt_new);
+
+            }
+        }
     }
 
     private void TenderChange() {
@@ -498,6 +526,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         intentResult.putExtra("CUST_ID", Integer.parseInt(tvCustId.getText().toString()));
         intentResult.putParcelableArrayListExtra("OrderList", orderList_recieved);
         intentResult.putExtra("TotalBillAmount", totalBillAmount);
+        intentResult.putExtra("TotalIGSTAmount", totalIGSTAmount);
         intentResult.putExtra("TotalCGSTAmount", totalCGSTAmount);
         intentResult.putExtra("TotalSGSTAmount", totalSGSTAmount);
         return intentResult;
@@ -604,12 +633,20 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                     TextView DiscountPercent = (TextView) Row.getChildAt(2);
                                     TextView DiscountAmount = (TextView) Row.getChildAt(3);
                                     if (rbDiscPercent.isChecked() == true) {
+                                        if(discPercent>0)
+                                        {
+                                            restoretoPreviousValue();
+                                        }
                                         discPercent = (Float.parseFloat(DiscountPercent.getText().toString()));
                                         float disc_amt = baseValue_recieved *  (discPercent/ 100);
                                         edtDiscount.setText(String.format("%.2f",disc_amt));
 //
                                     }
                                     if (rbDiscAmount.isChecked() == true) {
+                                        if(discPercent>0)
+                                        {
+                                            restoretoPreviousValue();
+                                        }
                                         double discAmt = Double.parseDouble(DiscountAmount.getText().toString());
                                         discPercent =0;
                                         if(discAmt <= dRoundoffTotal)

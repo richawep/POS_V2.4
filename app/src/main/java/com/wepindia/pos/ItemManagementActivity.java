@@ -1830,6 +1830,13 @@ public class ItemManagementActivity extends WepBaseActivity {
 
         if (txtStock.getText().toString().equalsIgnoreCase("")) {
             txtStock.setText("0");
+        }else
+        {
+            double stock = Double.parseDouble(txtStock.getText().toString());
+            if(stock>9999.99){
+                MsgBox.Show("Warning","Please enter stock between 0 and 9999.99");
+                return;
+            }
         }
         /*if (etRate.getText().toString().equals(""))
         {
