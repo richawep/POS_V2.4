@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
@@ -24,6 +23,7 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.fragments.FragmentInwardStock;
 import com.wepindia.pos.fragments.FragmentInwardSupply;
 
+import com.wepindia.pos.fragments.FragmentSupplierDetails;
 import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.util.ArrayList;
@@ -33,14 +33,14 @@ import java.util.List;
 /**
  * Created by RichaA on 3/15/2017.
  */
-public class TabbedInwardItem_NonGST extends WepBaseActivity {
+public class TabbedSupplierItemLinkage extends WepBaseActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     Context myContext;
     String strUserName = "";
-    DatabaseHandler dbTabbedInward;
+    DatabaseHandler dbTabbedSupplierItemLink;
     MessageDialog MsgBox;
     ViewPagerAdapter adapter;
 
@@ -59,13 +59,14 @@ public class TabbedInwardItem_NonGST extends WepBaseActivity {
     }
 
     private void init() {
-        dbTabbedInward = new DatabaseHandler(TabbedInwardItem_NonGST.this);
+        dbTabbedSupplierItemLink = new DatabaseHandler(TabbedSupplierItemLinkage.this);
         myContext = this;
         MsgBox = new MessageDialog(myContext);
         strUserName = getIntent().getStringExtra("USER_NAME");
         Date d = new Date();
         CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-        com.wep.common.app.ActionBarUtils.setupToolbar(TabbedInwardItem_NonGST.this,toolbar,getSupportActionBar(),"Inward Item Master",strUserName," Date:"+s.toString());
+        com.wep.common.app.ActionBarUtils.setupToolbar(TabbedSupplierItemLinkage.this,toolbar,getSupportActionBar(),
+                "Supplier Item Masters",strUserName," Date:"+s.toString());
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -73,15 +74,21 @@ public class TabbedInwardItem_NonGST extends WepBaseActivity {
 
         Bundle bundle2=new Bundle();
         bundle2.putString("REPORT_TYPE", "2");
-        FragmentInwardStock reportFragment2 = new FragmentInwardStock();
+        FragmentInwardSupply reportFragment2 = new FragmentInwardSupply();
         reportFragment2.setArguments(bundle2);
-        adapter.addFragment(reportFragment2, "Inward Stock");
+        adapter.addFragment(reportFragment2, "Supplier Item Linkage");
 
-        Bundle bundle1=new Bundle();
+        /*Bundle bundle1=new Bundle();
         bundle1.putString("REPORT_TYPE", "1");
-        FragmentInwardSupply reportFragment1 = new FragmentInwardSupply();
+        FragmentSupplierDetails reportFragment1 = new FragmentSupplierDetails();
         reportFragment1.setArguments(bundle1);
-        adapter.addFragment(reportFragment1, "Supplier Item Linkage ");
+        adapter.addFragment(reportFragment1, "Supplier Details ");
+*/
+        Bundle bundle11=new Bundle();
+        bundle11.putString("REPORT_TYPE", "1");
+        FragmentInwardStock reportFragment11 = new FragmentInwardStock();
+        reportFragment11.setArguments(bundle11);
+        adapter.addFragment(reportFragment11, "Supplier Details ");
 
         viewPager.setAdapter(adapter);
         //adapter.notifyDataSetChanged();
@@ -97,11 +104,16 @@ public class TabbedInwardItem_NonGST extends WepBaseActivity {
                     if(adapter!=null){
                         switch(i)
                         {
-                            case 0 : FragmentInwardStock fragment0 = (FragmentInwardStock) adapter.instantiateItem(viewPager, i);
-                                fragment0.btnItemClick();
+                            case 0 : FragmentInwardSupply fragment0 = (FragmentInwardSupply) adapter.instantiateItem(viewPager, i);
+                                fragment0.ClearItem1(null);
+                                /*fragment0.loadAutoCompleteData();
+                                fragment0.loadAutoCompleteData_item(-1);
+                                fragment0.ClearingAndDisplaying();*/
                                 break;
-                            case 1:  FragmentInwardSupply fragment = (FragmentInwardSupply) adapter.instantiateItem(viewPager, i);
-                                fragment.ClearingAndDisplaying();
+
+                            case 1:  FragmentSupplierDetails fragment = (FragmentSupplierDetails) adapter.instantiateItem(viewPager, i);
+                                fragment.Clear();
+                                fragment.Display();
                                     break;
                         }
 

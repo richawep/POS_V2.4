@@ -21,7 +21,6 @@ import android.util.SparseBooleanArray;
 import android.widget.Toast;
 
 import com.wep.common.app.gst.GSTR1_CDN_Details;
-import com.wep.common.app.gst.GSTR1_HSN_Details;
 import com.wep.common.app.gst.Model_reconcile;
 import com.wep.common.app.gst.get.GetGSTR1CounterPartySummary;
 import com.wep.common.app.gst.get.GetGSTR1SecSummary;
@@ -30,6 +29,7 @@ import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
 import com.wep.common.app.gst.get.GetGSTR2B2BInvoice;
 import com.wep.common.app.gst.get.GetGSTR2B2BItem;
 import com.wep.common.app.models.GSTR2_B2B_Amend;
+import com.wep.common.app.models.ItemInward;
 import com.wep.common.app.models.ItemOutward;
 import com.wep.common.app.models.ItemStock;
 import com.wep.common.app.models.Items;
@@ -103,6 +103,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TBL_PURCHASEORDER = "PurchaseOrder";
     private static final String TBL_GOODSINWARD = "GoodsInward";
     private static final String TBL_INGREDIENTS = "Ingredients";
+    private static final String TBL_SupplierItemLinkage= "SupplierItemLinkage";
 
 
     // Column Names for the tables
@@ -631,6 +632,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_IGSTRate = "IGSTRate";
     public static final String KEY_CGSTRate = "CGSTRate";
     public static final String KEY_SGSTRate = "SGSTRate";
+    public static final String KEY_cessRate = "cessRate";
+    public static final String KEY_cessAmount = "cesAmount";
     public static final String KEY_ITC_Eligible = "ITC_Eligible";
     public static final String KEY_Total_ITC_IGST = "Total_ITC_IGST";
     public static final String KEY_Total_ITC_CGST = "Total_ITC_CGST";
@@ -682,12 +685,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             " INTEGER PRIMARY KEY, " + KEY_TaxationType + " TEXT, " +
             KEY_SupplyType + " TEXT, " + KEY_SupplierCode + " INTEGER, " + KEY_SUPPLIERNAME + " TEXT, " +
             KEY_HSNCode + " TEXT, " + KEY_ItemName + " TEXT, " + KEY_IGSTRate + " REAL, " + KEY_IGSTAmount + " REAL, " +
-            KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL," + KEY_SGSTRate + " REAL, " + KEY_SGSTAmount + " REAL," +
-            KEY_ImageUri + " TEXT, " + KEY_AdditionalTaxId + " NUMERIC, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, " +
-            KEY_CategCode + " NUMERIC, " + KEY_Rate + " REAL, " + KEY_DeptCode + " NUMERIC, " +
-            KEY_DiscId + " NUMERIC, " + KEY_DiscountEnable + " NUMERIC, " + KEY_ItemBarcode + " TEXT, " +
-            KEY_KitchenCode + " NUMERIC, " + KEY_PriceChange + " NUMERIC, " +
-            KEY_SalesTaxId + " NUMERIC, " + KEY_SalesTaxPercent + " REAL, " + KEY_SerTaxPercent + " REAL, " +
+            KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL," + KEY_SGSTRate + " REAL, " + KEY_SGSTAmount + " REAL,"+
+            KEY_cessRate + " REAL, " + KEY_cessAmount + " REAL," +
+            KEY_ImageUri + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, " + KEY_ItemBarcode + " TEXT, "+
+            KEY_Rate + " REAL, "  +
+            KEY_DiscId + " NUMERIC, " + KEY_DiscountEnable + " NUMERIC, "  +
             KEY_Count+" INTEGER, "+ KEY_AverageRate+" REAL, "+KEY_TaxType + " NUMERIC )";
 
     String QUERY_CREATE_TABLE_ITEM_Outward = "CREATE TABLE " + TBL_ITEM_Outward + "( "
@@ -969,6 +971,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_IngredientCode + " INTEGER, " + KEY_IngredientName + " TEXT, " + KEY_IngredientQuantity + " REAL, " +
             KEY_IngredientUOM + " STRING, " + KEY_Status + " TEXT )";
 
+    String QUERY_CREATE_TABLE_SUPPLIERITEMLINKAGE = " CREATE TABLE " + TBL_SupplierItemLinkage + " ( " +
+            KEY_MenuCode + " INTEGER, " + KEY_SupplierCode + " INTEGER ) ";
+
 
     String QUERY_CREATE_TABLE_BILLSETTING = "CREATE TABLE " + TBL_BILLSETTING + " ( "
             + KEY_DineIn3Caption + " TEXT, "
@@ -1204,6 +1209,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TABLE_PURCHASE_ORDER);
             db.execSQL(QUERY_CREATE_TABLE_GOODS_INWARD);
             db.execSQL(QUERY_CREATE_TABLE_INGREDIENTS);
+            db.execSQL(QUERY_CREATE_TABLE_SUPPLIERITEMLINKAGE);
             db.execSQL(QUERY_CREATE_TBL_TRANSACTIONS);
             db.execSQL(QUERY_CREATE_TABLE_Stock_Outward);
             db.execSQL(QUERY_CREATE_TABLE_Stock_Inward);
@@ -4277,6 +4283,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return dbFNB.delete(TBL_ITEM_Inward, "MenuCode=" + MenuCode, null);
     }
+    public long DeleteSupplierItems_suppliercode(int suppliercode) {
+
+        return dbFNB.delete(TBL_SupplierItemLinkage, "SupplierCode=" + suppliercode, null);
+    }
+    public long deleteSupplierItemLinkforItem(int menucode) {
+
+        return dbFNB.delete(TBL_SupplierItemLinkage, "MenuCode=" + menucode, null);
+    }
 
     // -----Delete Items from Item Table by Dept Code-----
     public int DeleteItemByDeptCode(String DeptCode) {
@@ -5785,6 +5799,19 @@ public int makeBillVoid(int InvoiceNo ) {
         l = dbFNB.insert(TBL_Supplier, null, cvdbValues);
         return l;
     }
+    public long updateSupplierDetails(String supplierType_str, String suppliergstin_str, String suppliername_str,
+                                    String supplierphn_str, String supplieraddress_str, int suppliercode) {
+        long l = 0;
+        String whereclause = KEY_SupplierCode+"="+suppliercode;
+        ContentValues cvdbValues = new ContentValues();
+        cvdbValues.put(KEY_SupplierType, supplierType_str);
+        cvdbValues.put(KEY_GSTIN, suppliergstin_str);
+        cvdbValues.put(KEY_SUPPLIERNAME, suppliername_str);
+        cvdbValues.put(KEY_SupplierPhone, supplierphn_str);
+        cvdbValues.put(KEY_SupplierAddress, supplieraddress_str);
+        l = dbFNB.update(TBL_Supplier,cvdbValues,KEY_SupplierCode+"="+suppliercode,null );
+        return l;
+    }
 
     public int getSuppliercode(String suppliername) {
         int code = -1;
@@ -5827,17 +5854,46 @@ public int makeBillVoid(int InvoiceNo ) {
         return dbFNB.update(TBL_GOODSINWARD, cvDbValues, KEY_ItemName + " LIKE '" + ingredientname + "'", null);
     }
 
-    public int updateIngredientQuantityInGoodsInward(String ingredientname, float ingredientquantity, float rate) {
+    public int updateIngredientQuantityInGoodsInward(String ingredientname, double ingredientquantity, double rate) {
         cvDbValues = new ContentValues();
         cvDbValues.put(KEY_Quantity, ingredientquantity);
-        //cvDbValues.put(KEY_Value, ingredientquantity);
+        cvDbValues.put(KEY_Value, rate);
 
         return dbFNB.update(TBL_GOODSINWARD, cvDbValues, KEY_ItemName + " LIKE '" + ingredientname + "'", null);
+    }
+
+    public long addLinkage(String supplierCode_str, String  menuCode_str)
+    {
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_MenuCode, menuCode_str);
+        cvDbValues.put(KEY_SupplierCode, supplierCode_str);
+        return  dbFNB.insert(TBL_SupplierItemLinkage, null, cvDbValues);
+    }
+    public long deleteLinkage(String supplierCode_str, String  menuCode_str)
+    {
+        String deleteClause = KEY_SupplierCode+" = "+supplierCode_str+" AND "+KEY_MenuCode+" = "+menuCode_str;
+        return  dbFNB.delete(TBL_SupplierItemLinkage, deleteClause,null);
+
+    }
+    public Cursor isLinked(int supplierCode, int  menuCode)
+    {
+        String selectquery = "Select * FROM " + TBL_SupplierItemLinkage + " WHERE " + KEY_SupplierCode + " = "
+                + supplierCode + " AND "+KEY_MenuCode+" = "+menuCode;
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
     }
 
     // -----Retrieve Single Item based on Item MenuCode-----
     public Cursor getItem_inward(int MenuCode) {
         return dbFNB.query(TBL_ITEM_Inward, new String[]{"*"}, "MenuCode=" + MenuCode, null, null, null, null);
+    }
+
+    public Cursor getItemDetail_inward(String itemName) {
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TBL_ITEM_Inward + " WHERE " + KEY_ItemName + " LIKE '" + itemName + "'";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArgument
+        return cursor;
     }
 
     public Cursor getItemdetailsforSupplier(int suppliercode, String itemname) {
@@ -5911,6 +5967,46 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_AverageRate,objItem.getAverageRate());
         return dbFNB.insert(TBL_ITEM_Inward, null, cvDbValues);
     }
+    public long addItem_InwardDatabase(ItemInward objItem) {
+        cvDbValues = new ContentValues();
+
+        cvDbValues.put(KEY_SupplyType, objItem.getSupplyType());
+        cvDbValues.put(KEY_TaxationType, objItem.getTaxationType());
+        cvDbValues.put(KEY_ItemName, objItem.getStrItemname());
+        cvDbValues.put(KEY_HSNCode, objItem.getHSNCode());
+        cvDbValues.put(KEY_ItemBarcode, objItem.getStrItemBarcode());
+        cvDbValues.put(KEY_ImageUri, objItem.getStrImageUri());
+        cvDbValues.put(KEY_Quantity, objItem.getfQuantity());
+        cvDbValues.put(KEY_AverageRate, objItem.getfAveragerate());
+        cvDbValues.put(KEY_UOM, objItem.getUOM());
+        cvDbValues.put(KEY_CGSTRate, objItem.getCGSTRate());
+        cvDbValues.put(KEY_SGSTRate, objItem.getSGSTRate());
+        cvDbValues.put(KEY_IGSTRate, objItem.getIGSTRate());
+        cvDbValues.put(KEY_cessRate, objItem.getCessRate());
+        cvDbValues.put(KEY_Count,1);
+        return dbFNB.insert(TBL_ITEM_Inward, null, cvDbValues);
+    }
+    public int updateItem_InwardDatabase(ItemInward objItem) {
+
+        cvDbValues = new ContentValues();
+
+        cvDbValues.put(KEY_SupplyType, objItem.getSupplyType());
+        cvDbValues.put(KEY_TaxationType, objItem.getTaxationType());
+        cvDbValues.put(KEY_ItemName, objItem.getStrItemname());
+        cvDbValues.put(KEY_HSNCode, objItem.getHSNCode());
+        cvDbValues.put(KEY_ItemBarcode, objItem.getStrItemBarcode());
+        cvDbValues.put(KEY_ImageUri, objItem.getStrImageUri());
+        cvDbValues.put(KEY_Quantity, objItem.getfQuantity());
+        cvDbValues.put(KEY_AverageRate, objItem.getfAveragerate());
+        cvDbValues.put(KEY_UOM, objItem.getUOM());
+        cvDbValues.put(KEY_CGSTRate, objItem.getCGSTRate());
+        cvDbValues.put(KEY_SGSTRate, objItem.getSGSTRate());
+        cvDbValues.put(KEY_IGSTRate, objItem.getIGSTRate());
+        cvDbValues.put(KEY_cessRate, objItem.getCessRate());
+        cvDbValues.put(KEY_Count,1);
+
+        return dbFNB.update(TBL_ITEM_Inward, cvDbValues, "MenuCode=" + objItem.getiMenuCode(), null);
+    }
 
     public int updateItem_inward(int MenuCode, int taxationtype, String g_s, int suppliercode, String suppliername,
                                  String hsnCode, String ItemName, float IGSTRate, float igstamount, float CGSTRate, float cgstamount,
@@ -5961,27 +6057,31 @@ public int makeBillVoid(int InvoiceNo ) {
     public Cursor getAllSupplierName_nonGST() {
 
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TBL_Supplier/* + " WHERE " + KEY_SupplierType + " LIKE 'UnRegistered'"*/;
+        String selectQuery = "SELECT  * FROM " + TBL_Supplier+" ORDER BY SupplierName ASC"/* + " WHERE " + KEY_SupplierType + " LIKE 'UnRegistered'"*/;
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArgument
         return cursor;
     }
 
-    public Cursor getAllItems_Inw() {
+    public  long deleteSupplier(int supplierCode)
+    {
+        return dbFNB.delete(TBL_Supplier, KEY_SupplierCode + "=" + supplierCode, null);
+    }
+    public Cursor getAllInwardItemNames() {
 
         Cursor cursor = null;
         String selectQuery = "SELECT DISTINCT " + KEY_ItemName + " FROM " + TBL_ITEM_Inward;
-        //return dbFNB.query(TBL_ITEM_Inward, new String[]{"*"}, null, null, null, null, null);
         cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArgument
         return cursor;
     }
+    public Cursor getAllInwardItems() {
 
-    public Cursor getAllDetails_for_item(String itemName) {
-
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TBL_ITEM_Inward + " WHERE " + KEY_ItemName + " LIKE '" + itemName + "'";
-        Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArgument
+        Cursor cursor = null;
+        String selectQuery = "SELECT * FROM " + TBL_ITEM_Inward;
+        cursor = dbFNB.rawQuery(selectQuery, null);
         return cursor;
     }
+
+
 
     /*
     public ArrayList<String> getAllSupplierName_nonGST() {
@@ -6013,7 +6113,7 @@ public int makeBillVoid(int InvoiceNo ) {
         return list;
     }
 
-    public List<String> getitemlist_inward_nonGST_Goods(String suppliername, int suppliercode) {
+    /*public List<String> getitemlist_inward_nonGST_Goods(String suppliername, int suppliercode) {
         List<String> list = new ArrayList<String>();
         String selectQuery = "Select DISTINCT " + KEY_ItemName + "  FROM " + TBL_ITEM_Inward + " WHERE " + KEY_SUPPLIERNAME +
                 " LIKE '" + suppliername + "' AND " + KEY_SupplierCode + " LIKE '" + suppliercode + "'";
@@ -6025,7 +6125,7 @@ public int makeBillVoid(int InvoiceNo ) {
             list.add(item);
         }
         return list;
-    }
+    }*/
 
     public Cursor getItemsForSubmittedIngredients(String status) {
         Cursor cursor = null;
@@ -6051,6 +6151,13 @@ public int makeBillVoid(int InvoiceNo ) {
         cursor = dbFNB.rawQuery(selectQuery, null);
         return cursor;
     }
+    public Cursor getIngredientsForMenuCode(int menucode, String status) {
+        Cursor cursor = null;
+        String selectQuery = "Select *  FROM " + TBL_INGREDIENTS + " WHERE " + KEY_MenuCode +
+                " = " + menucode +" AND "+KEY_Status+" LIKE '"+status+"'";
+        cursor = dbFNB.rawQuery(selectQuery, null);
+        return cursor;
+    }
 
     public Cursor getIngredientsForItemName(String itemname) {
         Cursor cursor = null;
@@ -6066,7 +6173,7 @@ public int makeBillVoid(int InvoiceNo ) {
         return dbFNB.delete(TBL_INGREDIENTS, WhereClause, null);
     }
 
-    public long saveIngredient(Ingredients ingredient) {
+    public long saveIngredient(ItemIngredients ingredient) {
         cvDbValues = new ContentValues();
         cvDbValues.put(KEY_MenuCode, ingredient.getMenucode());
         cvDbValues.put(KEY_ItemName, ingredient.getItemname());
@@ -6095,7 +6202,7 @@ public int makeBillVoid(int InvoiceNo ) {
         return cursor;
     }
 
-    public long addIngredient(String itemname_str, float quantity_f, String uom_str, double rate, int supplierCount) {
+    public long addIngredient(String itemname_str, double quantity_f, String uom_str, double rate, int supplierCount) {
         cvDbValues = new ContentValues();
         cvDbValues.put(KEY_ItemName, itemname_str);
         cvDbValues.put(KEY_Quantity, quantity_f);
@@ -6105,7 +6212,7 @@ public int makeBillVoid(int InvoiceNo ) {
         return dbFNB.insert(TBL_GOODSINWARD, null, cvDbValues);
     }
 
-    public long updateIngredient(String itemname_str, float quantity_f, double rate, int SupplierCount) {
+    public long updateIngredient(String itemname_str, double quantity_f, double rate, int SupplierCount) {
         cvDbValues = new ContentValues();
         cvDbValues.put(KEY_ItemName, itemname_str);
         cvDbValues.put(KEY_Quantity, quantity_f);
@@ -6405,8 +6512,14 @@ public int makeBillVoid(int InvoiceNo ) {
     }
 
 
-    public Cursor getitemforSupplier_inward(int Suppliercode) {
-        String selectQuery = "Select *  FROM " + TBL_ITEM_Inward + " WHERE " + KEY_SupplierCode + " LIKE '" + Suppliercode + "'";
+    public Cursor getLinkedMenuCodeForSupplier(int Suppliercode) {
+        String selectQuery = "Select *  FROM " + TBL_SupplierItemLinkage + " WHERE " + KEY_SupplierCode + " LIKE '" + Suppliercode + "'";
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);
+
+        return cursor;
+    }
+    public Cursor getLinkedSupplierCodeForItem(int menucode) {
+        String selectQuery = "Select *  FROM " + TBL_SupplierItemLinkage + " WHERE " + KEY_MenuCode + " LIKE '" + menucode + "'";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);
 
         return cursor;

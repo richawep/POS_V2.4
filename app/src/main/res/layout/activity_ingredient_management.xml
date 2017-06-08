@@ -6,13 +6,13 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar_wep" />
+        layout="@layout/toolbar_wep"
+        />
 
     <RelativeLayout
         android:id="@+id/activity_ingredient_management"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffed"
         android:orientation="horizontal"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
@@ -85,7 +85,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1.8"
-                            android:gravity="center"
+                            android:gravity="bottom"
+                            android:layout_marginLeft="15dp"
+                            android:textSize="15dp"
+                            android:paddingBottom="10dp"
+                            android:textStyle="bold"
                             android:text="Select Item" />
 
                         <AutoCompleteTextView
@@ -110,7 +114,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1.9"
-                            android:gravity="center_vertical"
+                            android:gravity="bottom"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:paddingBottom="10dp"
                             android:hint="UoM"
                             android:paddingLeft="5dp" />
 
@@ -128,7 +136,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1.2"
-                            android:gravity="center"
+                            android:gravity="bottom"
+                            android:layout_marginLeft="15dp"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:paddingBottom="10dp"
                             android:text="Select Ingredient" />
 
                         <AutoCompleteTextView
@@ -136,6 +148,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:paddingLeft="5dp"
                             android:drawableRight="@drawable/searchicon_img"
                             android:hint="Type Ingredient Here" />
 
@@ -160,17 +173,25 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1.3"
-                            android:gravity="center_vertical"
+                            android:gravity="bottom"
+                            android:layout_marginLeft="15dp"
+                            android:paddingBottom="10dp"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
                             android:hint="UoM"
                             android:paddingLeft="3dp" />
 
-                        <Button
-                            android:id="@+id/btnAddIngredient"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_weight="1.4"
-                            android:background="@drawable/add_sign"
-                            android:onClick="AddIngredient" />
+                        <com.wep.common.app.views.WepButton
+                            android:id="@+id/btn_add_new_item"
+                            android:layout_width="120dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="15dp"
+                            android:background="@drawable/background_btn"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/WepButtonWithMarigin"
+                            android:layout_marginRight="10dp"
+                            android:text="Add Item" />
 
                     </LinearLayout>
 
@@ -203,20 +224,24 @@
                                 android:layout_marginLeft="3dp"
                                 android:layout_weight="1.1"
                                 android:background="@drawable/heading_border"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
                                 android:gravity="center"
                                 android:text="SNo"
                                 android:textSize="17dp" />
 
                             <TextView
+                                android:id="@+id/textView10"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="0.8"
+                                android:layout_weight="0.7"
                                 android:background="@drawable/heading_border"
                                 android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
                                 android:text="Ingredients"
-                                android:textSize="17dp"
 
-                                />
+                                android:textSize="17dp" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -224,15 +249,19 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/heading_border"
                                 android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
                                 android:text="Quantity"
                                 android:textSize="17dp" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
+                                android:layout_weight="1.05"
                                 android:background="@drawable/heading_border"
                                 android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
                                 android:text="UoM "
                                 android:textSize="17dp"
                                 android:id="@+id/textView6" />
@@ -240,32 +269,26 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
+                                android:layout_weight="1.1"
                                 android:background="@drawable/heading_border"
                                 android:gravity="center"
                                 android:text="Delete"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
                                 android:layout_marginRight="2dp"
                                 android:textSize="17dp" />
                         </LinearLayout>
 
-                        <ScrollView
+                        <ListView
+                            android:id="@+id/lstvw_displayingredient"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="2dp"
                             android:layout_marginTop="2dp"
-                            android:layout_weight="0.1">
-
-                            <TableLayout
-                                android:id="@+id/tbl_displayingredient"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:collapseColumns="1">
-
-                            </TableLayout>
-                        </ScrollView>
+                            android:layout_weight="0.1"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -291,7 +314,7 @@
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnPrint"
-                                android:layout_width="wrap_content"
+                                android:layout_width="130dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
@@ -301,7 +324,7 @@
                                 android:layout_marginLeft="@dimen/btn_marigin"
                                 android:layout_marginRight="@dimen/btn_marigin"
                                 android:onClick="PrintIngredients"
-                                android:text="Print Ingredient List" />
+                                android:text="Print Ingred. List" />
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnSave"
@@ -335,7 +358,7 @@
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnClearItem"
-                                android:layout_width="100dp"
+                                android:layout_width="120dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
@@ -349,7 +372,7 @@
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnCloseItem"
-                                android:layout_width="100dp"
+                                android:layout_width="120dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
@@ -384,7 +407,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin1"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -401,6 +424,8 @@
                             android:background="@drawable/heading_border"
                             android:gravity="center"
                             android:text="SNo"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
                             android:textSize="17dp" />
 
                         <TextView
@@ -410,6 +435,8 @@
                             android:background="@drawable/heading_border"
                             android:gravity="center"
                             android:text="Items"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
                             android:textSize="17dp" />
 
                         <TextView
@@ -419,6 +446,8 @@
                             android:background="@drawable/heading_border"
                             android:gravity="center"
                             android:text="Delete"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
                             android:textSize="17dp" />
 
                     </LinearLayout>

@@ -128,7 +128,7 @@ public class TaxConfigSubActivity extends WepBaseActivity {
             txtTaxId.setText(getIntent().getStringExtra("TAX_ID"));
             txtTotalPercent1.setText(getIntent().getStringExtra("TOTAL_PERCENT"));
             DisplaySubTaxConfig();
-//            loadSpinnerData();
+//            loadAutoCompleteData();
         } catch (Exception exp) {
             Toast.makeText(myContext, "OnCreate: " + exp.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -447,7 +447,7 @@ public class TaxConfigSubActivity extends WepBaseActivity {
         this.finish();
     }
 
-    //    private void loadSpinnerData() {
+    //    private void loadAutoCompleteData() {
 //
 //        List<String> labels = dbTaxConfig.getAllSpnrTaxConfig();
 //

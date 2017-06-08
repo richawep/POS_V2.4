@@ -258,7 +258,7 @@ public class FragmentInwardStock extends Fragment {
                         itemList.add(item);
                     }
                 }else{
-                    cursor = dbStockInward.getitemforSupplier_inward(supplierCode);
+                    cursor = dbStockInward.getLinkedMenuCodeForSupplier(supplierCode);
                     while (cursor!=null && cursor.moveToNext())
                     {
                         ItemStock item = new ItemStock();
@@ -295,7 +295,7 @@ public class FragmentInwardStock extends Fragment {
                 ArrayList<ItemStock> itemList = new ArrayList<ItemStock>();
                 Cursor cursor = null;
                 try {
-                    cursor = dbStockInward.getitemforSupplier_inward(supplierCode);
+                    cursor = dbStockInward.getLinkedMenuCodeForSupplier(supplierCode);
                     while (cursor!=null && cursor.moveToNext())
                     {
                         ItemStock item = new ItemStock();
@@ -373,7 +373,7 @@ public class FragmentInwardStock extends Fragment {
                         supplier.setSupplierCode(cursor.getInt(cursor.getColumnIndex("SupplierCode")));
                         supplier.setSupplierName(cursor.getString(cursor.getColumnIndex("SupplierName")));
                         supplier.setSupplierAddress(cursor.getString(cursor.getColumnIndex("SupplierAddress")));
-                        supplier.setSupplierPhone(cursor.getInt(cursor.getColumnIndex("SupplierPhone")));
+                        supplier.setSupplierPhone(cursor.getString(cursor.getColumnIndex("SupplierPhone")));
                         supplierList.add(supplier);// adding
                     } while (cursor.moveToNext());
                 }
@@ -394,7 +394,7 @@ public class FragmentInwardStock extends Fragment {
     {
         if(supplierAdapter==null){
 
-            supplierAdapter = new SupplierAdapter(getActivity(),supplierList);
+            supplierAdapter = new SupplierAdapter(getActivity(),supplierList,dbStockInward, "todo");
             listViewSupplier.setAdapter(supplierAdapter);
         }
         else
@@ -404,11 +404,11 @@ public class FragmentInwardStock extends Fragment {
     public void setItemsAdapter(ArrayList<ItemStock> itemList)
     {
         if(itemsAdapter==null){
-            itemsAdapter = new ItemInwardAdapter(getActivity(),itemList);
+            //itemsAdapter = new ItemInwardAdapter(myContext,dbStockInward,itemList);
             listViewItem.setAdapter(itemsAdapter);
         }
-        else
-            itemsAdapter.notifyDataSetChanged(itemList);
+        else ;
+            //itemsAdapter.notifyDataSetChanged(itemList);
     }
 
 

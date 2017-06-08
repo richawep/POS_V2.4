@@ -1,35 +1,27 @@
 package com.wepindia.pos.GST;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -39,19 +31,13 @@ import android.widget.Toast;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.Item;
 import com.wep.common.app.WepBaseActivity;
-import com.wepindia.pos.BillingScreenActivity;
 import com.wepindia.pos.FilePickerActivity;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
-import com.wepindia.pos.UploadFilePickerActivity;
 import com.wepindia.pos.utils.ActionBarUtils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -447,7 +433,7 @@ public class Inward_Item_Entry_Activity extends WepBaseActivity {
             String supplierPhone = supplier_crsr.getString(supplier_crsr.getColumnIndex("SupplierPhone"));
             String supplierAddress = supplier_crsr.getString(supplier_crsr.getColumnIndex("SupplierAddress"));
             int suppliercode = supplier_crsr.getInt(supplier_crsr.getColumnIndex("SupplierCode"));
-            crsrItems = dbInwardItem.getitemforSupplier_inward(suppliercode);
+            crsrItems = dbInwardItem.getLinkedMenuCodeForSupplier(suppliercode);
             TableRow rowItems = null;
 
             TextView tvSno, tvMenuCode, tvHSN, tvLongName, tvShortName, tvDineIn1, tvDineIn2, tvDineIn3, tvTakeAway, tvPickUp, tvDelivery,

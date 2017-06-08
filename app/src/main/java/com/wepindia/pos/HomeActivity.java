@@ -547,17 +547,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             intentDelivery.putExtra("CUST_ID", 0);
             startActivity(intentDelivery);
 
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("Ingredients")) {
-            // Launch Billing screen activity in Delivery billing mode
-
-            Intent intentDelivery = new Intent(myContext, IngredientManagementActivity.class);
-            intentDelivery.putExtra("BILLING_MODE", DELIVERY);
-            intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
-            intentDelivery.putExtra("CUST_ID", 0);
-            startActivity(intentDelivery);
-
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("gst")) {
+        } /*else if (v.getContentDescription().toString().equalsIgnoreCase("gst")) {
             // Launch Billing screen activity in Delivery billing mode
 
             Intent intentDelivery = new Intent(myContext, GSTHomeActivity.class);
@@ -567,7 +557,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             intentDelivery.putExtra("CUST_ID", 0);
             startActivity(intentDelivery);
 
-        }  else if (v.getContentDescription().toString().equalsIgnoreCase("Ammend")) {
+        }*/  else if (v.getContentDescription().toString().equalsIgnoreCase("Ammend")) {
             // Launch Billing screen activity in Delivery billing mode
 
             Intent intentDelivery = new Intent(myContext, TabbedAmmendActivity.class);
@@ -603,18 +593,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             }
 
         }
-        else if (v.getContentDescription().toString().equalsIgnoreCase("PurchaseOrder"))
-        {
-            if (strUserRole == 1) {
-                // Launch employee activity
-                Intent intentMasters = new Intent(myContext, PurchaseOrderActivity.class);
-                intentMasters.putExtra("USER_ID", strUserId);
-                intentMasters.putExtra("USER_NAME", strUserName);
-                startActivityForResult(intentMasters,1);
-//				startActivity(new Intent(myContext,MasterActivity.class));
-            }
 
-        }
         else if (v.getContentDescription().toString().equalsIgnoreCase("PaymentReceipt")) {
             //startActivity(new Intent(myContext,TableActivity.class));
             if (listAccesses.contains("Payment & Receipt"))

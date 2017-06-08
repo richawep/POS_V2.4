@@ -6,45 +6,37 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatCallback;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
-import com.wep.common.app.Database.Ingredients;
+import com.wep.common.app.Database.ItemIngredients;
 import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.views.WepButton;
+import com.wep.common.app.models.Ingredient;
 import com.wepindia.pos.GenericClasses.MessageDialog;
-import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.adapters.IngredientListAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,23 +47,19 @@ public class IngredientManagementActivity extends WepBaseActivity {
     AutoCompleteTextView autocompletetv_itemslist, autocompletetv_ingredientlist, autocompletetv_submitteditemsearch;
     EditText et_item_quantity, et_ingredient_quantity;
     TextView tv_ingredient_uom,tv_item_uom,tv_menucode;
-    WepButton btnSave, btnSubmit,btnAddIngredient,btnPrint, btnClearItem,btnCloseItem;
-    TableLayout tbl_displayingredient, tbl_displaysubmitteditems;
-
-    /*TextView tv_convert_item_authorize;
-    EditText et_convert_item_quantity_authorize;
-    TextView tv_convert_item_uom_authorize;
-
-    AutoCompleteTextView autocomplete_convert_ingredient_authorize;
-    EditText et_convert_ingredient_quantity_authorize;
-    TextView tv_convert_ingredient_uom_authorize;*/
+    WepButton btnSave, btnSubmit,btn_add_new_item,btnPrint, btnClearItem,btnCloseItem;
+    ListView lstvw_displayingredient;
+    ArrayList<Ingredient> ingredientlist;
+    IngredientListAdapter ingredientListAdapter;
     AlertDialog dialog;
 
+    final int INGREDIENT_LIST = 0;
+    final int SUBMITTED_LIST = 1;
     Context myContext;
     DatabaseHandler dbIngredientManagement;
     String strUserName = "", strUserId = "";
     MessageDialog MsgBox;
-
+    TableLayout tbl_displaysubmitteditems;
     String Status_Saved = "0";
     String Status_Submitted = "1";
     private Toolbar toolbar;
@@ -82,19 +70,6 @@ public class IngredientManagementActivity extends WepBaseActivity {
         setContentView(R.layout.activity_ingredient_management);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        //setContentView(R.layout.activity_ingredient_management);
-        //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.application_title_bar);
-
-        /*TextView tvTitleText = (TextView) findViewById(R.id.tvTitleBarCaption);
-        TextView tvTitleUserName = (TextView) findViewById(R.id.tvTitleBarUserName);
-        TextView tvTitleDate = (TextView) findViewById(R.id.tvTitleBarDate);
-        ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
-        ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.lnrPaymentReceipt));
-        tvTitleText.setText(" Ingredient Management ");*/
 
         dbIngredientManagement = new DatabaseHandler(IngredientManagementActivity.this);
         myContext = this;
@@ -113,11 +88,11 @@ public class IngredientManagementActivity extends WepBaseActivity {
             InitializeViews();
             dbIngredientManagement.CreateDatabase();
             dbIngredientManagement.OpenDatabase();
+            reset();
             loadAutoCompleteOutwardItems();
             loadAutoCompleteSubmitItems();
             loadAutoCompleteIngredients();
-            DisplaySubmittedItems();
-            reset();
+            //DisplaySubmittedItems();
             miscActivities();
 
 
@@ -392,7 +367,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
 
                 if (flag ==0)
                 {
-                    ClearTable(tbl_displayingredient);
+                    ClearTable(INGREDIENT_LIST);
                     tv_menucode.setText(String.valueOf(menucode));
                     et_item_quantity.setText(String.valueOf(item_quantity));
                     flag =1;
@@ -412,136 +387,21 @@ public class IngredientManagementActivity extends WepBaseActivity {
 
     void addingredienttotable( int ingredientcode, final String ingredientname, float ingredient_quantity, String uom)
     {
-        int count = tbl_displayingredient.getChildCount();
-        TableRow tr = new TableRow (myContext);
+        Ingredient ingredient;
+        if(ingredientlist == null || ingredientlist.size() ==0){
+            ingredientlist = new ArrayList<>();
+            ingredient = new Ingredient(1,ingredientcode,ingredientname, ingredient_quantity,uom);
+        }
+        else
+            ingredient = new Ingredient(ingredientlist.size()+1,ingredientcode,ingredientname, ingredient_quantity,uom);
 
-        TextView sn = new TextView(myContext);
-        sn.setWidth(75);
-        sn.setPadding(10,0,0,0);
-        sn.setBackgroundResource(R.drawable.border_itemdatabase);
-        sn.setTextSize(20);
-        count++;
-        sn.setText(String.valueOf(count));
-
-
-        TextView IngredientCode  = new TextView(myContext);
-        IngredientCode.setText(String.valueOf(ingredientcode));
-
-        TextView IngredientName = new TextView(myContext);
-        IngredientName.setBackgroundResource(R.drawable.border_itemdatabase);
-        IngredientName.setWidth(265);
-        IngredientName.setPadding(10,0,0,0);
-        IngredientName.setTextSize(20);
-        IngredientName.setText(ingredientname);
-
-        TextView IngredientQuantity = new TextView(myContext);
-        IngredientQuantity.setBackgroundResource(R.drawable.border_itemdatabase);
-        IngredientQuantity.setWidth(140);
-        IngredientQuantity.setGravity(Gravity.RIGHT);
-        IngredientQuantity.setPadding(0,0,10,0);
-        IngredientQuantity.setTextSize(20);
-        IngredientQuantity.setText(String.format("%.2f", ingredient_quantity));
-        //IngredientQuantity.setText(String.valueOf(ingredient_quantity));
-
-        TextView UOM = new TextView(myContext);
-        UOM.setBackgroundResource(R.drawable.border_itemdatabase);
-        UOM.setWidth(147);
-        UOM.setPadding(10,0,0,0);
-        UOM.setGravity(Gravity.CENTER);
-        UOM.setTextSize(20);
-        UOM.setText(uom);
-
-        TextView spc = new TextView(myContext);
-        spc.setWidth(5);
-
-        /*Button btndel = new Button(myContext);
-        btndel.setBackground(getResources().getDrawable(R.drawable.deletered1));
-        btndel.setPadding(5,0,0,0);*/
-
-        Button btndel = new Button(myContext);
-        btndel.setBackground(getResources().getDrawable(R.drawable.delete_icon_border));
-        btndel.setLayoutParams(new TableRow.LayoutParams(40, 35));
-        btndel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final View btn = v;
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
-                        .setTitle("Delete")
-                        .setMessage("Are you sure you want to Delete "+ingredientname)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                TableRow row = (TableRow) btn.getParent();
-                                ViewGroup table = ((ViewGroup) row.getParent());
-                                table.removeView(row);
-                                table.invalidate();
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
-
-        /*int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
-        ImageButton ImgDelete = new ImageButton(myContext);
-        ImgDelete.setImageResource(res);
-        ImgDelete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final View row = v;
-                AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
-                        .setTitle("Delete")
-                        .setMessage("Are you sure you want to Delete this Ingredient")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                TableRow tr = (TableRow) row.getParent();
-                                TextView IngredientCode_temp = (TextView) tr.getChildAt(1);
-                                TextView IngredientName_temp = (TextView) tr.getChildAt(2);
-                                int menucode = Integer.parseInt(tv_menucode.getText().toString());
-                                //int ingredientcode_temp = Integer.parseInt(IngredientCode_temp.getText().toString());
-                                String ingredientname = IngredientName_temp.getText().toString();
-                                long lResult = dbIngredientManagement.DeleteIngredients(menucode,ingredientname);
-                                if (lResult > 0) {
-                                    Toast.makeText(myContext, "Ingredient Deleted Successfully", Toast.LENGTH_SHORT).show();
-                                    Log.d("IngredientManagement: ", autocompletetv_itemslist.getText().toString()+": Ingredient Deleted Successfully ("+ingredientname+")");
-                                    ViewGroup container = ((ViewGroup) row.getParent());
-                                    container.removeView(row);
-                                    container.invalidate();
-                                }
-                                ClearTable(tbl_displayingredient);
-                                loadIngredientTable(menucode);
-                                Cursor crsr = dbIngredientManagement.getIngredientsForMenuCode(menucode);
-                                if (!(crsr != null && crsr.moveToNext())) {
-                                    ClearTable(tbl_displaysubmitteditems);
-                                    DisplaySubmittedItems();
-                                    loadAutoCompleteSubmitItems();
-                                    reset();
-                                }
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }  });*/
-
-        tr.addView(sn);
-        tr.addView(IngredientCode);
-        tr.addView(IngredientName);
-        tr.addView(IngredientQuantity);
-        tr.addView(UOM);
-        tr.addView(spc);
-        tr.addView(btndel);
-        tbl_displayingredient.addView(tr);
+        ingredientlist.add(ingredient);
+        if (ingredientListAdapter == null) {
+            ingredientListAdapter = new IngredientListAdapter(this,ingredientlist );
+            lstvw_displayingredient.setAdapter(ingredientListAdapter);
+        } else {
+            ingredientListAdapter.notifyNewDataAdded(ingredientlist);
+        }
     }
 
     void loadAutoCompleteIngredients()
@@ -598,7 +458,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
         Collections.sort(itemlist_submit, String.CASE_INSENSITIVE_ORDER);
         try
         {
-            //ClearTable(tbl_displaysubmitteditems);
+            //ClearTable(SUBMITTED_LIST);
             int count =0;
             for (final String item : itemlist_submit)
             {
@@ -646,7 +506,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
                                             container.removeView(row);
                                             container.invalidate();
                                         }
-                                        ClearTable(tbl_displaysubmitteditems);
+                                        ClearTable(SUBMITTED_LIST);
                                         DisplaySubmittedItems();
                                         loadAutoCompleteSubmitItems();
                                         dialog.dismiss();
@@ -721,6 +581,142 @@ public class IngredientManagementActivity extends WepBaseActivity {
             MsgBox.Show(" Error ", e.getMessage());
         }
     }
+    void DisplaySubmittedItems_old()
+    {
+        Cursor item_crsr  = dbIngredientManagement.getItemsForSubmittedIngredients(Status_Submitted);
+        ArrayList<String>  itemlist_submit = new ArrayList<String>();
+        while (item_crsr !=null && item_crsr.moveToNext())
+        {
+            String item = item_crsr.getString(item_crsr.getColumnIndex("ItemName"));
+            if(item !=null)
+                itemlist_submit.add(item);
+        }
+        Collections.sort(itemlist_submit, String.CASE_INSENSITIVE_ORDER);
+        try
+        {
+            //ClearTable(tbl_displaysubmitteditems);
+            int count =0;
+            for (final String item : itemlist_submit)
+            {
+                TableRow row = new TableRow(myContext);
+
+                TextView sn = new TextView(myContext);
+                sn.setWidth(95);
+                sn.setBackgroundResource(R.drawable.border_itemdatabase);
+                count++;
+                sn.setPadding(10,0,0,0);
+                sn.setTextSize(20);
+                sn.setText(String.valueOf(count));
+
+
+                TextView ItemName = new TextView(myContext);
+                ItemName.setBackgroundResource(R.drawable.border_itemdatabase);
+                ItemName.setWidth(320);
+                ItemName.setPadding(10,0,0,0);
+                ItemName.setTextSize(20);
+                ItemName.setText(item);
+
+                /*Button btndel = new Button(myContext);
+                btndel.setBackground(getResources().getDrawable(R.drawable.deletered1));
+                btndel.setPadding(5,0,0,0);*/
+
+                Button btndel = new Button(myContext);
+                btndel.setBackground(getResources().getDrawable(R.drawable.delete_icon_border));
+                btndel.setLayoutParams(new TableRow.LayoutParams(40, 35));
+                btndel.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        final View row = v;
+                        MsgBox = new MessageDialog(myContext);
+                        MsgBox.setTitle("Confirm")
+                                .setMessage("Do you want to Delete this item ")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        TableRow tr = (TableRow) row.getParent();
+                                        TextView IngredientName_temp = (TextView) tr.getChildAt(1);
+                                        String itemname = IngredientName_temp.getText().toString();
+                                        long lResult = dbIngredientManagement.DeleteSubmittedItem(itemname);
+                                        if (lResult > 0) {
+                                            Toast.makeText(myContext, "Ingredient Deleted Successfully for "+itemname, Toast.LENGTH_SHORT).show();
+                                            Log.d("IngredientManagement: ", "Ingredient Deleted Successfully for "+itemname);
+                                            ViewGroup container = ((ViewGroup) row.getParent());
+                                            container.removeView(row);
+                                            container.invalidate();
+                                        }
+                                        ClearTable(SUBMITTED_LIST);
+                                        DisplaySubmittedItems();
+                                        loadAutoCompleteSubmitItems();
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNegativeButton("No",null)
+                                .show();
+                    }
+                });
+
+                TextView spc = new TextView(myContext);
+                spc.setWidth(05);
+
+                /*int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
+                ImageButton ImgDelete = new ImageButton(myContext);
+                ImgDelete.setImageResource(res);
+                ImgDelete.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        final View row = v;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
+                                .setTitle("Delete")
+                                .setMessage("Are you sure you want to Delete this Item")
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        TableRow tr = (TableRow) row.getParent();
+                                        TextView IngredientName_temp = (TextView) tr.getChildAt(1);
+                                        String itemname = IngredientName_temp.getText().toString();
+                                        long lResult = dbIngredientManagement.DeleteSubmittedItem(itemname);
+                                        if (lResult > 0) {
+                                            Toast.makeText(myContext, "Ingredient Deleted Successfully for"+itemname, Toast.LENGTH_SHORT).show();
+                                            Log.d("IngredientManagement: ", "Ingredient Deleted Successfully for"+itemname);
+                                            ViewGroup container = ((ViewGroup) row.getParent());
+                                            container.removeView(row);
+                                            container.invalidate();
+                                        }
+                                        ClearTable(tbl_displaysubmitteditems);
+                                        DisplaySubmittedItems();
+                                        loadAutoCompleteSubmitItems();
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }  });*/
+
+                row.addView(sn);
+                row.addView(ItemName);
+                row.addView(spc);
+                row.addView(btndel);
+                row.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intentInwardSupply = new Intent(myContext, ConvertIngredientActivity.class);
+                        intentInwardSupply.putExtra("ItemName", item.toUpperCase());
+                        intentInwardSupply.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+                        intentInwardSupply.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+                        intentInwardSupply.putExtra("CUST_ID", 0);
+                        startActivity(intentInwardSupply);                    }
+                });
+                //tbl_displaysubmitteditems.addView(row);
+            }
+        }
+        catch (Exception e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            MsgBox.Show(" Error ", e.getMessage());
+        }
+    }
 
     void input_window()
     {
@@ -757,7 +753,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
         });*//*
         AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
         builder
-                .setTitle("Convert Ingredients Into Item")
+                .setTitle("Convert ItemIngredients Into Item")
                 .setView(vwAuthorization)
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Submit Changes", new DialogInterface.OnClickListener() {
@@ -767,7 +763,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
 
                     }
                 })
-                .setNeutralButton("Convert Ingredients", new DialogInterface.OnClickListener() {
+                .setNeutralButton("Convert ItemIngredients", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
@@ -802,11 +798,11 @@ public class IngredientManagementActivity extends WepBaseActivity {
                         int success =1;
                         int menucode = Integer.parseInt(tv_convert_menucode.getText().toString());
                         int del = dbIngredientManagement.DeleteSavedIngredients(menucode,Status_Submitted);
-                        Log.d("Convert Ingredients", "Submitted Rows deleted :"+del);
+                        Log.d("Convert ItemIngredients", "Submitted Rows deleted :"+del);
                         int count = tbl_convert_ingredients.getChildCount();
                         for(int i = 0; i<count; i++)
                         {
-                            Ingredients ingredient = new Ingredients();
+                            ItemIngredients ingredient = new ItemIngredients();
                             TableRow RowIngredient = (TableRow)tbl_convert_ingredients.getChildAt(i);
 
                             // MenuCode
@@ -865,7 +861,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
                         }
                         if(success != -1)
                         {
-                            Toast.makeText(myContext, "Ingredients submitted Successfully ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(myContext, "ItemIngredients submitted Successfully ", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -889,23 +885,33 @@ public class IngredientManagementActivity extends WepBaseActivity {
         tv_ingredient_uom.setText("");
         tv_item_uom.setText("");
         autocompletetv_submitteditemsearch.setText("");
-        ClearTable(tbl_displayingredient);
-        //ClearTable(tbl_displaysubmitteditems);
+        ClearTable(INGREDIENT_LIST);
+        ClearTable(SUBMITTED_LIST);
+        DisplaySubmittedItems();
     }
 
-    public  void ClearTable( TableLayout tbl)
+    public  void ClearTable( int ListName)
     {
-        if(tbl == null)
-            return;
+        if (ListName == INGREDIENT_LIST){
+            if(ingredientlist!= null)
+                ingredientlist.clear();
+            ingredientlist= new ArrayList<>();
+            ingredientListAdapter = null;
+            lstvw_displayingredient.setAdapter(null);
+        }else if (ListName == SUBMITTED_LIST)
+        {
+            if(tbl_displaysubmitteditems == null)
+                return;
 
-        for (int i = tbl.getChildCount(); i >0;  i--) {
-            View Row = tbl.getChildAt(i-1);
-            if (Row instanceof TableRow) {
-                ((TableRow) Row).removeAllViews();
+            for (int i = tbl_displaysubmitteditems.getChildCount(); i >0;  i--) {
+                View Row = tbl_displaysubmitteditems.getChildAt(i-1);
+                if (Row instanceof TableRow) {
+                    ((TableRow) Row).removeAllViews();
+                }
+                ViewGroup container = ((ViewGroup) Row.getParent());
+                container.removeView(Row);
+                container.invalidate();
             }
-            ViewGroup container = ((ViewGroup) Row.getParent());
-            container.removeView(Row);
-            container.invalidate();
         }
     }
 
@@ -924,10 +930,17 @@ public class IngredientManagementActivity extends WepBaseActivity {
 
         btnSave = (WepButton) findViewById(R.id.btnSave);
         btnSubmit = (WepButton) findViewById(R.id.btnSubmit);
+        btn_add_new_item = (WepButton) findViewById(R.id.btn_add_new_item);
         btnPrint = (WepButton) findViewById(R.id.btnPrint);
         btnClearItem = (WepButton) findViewById(R.id.btnClearItem);
         btnCloseItem = (WepButton) findViewById(R.id.btnCloseItem);
 
+        btn_add_new_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddIngredient(v);
+            }
+        });
         btnPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -960,7 +973,8 @@ public class IngredientManagementActivity extends WepBaseActivity {
         });
         //btnAddIngredient = (Button) findViewById(R.id.btnAddIngredient);
 
-        tbl_displayingredient = (TableLayout) findViewById(R.id.tbl_displayingredient);
+
+        lstvw_displayingredient = (ListView) findViewById(R.id.lstvw_displayingredient);
         tbl_displaysubmitteditems = (TableLayout) findViewById(R.id.tbl_displaysubmitteditems);
     }
 
@@ -1044,7 +1058,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
     public void Save(View v)
     {
         int success =0;
-        int count = tbl_displayingredient.getChildCount();
+        int count = ingredientlist.size();
         int menucode = 0;
         if(count <1)
         {
@@ -1075,8 +1089,6 @@ public class IngredientManagementActivity extends WepBaseActivity {
             return;
         }
 
-        // check for ingredients
-        // check for ingredients
         String ingredientname = autocompletetv_ingredientlist.getText().toString().toUpperCase();
         String ingredient_qty = et_ingredient_quantity.getText().toString();
 
@@ -1085,87 +1097,55 @@ public class IngredientManagementActivity extends WepBaseActivity {
             MsgBox.Show("Error ", " Ingredient and Quantity cannot have values while submitting ");
             return;
         }
-        if (tbl_displayingredient.getChildCount() < 1)
+        if (false)//tbl_displayingredient.getChildCount() < 1)
         {
             MsgBox.Show("Error ", " Please Add Ingredient to Table ");
             return;
         }
 
-        /*String ingredientname = autocompletetv_ingredientlist.getText().toString().toUpperCase();
-        if(ingredientname.equals("")){
-            MsgBox.Show(" Insufficient Information ", " Please Select Ingredient ");
-            return;
-        }
-        Cursor crsr_ingredient = dbIngredientManagement.getItem_GoodsInward(ingredientname);
-        if(!(crsr_ingredient !=null && crsr_ingredient.moveToFirst()))        {
-            MsgBox.Show(" Invalid Ingredient", " Please Select Ingredient from the List ");
-            return;
-        }
-
-        String ingredient_qty = et_ingredient_quantity.getText().toString();
-        if(ingredient_qty.equals(""))
-        {
-            MsgBox.Show(" Insufficient Information ", " Please Enter Ingredient Quantity ");
-            return;
-        }*/
 
         try
         {
             int del = dbIngredientManagement.DeleteSavedIngredients(menucode,Status_Saved);
             Log.d("SavingIngredients", "Rows deleted :"+del);
-            for(int i = 0; i<count; i++)
+            for(Ingredient ingredient_single : ingredientlist)
             {
-                Ingredients ingredient = new Ingredients();
-                TableRow RowIngredient = (TableRow)tbl_displayingredient.getChildAt(i);
+                ItemIngredients itemIngredients = new ItemIngredients();
 
                 // MenuCode
-                ingredient.setMenucode(menucode);
+                itemIngredients.setMenucode(menucode);
                 Log.d("SavingIngredients", "MenuCode :" + menucode);
                 // Item Name
-                ingredient.setItemname(itemname);
+                itemIngredients.setItemname(itemname);
                 Log.d("SavingIngredients", "Item Name :" + itemname);
                 // ItemQuantity
-                String temp = String.format("%.2f", Float.parseFloat(item_qty));
-                ingredient.setItemquantity(Float.parseFloat(String.format("%.2f", Float.parseFloat(item_qty))));
+                itemIngredients.setItemquantity(Float.parseFloat(String.format("%.2f", Float.parseFloat(item_qty))));
                 Log.d("SavingIngredients", "Item Quantity :" + item_qty);
 
                 String item_uom = tv_item_uom.getText().toString();
-                ingredient.setUom(item_uom);
+                itemIngredients.setUom(item_uom);
                 Log.d("SavingIngredients", "Item UOM :" + item_uom);
 
 
-                if (RowIngredient.getChildAt(1) != null) {
-                    TextView IngredientCode = (TextView) RowIngredient.getChildAt(1);
-                    ingredient.setIngredientcode(Integer.parseInt(IngredientCode.getText().toString()));
-                    Log.d("SavingIngredients", "Ingredient Code :" + IngredientCode.getText().toString());
-                }
+                itemIngredients.setIngredientcode(ingredient_single.getIngredientcode());
+                Log.d("SavingIngredients", "Ingredient Code :" + itemIngredients.getIngredientcode());
 
-                if (RowIngredient.getChildAt(2) != null) {
-                    TextView IngredientName = (TextView) RowIngredient.getChildAt(2);
-                    ingredient.setIngredientname(IngredientName.getText().toString());
-                    Log.d("SavingIngredients", "Ingredient Name :" + IngredientName.getText().toString());
-                }
+                itemIngredients.setIngredientname(ingredient_single.getIngredientName());
+                Log.d("SavingIngredients", "Ingredient Name :" + itemIngredients.getIngredientname());
 
-                if (RowIngredient.getChildAt(3) != null) {
-                    TextView IngredientQuatity = (TextView) RowIngredient.getChildAt(3);
-                    ingredient.setIngredientquantity(Float.parseFloat(String.format("%.2f", Float.parseFloat(IngredientQuatity.getText().toString()))));
-                    //ingredient.setIngredientquantity(Float.parseFloat(IngredientQuatity.getText().toString()));
-                    Log.d("SavingIngredients", "Ingredient Quantity :" + IngredientQuatity.getText().toString());
-                }
+                itemIngredients.setIngredientquantity(Float.parseFloat(String.format("%.2f",ingredient_single.getIngredientQuantity())));
+                Log.d("SavingIngredients", "Ingredient Quantity :" + itemIngredients.getIngredientquantity());
 
-                if (RowIngredient.getChildAt(4) != null) {
-                    TextView UOM = (TextView) RowIngredient.getChildAt(4);
-                    ingredient.setIngredientUOM(UOM.getText().toString());
-                    Log.d("SavingIngredients", "Ingredient UOM :" + UOM.getText().toString());
-                }
+                itemIngredients.setIngredientUOM(ingredient_single.getUOM());
+                Log.d("SavingIngredients", "Ingredient UOM :" + itemIngredients.getIngredientUOM());
 
-                ingredient.setStatus(Status_Saved);
+                itemIngredients.setStatus(Status_Saved);
                 Log.d("SavingIngredients", "Status :" + Status_Saved);
 
-                long l = dbIngredientManagement.saveIngredient(ingredient);
+                long l = dbIngredientManagement.saveIngredient(itemIngredients);
                 if(l>0)
                 {
-                    String msg = ingredient.getIngredientname()+" add at "+l;
+                    String msg = itemIngredients.getIngredientname()+" add at "+l;
                     Log.d("SavingIngredients", msg);
                 }
                 else
@@ -1175,7 +1155,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
             }
             if(success != -1)
             {
-                Toast.makeText(myContext, "Ingredients saved Successfully. Please Submit it.  ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(myContext, "ItemIngredients saved Successfully. Please Submit it.  ", Toast.LENGTH_SHORT).show();
             }
             reset();
         }
@@ -1189,13 +1169,8 @@ public class IngredientManagementActivity extends WepBaseActivity {
     public void Submit(View v)
     {
         int success =0;
-        int count = tbl_displayingredient.getChildCount();
         int menucode = 0;
-        if(count <1)
-        {
-            MsgBox.Show(" Insufficient Information ", " Please Add Ingredient ");
-            return;
-        }
+
         // check for items
         String itemname = autocompletetv_itemslist.getText().toString();
         if(itemname.equals("")){
@@ -1229,85 +1204,58 @@ public class IngredientManagementActivity extends WepBaseActivity {
             MsgBox.Show("Error ", " Ingredient and Quantity cannot have values while submitting ");
             return;
         }
-        if (tbl_displayingredient.getChildCount() < 1)
+        int count = ingredientlist.size();
+        if (count < 1)
         {
             MsgBox.Show("Error ", " Please Add Ingredient to Table ");
             return;
         }
 
-        /*{
-            MsgBox.Show(" Insufficient Information ", " Please Select Ingredient ");
-            return;
-        }
-        Cursor crsr_ingredient = dbIngredientManagement.getItem_GoodsInward(ingredientname);
-        if(!(crsr_ingredient !=null && crsr_ingredient.moveToFirst()))        {
-            MsgBox.Show(" Invalid Ingredient", " Please Select Ingredient from the List ");
-            return;
-        }
-
-        if(ingredient_qty.equals(""))
-        {
-            MsgBox.Show(" Insufficient Information ", " Please Enter Ingredient Quantity ");
-            return;
-        }
-*/
         try
         {
             int del = dbIngredientManagement.DeleteSavedIngredients(menucode,Status_Saved);
             Log.d("SubmitIngredients", "Saved Rows deleted :"+del);
             del = dbIngredientManagement.DeleteSavedIngredients(menucode,Status_Submitted);
             Log.d("SubmitIngredients", "Submitted Rows deleted :"+del);
-            for(int i = 0; i<count; i++)
+            for(Ingredient ingredient_single : ingredientlist)
             {
-                Ingredients ingredient = new Ingredients();
-                TableRow RowIngredient = (TableRow)tbl_displayingredient.getChildAt(i);
+                ItemIngredients itemIngredient = new ItemIngredients();
+                TableRow RowIngredient = null;// (TableRow)tbl_displayingredient.getChildAt(i);
 
                 // MenuCode
-                ingredient.setMenucode(menucode);
+                itemIngredient.setMenucode(menucode);
                 Log.d("SubmitIngredients", "MenuCode :" + menucode);
                 // Item Name
-                ingredient.setItemname(itemname);
+                itemIngredient.setItemname(itemname);
                 Log.d("SubmitIngredients", "Item Name :" + itemname);
                 // ItemQuantity
-                ingredient.setItemquantity(Float.parseFloat(item_qty));
+                itemIngredient.setItemquantity(Float.parseFloat(item_qty));
                 Log.d("SubmitIngredients", "Item Quantity :" + item_qty);
 
                 String item_uom = tv_item_uom.getText().toString();
-                ingredient.setUom(item_uom);
+                itemIngredient.setUom(item_uom);
                 Log.d("SubmitIngredients", "Item UOM :" + item_uom);
 
-                if (RowIngredient.getChildAt(1) != null) {
-                    TextView IngredientCode = (TextView) RowIngredient.getChildAt(1);
-                    ingredient.setIngredientcode(Integer.parseInt(IngredientCode.getText().toString()));
-                    Log.d("SubmitIngredients", "Ingredient Code :" + IngredientCode.getText().toString());
-                }
+                itemIngredient.setIngredientcode(ingredient_single.getIngredientcode());
+                Log.d("SubmitIngredients", "Ingredient Code :" + itemIngredient.getIngredientcode());
 
-                if (RowIngredient.getChildAt(2) != null) {
-                    TextView IngredientName = (TextView) RowIngredient.getChildAt(2);
-                    ingredient.setIngredientname(IngredientName.getText().toString());
-                    Log.d("SubmitIngredients", "Ingredient Name :" + IngredientName.getText().toString());
-                }
+                itemIngredient.setIngredientname(ingredient_single.getIngredientName());
+                Log.d("SubmitIngredients", "Ingredient Name :" + itemIngredient.getIngredientname());
 
-                if (RowIngredient.getChildAt(3) != null) {
-                    TextView IngredientQuatity = (TextView) RowIngredient.getChildAt(3);
-                    ingredient.setIngredientquantity(Float.parseFloat(IngredientQuatity.getText().toString()));
-                    Log.d("SubmitIngredients", "Ingredient Quantity :" + IngredientQuatity.getText().toString());
-                }
+                itemIngredient.setIngredientquantity(Float.parseFloat(String.format("%.2f",ingredient_single.getIngredientQuantity())));
+                Log.d("SubmitIngredients", "Ingredient Quantity :" + itemIngredient.getIngredientquantity());
 
-                if (RowIngredient.getChildAt(4) != null) {
-                    TextView UOM = (TextView) RowIngredient.getChildAt(4);
-                    ingredient.setIngredientUOM(UOM.getText().toString());
-                    Log.d("SubmitIngredients", "Ingredient UOM :" + UOM.getText().toString());
-                }
+                itemIngredient.setIngredientUOM(ingredient_single.getUOM());
+                Log.d("SubmitIngredients", "Ingredient UOM :" + itemIngredient.getIngredientUOM());
 
-                ingredient.setStatus(Status_Submitted);
+                itemIngredient.setStatus(Status_Submitted);
                 Log.d("SubmitIngredients", "Status :" + Status_Submitted);
 
-                long l = dbIngredientManagement.saveIngredient(ingredient);
+                long l = dbIngredientManagement.saveIngredient(itemIngredient);
                 if(l>0)
                 {
-                    String msg = ingredient.getIngredientname()+" add at "+l;
-                    Log.d("SavingIngredients", msg);
+                    String msg = itemIngredient.getIngredientname()+" add at "+l;
+                    Log.d("SubmitIngredients", msg);
                 }
                 else
                 {
@@ -1316,12 +1264,11 @@ public class IngredientManagementActivity extends WepBaseActivity {
             }
             if(success != -1)
             {
-                Toast.makeText(myContext, "Ingredients Submitted Successfully for "+itemname, Toast.LENGTH_SHORT).show();
+                Toast.makeText(myContext, "ItemIngredients Submitted Successfully for "+itemname, Toast.LENGTH_SHORT).show();
             }
             reset();
             loadAutoCompleteSubmitItems();
-            ClearTable(tbl_displaysubmitteditems);
-            DisplaySubmittedItems();
+            //DisplaySubmittedItems();
         }
         catch (Exception e)
         {

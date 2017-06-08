@@ -83,7 +83,7 @@ public class ItemOutwardAdapter extends BaseAdapter {
         if(true)
         {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.outwarditem_row,null);
+            convertView = inflater.inflate(R.layout.row_outwarditem,null);
             viewHolder = new ItemOutwardAdapter.ViewHolder();
             viewHolder.menuCode = (TextView) convertView.findViewById(R.id.tvMenuCode);
             viewHolder.itemName = (TextView) convertView.findViewById(R.id.tvItemName);
@@ -113,15 +113,7 @@ public class ItemOutwardAdapter extends BaseAdapter {
         rowparams.gravity = Gravity.CENTER;
         viewHolder.itemImg.setLayoutParams(rowparams);
         viewHolder.itemImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        /*if(!itemOutward.getImageUri().equals(""))
-        {
-            viewHolder.itemImg.setImageURI(Uri.fromFile(new File(itemOutward.getImageUri())));
 
-        }
-        else
-        {
-            viewHolder.itemImg.setImageResource(R.drawable.img_noimage);
-        }*/
         String icon = AppUtils.getImagePath(itemOutward.getImageUri(),itemOutward.getLongName());
         Uri uri = Uri.fromFile(new File(icon));
         try{

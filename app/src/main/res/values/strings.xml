@@ -46,7 +46,7 @@
         <item>NilRate</item>
         <item>nonGST</item>
     </string-array>
- <string-array name="suppliertypes">
+    <string-array name="suppliertypes">
         <item> </item>
         <item>Registered</item>
         <item>UnRegistered</item>
@@ -131,5 +131,9 @@
     <string name="text_message_payment_default">Your Credit Balance Amount is less than Payable Amount. Do you want to continue with Partial Payment?</string>
     <string name="text_message_payment_zero_negative">Your Credit Balance Amount is less than Payable Amount. You can Pay by  Credit or Other Mode.</string>
     <string name="text_message_payment_zero">Your Credit Balance Amount is less than Payable Amount. You can Pay by  Credit or Partial Payment.</string>
+    <string name="title_activity_inward">InwardActivity</string>
+    <string name="title_activity_supplier_details">SupplierDetails</string>
+    <string name="title_activity_inward_item">InwardItemActivity</string>
+    <string name="title_activity_item_supplier_linkage">ItemSupplierLinkageActivity</string>
 
 </resources>

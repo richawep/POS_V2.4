@@ -96,7 +96,7 @@ public class KOTModifierActivity extends Activity{
 			ResetKOTModifier();
 	    	DisplayKOTModifier();
 
-            //loadSpinnerData();
+            //loadAutoCompleteData();
 	    }
 	    catch(Exception exp){
 	    	Toast.makeText(myContext, "OnCreate: " + exp.getMessage(), Toast.LENGTH_LONG).show();

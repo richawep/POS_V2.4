@@ -1,1 +1,1 @@
-include ':app',':gstAPI', ':printers', ':mSwipe', ':wepbase'
+include ':app', ':gstAPI', ':printers', ':mSwipe', ':wepbase', 'upgradeModule'

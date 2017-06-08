@@ -52,7 +52,7 @@ public class GSTHomeActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
         super.onCreate(savedInstanceState);
         // Remove default title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_home_gst);
+        //setContentView(R.layout.activity_home_gst);
 
 
         dbHomeScreen = new DatabaseHandler(GSTHomeActivity.this);

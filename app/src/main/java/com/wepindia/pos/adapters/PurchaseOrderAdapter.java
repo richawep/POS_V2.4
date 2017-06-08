@@ -14,11 +14,9 @@ import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.wep.common.app.Database.Category;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.PurchaseOrder;
-import com.wep.common.app.models.ItemOutward;
-import com.wepindia.pos.PurchaseOrderActivity;
+
 import com.wepindia.pos.R;
 
 import java.util.ArrayList;

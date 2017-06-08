@@ -1172,7 +1172,7 @@
                             android:background="@drawable/background_btn"
                             android:textColor="@android:color/white"
                             android:theme="@style/WepButtonWithMarigin"
-                            android:onClick="CloseItem1"
+                            android:onClick="Close"
                             android:text="Close" />
                     </LinearLayout>
                 </FrameLayout>

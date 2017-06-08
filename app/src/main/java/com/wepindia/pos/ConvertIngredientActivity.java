@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
-import com.wep.common.app.Database.Ingredients;
+import com.wep.common.app.Database.ItemIngredients;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.StockInwardMaintain;
 import com.wepindia.pos.utils.StockOutwardMaintain;
@@ -61,18 +61,9 @@ public class ConvertIngredientActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_convert_ingredients);
-        //toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        /*TextView tvTitleText = (TextView) findViewById(R.id.tvTitleBarCaption);
-        TextView tvTitleUserName = (TextView) findViewById(R.id.tvTitleBarUserName);
-        TextView tvTitleDate = (TextView) findViewById(R.id.tvTitleBarDate);
-        ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
-        ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.lnrPaymentReceipt));
-        tvTitleText.setText(" Ingredient Management ");*/
+
 
         dbIngredientManagement = new DatabaseHandler(ConvertIngredientActivity.this);
         myContext = this;
@@ -170,7 +161,7 @@ public class ConvertIngredientActivity extends Activity {
         int count =0;
         try
         {
-            Cursor crsr = dbIngredientManagement.getIngredientsForMenuCode(menucode);
+            Cursor crsr = dbIngredientManagement.getIngredientsForMenuCode(menucode,Status_Submitted);
             while (crsr != null && crsr.moveToNext()){
                 float item_quantity = 0;
                 int ingredientcode = 0;
@@ -192,7 +183,7 @@ public class ConvertIngredientActivity extends Activity {
 
                 TextView sn = new TextView(myContext);
                 sn.setWidth(70);
-                sn.setBackgroundResource(R.drawable.border);
+                sn.setBackgroundResource(R.drawable.border_item);
                 count++;
                 sn.setPadding(4,0,0,0);
                 sn.setTextSize(20);
@@ -204,7 +195,7 @@ public class ConvertIngredientActivity extends Activity {
                 IngredientCode.setText(String.valueOf(ingredientcode));
 
                 TextView IngredientName = new TextView(myContext);
-                IngredientName.setBackgroundResource(R.drawable.border);
+                IngredientName.setBackgroundResource(R.drawable.border_item);
                 IngredientName.setWidth(170);
                 IngredientName.setTextSize(20);
                 IngredientName.setPadding(4,0,0,0);
@@ -212,7 +203,7 @@ public class ConvertIngredientActivity extends Activity {
                 IngredientName.setText(ingredientname);
 
                 TextView IngredientQuantity = new TextView(myContext);
-                IngredientQuantity.setBackgroundResource(R.drawable.border);
+                IngredientQuantity.setBackgroundResource(R.drawable.border_item);
                 IngredientQuantity.setWidth(90);
                 IngredientQuantity.setTextSize(20);
                 IngredientQuantity.setPadding(0,0,4,0);
@@ -221,7 +212,7 @@ public class ConvertIngredientActivity extends Activity {
                 IngredientQuantity.setText(String.valueOf(ingredient_quantity));
 
                 TextView UOM = new TextView(myContext);
-                UOM.setBackgroundResource(R.drawable.border);
+                UOM.setBackgroundResource(R.drawable.border_item);
                 UOM.setWidth(100);
                 UOM.setGravity(Gravity.CENTER);
                 UOM.setTextColor(getResources().getColor(R.color.black));
@@ -233,7 +224,7 @@ public class ConvertIngredientActivity extends Activity {
                 ImgDelete.setImageResource(res);*/
 
                 Button ImgDelete = new Button(myContext);
-                ImgDelete.setBackground(getResources().getDrawable(R.drawable.delete_icon_lightyellow));
+                ImgDelete.setBackground(getResources().getDrawable(R.drawable.delete_icon));
                 ImgDelete.setLayoutParams(new TableRow.LayoutParams(40, 35));
                 ImgDelete.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
@@ -609,7 +600,7 @@ public class ConvertIngredientActivity extends Activity {
             Log.d("SubmitIngredients", "Submitted Rows deleted :"+del);
             for(int i = 0; i<count; i++)
             {
-                Ingredients ingredient = new Ingredients();
+                ItemIngredients ingredient = new ItemIngredients();
                 TableRow RowIngredient = (TableRow)tbl_convert_ingredients.getChildAt(i);
 
                 // MenuCode
@@ -666,7 +657,7 @@ public class ConvertIngredientActivity extends Activity {
             }
             if(success != -1)
             {
-                Toast.makeText(myContext, "Ingredients submitted Successfully ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(myContext, "ItemIngredients submitted Successfully ", Toast.LENGTH_SHORT).show();
             }
 
             ClearTable(tbl_convert_ingredients);
@@ -789,7 +780,7 @@ public class ConvertIngredientActivity extends Activity {
                    Log.d("ConvertingIngredients", ingredientname+" updated to "+ingredientquantity);
 
                }// end for
-               Toast.makeText(myContext, itemname+ " and its Ingredients Updated Successfully ", Toast.LENGTH_SHORT).show();
+               Toast.makeText(myContext, itemname+ " and its ItemIngredients Updated Successfully ", Toast.LENGTH_SHORT).show();
 
            }
        }

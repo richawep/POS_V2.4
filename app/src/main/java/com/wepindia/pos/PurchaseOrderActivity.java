@@ -7,25 +7,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -33,11 +27,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wep.common.app.Database.BillItem;
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.Item;
 import com.wep.common.app.Database.PurchaseOrder;
@@ -47,7 +39,6 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.PurchaseOrderAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -70,11 +61,11 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
     TextView tx_inward_invoice_date;
 
-    ImageButton btnimage_new_item ;
+    //ImageButton btnimage_new_item ;
     AutoCompleteTextView autocompletetv_suppliername, autocompletetv_invoiceno,autocompletetv_itemlist, autocompletetv_purchase_order;
     ListView lv_inward_item_details;
     CheckBox chk_inward_additional_charge;
-    com.wep.common.app.views.WepButton btnEditPO,btnGeneratePO,btnAddSupplier, btnClearItem, btnCloseItem;
+    com.wep.common.app.views.WepButton btnEditPO,btnGeneratePO,btnAddSupplier, btnClearItem, btnCloseItem, btn_add_new_item;
     PurchaseOrderAdapter purchaseOrderAdapter = null;
 
     ArrayList<String> labelsSupplierName;
@@ -205,7 +196,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         et_inward_item_quantity.setEnabled(false);
                        // autocompletetv_itemlist.setText("");
                         //input_window();
-                        MsgBox.Show("Warning","Kindly goto \"Inward Supply Item\" and add the desired item." +
+                        MsgBox.Show("Warning","Kindly goto \"Supplier Item Linkage\" and add the desired item." +
                                 "\nPlease save your data , if any , before leaving this screen");
 
                     }else if (itemname.equalsIgnoreCase("Select/Add Supplier"))
@@ -260,7 +251,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             });
 
 
-            btnimage_new_item.setOnClickListener(new View.OnClickListener() {
+            btn_add_new_item.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     MsgBox = new MessageDialog(myContext);
                     String item = autocompletetv_itemlist.getText().toString();
@@ -289,7 +280,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                                 .setPositiveButton("OK", null)
                                 .show();*/
                         //input_window();
-                        MsgBox.Show("Warning","Kindly goto \"Inward Supply Item\" and add the desired item." +
+                        MsgBox.Show("Warning","Kindly goto \"Supplier Item Linkage\" and add the desired item." +
                                 "\nPlease save your data , if any , before leaving this screen");
                     }else   if (et_inward_item_quantity.getText().toString().equals(""))
                     {
@@ -302,24 +293,15 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                     }
                     else {
                         // check whether user has entered new item without going through inputwindow()
-                        Cursor itemdetails = dbPurchaseOrder.getItemdetailsforSupplier(suppliercode,item);
+                        Cursor itemdetails = dbPurchaseOrder.getItemDetail_inward(item);
                         if (itemdetails!=null && itemdetails.moveToFirst()) {
                             populate(2);
                         }
                         else
                         {
-                            /*MsgBox.setTitle(" Insufficient Information")
-                                    .setMessage(" Item not found in database for this Supplier. Do you want add it.")
-                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            input_window();
-                                        }
-                                    })
-                                    .setNegativeButton("Cancel", null)
-                                    .show();*/
                             MsgBox.setTitle(" Insufficient Information")
                                     .setMessage(" Item not found in database for this Supplier." +
-                                            "\nKindly goto \"Inward Supply Item\" and add the desired item" +
+                                            "\nKindly goto \"Supplier Item Linkage\" and add the desired item" +
                                             "\nPlease save your data , if any , before leaving this screen")
                                     .setPositiveButton("Ok",null)
                                     .show();
@@ -747,13 +729,14 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         autocompletetv_purchase_order = (AutoCompleteTextView)findViewById(R.id.autocompletetv_purchase_order);
         autocompletetv_itemlist = (AutoCompleteTextView)findViewById(R.id.autocompletetv_itemlist);
         et_inward_item_quantity = (EditText) findViewById(R.id.et_inward_item_quantity);
-        btnimage_new_item = (ImageButton) findViewById(R.id.btnimage_new_item);
+       // btnimage_new_item = (ImageButton) findViewById(R.id.btnimage_new_item);
 
         btnEditPO = (com.wep.common.app.views.WepButton) findViewById (R.id.btnEditPO);
         btnGeneratePO = (com.wep.common.app.views.WepButton) findViewById (R.id.btnGeneratePO);
         btnClearItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnClearItem);
         btnCloseItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnCloseItem);
         btnAddSupplier = (com.wep.common.app.views.WepButton) findViewById (R.id.btnAddSupplier);
+        btn_add_new_item = (com.wep.common.app.views.WepButton) findViewById (R.id.btn_add_new_item);
         btnAddSupplier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -796,13 +779,15 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         chk_interState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
-                    return;
+                /*if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
+                    return;*/
                 if(!isChecked)
                 {
 
                     spnrSupplierStateCode.setSelection(0);
                     spnrSupplierStateCode.setEnabled(false);
+                    if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
+                        return;
                     for(PurchaseOrder po : dataList)
                     {
                         double sgstAmt =0, cgstAmt =0;
@@ -810,7 +795,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         String suppliercode = po.getSupplierCode();
                         String itemname = po.getItemName();
 
-                        Cursor crsr = dbPurchaseOrder.getItemdetailsforSupplier( Integer.parseInt(suppliercode),  itemname);
+                        Cursor crsr = dbPurchaseOrder.getItemDetail_inward(itemname);
                         if(crsr!=null && crsr.moveToNext())
                         {
                             double cgstRate = crsr.getDouble(crsr.getColumnIndex("CGSTRate"));
@@ -829,6 +814,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 {
                     spnrSupplierStateCode.setSelection(0);
                     spnrSupplierStateCode.setEnabled(true);
+                    if(purchaseOrderAdapter== null || dataList== null || dataList.size()==0)
+                        return;
                     for(PurchaseOrder po : dataList)
                     {
                         double sgst = po.getSgstAmount();
@@ -859,8 +846,19 @@ public class PurchaseOrderActivity extends WepBaseActivity {
     private void loadAutoCompleteData_item(int suppliercode) {
 
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-        List<String> itemlist = dbPurchaseOrder.getitemlist_inward_nonGST_Goods(suppliername_str, suppliercode);
-        //itemlist.add("Not in list");
+        List<String> itemlist = new ArrayList<>();
+        itemlist.add("Not in list");
+        Cursor menuCodeListcrsr= dbPurchaseOrder.getLinkedMenuCodeForSupplier(suppliercode);
+        while (menuCodeListcrsr!=null && menuCodeListcrsr.moveToNext())
+        {
+            int menucode = menuCodeListcrsr.getInt(menuCodeListcrsr.getColumnIndex("MenuCode"));
+            Cursor itemDetail = dbPurchaseOrder.getItem_inward(menucode);
+            if(itemDetail!=null && itemDetail.moveToNext())
+            {
+                String itemName = itemDetail.getString(itemDetail.getColumnIndex("ItemName"));
+                itemlist.add(itemName);
+            }
+        }
 
         ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,itemlist);
         dataAdapter1.setDropDownViewResource(android.R.layout.simple_list_item_1);
@@ -1024,7 +1022,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                     MsgBox.Show("Insufficient Information ", " Please fill Supplier Details ");
                     return;
                 }
-                Cursor itemdetails = dbPurchaseOrder.getItemdetailsforSupplier(suppliercode,Item_name);
+                Cursor itemdetails = dbPurchaseOrder.getItemDetail_inward(Item_name);
                 if (itemdetails!=null && itemdetails.moveToFirst()) {
                     PurchaseOrder po = new PurchaseOrder();
                     //po.setSn(dataList.size()+1);
@@ -1044,7 +1042,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                     po.setHSNCode(itemdetails.getString(itemdetails.getColumnIndex("HSNCode")));
 
 
-                    String Rate = itemdetails.getString(itemdetails.getColumnIndex("Rate"));
+                    String Rate = itemdetails.getString(itemdetails.getColumnIndex("AverageRate"));
                     if (Rate == null || Rate.equals(""))
                         po.setValue(0.00);
                     else
@@ -1631,6 +1629,8 @@ void populate_old(int type)
             count--;
         }*/
         purchaseOrderAdapter = null;
+        if(dataList!=null)
+            dataList.clear();
         lv_inward_item_details.setAdapter(purchaseOrderAdapter);
         count=0;
         autocompletetv_purchase_order.setText("");

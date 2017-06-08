@@ -1,13 +1,11 @@
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +22,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -46,8 +43,6 @@ import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.StockInwardMaintain;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -421,7 +416,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                                                     Cursor crsrItem = dbInwardItem.getbyItemName(colums[0].trim().toUpperCase());
                                                     if (crsrItem.moveToFirst()) {
                                                         //MsgBox.Show("", colums[0].trim() + " - " + crsrItem.getString(0));
-                                                        /*int iRowId = dbInwardItem.updateItem_inward(Integer.parseInt(crsrItem.getString(0)),
+                                                        /*int iRowId = dbSupplierItemLink.updateItem_inward(Integer.parseInt(crsrItem.getString(0)),
                                                                 0, colums[1].trim(), Integer.parseInt(crsrItem.getString(2)),colums[4].trim(),"",
                                                                         colums[5].trim(),0,0,0,0,0,0,"",0,Float.parseFloat(colums[6].trim()),
                                                                         colums[7].trim(),0,Float.parseFloat(colums[8].trim()),0,0,0,"",0,0,0,
@@ -488,7 +483,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
             e.printStackTrace();
         }
         finally {
-            //dbInwardItem.CloseDatabase();
+            //dbSupplierItemLink.CloseDatabase();
         }
     }
 
@@ -501,11 +496,11 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
         txtHSNCode = (EditText) findViewById(R.id.et_inw_hsnCode);
         //etInputValidate.ValidateDecimalInput(txtDineIn1);
 
-        txtRate = (EditText) findViewById(R.id.et_inw_rate);
+        txtRate = (EditText) findViewById(R.id.et_inw_averagerate_entered);
         txtQuantity = (EditText) findViewById(R.id.et_inw_quantity);*/
         tvFileName = (TextView) findViewById(R.id.tvFileName);
 
-        //tv_rate = (TextView) findViewById(R.id.et_inw_rate);
+        //tv_rate = (TextView) findViewById(R.id.et_inw_averagerate_entered);
 
 
         /*spnrCategory = (Spinner) findViewById(R.id.spnrItemCategCode);
@@ -589,7 +584,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
 
         // Add Kitchen to adapter
         /*crsrAdapterData = null;
-        crsrAdapterData = dbInwardItem.getAllKitchen();
+        crsrAdapterData = dbSupplierItemLink.getAllKitchen();
         Log.d("Kitchen", "Rows:" + String.valueOf(crsrAdapterData.getCount()));
         if (crsrAdapterData.moveToFirst()) {
             do {
@@ -599,7 +594,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
 
         // Add Tax to adapter
        /* crsrAdapterData = null;
-        crsrAdapterData = dbInwardItem.getAllTaxConfig();
+        crsrAdapterData = dbSupplierItemLink.getAllTaxConfig();
         Log.d("Tax", "Rows:" + String.valueOf(crsrAdapterData.getCount()));
         if (crsrAdapterData.moveToFirst()) {
             do {
@@ -609,7 +604,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
 
         // Add Tax to adapter
         crsrAdapterData = null;
-        crsrAdapterData = dbInwardItem.getAllDiscountConfig();
+        crsrAdapterData = dbSupplierItemLink.getAllDiscountConfig();
         Log.d("Discount", "Rows:" + String.valueOf(crsrAdapterData.getCount()));
         if (crsrAdapterData.moveToFirst()) {
             do {
@@ -637,7 +632,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
             {
                 continue;
             }
-            crsrItems = dbInwardItem.getitemforSupplier_inward(suppliercode);
+            crsrItems = dbInwardItem.getLinkedMenuCodeForSupplier(suppliercode);
             TableRow rowItems = null;
 
             TextView tvSno, tvMenuCode, tvHSN, tvLongName, tvShortName, tvDineIn1, tvDineIn2, tvDineIn3, tvTakeAway, tvPickUp, tvDelivery,
@@ -882,7 +877,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
         try {
 
 
-            crsrItems = dbInwardItem.getAllDetails_for_item(itemname);
+            crsrItems = dbInwardItem.getItemDetail_inward(itemname);
             while (crsrItems != null && crsrItems.moveToNext()) {
 
                 int suppliercode = crsrItems.getInt(crsrItems.getColumnIndex("SupplierCode"));
@@ -1138,7 +1133,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
 
     private void DisplayItems(int suppliercode , String suppliername_str, String SupplierPhone, final String SupplierAddress) {
         Cursor crsrItems = null;
-        crsrItems = dbInwardItem.getitemforSupplier_inward(suppliercode);
+        crsrItems = dbInwardItem.getLinkedMenuCodeForSupplier(suppliercode);
         int sn =1;
         if (crsrItems!=null && crsrItems.moveToFirst())
         {
@@ -1503,7 +1498,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
 
 
         String suppliername = autocompletetv_suppliername.getText().toString().toUpperCase().toUpperCase();
-        int suppliercode = dbInwardItem.getSuppliercode(suppliername);
+        int suppliercode = dbSupplierItemLink.getSuppliercode(suppliername);
         if (suppliercode<0)
         {
             MsgBox.setTitle(" Warning")
@@ -1514,7 +1509,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
         }
         itemname = autocomplete_inw_ItemName.getText().toString().toUpperCase();
         strBarcode = et_inw_ItemBarcode.getText().toString();
-        rate = Float.parseFloat(et_inw_rate.getText().toString());
+        rate = Float.parseFloat(et_inw_averagerate_entered.getText().toString());
         quantity = Float.parseFloat(et_inw_quantity.getText().toString());
         SalesTax = Float.parseFloat(et_Inw_SalesTax.getText().toString());
         ServiceTax = Float.parseFloat(et_Inw_ServiceTax.getText().toString());
@@ -1551,7 +1546,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                 objItem.setItemBarcode(strBarcode);
                 objItem.setRate(rate);
                 objItem.setQuantity(quantity);
-                objItem.setMOU(mou);
+                objItem.setUOM(mou);
                 objItem.setImageId(ImageUri);
                 objItem.setSalesTaxPercent(SalesTax);
                 objItem.setServiceTaxPercent(ServiceTax);
@@ -1559,10 +1554,10 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                 objItem.setMenuCode(menucode);
 
 
-                int iRowId = dbInwardItem.updateItem_Inw_nonGST(objItem);
+                int iRowId = dbSupplierItemLink.updateItem_Inw_nonGST(objItem);
                 if (iRowId <1 ) // not updated
                 {
-                    Cursor  item_crsr = dbInwardItem.getItem_inward(menucode);
+                    Cursor  item_crsr = dbSupplierItemLink.getItem_inward(menucode);
                     if (item_crsr == null || !item_crsr.moveToFirst()) {
 
                         *//*AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
@@ -1808,7 +1803,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
     {
         long l =0;
         Cursor cursor = dbInwardItem.getAllSupplierName_nonGST();
-        //labelsSupplierName = dbInwardItem.getAllSupplierName_nonGST();
+        //labelsSupplierName = dbSupplierItemLink.getAllSupplierName_nonGST();
         labelsSupplierName = new ArrayList<String>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -1916,7 +1911,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
     public void AddItem1 (View v)
     {
         Cursor cursor = dbInwardItem.getAllSupplierName_nonGST();
-        //labelsSupplierName = dbInwardItem.getAllSupplierName_nonGST();
+        //labelsSupplierName = dbSupplierItemLink.getAllSupplierName_nonGST();
         labelsSupplierName = new ArrayList<String>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -2071,7 +2066,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
             String itemname = autocomplete_inw_ItemName.getText().toString();
             count =1;
             DisplayItems(itemname);
-            // MsgBox1.Show("Check", "itemwise on adding");
+            // MsgBox.Show("Check", "itemwise on adding");
         }
 
         ResetItem();
@@ -2098,8 +2093,8 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
             et_inw_quantity.setText("0");
         }
 
-        if (et_inw_rate.getText().toString().equalsIgnoreCase("")) {
-            et_inw_rate.setText("0");
+        if (et_inw_averagerate_entered.getText().toString().equalsIgnoreCase("")) {
+            et_inw_averagerate_entered.setText("0");
         }
         // richa 2712_UOM
         String mou_temp = spnrUOM.getSelectedItem().toString();
@@ -2139,7 +2134,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
             {
                 String itemname = autocomplete_inw_ItemName.getText().toString();
                 DisplayItems(itemname);
-                MsgBox1.Show("Check", "itemwise on adding");
+                MsgBox.Show("Check", "itemwise on adding");
             }
 
             ResetItem();
@@ -2207,7 +2202,7 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
         // for itemwise search , load item adapter also. If any supplier is selected then item adapter
         // will be reloaded for that particular supplier only
 
-        Cursor cursor_item = dbInwardItem.getAllItems_Inw();
+        Cursor cursor_item = dbInwardItem.getAllInwardItemNames();
         itemlist = new ArrayList<String>();
         if (cursor_item != null && cursor_item.moveToFirst()) {
             do {

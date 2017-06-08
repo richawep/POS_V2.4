@@ -207,34 +207,33 @@
                             android:textStyle="bold" />
                     </RelativeLayout>
 
+
                     <RelativeLayout
-                        android:id="@+id/rl_ingredients"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
-                            android:id="@+id/imgIngredients"
+                            android:id="@+id/imgPaymentReceipt"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
                             android:background="@drawable/gradient_button"
-                            android:contentDescription="Ingredients"
+                            android:contentDescription="PaymentReceipt"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/ingredients" />
+                            android:src="@drawable/img_payreceive" />
 
                         <TextView
-                            android:id="@+id/tvIngredientsOption"
+                            android:id="@+id/tvPayemntReceiptOption"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgIngredients"
+                            android:layout_below="@+id/imgPaymentReceipt"
                             android:gravity="center"
-                            android:text="Ingredient Management"
+                            android:text="Payment / Receipt"
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
-
                     <RelativeLayout
                         android:id="@+id/rl_inward_invoice_entry"
                         android:layout_width="wrap_content"
@@ -263,37 +262,10 @@
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
-                    <!-- richa -->
 
 
-                    <RelativeLayout
-                        android:id="@+id/rl_cdn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
-                        android:layout_weight="1"
-                        >
 
-                        <ImageButton
-                            android:id="@+id/img_cdn"
-                            android:layout_width="120dp"
-                            android:layout_height="100dp"
-                            android:background="@drawable/gradient_button"
-                            android:contentDescription="cdn"
-                            android:onClick="LaunchActivity"
-                            android:padding="3dp"
-                            android:src="@drawable/cdn" />
 
-                        <TextView
-                            android:id="@+id/tv_cdn"
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/img_cdn"
-                            android:gravity="center"
-                            android:text="Credit Debit Note "
-                            android:textSize="@dimen/menu_box_font_size"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -345,59 +317,9 @@
                             android:textStyle="bold" />
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
-                        android:layout_weight="1">
 
-                        <ImageButton
-                            android:id="@+id/imgPurchaseOrder"
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/gradient_button"
-                            android:contentDescription="PurchaseOrder"
-                            android:onClick="LaunchActivity"
-                            android:padding="3dp"
-                            android:src="@drawable/purchaseorder" />
 
-                        <TextView
-                            android:id="@+id/tvPurchaseOrderOption"
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgPurchaseOrder"
-                            android:gravity="center"
-                            android:text="Purchase Order"
-                            android:textSize="@dimen/menu_box_font_size"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
-                        android:layout_weight="1">
-
-                        <ImageButton
-                            android:id="@+id/imgPaymentReceipt"
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/gradient_button"
-                            android:contentDescription="PaymentReceipt"
-                            android:onClick="LaunchActivity"
-                            android:padding="3dp"
-                            android:src="@drawable/img_payreceive" />
-
-                        <TextView
-                            android:id="@+id/tvPayemntReceiptOption"
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgPaymentReceipt"
-                            android:gravity="center"
-                            android:text="Payment / Receipt"
-                            android:textSize="@dimen/menu_box_font_size"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -425,6 +347,7 @@
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/rl_amend"
                         android:layout_width="wrap_content"
@@ -453,7 +376,34 @@
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rl_cdn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/menu_box_marigin"
+                        android:layout_weight="1"
+                        >
 
+                        <ImageButton
+                            android:id="@+id/img_cdn"
+                            android:layout_width="120dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/gradient_button"
+                            android:contentDescription="cdn"
+                            android:onClick="LaunchActivity"
+                            android:padding="3dp"
+                            android:src="@drawable/cdn" />
+
+                        <TextView
+                            android:id="@+id/tv_cdn"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/img_cdn"
+                            android:gravity="center"
+                            android:text="Credit Debit Note "
+                            android:textSize="@dimen/menu_box_font_size"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

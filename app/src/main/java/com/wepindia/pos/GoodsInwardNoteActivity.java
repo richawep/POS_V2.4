@@ -74,13 +74,13 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
     TextView tx_inward_invoice_date;
 
-    ImageButton btnimage_new_item ;
+    //ImageButton btnimage_new_item ;
     AutoCompleteTextView autocompletetv_suppliername, autocompletetv_invoiceno,autocompletetv_itemlist, autocompletetv_purchase_order;
     ListView lv_inward_item_details;
     CheckBox chk_interState;
     Spinner spnrSupplierStateCode;
     CheckBox chk_inward_additional_charge;
-    WepButton btnSubmitItem,btnSaveItem,btnAddSupplier, btnClearItem, btnCloseItem;
+    WepButton btnSubmitItem,btnSaveItem,btnAddSupplier, btnClearItem, btnCloseItem,btn_add_new_item;
 
 
     ArrayList<String> labelsSupplierName;
@@ -233,7 +233,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                             String suppliercode = po.getSupplierCode();
                             String itemname = po.getItemName();
 
-                            Cursor crsr = dbGoodsInwardNote.getItemdetailsforSupplier( Integer.parseInt(suppliercode),  itemname);
+                            Cursor crsr = dbGoodsInwardNote.getItemDetail_inward(itemname);
                             if(crsr!=null && crsr.moveToNext())
                             {
                                 double cgstRate = crsr.getDouble(crsr.getColumnIndex("CGSTRate"));
@@ -306,7 +306,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                         et_inward_item_quantity.setEnabled(false);
                         //autocompletetv_itemlist.setText("");
                         //input_window();
-                        MsgBox.Show("Warning","Kindly goto \"Inward Supply Item\" and add the desired item." +
+                        MsgBox.Show("Warning","Kindly goto \"Supplier Item Linkage\" and add the desired item." +
                                 "\nPlease save your data , if any , before leaving this screen");
 
 
@@ -362,7 +362,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             });
 
 
-            btnimage_new_item.setOnClickListener(new View.OnClickListener() {
+            btn_add_new_item.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     MsgBox = new MessageDialog(myContext);
                     String item = autocompletetv_itemlist.getText().toString();
@@ -391,7 +391,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                                 .setPositiveButton("OK", null)
                                 .show();*/
                         //input_window();
-                        MsgBox.Show("Warning","Kindly goto \"Inward Supply Item\" and add the desired item." +
+                        MsgBox.Show("Warning","Kindly goto \"Supplier Item Linkage\" and add the desired item." +
                                 "\nPlease save your data , if any , before leaving this screen");
                     }else   if (et_inward_item_quantity.getText().toString().equals(""))
                     {
@@ -404,7 +404,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                     }
                     else {
                         // check whether user has entered new item without going through inputwindow()
-                        Cursor itemdetails = dbGoodsInwardNote.getItemdetailsforSupplier(suppliercode,item);
+                        Cursor itemdetails = dbGoodsInwardNote.getItemDetail_inward(item);
                         if (itemdetails!=null && itemdetails.moveToFirst()) {
                             populate(2);
                         }
@@ -421,7 +421,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                                     .show();*/
                             MsgBox.setTitle(" Insufficient Information")
                                     .setMessage(" Item not found in database for this Supplier." +
-                                            "\nKindly goto \"Inward Supply Item\" and add the desired item" +
+                                            "\nKindly goto \"Supplier Item Linkage\" and add the desired item" +
                                             "\nPlease save your data , if any , before leaving this screen")
                                     .setPositiveButton("Ok",null)
                                     .show();
@@ -1129,13 +1129,14 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         autocompletetv_purchase_order = (AutoCompleteTextView)findViewById(R.id.autocompletetv_purchase_order);
         autocompletetv_itemlist = (AutoCompleteTextView)findViewById(R.id.autocompletetv_itemlist);
         et_inward_item_quantity = (EditText) findViewById(R.id.et_inward_item_quantity);
-        btnimage_new_item = (ImageButton) findViewById(R.id.btnimage_new_item);
+        //btnimage_new_item = (ImageButton) findViewById(R.id.btnimage_new_item);
 
         btnSubmitItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnSubmitItem);
         btnSaveItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnSaveItem);
         btnAddSupplier = (com.wep.common.app.views.WepButton) findViewById (R.id.btnAddSupplier);
         btnClearItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnClearItem);
         btnCloseItem = (com.wep.common.app.views.WepButton) findViewById (R.id.btnCloseItem);
+        btn_add_new_item = (com.wep.common.app.views.WepButton) findViewById (R.id.btn_add_new_item);
 
         btnAddSupplier.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1204,8 +1205,20 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
     private void loadAutoCompleteData_item(int suppliercode) {
 
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-        List<String> itemlist = dbGoodsInwardNote.getitemlist_inward_nonGST_Goods(suppliername_str, suppliercode);
-        //itemlist.add("Not in list");
+        List<String> itemlist = new ArrayList<>();
+        itemlist.add("Not in list");
+        Cursor menuCodeListcrsr= dbGoodsInwardNote.getLinkedMenuCodeForSupplier(suppliercode);
+        while (menuCodeListcrsr!=null && menuCodeListcrsr.moveToNext())
+        {
+            int menucode = menuCodeListcrsr.getInt(menuCodeListcrsr.getColumnIndex("MenuCode"));
+            Cursor itemDetail = dbGoodsInwardNote.getItem_inward(menucode);
+            if(itemDetail!=null && itemDetail.moveToNext())
+            {
+                String itemName = itemDetail.getString(itemDetail.getColumnIndex("ItemName"));
+                itemlist.add(itemName);
+            }
+        }
+
 
         ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,itemlist);
         dataAdapter1.setDropDownViewResource(android.R.layout.simple_list_item_1);
@@ -1384,7 +1397,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                     MsgBox.Show("Insufficient Information ", " Please fill Supplier Details ");
                     return;
                 }
-                Cursor itemdetails = dbGoodsInwardNote.getItemdetailsforSupplier(suppliercode,Item_name);
+                Cursor itemdetails = dbGoodsInwardNote.getItemDetail_inward(Item_name);
                 if (itemdetails!=null && itemdetails.moveToFirst()) {
                     PurchaseOrder po = new PurchaseOrder();
                     //po.setSn(dataList.size()+1);
@@ -1404,7 +1417,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                     po.setHSNCode(itemdetails.getString(itemdetails.getColumnIndex("HSNCode")));
 
 
-                    String Rate = itemdetails.getString(itemdetails.getColumnIndex("Rate"));
+                    String Rate = itemdetails.getString(itemdetails.getColumnIndex("AverageRate"));
                     if (Rate == null || Rate.equals(""))
                         po.setValue(0.00);
                     else
@@ -1667,6 +1680,8 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             count--;
         }*/
         purchaseOrderAdapter = null;
+        if(dataList!=null)
+            dataList.clear();
         lv_inward_item_details.setAdapter(purchaseOrderAdapter);
         count=0;
         set_list_spnr();

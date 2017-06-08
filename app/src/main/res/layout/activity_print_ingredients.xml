@@ -6,8 +6,20 @@
     <RelativeLayout
         android:id="@+id/headerr"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:foregroundGravity="center"
+            android:text="Select Item to Print"/>
 
         <ImageView
             android:layout_width="60dp"
@@ -28,7 +40,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffed">
+            >
 
 
 
@@ -51,7 +63,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimaryLight">
+                    android:background="@color/colorPrimary">
 
 
                     <TextView
@@ -59,6 +71,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1.1"
                         android:text="SNo"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/txtColorAccent"
                         android:textSize="20dp" />
 
@@ -82,11 +95,12 @@
                     android:layout_margin="3dp"
                     android:layout_marginBottom="3dp"
                     android:layout_marginTop="1dp"
+                    android:background="@color/colorGreyBackground"
                     android:layout_weight="1">
 
                     <TableLayout
                         android:id="@+id/tbl_displaysubmitteditems"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
 
                         >

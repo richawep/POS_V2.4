@@ -98,7 +98,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="5">
+                    android:layout_marginRight="@dimen/menu_box_marigin"
+                    android:layout_marginLeft="@dimen/menu_box_marigin"
+                   >
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -127,32 +129,7 @@
                             android:textStyle="bold" />
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
-                        android:layout_weight="1">
 
-                        <ImageButton
-                            android:id="@+id/imgStock"
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/gradient_button"
-                            android:contentDescription="Stock"
-                            android:onClick="LaunchActivity"
-                            android:padding="3dp"
-                            android:src="@drawable/inwardsupplyitem" />
-
-                        <TextView
-                            android:id="@+id/tvStockOption"
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgStock"
-                            android:gravity="center"
-                            android:text="Inward Supply Items"
-                            android:textSize="@dimen/menu_box_font_size"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -207,7 +184,6 @@
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
-
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -215,25 +191,26 @@
                         android:layout_weight="1">
 
                         <ImageButton
-                            android:id="@+id/imgGoodInwardNote"
+                            android:id="@+id/imgStock"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
                             android:background="@drawable/gradient_button"
-                            android:contentDescription="GoodInwardNote"
+                            android:contentDescription="Inward"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/goodsinwardnote" />
+                            android:src="@drawable/inwardsupplyitem" />
 
                         <TextView
-                            android:id="@+id/tvGoodInwardNoteOption"
+                            android:id="@+id/tvStockOption"
                             android:layout_width="140dp"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgGoodInwardNote"
+                            android:layout_below="@+id/imgStock"
                             android:gravity="center"
-                            android:text="Goods Inward Note"
+                            android:text="Inward Items Masters "
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
+
 
                 </LinearLayout>
 
@@ -257,7 +234,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="5">
+                    >
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -340,6 +317,7 @@
                             android:textStyle="bold" />
                     </RelativeLayout>
 
+
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -366,7 +344,6 @@
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
-
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

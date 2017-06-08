@@ -4,13 +4,13 @@ package com.wep.common.app.Database;
  * Created by RichaA on 1/5/2017.
  */
 
-public class Ingredients {
+public class ItemIngredients {
 
     String itemname, ingredientname, uom,status, ingredientUOM;
     int menucode, ingredientcode;
     float itemquantity, ingredientquantity;
 
-    public Ingredients() {
+    public ItemIngredients() {
         this.itemname = "";
         this.ingredientname = "";
         this.uom = "";

@@ -103,17 +103,17 @@ public class PrintIngredients extends WepPrinterBaseActivity {
                 TableRow row = new TableRow(myContext);
 
                 CheckBox sn = new CheckBox(myContext);
-                sn.setWidth(95);
-                sn.setBackgroundResource(R.drawable.border_itemdatabase);
+                sn.setWidth(70);
+               // sn.setBackgroundResource(R.drawable.border_itemdatabase);
                 count++;
                 sn.setPadding(10,0,0,0);
                 sn.setTextSize(20);
-                sn.setText(String.valueOf(count));
+                sn.setText(String.valueOf(count)+" - ");
 
 
 
                 TextView ItemName = new TextView(myContext);
-                ItemName.setBackgroundResource(R.drawable.border_itemdatabase);
+                //ItemName.setBackgroundResource(R.drawable.border_itemdatabase);
                 //ItemName.setWidth(320);
                 ItemName.setPadding(10,0,0,0);
                 ItemName.setTextSize(21);
@@ -157,7 +157,7 @@ public class PrintIngredients extends WepPrinterBaseActivity {
                 MsgBox.Show("Warning", "Insert item before Print Bill");
                 return;
             } else {
-                int count = 0;
+                int checked = 0;
                 ArrayList<PrintIngredientsModel> billItems = new ArrayList<PrintIngredientsModel>();
                 for (int i = 0; i < tbl_displaysubmitteditems.getChildCount(); i++) {
 
@@ -167,6 +167,7 @@ public class PrintIngredients extends WepPrinterBaseActivity {
                     String itemname_str = itemname.getText().toString();
 
                     if (ch.isChecked()) {
+                        checked =1;
                         PrintIngredientsModel item = new PrintIngredientsModel();
                         Cursor crsr = dbIngredientManagement.getIngredientsForItemName(itemname_str);
                         if (crsr != null && crsr.moveToFirst()) { // item present in item database
@@ -202,11 +203,16 @@ public class PrintIngredients extends WepPrinterBaseActivity {
                         }
                     } // end of if(checked)
                 } // end of for
+                if(checked==0)
+                {
+                    MsgBox.Show("Message"," Please select atleast one item to print");
+                    return;
+                }
 
 
                 //startActivity(intent);
                 if (isPrinterAvailable) {
-                    printHeydeyIngredients(billItems, "Ingredients");
+                    printHeydeyIngredients(billItems, "ItemIngredients");
                 }
 
             }

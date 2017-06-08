@@ -631,7 +631,7 @@ public class PrinterUtil {
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);
         //esc.addText("Resturant Bill"+"\n");
-        esc.addText("Ingredients List\n");
+        esc.addText("ItemIngredients List\n");
         esc.addPrintAndLineFeed();
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
         esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);

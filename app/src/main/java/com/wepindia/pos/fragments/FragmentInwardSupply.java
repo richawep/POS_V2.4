@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,14 +39,8 @@ import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 import com.wepindia.pos.UploadFilePickerActivity;
-import com.wepindia.printers.utils.StringUtil;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +73,7 @@ public class FragmentInwardSupply extends Fragment {
     EditText et_inw_supplierAddress,et_inw_ItemBarcode,et_inw_HSNCode;
 
     AutoCompleteTextView autocompletetv_supplierPhn, autocompletetv_suppliername,autocomplete_inw_ItemName;
-    WepButton btnAddSupplier;
+    //WepButton btnAddSupplier;
     EditText et_inw_rate,et_inw_quantity,edt_supplierGSTIN;
     EditText et_Inw_SGSTRate, et_Inw_CGSTRate,et_Inw_IGSTRate;
     ArrayList<String> labelsSupplierName,labelsSupplierPhn;
@@ -553,7 +545,7 @@ public class FragmentInwardSupply extends Fragment {
         tv_AverageRate  = (TextView)view.findViewById(R.id.tv_AverageRate);
         tv_count  = (TextView)view.findViewById(R.id.tv_count);
         //  = (TextView)view.findViewById(R.id.spnrUOM_selection_code);
-        btnAddSupplier = (WepButton) view.findViewById (R.id.btnAddSupplier);
+        //btnAddSupplier = (WepButton) view.findViewById (R.id.btnAddSupplier);
         btnAdd = (WepButton) view.findViewById(R.id.btnAddItem);
         btnEdit = (WepButton) view.findViewById(R.id.btnEditItem);
         btnResetQuantity = (WepButton) view.findViewById(R.id.btnResetQuantity);
@@ -561,13 +553,13 @@ public class FragmentInwardSupply extends Fragment {
         btnCloseItem = (WepButton) view.findViewById(R.id.btnCloseItem);
         btnUploadExcel = (WepButton) view.findViewById(R.id.buttonUploadExcel);
         btnSaveExcel = (WepButton) view.findViewById(R.id.buttonSaveExcel);
-        btnAddSupplier.setOnClickListener(new View.OnClickListener() {
+       /* btnAddSupplier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Test", "onClickListener is getting started");
                 AddSupplier(v);
             }
-        });
+        });*/
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -643,7 +635,7 @@ public class FragmentInwardSupply extends Fragment {
             {
                 continue;
             }
-            crsrItems = dbInwardItem.getitemforSupplier_inward(suppliercode);
+            crsrItems = dbInwardItem.getLinkedMenuCodeForSupplier(suppliercode);
             TableRow rowItems = null;
 
             TextView tvSno, tvMenuCode, tvHSN, tvLongName, tvShortName, tvDineIn1, tvDineIn2, tvDineIn3, tvTakeAway, tvPickUp, tvDelivery,
@@ -915,7 +907,7 @@ public class FragmentInwardSupply extends Fragment {
         try {
 
 
-            crsrItems = dbInwardItem.getAllDetails_for_item(itemname);
+            crsrItems = dbInwardItem.getItemDetail_inward(itemname);
             while (crsrItems != null && crsrItems.moveToNext()) {
 
                 int suppliercode = crsrItems.getInt(crsrItems.getColumnIndex("SupplierCode"));
@@ -1178,13 +1170,13 @@ public class FragmentInwardSupply extends Fragment {
             MsgBox1.Show(" Error", e.getMessage());
             e.printStackTrace();
         }
-        DisplayItems(-1);
+        //DisplayItems(-1);
     }
 
 
     private void DisplayItems(int suppliercode , String suppliername_str, String SupplierPhone, final String SupplierAddress) {
         Cursor crsrItems = null;
-        crsrItems = dbInwardItem.getitemforSupplier_inward(suppliercode);
+        crsrItems = dbInwardItem.getLinkedMenuCodeForSupplier(suppliercode);
         int sn =1;
         if (crsrItems!=null && crsrItems.moveToFirst())
         {
@@ -1752,7 +1744,7 @@ public class FragmentInwardSupply extends Fragment {
                 objItem.setItemBarcode(strBarcode);
                 objItem.setRate(rate);
                 objItem.setQuantity(quantity);
-                objItem.setMOU(mou);
+                objItem.setUOM(mou);
                 objItem.setImageId(ImageUri);
                 objItem.setSalesTaxPercent(SalesTax);
                 objItem.setServiceTaxPercent(ServiceTax);
@@ -2178,7 +2170,7 @@ public class FragmentInwardSupply extends Fragment {
         et_Inw_SGSTRate.setText("0");
         et_Inw_CGSTRate.setText("0");
         et_Inw_IGSTRate.setText("0");
-        btnAddSupplier.setEnabled(true);
+        //btnAddSupplier.setEnabled(true);
         btnAdd.setEnabled(true);
         btnEdit.setEnabled(false);
         btnResetQuantity.setEnabled(false);
@@ -2473,7 +2465,7 @@ public class FragmentInwardSupply extends Fragment {
             String itemname = autocomplete_inw_ItemName.getText().toString();
             count =1;
             DisplayItems(itemname);
-            // MsgBox1.Show("Check", "itemwise on adding");
+            // MsgBox.Show("Check", "itemwise on adding");
         }
 
         ResetItem();
@@ -2493,7 +2485,7 @@ public class FragmentInwardSupply extends Fragment {
     }
 
 
-    private void loadAutoCompleteData_item(int suppliercode) {
+    public void loadAutoCompleteData_item(int suppliercode) {
 
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
         List<String> itemlist = dbInwardItem.getitemlist_inward_nonGST(suppliername_str, suppliercode);
@@ -2507,9 +2499,8 @@ public class FragmentInwardSupply extends Fragment {
 
     }
 
-    private void loadSpinnerData() {
-
-
+    public void loadSpinnerData()
+    {
         Cursor cursor = dbInwardItem.getAllSupplierName_nonGST();
         labelsSupplierName = new ArrayList<String>();
         labelsSupplierPhn = new ArrayList<String>();
@@ -2535,7 +2526,7 @@ public class FragmentInwardSupply extends Fragment {
         // for itemwise search , load item adapter also. If any supplier is selected then item adapter
         // will be reloaded for that particular supplier only
 
-        Cursor cursor_item = dbInwardItem.getAllItems_Inw();
+        Cursor cursor_item = dbInwardItem.getAllInwardItemNames();
         itemlist = new ArrayList<String>();
         if (cursor_item != null && cursor_item.moveToFirst()) {
             do {

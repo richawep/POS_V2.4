@@ -291,13 +291,13 @@
             android:name=".ConvertIngredientActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".PrintIngredients"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            android:theme="@style/Theme.Design.Light.BottomSheetDialog"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".GoodsInwardNoteActivity"
@@ -363,18 +363,46 @@
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".TabbedInwardItem_NonGST"
+            android:name=".TabbedSupplierItemLinkage"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".TabbedCreditDebitNote"
+        <activity
+            android:name=".TabbedCreditDebitNote"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".TabbedAmmendActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".TabbedAmmendActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".InwardActivity"
+            android:label="@string/title_activity_inward" />
+        <activity
+            android:name=".SupplierDetailsActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:label="@string/title_activity_supplier_details"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+
+        </activity>
+        <activity
+            android:name=".InwardItemActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:label="@string/title_activity_inward_item"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+
+        </activity>
+        <activity
+            android:name=".ItemSupplierLinkageActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            android:label="@string/title_activity_item_supplier_linkage">
+
         </activity>
     </application>
 
