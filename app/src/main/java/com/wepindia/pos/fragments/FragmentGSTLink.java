@@ -22,13 +22,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.gst.B2Csmall;
 import com.wep.common.app.gst.GSTR1AB2BSData;
@@ -51,15 +48,10 @@ import com.wep.common.app.gst.GSTR2_B2B_A_Data_registered;
 import com.wep.common.app.gst.GSTR2_B2B_Data_Unregistered;
 import com.wep.common.app.gst.GSTR2_B2B_Data_registered;
 import com.wep.common.app.gst.GSTRData;
-import com.wep.common.app.gst.get.GetGSTR1Summary;
-import com.wep.common.app.gst.get.GetGSTR2B2BFinal;
-import com.wep.common.app.gst.get.GetGSTR2B2BInvoice;
-import com.wep.common.app.gst.get.GetGSTR2B2BItem;
 import com.wep.gstcall.api.http.DownloadFileFromURL;
 import com.wep.gstcall.api.http.HTTPAsyncTask;
 import com.wep.gstcall.api.util.Config;
 import com.wep.gstcall.api.util.GstJsonEncoder;
-import com.wepindia.pos.GST.GSTFileActivity;
 import com.wepindia.pos.GST.controlers.GSTDataController;
 import com.wepindia.pos.GST.fragments.AuthFragment;
 import com.wepindia.pos.GSTSupport.HTTPAsyncTask_Frag;
@@ -95,9 +87,10 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
     private static final int REQUEST_SAVE_GSTR1 = 1;
     private static final int REQUEST_SAVE_GSTR2 = 2;
     private static final int REQUEST_GET_GSTR1_SUMMARY = 1006;
+    private static final int REQUEST_GET_GSTR1 = 1009;
     private static final int REQUEST_GET_GSTR1A = 1007;
     private static final int REQUEST_GET_GSTR2A = 1008;
-    private static final int REQUEST_GET_GSTR2_Reconcile = 1009;
+    private static final int REQUEST_GET_GSTR2_Reconcile = 1010;
     private static final int REQUEST_SAVE_GSTR1A = 11;
     private String strDate = "";
     private EditText etReportDateStart,etReportDateEnd;
@@ -109,7 +102,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
     private ProgressDialog progressDialog,pDialog;
     private SharedPreferences sharedPreferences;
     private RelativeLayout PostGSTR1,fileGSTR1,getGSTRR2B2B,postGSTR2,getGSTR3;
-    private RelativeLayout fileGSTR2, fileGSTR3, getGSTR1Summary,getGSTR1A, getGSTR2A,getGSTR2Reconcile;
+    private RelativeLayout fileGSTR2, fileGSTR3, getGSTR1Summary,getGSTR1,getGSTR1A, getGSTR2A,getGSTR2Reconcile;
 
 
     private static final int REQUEST_GET_GSTR2_B2B = 1001;
@@ -160,6 +153,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         postGSTR2 = (RelativeLayout) view.findViewById(R.id.postGSTR2);
         PostGSTR1 = (RelativeLayout) view.findViewById(R.id.PostGSTR1);
         getGSTR1Summary = (RelativeLayout) view.findViewById(R.id.getGSTR1Summary);
+        getGSTR1 = (RelativeLayout) view.findViewById(R.id.getGSTR1);
         getGSTR1A = (RelativeLayout) view.findViewById(R.id.getGSTR1A);
         getGSTR2A = (RelativeLayout) view.findViewById(R.id.getGSTR2A);
         getGSTR2Reconcile = (RelativeLayout) view.findViewById(R.id.getGSTR2Reconcile);
@@ -220,6 +214,9 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
             getGSTR1Summary.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { onClickGetGstr1Summary(v); }});
+            getGSTR1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { onClickGetGstr1(v); }});
             getGSTR1A.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { onClickGetGstr1A(v); }});
@@ -533,6 +530,11 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
         /*progressDialog.show();
         new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx").execute();*/
         onHttpRequestComplete(REQUEST_GET_GSTR1_SUMMARY, "Helloe");
+    }
+    public void onClickGetGstr1(View view) {
+        /*progressDialog.show();
+        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx").execute();*/
+        onHttpRequestComplete(REQUEST_GET_GSTR1, "Helloe");
     }
     public void onClickGetGstr1A(View view) {
         /*progressDialog.show();
@@ -901,20 +903,38 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
                         }
                     }*/
 
-                else if (requestCode == REQUEST_GET_GSTR1_SUMMARY || requestCode == REQUEST_GET_GSTR1A ||
+                else if (requestCode == REQUEST_GET_GSTR1_SUMMARY ||requestCode == REQUEST_GET_GSTR1 || requestCode == REQUEST_GET_GSTR1A ||
                         requestCode == REQUEST_GET_GSTR2A|| requestCode == REQUEST_GET_GSTR2_Reconcile ||
                          requestCode == REQUEST_GET_GSTR3)
                 {
                     String URL = "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx";
                     String Filename = "sample.xlsx";
+                    String gstin = dbGSTLink.getGSTIN();
+
                     switch (requestCode) {
                         case REQUEST_GET_GSTR1_SUMMARY:
-                            URL = "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx";
-                            Filename = "sample.xlsx";
+                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR1CSV?gstin="+gstin+"&fp=052017";
+                            Filename = "GSTR1Summary.xlsx";
                             break;
-                        case REQUEST_GET_GSTR2_B2B:
-                            URL = "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx";
-                            Filename = "sample.xlsx";
+                        case REQUEST_GET_GSTR1:
+                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR1CSV?gstin="+gstin+"&fp=052017";
+                            Filename = "GSTR1.xlsx";
+                            break;
+                        case REQUEST_GET_GSTR1A:
+                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR1ACSV?gstin="+gstin+"&fp=052017";
+                            Filename = "GSTR1A.xlsx";
+                            break;
+                        case REQUEST_GET_GSTR3:
+                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR3CSV?gstin="+gstin+"&fp=052017";
+                            Filename = "GSTR3.xlsx";
+                            break;
+                        case REQUEST_GET_GSTR2A:
+                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR2ACSV?gstin="+gstin+"&fp=052017";
+                            Filename = "GSTR2A.xlsx";
+                            break;
+                        case REQUEST_GET_GSTR2_Reconcile:
+                            URL = "http://13.71.118.152/AndroWeb/API/GetReconciledCSV?gstin="+gstin;
+                            Filename = "GSTR2_Reconcile.xlsx";
                             break;
                     }
                     File direct1 = new File(Environment.getExternalStorageDirectory()

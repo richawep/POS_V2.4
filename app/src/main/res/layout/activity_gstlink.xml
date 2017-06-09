@@ -182,6 +182,31 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:id="@+id/getGSTR1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/menu_box_marigin"
+                            android:layout_weight="1"
+                            >
+
+                            <ImageView
+                                android:id="@+id/img51"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="DineIn"
+                                android:padding="3dp"
+                                android:src="@drawable/ic_download" />
+
+                            <TextView
+                                android:id="@+id/tv51"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/img51"
+                                android:gravity="center"
+                                android:text="Get GSTR1 "
+                                android:textSize="@dimen/menu_box_font_size" />
+                        </RelativeLayout>
+                        <RelativeLayout
                             android:id="@+id/getGSTR1Summary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -490,7 +515,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/img1ww2"
                                 android:gravity="center"
-                                android:text="Get GSTR3 Details"
+                                android:text="Get GSTR3 "
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
 

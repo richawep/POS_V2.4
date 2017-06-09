@@ -1176,8 +1176,8 @@ public class ItemManagementActivity extends WepBaseActivity {
 //                                String uom = "("+uom_temp+")";
 //                                int index = getIndex(uom);
 //                                spnrMOU.setSelection(index);
-//                                btnAdd.setEnabled(false);
-//                                btnEdit.setEnabled(true);
+//                                btnLinkItem.setEnabled(false);
+//                                btnDelinkItem.setEnabled(true);
 //                            }
 //                        }
 //                    });
@@ -1354,8 +1354,8 @@ public class ItemManagementActivity extends WepBaseActivity {
 //                                }
 //                                edtItemSalesTax.setText(SalesTaxPercent.getText().toString());
 //                                edtItemServiceTax.setText(ServiceTaxPercent.getText().toString());
-//                                btnAdd.setEnabled(false);
-//                                btnEdit.setEnabled(true);
+//                                btnLinkItem.setEnabled(false);
+//                                btnDelinkItem.setEnabled(true);
 //                            }
 //                        }
 //                    });
@@ -2087,7 +2087,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
     public void ClearItem(View v) {
         ResetItem();
-        //loadSpinnerData();
+        //loadAutoCompleteData();
         //loadSpinnerData1();
     }
 
