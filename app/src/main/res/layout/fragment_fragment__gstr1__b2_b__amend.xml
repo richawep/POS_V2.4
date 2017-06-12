@@ -354,11 +354,11 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.7"
                         android:gravity="center_vertical"
-                        android:text="POS"/>
+                        android:text="CustStateCode"/>
 
 
                     <Spinner
-                        android:id="@+id/spnr_pos"
+                        android:id="@+id/spnr_custStateCode"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -442,7 +442,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
-
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="cess Amount"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="14dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/et_cessamt"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

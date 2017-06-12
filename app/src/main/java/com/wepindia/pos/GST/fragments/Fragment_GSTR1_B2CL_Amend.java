@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -39,10 +38,10 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
     DatabaseHandler dbAmmend_b2cl_GSTR1;
     MessageDialog MsgBox;// = new MessageDialog(HeaderFooterActivity.this);
     EditText et_invno_ori, et_invdate_ori,  et_invno_rev, et_invdate_rev;
-    EditText et_hsn,et_taxval,et_igstrate, et_igstamt,et_recipientStateCode, et_recipientName;
+    EditText et_hsn,et_taxval,et_igstrate, et_igstamt,et_recipientStateCode, et_recipientName,et_cessamt,et_val;
     Spinner spnr_g_s;
     ImageButton btnCal_ori, btnCal_rev;
-    Spinner spnr_pos;
+    Spinner spnr_CustStateCode;
 
     com.wep.common.app.views.WepButton btnAdd, btnSave, btnClear,btnClose,btnLoad;
     ListView listview_gstr2_amend;
@@ -101,13 +100,15 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
         et_igstrate = (EditText) view.findViewById (R.id.et_igstrate);
 
         et_igstamt = (EditText) view.findViewById (R.id.et_igstamt);
+        et_cessamt = (EditText) view.findViewById (R.id.et_cessamt);
+        et_val = (EditText) view.findViewById (R.id.et_val);
 
         et_hsn= (EditText)view.findViewById(R.id.et_hsn);
         btnCal_ori= (ImageButton)view.findViewById(R.id.btnCal_ori);
         btnCal_rev= (ImageButton)view.findViewById(R.id.btnCal_rev);
 
         spnr_g_s = (Spinner) view.findViewById(R.id.spnr_g_s);
-        spnr_pos = (Spinner) view.findViewById(R.id.spnr_pos);
+        spnr_CustStateCode = (Spinner) view.findViewById(R.id.spnr_CustStateCode);
         btnAdd = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnAdd);
         btnSave = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnSave);
         btnClear = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnClear);
@@ -231,10 +232,10 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
         String recipientName = et_recipientName.getText().toString();
         String invoiceNo = et_invno_ori.getText().toString();
         String invoiceDate = et_invdate_ori.getText().toString();
-        String pos_str = spnr_pos.getSelectedItem().toString();
-        String pos = pos_str.substring(pos_str.length()-2, pos_str.length());
+        String custStateCode_str = spnr_CustStateCode.getSelectedItem().toString();
+        String CustStateCode = custStateCode_str.substring(custStateCode_str.length()-2, custStateCode_str.length());
         Date dd  = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
-        Cursor cursor = dbAmmend_b2cl_GSTR1.getAmmends_GSTR1_b2cl(recipientName,recipientStateCode,invoiceNo,String.valueOf(dd.getTime()),pos);
+        Cursor cursor = dbAmmend_b2cl_GSTR1.getAmmends_GSTR1_b2cl(recipientName,recipientStateCode,invoiceNo,String.valueOf(dd.getTime()),CustStateCode);
         int count =1;
         while (cursor != null && cursor.moveToNext()) {
             GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
@@ -252,10 +253,13 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
             ammend.setInvoiceDate_rev(dd1);
             ammend.setType(cursor.getString(cursor.getColumnIndex("SupplyType")));
             ammend.setHSn(cursor.getString(cursor.getColumnIndex("HSNCode")));
+            ammend.setValue(cursor.getDouble(cursor.getColumnIndex("Value")));
             ammend.setTaxableValue(cursor.getDouble(cursor.getColumnIndex("TaxableValue")));
             ammend.setIgstrate(cursor.getFloat(cursor.getColumnIndex("IGSTRate")));
             ammend.setIgstamt(cursor.getFloat(cursor.getColumnIndex("IGSTAmount")));
             ammend.setPOS(cursor.getString(cursor.getColumnIndex("RevisedPOS")));
+            ammend.setCustStateCode(cursor.getString(cursor.getColumnIndex("CustStateCode")));
+            ammend.setCsamt(cursor.getDouble(cursor.getColumnIndex("cessAmount")));
             ammendList.add(ammend);
         }
     }catch (Exception e)
@@ -304,14 +308,16 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
         et_invdate_rev.setText("01-05-2017");
         //et_value.setText("500");
         //et_pos.setText("14");
-        spnr_pos.setSelection(getIndexPOS("29"));
+        spnr_CustStateCode.setSelection(getIndexPOS("29"));
         spnr_g_s.setSelection(0);
         et_taxval.setText("1000");
         et_hsn.setText("h5");
         et_igstrate.setText("0");
        /* et_sgstrate.setText("0");
         et_cgstrate.setText("0");*/
+        et_val.setText("0");
         et_igstamt.setText("0");
+        et_cessamt.setText("0");
         /*et_sgstamt.setText("0");
         et_cgstamt.setText("0");
 */
@@ -337,22 +343,23 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
         String invdate_rev = et_invdate_rev.getText().toString();
         String hsn = et_hsn.getText().toString();
         //String pos1 = et_pos.getText().toString();
-        String str = spnr_pos.getSelectedItem().toString().trim();
-        String pos1 = "";
-        if (!str.equals(""))
+        String custStateCode_temp = spnr_CustStateCode.getSelectedItem().toString().trim();
+        String CustStateCode = "";
+        if (!custStateCode_temp.equals(""))
         {
-            int length = str.length();
-            pos1 = str.substring(length - 2, length);
+            int length = custStateCode_temp.length();
+            CustStateCode = custStateCode_temp.substring(length - 2, length);
         }
 
         String supply = spnr_g_s.getSelectedItem().toString();
 
-        //String value = String.format("%.2f",Float.parseFloat(et_value.getText().toString()));
+        String value = String.format("%.2f",Float.parseFloat(et_val.getText().toString()));
         String taxval = String.format("%.2f",Float.parseFloat(et_taxval.getText().toString()));
         String igstrate = String.format("%.2f",Float.parseFloat(et_igstrate.getText().toString()));
 //        String cgstrate = String.format("%.2f",Float.parseFloat(et_cgstrate.getText().toString()));
 //        String sgstrate = String.format("%.2f",Float.parseFloat(et_sgstrate.getText().toString()));
         String igstamt = String.format("%.2f",Float.parseFloat(et_igstamt.getText().toString()));
+        String cessamt = String.format("%.2f",Float.parseFloat(et_cessamt.getText().toString()));
 //        String cgstamt = String.format("%.2f",Float.parseFloat(et_cgstamt.getText().toString()));
 //        String sgstamt = String.format("%.2f",Float.parseFloat(et_sgstamt.getText().toString()));
 
@@ -362,7 +369,7 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
 
         if (recipientName.equals("") || (invdate_ori.equals("")) || (invno_ori.equals(""))||
                 (invdate_rev.equals("")) || (invno_rev.equals(""))|| (taxval.equals(""))||
-                (igstrate.equals(""))|| (igstamt.equals("")))
+                (igstrate.equals(""))|| (igstamt.equals(""))||cessamt.equals("") ||value.equals("") )
         {
             MsgBox.setTitle(" Error ")
                     .setMessage(" Please fill all details ")
@@ -378,13 +385,15 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
 
                 ammend.setInvoiceNo_rev(invno_rev);
                 ammend.setInvoiceDate_rev(invdate_rev);
-                ammend.setPOS(pos1);
+                ammend.setCustStateCode(CustStateCode);
                 ammend.setHSn(hsn);
                 ammend.setType(supply);
+                ammend.setValue(Double.parseDouble(value));
 
                 ammend.setTaxableValue(Double.parseDouble(taxval));
                 ammend.setIgstrate(Float.parseFloat(igstrate));
                 ammend.setIgstamt(Float.parseFloat(igstamt));
+                ammend.setCsamt(Double.parseDouble(cessamt));
 
                 long lResult = dbAmmend_b2cl_GSTR1.add_GSTR1_B2CLAmmend(ammend);
                 if(lResult>0)

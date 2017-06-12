@@ -342,6 +342,32 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="cess"/>
+                    <EditText
+                        android:visibility="invisible"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="0.00"
+                        android:inputType="numberDecimal"
+                        android:layout_weight="1"/>
+                    <EditText
+                        android:id="@+id/edt_cessAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="0.00"
+                        android:inputType="numberDecimal"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:gravity="center_vertical"
                         android:text="Value"/>
@@ -365,6 +391,7 @@
                         android:visibility="gone"/>
 
                 </LinearLayout>
+
 
             </LinearLayout>
             <LinearLayout

@@ -164,7 +164,7 @@ public class GSTR2_B2B_AmendAdapter extends BaseAdapter {
 
             final int i  = Integer.parseInt(v.getTag().toString());
             final GSTR2_B2B_Amend obj = getItems(i);
-            //String ItemName = obj.getLongName();
+            //String ItemName = obj.getItemName();
             AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                     .setTitle("Delete")
                     .setMessage("Are you sure you want to Delete this entry")

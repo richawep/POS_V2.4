@@ -43,7 +43,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
 
 
     EditText edt_IGSTRate,edt_IGSTAmount,edt_CGSTRate,edt_CGSTAmount,edt_SGSTRate,edt_SGSTAmount,edt_Value;
-    EditText edt_InvoiceNo,edt_reason;
+    EditText edt_InvoiceNo,edt_reason,edt_cessAmount;
     TextView tv_InvoiceDate,tv_recipientName,tv_billamount,tv_reverseCharge,tv_totalIGSTVal,tv_totalCGSTVal,tv_totalSGSTVal,
             tv_note_no,tv_note_date;
     ImageButton imgButton_cal_Invoice;
@@ -109,6 +109,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         edt_CGSTAmount = (EditText) v.findViewById(R.id.edt_CGSTAmount);
         edt_SGSTRate = (EditText) v.findViewById(R.id.edt_SGSTRate);
         edt_SGSTAmount = (EditText) v.findViewById(R.id.edt_SGSTAmount);
+        edt_cessAmount = (EditText) v.findViewById(R.id.edt_cessAmount);
         edt_Value = (EditText) v.findViewById(R.id.edt_Value);
         edt_InvoiceNo = (EditText) v.findViewById(R.id.edt_InvoiceNo);
         edt_reason = (EditText) v.findViewById(R.id.edt_reason);
@@ -308,6 +309,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                     note.setSrt(cursor.getDouble(cursor.getColumnIndex("SGSTRate")));
                     note.setSamt(cursor.getDouble(cursor.getColumnIndex("SGSTAmount")));
                     note.setRsn(cursor.getString(cursor.getColumnIndex("Reason")));
+                    note.setCsamt(cursor.getDouble(cursor.getColumnIndex("cessAmount")));
                     noteList.add(note);
                 }
                 cursor = dbCredit.getCreditDetails(invoiceNo, date_str, "D",custgstin);
@@ -330,6 +332,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                     note.setSrt(cursor.getDouble(cursor.getColumnIndex("SGSTRate")));
                     note.setSamt(cursor.getDouble(cursor.getColumnIndex("SGSTAmount")));
                     note.setRsn(cursor.getString(cursor.getColumnIndex("Reason")));
+                    note.setCsamt(cursor.getDouble(cursor.getColumnIndex("cessAmount")));
                     noteList.add(note);
                 }
             }
@@ -355,6 +358,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                     note.setSrt(cursor.getDouble(cursor.getColumnIndex("SGSTRate")));
                     note.setSamt(cursor.getDouble(cursor.getColumnIndex("SGSTAmount")));
                     note.setRsn(cursor.getString(cursor.getColumnIndex("Reason")));
+                    note.setCsamt(cursor.getDouble(cursor.getColumnIndex("cessAmount")));
                     noteList.add(note);
                 }
             }
@@ -438,6 +442,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             note.setCamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_CGSTAmount.getText().toString()))));
             note.setSrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTRate.getText().toString()))));
             note.setSamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTAmount.getText().toString()))));
+            note.setCsamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_cessAmount.getText().toString()))));
 
             long lResult = dbCredit.addCredit(note, name,reason, reverseCharge);
             if(lResult>0) {
@@ -493,6 +498,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             note.setCamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_CGSTAmount.getText().toString()))));
             note.setSrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTRate.getText().toString()))));
             note.setSamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTAmount.getText().toString()))));
+            note.setCsamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_cessAmount.getText().toString()))));
 
 
             long lResult = dbCredit.editCredit(note, reason);
@@ -518,6 +524,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         edt_CGSTAmount.setText("0.00");
         edt_SGSTRate.setText("0.00");
         edt_SGSTAmount.setText("0.00");
+        edt_cessAmount.setText("0.00");
         edt_Value.setText("0.00");
         edt_reason.setText("");
         tv_note_no.setText("");

@@ -122,8 +122,8 @@ public class GSTDataController {
                                     while (rowcursor.moveToNext()) {
 
                                         String SupplyType_str;
-                                        float subtotal_f, taxablevalue_f, CGSTRate_f, CGSTAmount_f, SGSTRate_f;
-                                        float SGSTAmount_f, IGSTRate_f, IGSTAmount_f;
+                                        double subtotal_f, taxablevalue_f, CGSTRate_f, CGSTAmount_f, SGSTRate_f;
+                                        double SGSTAmount_f, IGSTRate_f, IGSTAmount_f;
                                         int found = 0;
 
                                         // supply type (g/s)
@@ -159,14 +159,14 @@ public class GSTDataController {
                                         if (cgstrate_str == null) {
                                             CGSTRate_f = 0;
                                         } else {
-                                            CGSTRate_f = Float.parseFloat(cgstrate_str);
+                                            CGSTRate_f = Double.parseDouble(cgstrate_str);
                                         }
 
                                         String cgstamt_str = rowcursor.getString(rowcursor.getColumnIndex("CGSTAmount"));
                                         if (cgstamt_str == null) {
                                             CGSTAmount_f = 0;
                                         } else {
-                                            CGSTAmount_f = Float.parseFloat(cgstamt_str);
+                                            CGSTAmount_f = Double.parseDouble(cgstamt_str);
                                         }
 
                                         String sgstrate_str = rowcursor.getString(rowcursor.getColumnIndex("SGSTRate"));
@@ -180,21 +180,29 @@ public class GSTDataController {
                                         if (sgstamt_str == null) {
                                             SGSTAmount_f = 0;
                                         } else {
-                                            SGSTAmount_f = Float.parseFloat(sgstamt_str);
+                                            SGSTAmount_f = Double.parseDouble(sgstamt_str);
                                         }
 
+                                        double cessamount = 0;
+                                        String cessamt_str = rowcursor.getString(rowcursor.getColumnIndex("cessAmount"));
+                                        if (cessamt_str == null) {
+                                            cessamount = 0;
+                                        } else {
+                                            cessamount = Double.parseDouble(cessamt_str);
+                                        }
+
+
                                         String cessRate ="0";
-                                        String cessAmt  ="0";
                                         String Orderno="0";
                                         String OrderDate="0";
                                         String etin="";
                                         String eType = "";
                                         String ProAss = "";
 
-                                        subtotal_f = Float.parseFloat(rowcursor.getString(rowcursor.getColumnIndex("SubTotal")));
+                                        subtotal_f = Double.parseDouble(rowcursor.getString(rowcursor.getColumnIndex("SubTotal")));
 
 
-
+                                        double gstrate = IGSTRate_f + CGSTRate_f+SGSTRate_f;
                                         B2Csmall obj = new B2Csmall();
                                         obj.setSupplyType(SupplyType_str);
                                         obj.setHSNCode(HSN);
@@ -207,10 +215,11 @@ public class GSTDataController {
                                         obj.setCGSTAmt(CGSTAmount_f);
                                         obj.setSGSTRate(SGSTRate_f);
                                         obj.setSGSTAmt(SGSTAmount_f);
+                                        obj.setGSTRate(gstrate);
                                         obj.setProAss(ProAss);
                                         obj.setSubTotal(subtotal_f);
                                         obj.setCessRate(cessRate);
-                                        obj.setCessAmt(cessAmt);
+                                        obj.setCessAmt(cessamount);
                                         obj.setOrderno(Orderno);
                                         obj.setOrderDate(OrderDate);
                                         obj.setEtin(etin);
@@ -222,34 +231,34 @@ public class GSTDataController {
                                         } else {
                                             found = 0;
                                             for (B2Csmall data_s : datalist_s) {
-                                                if (data_s.getHSNCode().equalsIgnoreCase(HSN) && data_s.getStateCode().equalsIgnoreCase(stateCode)) {
+                                                if (data_s.getGSTRate()==gstrate && data_s.getStateCode().equalsIgnoreCase(stateCode)) {
                                                     // taxval
-                                                    float taxableval = data_s.getTaxableValue();
+                                                    double taxableval = data_s.getTaxableValue();
                                                     taxableval += taxablevalue_f;
                                                     data_s.setTaxableValue(taxableval);
 
                                                     // IGST Amt
-                                                    float igstamt_temp = data_s.getIGSTAmt();
+                                                    double igstamt_temp = data_s.getIGSTAmt();
                                                     igstamt_temp += IGSTAmount_f;
                                                     data_s.setIGSTAmt(igstamt_temp);
 
                                                     // CGST Amt
-                                                    float cgstamt_temp = data_s.getCGSTAmt();
+                                                    double cgstamt_temp = data_s.getCGSTAmt();
                                                     cgstamt_temp += CGSTAmount_f;
                                                     data_s.setCGSTAmt(cgstamt_temp);
 
                                                     // SGST Amt
-                                                    float sgstamt_temp = data_s.getSGSTAmt();
+                                                    double sgstamt_temp = data_s.getSGSTAmt();
                                                     sgstamt_temp += SGSTAmount_f;
                                                     data_s.setSGSTAmt(sgstamt_temp);
 
                                                     // cess Amt
-                                                    float cessamt_temp = Float.parseFloat(data_s.getCessAmt());
-                                                    cessamt_temp += Float.parseFloat(cessAmt);
-                                                    data_s.setCessAmt(String.format("%.2f",cessamt_temp));
+                                                    double cessamt_temp = (data_s.getCessAmt());
+                                                    cessamt_temp += cessamount;
+                                                    data_s.setCessAmt(cessamt_temp);
 
                                                     //SubTotal
-                                                    float subtot = data_s.getSubTotal();
+                                                    double subtot = data_s.getSubTotal();
                                                     subtot += subtotal_f;
                                                     data_s.setSubTotal(subtot);
 
@@ -1049,7 +1058,7 @@ public class GSTDataController {
                             cursor.getDouble(cursor.getColumnIndex("SGSTRate")),
                             cursor.getDouble(cursor.getColumnIndex("SGSTAmount")),
                             cessamt,
-                            cessamt,
+                            cursor.getDouble(cursor.getColumnIndex("cessAmount")),
                             etin
                              );
                     notelist.add(nt_det);

@@ -300,7 +300,7 @@
                                     android:id="@+id/tblOrderItems"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:collapseColumns="0,6,7,8,9,10,11,12,13,14,15,16,17,21,22" />
+                                    android:collapseColumns="0,6,7,8,9,10,11,12,13,14,15,16,17,21,22,23,24,25,26" />
                                 <!--</HorizontalScrollView>-->
                             </ScrollView>
                         </RelativeLayout>
@@ -519,6 +519,37 @@
 
                                         <TextView
                                             android:id="@+id/tvSubTotalValue"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:gravity="right"
+                                            android:text="0.00"
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:id="@+id/idd11"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="2.5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:id="@+id/tvcessrate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:background="@color/colorPrimaryLight"
+                                            android:text="cess Tax :"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:textColor="@color/txtColorAccent" />
+
+                                        <TextView
+                                            android:id="@+id/tvcessValue"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"

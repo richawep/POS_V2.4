@@ -34,7 +34,7 @@ public class BillItem {
     float additionalChargeAmount;
 
 	Float TaxableValue, SubTotal;
-	
+	double cessRate, cessAmount;
 	// Default constructor
 	public BillItem(){
 		this.Suppliercode=-1;
@@ -79,8 +79,26 @@ public class BillItem {
 		this.CGSTAmount=0;
 		this.SGSTRate=0;
 		this.SGSTAmount=0;
+		this.cessRate=0;
+		this.cessAmount=0;
 		this.isGoodInwarded=0;
 		this.SupplierType="";
+	}
+
+	public double getCessRate() {
+		return cessRate;
+	}
+
+	public void setCessRate(double cessRate) {
+		this.cessRate = cessRate;
+	}
+
+	public double getCessAmount() {
+		return cessAmount;
+	}
+
+	public void setCessAmount(double cessAmount) {
+		this.cessAmount = cessAmount;
 	}
 
 	public String getSupplierGSTIN() {

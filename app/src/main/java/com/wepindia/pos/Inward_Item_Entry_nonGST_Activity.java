@@ -1548,8 +1548,8 @@ public class Inward_Item_Entry_nonGST_Activity extends WepBaseActivity {
                 objItem.setQuantity(quantity);
                 objItem.setUOM(mou);
                 objItem.setImageId(ImageUri);
-                objItem.setSalesTaxPercent(SalesTax);
-                objItem.setServiceTaxPercent(ServiceTax);
+                objItem.setCGSTRate(SalesTax);
+                objItem.setSGSTRate(ServiceTax);
                 objItem.setSupplyType(supplytype);
                 objItem.setMenuCode(menucode);
 

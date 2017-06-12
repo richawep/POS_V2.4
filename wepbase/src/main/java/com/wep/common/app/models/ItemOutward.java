@@ -8,28 +8,30 @@ public class ItemOutward {
 
 
     private int menuCode;
-    private String LongName;
-    private float DineIn1;
-    private float DineIn2;
-    private float DineIn3;
-    private float Stock;
+    private String ItemName;
+    private double DineIn1;
+    private double DineIn2;
+    private double DineIn3;
+    private double Stock;
     private int DeptCode;
     private int CategCode;
     private int KitchenCode;
     private String BarCode;
     private String ImageUri;
     private int ItemId;
-    private float SalesTaxPercent;
-    private float ServiceTaxPercent;
-    private float IGSTRate;
+    private double CGSTRate;
+    private double SGSTRate;
+    private double IGSTRate;
+    private double cessRate;
     private String UOM;
     private String HSN;
     private String TaxationType;
+    private String SupplyType;
 
     public ItemOutward() {
 
         this.menuCode = 0;
-        LongName = "";
+        ItemName = "";
         DineIn1 = 0;
         DineIn2 = 0;
         DineIn3 = 0;
@@ -40,35 +42,54 @@ public class ItemOutward {
         BarCode = "";
         ImageUri = "";
         ItemId = 0;
-        SalesTaxPercent = 0;
-        ServiceTaxPercent = 0;
+        CGSTRate = 0;
+        SGSTRate = 0;
         IGSTRate = 0;
+        cessRate = 0;
         this.UOM = "";
         this.HSN = "";
         this.TaxationType="GST";
+        this.SupplyType="G";
     }
 
-    public ItemOutward(int menuCode, String longName, float dineIn1, float dineIn2, float dineIn3, float stock,
-                       int deptCode, int categCode, int kitchenCode, String barCode, String imageUri, int itemId, float salesTaxPercent,
-                       float serviceTaxPercent, String UOM, String HSN, String taxationType, float IGSTRate) {
+    public ItemOutward(int menuCode, String longName, double dineIn1, double dineIn2, double dineIn3, double stock,
+                       int deptCode, int categCode, int kitchenCode, String barCode, String imageUri, int itemId, double CGSTRate, double SGSTRate, double IGSTRate, double cessRate, String UOM, String HSN, String taxationType, String SupplyType) {
         this.menuCode = menuCode;
-        LongName = longName;
-        DineIn1 = dineIn1;
-        DineIn2 = dineIn2;
-        DineIn3 = dineIn3;
-        Stock = stock;
-        DeptCode = deptCode;
-        CategCode = categCode;
-        KitchenCode = kitchenCode;
-        BarCode = barCode;
-        ImageUri = imageUri;
-        ItemId = itemId;
-        SalesTaxPercent = salesTaxPercent;
-        ServiceTaxPercent = serviceTaxPercent;
+        this.ItemName = longName;
+        this.DineIn1 = dineIn1;
+        this.DineIn2 = dineIn2;
+        this.DineIn3 = dineIn3;
+        this.Stock = stock;
+        this.DeptCode = deptCode;
+        this.CategCode = categCode;
+        this.KitchenCode = kitchenCode;
+        this.BarCode = barCode;
+        this.ImageUri = imageUri;
+        this.ItemId = itemId;
+        this.CGSTRate = CGSTRate;
+        this.SGSTRate = SGSTRate;
         this.IGSTRate = IGSTRate;
+        this.cessRate = cessRate;
         this.UOM = UOM;
         this.HSN = HSN;
-        TaxationType = taxationType;
+        this.TaxationType = taxationType;
+        this.SupplyType = SupplyType;
+    }
+
+    public String getSupplyType() {
+        return SupplyType;
+    }
+
+    public void setSupplyType(String supplyType) {
+        SupplyType = supplyType;
+    }
+
+    public double getCessRate() {
+        return cessRate;
+    }
+
+    public void setCessRate(double cessRate) {
+        this.cessRate = cessRate;
     }
 
     public String getTaxationType() {
@@ -95,43 +116,43 @@ public class ItemOutward {
         this.menuCode = menuCode;
     }
 
-    public String getLongName() {
-        return LongName;
+    public String getItemName() {
+        return ItemName;
     }
 
-    public void setLongName(String longName) {
-        LongName = longName;
+    public void setItemName(String itemName) {
+        ItemName = itemName;
     }
 
-    public float getDineIn1() {
+    public double getDineIn1() {
         return DineIn1;
     }
 
-    public void setDineIn1(float dineIn1) {
+    public void setDineIn1(double dineIn1) {
         DineIn1 = dineIn1;
     }
 
-    public float getDineIn2() {
+    public double getDineIn2() {
         return DineIn2;
     }
 
-    public void setDineIn2(float dineIn2) {
+    public void setDineIn2(double dineIn2) {
         DineIn2 = dineIn2;
     }
 
-    public float getDineIn3() {
+    public double getDineIn3() {
         return DineIn3;
     }
 
-    public void setDineIn3(float dineIn3) {
+    public void setDineIn3(double dineIn3) {
         DineIn3 = dineIn3;
     }
 
-    public float getStock() {
+    public double getStock() {
         return Stock;
     }
 
-    public void setStock(float stock) {
+    public void setStock(double stock) {
         Stock = stock;
     }
 
@@ -183,27 +204,27 @@ public class ItemOutward {
         ItemId = itemId;
     }
 
-    public float getSalesTaxPercent() {
-        return SalesTaxPercent;
+    public double getCGSTRate() {
+        return CGSTRate;
     }
 
-    public void setSalesTaxPercent(float salesTaxPercent) {
-        SalesTaxPercent = salesTaxPercent;
+    public void setCGSTRate(double CGSTRate) {
+        this.CGSTRate = CGSTRate;
     }
 
-    public float getServiceTaxPercent() {
-        return ServiceTaxPercent;
+    public double getSGSTRate() {
+        return SGSTRate;
     }
 
-    public void setServiceTaxPercent(float serviceTaxPercent) {
-        ServiceTaxPercent = serviceTaxPercent;
+    public void setSGSTRate(double SGSTRate) {
+        this.SGSTRate = SGSTRate;
     }
 
-    public float getIGSTRate() {
+    public double getIGSTRate() {
         return IGSTRate;
     }
 
-    public void setIGSTRate(float IGSTRate) {
+    public void setIGSTRate(double IGSTRate) {
         this.IGSTRate = IGSTRate;
     }
 

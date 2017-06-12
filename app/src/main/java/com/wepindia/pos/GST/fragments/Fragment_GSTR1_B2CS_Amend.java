@@ -1,6 +1,5 @@
 package com.wepindia.pos.GST.fragments;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -10,20 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.models.GSTR2_B2B_Amend;
 import com.wepindia.pos.GST.Adapter.GSTR1_B2CS_AmendAdapter;
-import com.wepindia.pos.GST.Adapter.GSTR2_B2B_AmendAdapter;
-import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.GenericClasses.MonthYearPicker;
 import com.wepindia.pos.R;
@@ -38,10 +32,10 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
     DatabaseHandler dbAmmend_b2cs_GSTR1;
     MessageDialog MsgBox;// = new MessageDialog(HeaderFooterActivity.this);
     EditText et_taxMonth,et_hsn_ori,et_hsn_rev;
-    EditText et_igstamt, et_cgstamt, et_sgstamt,et_taxval,et_igstrate,et_sgstrate,et_cgstrate;
+    EditText et_igstamt, et_cgstamt, et_sgstamt,et_taxval,et_igstrate,et_sgstrate,et_cgstrate,et_cessamt;
     Spinner spnr_g_s_ori, spnr_g_s_rev;
     ImageButton btnMonthPicker;
-    Spinner spnr_pos_ori, spnr_pos_rev;
+    Spinner spnr_pos_ori, spnr_CustStateCode;
 
     com.wep.common.app.views.WepButton btnAdd, btnSave, btnClear,btnClose,btnLoad;
     ListView listview_gstr2_amend;
@@ -93,7 +87,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
         spnr_g_s_ori = (Spinner) view.findViewById(R.id.spnr_g_s_ori);
         spnr_pos_ori = (Spinner) view.findViewById(R.id.spnr_pos_ori);
         spnr_g_s_rev = (Spinner) view.findViewById(R.id.spnr_g_s_rev);
-        spnr_pos_rev = (Spinner) view.findViewById(R.id.spnr_pos_rev);
+        spnr_CustStateCode = (Spinner) view.findViewById(R.id.spnr_CustStateCode);
         et_taxMonth= (EditText)view.findViewById(R.id.et_taxMonth);
         btnMonthPicker= (ImageButton)view.findViewById(R.id.btnMonthPicker);
 
@@ -107,6 +101,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
         et_igstamt = (EditText) view.findViewById (R.id.et_igstamt);
         et_cgstamt = (EditText) view.findViewById (R.id.et_cgstamt);
         et_sgstamt = (EditText) view.findViewById (R.id.et_sgstamt);
+        et_cessamt = (EditText) view.findViewById (R.id.et_cessamt);
 
         btnAdd = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnAdd);
        //btnSave = (com.wep.common.app.views.WepButton) view.findViewById(R.id.btnSave);
@@ -196,7 +191,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
             ammend.setPos_ori(cursor.getString(cursor.getColumnIndex("POS")));
             ammend.setHsn_rev(cursor.getString(cursor.getColumnIndex("ReviseHSNCode")));
             ammend.setType_rev(cursor.getString(cursor.getColumnIndex("RevisedSupplyType")));
-            ammend.setPos_rev(cursor.getString(cursor.getColumnIndex("RevisedPOS")));
+            ammend.setCustStateCode(cursor.getString(cursor.getColumnIndex("CustStateCode")));
             ammend.setTaxableValue(cursor.getDouble(cursor.getColumnIndex("TaxableValue")));
             ammend.setIgstrate(cursor.getFloat(cursor.getColumnIndex("IGSTRate")));
             ammend.setCgstrate(cursor.getFloat(cursor.getColumnIndex("CGSTRate")));
@@ -204,6 +199,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
             ammend.setIgstamt(cursor.getFloat(cursor.getColumnIndex("IGSTAmount")));
             ammend.setCgstamt(cursor.getFloat(cursor.getColumnIndex("CGSTAmount")));
             ammend.setSgstamt(cursor.getFloat(cursor.getColumnIndex("SGSTAmount")));
+            ammend.setCsamt(cursor.getFloat(cursor.getColumnIndex("cessAmount")));
 
             ammendList.add(ammend);
         }
@@ -231,8 +227,8 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
     {
         et_hsn_ori.setText("h5");
         et_hsn_rev.setText("h6");
-        spnr_pos_ori.setSelection(1);
-        spnr_pos_rev.setSelection(2);
+        spnr_pos_ori.setSelection(17);
+        spnr_CustStateCode.setSelection(18);
         spnr_g_s_ori.setSelection(0);
         spnr_g_s_rev.setSelection(0);
         et_taxMonth.setText("");
@@ -244,6 +240,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
         et_igstamt.setText("0");
         et_sgstamt.setText("0");
         et_cgstamt.setText("0");
+        et_cessamt.setText("0");
 
         // btnSave.setEnabled(false);
         ammendAdapter = null;
@@ -269,12 +266,12 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
 
         String hsn_rev = et_hsn_rev.getText().toString();
         String type_rev = spnr_g_s_rev.getSelectedItem().toString();
-        str = spnr_pos_rev.getSelectedItem().toString().trim();
-        String pos2 = "";
+        str = spnr_CustStateCode.getSelectedItem().toString().trim();
+        String custStateCode = "";
         if (!str.equals(""))
         {
             int length = str.length();
-            pos2 = str.substring(length - 2, length);
+            custStateCode = str.substring(length - 2, length);
         }
 
 
@@ -285,15 +282,19 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
         String igstamt1 = et_igstamt.getText().toString();
         String cgstamt1 = et_cgstamt.getText().toString();
         String sgstamt1 = et_sgstamt.getText().toString();
+        String cessamt1 = et_cessamt.getText().toString();
 
 
         int count =listview_gstr2_amend.getCount()+1;
 
 
 
-        if (taxMonth.equals("") || pos1.equals("")|| pos2.equals("")||(taxval1.equals(""))||
+        /*if (taxMonth.equals("") || pos1.equals("")|| custStateCode.equals("")||(taxval1.equals(""))||
                 (igstrate1.equals(""))|| (sgstrate1.equals(""))||(cgstrate1.equals("")) ||
-                (igstamt1.equals(""))|| (sgstamt1.equals(""))||(cgstamt1.equals("")))
+                (igstamt1.equals(""))|| (sgstamt1.equals(""))||(cgstamt1.equals("")))*/
+        if (taxMonth.equals("") || custStateCode.equals("")||(taxval1.equals(""))||
+                (igstrate1.equals(""))|| (sgstrate1.equals(""))||(cgstrate1.equals("")) ||
+                (igstamt1.equals(""))|| (sgstamt1.equals(""))||(cgstamt1.equals("")) || cessamt1.equals(""))
         {
             MsgBox.setTitle(" Error ")
                     .setMessage(" Please fill all details ")
@@ -306,6 +307,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
             String igstamt = String.format("%.2f",Float.parseFloat(et_igstamt.getText().toString()));
             String cgstamt = String.format("%.2f",Float.parseFloat(et_cgstamt.getText().toString()));
             String sgstamt = String.format("%.2f",Float.parseFloat(et_sgstamt.getText().toString()));
+            String cessamt = String.format("%.2f",Float.parseFloat(et_cessamt.getText().toString()));
 
             try {
                 GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
@@ -316,7 +318,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
                 ammend.setPos_ori(pos1);
                 ammend.setHsn_rev(hsn_rev);
                 ammend.setType_rev(type_rev);
-                ammend.setPos_rev(pos2);
+                ammend.setCustStateCode(custStateCode);
 
                 ammend.setTaxableValue(Double.parseDouble(taxval));
                 ammend.setIgstrate(Float.parseFloat(igstrate));
@@ -325,6 +327,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
                 ammend.setCgstamt(Float.parseFloat(cgstamt));
                 ammend.setSgstrate(Float.parseFloat(sgstrate));
                 ammend.setSgstamt(Float.parseFloat(sgstamt));
+                ammend.setCsamt(Float.parseFloat(cessamt));
                 Date dd = new Date();
                 String dd1 = new SimpleDateFormat("dd-MM-yyyy").format(dd);
                 Date dd2 = new SimpleDateFormat("dd-MM-yyyy").parse(dd1);

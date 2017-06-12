@@ -23,8 +23,10 @@ public class BillDetail {
 	int iBillNumber, iBillStatus, iCustId, iEmployeeId, iReprintCount, iTotalItems, iUserId;
 	String BillingMode, TableNo, TableSplitNo; // richa_2012
 	float fBillAmount, fCardPayment, fCashPayment, fCouponPayment, fPettyCashPayment, fPaidTotalPayment, fChangePayment, fWalletAmount,
-	fDeliveryCharge, fTotalDiscountPercentage,fTotalDiscountAmount, fTotalTaxAmount, fTotalServiceTaxAmount, IGSTAmount, CGSTAmount, SGSTAmount, SubTotal;
-	
+	fDeliveryCharge, fTotalDiscountPercentage,fTotalDiscountAmount, fTotalTaxAmount, fTotalServiceTaxAmount, IGSTAmount, CGSTAmount, SGSTAmount,
+            cessAmount,SubTotal;
+
+
 	// Default Constructor
 	public BillDetail(){
 		this.GSTIN="";
@@ -64,6 +66,8 @@ public class BillDetail {
 		this.fPettyCashPayment = 0;
 		this.fPaidTotalPayment = 0;
 		this.fChangePayment = 0;
+        this.cessAmount =0;
+
 		
 	}
 
@@ -73,7 +77,7 @@ public class BillDetail {
 	public BillDetail(String Date,String Time,int BillNumber,int BillStatus,int CustId,int EmployeeId,int ReprintCount,int TotalItems,String UserId,
 			float BillAmount,float CardPayment,float CashPayment,float CouponPayment,float DeliveryCharge,
 			float TotalDiscountAmount,float TotalTaxAmount,float TotalServiceTaxAmount, float PettyCashPayment, float PaidTotalPayment,
-                      float ChangePayment,String BusinessType,String Amount,float walletAmount, String tableNo, String TableSplitNo){
+                      float ChangePayment,String BusinessType,String Amount,float walletAmount, String tableNo, String TableSplitNo, float cessAmount){
 		this.Amount = Amount;
 		this.strDate = Date;
 		this.strTime = Time;
@@ -101,10 +105,18 @@ public class BillDetail {
 		this.fWalletAmount = walletAmount;
 		this.TableNo = tableNo;
 		this.TableSplitNo= TableSplitNo;
-		
+        this.cessAmount = cessAmount;
 	}
 
-	public String getGSTIN() {
+    public float getCessAmount() {
+        return cessAmount;
+    }
+
+    public void setCessAmount(float cessAmount) {
+        this.cessAmount = cessAmount;
+    }
+
+    public String getGSTIN() {
 		return GSTIN;
 	}
 

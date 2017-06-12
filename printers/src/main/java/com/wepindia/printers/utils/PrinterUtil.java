@@ -607,7 +607,23 @@ public class PrinterUtil {
         {
             dSerSubTaxAmt = 0;
         }
-        dTotalTaxAmt = dSalesTaxAmt + dtotalServiceAmt + dSerSubTaxAmt;
+        double  dtotalcessAmt =0;
+        ArrayList<BillServiceTaxItem> billcessTaxItems = item.getBillcessTaxItems();
+        Iterator it21 = billcessTaxItems.iterator();
+        while (it21.hasNext()) {
+
+            BillServiceTaxItem billKotItem = (BillServiceTaxItem) it21.next();
+            if (billKotItem.getServicePercent() > 0){
+
+                String TxName = getPostAddedSpaceFormat("", String.valueOf(billKotItem.getServiceTxName()), 23, 1);
+                String TxPercent = getPostAddedSpaceFormat("", "@ " + String.format("%.2f", billKotItem.getServicePercent()) + " %", 15, 1);
+                String TxValue = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", billKotItem.getServicePrice()), 10, 1), 8, 1);
+                dtotalcessAmt += billKotItem.getServicePrice();
+                String pre = TxName + TxPercent + TxValue;
+                esc.addText(pre + "\n");
+            }
+        }
+        dTotalTaxAmt = dSalesTaxAmt + dtotalServiceAmt + dSerSubTaxAmt+dtotalcessAmt;
         if(dTotalTaxAmt >0)
         {   esc.addText(getSpaceFormater("Total Tax Amount",String.format("%.2f",dTotalTaxAmt),48,1)+"\n");}
         esc.addText("================================================"+"\n");

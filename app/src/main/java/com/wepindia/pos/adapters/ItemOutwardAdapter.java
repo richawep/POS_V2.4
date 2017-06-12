@@ -103,7 +103,7 @@ public class ItemOutwardAdapter extends BaseAdapter {
         }
         ItemOutward itemOutward = itemOutwardsArrayList.get(i);
         viewHolder.menuCode.setText(String.valueOf(itemOutward.getMenuCode()));
-        viewHolder.itemName.setText(itemOutward.getLongName());
+        viewHolder.itemName.setText(itemOutward.getItemName());
         viewHolder.rate1.setText(String.format("%.2f",itemOutward.getDineIn1()));
         viewHolder.rate2.setText(String.format("%.2f",itemOutward.getDineIn2()));
         viewHolder.rate3.setText(String.format("%.2f",itemOutward.getDineIn3()));
@@ -114,7 +114,7 @@ public class ItemOutwardAdapter extends BaseAdapter {
         viewHolder.itemImg.setLayoutParams(rowparams);
         viewHolder.itemImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-        String icon = AppUtils.getImagePath(itemOutward.getImageUri(),itemOutward.getLongName());
+        String icon = AppUtils.getImagePath(itemOutward.getImageUri(),itemOutward.getItemName());
         Uri uri = Uri.fromFile(new File(icon));
         try{
             Picasso.with(activity)
@@ -139,7 +139,7 @@ public class ItemOutwardAdapter extends BaseAdapter {
 
             final int i  = Integer.parseInt(v.getTag().toString());
             final ItemOutward obj = getItems(i);
-            String ItemName = obj.getLongName();
+            String ItemName = obj.getItemName();
             AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                     .setTitle("Delete")
                     .setMessage("Are you sure you want to Delete Item "+ ItemName)

@@ -24,6 +24,7 @@ public class PrintKotBillItem implements Serializable {
     private ArrayList<BillKotItem> billKotItems;
     private ArrayList<BillTaxItem> billTaxItems;
     private ArrayList<BillServiceTaxItem> billServiceTaxItems;
+    private ArrayList<BillServiceTaxItem> billcessTaxItems;
     private ArrayList<BillSubTaxItem> billSubTaxItems;
 
     private ArrayList<BillTaxItem> billOtherChargesItems;
@@ -72,6 +73,14 @@ public class PrintKotBillItem implements Serializable {
         this.fdiscountPercentage = fdiscountPercentage;
         this.billOtherChargesItems = otherCharges;
         this.strBillingModeName = BillingModeName;
+    }
+
+    public ArrayList<BillServiceTaxItem> getBillcessTaxItems() {
+        return billcessTaxItems;
+    }
+
+    public void setBillcessTaxItems(ArrayList<BillServiceTaxItem> billcessTaxItems) {
+        this.billcessTaxItems = billcessTaxItems;
     }
 
     public float getdiscountPercentage() {

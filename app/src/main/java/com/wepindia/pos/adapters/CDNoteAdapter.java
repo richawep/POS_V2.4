@@ -136,7 +136,7 @@ public class CDNoteAdapter extends BaseAdapter {
 
             final int i  = Integer.parseInt(v.getTag().toString());
             final GSTR1_CDN_Details obj = getItems(i);
-            //String ItemName = obj.getLongName();
+            //String ItemName = obj.getItemName();
             AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                     .setTitle("Delete")
                     .setMessage("Are you sure you want to Delete this note")

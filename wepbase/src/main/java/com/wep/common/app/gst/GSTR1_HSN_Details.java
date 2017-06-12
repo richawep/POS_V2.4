@@ -9,6 +9,7 @@ public class GSTR1_HSN_Details {
     private String ty;
     private  String hsn_sc;
     private double txval;
+    private double val;
     private double irt;
     private double iamt;
     private double crt;
@@ -39,6 +40,33 @@ public class GSTR1_HSN_Details {
         this.uqc = uqc;
         this.qty = qty;
         this.sply_ty = sply_ty;
+    }
+    public GSTR1_HSN_Details(int num, String ty, String hsn_sc, double val, double txval,double irt, double iamt, double crt, double camt, double srt, double samt, double csrt, double csamt, String desc, String uqc, double qty, String sply_ty) {
+        this.num = num;
+        this.ty = ty;
+        this.hsn_sc = hsn_sc;
+        this.val = val;
+        this.txval = txval;
+        this.irt = irt;
+        this.iamt = iamt;
+        this.crt = crt;
+        this.camt = camt;
+        this.srt = srt;
+        this.samt = samt;
+        this.csrt = csrt;
+        this.csamt = csamt;
+        this.desc = desc;
+        this.uqc = uqc;
+        this.qty = qty;
+        this.sply_ty = sply_ty;
+    }
+
+    public double getVal() {
+        return val;
+    }
+
+    public void setVal(double val) {
+        this.val = val;
     }
 
     public int getNum() {

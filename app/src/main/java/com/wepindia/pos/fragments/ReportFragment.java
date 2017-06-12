@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.gst.B2Csmall;
+import com.wep.common.app.gst.GSTR1_HSN_Details;
 import com.wep.common.app.gst.Model_reconcile;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
@@ -599,6 +600,11 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     break;
                 case 44:  // Inward Stock Report
                     InwardStockReport();
+                    break;
+                case 45:  // GSTR1-HSNSummary
+                    GSTR1_HSNSummary();
+                    break;
+                case 46:
                     break;
             }
         }
@@ -7229,7 +7235,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
            /* String StartDate = txtReportDateStart.getText().toString();
             String EndDate = txtReportDateEnd.getText().toString();*/
             Cursor cursor = dbReport.getOutwardB2b(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
-            if (cursor == null )
+            if (!(cursor != null && cursor.moveToFirst()))
             {
                 //MsgBox = new AlertDialog.Builder(myContext);
                 MsgBox. setMessage("No data for entered period B2B")
@@ -7237,7 +7243,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         .show();
             }
             else {
-                if (cursor.moveToFirst()) {
+
 
                     TextView GSTIN, InvoiceNo, InvoiceDate, SupplyType, Value, HSNCode,GSTRate, Description, Price, Quantity,Units,SubValue,DiscountRate,TaxableValue;
                     TextView CGSTRate, CGSTAmount, SGSTRate, SGSTAmount,IGSTRate, IGSTAmount,AdditionalChargeName,AdditionalChargeAmount;
@@ -7270,6 +7276,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         InvoiceNo.setLeft(10);
                         InvoiceNo.setWidth(70);
                         InvoiceNo.setTextSize(12);
+                        InvoiceNo.setPadding(5,0,0,0);
                         String no = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
                         no.trim();
                         InvoiceNo.setText(no);
@@ -7277,6 +7284,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                         InvoiceDate = new TextView(myContext);
                         InvoiceDate.setLeft(10);
+                        InvoiceDate.setGravity(Gravity.CENTER);
                         InvoiceDate.setWidth(60);
                         String dateInMillis = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
                         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -7318,21 +7326,27 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                         TaxableValue = new TextView(myContext);
-                        TaxableValue.setText(cursor.getString(cursor.getColumnIndex("TaxableValue")));
+                        TaxableValue.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("TaxableValue"))));
                         TaxableValue.setLeft(10);
+                        TaxableValue.setGravity(Gravity.END);
+                        TaxableValue.setPadding(0,0,5,0);
                         TaxableValue.setWidth(100);
                         TaxableValue.setTextSize(12);
                         TaxableValue.setBackgroundResource(R.drawable.border);
 
                         GSTRate = new TextView(myContext);
                         GSTRate.setLeft(10);
+                        GSTRate.setGravity(Gravity.END);
+                        GSTRate.setPadding(0,0,5,0);
                         GSTRate.setWidth(60);
                         GSTRate.setTextSize(12);
                         GSTRate.setBackgroundResource(R.drawable.border);
 
 
                         CGSTAmount = new TextView(myContext);
-                        CGSTAmount.setText(cursor.getString(cursor.getColumnIndex("CGSTAmount")));
+                        CGSTAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("CGSTAmount"))));
+                        CGSTAmount.setGravity(Gravity.END);
+                        CGSTAmount.setPadding(0,0,5,0);
                         CGSTAmount.setLeft(10);
                         CGSTAmount.setWidth(60);
                         CGSTAmount.setTextSize(12);
@@ -7347,7 +7361,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         SGSTRate.setBackgroundResource(R.drawable.border);*/
 
                         SGSTAmount = new TextView(myContext);
-                        SGSTAmount.setText(cursor.getString(cursor.getColumnIndex("SGSTAmount")));
+                        //SGSTAmount.setText(cursor.getString(cursor.getColumnIndex("SGSTAmount")));
+                        SGSTAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));
+                        SGSTAmount.setGravity(Gravity.END);
+                        SGSTAmount.setPadding(0,0,5,0);
                         SGSTAmount.setLeft(10);
                         SGSTAmount.setWidth(60);
                         SGSTAmount.setTextSize(12);
@@ -7361,11 +7378,24 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         IGSTRate.setBackgroundResource(R.drawable.border);*/
 
                         IGSTAmount = new TextView(myContext);
-                        IGSTAmount.setText(cursor.getString(cursor.getColumnIndex("IGSTAmount")));
+                        //IGSTAmount.setText(cursor.getString(cursor.getColumnIndex("IGSTAmount")));
+                        IGSTAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));
+                        IGSTAmount.setGravity(Gravity.END);
+                        IGSTAmount.setPadding(0,0,5,0);
                         IGSTAmount.setLeft(10);
                         IGSTAmount.setWidth(60);
                         IGSTAmount.setTextSize(12);
                         IGSTAmount.setBackgroundResource(R.drawable.border);
+
+                        TextView cessAmount = new TextView(myContext);
+                        //cessAmount.setText(cursor.getString(cursor.getColumnIndex("cessAmount")));
+                        cessAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("cessAmount"))));
+                        cessAmount.setGravity(Gravity.END);
+                        cessAmount.setPadding(0,0,5,0);
+                        cessAmount.setLeft(10);
+                        cessAmount.setWidth(60);
+                        cessAmount.setTextSize(12);
+                        cessAmount.setBackgroundResource(R.drawable.border);
 
                         TextView SubTotal = new TextView(myContext);
                         SubTotal.setText(cursor.getString(cursor.getColumnIndex("SubTotal")));
@@ -7375,8 +7405,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         SubTotal.setBackgroundResource(R.drawable.border);
 
                         TextView Pos  = new TextView(myContext);
-                        Pos.setText(cursor.getString(cursor.getColumnIndex("POS")));
+                        Pos.setText(cursor.getString(cursor.getColumnIndex("CustStateCode")));
                         Pos.setLeft(10);
+                        Pos.setGravity(Gravity.CENTER);
                         Pos.setWidth(60);
                         Pos.setTextSize(12);
                         Pos.setBackgroundResource(R.drawable.border);
@@ -7410,18 +7441,20 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         rowcursor.addView(GSTIN);
                         rowcursor.addView(InvoiceNo);
                         rowcursor.addView(InvoiceDate);
-                        rowcursor.addView(SupplyType);
-                        rowcursor.addView(HSNCode);
+                        //rowcursor.addView(SupplyType);
+                        //rowcursor.addView(HSNCode);
                         rowcursor.addView(Value);
-                        rowcursor.addView(Quantity);
+                        //rowcursor.addView(Quantity);
+                        rowcursor.addView(GSTRate);
                         rowcursor.addView(TaxableValue);
-                        //rowcursor.addView(GSTRate);
+
                         rowcursor.addView(IGSTAmount);
                         //rowcursor.addView(CGSTRate);
                         rowcursor.addView(CGSTAmount);
                         //rowcursor.addView(SGSTRate);
                         rowcursor.addView(SGSTAmount);
-                        rowcursor.addView(SubTotal);
+                        rowcursor.addView(cessAmount);
+                        //rowcursor.addView(SubTotal);
                         rowcursor.addView(Pos);
                         if (ReverseChargeEnabe.equals("1"))
                         {
@@ -7460,7 +7493,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     } while (cursor.moveToNext());
-                }
+
                 btnExport.setEnabled(true);
             }
         }// end try
@@ -7470,6 +7503,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             MsgBox. setMessage(e.getMessage())
                     .setPositiveButton("OK", null)
                     .show();
+            e.printStackTrace();
         }
 
 
@@ -7576,7 +7610,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     HSNCode.setBackgroundResource(R.drawable.border_item);
 
                     TextView Value = new TextView(myContext);
-                    Value.setText(cursor.getString(cursor.getColumnIndex("Value")));
+                    Value.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("Value"))));
+                    Value.setPadding(0,0,5,0);
+                    Value.setGravity(Gravity.END);
                     Value.setLeft(10);
                     Value.setWidth(100);
                     Value.setTextSize(12);
@@ -7592,7 +7628,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     TaxableValue = new TextView(myContext);
-                    TaxableValue.setText(cursor.getString(cursor.getColumnIndex("TaxableValue")));
+                    TaxableValue.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("TaxableValue"))));
+                    TaxableValue.setPadding(0,0,5,0);
+                    TaxableValue.setGravity(Gravity.END);
                     TaxableValue.setLeft(10);
                     TaxableValue.setWidth(100);
                     TaxableValue.setTextSize(12);
@@ -7607,7 +7645,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 */
 
                     CGSTAmount = new TextView(myContext);
-                    CGSTAmount.setText(cursor.getString(cursor.getColumnIndex("CGSTAmount")));
+                    CGSTAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("CGSTAmount"))));
+                    CGSTAmount.setPadding(0,0,5,0);
+                    CGSTAmount.setGravity(Gravity.END);
                     CGSTAmount.setLeft(10);
                     CGSTAmount.setWidth(60);
                     CGSTAmount.setTextSize(12);
@@ -7622,11 +7662,32 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         SGSTRate.setBackgroundResource(R.drawable.border_item);*/
 
                     SGSTAmount = new TextView(myContext);
-                    SGSTAmount.setText(cursor.getString(cursor.getColumnIndex("SGSTAmount")));
+                    SGSTAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));
+                    SGSTAmount.setPadding(0,0,5,0);
+                    SGSTAmount.setGravity(Gravity.END);
                     SGSTAmount.setLeft(10);
                     SGSTAmount.setWidth(60);
                     SGSTAmount.setTextSize(12);
                     SGSTAmount.setBackgroundResource(R.drawable.border_item);
+
+                    TextView cessAmount = new TextView(myContext);
+                    //cessAmount.setText(cursor.getString(cursor.getColumnIndex("cessAmount")));
+                    cessAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("cessAmount"))));
+                    cessAmount.setPadding(0,0,5,0);
+                    cessAmount.setGravity(Gravity.END);
+                    cessAmount.setLeft(10);
+                    cessAmount.setWidth(60);
+                    cessAmount.setTextSize(12);
+                    cessAmount.setBackgroundResource(R.drawable.border_item);
+
+                    IGSTAmount = new TextView(myContext);
+                    IGSTAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));
+                    IGSTAmount.setPadding(0,0,5,0);
+                    IGSTAmount.setGravity(Gravity.END);
+                    IGSTAmount.setLeft(10);
+                    IGSTAmount.setWidth(60);
+                    IGSTAmount.setTextSize(12);
+                    IGSTAmount.setBackgroundResource(R.drawable.border_item);
 
                        /* IGSTRate = new TextView(myContext);
                         IGSTRate.setText(cursor.getString(cursor.getColumnIndex("IGSTRate")));
@@ -7636,38 +7697,21 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         IGSTRate.setBackgroundResource(R.drawable.border_item);*/
 
                     TextView GSTRate = new TextView(myContext);
-                    String gstrate = cursor.getString(cursor.getColumnIndex("IGSTRate"));
-                    String sgstrate ="0";
-                    if (gstrate== null || gstrate.equals("0"))
+                    String gstrate = String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("IGSTRate")));
+                    if (gstrate== null || gstrate.equals("0")|| gstrate.equals("")|| gstrate.equals("0.00"))
                     {
-                        gstrate = cursor.getString(cursor.getColumnIndex("CGSTRate"));
-                        if (gstrate==null )
-                        {
-                            gstrate="0";
-                        }else
-                        {
-                             sgstrate = cursor.getString(cursor.getColumnIndex("SGSTRate"));
-                            if(sgstrate== null)
-                                sgstrate="0";
-                        }
-                        float taxrate = Float.parseFloat(gstrate);
-                        float sgsttaxrate = Float.parseFloat(sgstrate);
-
-                        taxrate +=sgsttaxrate;
-                        gstrate = String.valueOf(taxrate);
+                        double cgstRate = cursor.getDouble(cursor.getColumnIndex("CGSTRate"));
+                        double sgstRate = cursor.getDouble(cursor.getColumnIndex("SGSTRate"));
+                        gstrate = String.format("%.2f",cgstRate+sgstRate);
                     }
                     GSTRate.setText(gstrate);
                     GSTRate.setLeft(10);
                     GSTRate.setWidth(60);
+                    GSTRate.setGravity(Gravity.CENTER);
                     GSTRate.setTextSize(12);
                     GSTRate.setBackgroundResource(R.drawable.border_item);
 
-                    IGSTAmount = new TextView(myContext);
-                    IGSTAmount.setText(cursor.getString(cursor.getColumnIndex("IGSTAmount")));
-                    IGSTAmount.setLeft(10);
-                    IGSTAmount.setWidth(60);
-                    IGSTAmount.setTextSize(12);
-                    IGSTAmount.setBackgroundResource(R.drawable.border_item);
+
 
                     TextView SubTotal = new TextView(myContext);
                     SubTotal.setText(cursor.getString(cursor.getColumnIndex("SubTotal")));
@@ -7710,16 +7754,18 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowcursor.addView(GSTIN);
                     rowcursor.addView(InvoiceNo);
                     rowcursor.addView(InvoiceDate);
-                    rowcursor.addView(SupplyType);
-                    rowcursor.addView(HSNCode);
+                    //rowcursor.addView(SupplyType);
+                    //rowcursor.addView(HSNCode);
                     rowcursor.addView(Value);
-                    rowcursor.addView(Quantity);
+                    //rowcursor.addView(Quantity);
+                    rowcursor.addView(GSTRate);
                     rowcursor.addView(TaxableValue);
-                    //rowcursor.addView(GSTRate);
+
                     rowcursor.addView(IGSTAmount);
                     rowcursor.addView(CGSTAmount);
                     rowcursor.addView(SGSTAmount);
-                    rowcursor.addView(SubTotal);
+                    rowcursor.addView(cessAmount);
+                    //rowcursor.addView(SubTotal);
                     rowcursor.addView(Pos);
                     if (ReverseChargeEnabe.equals("1"))
                     {
@@ -7727,31 +7773,85 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         rowcursor.addView(ProAss);
                     }
 
-
-                        /*View v1 = new View(this);
-                        v1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 3));
-                        v1.setBackgroundColor(getResources().getColor(R.color.orange));
-                        tblReport.addView(v1);*/
                     tblReport.addView(rowcursor, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
+                } while (cursor.moveToNext());
+            }
+        } // end else
+        }catch ( Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-                        /*View v = new View(this);
-                        v.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 3));
-                        v.setBackgroundColor(getResources().getColor(R.color.orange));
-                        tblReport.addView(v);*/
+    void GSTR1_HSNSummary()
+    {
+
+        try{
 
 
-                    //tblReport.addView(rowcursor, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-                    //add a new line to the TableLayout:
-                        /*final View vline = new View(this);
-                        vline.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,2));
-                        tb_b2b.addView(vline);*/
+        Cursor cursor = dbReport.getitems_outward_details(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+        if (cursor == null)
+        {
+            //MsgBox = new AlertDialog.Builder(myContext);
+            MsgBox. setMessage("No invoice found to display HSN Summay")
+                    .setPositiveButton("OK",null)
+                    .show();
+        }
+        else
+        {
 
+            ArrayList<GSTR1_HSN_Details> HSNList = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+
+                TextView GSTIN, InvoiceNo, InvoiceDate, SupplyType, TaxationType, HSNCode, Description, Price, Quantity,Units,SubValue,DiscountRate,TaxableValue;
+                TextView CGSTRate, CGSTAmount, SGSTRate, SGSTAmount,IGSTRate, IGSTAmount,AdditionalChargeName,AdditionalChargeAmount;
+
+                int count =0;
+                TableRow rowcursor;
+
+
+                do {
+                        String supplyType = cursor.getString(cursor.getColumnIndex("SupplyType"));
+                    String hsn = cursor.getString(cursor.getColumnIndex("HSNCode"));
+                    String desc = cursor.getString(cursor.getColumnIndex("ItemName"));
+                    String uom = cursor.getString(cursor.getColumnIndex("UOM"));
+                    String sply_ty = cursor.getString(cursor.getColumnIndex(""));
+                    double qty = cursor.getDouble(cursor.getColumnIndex("Quantity"));
+                    double val = cursor.getDouble(cursor.getColumnIndex("Value"));
+                    double txval = cursor.getDouble(cursor.getColumnIndex("Taxablevalue"));
+                    double irt = cursor.getDouble(cursor.getColumnIndex("IGSTRate"));
+                    double srt = cursor.getDouble(cursor.getColumnIndex("SGSTRate"));
+                    double crt = cursor.getDouble(cursor.getColumnIndex("CGSTRate"));
+                    double csrt = 0;
+                        double iamt = cursor.getDouble(cursor.getColumnIndex("IGSTAmount"));
+                    double samt = cursor.getDouble(cursor.getColumnIndex("SGSTAmount"));
+                    double camt = cursor.getDouble(cursor.getColumnIndex("CGSTAmount"));
+                    double csamt = cursor.getDouble(cursor.getColumnIndex("cessAmount"));
+
+                    GSTR1_HSN_Details hsn_data =  new GSTR1_HSN_Details(++count, supplyType, hsn,
+                         val,  txval,  irt, iamt, crt, camt, srt,  samt,  csrt,  csamt,
+                    desc, uom,  qty, sply_ty);
+
+                    int found =0;
+                    for(GSTR1_HSN_Details data : HSNList)
+                    {
+                        if(  hsn!=null && !hsn.equals("") )
+                        {
+                            if(data.getHsn_sc().equals(hsn))
+                            {
+                                double qty_prev = data.getQty();
+
+                                found = 1;
+                                break;
+                            }
+                        }
+                    }
+                    if(found ==0)
+                        HSNList.add(hsn_data);
 
                 } while (cursor.moveToNext());
-
             }
-
         } // end else
         }catch ( Exception e)
         {
@@ -7794,7 +7894,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             /*String StartDate = txtReportDateStart.getText().toString();
             String EndDate = txtReportDateEnd.getText().toString();*/
             Cursor cursor = dbReport.getOutwardB2Cl(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
-            if (cursor == null )
+            if (!(cursor != null && cursor.moveToFirst()))
             {
                 //MsgBox = new AlertDialog.Builder(myContext);
                 MsgBox. setMessage("No data for entered period B2C-L")
@@ -7802,7 +7902,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         .show();
             }
             else {
-                if (cursor.moveToFirst()) {
+
 
                     TextView CustStateCode, CustName, InvoiceNo, InvoiceDate, SupplyType, Value, HSNCode,GSTRate, Description, Price, Quantity,Units,SubValue,DiscountRate,TaxableValue;
                     TextView IGSTRate, IGSTAmount,AdditionalChargeName,AdditionalChargeAmount;
@@ -7831,6 +7931,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             CustStateCode.setLeft(10);
                             CustStateCode.setText(cursor.getString(cursor.getColumnIndex("CustStateCode")));
                             CustStateCode.setWidth(155);
+                            CustStateCode.setGravity(Gravity.CENTER);
                             CustStateCode.setTextSize(12);
                             CustStateCode.setBackgroundResource(R.drawable.border);
 
@@ -7839,11 +7940,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             CustName.setText(cursor.getString(cursor.getColumnIndex("CustName")));
                             CustName.setWidth(155);
                             CustName.setTextSize(12);
+                            CustName.setPadding(5,0,0,0);
                             CustName.setBackgroundResource(R.drawable.border);
 
                             InvoiceNo = new TextView(myContext);
                             InvoiceNo.setLeft(10);
                             InvoiceNo.setWidth(70);
+                            InvoiceNo.setPadding(5,0,0,0);
                             InvoiceNo.setTextSize(12);
                             String no = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
                             no.trim();
@@ -7853,6 +7956,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             InvoiceDate = new TextView(myContext);
                             InvoiceDate.setLeft(10);
                             InvoiceDate.setWidth(60);
+                            InvoiceDate.setGravity(Gravity.CENTER);
                             String dateInMillis = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
                             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                             String dateString = formatter.format(Long.parseLong(dateInMillis));
@@ -7892,7 +7996,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                             TaxableValue = new TextView(myContext);
-                            TaxableValue.setText(cursor.getString(cursor.getColumnIndex("TaxableValue")));
+                            TaxableValue.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("TaxableValue"))));
+                            TaxableValue.setGravity(Gravity.END);
+                            TaxableValue.setPadding(0,0,5,0);
                             TaxableValue.setLeft(10);
                             TaxableValue.setWidth(100);
                             TaxableValue.setTextSize(12);
@@ -7907,11 +8013,23 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             IGSTRate.setBackgroundResource(R.drawable.border);
 
                             IGSTAmount = new TextView(myContext);
-                            IGSTAmount.setText(cursor.getString(cursor.getColumnIndex("IGSTAmount")));
+                            IGSTAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));
+                            IGSTAmount.setGravity(Gravity.END);
+                            IGSTAmount.setPadding(0,0,5,0);
                             IGSTAmount.setLeft(10);
                             IGSTAmount.setWidth(60);
                             IGSTAmount.setTextSize(12);
                             IGSTAmount.setBackgroundResource(R.drawable.border);
+
+
+                            TextView cessAmount = new TextView(myContext);
+                            cessAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("cessAmount"))));
+                            cessAmount.setGravity(Gravity.END);
+                            cessAmount.setPadding(0,0,5,0);
+                            cessAmount.setLeft(10);
+                            cessAmount.setWidth(60);
+                            cessAmount.setTextSize(12);
+                            cessAmount.setBackgroundResource(R.drawable.border);
 
                             TextView SubTotal = new TextView(myContext);
                             SubTotal.setText(cursor.getString(cursor.getColumnIndex("SubTotal")));
@@ -7941,15 +8059,17 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             rowcursor.addView(CustName);
                             rowcursor.addView(InvoiceNo);
                             rowcursor.addView(InvoiceDate);
-                            rowcursor.addView(SupplyType);
-                            rowcursor.addView(HSNCode);
+                            //rowcursor.addView(SupplyType);
+                            //rowcursor.addView(HSNCode);
                             rowcursor.addView(Value);
-                            rowcursor.addView(Quantity);
-                            rowcursor.addView(TaxableValue);
+                            //rowcursor.addView(Quantity);
                             rowcursor.addView(IGSTRate);
+                            rowcursor.addView(TaxableValue);
+
                             rowcursor.addView(IGSTAmount);
+                            rowcursor.addView(cessAmount);
                             //rowcursor.addView(SubTotal);
-                            rowcursor.addView(Pos);
+                           // rowcursor.addView(Pos);
                             if (ReverseChargeEnabe.equals("1")) {
                                 rowcursor.addView(ProAss);
                             }
@@ -7982,7 +8102,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         }
                     } while (cursor.moveToNext());
 
-                }
                 btnExport.setEnabled(true);
             }
         }// end try
@@ -8025,7 +8144,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 if (cursor.moveToFirst()) {
 
                     TextView CustStateCode,CustName, InvoiceNo, InvoiceDate, SupplyType, TaxationType, HSNCode, Description, Price, Quantity,Units,SubValue,DiscountRate,TaxableValue;
-                    TextView CGSTRate, CGSTAmount, SGSTRate, SGSTAmount,IGSTRate, IGSTAmount,AdditionalChargeName,AdditionalChargeAmount;
+                    TextView cessAmount ,IGSTRate, IGSTAmount,AdditionalChargeName,AdditionalChargeAmount;
 
                     int count =0;
                     TableRow rowcursor;
@@ -8039,14 +8158,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         SNo.setLeft(10);
                         SNo.setText(count_str[count]+" ");
                         SNo.setWidth(42);
-                        SNo.setGravity(Gravity.RIGHT);
+                        SNo.setGravity(Gravity.END);
                         SNo.setTextSize(12);
                         SNo.setBackgroundResource(R.drawable.border_item);
                         count++;
 
                         CustStateCode = new TextView(myContext);
                         CustStateCode.setLeft(10);
-                        // GSTIN.setText("GSTIN12345678AB");
                         CustStateCode.setWidth(155);
                         CustStateCode.setTextSize(12);
                         CustStateCode.setBackgroundResource(R.drawable.border_item);
@@ -8096,7 +8214,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         HSNCode.setBackgroundResource(R.drawable.border_item);
 
                         TextView Value = new TextView(myContext);
-                        Value.setText(cursor.getString(cursor.getColumnIndex("Value")));
+                        Value.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("Value"))));
+                        Value.setGravity(Gravity.END);
+                        Value.setPadding(0,0,5,0);
                         Value.setLeft(10);
                         Value.setWidth(100);
                         Value.setTextSize(12);
@@ -8111,7 +8231,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                         TaxableValue = new TextView(myContext);
-                        TaxableValue.setText(cursor.getString(cursor.getColumnIndex("TaxableValue")));
+                        TaxableValue.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("TaxableValue"))));
+                        TaxableValue.setGravity(Gravity.END);
+                        TaxableValue.setPadding(0,0,5,0);
                         TaxableValue.setLeft(10);
                         TaxableValue.setWidth(100);
                         TaxableValue.setTextSize(12);
@@ -8120,6 +8242,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                         IGSTRate = new TextView(myContext);
                         IGSTRate.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("IGSTRate"))));
+                        IGSTRate.setGravity(Gravity.END);
+                        IGSTRate.setPadding(0,0,5,0);
                         IGSTRate.setLeft(10);
                         IGSTRate.setWidth(60);
                         IGSTRate.setTextSize(12);
@@ -8128,10 +8252,22 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                         IGSTAmount = new TextView(myContext);
                         IGSTAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));
+                        IGSTAmount.setGravity(Gravity.END);
+                        IGSTAmount.setPadding(0,0,5,0);
                         IGSTAmount.setLeft(10);
                         IGSTAmount.setWidth(60);
                         IGSTAmount.setTextSize(12);
                         IGSTAmount.setBackgroundResource(R.drawable.border_item);
+
+
+                        cessAmount = new TextView(myContext);
+                        cessAmount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("cessAmount"))));
+                        cessAmount.setGravity(Gravity.END);
+                        cessAmount.setPadding(0,0,5,0);
+                        cessAmount.setLeft(10);
+                        cessAmount.setWidth(60);
+                        cessAmount.setTextSize(12);
+                        cessAmount.setBackgroundResource(R.drawable.border_item);
 
                         TextView SubTotal = new TextView(myContext);
                         SubTotal.setText(cursor.getString(cursor.getColumnIndex("SubTotal")));
@@ -8162,15 +8298,16 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         rowcursor.addView(CustName);
                         rowcursor.addView(InvoiceNo);
                         rowcursor.addView(InvoiceDate);
-                        rowcursor.addView(SupplyType);
-                        rowcursor.addView(HSNCode);
+                        //rowcursor.addView(SupplyType);
+                       // rowcursor.addView(HSNCode);
                         rowcursor.addView(Value);
-                        rowcursor.addView(Quantity);
-                        rowcursor.addView(TaxableValue);
+                        //rowcursor.addView(Quantity);
                         rowcursor.addView(IGSTRate);
+                        rowcursor.addView(TaxableValue);
                         rowcursor.addView(IGSTAmount);
+                        rowcursor.addView(cessAmount);
                         //rowcursor.addView(SubTotal);
-                        rowcursor.addView(Pos);
+                        //rowcursor.addView(Pos);
                         if (ReverseChargeEnabe.equals("1"))
                         {
                             rowcursor.addView(ProAss);
@@ -8216,12 +8353,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 //ArrayList<GSTR1_B2B_A_invoices> invoiceList = new ArrayList<>();
                 while (cursor!=null && cursor.moveToNext()) {
 
-                    String pos = cursor.getString(cursor.getColumnIndex("POS"));
+                    String CustStateCode_str = cursor.getString(cursor.getColumnIndex("CustStateCode"));
                     String str = cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo"));
                     str += cursor.getString(cursor.getColumnIndex("OriginalInvoiceDate"));
                     str += cursor.getString(cursor.getColumnIndex("InvoiceNo"));
                     str += cursor.getString(cursor.getColumnIndex("InvoiceDate"));
-                    str +=pos;
+                    str +=CustStateCode_str;
 
 
                     if (ammendRecords != null && !(ammendRecords.contains(str)))
@@ -8280,8 +8417,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     SupplyType.setBackgroundResource(R.drawable.border);
                     TextView HSNCode = new TextView(myContext);
                     HSNCode.setBackgroundResource(R.drawable.border);
-                    TextView Rate = new TextView(myContext);
-                    Rate.setBackgroundResource(R.drawable.border);
+
+                    TextView GSTRate = new TextView(myContext);
+                    GSTRate.setBackgroundResource(R.drawable.border);
+
+                    TextView Value = new TextView(myContext);
+                    Value.setBackgroundResource(R.drawable.border);
 
                     TextView TaxableValue = new TextView(myContext);
                     /*TaxableValue.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("TaxableValue"))));*/
@@ -8317,16 +8458,22 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     SAmt.setPadding(0,0,5,0);
                     SAmt.setGravity(Gravity.END);
 
+                    TextView cessAmt = new TextView(myContext);
+                    /*SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));*/
+                    cessAmt.setBackgroundResource(R.drawable.border);
+                    cessAmt.setPadding(0,0,5,0);
+                    cessAmt.setGravity(Gravity.END);
+
                     TextView SubTot = new TextView(myContext);
                    /* SubTot.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("Amount"))));*/
                     SubTot.setBackgroundResource(R.drawable.border);
                     SubTot.setPadding(0,0,5,0);
                     SubTot.setGravity(Gravity.END);
 
-                    TextView supplPOS = new TextView(myContext);
-                    supplPOS.setText(pos);
-                    supplPOS.setBackgroundResource(R.drawable.border);
-                    supplPOS.setPadding(10,0,0,0);
+                    TextView CustStateCode = new TextView(myContext);
+                    CustStateCode.setText(CustStateCode_str);
+                    CustStateCode.setBackgroundResource(R.drawable.border);
+                    CustStateCode.setPadding(10,0,0,0);
 
 
                     rowReport.addView(Sno);
@@ -8336,9 +8483,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowReport.addView(GSTIN);
                     rowReport.addView(InvoiceNo_rev);
                     rowReport.addView(InvoiceDate_rev);
-                    rowReport.addView(SupplyType);
-                    rowReport.addView(HSNCode);
-                    //rowReport.addView(Rate);
+                    //rowReport.addView(SupplyType);
+                    //rowReport.addView(HSNCode);
+                    rowReport.addView(Value);
+                    rowReport.addView(GSTRate);
                     rowReport.addView(TaxableValue);
                    // rowReport.addView(IRate);
                     rowReport.addView(IAmt);
@@ -8346,8 +8494,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowReport.addView(CAmt);
                     //rowReport.addView(SRate);
                     rowReport.addView(SAmt);
-                    rowReport.addView(SubTot);
-                    rowReport.addView(supplPOS);
+                    rowReport.addView(cessAmt);
+                   // rowReport.addView(SubTot);
+                    rowReport.addView(CustStateCode);
 
                     View v1 = new View(getActivity());
                     v1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 5));
@@ -8370,10 +8519,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     int ii =0;
-                    double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0;
+                    double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0,cessTot=0;
 
 
-                    Cursor cursor_b2bitems_for_inv = dbReport.getitems_b2ba(invno_ori, invdt_ori, invno, invdt, gstin,pos);
+                    Cursor cursor_b2bitems_for_inv = dbReport.getitems_b2ba(invno_ori, invdt_ori, invno, invdt, gstin,CustStateCode_str);
 
                     while (cursor_b2bitems_for_inv != null && cursor_b2bitems_for_inv.moveToNext()) {
                         TableRow rowReport1 = new TableRow(myContext);
@@ -8424,6 +8573,16 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         TaxableValue1.setGravity(Gravity.END);
                         taxvaltot +=  cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("TaxableValue"));
 
+                        double igstrate = cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate"));
+                        double cgstrate = cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTRate"));
+                        double sgstrate = cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTRate"));
+
+                        TextView GSTRate1 = new TextView(myContext);
+                        GSTRate1.setText(String.format("%.2f", igstrate+cgstrate+sgstrate));
+                        GSTRate1.setBackgroundResource(R.drawable.border_item);
+                        GSTRate1.setPadding(0,0,5,0);
+                        GSTRate1.setGravity(Gravity.END);
+
                        /* TextView IRate1 = new TextView(myContext);
                         IRate1.setText(String.format("%.2f", cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate"))));
                         IRate1.setBackgroundResource(R.drawable.border_item);
@@ -8467,6 +8626,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         SAmt1.setGravity(Gravity.END);
                         Stot += cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTAmount"));
 
+                        TextView cessAmt1 = new TextView(myContext);
+                        cessAmt1.setText(String.format("%.2f", cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("cessAmount"))));
+                        cessAmt1.setBackgroundResource(R.drawable.border_item);
+                        cessAmt1.setPadding(0,0,5,0);
+                        cessAmt1.setGravity(Gravity.END);
+                        cessTot += cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("cessAmount"));
+
 
                         TextView SubTot1 = new TextView(myContext);
                         double sub = cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("TaxableValue")) +
@@ -8479,8 +8645,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         SubTot1.setGravity(Gravity.END);
                         Amttot += sub;
 
-                        TextView supplPOS1 = new TextView(myContext);
-                        supplPOS1.setBackgroundResource(R.drawable.border_item);
+                        TextView CustStateCode1 = new TextView(myContext);
+                        CustStateCode1.setBackgroundResource(R.drawable.border_item);
 
 
                         rowReport1.addView(Sno1);//0
@@ -8489,17 +8655,19 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         rowReport1.addView(InvoiceDate1_ori);//3
                         rowReport1.addView(InvoiceNo1);//4
                         rowReport1.addView(InvoiceDate1);//5
-                        rowReport1.addView(SupplyType1);//6
-                        rowReport1.addView(HSNCode1);//7
-                        //rowReport1.addView(Value1);//8
-                        rowReport1.addView(TaxableValue1);//9
-                        rowReport1.addView(IAmt1);//10
+                        //rowReport1.addView(SupplyType1);//6
+                       // rowReport1.addView(HSNCode1);//7
+                        rowReport1.addView(Value1);//6
+                        rowReport1.addView(GSTRate1);//7
+                        rowReport1.addView(TaxableValue1);//8
+                        rowReport1.addView(IAmt1);//9
 
-                        rowReport1.addView(CAmt1);//11
+                        rowReport1.addView(CAmt1);//10
 
-                        rowReport1.addView(SAmt1);//12
-                        rowReport1.addView(SubTot1);//13
-                        rowReport1.addView(supplPOS1);//14
+                        rowReport1.addView(SAmt1);//11
+                        rowReport1.addView(cessAmt1);//12
+                        //rowReport1.addView(SubTot1);//13
+                        rowReport1.addView(CustStateCode1);//14
 
                         tblReport.addView(rowReport1);
 
@@ -8519,8 +8687,11 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TextView Samt = (TextView)rowReport.getChildAt(11);
                     Samt.setText(String.format("%.2f",Stot));
 
-                    TextView sub = (TextView)rowReport.getChildAt(12);
-                    sub.setText(String.format("%.2f",Amttot));
+                    TextView cessamt = (TextView)rowReport.getChildAt(12);
+                    cessamt.setText(String.format("%.2f",cessTot));
+
+                   /* TextView sub = (TextView)rowReport.getChildAt(13);
+                    sub.setText(String.format("%.2f",Amttot));*/
             }}
             if(tblReport.getChildCount()>1)
             {
@@ -8551,7 +8722,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TableRow rowReport = new TableRow(myContext);
             rowReport.setLayoutParams(new ViewGroup.LayoutParams
                     (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0;
+            double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0,cesstot=0;
             int ii =0;
             do
             {
@@ -8637,6 +8808,20 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     SAmt.setGravity(Gravity.END);
 
 
+                    TextView cessAmt = new TextView(myContext);
+                    /*SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));*/
+                    cessAmt.setBackgroundResource(R.drawable.border);
+                    cessAmt.setPadding(0,0,5,0);
+                    cessAmt.setGravity(Gravity.END);
+
+
+                    TextView GSTRate = new TextView(myContext);
+                    /*SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));*/
+                    GSTRate.setBackgroundResource(R.drawable.border);
+                    GSTRate.setPadding(0,0,5,0);
+                    GSTRate.setGravity(Gravity.END);
+
+
 
                     rowReport.addView(Sno);
                     rowReport.addView(NoteType);
@@ -8645,10 +8830,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowReport.addView(InvoiceNo);
                     rowReport.addView(InvoiceDate);
                     rowReport.addView(Reason);
+                    rowReport.addView(GSTRate);
                     rowReport.addView(DifferentialValue);
                     rowReport.addView(IAmt);
                     rowReport.addView(CAmt);
                     rowReport.addView(SAmt);
+                    rowReport.addView(cessAmt);
 
 
                     View v1 = new View(getActivity());
@@ -8716,6 +8903,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 Reason.setPadding(5,0,0,0);
 
 
+                double igstRate = cursor.getDouble(cursor.getColumnIndex("IGSTRate"));
+                double cgstRate = cursor.getDouble(cursor.getColumnIndex("CGSTRate"));
+                double sgstRate = cursor.getDouble(cursor.getColumnIndex("SGSTRate"));
+                TextView GSTRate = new TextView(myContext);
+                GSTRate.setText(String.format("%.2f", igstRate+cgstRate+sgstRate));
+                GSTRate.setBackgroundResource(R.drawable.border_item);
+                GSTRate.setPadding(0,0,5,0);
+                GSTRate.setGravity(Gravity.CENTER);
 
                 TextView DifferentialValue = new TextView(myContext);
                 DifferentialValue.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("DifferentialValue"))));
@@ -8748,6 +8943,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 SAmt.setGravity(Gravity.END);
                 Stot += cursor.getDouble(cursor.getColumnIndex("SGSTAmount"));
 
+                TextView cessAmt = new TextView(myContext);
+                cessAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("cessAmount"))));
+                cessAmt.setBackgroundResource(R.drawable.border_item);
+                cessAmt.setPadding(0,0,5,0);
+                cessAmt.setGravity(Gravity.END);
+                cesstot += cursor.getDouble(cursor.getColumnIndex("cessAmount"));
+
 
 
                 rowReport1.addView(Sno);
@@ -8757,26 +8959,30 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 rowReport1.addView(InvoiceNo);
                 rowReport1.addView(InvoiceDate);
                 rowReport1.addView(Reason);
-                rowReport1.addView(DifferentialValue);//7
-                rowReport1.addView(IAmt);//8
-                rowReport1.addView(CAmt);//9
-                rowReport1.addView(SAmt);//10
+                rowReport1.addView(GSTRate);//7
+                rowReport1.addView(DifferentialValue);//8
+                rowReport1.addView(IAmt);//9
+                rowReport1.addView(CAmt);//10
+                rowReport1.addView(SAmt);//11
+                rowReport1.addView(cessAmt);//12
 
                 tblReport.addView(rowReport1);
 
             }while(cursor.moveToNext());
 
-            TextView taxVal = (TextView)rowReport.getChildAt(7);
+            TextView taxVal = (TextView)rowReport.getChildAt(8);
             taxVal.setText(String.format("%.2f",taxvaltot));
 
-            TextView iamt = (TextView)rowReport.getChildAt(8);
+            TextView iamt = (TextView)rowReport.getChildAt(9);
             iamt.setText(String.format("%.2f",Itot));
 
-            TextView camt = (TextView)rowReport.getChildAt(9);
+            TextView camt = (TextView)rowReport.getChildAt(10);
             camt.setText(String.format("%.2f",Ctot));
 
-            TextView Samt = (TextView)rowReport.getChildAt(10);
+            TextView Samt = (TextView)rowReport.getChildAt(11);
             Samt.setText(String.format("%.2f",Stot));
+            TextView cessamt = (TextView)rowReport.getChildAt(12);
+            cessamt.setText(String.format("%.2f",cesstot));
 
         }
             if(tblReport.getChildCount()>1)
@@ -8804,7 +9010,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             }
             else {
 
-                int c = cursor.getCount();
                 int i = 1;
                 if (cursor.moveToFirst()) {
                     do {
@@ -8815,8 +9020,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                         TextView Sno = new TextView(myContext);
                         Sno.setText(String.valueOf(i++));
+                        Sno.setBackgroundResource(R.drawable.border);
 
-                        TextView supplyType_ori = new TextView(myContext);
+                        /*TextView supplyType_ori = new TextView(myContext);
                         supplyType_ori.setText(cursor.getString(cursor.getColumnIndex("SupplyType")));
 
                         TextView hsn_ori = new TextView(myContext);
@@ -8830,45 +9036,75 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                         TextView hsn_rev = new TextView(myContext);
                         hsn_rev.setText(cursor.getString(cursor.getColumnIndex("ReviseHSNCode")));
-
+*/
                         TextView custCode_rev = new TextView(myContext);
-                        custCode_rev.setText(cursor.getString(cursor.getColumnIndex("RevisedPOS")));
+                        custCode_rev.setText(cursor.getString(cursor.getColumnIndex("CustStateCode")));
 
                         TextView taxVal = new TextView(myContext);
                         taxVal.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("TaxableValue"))));
+                        taxVal.setGravity(Gravity.END);
+                        taxVal.setBackgroundResource(R.drawable.border);
+                        taxVal.setPadding(0,0,5,0);
 
-                        TextView IRate = new TextView(myContext);
+                       /* TextView IRate = new TextView(myContext);
                         IRate.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("IGSTRate"))));
-
+*/
                         TextView IAmt = new TextView(myContext);
                         IAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));
+                        IAmt.setGravity(Gravity.END);
+                        IAmt.setPadding(0,0,5,0);
+                        IAmt.setBackgroundResource(R.drawable.border);
 
-                        TextView CRate = new TextView(myContext);
-                        CRate.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("CGSTRate"))));
+                       /* TextView CRate = new TextView(myContext);
+                        CRate.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("CGSTRate"))));*/
 
                         TextView CAmt = new TextView(myContext);
                         CAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("CGSTAmount"))));
+                        CAmt.setGravity(Gravity.END);
+                        CAmt.setPadding(0,0,5,0);
+                        CAmt.setBackgroundResource(R.drawable.border);
 
-                        TextView SRate = new TextView(myContext);
-                        SRate.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTRate"))));
+                        /*TextView SRate = new TextView(myContext);
+                        SRate.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTRate"))));*/
 
                         TextView SAmt = new TextView(myContext);
                         SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));
+                        SAmt.setGravity(Gravity.END);
+                        SAmt.setPadding(0,0,5,0);
+                        SAmt.setBackgroundResource(R.drawable.border);
+
+                        TextView cessAmt = new TextView(myContext);
+                        cessAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("cessAmount"))));
+                        cessAmt.setGravity(Gravity.END);
+                        cessAmt.setPadding(0,0,5,0);
+                        cessAmt.setBackgroundResource(R.drawable.border);
+
+                        double igstrate = cursor.getDouble(cursor.getColumnIndex("IGSTRate"));
+                        double cgstrate = cursor.getDouble(cursor.getColumnIndex("CGSTRate"));
+                        double sgstrate = cursor.getDouble(cursor.getColumnIndex("SGSTRate"));
+
+                        TextView GSTRate = new TextView(myContext);
+                        GSTRate.setText(String.format("%.2f", igstrate+cgstrate+sgstrate));
+                        GSTRate.setGravity(Gravity.CENTER);
+                        GSTRate.setBackgroundResource(R.drawable.border);
+
 
                         rowcursor.addView(Sno);
-                        rowcursor.addView(supplyType_ori);
+                        /*rowcursor.addView(supplyType_ori);
                         rowcursor.addView(hsn_ori);
                         rowcursor.addView(custCode_ori);
                         rowcursor.addView(supplyType_rev);
                         rowcursor.addView(hsn_rev);
-                        rowcursor.addView(custCode_rev);
+                        rowcursor.addView(custCode_rev);*/
+                        rowcursor.addView(GSTRate);
                         rowcursor.addView(taxVal);
-                        rowcursor.addView(IRate);
+                        //rowcursor.addView(IRate);
                         rowcursor.addView(IAmt);
-                        rowcursor.addView(CRate);
+                        //rowcursor.addView(CRate);
                         rowcursor.addView(CAmt);
-                        rowcursor.addView(SRate);
+                        //rowcursor.addView(SRate);
                         rowcursor.addView(SAmt);
+                        rowcursor.addView(cessAmt);
 
                         tblReport.addView(rowcursor);
                     } while (cursor.moveToNext());
@@ -8918,14 +9154,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     if (provisionalAssess == null)
                         provisionalAssess = "N";
-                    String str = invoiceNo + invoiceDate + invoiceNo_ori + invoiceDate_ori + pos_temp + custStateCd_temp;
+                    String str = invoiceNo + invoiceDate + invoiceNo_ori + invoiceDate_ori + custStateCd_temp;
                     if (!alreadyAddedAmmendBill.contains(str))
                         alreadyAddedAmmendBill.add(str);
                     else
                         continue;
 
-                    if (pos_temp.equals(custStateCd_temp))
-                        continue;
+                    /*if (pos_temp.equals(custStateCd_temp))
+                        continue;*/
 
 
                     TableRow rowReport = new TableRow(myContext);
@@ -8989,6 +9225,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     TextView SRate = new TextView(myContext);
                     SRate.setBackgroundResource(R.drawable.border);*/
+                    TextView Value = new TextView(myContext);
+                    Value.setBackgroundResource(R.drawable.border);
 
                     TextView IRate = new TextView(myContext);
                    /* IAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));*/
@@ -9003,17 +9241,23 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     IAmt.setPadding(0,0,5,0);
                     IAmt.setGravity(Gravity.END);
 
-                    TextView CAmt = new TextView(myContext);
-                    /*CAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("CGSTAmount"))));*/
+                    TextView cessAmt = new TextView(myContext);
+                   /* IAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("IGSTAmount"))));*/
+                    cessAmt.setBackgroundResource(R.drawable.border);
+                    cessAmt.setPadding(0,0,5,0);
+                    cessAmt.setGravity(Gravity.END);
+
+                    /*TextView CAmt = new TextView(myContext);
+                    *//*CAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("CGSTAmount"))));*//*
                     CAmt.setBackgroundResource(R.drawable.border);
                     CAmt.setPadding(0,0,5,0);
                     CAmt.setGravity(Gravity.END);
 
                     TextView SAmt = new TextView(myContext);
-                    /*SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));*/
+                    *//*SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));*//*
                     SAmt.setBackgroundResource(R.drawable.border);
                     SAmt.setPadding(0,0,5,0);
-                    SAmt.setGravity(Gravity.END);
+                    SAmt.setGravity(Gravity.END);*/
 
                     TextView SubTot = new TextView(myContext);
                    /* SubTot.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("Amount"))));*/
@@ -9021,31 +9265,34 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     SubTot.setPadding(0,0,5,0);
                     SubTot.setGravity(Gravity.END);
 
-                    TextView supplPOS = new TextView(myContext);
-                    supplPOS.setText(custStateCd_temp);
-                    supplPOS.setBackgroundResource(R.drawable.border);
-                    supplPOS.setPadding(10,0,0,0);
+                    TextView custStateCode = new TextView(myContext);
+                    custStateCode.setText(custStateCd_temp);
+                    custStateCode.setBackgroundResource(R.drawable.border);
+                    custStateCode.setPadding(10,0,0,0);
 
 
                     rowReport.addView(Sno);
                     rowReport.addView(InvoiceNo_ori);
                     rowReport.addView(InvoiceDate_ori);
-                    rowReport.addView(supplPOS);
+                    rowReport.addView(custStateCode);
                     rowReport.addView(recipientName);
                     rowReport.addView(InvoiceNo_rev);
                     rowReport.addView(InvoiceDate_rev);
-                    rowReport.addView(SupplyType);
-                    rowReport.addView(HSNCode);
+                   // rowReport.addView(SupplyType);
+                    //rowReport.addView(HSNCode);
                     //rowReport.addView(Rate);
+                    rowReport.addView(Value);
+                    rowReport.addView(IRate);
                     rowReport.addView(TaxableValue);
                     // rowReport.addView(IRate);
-                    rowReport.addView(IRate);
+                    //rowReport.addView(IRate);
                     rowReport.addView(IAmt);
+                    rowReport.addView(cessAmt);
                     // rowReport.addView(CRate);
                     //rowReport.addView(CAmt);
                     //rowReport.addView(SRate);
                     //rowReport.addView(SAmt);
-                    rowReport.addView(SubTot);
+                    //rowReport.addView(SubTot);
 
                     View v1 = new View(getActivity());
                     v1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 5));
@@ -9068,7 +9315,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     int ii =0;
-                    double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0;
+                    double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0,cesstot=0;
 
                     Cursor cursor_b2clitems_Ammned_for_inv = dbReport.getGSTR1B2CL_invoices_ammend(invoiceNo, invoiceDate,
                             custStateCd_temp, custName, pos_temp);
@@ -9078,10 +9325,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             rowcursor.setLayoutParams(new TableRow.LayoutParams
                                     (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-                            Date newD = new Date(Long.parseLong(invoiceDate));
+                            /*Date newD = new Date(Long.parseLong(invoiceDate));
                             String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
                             Date newD_ori = new Date(Long.parseLong(invoiceDate_ori));
-                            String newDate_ori = new SimpleDateFormat("dd-MM-yyyy").format(newD_ori);
+                            String newDate_ori = new SimpleDateFormat("dd-MM-yyyy").format(newD_ori);*/
 
 
                             TextView Sno1 = new TextView(myContext);
@@ -9114,6 +9361,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             HSNCode1.setText(cursor_b2clitems_Ammned_for_inv.getString(cursor_b2clitems_Ammned_for_inv.getColumnIndex("HSNCode")));
                             HSNCode1.setPadding(5,0,0,0);
 
+                            TextView Val = new TextView(myContext);
+                            Val.setBackgroundResource(R.drawable.border_item);
+                            Val.setPadding(0,0,5,0);
+                            Val.setGravity(Gravity.END);
+                            Val.setText(String.format("%.2f", cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("Value"))));
+                            valtot += cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("Value"));
+
                             TextView taxVal = new TextView(myContext);
                             taxVal.setBackgroundResource(R.drawable.border_item);
                             taxVal.setPadding(0,0,5,0);
@@ -9135,6 +9389,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             IAmt1.setText(String.format("%.2f", cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("IGSTAmount"))));
                             Itot += cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("IGSTAmount"));
 
+                           TextView cessAmt1 = new TextView(myContext);
+                            cessAmt1.setBackgroundResource(R.drawable.border_item);
+                            cessAmt1.setPadding(0,0,5,0);
+                            cessAmt1.setGravity(Gravity.END);
+                            cessAmt1.setText(String.format("%.2f", cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("cessAmount"))));
+                            cesstot += cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("cessAmount"));
+
                             TextView SubTot1 = new TextView(myContext);
                             double sub = cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("TaxableValue")) +
                                     cursor_b2clitems_Ammned_for_inv.getDouble(cursor_b2clitems_Ammned_for_inv.getColumnIndex("IGSTAmount"));
@@ -9145,8 +9406,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             Amttot += sub;
 
 
-                            TextView custStateCode = new TextView(myContext);
-                            custStateCode.setBackgroundResource(R.drawable.border_item);
+                            TextView custStateCode1 = new TextView(myContext);
+                            custStateCode1.setBackgroundResource(R.drawable.border_item);
 
 
                             TextView CustName = new TextView(myContext);
@@ -9156,18 +9417,21 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             rowcursor.addView(Sno1);//0
                             rowcursor.addView(InvNo_ori);//1
                             rowcursor.addView(inv_dt_ori);//2
-                            rowcursor.addView(custStateCode);//3
-                            rowcursor.addView(CustName);//4
+
+                            rowcursor.addView(CustName);//3
+                            rowcursor.addView(custStateCode1);//4
                            // rowcursor.addView(GSTIN);
                             rowcursor.addView(inv);//5
                             rowcursor.addView(invdt);//6
-                            rowcursor.addView(supplyType);//7
-                            rowcursor.addView(HSNCode1);//8
-                            //rowcursor.addView(Value);
+                            //rowcursor.addView(supplyType);//7
+                            //rowcursor.addView(HSNCode1);//8
+                            rowcursor.addView(Val);//7
+                            rowcursor.addView(IRate1);//8
                             rowcursor.addView(taxVal);//9
-                            rowcursor.addView(IRate1);//10
-                            rowcursor.addView(IAmt1);//11
-                            rowcursor.addView(SubTot1);//12
+
+                            rowcursor.addView(IAmt1);//10
+                            rowcursor.addView(cessAmt1);//11
+                            //rowcursor.addView(SubTot1);//12
                             //rowcursor.addView(CRate);
                             //rowcursor.addView(CAmt);
                             //rowcursor.addView(SRate);
@@ -9180,12 +9444,15 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TextView taxVal = (TextView)rowReport.getChildAt(9);
                     taxVal.setText(String.format("%.2f",taxvaltot));
 
-                    TextView iamt = (TextView)rowReport.getChildAt(11);
+                    TextView iamt = (TextView)rowReport.getChildAt(10);
                     iamt.setText(String.format("%.2f",Itot));
 
+                    TextView cessamt = (TextView)rowReport.getChildAt(11);
+                    cessamt.setText(String.format("%.2f",cesstot));
 
-                    TextView sub = (TextView)rowReport.getChildAt(12);
-                    sub.setText(String.format("%.2f",Amttot));
+
+                    /*TextView sub = (TextView)rowReport.getChildAt(12);
+                    sub.setText(String.format("%.2f",Amttot));*/
                 }while (cursor_billDetail.moveToNext());
                 if(tblReport.getChildCount()>1)
                 {
@@ -9199,6 +9466,435 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
     }
     void GSTR1_B2Cs()
+    {
+        String GSTEnable="1", POSEnable="1",HSNEnable="1",ReverseChargeEnabe="0";
+        ArrayList<B2Csmall> datalist_s = new ArrayList<B2Csmall>();
+        try
+        {
+            Cursor cursor = dbReport.getOutwardB2Cs(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+            if (!(cursor != null && cursor.moveToFirst()) )
+            {
+                //MsgBox = new AlertDialog.Builder(myContext);
+                MsgBox. setMessage("No data for entered period B2C-S")
+                        .setPositiveButton("OK", null)
+                        .show();
+            }
+            else {
+                if (cursor.moveToFirst()) {
+
+                    int count =1;
+
+                    do {// item_detail table
+                        String POS_str = cursor.getString(cursor.getColumnIndex("POS"));
+                        String custStateCode_str = cursor.getString(cursor.getColumnIndex("CustStateCode"));
+                        float TaxableValue_f = Float.parseFloat(cursor.getString(cursor.getColumnIndex("TaxableValue")));
+                        if ((POS_str.equals("")== false  && !POS_str.equals(custStateCode_str)&& TaxableValue_f >250000 )) {
+                        }else{
+                            // for interstate + interstate only + <=2.5l
+                            String InvNo =cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                            String InvDate1 = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                            String InvDate = formatter.format(Long.parseLong(InvDate1));
+
+                            String custname_str = cursor.getString(cursor.getColumnIndex("CustName"));
+                            String statecode_str = cursor.getString(cursor.getColumnIndex("CustStateCode"));
+
+                            Cursor rowcursor = dbReport.getitems_b2cl(InvNo, InvDate1,custname_str,statecode_str);
+                            if (rowcursor == null)
+                            {
+                                //MsgBox = new AlertDialog.Builder(myContext);
+                                MsgBox. setMessage("No items for Invoice No : "+InvNo+" & Invoice Date : "+InvDate)
+                                        .setPositiveButton("OK",null)
+                                        .show();
+                            }
+                            else { // bill level
+
+                                try{
+                                    while(rowcursor.moveToNext()) {
+
+                                        String SupplyType_str;
+                                        double subtotal_f,taxablevalue_f,CGSTRate_f, CGSTAmount_f, SGSTRate_f;
+                                        double SGSTAmount_f,IGSTRate_f, IGSTAmount_f,cessAmt;
+                                        int found  =0;
+
+                                        // supply type (g/s)
+                                        SupplyType_str = rowcursor.getString(rowcursor.getColumnIndex("SupplyType"));
+
+                                        String HSN = rowcursor.getString(rowcursor.getColumnIndex("HSNCode"));
+                                        String desc = rowcursor.getString(rowcursor.getColumnIndex("ItemName"));
+                                        if (HSN==null || HSN.equals(""))
+                                        {
+                                            HSN = "_"+desc;
+                                        }
+                                        //HSN = HSN + "-" + desc;
+
+                                        //HSNCode_str = HSN;
+
+
+                                        //CustStateCode_str  = rowcursor.getString(rowcursor.getColumnIndex("CustStateCode"));
+                                        //String POS_str1 = rowcursor.getString(rowcursor.getColumnIndex("POS"));
+
+
+                                        taxablevalue_f = Double.parseDouble(rowcursor.getString(rowcursor.getColumnIndex("TaxableValue")));
+
+                                        String igstrate_str = rowcursor.getString(rowcursor.getColumnIndex("IGSTRate"));
+                                        if (igstrate_str== null)
+                                        {
+                                            IGSTRate_f =0;
+                                        }
+                                        else
+                                        {
+                                            IGSTRate_f = Double.parseDouble(igstrate_str);
+                                        }
+
+                                        String igstamt_str = String.format("%.2f",rowcursor.getDouble(rowcursor.getColumnIndex("IGSTAmount")));
+                                        if (igstamt_str== null )
+                                        {
+                                            IGSTAmount_f =0;
+                                        }
+                                        else
+                                        {
+                                            IGSTAmount_f = Double.parseDouble(igstamt_str);
+                                        }
+
+                                        String cgstrate_str = rowcursor.getString(rowcursor.getColumnIndex("CGSTRate"));
+                                        if (cgstrate_str== null )
+                                        {
+                                            CGSTRate_f =0;
+                                        }
+                                        else
+                                        {
+                                            CGSTRate_f = Double.parseDouble(cgstrate_str);
+                                        }
+
+                                        String cgstamt_str = rowcursor.getString(rowcursor.getColumnIndex("CGSTAmount"));
+                                        if (cgstamt_str== null )
+                                        {
+                                            CGSTAmount_f =0;
+                                        }
+                                        else
+                                        {
+                                            CGSTAmount_f = Double.parseDouble(cgstamt_str);
+                                        }
+
+                                        String sgstrate_str = rowcursor.getString(rowcursor.getColumnIndex("SGSTRate"));
+                                        if (sgstrate_str== null )
+                                        {
+                                            SGSTRate_f =0;
+                                        }
+                                        else
+                                        {
+                                            SGSTRate_f = Double.parseDouble(sgstrate_str);
+                                        }
+
+                                        String sgstamt_str = rowcursor.getString(rowcursor.getColumnIndex("SGSTAmount"));
+                                        if (sgstamt_str== null )
+                                        {
+                                            SGSTAmount_f =0;
+                                        }
+                                        else
+                                        {
+                                            SGSTAmount_f = Double.parseDouble(sgstamt_str);
+                                        }
+
+                                        String cessamt_str = rowcursor.getString(rowcursor.getColumnIndex("cessAmount"));
+                                        if (cessamt_str== null )
+                                        {
+                                            cessAmt =0;
+                                        }
+                                        else
+                                        {
+                                            cessAmt = Double.parseDouble(cessamt_str);
+                                        }
+
+
+                                        subtotal_f = Double.parseDouble(rowcursor.getString(rowcursor.getColumnIndex("SubTotal")));
+
+                                        String ProAss = "";
+                                        double gstrate = IGSTRate_f+CGSTRate_f+SGSTRate_f;
+                                        B2Csmall obj = new B2Csmall();
+                                        obj.setSupplyType(SupplyType_str);
+                                        obj.setHSNCode(HSN);
+                                        obj.setPlaceOfSupply(POS_str);
+                                        obj.setStateCode(custStateCode_str);
+                                        obj.setTaxableValue(taxablevalue_f);
+                                        obj.setIGSTRate(IGSTRate_f);
+                                        obj.setGSTRate(IGSTRate_f+CGSTRate_f+SGSTRate_f);
+                                        obj.setCessAmt(cessAmt);
+                                        obj.setIGSTAmt(IGSTAmount_f);
+                                        obj.setCGSTRate(CGSTRate_f);
+                                        obj.setCGSTAmt(CGSTAmount_f);
+                                        obj.setSGSTRate(SGSTRate_f);
+                                        obj.setSGSTAmt(SGSTAmount_f);
+                                        obj.setProAss(ProAss);
+                                        obj.setSubTotal(Float.parseFloat(String.valueOf(subtotal_f)));
+                                        if (datalist_s.size() == 0) // empty list
+                                        {
+                                            datalist_s.add(obj);
+                                        }
+                                        else
+                                        {
+                                            found = 0;
+                                            for(B2Csmall data_s: datalist_s){
+                                                if((data_s.getGSTRate()==gstrate)&& data_s.getStateCode().equalsIgnoreCase(custStateCode_str) ){
+                                                    // taxval
+                                                    double taxableval = data_s.getTaxableValue();
+                                                    taxableval += taxablevalue_f;
+                                                    data_s.setTaxableValue(taxableval);
+
+                                                    // IGST Amt
+                                                    double igstamt_temp = data_s.getIGSTAmt();
+                                                    igstamt_temp += IGSTAmount_f;
+                                                    data_s.setIGSTAmt(igstamt_temp);
+
+                                                    // CGST Amt
+                                                    double cgstamt_temp = data_s.getCGSTAmt();
+                                                    cgstamt_temp += CGSTAmount_f;
+                                                    data_s.setCGSTAmt(cgstamt_temp);
+
+                                                    // SGST Amt
+                                                    double sgstamt_temp = data_s.getSGSTAmt();
+                                                    sgstamt_temp += SGSTAmount_f;
+                                                    data_s.setSGSTAmt(sgstamt_temp);
+
+                                                    double cessamt_temp = data_s.getCessAmt();
+                                                    cessamt_temp += cessAmt;
+                                                    data_s.setCessAmt(cessamt_temp);
+
+                                                    //SubTotal
+                                                    double subtot = data_s.getSubTotal();
+                                                    subtot += subtotal_f;
+                                                    data_s.setSubTotal(Float.parseFloat(String.valueOf(subtot)));
+
+                                                    found =1;
+                                                    break;
+
+                                                }
+                                            }  // end of for loop
+                                            if (found ==0) // not in list
+                                            {
+                                                datalist_s.add(obj);
+                                            }
+                                        } // end of else
+
+
+                                        // } while (cursor.moveToNext());
+
+                                    }
+
+                                }// end try
+                                catch (Exception e)
+                                {
+                                    //MsgBox = new AlertDialog.Builder(myContext);
+                                    MsgBox .setTitle("Error while fetching items details")
+                                            .setMessage(e.getMessage())
+                                            .setPositiveButton("OK",null)
+                                            .show();
+                                }
+                            } // end else bill level
+
+
+                        }
+                    } while (cursor.moveToNext());
+
+                    Collections.sort(datalist_s, B2Csmall.HSNComparator);
+
+                }
+                // now displaying the content
+                // richa b2cs
+                int count =1;
+                TableRow rowcursor;
+                for (B2Csmall obj : datalist_s)
+                {
+                    rowcursor = new TableRow(myContext);
+                    rowcursor.setLayoutParams(new TableRow.LayoutParams
+                            (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                    TextView SNo = new TextView(myContext);
+                    SNo.setLeft(10);
+                    SNo.setText(String.valueOf(count));
+                    SNo.setWidth(42);
+                    SNo.setGravity(Gravity.CENTER);
+                    SNo.setTextSize(12);
+                    SNo.setBackgroundResource(R.drawable.border);
+                    count++;
+
+                    TextView SupplyType = new TextView(myContext);
+                    SupplyType.setText(obj.getSupplyType());
+                    SupplyType.setLeft(10);
+                    SupplyType.setWidth(25);
+                    SupplyType.setTextSize(12);
+                    SupplyType.setBackgroundResource(R.drawable.border);
+
+                    TextView HSNCode = new TextView(myContext);
+                    HSNCode.setText(obj.getHSNCode());
+                    HSNCode.setLeft(10);
+                    HSNCode.setWidth(70);
+                    HSNCode.setTextSize(12);
+                    HSNCode.setBackgroundResource(R.drawable.border);
+
+                    TextView POS = new TextView(myContext);
+                    POS.setText(obj.getPlaceOfSupply());
+                    POS.setLeft(10);
+                    POS.setWidth(100);
+                    POS.setTextSize(12);
+                    POS.setBackgroundResource(R.drawable.border);
+
+                    TextView TaxableValue = new TextView(myContext);
+                    TaxableValue.setText(String.format("%.2f",obj.getTaxableValue()));
+                    TaxableValue.setLeft(10);
+                    TaxableValue.setGravity(Gravity.END);
+                    TaxableValue.setPadding(0,0,5,0);
+                    TaxableValue.setWidth(100);
+                    TaxableValue.setTextSize(12);
+                    TaxableValue.setBackgroundResource(R.drawable.border);
+
+
+                    TextView GSTRate = new TextView(myContext);
+                    GSTRate.setText(String.format("%.2f",obj.getGSTRate()));
+                    GSTRate.setLeft(10);
+                    GSTRate.setGravity(Gravity.END);
+                    GSTRate.setPadding(0,0,5,0);
+                    GSTRate.setWidth(60);
+                    GSTRate.setTextSize(12);
+                    GSTRate.setBackgroundResource(R.drawable.border);
+
+
+                    TextView IGSTRate = new TextView(myContext);
+                    IGSTRate.setText(String.format("%.2f",obj.getIGSTRate()));
+                    IGSTRate.setLeft(10);
+                    IGSTRate.setWidth(60);
+                    IGSTRate.setTextSize(12);
+                    IGSTRate.setBackgroundResource(R.drawable.border);
+
+
+                    TextView IGSTAmount = new TextView(myContext);
+                    IGSTAmount.setText(String.format("%.2f",obj.getIGSTAmt()));
+                    IGSTAmount.setLeft(10);
+                    IGSTAmount.setGravity(Gravity.END);
+                    IGSTAmount.setPadding(0,0,5,0);
+                    IGSTAmount.setWidth(60);
+                    IGSTAmount.setTextSize(12);
+                    IGSTAmount.setBackgroundResource(R.drawable.border);
+
+                    TextView CGSTRate = new TextView(myContext);
+                    CGSTRate.setText(String.format("%.2f",obj.getCGSTRate()));
+                    CGSTRate.setLeft(10);
+                    CGSTRate.setWidth(60);
+                    CGSTRate.setTextSize(12);
+                    CGSTRate.setBackgroundResource(R.drawable.border);
+
+
+                    TextView CGSTAmount = new TextView(myContext);
+                    CGSTAmount.setText(String.format("%.2f",obj.getCGSTAmt()));
+                    CGSTAmount.setLeft(10);
+                    CGSTAmount.setGravity(Gravity.END);
+                    CGSTAmount.setPadding(0,0,5,0);
+                    CGSTAmount.setWidth(60);
+                    CGSTAmount.setTextSize(12);
+                    CGSTAmount.setBackgroundResource(R.drawable.border);
+
+                    TextView SGSTRate = new TextView(myContext);
+                    SGSTRate.setText(String.format("%.2f",obj.getSGSTRate()));
+                    SGSTRate.setLeft(10);
+                    SGSTRate.setWidth(60);
+                    SGSTRate.setTextSize(12);
+                    SGSTRate.setBackgroundResource(R.drawable.border);
+
+
+                    TextView SGSTAmount = new TextView(myContext);
+                    SGSTAmount.setText(String.format("%.2f",(obj.getSGSTAmt())));
+                    SGSTAmount.setLeft(10);
+                    SGSTAmount.setGravity(Gravity.END);
+                    SGSTAmount.setPadding(0,0,5,0);
+                    SGSTAmount.setWidth(60);
+                    SGSTAmount.setTextSize(12);
+                    SGSTAmount.setBackgroundResource(R.drawable.border);
+
+                    TextView cessAmount = new TextView(myContext);
+                    cessAmount.setText(String.format("%.2f",(obj.getCessAmt())));
+                    cessAmount.setLeft(10);
+                    cessAmount.setGravity(Gravity.END);
+                    cessAmount.setPadding(0,0,5,0);
+                    cessAmount.setWidth(60);
+                    cessAmount.setTextSize(12);
+                    cessAmount.setBackgroundResource(R.drawable.border);
+
+                    TextView SubTotal = new TextView(myContext);
+                    SubTotal.setText(String.valueOf(obj.getStateCode()));
+                    SubTotal.setLeft(10);
+                    SubTotal.setWidth(60);
+                    SubTotal.setTextSize(12);
+                    SubTotal.setBackgroundResource(R.drawable.border);
+
+
+                    TextView ProAss = new TextView(myContext);
+                    ProAss.setText(obj.getProAss());
+                    ProAss.setLeft(10);
+                    ProAss.setWidth(60);
+                    ProAss.setTextSize(12);
+                    ProAss.setBackgroundResource(R.drawable.border);
+
+
+
+                    rowcursor.addView(SNo);
+                    rowcursor.addView(GSTRate);
+                    //rowcursor.addView(SupplyType);
+                    //rowcursor.addView(HSNCode);
+                    //rowcursor.addView(POS);
+                    if (POSEnable.equals("1"))
+                    {
+
+                    }
+                    if (HSNEnable.equals("1"))
+                    {
+
+                    }
+
+
+                    rowcursor.addView(TaxableValue);
+                    //rowcursor.addView(IGSTRate);
+                    rowcursor.addView(IGSTAmount);
+                    //rowcursor.addView(CGSTRate);
+                    rowcursor.addView(CGSTAmount);
+                    //rowcursor.addView(SGSTRate);
+                    rowcursor.addView(SGSTAmount);
+                    rowcursor.addView(cessAmount);
+                    //rowcursor.addView(SubTotal);
+                    if (ReverseChargeEnabe.equals("1"))
+                    {
+                        rowcursor.addView(ProAss);
+                    }
+
+                    View v = new View(getActivity());
+                    v.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 3));
+                    v.setBackgroundColor(getResources().getColor(R.color.orange));
+                    tblReport.addView(v);
+
+                    tblReport.addView(rowcursor, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                    View v1 = new View(getActivity());
+                    v1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 3));
+                    v1.setBackgroundColor(getResources().getColor(R.color.orange));
+                    tblReport.addView(v1);
+                    //tblReport.addView(rowcursor, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+                }
+            }
+        }// end try
+        catch(Exception e)
+        {
+            //MsgBox = new AlertDialog.Builder(myContext);
+            MsgBox. setMessage(e.getMessage())
+                    .setPositiveButton("OK", null)
+                    .show();
+        }
+
+
+    }
+
+    void GSTR1_B2Cs_itemwise() // as per prev version of API
     {
         String GSTEnable="1", POSEnable="1",HSNEnable="1",ReverseChargeEnabe="0";
         ArrayList<B2Csmall> datalist_s = new ArrayList<B2Csmall>();
@@ -9389,27 +10085,27 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                             for(B2Csmall data_s: datalist_s){
                                                 if(data_s.getHSNCode().equalsIgnoreCase(HSN) && data_s.getStateCode().equalsIgnoreCase(custStateCode_str) ){
                                                     // taxval
-                                                    float taxableval = data_s.getTaxableValue();
+                                                    double taxableval = data_s.getTaxableValue();
                                                     taxableval += taxablevalue_f;
                                                     data_s.setTaxableValue(taxableval);
 
                                                     // IGST Amt
-                                                    float igstamt_temp = data_s.getIGSTAmt();
+                                                    double igstamt_temp = data_s.getIGSTAmt();
                                                     igstamt_temp += IGSTAmount_f;
                                                     data_s.setIGSTAmt(igstamt_temp);
 
                                                     // CGST Amt
-                                                    float cgstamt_temp = data_s.getCGSTAmt();
+                                                    double cgstamt_temp = data_s.getCGSTAmt();
                                                     cgstamt_temp += CGSTAmount_f;
                                                     data_s.setCGSTAmt(cgstamt_temp);
 
                                                     // SGST Amt
-                                                    float sgstamt_temp = data_s.getSGSTAmt();
+                                                    double sgstamt_temp = data_s.getSGSTAmt();
                                                     sgstamt_temp += SGSTAmount_f;
                                                     data_s.setSGSTAmt(sgstamt_temp);
 
                                                     //SubTotal
-                                                    float subtot = data_s.getSubTotal();
+                                                    double subtot = data_s.getSubTotal();
                                                     subtot += subtotal_f;
                                                     data_s.setSubTotal(subtot);
 

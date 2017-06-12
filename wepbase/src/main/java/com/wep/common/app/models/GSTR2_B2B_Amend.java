@@ -18,7 +18,9 @@ public class GSTR2_B2B_Amend {
     private double taxableValue;
     private float igstrate, cgstrate, sgstrate;
     private float igstamt, cgstamt, sgstamt;
+    private double csamt;
     private String POS;
+    private String CustStateCode;
     private String RecipientName;
     private String RecipientStateCode;
     private String supplierType;
@@ -55,6 +57,24 @@ public class GSTR2_B2B_Amend {
         this.hsn_rev="";
         this.pos_ori= "";
         this.pos_rev="";
+        this.CustStateCode="";
+        this.csamt =0;
+    }
+
+    public double getCsamt() {
+        return csamt;
+    }
+
+    public void setCsamt(double csamt) {
+        this.csamt = csamt;
+    }
+
+    public String getCustStateCode() {
+        return CustStateCode;
+    }
+
+    public void setCustStateCode(String custStateCode) {
+        CustStateCode = custStateCode;
     }
 
     public String getSupplierType() {

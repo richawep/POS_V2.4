@@ -21,6 +21,7 @@ public class GSTR1_CDN_Details {
     private double samt;
     private double csrt;
     private double csamt;
+    private double cessamt;
     private String etin;
 
     public GSTR1_CDN_Details() {
@@ -40,6 +41,7 @@ public class GSTR1_CDN_Details {
         this.samt = 0.00;
         this.csrt =0.00;
         this.csamt = 0.00;
+        this.cessamt = 0.00;
         this.etin="";
         this.sno = 0;
 
@@ -66,7 +68,9 @@ public class GSTR1_CDN_Details {
         this.sno = 0;
     }
 
-    public GSTR1_CDN_Details(String ntty, double nt_num, String nt_dt, String rsn, String inum, String idt, String rchrg, double val, double irt, double iamt, double crt, double camt, double srt, double samt, double csrt, double csamt, String etin) {
+    public GSTR1_CDN_Details(String ntty, double nt_num, String nt_dt, String rsn, String inum, String idt,
+                             String rchrg, double val, double irt, double iamt, double crt, double camt, double srt,
+                             double samt, double csrt, double csamt, String etin) {
         this.sno = 0;
         this.ntty = ntty;
         this.nt_num = nt_num;
@@ -83,9 +87,11 @@ public class GSTR1_CDN_Details {
         this.srt = srt;
         this.samt = samt;
         this.csrt = csrt;
-        this.csamt = csamt;
+        this.csamt = cessamt;
+
         this.etin = etin;
     }
+
 
     public String getRchrg() {
         return rchrg;

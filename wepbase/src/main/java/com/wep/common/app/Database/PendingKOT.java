@@ -19,11 +19,12 @@ package com.wep.common.app.Database;
 public class PendingKOT {
 
     // Private Variable
-    String strItemName, strTime , HSNCode , POS , SupplyType;
+    String strItemName, strTime , HSNCode , POS , SupplyType,UOM;
     int iTokenNumber, iItemNumber, iTableNumber, iSubUdfNumber, iDeptCode, iTableSplitNo, iPrintKOTStatus,
             iCategCode, iKitchenCode, iEmployeeId, iCustId, iTaxType, iOrderMode, iIsCheckedOut;
     float fQuantity, fRate, fAmount, fTaxPercent, fTaxAmount,
             fDiscountPercent, fDiscountAmount, fModifierAmount, fServiceTaxAmount, fServiceTaxPercent;
+    float cessRate, cessAmount,IGSTRate,IGSTAmount;
 
     // Default constructor
     public PendingKOT() {
@@ -56,6 +57,11 @@ public class PendingKOT {
         this.HSNCode= "";
         this.POS ="";
         this.iPrintKOTStatus = 0;
+        this.UOM="";
+        this.IGSTRate=0;
+        this.IGSTAmount=0;
+        this.cessRate=0;
+        this.cessAmount=0;
     }
 
     // Parameterized constructor
@@ -92,6 +98,46 @@ public class PendingKOT {
         this.HSNCode = hsn;
         this.POS=pos;
         this.iPrintKOTStatus = PrintKOTStatus;
+    }
+
+    public String getUOM() {
+        return UOM;
+    }
+
+    public void setUOM(String UOM) {
+        this.UOM = UOM;
+    }
+
+    public float getCessRate() {
+        return cessRate;
+    }
+
+    public void setCessRate(float cessRate) {
+        this.cessRate = cessRate;
+    }
+
+    public float getCessAmount() {
+        return cessAmount;
+    }
+
+    public void setCessAmount(float cessAmount) {
+        this.cessAmount = cessAmount;
+    }
+
+    public float getIGSTRate() {
+        return IGSTRate;
+    }
+
+    public void setIGSTRate(float IGSTRate) {
+        this.IGSTRate = IGSTRate;
+    }
+
+    public float getIGSTAmount() {
+        return IGSTAmount;
+    }
+
+    public void setIGSTAmount(float IGSTAmount) {
+        this.IGSTAmount = IGSTAmount;
     }
 
     public int getPrintKOTStatus() {

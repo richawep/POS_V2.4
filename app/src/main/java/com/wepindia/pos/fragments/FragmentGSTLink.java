@@ -412,7 +412,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
                     b2Csmall.getSGSTRate(),
                     b2Csmall.getSGSTAmt(),
                     Double.parseDouble(b2Csmall.getCessRate()),
-                    Double.parseDouble(b2Csmall.getCessAmt()),
+                    b2Csmall.getCessAmt(),
                     (b2Csmall.getProAss().equalsIgnoreCase("")) ? "*pro_ass*" : b2Csmall.getProAss(),
                     b2Csmall.getEtin(),
                     b2Csmall.getEtype(),

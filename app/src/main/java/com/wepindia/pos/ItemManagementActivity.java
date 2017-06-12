@@ -24,13 +24,11 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -96,7 +94,7 @@ public class ItemManagementActivity extends WepBaseActivity {
     Spinner spnrG_S, spnrMOU, spnrtaxationtype;
     EditText etRate ,etQuantity ,etHSN ,etGstTax  ;
     FrameLayout frame_rate_nongst, frame_rate_gst, frame_serviceTax, frame_salesTax, frame_GSTTax;
-    EditText edtMenuCode, edtItemCGSTTax, edtItemSGSTTax, edtIGSTTax;
+    EditText edtMenuCode, edtItemCGSTTax, edtItemSGSTTax, edtIGSTTax,edtcessTax;
     //TextView tvCaptionSNo,tvCaptionLongName,tvCaptionDineInPrice1,tvCaptionDineInPrice2,tvCaptionDineInPrice3,tvCaptionStock, tvCaptionRate,tvCaptionQuanity,tvCaptionMOU,tvCaptionGSTRate,tvCaptionImage,tvCaptionDelete;
     float fRate =0, fQuantity =0, fGSTTax = 0, fDiscount = 0;
     String txtHSNCode = "";
@@ -270,24 +268,23 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                                     continue;
                                                                 }
 
+                                                                ItemOutward item_add = new ItemOutward(i,colums[1].trim(), Double.parseDouble(colums[2].trim()),
+                                                                        Double.parseDouble(colums[3].trim()), Double.parseDouble(colums[4].trim()),Double.parseDouble(colums[5].trim()),
+                                                                        0, 0, 0, "","",i, Double.parseDouble(colums[6].trim()),Double.parseDouble(colums[7].trim()),
+                                                                        Double.parseDouble(colums[6].trim())+ Double.parseDouble(colums[7].trim()),0,
+                                                                        colums[8].trim(), "HSN_"+i,"GST", "G" ) ;
+                                                                long lRowId = dbItems.addItem(item_add);
 
-                                                                InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
+
+                                                                    /*InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
                                                                         Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
                                                                         0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
                                                                         2, 0, 0, 0, "", "",0f,0f,"HSN_"+i,
                                                                         Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
                                                                         Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
                                                                         "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
-                                                                        Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
-                                                                i++;
-                                                                /*InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
-                                                                        Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
-                                                                        0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-                                                                        2, 0, 0, 0, "", "",0f,0f,"",
-                                                                        Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
-                                                                        Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
-                                                                        "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
                                                                         Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));*/
+                                                                i++;
                                                             }
                                                             StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
                                                             stock_outward.saveOpeningStock_Outward(current_date);
@@ -363,14 +360,20 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                     iteration++;
                                                     continue;
                                                 }
-                                                InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
-                                                        Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
-                                                        0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
-                                                        2, 0, 0, 0, "", "",0f,0f,"HSN_"+i,
-                                                        Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
-                                                        Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
-                                                        "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
-                                                        Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
+//                                                InsertItem(colums[1].trim(), colums[1].trim(), Float.parseFloat(colums[2].trim()),
+//                                                        Float.parseFloat(colums[3].trim()), Float.parseFloat(colums[4].trim()),
+//                                                        0, 0, 0, Float.parseFloat(colums[5].trim()), 0, 0, 0, 0, 0, 0, 0, 1,
+//                                                        2, 0, 0, 0, "", "",0f,0f,"HSN_"+i,
+//                                                        Float.parseFloat(colums[6].trim())+ Float.parseFloat(colums[7].trim()),
+//                                                        Float.parseFloat(colums[6].trim()),Float.parseFloat(colums[7].trim()),
+//                                                        "G",colums[8].trim(),"", Float.parseFloat(colums[6].trim()),
+//                                                        Float.parseFloat(colums[7].trim()), Integer.valueOf(colums[0].trim()));
+                                                ItemOutward item_add = new ItemOutward(i,colums[1].trim(), Double.parseDouble(colums[2].trim()),
+                                                        Double.parseDouble(colums[3].trim()), Double.parseDouble(colums[4].trim()),Double.parseDouble(colums[5].trim()),
+                                                        0, 0, 0, "","",i,Double.parseDouble(colums[6].trim()),
+                                                        Double.parseDouble(colums[7].trim()),Double.parseDouble(colums[6].trim())+ Double.parseDouble(colums[7].trim()),0,
+                                                        colums[8].trim(), "HSN_"+i,"GST", "G" ) ;
+                                                long lRowId = dbItems.addItem(item_add);
                                                 i++;
                                             }
                                             final String current_date = businessDate;
@@ -378,6 +381,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                                             stock_outward.saveOpeningStock_Outward(current_date);
                                         } catch (Exception exp) {
                                             Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
+                                            exp.printStackTrace();
                                         }
                                         return null;
                                     }
@@ -393,7 +397,9 @@ public class ItemManagementActivity extends WepBaseActivity {
                                             pd.dismiss();
                                         }catch (Exception e){
                                             Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            e.printStackTrace();
                                         }
+
                                     }
                                 }.execute();
 
@@ -417,6 +423,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
         } catch (Exception exp) {
             Toast.makeText(myContext, "OnCreate:" + exp.getMessage(), Toast.LENGTH_SHORT).show();
+            exp.printStackTrace();
         }
     }
 
@@ -602,6 +609,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         frame_GSTTax = (FrameLayout) findViewById(R.id.frame_GSTTax);*/
 
         edtMenuCode = (EditText) findViewById(R.id.edtMenuCode);
+        edtcessTax = (EditText) findViewById(R.id.edtcessTax);
         edtItemCGSTTax = (EditText) findViewById(R.id.edtItemCGSTTax);
         edtItemSGSTTax = (EditText) findViewById(R.id.edtItemSGSTTax);
         edtIGSTTax = (EditText) findViewById(R.id.edtIGSTTax);
@@ -678,8 +686,8 @@ public class ItemManagementActivity extends WepBaseActivity {
 
     private void listItemClickEvent(ItemOutward item) {
         edtMenuCode.setText(String.valueOf(item.getMenuCode()));
-        txtLongName.setText(item.getLongName());
-        itemName_beforeChange_in_update = item.getLongName();
+        txtLongName.setText(item.getItemName());
+        itemName_beforeChange_in_update = item.getItemName();
         txtBarcode.setText(item.getBarCode());
         txtDineIn1.setText(String.valueOf(item.getDineIn1()));
         txtDineIn2.setText(String.valueOf(item.getDineIn2()));
@@ -736,9 +744,10 @@ public class ItemManagementActivity extends WepBaseActivity {
         } else {
             imgItemImage.setImageResource(R.drawable.img_noimage);
         }
-        edtItemCGSTTax.setText(String.format("%.2f",item.getSalesTaxPercent()));
-        edtItemSGSTTax.setText(String.format("%.2f",item.getServiceTaxPercent()));
+        edtItemCGSTTax.setText(String.format("%.2f",item.getCGSTRate()));
+        edtItemSGSTTax.setText(String.format("%.2f",item.getSGSTRate()));
         edtIGSTTax.setText(String.format("%.2f",item.getIGSTRate()));
+        edtcessTax.setText(String.format("%.2f",item.getCessRate()));
 
         String uom_temp = item.getUOM();
         String uom = "("+uom_temp+")";
@@ -840,7 +849,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         {
             ItemOutward item = new ItemOutward();
             item.setMenuCode(cursorItem.getInt(cursorItem.getColumnIndex("MenuCode")));
-            item.setLongName(cursorItem.getString(cursorItem.getColumnIndex("ItemName")));
+            item.setItemName(cursorItem.getString(cursorItem.getColumnIndex("ItemName")));
             item.setDineIn1(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice1")));
             item.setDineIn2(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice2")));
             item.setDineIn3(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice3")));
@@ -851,9 +860,10 @@ public class ItemManagementActivity extends WepBaseActivity {
             item.setBarCode(cursorItem.getString(cursorItem.getColumnIndex("ItemBarcode")));
             item.setImageUri(cursorItem.getString(cursorItem.getColumnIndex("ImageUri")));
             item.setUOM(cursorItem.getString(cursorItem.getColumnIndex("UOM")));
-            item.setSalesTaxPercent(cursorItem.getFloat(cursorItem.getColumnIndex("CGSTRate")));
-            item.setServiceTaxPercent(cursorItem.getFloat(cursorItem.getColumnIndex("SGSTRate")));
+            item.setCGSTRate(cursorItem.getFloat(cursorItem.getColumnIndex("CGSTRate")));
+            item.setSGSTRate(cursorItem.getFloat(cursorItem.getColumnIndex("SGSTRate")));
             item.setIGSTRate(cursorItem.getFloat(cursorItem.getColumnIndex("IGSTRate")));
+            item.setCessRate(cursorItem.getFloat(cursorItem.getColumnIndex("cessRate")));
             item.setItemId(cursorItem.getInt(cursorItem.getColumnIndex("ItemId")));
             item.setHSN(cursorItem.getString(cursorItem.getColumnIndex("HSNCode")));
             item.setTaxationType(cursorItem.getString(cursorItem.getColumnIndex("TaxationType")));
@@ -1437,18 +1447,18 @@ public class ItemManagementActivity extends WepBaseActivity {
 
         if(type==1){
             for (ItemOutward item : dataList) {
-                if ( item.getMenuCode() == (MenuCode) && !item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase())){
+                if ( item.getMenuCode() == (MenuCode) && !item.getItemName().equalsIgnoreCase(ItemFullName.toUpperCase())){
                     MsgBox = new MessageDialog(myContext);
-                    MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getLongName() );
+                    MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getItemName() );
                     isItemExists = true;
                     break;
                 }
-                else if (item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase()) && item.getMenuCode() != (MenuCode)){
+                else if (item.getItemName().equalsIgnoreCase(ItemFullName.toUpperCase()) && item.getMenuCode() != (MenuCode)){
                     MsgBox = new MessageDialog(myContext);
                     MsgBox.Show("Inconsistent"," Item "+ItemFullName +" already present with Menu Code "+item.getMenuCode());
                     isItemExists = true;
                     break;
-                }else if (item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase()) && item.getMenuCode() == (MenuCode)){
+                }else if (item.getItemName().equalsIgnoreCase(ItemFullName.toUpperCase()) && item.getMenuCode() == (MenuCode)){
                     MsgBox = new MessageDialog(myContext);
                     MsgBox.Show("Inconsistent"," Item "+ItemFullName +" already present with Menu Code "+item.getMenuCode()+
                             "\n Therefore you cannot add it again");
@@ -1463,9 +1473,9 @@ public class ItemManagementActivity extends WepBaseActivity {
             for (ItemOutward item : dataList) {
                 if(itemName_beforeChange_in_update.equalsIgnoreCase(ItemFullName))
                 {
-                    if(item.getMenuCode()==MenuCode && !item.getLongName().equalsIgnoreCase(ItemFullName)){
+                    if(item.getMenuCode()==MenuCode && !item.getItemName().equalsIgnoreCase(ItemFullName)){
                         MsgBox = new MessageDialog(myContext);
-                        MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getLongName() );
+                        MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getItemName() );
                         isItemExists = true;
                         break;
                     }
@@ -1481,13 +1491,13 @@ public class ItemManagementActivity extends WepBaseActivity {
                         break;
                     }/*else if ( menuCodelist.contains(String.valueOf(MenuCode))){
                         MsgBox = new MessageDialog(myContext);
-                        MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getLongName() );
+                        MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getItemName() );
                         isItemExists = true;
                         break;
                     }*/
-                    /*else if ( item.getMenuCode() == (MenuCode) && !item.getLongName().equalsIgnoreCase(ItemFullName.toUpperCase())){
+                    /*else if ( item.getMenuCode() == (MenuCode) && !item.getItemName().equalsIgnoreCase(ItemFullName.toUpperCase())){
                         MsgBox = new MessageDialog(myContext);
-                        MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getLongName() );
+                        MsgBox.Show("Inconsistent"," Menu Code "+MenuCode+" already present for item "+item.getItemName() );
                         isItemExists = true;
                         break;
                     }*/
@@ -1525,12 +1535,12 @@ public class ItemManagementActivity extends WepBaseActivity {
             }
         }*/
 
-        Item objItem = new Item(ItemBarcode, LongName, ShortName, AdditionalTaxId, BillWithStock, CategCode, DeptCode,
+        /*Item objItem = new Item(ItemBarcode, LongName, ShortName, AdditionalTaxId, BillWithStock, CategCode, DeptCode,
                 DiscId, DiscountEnable, KitchenCode, OptionalTaxId1, OptionalTaxId2, PriceChange, SalesTaxId, TaxType,
                 DeliveryPrice, DineInPrice1, DineInPrice2, DineInPrice3, PickUpPrice, Stock, TakeAwayPrice, ImageUri,hsnCode,
                 IGSTRate,0,CGSTRate, 0,SGSTRate, 0 ,MOU_str, taxationtype,frate,g_s, SalesTaxPercent, ServiceTaxPercent, MenuCode,0,0);
 
-        lRowId = dbItems.addItem(objItem);
+        lRowId = dbItems.addItem(objItem);*/
 
         Log.d("Item", "Row Id:" + String.valueOf(lRowId));
     }
@@ -1538,21 +1548,20 @@ public class ItemManagementActivity extends WepBaseActivity {
     private void ReadData(int Type) {
         String strMenuCode = "", strLongName = "", strShortName = "", strBarcode = "";
         int iDeptCode = 0, iCategCode = 0, iKitchenCode = 0, iSalesTaxId = 0, iAdditionalTaxId = 0, iOptionalTaxId1 = 0,
-                iOptionalTaxId2 = 0, iDiscountId = 0, iPriceChange = 0, iDiscountEnable = 0, iBillWithStock = 0,
-                iTaxType = 0;
-        float fDineIn1 = 0, fDineIn2 = 0, fDineIn3 = 0, fTakeAway = 0, fPickUp = 0, fDelivery = 0, fStock = 0;
+                iOptionalTaxId2 = 0, iDiscountId = 0, iPriceChange = 0, iDiscountEnable = 0, iBillWithStock = 0,iTaxType = 0;
+        double fDineIn1 = 0, fDineIn2 = 0, fDineIn3 = 0, fTakeAway = 0, fPickUp = 0, fDelivery = 0, fStock = 0;
 
         strMenuCode = edtMenuCode.getText().toString();
         strLongName = txtLongName.getText().toString().toUpperCase();
         strBarcode = txtBarcode.getText().toString();
 
-        fDineIn1 = Float.parseFloat(txtDineIn1.getText().toString());
-        fDineIn2 = Float.parseFloat(txtDineIn2.getText().toString());
-        fDineIn3 = Float.parseFloat(txtDineIn3.getText().toString());
+        fDineIn1 = Double.parseDouble(txtDineIn1.getText().toString());
+        fDineIn2 = Double.parseDouble(txtDineIn2.getText().toString());
+        fDineIn3 = Double.parseDouble(txtDineIn3.getText().toString());
         fPickUp = 0.00f;
         fTakeAway = 0.00f;
         fDelivery = 0.00f;
-        fStock = Float.parseFloat(txtStock.getText().toString());
+        fStock = Double.parseDouble((txtStock.getText().toString()));
 
         if(!spnrDepartment.getSelectedItem().toString().equalsIgnoreCase("Select"))
             iDeptCode = dbItems.getDepartmentIdByName(labelsDept.get(spnrDepartment.getSelectedItemPosition()));
@@ -1560,16 +1569,10 @@ public class ItemManagementActivity extends WepBaseActivity {
             iCategCode = dbItems.getCategoryIdByName(String.valueOf(spnrCategory.getSelectedItem()));
         iKitchenCode = spnrKitchen.getSelectedItemPosition() ;
 
-        // richa - gst
 
         float frate = 0.0f, fquantity = 0.0f,fgsttax =0.0f;
         String hsnCode = "";
 
-
-        /*frate = Float.parseFloat(etRate.getText().toString());
-        fquantity = Float.parseFloat(etQuantity.getText().toString());
-        hsnCode = etHSN.getText().toString();
-        fgsttax = Float.parseFloat(etGstTax.getText().toString());*/
         iDiscountId = 0;
         hsnCode = etHSN.getText().toString();
         if(hsnCode.equals(""))
@@ -1586,7 +1589,9 @@ public class ItemManagementActivity extends WepBaseActivity {
         float fServiceTax = 0;
         float fCGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtItemCGSTTax.getText().toString())));
         float fSGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtItemSGSTTax.getText().toString())));
-        //float fIGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtIGSTTax.getText().toString())));
+        float fIGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtIGSTTax.getText().toString())));
+        float fcessTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtcessTax.getText().toString())));
+
 
 
         //Cursor crsrSettings = dbItems.getBillSetting();
@@ -1601,17 +1606,21 @@ public class ItemManagementActivity extends WepBaseActivity {
         if (fgsttax >= 0 && fquantity >= 0) {
             // Type 1 - addItem, Type 2 - updateItem
             if (Type == 1) {
-                if (false )/*IsItemExists(strLongName.toUpperCase(), String.valueOf(iMenuCode)))*/
+
+                /*InsertItem(strLongName, strLongName, fDineIn1, fDineIn2, fDineIn3, fTakeAway, fPickUp, fDelivery,
+                        fStock, iPriceChange, iDiscountEnable, iBillWithStock, iTaxType, iDeptCode, iCategCode,
+                        iKitchenCode, iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId,
+                        strBarcode, strImageUri, frate, fquantity, hsnCode, fCGSTTax+fSGSTTax, fCGSTTax, fSGSTTax, g_s,
+                        MOU_str, taxationtype_str,
+                        fSalesTax, fServiceTax, iMenuCode);*/
+
+                ItemOutward item_add = new ItemOutward(iMenuCode,strLongName, fDineIn1, fDineIn2,fDineIn3,fStock,
+                        iDeptCode,iCategCode,iKitchenCode, strBarcode,strImageUri,iMenuCode, fCGSTTax,fSGSTTax,fIGSTTax,fcessTax,
+                        MOU_str, hsnCode,taxationtype_str, g_s ) ;
+                long lRowId = dbItems.addItem(item_add);
+                if (lRowId>0)
                 {
-                    MsgBox.Show("Warning", "Item already present");
-                } else {
-
-                    InsertItem(strLongName, strLongName, fDineIn1, fDineIn2, fDineIn3, fTakeAway, fPickUp, fDelivery,
-                            fStock, iPriceChange, iDiscountEnable, iBillWithStock, iTaxType, iDeptCode, iCategCode,
-                            iKitchenCode, iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId,
-                            strBarcode, strImageUri, frate, fquantity, hsnCode, fCGSTTax+fSGSTTax, fCGSTTax, fSGSTTax, g_s, MOU_str, taxationtype_str,
-                            fSalesTax, fServiceTax, iMenuCode);
-
+                    Log.d("Item Management : ", strLongName+" added sucessfully at Row Id:" + String.valueOf(lRowId));
 
                     // inserting new item stock in OutwardStock Table
                     double rate =0;
@@ -1623,52 +1632,46 @@ public class ItemManagementActivity extends WepBaseActivity {
                         rate = Double.parseDouble(txtDineIn3.getText().toString());
 
                     double quantity =Double.parseDouble(txtStock.getText().toString());
-//                    Cursor date_cursor = dbItems.getCurrentDate();
-//                    String currentdate = "";
-//                    if(date_cursor.moveToNext())
-//                        currentdate = date_cursor.getString(date_cursor.getColumnIndex("BusinessDate"));
+
                     StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
                     stock_outward.addItemToStock_Outward( businessDate, iMenuCode,
                             strLongName,quantity, rate );
                 }
-
-            } else if (Type == 2) {
-
-                float tax = 0;
-
-
-                if (fgsttax > 0) {
-                    tax = fgsttax / 2;
-                }
-
+                else
+                    Log.d("Item Management : ", strLongName+" cannot be added in Item Outward database");
+            }
+            else if (Type == 2)
+            {
                 int iRowId = dbItems.updateItem(Integer.parseInt(edtMenuCode.getText().toString()), strLongName, strShortName, strBarcode,
                         iDeptCode, iCategCode, iKitchenCode, fDineIn1, fDineIn2, fDineIn3, fTakeAway, fPickUp, fDelivery,
                         iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId, fStock, iPriceChange,
                         iDiscountEnable, iBillWithStock, strImageUri, iTaxType, frate, hsnCode, g_s, MOU_str,
-                        taxationtype_str, fCGSTTax+fSGSTTax, fCGSTTax, fSGSTTax,
+                        taxationtype_str, fIGSTTax, fCGSTTax, fSGSTTax,fcessTax,
                         fSalesTax, fServiceTax, Integer.valueOf(strItemId));
-                Log.d("updateCategory", "Updated Rows: " + String.valueOf(iRowId));
+                if (iRowId > 0)
+                {
+                    Log.d("Item Management : ", "Updated Rows: " + String.valueOf(iRowId));
+                    // updating outwardStock table
+                    double rate =0;
+                    if(Double.parseDouble(txtDineIn1.getText().toString()) >0)
+                        rate = Double.parseDouble(txtDineIn1.getText().toString());
+                    else if(Double.parseDouble(txtDineIn2.getText().toString()) >0)
+                        rate = Double.parseDouble(txtDineIn2.getText().toString());
+                    else if(Double.parseDouble(txtDineIn3.getText().toString()) >0)
+                        rate = Double.parseDouble(txtDineIn3.getText().toString());
 
+                    double quantity =Double.parseDouble(txtStock.getText().toString());
 
-                // updating outwardStock table
-                double rate =0;
-                if(Double.parseDouble(txtDineIn1.getText().toString()) >0)
-                    rate = Double.parseDouble(txtDineIn1.getText().toString());
-                else if(Double.parseDouble(txtDineIn2.getText().toString()) >0)
-                    rate = Double.parseDouble(txtDineIn2.getText().toString());
-                else if(Double.parseDouble(txtDineIn3.getText().toString()) >0)
-                    rate = Double.parseDouble(txtDineIn3.getText().toString());
+                    StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
+                    stock_outward.updateOpeningStock_Outward( businessDate, Integer.parseInt(strMenuCode),
+                            strLongName,quantity, rate );
+                    stock_outward.updateClosingStock_Outward( businessDate, Integer.parseInt(strMenuCode),
+                            strLongName,quantity);
+                }else
+                {
+                    Log.d("Item Management : ", " Item data cannot be updated" );
+                }
 
-                double quantity =Double.parseDouble(txtStock.getText().toString());
-                Cursor date_cursor = dbItems.getCurrentDate();
-//                String currentdate = "";
-//                if(date_cursor.moveToNext())
-//                    currentdate = date_cursor.getString(date_cursor.getColumnIndex("BusinessDate"));
-                StockOutwardMaintain stock_outward = new StockOutwardMaintain(myContext, dbItems);
-                stock_outward.updateOpeningStock_Outward( businessDate, Integer.parseInt(strMenuCode),
-                        strLongName,quantity, rate );
-                stock_outward.updateClosingStock_Outward( businessDate, Integer.parseInt(strMenuCode),
-                        strLongName,quantity);
             }
         }
         else {
@@ -1677,14 +1680,6 @@ public class ItemManagementActivity extends WepBaseActivity {
         }
     }
 
-    private void ClearItemTable() {
-        for (int i = 0; i < tblItems.getChildCount(); i++) {
-            View Row = tblItems.getChildAt(i);
-            if (Row instanceof TableRow) {
-                ((TableRow) Row).removeAllViews();
-            }
-        }
-    }
 
     private void ResetItem() {
         strItemId = "";
@@ -1703,6 +1698,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         edtItemCGSTTax.setText("0.00");
         edtItemSGSTTax.setText("0.00");
         edtIGSTTax.setText("0.00");
+        edtcessTax.setText("0.00");
         edtMenuCode.setText("");
 
         etRate.setText("0");
@@ -1875,13 +1871,22 @@ public class ItemManagementActivity extends WepBaseActivity {
         }
 
         String IGST_str = edtIGSTTax.getText().toString();
-                if (IGST_str.equalsIgnoreCase("")) {
-                    edtIGSTTax.setText("0");
-                }else if (Double.parseDouble(IGST_str) <0 || Double.parseDouble(IGST_str)> 99.99)
-                {
-                    MsgBox.Show("Warning","Please enter IGST Rate between 0 and 99.99");
-                    return;
-                }
+        if (IGST_str.equalsIgnoreCase("")) {
+            edtIGSTTax.setText("0");
+        }else if (Double.parseDouble(IGST_str) <0 || Double.parseDouble(IGST_str)> 99.99)
+        {
+            MsgBox.Show("Warning","Please enter IGST Rate between 0 and 99.99");
+            return;
+        }
+
+        String cess_str = edtcessTax.getText().toString();
+        if (cess_str.equalsIgnoreCase("")) {
+            edtIGSTTax.setText("0");
+        }else if (Double.parseDouble(cess_str) <0 || Double.parseDouble(cess_str)> 99.99)
+        {
+            MsgBox.Show("Warning","Please enter cess Rate between 0 and 99.99");
+            return;
+        }
 
 
         new AsyncTask<Void,Void,Void>(){
@@ -1918,10 +1923,11 @@ public class ItemManagementActivity extends WepBaseActivity {
                     ResetItem();
                     //ClearItemTable();
                     DisplayItemList();
-                    Toast.makeText(myContext, "Item Added Successfully", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(myContext, "Item Added Successfully", Toast.LENGTH_LONG).show();
                     pd.dismiss();
                 }catch (Exception e){
                     Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 }
             }
         }.execute();
@@ -2038,6 +2044,16 @@ public class ItemManagementActivity extends WepBaseActivity {
                 return;
             }
 
+            String cess_str = edtcessTax.getText().toString();
+            if (cess_str.equalsIgnoreCase("")) {
+                edtIGSTTax.setText("0");
+            }else if (Double.parseDouble(cess_str) <0 || Double.parseDouble(cess_str)> 99.99)
+            {
+                MsgBox.Show("Warning","Please enter cess Rate between 0 and 99.99");
+                return;
+            }
+
+
             new AsyncTask<Void, Void, Void>() {
                 ProgressDialog pd;
 
@@ -2059,6 +2075,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 //                    ClearItemTable();
 //                    DisplayItems();
                     } catch (Exception exp) {
+                        exp.printStackTrace();
                         //Toast.makeText(myContext, exp.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                     return null;
@@ -2076,6 +2093,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
                     } catch (Exception e) {
                         Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
                     }
                 }
             }.execute();

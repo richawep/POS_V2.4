@@ -1746,8 +1746,8 @@ public class FragmentInwardSupply extends Fragment {
                 objItem.setQuantity(quantity);
                 objItem.setUOM(mou);
                 objItem.setImageId(ImageUri);
-                objItem.setSalesTaxPercent(SalesTax);
-                objItem.setServiceTaxPercent(ServiceTax);
+                objItem.setCGSTRate(SalesTax);
+                objItem.setSGSTRate(ServiceTax);
                 objItem.setSupplyType(supplytype);
                 objItem.setMenuCode(menucode);
 
