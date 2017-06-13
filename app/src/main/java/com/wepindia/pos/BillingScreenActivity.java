@@ -2833,7 +2833,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                 TaxAmt = Float.valueOf(Quantity.getText().toString()) + Float.valueOf(crsrItemsUpdate.getString(crsrItemsUpdate.getColumnIndex("TaxAmount")));
                 SerTaxAmt = Float.valueOf(Quantity.getText().toString()) + Float.valueOf(crsrItemsUpdate.getString(crsrItemsUpdate.getColumnIndex("ServiceTaxAmount")));
 
-                lResult = dbBillScreen.updateKOT(itemno, Qty, Amt, TaxAmt, SerTaxAmt, jBillingMode, Status);
+                lResult = dbBillScreen.updateKOT(itemno, Qty, Amt, TaxAmt, SerTaxAmt, jBillingMode, Status,0,0);
                 Log.d("UpdateKOT", "KOT item updated at position:" + lResult);
             } else {
 

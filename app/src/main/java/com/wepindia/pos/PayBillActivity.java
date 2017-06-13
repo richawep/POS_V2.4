@@ -77,6 +77,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     int RESETCALLED =0;
     float discPercent =0;
     double otherCharges_recieved =0;
+    double totalcessAmount =0;
     double totalIGSTAmount =0;
     double totalCGSTAmount =0;
     double totalSGSTAmount =0;
@@ -243,7 +244,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     private void RecalculateBillAmount() {
         double dTotalValue = 0.00, dPaidTotal = 0.00;
         double dTenderAmount = 0.00, dChangeAmount = 0.00, dDiscAmt = 0.00;
-        totalIGSTAmount=totalCGSTAmount = totalSGSTAmount =totalBillAmount=0;
+        totalcessAmount=totalIGSTAmount=totalCGSTAmount = totalSGSTAmount =totalBillAmount=0;
 
         if(discPercent>0){
             for(AddedItemsToOrderTableClass item : orderList_recieved)
@@ -253,6 +254,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                 double igstRate = item.getIgstRate();
                 double cgstRate = item.getCgstRate();
                 double sgstRate = item.getSgstRate();
+                double cessRate = item.getCessRate();
                 if(taxType_recieved ==1 ) // forward
                 {
                     double discountedrate_item = rate*(1-(discPercent/100));
@@ -260,15 +262,18 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     double igstAmt_new = discountedrate*igstRate/100;
                     double cgstAmt_new = discountedrate*cgstRate/100;
                     double sgstAmt_new = discountedrate*sgstRate/100;
+                    double cessAmt_new = discountedrate*cessRate/100;
                     totalIGSTAmount += igstAmt_new;
                     totalCGSTAmount += cgstAmt_new;
                     totalSGSTAmount += sgstAmt_new;
+                    totalcessAmount+= cessAmt_new;
 
-                    dTotalValue += discountedrate+igstAmt_new + cgstAmt_new +sgstAmt_new;
-                    item.setSubtotal(discountedrate+igstAmt_new + cgstAmt_new +sgstAmt_new);
+                    dTotalValue += discountedrate+igstAmt_new + cgstAmt_new +sgstAmt_new+cessAmt_new;
+                    item.setSubtotal(discountedrate+igstAmt_new + cgstAmt_new +sgstAmt_new+cessAmt_new);
                     item.setIgstAmt(igstAmt_new);
                     item.setCgstAmt(cgstAmt_new);
                     item.setSgstAmt(sgstAmt_new);
+                    item.setCessAmt(cessAmt_new);
                     //item.setTaxableValue(discountedrate);
                 }
                 /*else *//*if(taxType_recieved ==0 )*//*// reverse
@@ -322,28 +327,32 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     private  void restoretoPreviousValue()
     {
         double dTotalValue = 0.00;
-        totalIGSTAmount=totalCGSTAmount = totalSGSTAmount =totalBillAmount=0;
+        totalcessAmount= totalIGSTAmount=totalCGSTAmount = totalSGSTAmount =totalBillAmount=0;
         for(AddedItemsToOrderTableClass item : orderList_recieved) {
             double rate = item.getRate();
             double quantity = item.getQuantity();
             double igstRate = item.getIgstRate();
             double cgstRate = item.getCgstRate();
             double sgstRate = item.getSgstRate();
+            double cessRate = item.getSgstRate();
             if (taxType_recieved == 1) // forward
             {
 
                 double igstAmt_new = rate*quantity * igstRate / 100;
                 double cgstAmt_new = rate*quantity * cgstRate / 100;
                 double sgstAmt_new = rate*quantity * sgstRate / 100;
+                double cessAmt_new = rate*quantity * cessRate / 100;
                 totalIGSTAmount += igstAmt_new;
                 totalCGSTAmount += cgstAmt_new;
                 totalSGSTAmount += sgstAmt_new;
+                totalcessAmount += cessAmt_new;
 
-                dTotalValue += rate*quantity + igstAmt_new + cgstAmt_new + sgstAmt_new;
-                item.setSubtotal(rate*quantity + igstAmt_new + cgstAmt_new + sgstAmt_new);
+                dTotalValue += rate*quantity + igstAmt_new + cgstAmt_new + sgstAmt_new+cessAmt_new;
+                item.setSubtotal(rate*quantity + igstAmt_new + cgstAmt_new + sgstAmt_new+cessAmt_new);
                 item.setIgstAmt(igstAmt_new);
                 item.setCgstAmt(cgstAmt_new);
                 item.setSgstAmt(sgstAmt_new);
+                item.setCessAmt(cessAmt_new);
 
             }
         }
@@ -529,6 +538,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         intentResult.putExtra("TotalIGSTAmount", totalIGSTAmount);
         intentResult.putExtra("TotalCGSTAmount", totalCGSTAmount);
         intentResult.putExtra("TotalSGSTAmount", totalSGSTAmount);
+        intentResult.putExtra("TotalcessAmount", totalcessAmount);
         return intentResult;
     }
 

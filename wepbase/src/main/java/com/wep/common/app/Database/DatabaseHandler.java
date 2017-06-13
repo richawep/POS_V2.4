@@ -4418,6 +4418,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HSNCode, objPendingKOT.getHSNCode());
         cvDbValues.put(KEY_POS, objPendingKOT.getPOS());
         cvDbValues.put(KEY_SupplyType, objPendingKOT.getSupplyType());
+        cvDbValues.put(KEY_IGSTRate, objPendingKOT.getIGSTRate());
+        cvDbValues.put(KEY_IGSTAmount, objPendingKOT.getIGSTAmount());
+        cvDbValues.put(KEY_cessRate, objPendingKOT.getCessRate());
+        cvDbValues.put(KEY_cessAmount, objPendingKOT.getCessAmount());
 
         return dbFNB.insert(TBL_PENDINGKOT, null, cvDbValues);
     }
@@ -4458,6 +4462,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HSNCode, objPendingKOT.getHSNCode());
         cvDbValues.put(KEY_POS, objPendingKOT.getPOS());
         cvDbValues.put(KEY_SupplyType, objPendingKOT.getSupplyType());
+        cvDbValues.put(KEY_IGSTRate, objPendingKOT.getIGSTRate());
+        cvDbValues.put(KEY_IGSTAmount, objPendingKOT.getIGSTAmount());
+        cvDbValues.put(KEY_cessRate, objPendingKOT.getCessRate());
+        cvDbValues.put(KEY_cessAmount, objPendingKOT.getCessAmount());
 
         result = db.insert(TBL_PENDINGKOT, null, cvDbValues);
     }catch(Exception e )
@@ -4471,16 +4479,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 }
 
-    public long updateKOT(int ItemNo, float Qty, float Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus) {
+    public long updateKOT(int ItemNo, float Qty, float Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus
+                    ,float IAmt, float cessAmt) {
         cvDbValues = new ContentValues();
         cvDbValues.put("Quantity", Qty);
         cvDbValues.put("Amount", Amount);
         cvDbValues.put("TaxAmount", TaxAmt);
         cvDbValues.put("ServiceTaxAmount", SerTaxAmt);
+        cvDbValues.put(KEY_IGSTAmount, IAmt);
+        cvDbValues.put(KEY_cessAmount, cessAmt);
         return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
     }
 
-    public long updateKOT_new(int ItemNo, float Qty, float Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus) {
+    public long updateKOT_new(int ItemNo, float Qty, float Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus
+                    ,float IAmt, float cessAmt) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result =0;
         try
@@ -4490,6 +4502,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cvDbValues.put("Amount", Amount);
             cvDbValues.put("TaxAmount", TaxAmt);
             cvDbValues.put("ServiceTaxAmount", SerTaxAmt);
+            cvDbValues.put(KEY_IGSTAmount, IAmt);
+            cvDbValues.put(KEY_cessAmount, cessAmt);
             result =  db.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
         }catch (Exception e)
         {

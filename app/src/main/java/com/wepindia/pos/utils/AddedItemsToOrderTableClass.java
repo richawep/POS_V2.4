@@ -19,11 +19,14 @@ public class AddedItemsToOrderTableClass implements Parcelable {
     double cgstAmt;
     double sgstRate;
     double sgstAmt;
+    double cessRate;
+    double cessAmt;
     double taxableValue;
     double subtotal;
     double billamount;
 
-    public AddedItemsToOrderTableClass(int menuCode, String itemName, double quantity, double rate, double igstRate, double igstAmt, double cgstRate, double cgstAmt, double sgstRate, double sgstAmt, double taxableValue, double subtotal, double billamount) {
+    public AddedItemsToOrderTableClass(int menuCode, String itemName, double quantity, double rate, double igstRate, double igstAmt, double cgstRate, double cgstAmt, double sgstRate, double sgstAmt, double taxableValue, double subtotal, double billamount,
+                                       double cessRate, double cessAmt) {
         this.menuCode = menuCode;
         this.itemName = itemName;
         this.quantity = quantity;
@@ -37,6 +40,8 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         this.taxableValue = taxableValue;
         this.subtotal = subtotal;
         this.billamount = billamount;
+        this.cessRate = cessRate;
+        this.cessAmt= cessAmt;
     }
 
     public AddedItemsToOrderTableClass() {
@@ -53,6 +58,8 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         this.taxableValue = 0.00;
         this.subtotal = 0.00;
         this.billamount = 0.00;
+        this.cessRate = 0.00;
+        this.cessAmt= 0.00;
     }
     /**
      * Storing the Student data to Parcel object
@@ -69,6 +76,8 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         dest.writeDouble(cgstAmt);
         dest.writeDouble(sgstRate);
         dest.writeDouble(sgstAmt);
+        dest.writeDouble(cessRate);
+        dest.writeDouble(cessAmt);
         dest.writeDouble(taxableValue);
         dest.writeDouble(subtotal);
         dest.writeDouble(billamount);
@@ -84,6 +93,8 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         cgstAmt = in.readDouble();
         sgstRate = in.readDouble();
         sgstAmt = in.readDouble();
+        cessRate = in.readDouble();
+        cessAmt = in.readDouble();
         taxableValue = in.readDouble();
         subtotal = in.readDouble();
         billamount = in.readDouble();
@@ -111,7 +122,24 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         this.taxableValue = taxableValue;
     }
 
+    public double getCessRate() {
+        return cessRate;
+    }
+
+    public void setCessRate(double cessRate) {
+        this.cessRate = cessRate;
+    }
+
+    public double getCessAmt() {
+        return cessAmt;
+    }
+
+    public void setCessAmt(double cessAmt) {
+        this.cessAmt = cessAmt;
+    }
+
     @Override
+
 
     public int describeContents() {
         return 0;
