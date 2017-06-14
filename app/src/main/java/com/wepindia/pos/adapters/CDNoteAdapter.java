@@ -76,6 +76,7 @@ public class CDNoteAdapter extends BaseAdapter {
         TextView CGSTAmount;
         TextView SGSTRate;
         TextView SGSTAmount;
+        TextView cessAmount;
         TextView tvNotetype;
         ImageView btndel;
     }
@@ -95,10 +96,11 @@ public class CDNoteAdapter extends BaseAdapter {
             viewHolder.DifferentialValue = (TextView) convertView.findViewById(R.id.tvDifferentialValue);
             viewHolder.IGSTRate = (TextView) convertView.findViewById(R.id.tvIGSTRate);
             viewHolder.IGSTAmount = (TextView) convertView.findViewById(R.id.tvIGSTAmount);
-            viewHolder.CGSTRate = (TextView) convertView.findViewById(R.id.tvCGSTRate);
+            //viewHolder.CGSTRate = (TextView) convertView.findViewById(R.id.tvCGSTRate);
             viewHolder.CGSTAmount = (TextView) convertView.findViewById(R.id.tvCGSTAmount);
-            viewHolder.SGSTRate = (TextView) convertView.findViewById(R.id.tvSGSTRate);
+            //viewHolder.SGSTRate = (TextView) convertView.findViewById(R.id.tvSGSTRate);
             viewHolder.SGSTAmount = (TextView) convertView.findViewById(R.id.tvSGSTAmount);
+            viewHolder.cessAmount = (TextView) convertView.findViewById(R.id.tvcessAmount);
 
             viewHolder.btndel = (ImageView) convertView.findViewById(R.id.btnItemDelete);
             viewHolder.btndel.setTag(i);
@@ -115,12 +117,13 @@ public class CDNoteAdapter extends BaseAdapter {
         viewHolder.CreditNo.setText(String.valueOf(itemOutward.getNt_num()));
         viewHolder.CreditDate.setText(itemOutward.getNt_dt());
         viewHolder.DifferentialValue.setText(String.format("%.2f",itemOutward.getVal()));
-        viewHolder.IGSTRate.setText(String.format("%.2f",itemOutward.getIrt()));
+        viewHolder.IGSTRate.setText(String.format("%.2f",(itemOutward.getIrt() +itemOutward.getCrt()+itemOutward.getSrt())));
         viewHolder.IGSTAmount.setText(String.format("%.2f",itemOutward.getIamt()));
-        viewHolder.CGSTRate.setText(String.format("%.2f",itemOutward.getCrt()));
+        //viewHolder.CGSTRate.setText(String.format("%.2f",itemOutward.getCrt()));
         viewHolder.CGSTAmount.setText(String.format("%.2f",itemOutward.getCamt()));
-        viewHolder.SGSTRate.setText(String.format("%.2f",itemOutward.getSrt()));
+       // viewHolder.SGSTRate.setText(String.format("%.2f",itemOutward.getSrt()));
         viewHolder.SGSTAmount.setText(String.format("%.2f",itemOutward.getSamt()));
+        viewHolder.cessAmount.setText(String.format("%.2f",itemOutward.getCsamt()));
 
         viewHolder.btndel.setLayoutParams(new TableRow.LayoutParams(40, 35));
         viewHolder.btndel.setBackground(activity.getResources().getDrawable(R.drawable.delete_icon_border));

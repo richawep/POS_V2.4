@@ -1843,6 +1843,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(KEY_CGSTRate, note.getCrt());
         contentValues.put(KEY_CGSTAmount, note.getCamt());
         contentValues.put(KEY_cessAmount, note.getCsamt());
+        contentValues.put(KEY_cessRate, note.getCsrt());
 
         long result = dbFNB.insert(TBL_CreditDebit_Outward, null, contentValues);
         return result;
@@ -1861,6 +1862,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(KEY_SGSTAmount, note.getSamt());
         contentValues.put(KEY_CGSTRate, note.getCrt());
         contentValues.put(KEY_CGSTAmount, note.getSamt());
+        contentValues.put(KEY_cessRate, note.getCsrt());
         contentValues.put(KEY_cessAmount, note.getCsamt());
 
         long result = dbFNB.update(TBL_CreditDebit_Outward, contentValues,whereClause,null);

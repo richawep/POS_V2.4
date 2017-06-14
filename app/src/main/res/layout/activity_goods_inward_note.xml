@@ -383,7 +383,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1">
 
 
@@ -391,6 +392,7 @@
                 android:id="@+id/lv_inward_item_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorGreyBackground"
                 android:layout_marginBottom="10dp"
                 >
             </ListView>

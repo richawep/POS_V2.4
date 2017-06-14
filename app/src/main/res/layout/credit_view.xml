@@ -66,13 +66,13 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="0" />
-        <TextView
+        <!--<TextView
             android:id="@+id/tvCGSTRate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="0" />
+            android:text="0" />-->
         <TextView
             android:id="@+id/tvCGSTAmount"
             android:layout_width="match_parent"
@@ -80,15 +80,23 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="0" />
-        <TextView
+       <!-- <TextView
             android:id="@+id/tvSGSTRate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="0" />
+            android:text="0" />-->
         <TextView
             android:id="@+id/tvSGSTAmount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/tvcessAmount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

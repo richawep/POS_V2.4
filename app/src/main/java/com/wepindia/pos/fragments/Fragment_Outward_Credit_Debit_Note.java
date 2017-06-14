@@ -232,13 +232,14 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
     private void listViewItemClickEvent(GSTR1_CDN_Details note)
     {
         try {
-            edt_IGSTRate.setText(String.valueOf(note.getIrt()));
-            edt_IGSTAmount.setText(String.valueOf(note.getIamt()));
-            edt_CGSTRate.setText(String.valueOf(note.getCrt()));
-            edt_CGSTAmount.setText(String.valueOf(note.getCamt()));
-            edt_SGSTRate.setText(String.valueOf(note.getSrt()));
-            edt_SGSTAmount.setText(String.valueOf(note.getSamt()));
-            edt_Value.setText(String.valueOf(note.getVal()));
+            edt_IGSTRate.setText(String.format("%.2f",note.getIrt()));
+            edt_IGSTAmount.setText(String.format("%.2f",note.getIamt()));
+            edt_CGSTRate.setText(String.format("%.2f",note.getCrt()));
+            edt_CGSTAmount.setText(String.format("%.2f",note.getCamt()));
+            edt_SGSTRate.setText(String.format("%.2f",note.getSrt()));
+            edt_SGSTAmount.setText(String.format("%.2f",note.getSamt()));
+            edt_cessAmount.setText(String.format("%.2f",note.getCsamt()));
+            edt_Value.setText(String.format("%.2f",note.getVal()));
             edt_reason.setText(note.getRsn());
             tv_note_no.setText(String.valueOf(note.getNt_num()));
             String notetype = note.getNtty();
@@ -442,6 +443,8 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             note.setCamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_CGSTAmount.getText().toString()))));
             note.setSrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTRate.getText().toString()))));
             note.setSamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTAmount.getText().toString()))));
+            //note.setCsrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_cessRate.getText().toString()))));
+            note.setCsrt(0);
             note.setCsamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_cessAmount.getText().toString()))));
 
             long lResult = dbCredit.addCredit(note, name,reason, reverseCharge);
@@ -499,7 +502,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             note.setSrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTRate.getText().toString()))));
             note.setSamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTAmount.getText().toString()))));
             note.setCsamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_cessAmount.getText().toString()))));
-
+            note.setCrt(0);
 
             long lResult = dbCredit.editCredit(note, reason);
             if(lResult>0) {
@@ -551,6 +554,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         edt_CGSTAmount.setText("0.00");
         edt_SGSTRate.setText("0.00");
         edt_SGSTAmount.setText("0.00");
+        edt_cessAmount.setText("0.00");
         edt_Value.setText("0.00");
         edt_InvoiceNo.setText("");
         edt_reason.setText("");

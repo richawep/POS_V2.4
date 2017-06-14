@@ -97,6 +97,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/background_btn"
                 android:text="Print"
+                android:visibility="gone"
                 android:textColor="@android:color/white"
                 android:theme="@style/WepButtonWithMarigin" />
 
@@ -530,7 +531,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.07"
-                    android:text="NoteType"
+                    android:text="Note   Type"
                     android:gravity="center"
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -568,7 +569,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="IGST Rate"
+                    android:text="GST Rate"
                     android:gravity="center_vertical"
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -587,6 +588,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="CGST Rate"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -605,6 +607,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="SGST Rate"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -618,12 +621,22 @@
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/txtColorAccent"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="cess Amount"
+                    android:gravity="center_vertical"
+                    android:background="@color/colorPrimaryLight"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/txtColorAccent"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.08"
                     android:gravity="center"
+                    android:text="Del"
                     android:background="@color/colorPrimaryLight"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/txtColorAccent"/>
