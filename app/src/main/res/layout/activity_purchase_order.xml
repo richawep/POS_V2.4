@@ -521,7 +521,7 @@
                                 android:id="@+id/chk_interState"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="OtherState"
+                                android:text="Supplier StateCode"
                                 android:checked="false"/>
                             <Spinner
                                 android:id="@+id/spnrSupplierStateCode"
@@ -640,7 +640,7 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/linear_inward_additional_charge"
             android:layout_below="@+id/main"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin1"
             android:layout_marginTop="10dp"
             android:orientation="vertical">
@@ -667,15 +667,7 @@
                     android:gravity="center"
                     android:text="Sno." />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.05"
-                    android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="G/S" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -719,10 +711,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.02"
                     android:background="@drawable/heading_border"
                     android:textColor="@color/white"
                     android:gravity="center"
+                    android:textStyle="bold"
                     android:text="UoM" />
 
                 <TextView
@@ -764,6 +757,16 @@
                     android:textStyle="bold"
                     android:gravity="center"
                     android:text="SGST Amt" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/heading_border"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="cess Amt" />
 
                 <TextView
                     android:layout_width="match_parent"

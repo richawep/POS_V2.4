@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.models.ItemInward;
+import com.wepindia.pos.InwardItemActivity;
 import com.wepindia.pos.R;
 
 import java.util.ArrayList;
@@ -28,13 +29,13 @@ public class ItemInwardAdapter extends BaseAdapter {
     private DatabaseHandler dbHandler;
     private ArrayList<ItemInward> itemList;
     ItemInwardAdapter activityAdapter;
+    String className;
 
-    public ItemInwardAdapter( Context context, DatabaseHandler dbHandler, ArrayList<ItemInward> itemList) {
+    public ItemInwardAdapter( Context context, DatabaseHandler dbHandler, ArrayList<ItemInward> itemList, String className) {
         this.itemList = itemList;
         this.activityContext = context;
         this.dbHandler = dbHandler;
-
-
+        this.className = className;
     }
 
     public ItemInwardAdapter getActivityAdapter() {
@@ -132,6 +133,9 @@ public class ItemInwardAdapter extends BaseAdapter {
                                 Log.d("InwardItemActivity",ItemName+" delete successfully");
                                 dbHandler.deleteSupplierItemLinkforItem(obj.getiMenuCode());
                                 dbHandler.deleteItemInGoodsInward(ItemName);
+                                if(className.equalsIgnoreCase("InwardItemActivity")) {
+                                    ((InwardItemActivity) activityContext).loadSpinnerData();
+                                }
                                 itemList.remove(i);
                                 activityAdapter.notifyDataSetChanged(itemList);
                             }

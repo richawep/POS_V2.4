@@ -573,6 +573,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     edit = savePurchaseOrder();
+                                    reset_inward(0);
                                 }
                             })
                             .show();
@@ -978,14 +979,22 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 if (igstAmt_str== null || igstAmt_str.equals(""))
                     igstAmt_str ="0.00";
 
+                String cessRate_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("cessRate"));
+                if (cessRate_str== null || cessRate_str.equals(""))
+                    cessRate_str =("0.00");
+
+                String cessAmt_str = purchase_crsr.getString(purchase_crsr.getColumnIndex("cessAmount"));
+                if (cessAmt_str== null || cessAmt_str.equals(""))
+                    cessAmt_str ="0.00";
+
                 po.setIgstRate(Double.parseDouble(igstRate_str));
                 po.setIgstAmount(Double.parseDouble(igstAmt_str));
                 po.setCgstRate(Double.parseDouble(cgstRate_str));
                 po.setCgstAmount(Double.parseDouble(cgstAmt_str));
                 po.setSgstRate(Double.parseDouble(sgstRate_str));
                 po.setSgstAmount(Double.parseDouble(sgstAmt_str));
-                po.setCsRate(0);
-                po.setCsAmount(0);
+                po.setCsRate(Double.parseDouble(cessRate_str));
+                po.setCsAmount(Double.parseDouble(cessAmt_str));
 
                 double amt = purchase_crsr.getDouble(purchase_crsr.getColumnIndex("Amount"));
                 po.setAmount(amt);
@@ -1064,8 +1073,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                     String uom_str = itemdetails.getString(itemdetails.getColumnIndex("UOM"));
                     po.setUOM(uom_str);
 
-                    double cgstRate_d =0, sgstRate_d =0, igstRate_d = 0;
-                    double cgstAmt_d =0, sgstAmt_d =0, igstAmt_d = 0;
+                    double cgstRate_d =0, sgstRate_d =0, igstRate_d = 0,cessRate_d=0;
+                    double cgstAmt_d =0, sgstAmt_d =0, igstAmt_d = 0,cessAmt_d=0;
 
                     String cgstRate_str = itemdetails.getString(itemdetails.getColumnIndex("CGSTRate"));
                     if (cgstRate_str== null || cgstRate_str.equals(""))
@@ -1075,32 +1084,43 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                     if (sgstRate_str== null || sgstRate_str.equals(""))
                         sgstRate_str =("0.00");
 
+                    String igstRate_str = itemdetails.getString(itemdetails.getColumnIndex("IGSTRate"));
+                    if (igstRate_str== null || igstRate_str.equals(""))
+                        igstRate_str ="0.00";
+
+                    String cessRate_str = itemdetails.getString(itemdetails.getColumnIndex("cessRate"));
+                    if (cessRate_str== null || cessRate_str.equals(""))
+                        cessRate_str =("0.00");
+
                     cgstRate_d = Double.parseDouble(cgstRate_str);
                     sgstRate_d = Double.parseDouble(sgstRate_str);
+                    igstRate_d = Double.parseDouble(igstRate_str);
+                    cessRate_d = Double.parseDouble(cessRate_str);
                     if(chk_interState.isChecked())
                     {
-                        igstRate_d = cgstRate_d+sgstRate_d;
                         igstAmt_d = igstRate_d *taxval_f/100;
                         cgstRate_d = 0;
                         cgstAmt_d = 0;
                         sgstRate_d = 0;
                         sgstAmt_d = 0;
-
                     }
                     else
                     {
                         cgstAmt_d = cgstRate_d*taxval_f/100;
                         sgstAmt_d = sgstRate_d*taxval_f/100;
+                        igstAmt_d =0;
+                        igstRate_d=0;
                     }
+                    cessAmt_d = cessRate_d*taxval_f/100;
                     po.setIgstRate(igstRate_d);
                     po.setIgstAmount(igstAmt_d);
                     po.setCgstRate(cgstRate_d);
                     po.setCgstAmount(cgstAmt_d);
                     po.setSgstRate(sgstRate_d);
                     po.setSgstAmount(sgstAmt_d);
-                    po.setCsRate(0);
-                    po.setCsAmount(0);
-                    double amount_f = taxval_f + cgstAmt_d +sgstAmt_d+igstAmt_d;
+                    po.setCsRate(cessRate_d);
+                    po.setCsAmount(cessAmt_d);
+                    double amount_f = taxval_f + cgstAmt_d +sgstAmt_d+igstAmt_d+cessAmt_d;
                     po.setAmount(amount_f);
                     po.setIsgoodInward("0");
                     if(chk_inward_additional_charge.isChecked())

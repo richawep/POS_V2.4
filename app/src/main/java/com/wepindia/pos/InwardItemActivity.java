@@ -84,6 +84,8 @@ public class InwardItemActivity extends WepBaseActivity {
         CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
         InwardItemAdapter = null;
         try{
+            InwardItemList =null;
+            InwardItemAdapter = null;
             myContext = this;
 
             MsgBox = new MessageDialog(myContext);
@@ -479,6 +481,8 @@ public class InwardItemActivity extends WepBaseActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             try{
+                if(InwardItemAdapter==null )
+                    return;
                 ItemInward item = (ItemInward)InwardItemAdapter.getItem(position);
                 itemname_clicked = (item.getStrItemname());
                 autocomplete_inw_ItemName.setText(item.getStrItemname());
@@ -548,7 +552,7 @@ public class InwardItemActivity extends WepBaseActivity {
         {
             if(InwardItemAdapter == null)
             {
-                InwardItemAdapter = new ItemInwardAdapter(myContext,dbInwardItem,InwardItemList);
+                InwardItemAdapter = new ItemInwardAdapter(myContext,dbInwardItem,InwardItemList, "InwardItemActivity");
                 InwardItemAdapter.setActivityAdapter(InwardItemAdapter);
                 lstInwardItem.setAdapter(InwardItemAdapter);
             }else
@@ -1018,8 +1022,7 @@ public class InwardItemActivity extends WepBaseActivity {
         btnAdd.setEnabled(true);
         btnEdit.setEnabled(false);
         //btnResetQuantity.setEnabled(false);
-        InwardItemList =null;
-        InwardItemAdapter = null;
+
         rate_prev_for_touched_item = 0;
         itemname_clicked = "";
     }
@@ -1129,6 +1132,7 @@ public class InwardItemActivity extends WepBaseActivity {
         try {
             ReadData(1); // 1 - addItem
             ClearingAndDisplaying();
+            loadSpinnerData();
             //loadAutoCompleteData_item(-1);
 
         } catch (Exception exp) {

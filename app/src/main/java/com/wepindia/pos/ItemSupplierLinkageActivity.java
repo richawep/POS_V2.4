@@ -354,13 +354,34 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
     public AdapterView.OnItemClickListener listViewClickevent = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            /*try {
-                SupplierItemLinkageAdapter.getItem(position);
+            try {
+                SupplierItemLinkageModel link = (SupplierItemLinkageModel)parent.getItemAtPosition(position);
+                autocompletetv_suppliername.setText(link.getSupplierName());
+                tv_suppliercode.setText(String.valueOf(link.getSupplierCode()));
+                autocompletetv_supplierPhn.setText(link.getSupplierPhone());
+                et_inw_supplierAddress.setText(link.getSupplierAddress());
+
+                autocomplete_inw_ItemName.setText(link.getItemName());
+                tv_menucode.setText(String.valueOf(link.getMenuCode()));
+                et_Inw_AverageRate.setText(String.format("%.2f",link.getAverageRate()));
+                et_inw_HSNCode.setText(link.getHsnCode());
+                if(link.getSupplyType().equalsIgnoreCase("G"))
+                    spnr_supplytype.setSelection(0);
+                else if(link.getSupplyType().equalsIgnoreCase("S"))
+                    spnr_supplytype.setSelection(1);
+                spnrUOM.setSelection(getIndex(link.getUom()));
+                et_Inw_CGSTRate.setText(String.format("%.2f",link.getCGSTRate()));
+                et_Inw_SGSTRate.setText(String.format("%.2f",link.getSGSTRate()));
+                et_Inw_IGSTRate.setText(String.format("%.2f",link.getIGSTRate()));
+                et_Inw_cessRate.setText(String.format("%.2f",link.getCessRate()));
+
+                 btnLinkItem.setEnabled(false);
+                btnDelinkItem.setEnabled(true);
             }catch (Exception e)
             {
                 e.printStackTrace();
                 MsgBox.Show("Error",e.getMessage());
-            }*/
+            }
         }
     };
 

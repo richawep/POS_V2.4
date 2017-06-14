@@ -962,7 +962,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_MenuCode + " INTEGER, " + KEY_SupplyType + " TEXT , " + KEY_HSNCode+" TEXT, "+
             KEY_ItemName + " TEXT, " + KEY_Value + " REAL, " + KEY_Quantity + " REAL, " + KEY_UOM + "  TEXT, " + KEY_TaxableValue + " REAL, " +
             KEY_IGSTRate + " REAL," + KEY_IGSTAmount + " REAl, "+KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAl, "+
-            KEY_SGSTRate + " REAL," + KEY_SGSTAmount + " REAl, "+
+            KEY_SGSTRate + " REAL," + KEY_SGSTAmount + " REAl, "+ KEY_cessRate + " REAL," + KEY_cessAmount + " REAl, "+
             KEY_SalesTax + " REAL," + KEY_ServiceTaxAmount + " REAl, " + KEY_Amount + " REAL," + KEY_AdditionalChargeName + " TEXT, " +
             KEY_AdditionalChargeAmount + " REAL , " + KEY_isGoodinward + " INTEGER )";
 
@@ -6441,6 +6441,8 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_CGSTAmount,po.getCgstAmount());
         cvDbValues.put(KEY_SGSTRate,po.getSgstRate());
         cvDbValues.put(KEY_SGSTAmount,po.getSgstAmount());
+        cvDbValues.put(KEY_cessRate,po.getCsRate());
+        cvDbValues.put(KEY_cessAmount,po.getCsAmount());
 
         cvDbValues.put(KEY_Amount, po.getAmount());
         cvDbValues.put(KEY_AdditionalChargeName, po.getAdditionalCharge());

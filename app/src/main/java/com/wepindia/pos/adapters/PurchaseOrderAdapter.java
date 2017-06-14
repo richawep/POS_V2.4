@@ -63,6 +63,7 @@ public class PurchaseOrderAdapter extends BaseAdapter{
         TextView tv_igstAmt;
         TextView tv_cgstAmt;
         TextView tv_sgstAmt;
+        TextView tv_cessAmt;
         TextView tv_amt;
         ImageButton tv_imgDel;
 
@@ -78,7 +79,7 @@ public class PurchaseOrderAdapter extends BaseAdapter{
             convertView = inflater.inflate(R.layout.row_purchaseorder, null);
             viewHolder = new PurchaseOrderAdapter.ViewHolder();
             viewHolder.tv_Sn = (TextView) convertView.findViewById(R.id.tv_Sn);
-            viewHolder.tv_g_s = (TextView) convertView.findViewById(R.id.tv_g_s);
+            //viewHolder.tv_g_s = (TextView) convertView.findViewById(R.id.tv_g_s);
             viewHolder.tv_hsnCode = (TextView) convertView.findViewById(R.id.tv_hsnCode);
             viewHolder.tv_itemName = (TextView) convertView.findViewById(R.id.tv_itemName);
             viewHolder.tv_rate = (TextView) convertView.findViewById(R.id.tv_rate);
@@ -88,6 +89,7 @@ public class PurchaseOrderAdapter extends BaseAdapter{
             viewHolder.tv_igstAmt = (TextView) convertView.findViewById(R.id.tv_igstAmt);
             viewHolder.tv_cgstAmt = (TextView) convertView.findViewById(R.id.tv_cgstAmt);
             viewHolder.tv_sgstAmt = (TextView) convertView.findViewById(R.id.tv_sgstAmt);
+            viewHolder.tv_cessAmt = (TextView) convertView.findViewById(R.id.tv_cessAmt);
             viewHolder.tv_amt = (TextView) convertView.findViewById(R.id.tv_amt);
             viewHolder.tv_imgDel = (ImageButton) convertView.findViewById(R.id.tv_imgDel);
 
@@ -99,7 +101,7 @@ public class PurchaseOrderAdapter extends BaseAdapter{
         }
         PurchaseOrder po = purchaseOrderList.get(position);
         viewHolder.tv_Sn.setText(String.valueOf(position+1));
-        viewHolder.tv_g_s.setText(po.getSupplyType());
+        //viewHolder.tv_g_s.setText(po.getSupplyType());
         viewHolder.tv_hsnCode.setText(po.getHSNCode());
         viewHolder.tv_itemName.setText(po.getItemName());
         viewHolder.tv_rate.setText(String.format("%.2f",po.getValue()));
@@ -109,6 +111,7 @@ public class PurchaseOrderAdapter extends BaseAdapter{
         viewHolder.tv_igstAmt.setText(String.format("%.2f",po.getIgstAmount()));
         viewHolder.tv_cgstAmt.setText(String.format("%.2f",po.getCgstAmount()));
         viewHolder.tv_sgstAmt.setText(String.format("%.2f",po.getSgstAmount()));
+        viewHolder.tv_cessAmt.setText(String.format("%.2f",po.getCsAmount()));
         viewHolder.tv_amt.setText(String.format("%.2f",po.getAmount()));
 
         viewHolder.tv_imgDel.setLayoutParams(new TableRow.LayoutParams(40, 35));

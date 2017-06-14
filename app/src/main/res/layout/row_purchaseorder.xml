@@ -11,13 +11,7 @@
         android:gravity="center"
         android:text="Sno." />
 
-    <TextView
-        android:id="@+id/tv_g_s"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.05"
-        android:gravity="center"
-        android:text="G/S" />
+
 
     <TextView
         android:id="@+id/tv_hsnCode"
@@ -59,8 +53,7 @@
         android:id="@+id/tv_UOM"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-
+        android:layout_weight="1.02"
         android:gravity="center"
         android:text="UoM" />
 
@@ -98,6 +91,15 @@
 
         android:gravity="center"
         android:text="SGST Amt" />
+
+    <TextView
+        android:id="@+id/tv_cessAmt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+
+        android:gravity="center"
+        android:text="cess Amt" />
 
     <TextView
         android:id="@+id/tv_amt"

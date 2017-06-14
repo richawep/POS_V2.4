@@ -223,7 +223,7 @@ android:layout_height="match_parent">
                             android:enabled="false"
                             android:layout_weight="0.65"
                             android:maxLength="15"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
 
 
                     </LinearLayout>
@@ -252,7 +252,7 @@ android:layout_height="match_parent">
                             android:enabled="false"
                             android:inputType="number"
                             android:maxLength="10"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
 
 
                     </LinearLayout>
@@ -283,7 +283,7 @@ android:layout_height="match_parent">
                             android:enabled="false"
                             android:inputType="text"
                             android:maxLength="100"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
 
                     </LinearLayout>
 
@@ -335,7 +335,7 @@ android:layout_height="match_parent">
                             android:hint="Item  Name"
                             android:inputType="text"
                             android:maxLength="20"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
 
 
                     </LinearLayout>
@@ -363,7 +363,7 @@ android:layout_height="match_parent">
                             android:enabled="false"
                             android:inputType="numberDecimal"
                             android:maxLength="7"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -387,7 +387,7 @@ android:layout_height="match_parent">
                             android:gravity="center"
                             android:enabled="false"
                             android:maxLength="8"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -474,7 +474,7 @@ android:layout_height="match_parent">
                             android:layout_weight="0.67"
                             android:enabled="false"
                             android:gravity="center"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
 
                         <!--<ImageView
                             android:layout_width="match_parent"
@@ -528,7 +528,7 @@ android:layout_height="match_parent">
                             android:inputType="numberDecimal"
                             android:maxLength="7"
                             android:enabled="false"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -556,7 +556,7 @@ android:layout_height="match_parent">
                             android:inputType="numberDecimal"
                             android:maxLength="7"
 
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -577,14 +577,14 @@ android:layout_height="match_parent">
                             android:id="@+id/et_Inw_IGSTRate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.6"
                             android:gravity="center"
                             android:hint="%"
                             android:enabled="false"
                             android:focusable="false"
                             android:inputType="numberDecimal"
                             android:maxLength="7"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -612,7 +612,7 @@ android:layout_height="match_parent">
                             android:hint="%"
                             android:inputType="numberDecimal"
                             android:maxLength="7"
-                            android:textSize="13dp" />
+                            android:textSize="15dp" />
                     </LinearLayout>
 
                 </LinearLayout>
