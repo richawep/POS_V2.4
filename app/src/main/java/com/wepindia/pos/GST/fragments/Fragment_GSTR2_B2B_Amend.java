@@ -361,7 +361,7 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
 
 
     public void Add(View v)
-    {
+    {try{
         String supplierType = spnr_SupplierType.getSelectedItem().toString();
         if(supplierType.equals(""))
         {
@@ -409,7 +409,7 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
                     .setMessage(" Please fill all details ")
                     .show();
         }else {
-            try {
+
                 GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
                 ammend.setSno(count);
                 ammend.setGstin_ori(gstin_ori);
@@ -446,12 +446,13 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
                         ammendAdapter.notifyNewDataAdded(ammendList);
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
         }
 
-
+    } catch (Exception e) {
+        e.printStackTrace();
+        MsgBox.Show("Error",e.getMessage());
+    }
     }
 
     public void Clear(View v) {

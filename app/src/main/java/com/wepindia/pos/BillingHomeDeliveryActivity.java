@@ -55,6 +55,7 @@ import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.DeletedKOT;
 import com.wep.common.app.Database.Department;
 import com.wep.common.app.Database.PendingKOT;
+import com.wep.common.app.gst.GSTR1_HSN_Details;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.print.BillKotItem;
 import com.wep.common.app.print.BillServiceTaxItem;
@@ -248,6 +249,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     relative_Interstate.setVisibility(View.VISIBLE);
                 }
             }
+            HSNEnable_out = "1";
+            GSTEnable = "1";
             Cursor crssOtherChrg = null;
             if (jBillingMode == 4) {
                 crssOtherChrg = db.getKOTModifierByModes_new(HomeDeliveryCaption);
@@ -2228,7 +2231,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         tvIGSTValue.setText("0.00");
         tvcessValue.setText("0.00");
         tvBillAmount.setText("0.00");
-        //chk_interstate.setChecked(false);
+        chk_interstate.setChecked(false);
         aTViewSearchItem.setText("");
         aTViewSearchMenuCode.setText("");
         CustomerDetailsFilled = false;
@@ -2238,7 +2241,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         edtCustPhoneNo.setText("");
         edtCustAddress.setText("");
         etCustGSTIN.setText("");
-        chk_interstate.setChecked(false);
         spnr_pos.setSelection(0);
 
         tvBillNumber.setText(String.valueOf(db.getNewBillNumber()));
@@ -3082,6 +3084,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 iTotalItems++;
             }
 
+
+
             // Bill Number
             objBillItem.setBillNumber(tvBillNumber.getText().toString());
             Log.d("InsertBillItems", "InvoiceNo:" + tvBillNumber.getText().toString());
@@ -3394,6 +3398,14 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
             // richa to do - hardcoded b2b bussinies type
             //objBillItem.setBusinessType("B2B");
+            if (jBillingMode == 4) {
+                objBillItem.setBillStatus(2);
+                Log.d("InsertBillItem", "Bill Status:2");
+            } else {
+                objBillItem.setBillStatus(1);
+                Log.d("InsertBillItem", "Bill Status:1");
+            }
+
             lResult = db.addBillItems(objBillItem);
             Log.d("InsertBillItem", "Bill item inserted at position:" + lResult);
         }
@@ -3819,6 +3831,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 double cessAmt=0.00;
                 double subtotal=0.00;
                 double billamount=0.00;
+                double discountamount=0.00;
 
                 TableRow RowBillItem = (TableRow) tblOrderItems.getChildAt(iRow);
 
@@ -3944,7 +3957,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 subtotal = (rate*quantity) + igstAmt+cgstAmt+sgstAmt;
 
                 AddedItemsToOrderTableClass orderItem = new AddedItemsToOrderTableClass( menuCode, itemName, quantity, rate,
-                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt, rate*quantity,subtotal, billamount,cessRate,cessAmt);
+                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt, rate*quantity,subtotal, billamount,cessRate,cessAmt,discountamount);
                 orderItemList.add(orderItem);
             }
 
@@ -4505,6 +4518,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 double sgstAmt=0.00;
                 double subtotal=0.00;
                 double billamount=0.00;
+                double discountamount=0.00;
 
                 TableRow RowBillItem = (TableRow) tblOrderItems.getChildAt(iRow);
 
@@ -4626,7 +4640,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 subtotal = (rate*quantity) + igstAmt+cgstAmt+sgstAmt;
 
                 AddedItemsToOrderTableClass orderItem = new AddedItemsToOrderTableClass( menuCode, itemName, quantity, rate,
-                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt,rate*quantity, subtotal, billamount,cessRate,cessAmt);
+                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt,rate*quantity, subtotal, billamount,cessRate,cessAmt,discountamount);
                 orderItemList.add(orderItem);
             }
 
@@ -4805,7 +4819,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                         String custStateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
                                         if (pos != null && !pos.equals("") && custStateCode != null && !custStateCode.equals("") && !custStateCode.equalsIgnoreCase(pos)) {
                                             chk_interstate.setChecked(true);
-                                            int index = getIndex_pos(pos);
+                                            int index = getIndex_pos(custStateCode);
                                             spnr_pos.setSelection(index);
                                         } else {
                                             chk_interstate.setChecked(false);
@@ -5120,6 +5134,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 Log.d("Richa :",String.valueOf(cess));
                                 if(chk_interstate.isChecked())
                                 {
+                                    tvIGSTValue.setText(String.format("%.2f", igst));
                                     tvTaxTotal.setText(String.format("%.2f", igst));
                                     tvServiceTaxTotal.setText("0.00");
                                 }else {
@@ -5140,6 +5155,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                     int menucode = (Integer.parseInt(ItemNumber.getText().toString()));
                                     for(AddedItemsToOrderTableClass item : orderList_recieved) {
                                         if(item.getMenuCode() == menucode) {
+
+                                            if (RowBillItem.getChildAt(9) != null ) {
+                                                TextView DiscountAmount = (TextView) RowBillItem.getChildAt(9);
+                                                DiscountAmount.setText(String.format("%.2f",item.getDiscountamount()));
+                                            }
 
                                             if (RowBillItem.getChildAt(16) != null) {
                                                 TextView ServiceTaxAmount = (TextView) RowBillItem.getChildAt(16);
@@ -5296,7 +5316,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                                 tvServiceTaxTotal.setText(String.format("%.2f",cursorBillInfo.getDouble(cursorBillInfo.getColumnIndex("SGSTAmount"))));
                                             }else
                                             {
+
                                                 chk_interstate.setChecked(true);
+                                                spnr_pos.setSelection(getIndex_pos(custStateCode));
                                                 tvTaxTotal.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                                                 tvServiceTaxTotal.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                                                 tvIGSTValue.setTextColor(Color.WHITE);
@@ -5380,6 +5402,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             TableRow row = (TableRow) tblOrderItems.getChildAt(iRow);
             CheckBox itemId = (CheckBox) row.getChildAt(0);
             TextView itemName = (TextView) row.getChildAt(1);
+            TextView HSNCode = (TextView) row.getChildAt(2);
             EditText itemQty = (EditText) row.getChildAt(3);
             EditText itemRate = (EditText) row.getChildAt(4);
             TextView itemAmount = (TextView) row.getChildAt(5);
@@ -5388,10 +5411,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 int id = Integer.parseInt(itemId.getText().toString().trim());
                 int sno = count;
                 String name = itemName.getText().toString().trim();
+                String hsn = HSNCode.getText().toString().trim();
                 Double qty = Double.parseDouble(itemQty.getText().toString().trim());
                 double rate = Double.parseDouble(itemRate.getText().toString().trim());
                 double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-                BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount);
+                BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount,hsn);
                 billKotItems.add(billKotItem);
                 count++;
             }
@@ -5406,6 +5430,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             TableRow row = (TableRow) tblOrderItems.getChildAt(iRow);
             CheckBox itemId = (CheckBox) row.getChildAt(0);
             TextView itemName = (TextView) row.getChildAt(1);
+            TextView HSNCode = (TextView) row.getChildAt(2);
             EditText itemQty = (EditText) row.getChildAt(3);
             EditText itemRate = (EditText) row.getChildAt(4);
             TextView itemAmount = (TextView) row.getChildAt(5);
@@ -5413,10 +5438,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             int id = Integer.parseInt(itemId.getText().toString().trim());
             int sno = count;
             String name = itemName.getText().toString().trim();
+            String hsn = HSNCode.getText().toString().trim();
             Double qty = Double.parseDouble(itemQty.getText().toString().trim());
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
             double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-            BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount);
+            BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount,hsn);
             billKotItems.add(billKotItem);
             count++;
 
@@ -5975,7 +6001,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 String addres3= tokens[2];
                                 if(chk_interstate.isChecked())
                                 {
-                                    addres3 = addres3 + " ("+getState_pos(ownerPos)+") ";
+                                    addres3 = addres3 + " ("+spnr_pos.getSelectedItem().toString()+") ";
                                 }
                                 if(reprintBillingMode>0) {
                                     item.setAddressLine3(addres3+"\n(Duplicate Bill)");

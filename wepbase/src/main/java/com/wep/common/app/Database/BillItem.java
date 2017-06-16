@@ -28,7 +28,7 @@ public class BillItem {
 	String TaxationType,SupplierType ;
 	String InvoiceDate;
 	String BillingMode; // richa_2012
-	int isGoodInwarded;
+	int isGoodInwarded, billStatus;
 	int Suppliercode, PurchaseOrderNo;
     String additionalChargeName;
     float additionalChargeAmount;
@@ -82,7 +82,16 @@ public class BillItem {
 		this.cessRate=0;
 		this.cessAmount=0;
 		this.isGoodInwarded=0;
+		this.billStatus=0;
 		this.SupplierType="";
+	}
+
+	public int getBillStatus() {
+		return billStatus;
+	}
+
+	public void setBillStatus(int billStatus) {
+		this.billStatus = billStatus;
 	}
 
 	public double getCessRate() {

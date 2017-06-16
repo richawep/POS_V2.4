@@ -24,9 +24,10 @@ public class AddedItemsToOrderTableClass implements Parcelable {
     double taxableValue;
     double subtotal;
     double billamount;
+    double discountamount;
 
     public AddedItemsToOrderTableClass(int menuCode, String itemName, double quantity, double rate, double igstRate, double igstAmt, double cgstRate, double cgstAmt, double sgstRate, double sgstAmt, double taxableValue, double subtotal, double billamount,
-                                       double cessRate, double cessAmt) {
+                                       double cessRate, double cessAmt,double discountamount) {
         this.menuCode = menuCode;
         this.itemName = itemName;
         this.quantity = quantity;
@@ -42,6 +43,7 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         this.billamount = billamount;
         this.cessRate = cessRate;
         this.cessAmt= cessAmt;
+        this.discountamount= discountamount;
     }
 
     public AddedItemsToOrderTableClass() {
@@ -60,6 +62,7 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         this.billamount = 0.00;
         this.cessRate = 0.00;
         this.cessAmt= 0.00;
+        this.discountamount= 0.00;
     }
     /**
      * Storing the Student data to Parcel object
@@ -81,6 +84,7 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         dest.writeDouble(taxableValue);
         dest.writeDouble(subtotal);
         dest.writeDouble(billamount);
+        dest.writeDouble(discountamount);
     }
     public AddedItemsToOrderTableClass(Parcel in) {
         menuCode = in.readInt();
@@ -98,6 +102,7 @@ public class AddedItemsToOrderTableClass implements Parcelable {
         taxableValue = in.readDouble();
         subtotal = in.readDouble();
         billamount = in.readDouble();
+        discountamount = in.readDouble();
     }
 
 
@@ -113,6 +118,14 @@ public class AddedItemsToOrderTableClass implements Parcelable {
             return new AddedItemsToOrderTableClass[size];
         }
     };
+
+    public double getDiscountamount() {
+        return discountamount;
+    }
+
+    public void setDiscountamount(double discountamount) {
+        this.discountamount = discountamount;
+    }
 
     public double getTaxableValue() {
         return taxableValue;

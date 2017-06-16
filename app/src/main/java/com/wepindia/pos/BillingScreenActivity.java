@@ -4974,6 +4974,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
             TableRow row = (TableRow) tblOrderItems.getChildAt(iRow);
             CheckBox itemId = (CheckBox) row.getChildAt(0);
             TextView itemName = (TextView) row.getChildAt(1);
+            TextView HSNCode = (TextView) row.getChildAt(2);
             EditText itemQty = (EditText) row.getChildAt(3);
             EditText itemRate = (EditText) row.getChildAt(4);
             TextView itemAmount = (TextView) row.getChildAt(5);
@@ -4982,10 +4983,11 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                 int id = Integer.parseInt(itemId.getText().toString().trim());
                 int sno = count;
                 String name = itemName.getText().toString().trim();
+                String hsn = HSNCode.getText().toString().trim();
                 Double qty = Double.parseDouble(itemQty.getText().toString().trim());
                 double rate = Double.parseDouble(itemRate.getText().toString().trim());
                 double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-                BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount);
+                BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount,hsn);
                 billKotItems.add(billKotItem);
                 count++;
             }
@@ -5000,6 +5002,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
             TableRow row = (TableRow) tblOrderItems.getChildAt(iRow);
             CheckBox itemId = (CheckBox) row.getChildAt(0);
             TextView itemName = (TextView) row.getChildAt(1);
+            TextView HSNCode = (TextView) row.getChildAt(2);
             EditText itemQty = (EditText) row.getChildAt(3);
             EditText itemRate = (EditText) row.getChildAt(4);
             TextView itemAmount = (TextView) row.getChildAt(5);
@@ -5007,10 +5010,11 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
             int id = Integer.parseInt(itemId.getText().toString().trim());
             int sno = count;
             String name = itemName.getText().toString().trim();
+            String hsn = HSNCode.getText().toString().trim();
             Double qty = Double.parseDouble(itemQty.getText().toString().trim());
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
             double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-            BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount);
+            BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount,hsn);
             billKotItems.add(billKotItem);
             count++;
 

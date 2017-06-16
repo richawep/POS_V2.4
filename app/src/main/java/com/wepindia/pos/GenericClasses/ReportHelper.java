@@ -150,6 +150,12 @@ public class ReportHelper{
 			ServiceTax.setTextSize(15);
 			ServiceTax.setTextColor(Color.WHITE);
 			ServiceTax.setText("SGST Amt");
+
+			TextView cessTax = new TextView(activityContext);
+			cessTax.setWidth(100);
+			cessTax.setTextSize(15);
+			cessTax.setTextColor(Color.WHITE);
+			cessTax.setText("cess Amt");
 			
 			TextView Discount = new TextView(activityContext);
 			Discount.setWidth(100);
@@ -176,6 +182,7 @@ public class ReportHelper{
 			rowColumnCaption.addView(IGSTTax);
 			rowColumnCaption.addView(SalesTax);
 			rowColumnCaption.addView(ServiceTax);
+			rowColumnCaption.addView(cessTax);
 			rowColumnCaption.addView(Amount);
 			if (ReportName.equalsIgnoreCase("Duplicate Bill Report")) {
 				rowColumnCaption.addView(ReprintCount);
@@ -399,7 +406,7 @@ public class ReportHelper{
 			Amount.setTextSize(15);
 			Amount.setGravity(Gravity.CENTER);
 			Amount.setTextColor(Color.WHITE);
-			Amount.setText("Total Amount");
+			Amount.setText("Taxable27 Amount");
 									
 			// Add views to row
 			rowColumnCaption.addView(SNo);
@@ -582,6 +589,12 @@ public class ReportHelper{
 			ServiceTax.setTextSize(15);
 			ServiceTax.setTextColor(Color.WHITE);
 			ServiceTax.setText("SGST Amt");
+
+			TextView cessTax = new TextView(activityContext);
+			cessTax.setWidth(100);
+			cessTax.setTextSize(15);
+			cessTax.setTextColor(Color.WHITE);
+			cessTax.setText("cess Amt");
 			
 			TextView Discount = new TextView(activityContext);
 			Discount.setWidth(100);
@@ -597,6 +610,7 @@ public class ReportHelper{
 			rowColumnCaption.addView(IGSTTax);
 			rowColumnCaption.addView(SalesTax);
 			rowColumnCaption.addView(ServiceTax);
+			rowColumnCaption.addView(cessTax);
 			rowColumnCaption.addView(Amount);
 			
 		}
@@ -893,6 +907,13 @@ public class ReportHelper{
 			SNo.setTextColor(Color.WHITE);
 			SNo.setText("SNo");
 
+			TextView MenuCode = new TextView(activityContext);
+			MenuCode.setWidth(120);
+			MenuCode.setTextSize(15);
+			MenuCode.setTextColor(Color.WHITE);
+			MenuCode.setText("MenuCode");
+
+
 			TextView DeptName = new TextView(activityContext);
 			DeptName.setWidth(120);
 			DeptName.setTextSize(15);
@@ -906,20 +927,20 @@ public class ReportHelper{
 			CategName.setText("Categ Name");
 
 			TextView ItemName = new TextView(activityContext);
-			ItemName.setWidth(180);
+			ItemName.setWidth(250);
 			ItemName.setTextSize(15);
 			ItemName.setTextColor(Color.WHITE);
 			ItemName.setText("Item Name");
 
 			TextView Qty = new TextView(activityContext);
-			Qty.setWidth(100);
+			Qty.setWidth(150);
 			Qty.setTextSize(15);
 			Qty.setPadding(5,0,0,0);
 			Qty.setTextColor(Color.WHITE);
 			Qty.setText("Qty");
 
 			TextView Rate = new TextView(activityContext);
-			Rate.setWidth(120);
+			Rate.setWidth(150);
 			Rate.setTextSize(15);
             Rate.setGravity(Gravity.CENTER);
 			Rate.setTextColor(Color.WHITE);
@@ -927,6 +948,7 @@ public class ReportHelper{
 
 			// Add views to row
 			rowColumnCaption.addView(SNo);
+			rowColumnCaption.addView(MenuCode);
 			rowColumnCaption.addView(DeptName);
 			rowColumnCaption.addView(CategName);
 			rowColumnCaption.addView(ItemName);
@@ -1375,7 +1397,7 @@ public class ReportHelper{
 			HSN.setTextSize(15);
 			HSN.setTextColor(Color.WHITE);
 			HSN.setText("HSN/SAC");
-            HSN.setGravity(Gravity.CENTER);
+            //HSN.setGravity(Gravity.CENTER);
 
 
             TextView UOM = new TextView(activityContext);
@@ -1397,6 +1419,7 @@ public class ReportHelper{
 			Quantity.setTextSize(15);
 			Quantity.setTextColor(Color.WHITE);
 			Quantity.setText("Qty");
+			Quantity.setGravity(Gravity.CENTER);
 
 			TextView TaxableValue = new TextView(activityContext);
 			TaxableValue.setWidth(100);

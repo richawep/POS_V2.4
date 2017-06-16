@@ -257,6 +257,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                 double cessRate = item.getCessRate();
                 if(taxType_recieved ==1 ) // forward
                 {
+                    double discountamount = quantity*rate*discPercent/100 ;
                     double discountedrate_item = rate*(1-(discPercent/100));
                     double discountedrate = discountedrate_item*quantity;
                     double igstAmt_new = discountedrate*igstRate/100;
@@ -274,6 +275,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     item.setCgstAmt(cgstAmt_new);
                     item.setSgstAmt(sgstAmt_new);
                     item.setCessAmt(cessAmt_new);
+                    item.setDiscountamount(discountamount);
                     //item.setTaxableValue(discountedrate);
                 }
                 /*else *//*if(taxType_recieved ==0 )*//*// reverse

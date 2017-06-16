@@ -1,10 +1,12 @@
 package com.wep.common.app.gst;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by RichaA on 5/5/2017.
  */
 
-public class GSTR1_HSN_Details {
+public class GSTR1_HSN_Details implements  Comparable<GSTR1_HSN_Details>{
     private int num;
     private String ty;
     private  String hsn_sc;
@@ -195,5 +197,10 @@ public class GSTR1_HSN_Details {
 
     public void setSply_ty(String sply_ty) {
         this.sply_ty = sply_ty;
+    }
+
+    @Override
+    public int compareTo(@NonNull GSTR1_HSN_Details hsndata) {
+        return  hsn_sc.compareTo(hsndata.hsn_sc);
     }
 }

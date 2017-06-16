@@ -252,7 +252,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
 
 
     public void Add(View v)
-    {
+    {try{
         String taxMonth = et_taxMonth.getText().toString();
         String hsn_ori = et_hsn_ori.getText().toString();
         String type_ori = spnr_g_s_ori.getSelectedItem().toString();
@@ -309,7 +309,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
             String sgstamt = String.format("%.2f",Float.parseFloat(et_sgstamt.getText().toString()));
             String cessamt = String.format("%.2f",Float.parseFloat(et_cessamt.getText().toString()));
 
-            try {
+
                 GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
                 ammend.setSno(count);
                 ammend.setTaxMonth(taxMonth);
@@ -348,11 +348,11 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
                         ammendAdapter.notifyNewDataAdded(ammendList);
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
+        }
+    } catch (Exception e) {
+        e.printStackTrace();MsgBox.Show("Error",e.getMessage());
+    }
 
     }
 

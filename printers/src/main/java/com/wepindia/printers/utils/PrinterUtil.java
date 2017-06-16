@@ -492,12 +492,14 @@ public class PrinterUtil {
                 amt = ""+amt;*/
             String preId = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getItemId()),4,1);
             String preName = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(billKotItem.getItemName()),10,1),11,1);
+            String HSN = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(billKotItem.getHSNCode()),7,1),7,1);
+
             String preQty = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.valueOf(billKotItem.getQty()),8,1),7,1);
             //String preRate = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.format("%.2f",billKotItem.getRate()),6,1),9,1);
             //String preAmount = getPostAddedSpaceFormat("",String.format("%.2f",billKotItem.getAmount()),7,1);
             String preRate = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getRate()),10,1),11,1);
             String preAmount = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getAmount()),13,1),15,1);
-            String pre = preId+preName+preQty+preRate+preAmount;
+            String pre = preId+preName+HSN+preQty+preRate+preAmount;
             esc.addText(pre+"\n");
         }
         esc.addText("================================================"+"\n");

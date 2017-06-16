@@ -315,6 +315,9 @@ public class RiderSettlementActivity extends WepBaseActivity{
 					(Integer.parseInt(billno_str), iRiderCode,
 					Float.parseFloat(deliveryCharges_str), fSettledAmount, fSettledAmount);
 			Log.d("UpdatePendingDelivery", "Rows Updated:" + iResult);
+
+			iResult = dbRiderSettlement.updatePendingDeliveryBill_Ledger
+					(Integer.parseInt(billno_str),fSettledAmount);
 			/*MsgBox = new MessageDialog(myContext);
             MsgBox.Show("Information", "Deliver order settled");*/
             Toast.makeText(myContext, "Deliver order settled", Toast.LENGTH_SHORT).show();

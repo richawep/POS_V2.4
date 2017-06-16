@@ -184,6 +184,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:layout_gravity="center"
+                                    style="@android:style/Widget.Holo.Light.Spinner"
                                     android:layout_marginLeft="5dp"
                                     />
 

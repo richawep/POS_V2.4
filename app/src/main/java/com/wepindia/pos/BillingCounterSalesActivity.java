@@ -125,7 +125,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     String businessDate="";
     int reprintBillingMode =0;
     boolean isReprint = false;
-    String ownerPos= "";
+   // String ownerPos= "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -631,7 +631,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 CounterSalesCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeCounterSalesCaption"));
                 HomeDeliveryCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeHomeDeliveryCaption"));
                 TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
-                ownerPos = crsrSettings.getString(crsrSettings.getColumnIndex("POSNumber"));
+                //ownerPos = crsrSettings.getString(crsrSettings.getColumnIndex("POSNumber"));
 
                /* if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1) {
                     Date date1 = new Date();
@@ -695,7 +695,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 } else {
                     relative_Interstate.setVisibility(View.VISIBLE);
                 }
-
+                HSNEnable_out = "1";
+                GSTEnable = "1";
             }
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -1814,6 +1815,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 double cessAmt=0.00;
                 double subtotal=0.00;
                 double billamount=0.00;
+                double discountamount=0.00;
 
                 TableRow RowBillItem = (TableRow) tblOrderItems.getChildAt(iRow);
 
@@ -1939,7 +1941,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 subtotal = (rate*quantity) + igstAmt+cgstAmt+sgstAmt;
 
                 AddedItemsToOrderTableClass orderItem = new AddedItemsToOrderTableClass( menuCode, itemName, quantity, rate,
-                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt, rate*quantity,subtotal, billamount,cessRate,cessAmt);
+                        igstRate,igstAmt, cgstRate, cgstAmt, sgstRate,sgstAmt, rate*quantity,subtotal, billamount,cessRate,cessAmt,discountamount);
                 orderItemList.add(orderItem);
             }
 
@@ -2567,7 +2569,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 objBillItem.setBusinessType("B2B");
             }
             Log.d("InsertBillItems", "BusinessType : " + objBillItem.getBusinessType());
-
+            objBillItem.setBillStatus(1);
+            Log.d("InsertBillItems", "Bill Status:1");
             // richa to do - hardcoded b2b bussinies type
             //objBillItem.setBusinessType("B2B");
             lResult = db.addBillItems(objBillItem);
@@ -2828,13 +2831,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBillDetail", "Reprint Count:0");
 
         // Bill Status
-        if (jBillingMode == 4) {
-            objBillDetail.setBillStatus(2);
-            Log.d("InsertBillDetail", "Bill Status:2");
-        } else {
-            objBillDetail.setBillStatus(1);
-            Log.d("InsertBillDetail", "Bill Status:1");
-        }
+
+        objBillDetail.setBillStatus(1);
+        Log.d("InsertBillDetail", "Bill Status:1");
+
 
         // Employee Id (Waiter / Rider)
         if (jBillingMode == 1 ) {
@@ -3077,7 +3077,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 String addres3= tokens[2];
                                 if(chk_interstate.isChecked())
                                 {
-                                    addres3 = addres3 + " ("+getState_pos(ownerPos)+") ";
+                                    addres3 = addres3 + " ("+(spnr_pos.getSelectedItem().toString())+") ";
                                 }
                                 if(reprintBillingMode>0) {
                                     item.setAddressLine3(addres3+"\n(Duplicate Bill)");
@@ -3118,6 +3118,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             TableRow row = (TableRow) tblOrderItems.getChildAt(iRow);
             CheckBox itemId = (CheckBox) row.getChildAt(0);
             TextView itemName = (TextView) row.getChildAt(1);
+            TextView HSNCode = (TextView) row.getChildAt(2);
             EditText itemQty = (EditText) row.getChildAt(3);
             EditText itemRate = (EditText) row.getChildAt(4);
             TextView itemAmount = (TextView) row.getChildAt(5);
@@ -3125,10 +3126,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             int id = Integer.parseInt(itemId.getText().toString().trim());
             int sno = count;
             String name = itemName.getText().toString().trim();
+            String hsncode = HSNCode.getText().toString().trim();
             Double qty = Double.parseDouble(itemQty.getText().toString().trim());
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
             double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-            BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount);
+            BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount, hsncode);
             billKotItems.add(billKotItem);
             count++;
 
@@ -3432,9 +3434,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                             tvcessValue.setText(String.format("%.2f",cess));
                             if(chk_interstate.isChecked())
                             {
+                                tvIGSTValue.setText(String.format("%.2f", igst));
                                 tvTaxTotal.setText(String.format("%.2f", igst));
                                 tvServiceTaxTotal.setText("0.00");
                             }else {
+                                tvIGSTValue.setText(String.format("0.00"));
                                 tvTaxTotal.setText(String.format("%.2f", cgst));
                                 tvServiceTaxTotal.setText(String.format("%.2f", sgst));
                             }
@@ -3457,6 +3461,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                             TextView Amount = (TextView) RowBillItem.getChildAt(5);
                                             Amount.setText(String.format("%.2f",item.getTaxableValue()));
                                         }*/
+                                        if (RowBillItem.getChildAt(9) != null ) {
+                                            TextView DiscountAmount = (TextView) RowBillItem.getChildAt(9);
+                                            DiscountAmount.setText(String.format("%.2f",item.getDiscountamount()));
+                                        }
                                         if (RowBillItem.getChildAt(16) != null) {
                                             TextView ServiceTaxAmount = (TextView) RowBillItem.getChildAt(16);
                                             ServiceTaxAmount.setText(String.format("%.2f",item.getSgstAmt()));
@@ -3810,7 +3818,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                         String custStateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
                                         if (pos != null && !pos.equals("") && custStateCode != null && !custStateCode.equals("") && !custStateCode.equalsIgnoreCase(pos)) {
                                             chk_interstate.setChecked(true);
-                                            int index = getIndex_pos(pos);
+                                            int index = getIndex_pos(custStateCode);
                                             spnr_pos.setSelection(index);
                                         } else {
                                             chk_interstate.setChecked(false);

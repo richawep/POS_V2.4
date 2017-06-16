@@ -830,7 +830,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_SubTotal + " REAl, " + KEY_BillingMode + " TEXT, " + KEY_ServiceTaxAmount + " REAL, " +
             KEY_ServiceTaxPercent + " REAL," + KEY_ModifierAmount + " REAL, " + KEY_TaxType + " NUMERIC, " +
             KEY_KitchenCode + " NUMERIC, " + KEY_CategCode + " NUMERIC, " + KEY_DeptCode + " NUMERIC, " +
-            KEY_DiscountPercent + " REAL, " + KEY_DiscountAmount + " REAL, " + KEY_TaxAmount + " REAL, " +
+            KEY_DiscountPercent + " REAL, " + KEY_DiscountAmount + " REAL, " + KEY_TaxAmount + " REAL, " + KEY_BillStatus+" INTEGER, "+
             KEY_TaxPercent + " REAL)";
 
     String QUERY_CREATE_TABLE_Outward_Supply_Items_Details = " CREATE TABLE " + TBL_OUTWARD_SUPPLY_ITEMS_DETAILS + "( "
@@ -1976,10 +1976,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
     public Cursor getitems_outward_details(String Startdate, String Enddate) {
-        String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " WHERE " + KEY_InvoiceNo + " BETWEEN '" + Startdate + "' AND '" +Enddate+"' ";
+        String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " WHERE " + KEY_InvoiceDate + " BETWEEN '" + Startdate + "' AND '" +Enddate+"' ";
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
+    public Cursor getitems_outward_details_withDept(String Startdate, String Enddate) {
+        String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " , "+TBL_DEPARTMENT+"  WHERE " +KEY_BillStatus+" = 1 AND "+
+                KEY_InvoiceDate + " BETWEEN '" + Startdate + "' AND '" +Enddate+"' AND "+TBL_OUTWARD_SUPPLY_LEDGER+"."+KEY_DeptCode+" = "+TBL_DEPARTMENT+"."+KEY_DeptCode;
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+    public Cursor getitems_outward_details_withCateg(String Startdate, String Enddate) {
+        String selectQuery = "SELECT * FROM " + TBL_OUTWARD_SUPPLY_LEDGER + " , "+TBL_CATEGORY+"  WHERE " +KEY_BillStatus+" = 1 AND "+
+                KEY_InvoiceDate + " BETWEEN '" + Startdate + "' AND '" +Enddate+"' AND "+TBL_OUTWARD_SUPPLY_LEDGER+"."+KEY_CategCode+" = "+TBL_CATEGORY+"."+KEY_CategCode;
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+
+
 
     public Cursor getitems_b2ba(String No_ori, String Date_ori,String No, String Date, String cust_GSTIN, String custStateCode) {
         String selectQuery = "SELECT * FROM " + TBL_GSTR1_AMEND + " WHERE " + KEY_InvoiceNo + " Like '" + No + "' AND " +
@@ -5260,6 +5274,13 @@ public int makeBillVoid(int InvoiceNo ) {
 
         return dbFNB.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
     }
+    public int updatePendingDeliveryBill_Ledger(int InvoiceNo, float PaidTotalPayment) {
+        cvDbValues = new ContentValues();
+        cvDbValues.put("BillStatus", 1);
+
+        String whereClaus = KEY_InvoiceNo + "=" + InvoiceNo+" AND "+KEY_BillStatus+" = 2 ";
+        return dbFNB.update(TBL_OUTWARD_SUPPLY_LEDGER, cvDbValues, whereClaus, null);
+    }
 
     /************************************************************************************************************************************/
     /*******************************************************
@@ -5306,6 +5327,7 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_CustStateCode, objBillItem.getCustStateCode());
         cvDbValues.put(KEY_UOM, objBillItem.getUom());
         cvDbValues.put(KEY_BusinessType, objBillItem.getBusinessType());
+        cvDbValues.put(KEY_BillStatus, objBillItem.getBillStatus());
 
         return dbFNB.insert(TBL_BILLITEM, null, cvDbValues);
     }
@@ -5433,7 +5455,7 @@ public int makeBillVoid(int InvoiceNo ) {
     /************************************************************************************************************************************/
 
     // -----Bill wise and Transaction Report-----
-    public Cursor getBillwiseReport(String StartDate, String EndDate) {
+    public Cursor getBillDetailReport(String StartDate, String EndDate) {
         /*return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"},
                 "BillStatus=1 AND InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "'", null, null, null,
                 KEY_InvoiceNo);*/
@@ -5578,16 +5600,16 @@ public int makeBillVoid(int InvoiceNo ) {
     }
 
     // -----Tax Report-----
-    public Cursor getBillsforTaxReports(String StartDate, String EndDate)
+    /*public Cursor getBillsforTaxReports(String StartDate, String EndDate)
     {
         String selectQuery = "Select "+KEY_InvoiceNo+" , "+KEY_InvoiceDate+" FROM "+TBL_OUTWARD_SUPPLY_ITEMS_DETAILS+
                 " WHERE "+KEY_BillStatus+" = 1 AND "+KEY_InvoiceDate+" BETWEEN '"+StartDate+"' AND '"+EndDate+"'";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);
         return cursor;
-    }
+    }*/
     public Cursor getTaxDetailforBill(String Invoiceno, String Invoicedate, String taxPercentName, String taxAmountName)
     {
-        String selectQuery = "Select "+taxPercentName+" , "+taxAmountName+" ,"+KEY_TaxableValue+" FROM "+TBL_OUTWARD_SUPPLY_LEDGER+
+        String selectQuery = "Select "+taxPercentName+" , "+taxAmountName+" ,"+KEY_TaxableValue+","+KEY_DiscountAmount+" FROM "+TBL_OUTWARD_SUPPLY_LEDGER+
                 " WHERE "+KEY_InvoiceNo+" LIKE '"+Invoiceno+"' AND "+KEY_InvoiceDate+" LIKE '"+Invoicedate+"'";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);
         return cursor;
@@ -5677,9 +5699,9 @@ public int makeBillVoid(int InvoiceNo ) {
                 TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' Group By ItemName Order by Qty desc LIMIT 10", null);
     }*/
     public Cursor getFastSellingItemwiseReport(String StartDate, String EndDate) {
-        return dbFNB.rawQuery("SELECT sum(Quantity) as Qty, * FROM " + TBL_BILLITEM + "," + TBL_BILLDETAIL +
-                " WHERE " + TBL_BILLDETAIL + ".BillStatus=1 AND " + TBL_BILLITEM + ".InvoiceNo= " + TBL_BILLDETAIL + ".InvoiceNo AND " +
-                TBL_BILLDETAIL + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' Group By ItemName Order by Qty desc LIMIT 10", null);
+        return dbFNB.rawQuery("SELECT  * FROM " + TBL_BILLITEM +
+                " WHERE BillStatus=1 AND " +
+                TBL_OUTWARD_SUPPLY_LEDGER + ".InvoiceDate BETWEEN '" + StartDate + "' AND '" + EndDate + "' ", null);
     }
     // -----Day wise and Month wise Report-----
     public Cursor getDaywiseReport(String StartDate, String EndDate) {
@@ -8356,6 +8378,8 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put(KEY_CustStateCode, objBillItem.getCustStateCode());
             cvDbValues.put(KEY_UOM, objBillItem.getUom());
             cvDbValues.put(KEY_BusinessType, objBillItem.getBusinessType());
+            cvDbValues.put(KEY_BillStatus, objBillItem.getBillStatus());
+
             return db.insert(TBL_BILLITEM, null, cvDbValues);
         }catch (Exception e){
             e.printStackTrace();

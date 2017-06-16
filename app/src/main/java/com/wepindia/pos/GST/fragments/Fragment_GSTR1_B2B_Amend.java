@@ -352,7 +352,7 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
         }
 
         String supply = spnr_g_s.getSelectedItem().toString();
-
+        try {
         String value = String.format("%.2f",Float.parseFloat(et_value.getText().toString()));
         String taxval = String.format("%.2f",Float.parseFloat(et_taxval.getText().toString()));
         String igstrate = String.format("%.2f",Float.parseFloat(et_igstrate.getText().toString()));
@@ -377,7 +377,7 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
                     .setMessage(" Please fill all details ")
                     .show();
         }else {
-            try {
+
                 GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
                 ammend.setSno(count);
                 ammend.setGstin_ori(gstin_ori);
@@ -414,11 +414,12 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
                         ammendAdapter.notifyNewDataAdded(ammendList);
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+            MsgBox.Show("Error",e.getMessage());
+        }
 
     }
 

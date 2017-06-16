@@ -334,7 +334,7 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
 
 
     public void Add(View v)
-    {
+    {try {
         String recipientStateCode = et_recipientStateCode.getText().toString();
         String recipientName = et_recipientName.getText().toString();
         String invno_ori = et_invno_ori.getText().toString();
@@ -375,7 +375,7 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
                     .setMessage(" Please fill all details ")
                     .show();
         }else {
-            try {
+
                 GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
                 ammend.setSno(count);
                 ammend.setRecipientName(recipientName);
@@ -410,11 +410,12 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
                         ammendAdapter.notifyNewDataAdded(ammendList);
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        MsgBox.Show("Error",e.getMessage());
+    }
 
     }
 
