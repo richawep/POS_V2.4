@@ -828,6 +828,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     SAmt.setPadding(0,0,5,0);
                     SAmt.setGravity(Gravity.END);
 
+
+                    TextView cessAmt = new TextView(myContext);
+                    /*SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));*/
+                    cessAmt.setBackgroundResource(R.drawable.border);
+                    cessAmt.setPadding(0,0,5,0);
+                    cessAmt.setGravity(Gravity.END);
+
+
                     TextView SubTot = new TextView(myContext);
                    /* SubTot.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("Amount"))));*/
                     SubTot.setBackgroundResource(R.drawable.border);
@@ -845,6 +853,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                    rowReport.addView(IAmt);
                    rowReport.addView(CAmt);
                    rowReport.addView(SAmt);
+                   rowReport.addView(cessAmt);
                    rowReport.addView(SubTot);
 
                     View v1 = new View(getActivity());
@@ -868,7 +877,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     Cursor cursor_item = dbReport.getPurchaseOrder_for_gstin(invoiceNo,invoiceDate,gstin,purchaseorder);
                     int ii =0;
-                    double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0;
+                    double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0,cesstot=0;
                     while (cursor_item!=null && cursor_item.moveToNext())
                     {
                         TableRow rowReport1 = new TableRow(myContext);
@@ -936,6 +945,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         SAmt1.setGravity(Gravity.END);
                         Stot += cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"));
 
+                        TextView cessAmt1 = new TextView(myContext);
+                        cessAmt1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("cessAmount"))));
+                        cessAmt1.setBackgroundResource(R.drawable.border_item);
+                        cessAmt1.setPadding(0,0,5,0);
+                        cessAmt1.setGravity(Gravity.END);
+                        cesstot += cursor_item.getDouble(cursor_item.getColumnIndex("cessAmount"));
+
 
                         TextView SubTot1 = new TextView(myContext);
                         SubTot1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("Amount"))));
@@ -956,6 +972,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                         rowReport1.addView(IAmt1);//8
                         rowReport1.addView(CAmt1);//9
                         rowReport1.addView(SAmt1);//10
+                        rowReport1.addView(cessAmt1);//10
                         rowReport1.addView(SubTot1);//11
 
                         tblReport.addView(rowReport1);
@@ -976,7 +993,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     TextView Samt = (TextView)rowReport.getChildAt(10);
                     Samt.setText(String.format("%.2f",Stot));
 
-                    TextView sub = (TextView)rowReport.getChildAt(11);
+                     TextView cessamt = (TextView)rowReport.getChildAt(11);
+                    cessamt.setText(String.format("%.2f",cesstot));
+
+                    TextView sub = (TextView)rowReport.getChildAt(12);
                     sub.setText(String.format("%.2f",Amttot));
 
                 }
@@ -1659,6 +1679,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 SAmt.setPadding(0,0,5,0);
                 SAmt.setGravity(Gravity.END);
 
+
+                TextView cessAmt = new TextView(myContext);
+                    /*SAmt.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("SGSTAmount"))));*/
+                cessAmt.setBackgroundResource(R.drawable.border);
+                cessAmt.setPadding(0,0,5,0);
+                cessAmt.setGravity(Gravity.END);
+
                 TextView SubTot = new TextView(myContext);
                    /* SubTot.setText(String.format("%.2f", cursor.getDouble(cursor.getColumnIndex("Amount"))));*/
                 SubTot.setBackgroundResource(R.drawable.border);
@@ -1676,6 +1703,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 rowReport.addView(IAmt);
                 rowReport.addView(CAmt);
                 rowReport.addView(SAmt);
+                rowReport.addView(cessAmt);
                 rowReport.addView(SubTot);
 
                 View v1 = new View(getActivity());
@@ -1697,7 +1725,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                 int ii =0;
-                double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0;
+                double valtot =0, taxvaltot =0,Itot =0, Ctot =0, Stot =0, Amttot =0,cesstot=0;
 
                 Cursor cursor_item = dbReport.getPurchaseOrder_for_unregisteredSupplier(invoiceNo,invoiceDate,purchaseorder,supplierCode);
 
@@ -1768,6 +1796,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     SAmt1.setGravity(Gravity.END);
                     Stot += cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"));
 
+                    TextView cessAmt1 = new TextView(myContext);
+                    cessAmt1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("cessAmount"))));
+                    cessAmt1.setBackgroundResource(R.drawable.border_item);
+                    cessAmt1.setPadding(0,0,5,0);
+                    cessAmt1.setGravity(Gravity.END);
+                    cesstot += cursor_item.getDouble(cursor_item.getColumnIndex("cessAmount"));
+
 
                     TextView SubTot1 = new TextView(myContext);
                     SubTot1.setText(String.format("%.2f", cursor_item.getDouble(cursor_item.getColumnIndex("Amount"))));
@@ -1788,6 +1823,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     rowReport1.addView(IAmt1);//8
                     rowReport1.addView(CAmt1);//9
                     rowReport1.addView(SAmt1);//10
+                    rowReport1.addView(cessAmt1);//10
                     rowReport1.addView(SubTot1);//11
 
                     tblReport.addView(rowReport1);
@@ -1808,7 +1844,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 TextView Samt = (TextView)rowReport.getChildAt(10);
                 Samt.setText(String.format("%.2f",Stot));
 
-                TextView sub = (TextView)rowReport.getChildAt(11);
+                TextView cessamt = (TextView)rowReport.getChildAt(11);
+                cessamt.setText(String.format("%.2f",cesstot));
+
+                TextView sub = (TextView)rowReport.getChildAt(12);
                 sub.setText(String.format("%.2f",Amttot));
 
             }

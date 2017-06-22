@@ -1327,9 +1327,16 @@ public class ReportHelper{
 			SGSTAmt.setTextColor(Color.WHITE);
 			SGSTAmt.setText("SGST Amt");
 
+            TextView cessAmt = new TextView(activityContext);
+            cessAmt.setWidth(65);
+            cessAmt.setTextSize(15);
+            cessAmt.setTextColor(Color.WHITE);
+            cessAmt.setText("cess Amt");
+
 			TextView SubTotal = new TextView(activityContext);
 			SubTotal.setWidth(100);
 			SubTotal.setTextSize(15);
+			SubTotal.setGravity(Gravity.CENTER);
 			SubTotal.setTextColor(Color.WHITE);
 			SubTotal.setText("Amount");
 
@@ -1363,6 +1370,7 @@ public class ReportHelper{
 
 			//rowColumnCaption.addView(SGSTRate);
 			rowColumnCaption.addView(SGSTAmt);
+			rowColumnCaption.addView(cessAmt);
             rowColumnCaption.addView(SubTotal);
 			/*rowColumnCaption.addView(POS);
 			rowColumnCaption.addView(ITC);*/

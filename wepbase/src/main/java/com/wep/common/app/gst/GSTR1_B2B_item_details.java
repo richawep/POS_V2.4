@@ -8,6 +8,7 @@ public class GSTR1_B2B_item_details {
     private String ty;
     private String hsn_sc;
     private double txval;
+    private double rt; // GST Rate
     private double irt;
     private double iamt;
     private double crt;
@@ -17,9 +18,10 @@ public class GSTR1_B2B_item_details {
     private double csrt;
     private double csamt;
 
-    public GSTR1_B2B_item_details(String ty, String hsn_sc, double txval, double irt, double iamt, double crt, double camt, double srt, double samt, double csrt, double csamt) {
+    public GSTR1_B2B_item_details(String ty, String hsn_sc, double rt,double txval, double irt, double iamt, double crt, double camt, double srt, double samt, double csrt, double csamt) {
         this.ty = ty;
         this.hsn_sc = hsn_sc;
+        this.rt = rt;
         this.txval = txval;
         this.irt = irt;
         this.iamt = iamt;
@@ -29,6 +31,14 @@ public class GSTR1_B2B_item_details {
         this.samt = samt;
         this.csrt = csrt;
         this.csamt = csamt;
+    }
+
+    public double getRt() {
+        return rt;
+    }
+
+    public void setRt(double rt) {
+        this.rt = rt;
     }
 
     public String getTy() {

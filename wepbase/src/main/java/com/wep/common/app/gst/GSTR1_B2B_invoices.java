@@ -16,9 +16,10 @@ public class GSTR1_B2B_invoices {
     private String od_num;
     private String od_dt;
     private String etin;
+    private String inv_typ;
     private ArrayList<GSTR1_B2B_items> itms;
 
-    public GSTR1_B2B_invoices(String inum, String idt, double val, String pos, String rchrg, String prs, String od_num, String od_dt, String etin, ArrayList<GSTR1_B2B_items> itms) {
+    public GSTR1_B2B_invoices(String inum, String idt, double val, String pos, String rchrg, String prs, String od_num, String od_dt, String inv_typ, String etin, ArrayList<GSTR1_B2B_items> itms) {
         this.inum = inum;
         this.idt = idt;
         this.val = val;
@@ -28,7 +29,16 @@ public class GSTR1_B2B_invoices {
         this.od_num = od_num;
         this.od_dt = od_dt;
         this.etin = etin;
+        this.inv_typ = inv_typ;
         this.itms = itms;
+    }
+
+    public String getInv_typ() {
+        return inv_typ;
+    }
+
+    public void setInv_typ(String inv_typ) {
+        this.inv_typ = inv_typ;
     }
 
     public String getInum() {

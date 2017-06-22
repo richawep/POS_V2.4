@@ -683,9 +683,13 @@ public class GSTDataController {
 
                     while (cursor_b2bitems_for_inv!=null && cursor_b2bitems_for_inv.moveToNext())
                     {
+                        double gstrate = cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate")) +
+                                cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTRate")) +
+                                cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTRate"));
                         GSTR1_B2B_item_details item_details = new GSTR1_B2B_item_details(
                                 cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("SupplyType")),
                                 cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("HSNCode")),
+                                gstrate,
                                 cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("TaxableValue")),
                                 cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate")),
                                 cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTAmount")),
@@ -895,9 +899,14 @@ public class GSTDataController {
                         int i = 0;
                         while (cursor_b2bitems_for_inv!=null && cursor_b2bitems_for_inv.moveToNext())
                         {
+                            double gstrate = Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate")))) +
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTRate")))) +
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTRate"))));
+
                             GSTR1_B2B_item_details item_details = new GSTR1_B2B_item_details(
                                     cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("SupplyType")),
                                     cursor_b2bitems_for_inv.getString(cursor_b2bitems_for_inv.getColumnIndex("HSNCode")),
+                                    gstrate,
                                     Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("TaxableValue")))),
                                     Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTRate")))),
                                     Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("IGSTAmount")))),
@@ -905,7 +914,9 @@ public class GSTDataController {
                                     Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("CGSTAmount")))),
                                     Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTRate")))),
                                     Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("SGSTAmount")))),
-                                    0,0
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("cessRate")))),
+                                    Double.parseDouble(String.format("%.2f",cursor_b2bitems_for_inv.getDouble(cursor_b2bitems_for_inv.getColumnIndex("cessAmount"))))
+
                             );
                             GSTR1_B2B_items item= new GSTR1_B2B_items(++i,item_details);
                             item_list.add(item);
@@ -919,7 +930,7 @@ public class GSTDataController {
                                     rchrg = "N";
                                  if(prs==null)
                                      prs = "N";
-
+                                String inv_typ = "R";
                                 String date_str = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
                                 Date newD = new Date(Long.parseLong(date_str));
                                 String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
@@ -927,11 +938,12 @@ public class GSTDataController {
                                         cursor.getString(cursor.getColumnIndex("InvoiceNo")),
                                         newDate,
                                         Double.parseDouble(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("BillAmount")))),
-                                        cursor.getString(cursor.getColumnIndex("POS")),
+                                        cursor.getString(cursor.getColumnIndex("CustStateCode")),
                                         rchrg,
                                         prs,
                                         "",//order_num
                                         "",//order_date
+                                        inv_typ,
                                         cursor.getString(cursor.getColumnIndex("EcommerceGSTIN")),
                                         item_list
                                 );
