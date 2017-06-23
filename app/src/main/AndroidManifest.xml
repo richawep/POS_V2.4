@@ -267,10 +267,14 @@
             android:name=".GST.Ammend_b2b_GSTR2"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".GST.InwardInvoiceEntry_Activity" />
-        <activity android:name=".GST.GSTConfiguration_Activity" />
-        <activity android:name=".GSTLinkActivity" />
-        <activity android:name=".GST.GSTFileActivity" />
+        <activity android:name=".GST.InwardInvoiceEntry_Activity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".GST.GSTConfiguration_Activity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".GSTLinkActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".GST.GSTFileActivity"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".GST.CreditDebitActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
@@ -379,6 +383,7 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".InwardActivity"
+            android:screenOrientation="landscape"
             android:label="@string/title_activity_inward" />
         <activity
             android:name=".SupplierDetailsActivity"
