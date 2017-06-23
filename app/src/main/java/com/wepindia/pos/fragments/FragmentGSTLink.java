@@ -736,173 +736,6 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
                         }
                     }
                 }
-
-
-                /*else if(requestCode == REQUEST_GET_GSTR1A_SUMMARY) // REQUEST_GET_GSTR1A_SUMMARY
-                {
-                  String  data1 = "{\n" +
-                            "  \"gstin\": \"25ABCDE1028F6Z4\",\n" +
-                            "  \"fp\": \"062016\",\n" +
-                            "  \"b2b\": [\n" +
-                            "    {\n" +
-                            "      \"ctin\": \"21ABCDE3180F8Z6\",\n" +
-                            "      \"inv\": [\n" +
-                            "        {\n" +
-                            "          \"inum\": \"98678\",\n" +
-                            "          \"idt\": \"25-10-2016\",\n" +
-                            "          \"val\": 776522.02,\n" +
-                            "          \"pos\": \"01\",\n" +
-                            "          \"rchrg\": \"N\",\n" +
-                            "          \"prs\": \"Y\",\n" +
-                            "          \"od_num\": \"S008400\",\n" +
-                            "          \"od_dt\": \"03-02-2016\",\n" +
-                            "          \"etin\": \"01AABCE5507R1Z4\",\n" +
-                            "          \"itms\": [\n" +
-                            "            {\n" +
-                            "              \"num\": 1,\n" +
-                            "              \"itm_det\": {\n" +
-                            "                \"ty\": \"G\",\n" +
-                            "                \"hsn_sc\": \"G1221\",\n" +
-                            "                \"txval\": 10000,\n" +
-                            "                \"irt\": 3,\n" +
-                            "                \"iamt\": 833.33,\n" +
-                            "                \"crt\": 4,\n" +
-                            "                \"camt\": 500,\n" +
-                            "                \"srt\": 5,\n" +
-                            "                \"samt\": 900,\n" +
-                            "                \"csrt\": 2,\n" +
-                            "                \"csamt\": 500\n" +
-                            "              }\n" +
-                            "            }\n" +
-                            "          ]\n" +
-                            "        }\n" +
-                            "      ]\n" +
-                            "    }\n" +
-                            "  ],\n" +
-                            "  \"b2ba\": [\n" +
-                            "    {\n" +
-                            "      \"ctin\": \"76ABCDE3548F4Z8\",\n" +
-                            "      \"inv\": [\n" +
-                            "        {\n" +
-                            "          \"inum\": \"27686\",\n" +
-                            "          \"idt\": \"16-04-2016\",\n" +
-                            "          \"val\": 142244.71,\n" +
-                            "          \"pos\": \"01\",\n" +
-                            "          \"rchrg\": \"N\",\n" +
-                            "          \"oinum\": \"S008400\",\n" +
-                            "          \"oidt\": \"03-01-2016\",\n" +
-                            "          \"prs\": \"Y\",\n" +
-                            "          \"od_num\": \"S008400\",\n" +
-                            "          \"od_dt\": \"03-02-2016\",\n" +
-                            "          \"etin\": \"01AABCE5507R1Z4\",\n" +
-                            "          \"itms\": [\n" +
-                            "            {\n" +
-                            "              \"num\": 1,\n" +
-                            "              \"itm_det\": {\n" +
-                            "                \"ty\": \"G\",\n" +
-                            "                \"hsn_sc\": \"G1221\",\n" +
-                            "                \"txval\": 10000,\n" +
-                            "                \"irt\": 3,\n" +
-                            "                \"iamt\": 833.33,\n" +
-                            "                \"crt\": 4,\n" +
-                            "                \"camt\": 500,\n" +
-                            "                \"srt\": 5,\n" +
-                            "                \"samt\": 900,\n" +
-                            "                \"csrt\": 2,\n" +
-                            "                \"csamt\": 500\n" +
-                            "              }\n" +
-                            "            }\n" +
-                            "          ]\n" +
-                            "        }\n" +
-                            "      ]\n" +
-                            "    }\n" +
-                            "  ],\n" +
-                            "  \"cdnr\": [\n" +
-                            "    {\n" +
-                            "      \"ctin\": \"01AAAAP1208Q1ZS\",\n" +
-                            "      \"nt\": [\n" +
-                            "        {\n" +
-                            "          \"ntty\": \"C\",\n" +
-                            "          \"nt_num\": \"533515\",\n" +
-                            "          \"nt_dt\": \"23-09-2016\",\n" +
-                            "          \"rsn\": \"Not mentioned\",\n" +
-                            "          \"inum\": \"915914\",\n" +
-                            "          \"idt\": \"23-09-2016\",\n" +
-                            "          \"rchrg\": \"N\",\n" +
-                            "          \"val\": 10000,\n" +
-                            "          \"irt\": 3,\n" +
-                            "          \"iamt\": 833.33,\n" +
-                            "          \"crt\": 4,\n" +
-                            "          \"camt\": 500,\n" +
-                            "          \"srt\": 5,\n" +
-                            "          \"samt\": 900,\n" +
-                            "          \"csrt\": 2,\n" +
-                            "          \"csamt\": 500,\n" +
-                            "          \"etin\": \"01AAAAP1208Q1Z7\"\n" +
-                            "        }\n" +
-                            "      ]\n" +
-                            "    }\n" +
-                            "  ],\n" +
-                            "  \"cdnra\": [\n" +
-                            "    {\n" +
-                            "      \"ctin\": \"01AAAAP1208Q1ZS\",\n" +
-                            "      \"nt\": [\n" +
-                            "        {\n" +
-                            "          \"ntty\": \"C\",\n" +
-                            "          \"rsn\": \"Not mentioned\",\n" +
-                            "          \"ont_num\": \"533515\",\n" +
-                            "          \"ont_dt\": \"23-09-2016\",\n" +
-                            "          \"nt_num\": \"533515\",\n" +
-                            "          \"nt_dt\": \"23-09-2016\",\n" +
-                            "          \"inum\": \"915914\",\n" +
-                            "          \"idt\": \"23-09-2016\",\n" +
-                            "          \"rchrg\": \"N\",\n" +
-                            "          \"val\": 5225.28,\n" +
-                            "          \"irt\": 3,\n" +
-                            "          \"iamt\": 833.33,\n" +
-                            "          \"crt\": 4,\n" +
-                            "          \"camt\": 500,\n" +
-                            "          \"srt\": 5,\n" +
-                            "          \"samt\": 900,\n" +
-                            "          \"csrt\": 2,\n" +
-                            "          \"csamt\": 500,\n" +
-                            "          \"etin\": \"01AAAAP1208Q1Z7\"\n" +
-                            "        }\n" +
-                            "      ]\n" +
-                            "    }\n" +
-                            "  ]\n" +
-                            "}";
-                    ArrayList<GetGSTR2B2BFinal> finalsList = new ArrayList<GetGSTR2B2BFinal>();
-                    data1.trim();
-                    //data1 = data.replaceAll("\\\\", "");
-                    Gson gson = new Gson();
-                    data = gson.toJson(data1);
-
-
-                    //data = data.substring(1,data.length()-1);
-
-                    if(data.equalsIgnoreCase(""))
-                    {
-                        Toast.makeText(myContext, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        try {
-
-                            JSONObject jsonObject = new JSONObject(data1);
-                            String gstin_recvd =jsonObject.getString("gstin");
-                            String fp_recvd =jsonObject.getString("fp");
-                            JSONArray jsonarray = jsonObject.getJSONArray("b2b");
-                            Type listType = new TypeToken<ArrayList<GetGSTR1Summary>>(){}.getType();
-                            ArrayList<GetGSTR1Summary> dataList = new GsonBuilder().create().fromJson(jsonarray.toString(), listType);
-                            dbGSTLink.saveGSTR1ASummary(dataList);
-                            Toast.makeText(myContext, "Data loaded successfully", Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
-                            Toast.makeText(myContext, "Error due to "+e, Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
-                    }*/
-
                 else if (requestCode == REQUEST_GET_GSTR1_SUMMARY ||requestCode == REQUEST_GET_GSTR1 || requestCode == REQUEST_GET_GSTR1A ||
                         requestCode == REQUEST_GET_GSTR2A|| requestCode == REQUEST_GET_GSTR2_Reconcile ||
                          requestCode == REQUEST_GET_GSTR3)
@@ -911,7 +744,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
                     String Filename = "sample.xlsx";
                     String gstin = dbGSTLink.getGSTIN();
 
-                    switch (requestCode) {
+                    /*switch (requestCode) {
                         case REQUEST_GET_GSTR1_SUMMARY:
                             URL = "http://13.71.118.152/AndroWeb/API/GetGSTR1CSV?gstin="+gstin+"&fp=052017";
                             Filename = "GSTR1Summary.xlsx";
@@ -978,16 +811,16 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask.OnHTTPR
                                             .getInt(columnIndex)) {
 
 
-                            /*ImageView view = (ImageView) findViewById(R.id.imageView1);
+                            *//*ImageView view = (ImageView) findViewById(R.id.imageView1);
                             String uriString = c
                                     .getString(c
                                             .getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-                            view.setImageURI(Uri.parse(uriString));*/
+                            view.setImageURI(Uri.parse(uriString));*//*
                                     }
                                 }
                             }
                         }
-                    };
+                    };*/
 
                 }
 

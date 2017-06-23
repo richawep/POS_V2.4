@@ -499,7 +499,7 @@ public class PrinterUtil {
             //String preAmount = getPostAddedSpaceFormat("",String.format("%.2f",billKotItem.getAmount()),7,1);
             String preRate = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getRate()),10,1),11,1);
             String preAmount = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getAmount()),13,1),15,1);
-            String pre = preId+preName+HSN+preQty+preRate+preAmount;
+            String pre = preId+preName+/*HSN+*/preQty+preRate+preAmount;
             esc.addText(pre+"\n");
         }
         esc.addText("================================================"+"\n");
