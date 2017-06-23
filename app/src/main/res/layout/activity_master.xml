@@ -206,7 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgStock"
                             android:gravity="center"
-                            android:text="Inward Items Masters "
+                            android:text="Inward Management "
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
