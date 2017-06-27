@@ -1,7 +1,7 @@
 /****************************************************************************
  * Project Name		:	VAJRA
  * <p/>
- * File Name		:	BillingScreenActivity
+ * File Name		:	BillingScreenActivity_Unused
  * <p/>
  * Purpose			:	Represents Billing screen activity, takes care of all
  * UI back end operations in this activity, such as event
@@ -90,12 +90,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class BillingScreenActivity extends WepPrinterBaseActivity {
+public class BillingScreenActivity_Unused extends WepPrinterBaseActivity {
 
-    private static final String TAG = BillingScreenActivity.class.getSimpleName();
+    private static final String TAG = BillingScreenActivity_Unused.class.getSimpleName();
     private static final int CUTOMER_ORDER_REQUEST_CODE = 234532;
     Context myContext;
-    DatabaseHandler dbBillScreen = new DatabaseHandler(BillingScreenActivity.this);
+    DatabaseHandler dbBillScreen = new DatabaseHandler(BillingScreenActivity_Unused.this);
     MessageDialog MsgBox;
     EditText txtSearchItemBarcode,  tvWaiterNumber, tvTableNumber, tvTableSplitNo, tvBillNumber;
     ListView lstvwDepartment, lstvwCategory, lstvwKOTModifiers;
@@ -187,7 +187,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
             strMakeOrder = getIntent().getStringExtra("MAKE_ORDER");
             d = new Date();
             CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-            com.wep.common.app.ActionBarUtils.setupToolbar(BillingScreenActivity.this,toolbar,getSupportActionBar(),"",strUserName," Date:"+s.toString());
+            com.wep.common.app.ActionBarUtils.setupToolbar(BillingScreenActivity_Unused.this,toolbar,getSupportActionBar(),"",strUserName," Date:"+s.toString());
             IntializeViewVariables();
             dbBillScreen.OpenDatabase();
             crsrSettings = dbBillScreen.getBillSetting();
@@ -895,7 +895,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 try {
-                    /*Toast.makeText(BillingScreenActivity.this, aTViewSearchItem.getText().toString(),
+                    /*Toast.makeText(BillingScreenActivity_Unused.this, aTViewSearchItem.getText().toString(),
                             Toast.LENGTH_SHORT).show();*/
                     if ((aTViewSearchItem.getText().toString().equals(""))) {
                         MsgBox.Show("Warning", "Enter Item Name");
@@ -923,7 +923,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    /*Toast.makeText(BillingScreenActivity.this, aTViewSearchMenuCode.getText().toString(),
+                    /*Toast.makeText(BillingScreenActivity_Unused.this, aTViewSearchMenuCode.getText().toString(),
                             Toast.LENGTH_SHORT).show();*/
                     if ((aTViewSearchMenuCode.getText().toString().equals(""))) {
                         MsgBox.Show("Warning", "Enter Menu Code");
@@ -5162,7 +5162,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
             intent.putExtra("printType", "KOT");
             intent.putExtra("printData", item);
             startActivity(intent);*/
-                    String prf = Preferences.getSharedPreferencesForPrint(BillingScreenActivity.this).getString("kot", "--Select--");
+                    String prf = Preferences.getSharedPreferencesForPrint(BillingScreenActivity_Unused.this).getString("kot", "--Select--");
                     Intent intent = null;
                     if (prf.equalsIgnoreCase("Sohamsa")) {
                     /*intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);
@@ -5186,7 +5186,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                         Toast.makeText(myContext, "Printer not configured", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(BillingScreenActivity.this, "Please enter bill,waiter,table number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BillingScreenActivity_Unused.this, "Please enter bill,waiter,table number", Toast.LENGTH_SHORT).show();
                 }
             }
         } else {
@@ -5312,7 +5312,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                             break;
                     }
                     item.setStrBillingModeName(billingmode);
-                    String prf = Preferences.getSharedPreferencesForPrint(BillingScreenActivity.this).getString("bill", "--Select--");
+                    String prf = Preferences.getSharedPreferencesForPrint(BillingScreenActivity_Unused.this).getString("bill", "--Select--");
                 /*Intent intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);*/
                     Intent intent = null;
                     if (prf.equalsIgnoreCase("Sohamsa")) {
@@ -5377,7 +5377,7 @@ public class BillingScreenActivity extends WepPrinterBaseActivity {
                         Toast.makeText(myContext, "Printer not configured", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(BillingScreenActivity.this, "Please Enter Bill, Waiter, Table Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BillingScreenActivity_Unused.this, "Please Enter Bill, Waiter, Table Number", Toast.LENGTH_SHORT).show();
                 }
             }
         } else {

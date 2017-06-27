@@ -144,7 +144,7 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".BillingScreenActivity"
+            android:name=".BillingScreenActivity_Unused"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="landscape"
             android:theme="@style/AppThemeWep"
