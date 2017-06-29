@@ -3097,7 +3097,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                             askForConfig();
                         }
                     } else {
-                        Toast.makeText(BillingCounterSalesActivity.this, "Printer not configured", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BillingCounterSalesActivity.this, "Printer not configured. Kindly goto settings and configure printer", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else

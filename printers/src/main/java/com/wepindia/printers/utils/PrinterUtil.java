@@ -671,7 +671,7 @@ public class PrinterUtil {
             if(!String.valueOf(Item.getItemId()).equals(" ")&& count >1)
                 esc.addText("-----------------------------------------------"+"\n");
             String preName = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(Item.getItemName()),22,1),17,1);
-            String preQty = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.valueOf(Item.getQty()),4,1),10,1);
+            String preQty = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.valueOf(Item.getQty()),7,1),10,1);
             String preUOM = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(Item.getUom()),4,1),8,1);
             String pre = preId+preName+preQty+preUOM;
             esc.addText(pre+"\n");

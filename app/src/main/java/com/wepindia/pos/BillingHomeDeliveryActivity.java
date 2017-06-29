@@ -5729,7 +5729,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                         }
                         Toast.makeText(myContext, "KOT is printing... ", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(myContext, "Printer not configured", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(myContext, "Printer not configured. Kindly goto settings and configure printer", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(BillingHomeDeliveryActivity.this, "Please enter bill,waiter,table number", Toast.LENGTH_SHORT).show();
@@ -6017,7 +6017,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             askForConfig();
                         }
                     } else {
-                        Toast.makeText(myContext, "Printer not configured", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(myContext, "Printer not configured. Kindly goto settings and configure printer", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(BillingHomeDeliveryActivity.this, "Please Enter Bill, Waiter, Table Number", Toast.LENGTH_SHORT).show();
