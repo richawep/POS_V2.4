@@ -52,7 +52,7 @@
             android:id="@+id/tvTIN"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="TIN"
+            android:text="GSTIN"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText

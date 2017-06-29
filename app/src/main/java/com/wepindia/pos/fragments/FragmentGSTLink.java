@@ -1007,10 +1007,9 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                     e.printStackTrace();
                 }
 
-                String jj = GstJsonEncoder.getGSTRJsonEncode(strjson2);
                 String URL = Config.Base_URL_Azure+Config.GSTR2_SAVE_AZURE_API;
 
-                new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST, jj, REQUEST_SAVE_GSTR2, URL,HeaderAuthorizationData_POST_APIS).execute();
+                new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST, strJson, REQUEST_SAVE_GSTR2, URL,HeaderAuthorizationData_POST_APIS).execute();
             } else {
                 Toast.makeText(myContext, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
             }
