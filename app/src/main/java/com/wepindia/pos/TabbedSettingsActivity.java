@@ -42,6 +42,7 @@ public class TabbedSettingsActivity extends WepBaseActivity{
     String strUserName = "";
     DatabaseHandler dbReportTab;
     MessageDialog MsgBox;
+    ViewPagerAdapter adapter;
 
 
     @Override
@@ -68,7 +69,7 @@ public class TabbedSettingsActivity extends WepBaseActivity{
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Bundle bundle1=new Bundle();
         bundle1.putString("REPORT_TYPE", "1");
@@ -145,6 +146,30 @@ public class TabbedSettingsActivity extends WepBaseActivity{
             return mFragmentTitleList.get(position);
         }
     }
+    ViewPager.OnPageChangeListener myOnPageChangeListener =
+            new ViewPager.OnPageChangeListener(){
+
+                @Override
+                public void onPageScrolled(final int i, final float v, final int i2) {
+                }
+                @Override
+                public void onPageSelected(final int i) {
+                    if(adapter!=null){
+                        switch(i)
+                        {
+
+                            case 2:  FragmentSettingsMiscellaneous fragment = (FragmentSettingsMiscellaneous) adapter.instantiateItem(viewPager, i);
+                                fragment.DisplaySettings();
+                                break;
+                        }
+
+                    }
+
+                }
+                @Override
+                public void onPageScrollStateChanged(final int i) {
+                }
+            };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

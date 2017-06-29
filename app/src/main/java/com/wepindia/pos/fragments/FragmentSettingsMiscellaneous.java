@@ -224,7 +224,7 @@ public class FragmentSettingsMiscellaneous extends Fragment implements AdapterVi
         return index;
 
     }
-    private void DisplaySettings(){
+    public void DisplaySettings(){
 
         Cursor crsrMiscSetting = null;
 

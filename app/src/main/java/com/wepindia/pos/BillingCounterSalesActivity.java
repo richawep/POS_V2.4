@@ -1067,7 +1067,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
                     etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etInputValidate.ValidateDecimalInput(etQty);
-                    etQty.addTextChangedListener(new TextWatcher() {
+                    /*etQty.addTextChangedListener(new TextWatcher() {
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                         }
@@ -1079,7 +1079,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         public void afterTextChanged(Editable s) {
                             Qty_Rate_Edit();
                         }
-                    });
+                    });*/
 
                     if (BillwithStock == 1) {
                         if (crsrItem.getFloat(crsrItem.getColumnIndex("Quantity")) < Float.valueOf(etQty.getText().toString())) {
@@ -1350,6 +1350,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     // Quantity
                     EditText Qty = (EditText) Row.getChildAt(3);
                     Qty.setSelectAllOnFocus(true);
+                    if(Qty.getText().toString().equalsIgnoreCase(""))
+                        Qty.setText("0.00");
                     strQty = Double.parseDouble(
                             Qty.getText().toString().equalsIgnoreCase("") ? "0" : Qty.getText().toString()); // Temp
                     if (BillwithStock == 1) {
