@@ -80,6 +80,7 @@
                                 android:hint="Search Item Name"
                                 android:imeOptions="flagNoExtractUi"
                                 android:minHeight="40dp"
+                                android:drawableRight="@drawable/searchicon_img"
                                 android:textSize="10sp" />
 
                             <AutoCompleteTextView
@@ -90,6 +91,7 @@
                                 android:layout_weight="1"
                                 android:completionThreshold="1"
                                 android:gravity="center"
+                                android:drawableRight="@drawable/searchicon_img"
                                 android:hint="Search Item Code"
                                 android:imeOptions="flagNoExtractUi"
                                 android:inputType="numberSigned"
