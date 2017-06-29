@@ -18,6 +18,7 @@ import com.wepindia.printers.R;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -656,7 +657,7 @@ public class PrinterUtil {
         esc.addText("===============================================\n");
 
         esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
-        esc.addText("ITEMID ITEM NAME             QTY     UOM "+"\n");
+        esc.addText("ITEMID ITEM NAME               QTY    UOM "+"\n");
         esc.addText("==============================================="+"\n");
 
         Iterator it = item.iterator();
@@ -692,6 +693,8 @@ public class PrinterUtil {
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addText(reportName+"\n");
         esc.addText("========================================"+"\n");
+        Calendar time = Calendar.getInstance();
+        esc.addText("["+String.format("%tR", time)+"]\n");
         esc.addPrintAndLineFeed();
 
         for(int j=0;j<itemReport.size();j++)
