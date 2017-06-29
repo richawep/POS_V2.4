@@ -17,7 +17,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:layout_weight="1.35"
+            android:layout_weight="1.25"
             >
 
 
@@ -391,7 +391,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="1.95">
+            android:layout_weight="1.99">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="4dp"

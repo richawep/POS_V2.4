@@ -779,7 +779,7 @@
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:hint=" "
-                                    android:maxLength="7"
+                                    android:maxLength="8"
                                     android:selectAllOnFocus="true"
                                     android:textSize="13dp" />
                             </LinearLayout>

@@ -923,7 +923,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_InvoiceNo + " TEXT, " + KEY_InvoiceDate + " TEXT, " + KEY_HSNCode + " TEXT, " + KEY_ItemName + " TEXT, " +
             KEY_Quantity + " NUMERIC, " + KEY_UOM + " TEXT, " + KEY_Value + " REAL, " +
             KEY_DiscountPercent + " NUMERIC, " + KEY_TaxableValue + " REAL, " + KEY_IGSTRate + " REAL, " + KEY_IGSTAmount + " REAL, " +
-            KEY_CGSTRate + " REAL , " + KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL, " + KEY_SGSTAmount + " REAL, " +
+            KEY_CGSTRate + " REAL , " + KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL, " + KEY_SGSTAmount + " REAL, " +KEY_cessAmount + " REAL, " +
             KEY_POS + " TEXT, " + KEY_ITC_Eligible + " TEXT, " + KEY_Total_ITC_IGST + " REAL, " + KEY_Total_ITC_CGST + " REAL, " +
             KEY_Total_ITC_SGST + " TEXT, " +
             KEY_MONTH_ITC_IGSTAMT + " TEXT, " + KEY_MONTH_ITC_CGSTAMT + " TEXT, " + KEY_MONTH_ITC_SGSTAMT + " TEXT )";
@@ -2192,6 +2192,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put(KEY_CGSTAmount, ammend.getCgstamt());
             contentValues.put(KEY_SGSTRate, ammend.getSgstrate());
             contentValues.put(KEY_SGSTAmount, ammend.getSgstamt());
+            contentValues.put(KEY_cessAmount, ammend.getCsamt());
             contentValues.put(KEY_POS, ammend.getPOS());
             contentValues.put(KEY_SupplierType, ammend.getSupplierType());
             //contentValues.put(KEY_BusinessType,bussinessType);

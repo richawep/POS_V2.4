@@ -1976,20 +1976,20 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         // Discount
                         dDiscAmt = dRate * (dDiscPercent / 100);
                         dTempAmt = dDiscAmt;
-                        dDiscAmt = dDiscAmt * Double.parseDouble(Qty.getText().toString());
+                        dDiscAmt = dDiscAmt * strQty;
 
                         // Tax
                         dTaxAmt = (dRate - dTempAmt) * (dTaxPercent / 100);
-                        dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
+                        dTaxAmt = dTaxAmt * strQty;
 
                         dServiceTaxAmt = (dRate - dTempAmt) * (dServiceTaxPercent / 100);
-                        dServiceTaxAmt = dServiceTaxAmt * Double.parseDouble(Qty.getText().toString());
+                        dServiceTaxAmt = dServiceTaxAmt * strQty;
 
                         dIGSTAmt = (dRate - dTempAmt) * (dIGSTRate / 100);
-                        dIGSTAmt = dIGSTAmt * Double.parseDouble(Qty.getText().toString());
+                        dIGSTAmt = dIGSTAmt * strQty;
 
                         dcessAmt = (dRate - dTempAmt) * (dcessRate / 100);
-                        dcessAmt = dcessAmt * Double.parseDouble(Qty.getText().toString());
+                        dcessAmt = dcessAmt * strQty;
 
 
                         TaxAmt.setText(String.format("%.2f", dTaxAmt));
