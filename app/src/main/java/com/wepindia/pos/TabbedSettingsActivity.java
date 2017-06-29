@@ -54,6 +54,7 @@ public class TabbedSettingsActivity extends WepBaseActivity{
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         init();
         setupViewPager(viewPager);
+        viewPager.addOnPageChangeListener (myOnPageChangeListener);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -159,7 +160,7 @@ public class TabbedSettingsActivity extends WepBaseActivity{
                         {
 
                             case 2:  FragmentSettingsMiscellaneous fragment = (FragmentSettingsMiscellaneous) adapter.instantiateItem(viewPager, i);
-                                fragment.DisplaySettings();
+                                fragment.onResume();
                                 break;
                         }
 

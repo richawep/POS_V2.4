@@ -370,6 +370,12 @@ public class FragmentSettingsMiscellaneous extends Fragment implements AdapterVi
         if(ReadSettings()>0)
             SaveMiscSettings();
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        DisplaySettings();
+    }
+
 
     public void Close(){
         dbMiscellaneousSettings.CloseDatabase();
