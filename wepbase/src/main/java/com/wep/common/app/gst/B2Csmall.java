@@ -21,6 +21,7 @@ public class B2Csmall  {
     private String OrderDate="0";
     private String etin="";
     private String etype="";
+    private String sply_ty=""; // Inter/Intra
 
 
     public B2Csmall() {
@@ -49,6 +50,7 @@ public class B2Csmall  {
         OrderDate="0";
         etin="";
         etype="";
+        sply_ty="";
         stateCode="";
     }
 
@@ -104,6 +106,14 @@ public class B2Csmall  {
             this.unregisteredValue = unregisteredValue;
         }
     */
+
+    public String getSply_ty() {
+        return sply_ty;
+    }
+
+    public void setSply_ty(String sply_ty) {
+        this.sply_ty = sply_ty;
+    }
 
     public String getStateCode() {
         return stateCode;

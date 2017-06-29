@@ -389,7 +389,7 @@
                             android:layout_width="120dp"
                             android:layout_height="100dp"
                             android:background="@drawable/gradient_button"
-                            android:contentDescription="cdn"
+                            android:contentDescription="cdnr"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
                             android:src="@drawable/cdn" />

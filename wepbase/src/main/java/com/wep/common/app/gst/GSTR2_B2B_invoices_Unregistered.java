@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by RichaA on 02-05-2017.
  */
 
-public class GSTR2_B2B_invoices_Unregistered {
+public class  GSTR2_B2B_invoices_Unregistered {
     private String cname;
     private String inum;
     private String idt;

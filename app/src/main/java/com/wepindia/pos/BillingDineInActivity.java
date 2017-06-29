@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -75,7 +74,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -4803,7 +4801,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                                 String date_reprint = tv_inv_date.getText().toString();
                                 tvDate.setText(date_reprint);
                                 Date date = new SimpleDateFormat("dd-MM-yyyy").parse(date_reprint);
-                                Cursor LoadItemForReprint = dbBillScreen.getItemsForReprintBill_new(
+                                Cursor LoadItemForReprint = dbBillScreen.getItemsFromBillItem_new(
                                                                             billNo, String.valueOf(date.getTime()));
                                 if (LoadItemForReprint.moveToFirst())
                                 {

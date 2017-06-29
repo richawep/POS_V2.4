@@ -32,6 +32,16 @@ public class GSTR1_B2B_invoices {
         this.inv_typ = inv_typ;
         this.itms = itms;
     }
+    public GSTR1_B2B_invoices(String inum, String idt, double val, String pos, String rchrg,   String etin, String inv_typ,ArrayList<GSTR1_B2B_items> itms) {
+        this.inum = inum;
+        this.idt = idt;
+        this.val = val;
+        this.pos = pos;
+        this.rchrg = rchrg;
+        this.etin = etin;
+        this.inv_typ = inv_typ;
+        this.itms = itms;
+    }
 
     public String getInv_typ() {
         return inv_typ;

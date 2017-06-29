@@ -56,7 +56,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPRequestCompletedListener, DownloadFileFromURL.OnFileDownloadCompletedListener,AuthFragment.OnAuthCompletedListener {
+public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPRequestCompletedListener, DownloadFileFromURL.OnFileDownloadCompletedListener,AuthFragment.OnLocalAuthCompletedListener {
 
     private static final int REQUEST_GET_GSTR1_SUMMERY = 1002;
     private static final int REQUEST_GET_GSTR3 = 1003;
@@ -527,7 +527,7 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
         alertdFragment.show(getFragmentManager(), "auth");
     }
 
-    public void onAuthCompleted(boolean success, int code,String userName) {
+    public void onLocalAuthCompleted(boolean success, int code, String userName) {
         if(success)
         {
             if(code == REQUEST_SAVE_GSTR1)

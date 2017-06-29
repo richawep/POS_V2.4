@@ -1896,6 +1896,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.delete(TBL_CreditDebit_Inward, deleteQuery, null);
     }
 
+    public int getCreditNoteNo(String invoiceNo, String invoiceDate) {
+        int max = 1;
+        String whereClause = "SELECT NoteNo FROM "+TBL_CreditDebit_Outward+" WHERE "+KEY_InvoiceNo+" LIKE '"+
+                invoiceNo+"' AND "+KEY_InvoiceDate+" LIKE '"+invoiceDate+"'";
+        Cursor cursor = dbFNB.rawQuery(whereClause, null);
+        if(cursor.moveToNext())
+            max = cursor.getInt(cursor.getColumnIndex("NoteNo")) ;
+        else
+        {
+            cursor = dbFNB.rawQuery("SELECT max(NoteNo) as NoteNo FROM "+TBL_CreditDebit_Outward, null);
+            while(cursor.moveToNext())
+                max = cursor.getInt(cursor.getColumnIndex("NoteNo")) +1 ;
+        }
+        return max;
+    }
     public int getMaxCreditNoteNo() {
         int max = 0;
         Cursor cursor = dbFNB.rawQuery("SELECT NoteNo FROM "+TBL_CreditDebit_Outward, null);
@@ -4587,7 +4602,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "'", null);
     }
 
-    public Cursor getItemsForReprintBill_new(int InvoiceNo, String InvoiceDate) {
+    public Cursor getItemsFromBillItem_new(int InvoiceNo, String InvoiceDate) {
         // return dbFNB.rawQuery("Select * from BillItem, BillDetail where BillDetail.BillNumber = '" + BillNumber + "' AND BillItem.BillNumber = BillDetail.BillNumber", null);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor crsr = null;
@@ -7743,12 +7758,36 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
+    public Cursor getGSTR1_CDN(String startDate, String endDate) {
+        String selectQuery = "SELECT * FROM CreditDebitOutward WHERE  " +
+                KEY_NoteDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
+    public Cursor isNotePresentforInvoice(String invoiceNo, String invoiceDate, String notetype) {
+        String selectQuery = "SELECT * FROM CreditDebitOutward WHERE  " + KEY_InvoiceNo + " LIKE '" + invoiceNo +
+                "' and " + KEY_InvoiceDate + " Like '" + invoiceDate + "' AND " +KEY_NoteType+" LIKE '" +notetype + "'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }public Cursor getNoteDetails(String noteNo, String noteDate, String gstin) {
+        String selectQuery = "SELECT * FROM CreditDebitOutward WHERE  " + KEY_NoteNo + " LIKE '" + noteNo +
+                "' and " + KEY_NoteDate + " Like '" + noteDate + "' AND " +KEY_GSTIN+" LIKE '" +gstin + "'";
+        Cursor result = dbFNB.rawQuery(selectQuery, null);
+        return result;
+    }
     public Cursor getInvoices_outward(String startDate, String endDate)
     {
         String selectQuery = "Select * from "+TBL_OUTWARD_SUPPLY_ITEMS_DETAILS+" WHERE BillStatus =1 AND "+KEY_InvoiceDate+
                 " BETWEEN '"+startDate+"' AND '"+endDate+"'";
         return dbFNB.rawQuery(selectQuery, null);
     }
+    public Cursor getAllInvoices_outward(String startDate, String endDate)
+    {
+        String selectQuery = "Select * from "+TBL_OUTWARD_SUPPLY_ITEMS_DETAILS+" WHERE "+KEY_InvoiceDate+
+                " BETWEEN '"+startDate+"' AND '"+endDate+"'";
+        return dbFNB.rawQuery(selectQuery, null);
+    }
+
 
     public ArrayList<String> gethsn_list_for_invoices(Cursor cursor) {
         ArrayList<String > list = new ArrayList<>();

@@ -12,13 +12,15 @@ public class GSTR2_B2B_invoices_registered {
     private double val;
     private String pos;
     private String rchrg;
+    private String inv_typ;
     private ArrayList<GSTR2_B2B_items> itms;
 
-    public GSTR2_B2B_invoices_registered(String inum, String idt, double val, String pos, String rchrg, ArrayList<GSTR2_B2B_items> itms) {
+    public GSTR2_B2B_invoices_registered(String inum, String idt, double val, String pos, String rchrg, String inv_typ,ArrayList<GSTR2_B2B_items> itms) {
         this.inum = inum;
         this.idt = idt;
         this.val = val;
         this.pos = pos;
+        this.inv_typ = inv_typ;
         this.rchrg = rchrg;
         this.itms = itms;
     }

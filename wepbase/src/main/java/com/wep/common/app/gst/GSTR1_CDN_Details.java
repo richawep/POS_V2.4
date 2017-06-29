@@ -1,12 +1,14 @@
 package com.wep.common.app.gst;
 
+import java.util.ArrayList;
+
 /**
  * Created by PriyabratP on 01-12-2016.
  */
 public class GSTR1_CDN_Details {
     private int sno;
     private String ntty;
-    private double nt_num;
+    private int nt_num;
     private String nt_dt;
     private String rsn;
     private String inum;// invoice no
@@ -23,10 +25,12 @@ public class GSTR1_CDN_Details {
     private double csamt;
     private double cessamt;
     private String etin;
+    private String p_gst;
+    ArrayList<GSTR1_CDN_Items> itms;
 
     public GSTR1_CDN_Details() {
         this.ntty = "";
-        this.nt_num = 0.00;
+        this.nt_num = 0;
         this.nt_dt = "";
         this.rsn = "";
         this.inum = "";
@@ -43,11 +47,12 @@ public class GSTR1_CDN_Details {
         this.csamt = 0.00;
         this.cessamt = 0.00;
         this.etin="";
+        this.p_gst="N";
         this.sno = 0;
 
     }
 
-    public GSTR1_CDN_Details(String ntty, double nt_num, String nt_dt, String rsn, String inum, String idt, double val, double irt, double iamt, double crt, double camt, double srt, double samt) {
+    public GSTR1_CDN_Details(String ntty, int nt_num, String nt_dt, String rsn, String inum, String idt, double val, double irt, double iamt, double crt, double camt, double srt, double samt) {
         this.ntty = ntty;
         this.nt_num = nt_num;
         this.nt_dt = nt_dt;
@@ -68,7 +73,7 @@ public class GSTR1_CDN_Details {
         this.sno = 0;
     }
 
-    public GSTR1_CDN_Details(String ntty, double nt_num, String nt_dt, String rsn, String inum, String idt,
+    public GSTR1_CDN_Details(String ntty, int nt_num, String nt_dt, String rsn, String inum, String idt,
                              String rchrg, double val, double irt, double iamt, double crt, double camt, double srt,
                              double samt, double csrt, double csamt, String etin) {
         this.sno = 0;
@@ -92,6 +97,45 @@ public class GSTR1_CDN_Details {
         this.etin = etin;
     }
 
+    public GSTR1_CDN_Details(String ntty, int nt_num, String nt_dt, String p_gst,String rsn, String inum,
+                             String idt,double val, ArrayList<GSTR1_CDN_Items> items
+                             ) {
+
+        this.ntty = ntty;
+        this.nt_num = nt_num;
+        this.nt_dt = nt_dt;
+        this.p_gst = p_gst;
+        this.rsn = rsn;
+        this.inum = inum;
+        this.idt = idt;
+        this.val = val;
+        this.itms = items;
+
+    }
+
+    public double getCessamt() {
+        return cessamt;
+    }
+
+    public void setCessamt(double cessamt) {
+        this.cessamt = cessamt;
+    }
+
+    public String getP_gst() {
+        return p_gst;
+    }
+
+    public void setP_gst(String p_gst) {
+        this.p_gst = p_gst;
+    }
+
+    public ArrayList<GSTR1_CDN_Items> getItms() {
+        return itms;
+    }
+
+    public void setItms(ArrayList<GSTR1_CDN_Items> itms) {
+        this.itms = itms;
+    }
 
     public String getRchrg() {
         return rchrg;
@@ -141,11 +185,11 @@ public class GSTR1_CDN_Details {
         this.ntty = ntty;
     }
 
-    public double getNt_num() {
+    public int getNt_num() {
         return nt_num;
     }
 
-    public void setNt_num(double nt_num) {
+    public void setNt_num(int nt_num) {
         this.nt_num = nt_num;
     }
 

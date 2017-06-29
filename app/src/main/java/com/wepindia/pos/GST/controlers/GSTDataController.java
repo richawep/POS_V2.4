@@ -303,6 +303,50 @@ public class GSTDataController {
         return datalist_s;
     }
 
+    /*private ArrayList<GSTR1_B2B_Data> makeGSTR1B2B(String start_milli, String end_milli){
+    ArrayList<GSTR1_B2B_Data> list = dataController.getGSTR1B2BList(start_milli,end_milli);
+    return list;
+}
+*/
+    /*private ArrayList<GSTR1B2CSAData> makeGSTR1B2CSA(String start_milli, String end_milli){
+        ArrayList<GSTR1B2CSAData> list = new ArrayList<GSTR1B2CSAData>();
+        list = dataController.getGSTR1B2CSAList(start_milli,end_milli);
+        return list;
+    }
+    private ArrayList<GSTR1B2CSData> makeGSTR1B2CS(String start_milli, String end_milli)
+    {
+        ArrayList<GSTR1B2CSData> list = new ArrayList<GSTR1B2CSData>();
+        ArrayList<B2Csmall> b2CsmallsList = dataController.getGSTR1B2CSDataList(start_milli, end_milli);
+        double gt = 0;
+       // Collections.sort(b2CsmallsList, B2Csmall.HSNComparator);
+
+        for (B2Csmall b2Csmall : b2CsmallsList) {
+            gt = gt + b2Csmall.getSubTotal();
+            GSTR1B2CSData b2CSData = new GSTR1B2CSData(
+                    "*flag*"*//*"A"*//*,
+                    "*chksum*"*//*"HHJJHJJHJJJJJJ"*//*,
+                    b2Csmall.getStateCode(),
+                    b2Csmall.getSupplyType(),
+                    b2Csmall.getHSNCode().substring(0, b2Csmall.getHSNCode().indexOf("-")),
+                    b2Csmall.getTaxableValue(),
+                    b2Csmall.getIGSTRate(),
+                    b2Csmall.getIGSTAmt(),
+                    b2Csmall.getCGSTRate(),
+                    b2Csmall.getCGSTAmt(),
+                    b2Csmall.getSGSTRate(),
+                    b2Csmall.getSGSTAmt(),
+                    Double.parseDouble(b2Csmall.getCessRate()),
+                    b2Csmall.getCessAmt(),
+                    (b2Csmall.getProAss().equalsIgnoreCase("")) ? "*pro_ass*" : b2Csmall.getProAss(),
+                    b2Csmall.getEtin(),
+                    b2Csmall.getEtype(),
+                    b2Csmall.getOrderno(),
+                    b2Csmall.getOrderDate()
+            );
+            list.add(b2CSData);
+        }
+        return list;
+    }*/
     /*public ArrayList<GSTR2B2BData> getB2BItems(String StartDate, String EndDate)
     {
         ArrayList<GSTR2B2BData> b2bDataList = new ArrayList<GSTR2B2BData>();
@@ -1056,7 +1100,7 @@ public class GSTDataController {
                     String dd_inv_str =  new SimpleDateFormat("dd-MM-yyyy").format(dd_inv);
                     GSTR1_CDN_Details nt_det = new GSTR1_CDN_Details(
                             cursor.getString(cursor.getColumnIndex("NoteType")),
-                            cursor.getDouble(cursor.getColumnIndex("NoteNo")),
+                            cursor.getInt(cursor.getColumnIndex("NoteNo")),
                             dd_note_str,
                             reason,
                             cursor.getString(cursor.getColumnIndex("InvoiceNo")),
@@ -1163,7 +1207,7 @@ public class GSTDataController {
                     {
                         totval += cursor_item.getDouble(cursor_item.getColumnIndex("Amount"));
                         GSTR2_B2B_item_details item_details = new GSTR2_B2B_item_details(
-                                cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
+                                /*cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
                                 cursor_item.getString(cursor_item.getColumnIndex("HSNCode")),
                                 cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue")),
                                 cursor_item.getDouble(cursor_item.getColumnIndex("IGSTRate")),
@@ -1174,7 +1218,7 @@ public class GSTDataController {
                                 cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount")),
                                 0,
                                 0,
-                                "ip"
+                                "ip"*/
                         );
                         GSTR2_B2B_ITC_details itc = new GSTR2_B2B_ITC_details();
                         GSTR2_B2B_items itm = new GSTR2_B2B_items(i++, item_details,itc);
@@ -1190,6 +1234,7 @@ public class GSTDataController {
                                 totval,
                                 pos_supplier,
                                 "N",
+                                "R",
                                 itms_list
                         );
                         invoiceList.add(inv);
@@ -1242,7 +1287,7 @@ public class GSTDataController {
                     {
                         totval += cursor_item.getDouble(cursor_item.getColumnIndex("Amount"));
                         GSTR2_B2B_item_details item_details = new GSTR2_B2B_item_details(
-                                cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
+                               /* cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
                                 cursor_item.getString(cursor_item.getColumnIndex("HSNCode")),
                                 cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue")),
                                 cursor_item.getDouble(cursor_item.getColumnIndex("IGSTRate")),
@@ -1253,7 +1298,7 @@ public class GSTDataController {
                                 cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount")),
                                 0,
                                 0,
-                                "ip"
+                                "ip"*/
                         );
                         GSTR2_B2B_ITC_details itc = new GSTR2_B2B_ITC_details();
                         GSTR2_B2B_items itm = new GSTR2_B2B_items(i++, item_details,itc);
@@ -1320,7 +1365,7 @@ public class GSTDataController {
                 {
                     totval += cursor_item.getDouble(cursor_item.getColumnIndex("Amount"));
                     GSTR2_B2B_item_details item_details = new GSTR2_B2B_item_details(
-                            cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
+                            /*cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
                             cursor_item.getString(cursor_item.getColumnIndex("HSNCode")),
                             cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue")),
                             cursor_item.getDouble(cursor_item.getColumnIndex("IGSTRate")),
@@ -1331,7 +1376,7 @@ public class GSTDataController {
                             cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount")),
                             0,
                             0,
-                            "ip"
+                            "ip"*/
                     );
                     GSTR2_B2B_ITC_details itc = new GSTR2_B2B_ITC_details();
                     GSTR2_B2B_items itm = new GSTR2_B2B_items(i++, item_details,itc);
@@ -1400,7 +1445,7 @@ public class GSTDataController {
                     double sgstAmt = cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount"));
                     totval +=taxval+igstAmt+cgstAmt+sgstAmt;
                     GSTR2_B2B_item_details item_details = new GSTR2_B2B_item_details(
-                            cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
+                            /*cursor_item.getString(cursor_item.getColumnIndex("SupplyType")),
                             cursor_item.getString(cursor_item.getColumnIndex("HSNCode")),
                             cursor_item.getDouble(cursor_item.getColumnIndex("TaxableValue")),
                             cursor_item.getDouble(cursor_item.getColumnIndex("IGSTRate")),
@@ -1411,7 +1456,7 @@ public class GSTDataController {
                             cursor_item.getDouble(cursor_item.getColumnIndex("SGSTAmount")),
                             0,
                             0,
-                            "ip"
+                            "ip"*/
                     );
                     GSTR2_B2B_ITC_details itc = new GSTR2_B2B_ITC_details();
                     GSTR2_B2B_items itm = new GSTR2_B2B_items(i++, item_details,itc);

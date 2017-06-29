@@ -225,6 +225,33 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
 
     void Reset()
     {
+        et_hsn_ori.setText("");
+        et_hsn_rev.setText("");
+        spnr_pos_ori.setSelection(0);
+        spnr_CustStateCode.setSelection(0);
+        spnr_g_s_ori.setSelection(0);
+        spnr_g_s_rev.setSelection(0);
+        et_taxMonth.setText("");
+
+        et_taxval.setText("0");
+        et_igstrate.setText("0");
+        et_sgstrate.setText("0");
+        et_cgstrate.setText("0");
+        et_igstamt.setText("0");
+        et_sgstamt.setText("0");
+        et_cgstamt.setText("0");
+        et_cessamt.setText("0");
+
+        // btnSave.setEnabled(false);
+        ammendAdapter = null;
+        listview_gstr2_amend.setAdapter(null);
+        if(ammendList!=null)
+            ammendList.clear();
+
+    }
+/*
+void Reset()
+    {
         et_hsn_ori.setText("h5");
         et_hsn_rev.setText("h6");
         spnr_pos_ori.setSelection(17);
@@ -249,6 +276,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
             ammendList.clear();
 
     }
+*/
 
 
     public void Add(View v)

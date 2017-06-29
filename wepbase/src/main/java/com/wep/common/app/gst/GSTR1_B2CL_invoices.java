@@ -30,6 +30,14 @@ public class GSTR1_B2CL_invoices {
         this.etin = etin;
         this.itms = itms;
     }
+    public GSTR1_B2CL_invoices(String inum, String idt, double val, String etin, ArrayList<GSTR1_B2CL_items> itms) {
+
+        this.inum = inum;
+        this.idt = idt;
+        this.val = val;
+        this.etin = etin;
+        this.itms = itms;
+    }
 
     public String getCname() {
         return cname;

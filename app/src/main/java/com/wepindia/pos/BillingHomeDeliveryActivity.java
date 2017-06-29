@@ -55,7 +55,6 @@ import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.DeletedKOT;
 import com.wep.common.app.Database.Department;
 import com.wep.common.app.Database.PendingKOT;
-import com.wep.common.app.gst.GSTR1_HSN_Details;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.print.BillKotItem;
 import com.wep.common.app.print.BillServiceTaxItem;
@@ -76,8 +75,6 @@ import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.AddedItemsToOrderTableClass;
 import com.wepindia.pos.utils.StockOutwardMaintain;
 import com.wepindia.printers.WepPrinterBaseActivity;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -4803,7 +4800,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                 String date_reprint = tv_inv_date.getText().toString();
                                 tvDate.setText(date_reprint);
                                 Date date = new SimpleDateFormat("dd-MM-yyyy").parse(date_reprint);
-                                Cursor LoadItemForReprint = dbBillScreen.getItemsForReprintBill_new(
+                                Cursor LoadItemForReprint = dbBillScreen.getItemsFromBillItem_new(
                                         billNo, String.valueOf(date.getTime()));
                                 if (LoadItemForReprint.moveToFirst())
                                 {

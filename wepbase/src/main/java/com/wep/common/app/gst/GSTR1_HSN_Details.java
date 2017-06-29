@@ -43,6 +43,20 @@ public class GSTR1_HSN_Details implements  Comparable<GSTR1_HSN_Details>{
         this.qty = qty;
         this.sply_ty = sply_ty;
     }
+    public GSTR1_HSN_Details(int num, String hsn_sc, String desc, String uqc, double qty,double val,
+                             double txval, double iamt,double camt, double samt, double csamt) {
+        this.num = num;
+        this.hsn_sc = hsn_sc;
+        this.desc = desc;
+        this.uqc = uqc;
+        this.qty = qty;
+        this.val = val;
+        this.txval = txval;
+        this.iamt = iamt;
+        this.camt = camt;
+        this.samt = samt;
+        this.csamt = csamt;
+    }
     public GSTR1_HSN_Details(int num, String ty, String hsn_sc, double val, double txval,double irt, double iamt, double crt, double camt, double srt, double samt, double csrt, double csamt, String desc, String uqc, double qty, String sply_ty) {
         this.num = num;
         this.ty = ty;

@@ -10,20 +10,26 @@ public class GSTR1B2CSData {
     private String state_cd;
     private String ty;
     private String hsn_sc;
-    private double txval;
     private double irt;
-    private double iamt;
     private double crt;
-    private double camt;
     private double srt;
-    private double samt;
     private double csrt;
-    private double csamt;
     private String pro_ass;
-    private String etin;
-    private String etype;
     private String OrderNumber;
     private String OrderDate;
+
+    private String sply_ty;
+    private double rt;
+    private String etin;
+    private String typ;
+    private String pos;
+    private double txval;
+    private double iamt;
+    private double camt;
+    private double samt;
+    private double csamt;
+
+
 
     public GSTR1B2CSData() {
     }
@@ -45,7 +51,7 @@ public class GSTR1B2CSData {
         this.csamt = csamt;
         this.pro_ass = pro_ass;
         this.etin = etin;
-        this.etype = etype;
+        this.typ = etype;
         OrderNumber = orderNumber;
         OrderDate = orderDate;
     }
@@ -66,6 +72,50 @@ public class GSTR1B2CSData {
         this.pro_ass = pro_ass;
     }
 
+    public GSTR1B2CSData(String sply_ty, double rt, String typ,String etin, String pos, double txval, double iamt, double camt, double samt, double csamt) {
+        this.sply_ty = sply_ty;
+        this.rt = rt;
+        this.typ = typ;
+        this.etin = etin;
+        this.pos = pos;
+        this.txval = txval;
+        this.iamt = iamt;
+        this.camt = camt;
+        this.samt = samt;
+        this.csamt = csamt;
+    }
+
+    public double getRt() {
+        return rt;
+    }
+
+    public void setRt(double rt) {
+        this.rt = rt;
+    }
+
+    public String getTyp() {
+        return typ;
+    }
+
+    public void setTyp(String typ) {
+        this.typ = typ;
+    }
+
+    public String getPos() {
+        return pos;
+    }
+
+    public void setPos(String pos) {
+        this.pos = pos;
+    }
+
+    public String getSply_ty() {
+        return sply_ty;
+    }
+
+    public void setSply_ty(String sply_ty) {
+        this.sply_ty = sply_ty;
+    }
 
     public double getCsrt() {
         return csrt;
@@ -92,11 +142,11 @@ public class GSTR1B2CSData {
     }
 
     public String getEtype() {
-        return etype;
+        return typ;
     }
 
     public void setEtype(String etype) {
-        this.etype = etype;
+        this.typ = etype;
     }
 
     public String getOrderNumber() {

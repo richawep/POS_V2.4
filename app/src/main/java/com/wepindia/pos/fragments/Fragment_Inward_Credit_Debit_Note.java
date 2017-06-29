@@ -310,7 +310,7 @@ public class Fragment_Inward_Credit_Debit_Note extends Fragment {
                     String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
                     note.setSno(count++);
                     note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
-                    note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
+                    note.setNt_num(cursor.getInt(cursor.getColumnIndex("NoteNo")));
                     note.setNt_dt(date_str1);
                     note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
                     note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
@@ -338,7 +338,7 @@ public class Fragment_Inward_Credit_Debit_Note extends Fragment {
                     String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
                     note.setSno(count++);
                     note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
-                    note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
+                    note.setNt_num(cursor.getInt(cursor.getColumnIndex("NoteNo")));
                     note.setNt_dt(date_str1);
                     note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
                     note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
@@ -369,7 +369,7 @@ public class Fragment_Inward_Credit_Debit_Note extends Fragment {
                     String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
                     note.setSno(count++);
                     note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
-                    note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
+                    note.setNt_num(cursor.getInt(cursor.getColumnIndex("NoteNo")));
                     note.setNt_dt(date_str1);
                     note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
                     note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
@@ -518,7 +518,7 @@ public class Fragment_Inward_Credit_Debit_Note extends Fragment {
             Date date_inv = (new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate));
             String reason = edt_reason.getText().toString();
 
-            note.setNt_num(Double.parseDouble(tv_note_no.getText().toString()));
+            note.setNt_num(Integer.parseInt(tv_note_no.getText().toString()));
             note.setNt_dt(tv_note_date.getText().toString());
             note.setInum(edt_InvoiceNo.getText().toString());
             note.setIdt(String.valueOf(date_inv.getTime()));

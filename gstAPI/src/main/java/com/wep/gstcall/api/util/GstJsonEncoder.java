@@ -29,6 +29,19 @@ public class GstJsonEncoder {
         }
         return jsonInString;
     }
+    public static String getGSTRJsonEncode(String gstrData){
+        String jsonInString = "";
+        try {
+            Gson gson = new Gson();
+            jsonInString = gson.toJson(gstrData);
+            int i;
+            return jsonInString;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonInString;
+    }
 
     /*public static String getGSTR2JsonEncode(String userName, GSTR2Data gstr2Data){
         GSTRData gstrData = new GSTRData(userName,gstr2Data);

@@ -17,8 +17,9 @@ public class GSTR1Data {
     private ArrayList<GSTR1_B2CL_A_Data> b2cla;
     private ArrayList<GSTR1B2CSData> b2cs;
     private ArrayList<GSTR1B2CSAData> b2csa;
-    private ArrayList<GSTR1_CDN_Data> cdn;
+    private ArrayList<GSTR1_CDN_Data> cdnr;
     private ArrayList<GSTR1_HSN_Data> hsn;
+    private  ArrayList<GSTR1_DOCS_Data> doc_issue;
 
     public GSTR1Data() {
     }
@@ -28,9 +29,20 @@ public class GSTR1Data {
         this.gt = gt;
         this.b2cs = b2cs;
         this.b2csa = b2csa;
-        this.cdn = cdn;
+        this.cdnr = cdn;
     }
 
+    public GSTR1Data(ArrayList<GSTR1_B2B_Data> b2b, ArrayList<GSTR1_B2B_A_Data> b2ba, ArrayList<GSTR1_B2CL_Data> b2cl, ArrayList<GSTR1_B2CL_A_Data> b2cla, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1_CDN_Data> cdnr, ArrayList<GSTR1_HSN_Data> hsn, ArrayList<GSTR1_DOCS_Data> doc_issue) {
+        this.b2b = b2b;
+        this.b2ba = b2ba;
+        this.b2cl = b2cl;
+        this.b2cla = b2cla;
+        this.b2cs = b2cs;
+        this.b2csa = b2csa;
+        this.cdnr = cdnr;
+        this.hsn = hsn;
+        this.doc_issue = doc_issue;
+    }
 
     public GSTR1Data(String gstin, String fp, double gt, ArrayList<GSTR1_B2B_Data> b2b, ArrayList<GSTR1_B2B_A_Data> b2ba, ArrayList<GSTR1_B2CL_Data> b2cl, ArrayList<GSTR1_B2CL_A_Data> b2cla, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1_CDN_Data> cdn, ArrayList<GSTR1_HSN_Data> hsn) {
         this.gstin = gstin;
@@ -42,7 +54,7 @@ public class GSTR1Data {
         this.b2cla = b2cla;
         this.b2cs = b2cs;
         this.b2csa = b2csa;
-        this.cdn = cdn;
+        this.cdnr = cdn;
         this.hsn = hsn;
     }
 
@@ -126,11 +138,11 @@ public class GSTR1Data {
         this.b2csa = b2csa;
     }
 
-    public ArrayList<GSTR1_CDN_Data> getCdn() {
-        return cdn;
+    public ArrayList<GSTR1_CDN_Data> getCdnr() {
+        return cdnr;
     }
 
-    public void setCdn(ArrayList<GSTR1_CDN_Data> cdn) {
-        this.cdn = cdn;
+    public void setCdnr(ArrayList<GSTR1_CDN_Data> cdnr) {
+        this.cdnr = cdnr;
     }
 }

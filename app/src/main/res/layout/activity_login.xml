@@ -78,7 +78,7 @@
             android:layout_marginTop="20dp"
             android:background="@android:drawable/edit_text"
             android:ems="10"
-            android:text="admin"
+            android:text=""
             android:hint="Password"
             android:imeOptions="flagNoExtractUi"
             android:inputType="textPassword"

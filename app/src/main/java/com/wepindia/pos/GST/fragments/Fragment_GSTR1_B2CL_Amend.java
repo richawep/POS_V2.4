@@ -299,19 +299,19 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
     void Reset()
     {
         //et_gstin_ori.setText("12ANTPA0870E1A1");
-        et_recipientStateCode.setText("12");
-        et_recipientName.setText("neha");
-        et_invno_ori.setText("23");
-        et_invdate_ori.setText("01-05-2017");
+        et_recipientStateCode.setText("");
+        et_recipientName.setText("");
+        et_invno_ori.setText("");
+        et_invdate_ori.setText("");
 
-        et_invno_rev.setText("50");
-        et_invdate_rev.setText("01-05-2017");
+        et_invno_rev.setText("");
+        et_invdate_rev.setText("");
         //et_value.setText("500");
         //et_pos.setText("14");
-        spnr_CustStateCode.setSelection(getIndexPOS("29"));
+        spnr_CustStateCode.setSelection(0);
         spnr_g_s.setSelection(0);
-        et_taxval.setText("1000");
-        et_hsn.setText("h5");
+        et_taxval.setText("");
+        et_hsn.setText("");
         et_igstrate.setText("0");
        /* et_sgstrate.setText("0");
         et_cgstrate.setText("0");*/
@@ -331,6 +331,47 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
             ammendList.clear();
 
     }
+/*
+void Reset()
+    {
+        //et_gstin_ori.setText("12ANTPA0870E1A1");
+        et_recipientStateCode.setText("12");
+        et_recipientName.setText("neha");
+        et_invno_ori.setText("23");
+        et_invdate_ori.setText("01-05-2017");
+
+        et_invno_rev.setText("50");
+        et_invdate_rev.setText("01-05-2017");
+        //et_value.setText("500");
+        //et_pos.setText("14");
+        spnr_CustStateCode.setSelection(getIndexPOS("29"));
+        spnr_g_s.setSelection(0);
+        et_taxval.setText("1000");
+        et_hsn.setText("h5");
+        et_igstrate.setText("0");
+       */
+/* et_sgstrate.setText("0");
+        et_cgstrate.setText("0");*//*
+
+        et_val.setText("0");
+        et_igstamt.setText("0");
+        et_cessamt.setText("0");
+        */
+/*et_sgstamt.setText("0");
+        et_cgstamt.setText("0");
+*//*
+
+
+
+
+        // btnSave.setEnabled(false);
+        ammendAdapter = null;
+        listview_gstr2_amend.setAdapter(null);
+        if(ammendList!=null)
+            ammendList.clear();
+
+    }
+*/
 
 
     public void Add(View v)

@@ -34,5 +34,9 @@ public class Config {
 
 
     public static final String Upload_No_of_Invoices = "http://metering.wepaspservices.com/api/Device/addBillCount?";
+    public static final String Base_URL_Azure = "https://wepgspapi.azure-api.net";
+    public static final String GET_TOKEN_API = "/api/token/getToken";
+    public static final String GSTR1_SAVE_AZURE_API = "/sendGstr1Save/SendGstr1Save";
+    public static final String GSTR2_SAVE_AZURE_API = "/gstr2SaveData/SendGstr2Save";
 
 }

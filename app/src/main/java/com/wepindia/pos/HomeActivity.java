@@ -566,7 +566,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             intentDelivery.putExtra("CUST_ID", 0);
             startActivity(intentDelivery);
 
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("cdn")) {
+        } else if (v.getContentDescription().toString().equalsIgnoreCase("cdnr")) {
 
            // Intent intentDelivery = new Intent(myContext, CreditDebitActivity.class);
             Intent intentDelivery = new Intent(myContext, TabbedCreditDebitNote.class);

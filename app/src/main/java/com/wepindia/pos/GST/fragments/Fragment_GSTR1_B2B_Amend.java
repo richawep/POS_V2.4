@@ -301,6 +301,40 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
     }
     void Reset()
     {
+        et_gstin_ori.setText("");
+        et_invno_ori.setText("");
+        et_invdate_ori.setText("");
+        et_gstin_ecom.setText("");
+        et_invno_rev.setText("");
+        et_invdate_rev.setText("");
+        et_value.setText("");
+        //et_pos.setText("14");
+        spnr_custStateCode.setSelection(0);
+        spnr_g_s.setSelection(0);
+        et_taxval.setText("");
+        et_hsn.setText("");
+        et_igstrate.setText("0");
+        et_sgstrate.setText("0");
+        et_cgstrate.setText("0");
+        et_igstamt.setText("0");
+        et_sgstamt.setText("0");
+        et_cgstamt.setText("0");
+        et_cessamt.setText("0");
+
+
+
+
+        // btnSave.setEnabled(false);
+        ammendAdapter = null;
+        listview_gstr2_amend.setAdapter(null);
+        if(ammendList!=null)
+            ammendList.clear();
+
+    }
+
+/*
+void Reset()
+    {
         et_gstin_ori.setText("12ANTPA0870E1A1");
         et_invno_ori.setText("23");
         et_invdate_ori.setText("01-04-2017");
@@ -332,6 +366,7 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
 
     }
 
+*/
 
     public void Add(View v)
     {

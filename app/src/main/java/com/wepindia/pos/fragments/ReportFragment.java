@@ -9995,16 +9995,29 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                                         subtotal_f = Double.parseDouble(rowcursor.getString(rowcursor.getColumnIndex("SubTotal")));
 
+                                        /*if((SGSTAmount_f + CGSTAmount_f+IGSTAmount_f) == 0) // nil rated
+                                            continue;*/
+
+
+
+
                                         String ProAss = "";
                                         double gstrate = IGSTRate_f+CGSTRate_f+SGSTRate_f;
                                         B2Csmall obj = new B2Csmall();
+                                        String suply_type = "";
+                                        if(IGSTAmount_f >0)
+                                            suply_type = "INTER";
+                                        else
+                                            suply_type = "INTRA" ;
+
+                                        obj.setSply_ty(suply_type);
                                         obj.setSupplyType(SupplyType_str);
                                         obj.setHSNCode(HSN);
                                         obj.setPlaceOfSupply(POS_str);
                                         obj.setStateCode(custStateCode_str);
                                         obj.setTaxableValue(taxablevalue_f);
                                         obj.setIGSTRate(IGSTRate_f);
-                                        obj.setGSTRate(IGSTRate_f+CGSTRate_f+SGSTRate_f);
+                                        obj.setGSTRate(gstrate);
                                         obj.setCessAmt(cessAmt);
                                         obj.setIGSTAmt(IGSTAmount_f);
                                         obj.setCGSTRate(CGSTRate_f);
@@ -10022,8 +10035,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                             {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  found = 0;
                                             for(B2Csmall data_s: datalist_s){
                                                 //if((data_s.getGSTRate()==gstrate)&& (data_s.getStateCode().equalsIgnoreCase(custStateCode_str)) ){
-                                                if((IGSTRate_f >0 && IGSTRate_f ==data_s.getIGSTRate()) ||
-                                                        (IGSTRate_f == 0 && gstrate==data_s.getGSTRate()))
+                                                /*if((IGSTRate_f >0 && IGSTRate_f ==data_s.getIGSTRate()) ||
+                                                        (IGSTRate_f == 0 && gstrate==data_s.getGSTRate()))*/
+                                                if(data_s.getGSTRate()==gstrate &&
+                                                        data_s.getSply_ty().equalsIgnoreCase(suply_type))
                                                 {
                                                     // taxval
                                                     double taxableval = data_s.getTaxableValue();

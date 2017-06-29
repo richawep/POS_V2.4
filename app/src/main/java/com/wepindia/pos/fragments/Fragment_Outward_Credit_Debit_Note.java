@@ -298,7 +298,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                     String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
                     note.setSno(count++);
                     note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
-                    note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
+                    note.setNt_num(cursor.getInt(cursor.getColumnIndex("NoteNo")));
                     note.setNt_dt(date_str1);
                     note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
                     note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
@@ -321,7 +321,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                     String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
                     note.setSno(count++);
                     note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
-                    note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
+                    note.setNt_num(cursor.getInt(cursor.getColumnIndex("NoteNo")));
                     note.setNt_dt(date_str1);
                     note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
                     note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
@@ -347,7 +347,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                     String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
                     note.setSno(count++);
                     note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
-                    note.setNt_num(cursor.getDouble(cursor.getColumnIndex("NoteNo")));
+                    note.setNt_num(cursor.getInt(cursor.getColumnIndex("NoteNo")));
                     note.setNt_dt(date_str1);
                     note.setInum(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
                     note.setIdt(cursor.getString(cursor.getColumnIndex("InvoiceDate")));
@@ -403,14 +403,45 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         }
         if(spnrNote.getSelectedItem().toString().equals(""))
         {
-            MsgBox.Show("Error", "Please Note type as Credit or Debit");
+            MsgBox.Show("Error", "Please Select Note type as Credit or Debit");
             return 0;
+        }else if (spnrNote.getSelectedItem().toString().equalsIgnoreCase("Credit"))
+        {   String notetype = "D";
+            try{
+                String invoiceDate = tv_InvoiceDate.getText().toString();
+                Date invoiceDate_new = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
+                Cursor cursor = dbCredit.isNotePresentforInvoice(edt_InvoiceNo.getText().toString(),String.valueOf(invoiceDate_new.getTime()),notetype);
+                if(cursor.moveToNext())
+                {
+                    MsgBox.Show("Error", "Debit Note is already issued for this invoice. You cannot make Credit and Debit both on same invoice ");
+                    return 0;
+                }
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }else if (spnrNote.getSelectedItem().toString().equalsIgnoreCase("Debit"))
+        {   String notetype = "C";
+            try{
+                String invoiceDate = tv_InvoiceDate.getText().toString();
+                Date invoiceDate_new = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
+                Cursor cursor = dbCredit.isNotePresentforInvoice(edt_InvoiceNo.getText().toString(),String.valueOf(invoiceDate_new.getTime()),notetype);
+                if(cursor.moveToNext())
+                {
+                    MsgBox.Show("Error", "Credit Note is already issued for this invoice. You cannot make Credit and Debit both on same invoice ");
+                    return 0;
+                }
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
         if(Double.parseDouble(edt_Value.getText().toString()) > Double.parseDouble(tv_billamount.getText().toString()))
         {
             MsgBox.Show("Error", "Differential Value cannot be greater than Total Invoice Amount");
             return 0;
         }
+
         return 1;
     }
     private int AddCredit()
@@ -422,9 +453,9 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             String date_temp = new SimpleDateFormat("dd-MM-yyyy").format(date);
             Date date_new = new SimpleDateFormat("dd-MM-yyyy").parse(date_temp);
             long milii = date_new.getTime();
-            int notenum = dbCredit.getMaxCreditNoteNo();
             String invoiceDate = tv_InvoiceDate.getText().toString();
             Date date_inv = (new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate));
+            int notenum = dbCredit.getCreditNoteNo(edt_InvoiceNo.getText().toString(),String.valueOf(date_inv.getTime()));
             String name  = tv_recipientName.getText().toString();
             String reason = edt_reason.getText().toString();
             String reverseCharge = tv_reverseCharge.getText().toString();
@@ -490,7 +521,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             Date date_inv = (new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate));
             String reason = edt_reason.getText().toString();
 
-            note.setNt_num(Double.parseDouble(tv_note_no.getText().toString()));
+            note.setNt_num(Integer.parseInt(tv_note_no.getText().toString()));
             note.setNt_dt(tv_note_date.getText().toString());
             note.setInum(edt_InvoiceNo.getText().toString());
             note.setIdt(String.valueOf(date_inv.getTime()));

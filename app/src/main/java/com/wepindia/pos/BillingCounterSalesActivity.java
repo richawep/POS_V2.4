@@ -3803,7 +3803,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 String date_reprint = tv_inv_date.getText().toString();
                                 tvDate.setText(date_reprint);
                                 Date date = new SimpleDateFormat("dd-MM-yyyy").parse(date_reprint);
-                                Cursor LoadItemForReprint = db.getItemsForReprintBill_new(
+                                Cursor LoadItemForReprint = db.getItemsFromBillItem_new(
                                         billNo, String.valueOf(date.getTime()));
                                 if (LoadItemForReprint.moveToFirst()) {
                                     Cursor cursor = db.getBillDetail_counter(billNo, String.valueOf(date.getTime()));

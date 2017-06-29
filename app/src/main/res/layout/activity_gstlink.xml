@@ -401,7 +401,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/img20"
                                 android:gravity="center"
-                                android:text="Post GSTR2"
+                                android:text="Post GSTR2 Invoices"
                                 android:textSize="@dimen/menu_box_font_size" />
                         </RelativeLayout>
                         <RelativeLayout

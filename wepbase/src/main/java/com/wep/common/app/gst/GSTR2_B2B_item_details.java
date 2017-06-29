@@ -16,9 +16,10 @@ public class GSTR2_B2B_item_details {
     private double samt;
     private double csrt;
     private double csamt;
+    private double rt;
     private String elg;
 
-    public GSTR2_B2B_item_details(String ty, String hsn_sc, double txval, double irt, double iamt, double crt, double camt, double srt, double samt, double csrt, double csamt, String elg) {
+    public GSTR2_B2B_item_details(String ty, String hsn_sc, double txval, double irt, double iamt, double crt, double camt, double srt, double samt, double csrt, double csamt, double rt, String elg) {
         this.ty = ty;
         this.hsn_sc = hsn_sc;
         this.txval = txval;
@@ -31,6 +32,27 @@ public class GSTR2_B2B_item_details {
         this.csrt = csrt;
         this.csamt = csamt;
         this.elg = elg;
+        this.rt = rt;
+    }
+    public GSTR2_B2B_item_details() {
+
+    }
+
+    public GSTR2_B2B_item_details(double txval, double iamt, double camt, double samt, double csamt, double rt) {
+        this.txval = txval;
+        this.iamt = iamt;
+        this.camt = camt;
+        this.samt = samt;
+        this.csamt = csamt;
+        this.rt = rt;
+    }
+
+    public double getRt() {
+        return rt;
+    }
+
+    public void setRt(double rt) {
+        this.rt = rt;
     }
 
     public String getTy() {

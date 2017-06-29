@@ -9,6 +9,7 @@ import com.wepindia.pos.fragments.FragmentGSTLink;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -25,19 +26,20 @@ public class HTTPAsyncTask_Frag extends AsyncTask<Void,Void,String> {
     private String strJson;
     private int requestCode;
     private String url;
-    private HTTPAsyncTask.OnHTTPRequestCompletedListener httpRequestCompletedListener;
+    private HTTPAsyncTask_Frag.OnHTTPRequestCompletedListener httpRequestCompletedListener;
     public static int HTTP_GET = 1;
     public static int HTTP_POST = 2;
     private int method;
-
-    public HTTPAsyncTask_Frag(FragmentGSTLink activity, int method, String strJson, int requestCode, String url)
+    private String Header;
+    public HTTPAsyncTask_Frag(FragmentGSTLink activity, int method, String strJson, int requestCode, String url, String Header)
     {
         this.activity = activity;
         this.strJson = strJson;
         this.requestCode = requestCode;
         this.url = url;
         this.method = method;
-        httpRequestCompletedListener = (HTTPAsyncTask.OnHTTPRequestCompletedListener) activity;
+        httpRequestCompletedListener = (HTTPAsyncTask_Frag.OnHTTPRequestCompletedListener) activity;
+        this.Header = Header;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class HTTPAsyncTask_Frag extends AsyncTask<Void,Void,String> {
         {
             resp = sendHTTPGETData(url);
         }
-        else
+        else if(this.method == HTTP_POST)
         {
             resp = sendHTTPData(url,strJson);
         }
@@ -73,33 +75,48 @@ public class HTTPAsyncTask_Frag extends AsyncTask<Void,Void,String> {
         String resp = null;
         HttpURLConnection connection = null;
         try {
-            URL url=new URL(urlpath);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Accept", "application/json");
-            OutputStreamWriter streamWriter = new OutputStreamWriter(connection.getOutputStream());
-            streamWriter.write(jsonData.toString());
-            streamWriter.flush();
-            StringBuilder stringBuilder = new StringBuilder();
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
-                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
-                BufferedReader bufferedReader = new BufferedReader(streamReader);
-                String response = null;
-                while ((response = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(response + "\n");
+            URL obj = new URL(urlpath);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", USER_AGENT);
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+            con.setDoInput(true);
+            if(Header.length()>0)
+            {
+                String[] headerData=Header.split(",");
+                for(String head : headerData)
+                {
+                    String[] prop = head.split("@");
+                    con.setRequestProperty(prop[0], prop[1]);
                 }
-                bufferedReader.close();
+            }
+            OutputStream os = con.getOutputStream();
+            os.write(jsonData.getBytes());
+            os.flush();
+            os.close();
+            // For POST only - END
 
-                Log.d("test", stringBuilder.toString());
-                resp =  stringBuilder.toString();
-                Log.d(TAG,resp.toString());
-                Log.d(TAG,jsonData);
+            int responseCode = con.getResponseCode();
+            System.out.println("\n Sending 'POST ' request to URL : " + url);
+            System.out.println("POST Response Code :: " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // print result
+                System.out.println(response.toString());
+                resp = String.valueOf(response);
             } else {
-                Log.e("test", connection.getResponseMessage());
-                resp =  null;
+                System.out.println("POST request not worked");
             }
         } catch (Exception exception){
             Log.e(TAG, exception.toString());

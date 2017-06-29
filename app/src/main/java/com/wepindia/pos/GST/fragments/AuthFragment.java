@@ -26,7 +26,7 @@ public class AuthFragment extends DialogFragment {
     private EditText editTextUserName,editTextUserPass;
     private Button btnCancel,btnOkay;
     private TextView textViewValidationMsg;
-    private OnAuthCompletedListener onAuthCompletedListener;
+    private OnLocalAuthCompletedListener onLocalAuthCompletedListener;
     private int code;
 
 
@@ -40,7 +40,7 @@ public class AuthFragment extends DialogFragment {
         editTextUserName = (EditText) view.findViewById(R.id.editTextUserName);
         editTextUserPass = (EditText) view.findViewById(R.id.editTextUserPass);
         textViewValidationMsg = (TextView) view.findViewById(R.id.textViewVal);
-        onAuthCompletedListener = (OnAuthCompletedListener) getActivity();
+        onLocalAuthCompletedListener = (OnLocalAuthCompletedListener) getActivity();
         btnCancel = (Button) view.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +68,7 @@ public class AuthFragment extends DialogFragment {
                     if(User!=null) {
                         if (User.getCount() > 0) {
                             if(User.moveToFirst()){
-                                onAuthCompletedListener.onAuthCompleted(true,code,User.getString(User.getColumnIndex("Name")));
+                                onLocalAuthCompletedListener.onLocalAuthCompleted(true,code,User.getString(User.getColumnIndex("Name")));
                             }
                             AuthFragment.this.dismiss();
                         }else {
@@ -86,7 +86,8 @@ public class AuthFragment extends DialogFragment {
         this.code = code;
     }
 
-    public interface OnAuthCompletedListener {
-        public void onAuthCompleted(boolean success, int code, String userName);
+    public interface OnLocalAuthCompletedListener {
+        public void onLocalAuthCompleted(boolean success, int code, String userName);
     }
+
 }
