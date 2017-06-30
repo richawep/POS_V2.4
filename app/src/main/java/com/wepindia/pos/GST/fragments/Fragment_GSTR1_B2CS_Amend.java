@@ -225,8 +225,8 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
 
     void Reset()
     {
-        et_hsn_ori.setText("");
-        et_hsn_rev.setText("");
+        et_hsn_ori.setText("-");
+        et_hsn_rev.setText("-");
         spnr_pos_ori.setSelection(0);
         spnr_CustStateCode.setSelection(0);
         spnr_g_s_ori.setSelection(0);

@@ -169,6 +169,7 @@ public class LoginActivity extends Activity {
             if (User != null) {
                 if (User.moveToFirst()) {
                     Intent intentHomeScreen = new Intent(this, HomeActivity.class);
+                    Intent intentOwnerDetail = new Intent(this, OwnerDetailsActivity.class);
                     String userId = User.getString(User.getColumnIndex("UserId"));
                     String userName = User.getString(User.getColumnIndex("Name"));
                     String userRole = User.getString(User.getColumnIndex("RoleId"))+"";
@@ -178,6 +179,11 @@ public class LoginActivity extends Activity {
                     ApplicationData.savePreference(this,ApplicationData.USER_ROLE,userRole);
 
                     startActivity(intentHomeScreen);
+                    /*Cursor cursor = dbLogin.getAllBillDetail();
+                    if(cursor!=null && cursor.moveToFirst())
+                        startActivity(intentHomeScreen);
+                    else
+                        startActivity(intentOwnerDetail);*/
 
                 /*objBillSettings.setDateAndTime(1);
                 long iResult = dbLogin.updateDateAndTime(objBillSettings);*/

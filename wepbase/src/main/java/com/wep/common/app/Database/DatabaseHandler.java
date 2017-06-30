@@ -1296,7 +1296,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
 
 
-        cvDbValues = new ContentValues();
+        /*cvDbValues = new ContentValues();
         //cvDbValues.put(KEY_GSTIN, "G12345678901234");
         cvDbValues.put(KEY_GSTIN, "04AABFN9870CMZT");
         cvDbValues.put(KEY_POS, "29");
@@ -1316,7 +1316,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             l = 0;
             //Log.d(TAG, e.toString());
             e.printStackTrace();
-        }
+        }*/
 
 
         cvDbValues = new ContentValues();
@@ -2389,6 +2389,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public int deleteOwnerDetails() {
+        SQLiteDatabase db = getWritableDatabase();
+        int result=0;
+        try{
+             result = db.delete(TBL_OWNER_DETAILS, null, null);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            result =0;
+
+        }finally {
+            return result;
+        }
+    }
     public String gettaxeename() {
         String Selectquery = "Select " + KEY_Owner_Name + " FROM " + TBL_OWNER_DETAILS + " WHERE " + KEY_IsMainOffice + " LIKE 'yes'";
         Cursor result = dbFNB.rawQuery(Selectquery, null);
@@ -7511,6 +7525,41 @@ public int makeBillVoid(int InvoiceNo ) {
                 }
             }
         }
+    }
+
+
+    public long addOwnerDetails(String name, String gstin, String phone, String email, String address, String pos, String office)
+    {
+        long status = 0;
+        ContentValues cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_Owner_Name,name);
+        cvDbValues.put(KEY_GSTIN,gstin);
+        cvDbValues.put(KEY_PhoneNo,phone);
+        cvDbValues.put(KEY_USER_EMAIL,email);
+        cvDbValues.put(KEY_USER_ADDRESS,address);
+        cvDbValues.put(KEY_POS,pos);
+        cvDbValues.put(KEY_IsMainOffice,office);
+
+        cvDbValues.put(KEY_DeviceId, "MACID_00");
+        cvDbValues.put(KEY_DeviceName, "TAB2200+");
+        cvDbValues.put(KEY_FIRM_NAME, "Sharma & Sons");
+        cvDbValues.put(KEY_TINCIN, "1234567890");
+        cvDbValues.put(KEY_IsMainOffice, "YES");
+
+
+        try {
+            status = dbFNB.insert(TBL_OWNER_DETAILS, null, cvDbValues);
+            //Log.d(TAG,"code "+status);
+            if (status > 0) {
+
+            }
+            //Log.d(TAG,"Inserted Successfully with code "+status);
+        } catch (Exception e) {
+            status = 0;
+            Log.d(TAG,e.toString());
+        }
+        return status;
+
     }
 
 
