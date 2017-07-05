@@ -178,15 +178,15 @@ public class LoginActivity extends Activity {
                     ApplicationData.savePreference(this,ApplicationData.USER_NAME,userName);
                     ApplicationData.savePreference(this,ApplicationData.USER_ROLE,userRole);
 
-                    startActivity(intentHomeScreen);
-                    /*Cursor cursor = dbLogin.getAllBillDetail();
+                    //startActivity(intentHomeScreen);
+                    Cursor cursor = dbLogin.getAllBillDetail();
                     if(cursor!=null && cursor.moveToFirst())
                         startActivity(intentHomeScreen);
                     else
-                        startActivity(intentOwnerDetail);*/
+                        startActivity(intentOwnerDetail);
 
-                /*objBillSettings.setDateAndTime(1);
-                long iResult = dbLogin.updateDateAndTime(objBillSettings);*/
+                objBillSettings.setDateAndTime(1);
+                long iResult = dbLogin.updateDateAndTime(objBillSettings);
 
                     finish();
 

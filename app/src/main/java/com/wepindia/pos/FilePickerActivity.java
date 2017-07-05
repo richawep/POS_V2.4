@@ -1,8 +1,10 @@
 package com.wepindia.pos;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,10 +46,9 @@ public class FilePickerActivity extends AppCompatActivity implements AdapterView
     protected boolean mShowHiddenFiles = false;
     protected String[] acceptedFileExtensions;
     private String contentType;
-
     public static final int FILE_PICKER_CODE = 34890;
     public static final int PICK_IMAGE_CODE = 33890;
-
+    //    static int c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +59,18 @@ public class FilePickerActivity extends AppCompatActivity implements AdapterView
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = (ListView) findViewById(R.id.listView);
         contentType = getIntent().getStringExtra("contentType");
-        // Set initial directory
         mDirectory = new File(DEFAULT_INITIAL_DIRECTORY);
         // Initialize the ArrayList
         mFiles = new ArrayList<File>();
         // Set the ListAdapter
+//        if(c==1)
+//        {
+//            int k=getIntent().getIntExtra("flag",0);
+//            if(k==1)
+//            {
+//                onBackPressed();
+//            }
+//        }
         mAdapter = new FilePickerListAdapter(this, mFiles);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(this);
@@ -70,7 +78,6 @@ public class FilePickerActivity extends AppCompatActivity implements AdapterView
         listView.setEmptyView(empty);
         // Initialize the extensions array to allow any file extensions
         acceptedFileExtensions = new String[] {};
-
         // Get intent extras
         if(getIntent().hasExtra(EXTRA_FILE_PATH)) {
             mDirectory = new File(getIntent().getStringExtra(EXTRA_FILE_PATH));
@@ -83,7 +90,6 @@ public class FilePickerActivity extends AppCompatActivity implements AdapterView
             acceptedFileExtensions = collection.toArray(new String[collection.size()]);
         }
     }
-
     @Override
     protected void onResume() {
         refreshFilesList();
@@ -96,7 +102,7 @@ public class FilePickerActivity extends AppCompatActivity implements AdapterView
     protected void refreshFilesList() {
         // Clear the files ArrayList
         mFiles.clear();
-
+//        c=1;
         // Set the extension file filter
         ExtensionFilenameFilter filter = new ExtensionFilenameFilter(acceptedFileExtensions);
 
@@ -126,13 +132,14 @@ public class FilePickerActivity extends AppCompatActivity implements AdapterView
         if(mDirectory.getParentFile() != null) {
             // Go to parent directory
             File file = mDirectory.getParentFile();
-            if(!file.toString().equalsIgnoreCase("/")){
-                mDirectory = file;
-            }
+            System.out.print(mDirectory.getAbsolutePath());
+
+            mDirectory = file;
+
             refreshFilesList();
             return;
         }
-
+//        c=0;
         super.onBackPressed();
     }
 
@@ -330,7 +337,7 @@ public class FilePickerActivity extends AppCompatActivity implements AdapterView
 
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
-            finish();
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }

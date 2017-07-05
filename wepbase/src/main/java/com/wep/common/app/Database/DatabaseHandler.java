@@ -671,6 +671,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     String QUERY_CREATE_TABLE_OWNER_DETAILS = "CREATE TABLE " + TBL_OWNER_DETAILS + " ( " +
             KEY_GSTIN + " TEXT, " + KEY_Owner_Name + "  TEXT, " + KEY_FIRM_NAME + " TEXT, " + KEY_PhoneNo + " TEXT, " +
             KEY_POS +" TEXT,"+ KEY_DeviceId+" Text, "+KEY_DeviceName+" Text, "+KEY_USER_EMAIL+" TEXT, "+
+            KEY_REFERENCE_NO+" TEXT, "+
             KEY_Address + " TEXT, " + KEY_TINCIN + " TEXT, " + KEY_IsMainOffice + "  TEXT ) ";
 
     String QUERY_CREATE_TABLE_Stock_Outward = "CREATE TABLE " + TBL_StockOutward + " ( " +
@@ -2379,6 +2380,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 gstin = result.getString(result.getColumnIndex("GSTIN"));
         }
         return gstin;
+
+    }
+    public String getOwnerReferenceNo() {
+        String Selectquery = "Select "+KEY_REFERENCE_NO+" FROM " + TBL_OWNER_DETAILS + " WHERE IsMainOffice='YES'";
+        Cursor result = dbFNB.rawQuery(Selectquery, null);
+        String refno = null;
+        if (result != null) {
+            if (result.moveToFirst())
+                refno = result.getString(result.getColumnIndex(KEY_REFERENCE_NO));
+        }
+        return refno;
 
     }
     public Cursor getOwnerDetail() {
@@ -7528,7 +7540,7 @@ public int makeBillVoid(int InvoiceNo ) {
     }
 
 
-    public long addOwnerDetails(String name, String gstin, String phone, String email, String address, String pos, String office)
+    public long addOwnerDetails(String name, String gstin, String phone, String email, String address, String pos, String office, String RefernceNo)
     {
         long status = 0;
         ContentValues cvDbValues = new ContentValues();
@@ -7539,6 +7551,7 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_USER_ADDRESS,address);
         cvDbValues.put(KEY_POS,pos);
         cvDbValues.put(KEY_IsMainOffice,office);
+        cvDbValues.put(KEY_REFERENCE_NO,RefernceNo);
 
         cvDbValues.put(KEY_DeviceId, "MACID_00");
         cvDbValues.put(KEY_DeviceName, "TAB2200+");

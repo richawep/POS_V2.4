@@ -1,6 +1,7 @@
 package com.wep.gstcall.api.util;
 
 import com.google.gson.Gson;
+import com.wep.common.app.gst.GSTR1Data;
 import com.wep.common.app.gst.GSTRData;
 
 import org.json.JSONArray;
@@ -29,7 +30,8 @@ public class GstJsonEncoder {
         }
         return jsonInString;
     }
-    public static String getGSTRJsonEncode(String gstrData){
+
+    public static String getGSTR1JsonEncode(GSTR1Data gstrData){
         String jsonInString = "";
         try {
             Gson gson = new Gson();
@@ -42,6 +44,7 @@ public class GstJsonEncoder {
         }
         return jsonInString;
     }
+
 
     /*public static String getGSTR2JsonEncode(String userName, GSTR2Data gstr2Data){
         GSTRData gstrData = new GSTRData(userName,gstr2Data);

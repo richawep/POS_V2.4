@@ -333,7 +333,7 @@ tools:context="com.wepindia.pos.InwardItemActivity">
                             android:layout_height="match_parent"
                             android:layout_weight="0.87"
                             android:gravity="center"
-                            android:text="Average Rate*"
+                            android:text="Rate*"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <EditText

@@ -80,8 +80,8 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         // Required empty public constructor
     }
 
-    String HeaderAuthorizationData_POST_APIS ="Ocp-Apim-Subscription-Key@07cde031cc1646efae45746a8c844974,GSTINNO@04AABFN9870CMZT"+
-            ",SOURCE_TYPE@POS,REFERENCE_NO@POSP1";
+    String HeaderAuthorizationData_POST_APIS ="Ocp-Apim-Subscription-Key@07cde031cc1646efae45746a8c844974"+
+            ",SOURCE_TYPE@POS";
 
     private static final String Header_TokenAuth ="Ocp-Apim-Subscription-Key@07cde031cc1646efae45746a8c844974," +
             "client_id@e03001c6-59b7-4bbb-919a-778108e643b9,client_secret@nOViR/b/Q7L/iwQkzWIDG19DzcqbaiC82yNVFF3J9qc=";
@@ -930,13 +930,22 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
             ArrayList<GSTR1_B2CL_A_Data> list_b2cla= new ArrayList<>();// = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
             ArrayList<GSTR1B2CSAData> list_b2csA= new ArrayList<>();// = makeGSTR1B2CSA( start_milli,  end_milli);
             ArrayList<GSTR1_DOCS_Data> list_doc= handle.getGSTR1DOCData( start_milli,  end_milli);
-            GSTR1Data gstr1Data = new GSTR1Data(list_b2b, list_b2ba,list_b2cl,list_b2cla,list_b2cs, list_b2csA,
+            GSTR1Data gstr1Data = new GSTR1Data( dbGSTLink.getGSTIN(),list_b2b, list_b2ba,list_b2cl,list_b2cla,list_b2cs, list_b2csA,
                     cdnList,hsnList,list_doc);
             GSTRData gstrData = new GSTRData(userName, dbGSTLink.getGSTIN(), gstr1Data);
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
-
+            //String strJson = GstJsonEncoder.getGSTR1JsonEncode(gstr1Data);
+            System.out.println(strJson);
 
             try{
+                String gstin = dbGSTLink.getGSTIN();
+                if(gstin==null)
+                    gstin="";
+                String referenceno = dbGSTLink.getOwnerReferenceNo();
+                if(referenceno==null)
+                    referenceno="";
+                HeaderAuthorizationData_POST_APIS += ",GSTINNO@"+gstin.trim();
+                HeaderAuthorizationData_POST_APIS += ",REFERENCE_NO@"+referenceno.trim();
                 JSONObject jsonObject = new JSONObject(respData);
                 String Bearer = (String) jsonObject.get("access_token");
                 if (Bearer!=null && !Bearer.equals(""))
@@ -944,6 +953,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                     //HeaderAuthorizationData_POST_APIS += ",Authorization@Bearer "+Bearer.trim();
                     HeaderAuthorizationData_POST_APIS += ",Authorization@Bearer "+Bearer;
                 }
+
             }catch (Exception e)
             {
                 e.printStackTrace();
@@ -995,6 +1005,14 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                 String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
 
                 try{
+                    String gstin = dbGSTLink.getGSTIN();
+                    if(gstin==null)
+                        gstin="";
+                    String referenceno = dbGSTLink.getOwnerReferenceNo();
+                    if(referenceno==null)
+                        referenceno="";
+                    HeaderAuthorizationData_POST_APIS += ",GSTINNO@"+gstin.trim();
+                    HeaderAuthorizationData_POST_APIS += ",REFERENCE_NO@"+referenceno.trim();
                     JSONObject jsonObject = new JSONObject(respData);
                     String Bearer = (String) jsonObject.get("access_token");
                     if (Bearer!=null && !Bearer.equals(""))

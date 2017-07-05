@@ -1,0 +1,242 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.wepindia.pos.fragments.Fragment_DisplayOwnerDetail">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_above="@id/tvHorizontalLine"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="NAME*"
+                android:gravity="center_vertical"
+                android:textSize="25sp"
+                android:layout_weight="1"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Enter Name"
+                android:id="@+id/ownerName"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:focusable="false"
+                android:inputType="text"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="GSTIN"
+                android:textSize="25sp"
+                android:layout_weight="1"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="enter GSTIN"
+                android:enabled="false"
+                android:focusable="false"
+                android:id="@+id/ownerGstin"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Reference No"
+                android:textSize="25sp"
+                android:layout_weight="1"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="reference no"
+                android:enabled="false"
+                android:focusable="false"
+                android:id="@+id/ownerReferenceNo"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="PHONE*"
+                android:textSize="25sp"
+                android:layout_weight="1"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Enter Contact Number"
+                android:id="@+id/ownerContact"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:enabled="false"
+                android:focusable="false"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="E-MAIL*"
+                android:textSize="25sp"
+                android:layout_weight="1"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Enter e-mail"
+                android:id="@+id/ownerEmail"
+                android:enabled="false"
+                android:focusable="false"
+                android:inputType="textEmailAddress"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="ADDRESS*"
+                android:textSize="25sp"
+                android:layout_weight="1"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Enter Address"
+                android:id="@+id/ownerAddress"
+                android:enabled="false"
+                android:focusable="false"
+                android:inputType="text"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="POS*"
+                android:textSize="25sp"
+                android:layout_weight="1"/>
+
+            <Spinner
+                android:id="@+id/ownerPos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:entries="@array/poscode"
+                android:enabled="false"
+                android:focusable="false"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="IS MAIN OFFICE"
+                android:textSize="25sp"
+                android:layout_weight="1"/>
+
+            <Spinner
+                android:id="@+id/ownerOffice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:entries="@array/y_n"
+                android:enabled="false"
+                android:focusable="false"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tvHorizontalLine"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_above="@+id/rowButtons"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="2dp"
+        android:background="#000000" />
+
+    <TableRow
+        android:id="@+id/rowButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" >
+
+
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/background_btn"
+            android:textColor="@android:color/white"
+            android:theme="@style/WepButtonWithMarigin"
+            android:text="Close" />
+    </TableRow>
+
+
+</RelativeLayout>

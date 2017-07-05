@@ -27,6 +27,7 @@ import com.wepindia.pos.fragments.FragmentSettingsMiscellaneous;
 import com.wepindia.pos.fragments.FragmentSettingsOther;
 import com.wepindia.pos.fragments.FragmentSettingsPrice;
 import com.wepindia.pos.fragments.FragmentSettingsPrint;
+import com.wepindia.pos.fragments.Fragment_DisplayOwnerDetail;
 import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.util.ArrayList;
@@ -84,11 +85,19 @@ public class TabbedSettingsActivity extends WepBaseActivity{
         reportFragment2.setArguments(bundle2);
         adapter.addFragment(reportFragment2, "Price");
 
-        Bundle bundle3=new Bundle();
+        /*Bundle bundle3=new Bundle();
         bundle3.putString("REPORT_TYPE", "3");
         FragmentSettingsMiscellaneous reportFragment3 = new FragmentSettingsMiscellaneous();
+        reportFragment3.setArguments(bundle3);*/
+        //adapter.addFragment(reportFragment3, "Miscellaneous");
+        //
+        Bundle bundle3=new Bundle();
+        bundle3.putString("REPORT_TYPE", "3");
+        Fragment_DisplayOwnerDetail reportFragment3 = new Fragment_DisplayOwnerDetail();
         reportFragment3.setArguments(bundle3);
-        adapter.addFragment(reportFragment3, "Miscellaneous");
+        adapter.addFragment(reportFragment3, "Owner Detail");
+
+
 
         Bundle bundle4=new Bundle();
         bundle4.putString("REPORT_TYPE", "4");
@@ -159,9 +168,9 @@ public class TabbedSettingsActivity extends WepBaseActivity{
                         switch(i)
                         {
 
-                            case 2:  FragmentSettingsMiscellaneous fragment = (FragmentSettingsMiscellaneous) adapter.instantiateItem(viewPager, i);
+                           /* case 2:  FragmentSettingsMiscellaneous fragment = (FragmentSettingsMiscellaneous) adapter.instantiateItem(viewPager, i);
                                 fragment.onResume();
-                                break;
+                                break;*/
                         }
 
                     }
