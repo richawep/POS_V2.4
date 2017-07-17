@@ -396,7 +396,7 @@
 
                         <TextView
                             android:id="@+id/tv_cdn"
-                            android:layout_width="140dp"
+                            android:layout_width="142dp"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/img_cdn"
                             android:gravity="center"
