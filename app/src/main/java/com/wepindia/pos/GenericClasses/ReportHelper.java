@@ -1816,7 +1816,7 @@ public class ReportHelper{
 			IGSTRate.setText("IGST Rate");
 
 			TextView IGSTAmt = new TextView(activityContext);
-			IGSTAmt.setWidth(70);
+			IGSTAmt.setWidth(85);
 			IGSTAmt.setTextSize(15);
 			IGSTAmt.setGravity(Gravity.CENTER);
 			IGSTAmt.setTextColor(Color.WHITE);
