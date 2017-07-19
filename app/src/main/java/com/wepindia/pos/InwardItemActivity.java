@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -158,6 +160,68 @@ public class InwardItemActivity extends WepBaseActivity {
                 public boolean onTouch(View v, MotionEvent event){
                     autocomplete_inw_ItemName.showDropDown();
                     return false;
+                }
+            });
+
+            et_Inw_SGSTRate.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String SGST = et_Inw_SGSTRate.getText().toString();
+                    String CGST = et_Inw_CGSTRate.getText().toString();
+                    if(SGST.equals("")){
+                        //et_Inw_SGSTRate.setText("0");
+                        SGST = ("0");
+                    }
+                    if(CGST.equals("")){
+                        //et_Inw_CGSTRate.setText("0");
+                        CGST = ("0");}
+
+                    double sgst_d = Double.parseDouble(SGST);
+                    double cgst_d = Double.parseDouble(CGST);
+                    double igst_d = sgst_d+cgst_d;
+                    et_Inw_IGSTRate.setText(String.format("%.2f",igst_d));
+
+                }
+            });
+            et_Inw_CGSTRate.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String SGST = et_Inw_SGSTRate.getText().toString();
+                    String CGST = et_Inw_CGSTRate.getText().toString();
+                    if(CGST.equals("")) {
+                        //et_Inw_CGSTRate.setText("0");
+                        CGST = ("0");
+                    }
+                    if(SGST.equals("")) {
+                        //et_Inw_SGSTRate.setText("0");
+                        SGST = ("0");
+                    }
+
+                    double sgst_d = Double.parseDouble(SGST);
+                    double cgst_d = Double.parseDouble(CGST);
+                    double igst_d = sgst_d+cgst_d;
+                    et_Inw_IGSTRate.setText(String.format("%.2f",igst_d));
+
                 }
             });
 
