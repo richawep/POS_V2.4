@@ -1823,7 +1823,7 @@ public class ReportHelper{
 			IGSTAmt.setText("IGST   Amt");
 
 			TextView cessAmt = new TextView(activityContext);
-			cessAmt.setWidth(70);
+			cessAmt.setWidth(80);
 			cessAmt.setGravity(Gravity.CENTER);
 			cessAmt.setTextSize(15);
 			cessAmt.setTextColor(Color.WHITE);
