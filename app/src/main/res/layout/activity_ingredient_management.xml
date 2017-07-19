@@ -106,6 +106,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1.6"
+                            android:maxLength="6"
                             android:hint="Enter Quantity"
                             android:inputType="numberDecimal" />
 
@@ -119,7 +120,7 @@
                             android:textSize="15dp"
                             android:textStyle="bold"
                             android:paddingBottom="10dp"
-                            android:hint="UoM"
+                            android:hint="UOM"
                             android:paddingLeft="5dp" />
 
                     </LinearLayout>
@@ -165,6 +166,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1.1"
+                            android:maxLength="6"
                             android:hint="Enter Quantity"
                             android:inputType="numberDecimal" />
 
@@ -178,7 +180,7 @@
                             android:paddingBottom="10dp"
                             android:textSize="15dp"
                             android:textStyle="bold"
-                            android:hint="UoM"
+                            android:hint="UOM"
                             android:paddingLeft="3dp" />
 
                         <com.wep.common.app.views.WepButton

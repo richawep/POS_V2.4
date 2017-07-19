@@ -1229,8 +1229,8 @@ public class IngredientManagementActivity extends WepBaseActivity {
                 itemIngredient.setItemname(itemname);
                 Log.d("SubmitIngredients", "Item Name :" + itemname);
                 // ItemQuantity
-                itemIngredient.setItemquantity(Float.parseFloat(item_qty));
-                Log.d("SubmitIngredients", "Item Quantity :" + item_qty);
+                itemIngredient.setItemquantity(Float.parseFloat(String.format("%2f",Float.parseFloat(item_qty))));
+                Log.d("SubmitIngredients", "Item Quantity :" + itemIngredient.getItemquantity());
 
                 String item_uom = tv_item_uom.getText().toString();
                 itemIngredient.setUom(item_uom);

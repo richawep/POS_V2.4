@@ -176,7 +176,7 @@ public class PrintIngredients extends WepPrinterBaseActivity {
                             double item_quantity_item = crsr.getDouble(crsr.getColumnIndex("Quantity"));
                             item.setItemId(String.valueOf(menucode));
                             item.setItemName(itemname_str);
-                            item.setQty(item_quantity_item);
+                            item.setQty(Double.parseDouble(String.format("%2f",item_quantity_item)));
                             if (item_uom != null && !item_uom.equals("")) {
                                 item.setUom(item_uom);
                             }
@@ -194,7 +194,7 @@ public class PrintIngredients extends WepPrinterBaseActivity {
                                     ingredient_quantity = Double.parseDouble(ingredient_qty_str);
                                 PrintIngredientsModel ingredient = new PrintIngredientsModel();
                                 ingredient.setItemName(ingredientname);
-                                ingredient.setQty(ingredient_quantity);
+                                ingredient.setQty(Double.parseDouble(String.format("%2f",ingredient_quantity)));
                                 ingredient.setUom(uom);
 
                                 billItems.add(ingredient);
