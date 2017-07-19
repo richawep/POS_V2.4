@@ -669,7 +669,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
     private SharedPreferences sharedPreferences;
     private RelativeLayout PostGSTR1,fileGSTR1,getGSTRR2B2B,postGSTR2,getGSTR3;
     private RelativeLayout fileGSTR2, fileGSTR3, getGSTR1Summary,getGSTR1,getGSTR1A, getGSTR2A,getGSTR2Reconcile;
-
+    private  String BillNoPrefix = "";
 
     private static final int REQUEST_GET_GSTR2_B2B = 1001;
 
@@ -681,6 +681,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         try{
             dbGSTLink = new DatabaseHandler(getActivity());
             dbGSTLink.OpenDatabase();
+            BillNoPrefix = dbGSTLink.getBillNoPrefix();
         }catch (Exception e){
 
         }
@@ -920,7 +921,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         if(ConnectionDetector.isInternetConnection(myContext)) {
             progressDialog.show();
             String str[] = startDate_str.split("-");
-            GSTUploadFunctions handle = new GSTUploadFunctions(myContext,dbGSTLink);
+            GSTUploadFunctions handle = new GSTUploadFunctions(myContext,dbGSTLink,BillNoPrefix);
             ArrayList<GSTR1_B2B_Data> list_b2b = handle.getGSTR1B2BList(start_milli,end_milli);
             ArrayList<GSTR1_B2CL_Data> list_b2cl= handle.getGSTR1B2CLList(start_milli,end_milli);
             ArrayList<GSTR1_CDN_Data> cdnList= handle.getGSTR1CDNData(start_milli,end_milli);
@@ -985,7 +986,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
     public void PostGSTR2Invoices(String respData,String userName) {
         String startDate_str = (etReportDateStart.getText().toString()) ;
         String endDate_str = (etReportDateEnd.getText().toString()) ;
-        GSTUploadFunctions handle = new GSTUploadFunctions(myContext,dbGSTLink);
+        GSTUploadFunctions handle = new GSTUploadFunctions(myContext,dbGSTLink, BillNoPrefix);
         try {
             String start_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(startDate_str)).getTime());
             String end_milli = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(endDate_str)).getTime());

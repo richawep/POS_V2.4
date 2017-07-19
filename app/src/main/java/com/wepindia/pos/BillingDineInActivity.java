@@ -5836,7 +5836,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     }
                     item.setTableNo(tablemsg);
                     item.setWaiterNo(waiterId);
-                    item.setBillNo(String.valueOf(orderId));
+                    String billNoPrefix  = db.getBillNoPrefix();
+                    item.setBillNo(billNoPrefix+String.valueOf(orderId));
                     item.setOrderBy(strUserName);
                     item.setBillingMode(String.valueOf(jBillingMode));
                     if (strPaymentStatus.equalsIgnoreCase("")) {

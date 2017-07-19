@@ -2931,7 +2931,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     item.setNetTotal(Double.parseDouble(tvBillAmount.getText().toString().trim()));
                     item.setTableNo(tableId);
                     item.setWaiterNo(waiterId);
-                    item.setBillNo(String.valueOf(orderId));
+                    String billNoPrefix  = db.getBillNoPrefix();
+                    item.setBillNo(billNoPrefix+String.valueOf(orderId));
                     item.setOrderBy(userName);
                     item.setBillingMode(String.valueOf(jBillingMode));
                     if (strPaymentStatus.equalsIgnoreCase("")) {

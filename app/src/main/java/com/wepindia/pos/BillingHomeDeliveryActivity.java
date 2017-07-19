@@ -5851,7 +5851,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     //Log.d("netTotal",String.valueOf(item.getNetTotal()) );
                     item.setTableNo(String.valueOf(tableId));
                     item.setWaiterNo(waiterId);
-                    item.setBillNo(String.valueOf(orderId));
+                    String billNoPrefix  = db.getBillNoPrefix();
+                    item.setBillNo(billNoPrefix+String.valueOf(orderId));
                     item.setOrderBy(strUserName);
                     item.setBillingMode(String.valueOf(jBillingMode));
                     if (strPaymentStatus.equalsIgnoreCase("")) {

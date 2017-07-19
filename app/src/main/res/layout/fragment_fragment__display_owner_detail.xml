@@ -8,9 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_margin="10dp"
-        android:layout_above="@id/tvHorizontalLine"
-        android:layout_height="match_parent">
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,16 +23,14 @@
                 android:layout_height="match_parent"
                 android:text="NAME*"
                 android:gravity="center_vertical"
-                android:textSize="25sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_weight="1"/>
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Enter Name"
                 android:id="@+id/ownerName"
                 android:layout_weight="1"
-                android:enabled="false"
-                android:focusable="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:inputType="text"/>
         </LinearLayout>
         <LinearLayout
@@ -48,14 +45,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="GSTIN"
-                android:textSize="25sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_weight="1"/>
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="enter GSTIN"
-                android:enabled="false"
-                android:focusable="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/ownerGstin"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -71,14 +67,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Reference No"
-                android:textSize="25sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_weight="1"/>
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="reference no"
-                android:enabled="false"
-                android:focusable="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/ownerReferenceNo"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -94,17 +89,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="PHONE*"
-                android:textSize="25sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_weight="1"/>
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Enter Contact Number"
                 android:id="@+id/ownerContact"
                 android:inputType="phone"
                 android:maxLength="10"
-                android:enabled="false"
-                android:focusable="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_weight="1"/>
         </LinearLayout>
         <LinearLayout
@@ -119,15 +113,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="E-MAIL*"
-                android:textSize="25sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_weight="1"/>
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Enter e-mail"
                 android:id="@+id/ownerEmail"
-                android:enabled="false"
-                android:focusable="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:inputType="textEmailAddress"
                 android:layout_weight="1"/>
         </LinearLayout>
@@ -143,15 +136,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="ADDRESS*"
-                android:textSize="25sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_weight="1"/>
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Enter Address"
                 android:id="@+id/ownerAddress"
-                android:enabled="false"
-                android:focusable="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:inputType="text"
                 android:layout_weight="1"/>
         </LinearLayout>
@@ -167,19 +159,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="POS*"
-                android:textSize="25sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_weight="1"/>
 
-            <Spinner
+            <TextView
                 android:id="@+id/ownerPos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:entries="@array/poscode"
-                android:enabled="false"
-                android:focusable="false"
                 style="@android:style/Widget.Holo.Light.Spinner"
-                android:spinnerMode="dropdown" />
+                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -193,19 +182,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="IS MAIN OFFICE"
-                android:textSize="25sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_weight="1"/>
 
-            <Spinner
+            <TextView
                 android:id="@+id/ownerOffice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 style="@android:style/Widget.Holo.Light.Spinner"
-                android:entries="@array/y_n"
-                android:enabled="false"
-                android:focusable="false"
-                android:spinnerMode="dropdown" />
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="BillNo Prefix*"
+                android:textSize="25sp"
+                android:layout_weight="1"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="ABCD"
+                android:maxLength="8"
+                android:id="@+id/ownerBillPrefix"
+                android:inputType="text"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Merchant Id"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_weight="1"/>
+            <EditText
+                android:id="@+id/OwnerDetail_mId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="App Id"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_weight="1"/>
+            <EditText
+                android:id="@+id/OwnerDetail_appId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
     <TextView
@@ -226,7 +280,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp" >
 
-
+        <Button
+            android:id="@+id/btnApply"
+            android:layout_width="100dp"
+            android:visibility="gone"
+            android:layout_height="45dp"
+            android:background="@drawable/background_btn"
+            android:textColor="@android:color/white"
+            android:theme="@style/WepButtonWithMarigin"
+            android:text="Apply" />
         <Button
             android:id="@+id/btnClose"
             android:layout_width="100dp"

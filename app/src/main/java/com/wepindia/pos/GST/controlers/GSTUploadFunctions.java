@@ -47,10 +47,12 @@ public class GSTUploadFunctions {
     private final MessageDialog MsgBox;
     private DatabaseHandler dbReport;
     private Context myContext;
+    private String BillNoPrefix;
 
-    public GSTUploadFunctions(Context context, DatabaseHandler dbReport) {
+    public GSTUploadFunctions(Context context, DatabaseHandler dbReport , String BillNoPrefix) {
         this.myContext = context;
         this.dbReport = dbReport;
+        this.BillNoPrefix = BillNoPrefix;
         MsgBox  = new MessageDialog(myContext);
     }
 
@@ -115,8 +117,9 @@ public class GSTUploadFunctions {
                                 String pos = cursor.getString(cursor.getColumnIndex("POS"));
                                 if(pos!=null && custStateCode!=null & pos.equals(custStateCode))
                                     custStateCode="";
+
                                 GSTR1_B2B_invoices inv = new GSTR1_B2B_invoices(
-                                        cursor.getString(cursor.getColumnIndex("InvoiceNo")),
+                                        BillNoPrefix+invno,
                                         newDate,
                                         Double.parseDouble(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("BillAmount")))),
                                         custStateCode,
@@ -202,7 +205,7 @@ public class GSTUploadFunctions {
                             Date newD = new Date(Long.parseLong(invoiceDate));
                             String newDate = new SimpleDateFormat("dd-MM-yyyy").format(newD);
                             GSTR1_B2CL_invoices inv = new GSTR1_B2CL_invoices(
-                                    invoiceNo,
+                                    BillNoPrefix+invoiceNo,
                                     newDate,
                                     taxableValue,
                                     etin,
@@ -651,7 +654,7 @@ public class GSTUploadFunctions {
                     cancel++;
 
             }while(cursor.moveToNext());
-            GSTR1_DOCS document = new GSTR1_DOCS(1,from,to,totnum,cancel,totnum-cancel);
+            GSTR1_DOCS document = new GSTR1_DOCS(1,BillNoPrefix+from,BillNoPrefix+to,totnum,cancel,totnum-cancel);
             ArrayList<GSTR1_DOCS> list = new ArrayList<>();
             list.add(document);
             GSTR1_DOCS_Data doc = new GSTR1_DOCS_Data(1,list);

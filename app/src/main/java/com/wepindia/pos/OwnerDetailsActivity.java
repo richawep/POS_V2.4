@@ -22,7 +22,7 @@ import java.util.Date;
 public class OwnerDetailsActivity extends WepBaseActivity {
 
     private com.wep.common.app.views.WepButton btnAdd,btnClear,btnClose;
-    private EditText Name,Gstin,Phone,Email,Address,RefernceNo;
+    private EditText Name,Gstin,Phone,Email,Address,RefernceNo, BillNoPrefix;
     private DatabaseHandler dbHelper;
     private Toolbar toolbar;
     MessageDialog MsgBox;
@@ -50,6 +50,7 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         Name=(EditText)findViewById(R.id.ownerName);
         Gstin=(EditText)findViewById(R.id.ownerGstin);
         RefernceNo=(EditText)findViewById(R.id.ownerReferenceNo);
+        BillNoPrefix =(EditText)findViewById(R.id.ownerBillPrefix);
         Phone=(EditText)findViewById(R.id.ownerContact);
         Email=(EditText)findViewById(R.id.ownerEmail);
         spinner1=(Spinner)findViewById(R.id.ownerPos);
@@ -139,12 +140,16 @@ public class OwnerDetailsActivity extends WepBaseActivity {
             String address = cursor.getString(cursor.getColumnIndex("Address"));
             String pos = cursor.getString(cursor.getColumnIndex("POS"));
             String mainOffice = cursor.getString(cursor.getColumnIndex("IsMainOffice"));
+            String bill_prefix = "";
+            if(null != cursor.getString(cursor.getColumnIndex("BillNoPrefix")))
+                 bill_prefix = cursor.getString(cursor.getColumnIndex("BillNoPrefix"));
             Name.setText(name);
             Gstin.setText(gstin);
             RefernceNo.setText(refernceNo);
             Phone.setText(phone);
             Email.setText(email);
             Address.setText(address);
+            BillNoPrefix.setText(bill_prefix);
             spinner1.setSelection(getIndex_pos(pos));
             if(mainOffice.equalsIgnoreCase("yes"))
                 spinner2.setSelection(1);
@@ -165,7 +170,7 @@ public class OwnerDetailsActivity extends WepBaseActivity {
            Status=dbHelper.addOwnerDetails(Name.getText().toString(),Gstin.getText().toString(),
                    Phone.getText().toString(),Email.getText().toString(),
                    Address.getText().toString(),sub,
-                   spinner2.getSelectedItem().toString(), RefernceNo.getText().toString());
+                   spinner2.getSelectedItem().toString(), RefernceNo.getText().toString(), BillNoPrefix.getText().toString());
         if(Status>0)
             Toast.makeText(OwnerDetailsActivity.this, "Details Successfully Added", Toast.LENGTH_SHORT).show();
         else

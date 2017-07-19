@@ -2,12 +2,14 @@ package com.wepindia.pos.fragments;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.nfc.FormatException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
@@ -595,7 +597,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 case 45:  // GSTR1-HSNSummary
                     GSTR1_HSNSummary();
                     break;
-                case 46:
+                case 46: // doc issuesd
+                    break;
+                case 47: GSTR4_CompositeReport();
+                    // GSTR4 composite Report
                     break;
             }
         }
@@ -8065,6 +8070,123 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    void GSTR4_CompositeReport()
+    {
+        final Cursor cursor = dbReport.getInvoices_outward(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+        if (cursor == null || !cursor.moveToFirst())
+        {
+            //MsgBox = new AlertDialog.Builder(myContext);
+            MsgBox. setMessage("No invoice found to display GSTR4 Composite Report")
+                    .setPositiveButton("OK",null)
+                    .show();
+        }else
+        {
+            new AsyncTask<Void, Void ,Void>()
+            {
+                ProgressDialog pd;
+                ArrayList<double[]> taxResult = new ArrayList<>();
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    /*pd = new ProgressDialog(myContext);
+                    pd.setMessage("Loading...");
+                    pd.setCancelable(false);
+                    pd.show();*/
+                }
+
+                @Override
+                protected Void doInBackground(Void... params) {
+                    try {
+                        do {
+                            int billNo = cursor.getInt(cursor.getColumnIndex("InvoiceNo"));
+                            String billDate = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
+                            String custStateCode = cursor.getString(cursor.getColumnIndex("CustStateCode"));
+                            String pos =cursor.getString(cursor.getColumnIndex("POS"));
+                            if(!pos.equalsIgnoreCase(custStateCode))
+                                continue;
+
+                            Cursor cursor_billItem = dbReport.getItemsFromBillItem(billNo, billDate);
+                            while (cursor_billItem.moveToNext())
+                            {
+                                double gstTax =  cursor_billItem.getDouble(cursor_billItem.getColumnIndex("CGSTRate"))
+                                        + cursor_billItem.getDouble(cursor_billItem.getColumnIndex("SGSTRate"));
+                                //gstTax +=   cursor_billItem.getDouble(cursor_billItem.getColumnIndex("SGSTRate"));
+                                double taxableValue =  cursor_billItem.getDouble(cursor_billItem.getColumnIndex("TaxableValue"));
+                                double cgstamt =  cursor_billItem.getDouble(cursor_billItem.getColumnIndex("CGSTAmount"));
+                                double sgstamt =  cursor_billItem.getDouble(cursor_billItem.getColumnIndex("SGSTAmount"));
+                                int found =0;
+                                for(double[] taxrow : taxResult)
+                                {
+                                    if(taxrow[0] == gstTax)
+                                    {
+                                        taxrow[1] += taxableValue;
+                                        taxrow[2] += cgstamt;
+                                        taxrow[3] += sgstamt;
+                                        found =1;
+                                        break;
+                                    }
+                                }
+                                if(0 == found){
+                                    double[] tax = {gstTax, taxableValue, cgstamt,sgstamt};
+                                    taxResult.add(tax);
+                                }
+                            }
+                        }while(cursor.moveToNext());
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        //MsgBox.Show("Oops","Error Encountered");
+                        //Toast.makeText(myContext,"Error Encountered",Toast.LENGTH_SHORT).show();
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                   // pd.dismiss();
+                    for(double[] taxrow : taxResult)
+                    {
+                        TextView GSTRate = new TextView(myContext);
+                        GSTRate.setText(String.format("%.2f", taxrow[0]));
+                        GSTRate.setGravity(Gravity.CENTER);
+
+                        TextView TaxableValue = new TextView(myContext);
+                        TaxableValue.setText(String.format("%.2f", taxrow[1]));
+                        TaxableValue.setGravity(Gravity.END);
+                        TaxableValue.setPadding(0,0,5,0);
+
+                        TextView CAmt = new TextView(myContext);
+                        CAmt.setText(String.format("%.2f", taxrow[2]));
+                        CAmt.setGravity(Gravity.END);
+                        CAmt.setPadding(0,0,5,0);
+
+
+                        TextView SAmt = new TextView(myContext);
+                        SAmt.setText(String.format("%.2f", taxrow[3]));
+                        SAmt.setGravity(Gravity.END);
+                        SAmt.setPadding(0,0,5,0);
+
+                        TableRow rowcursor = new TableRow(myContext);
+                        rowcursor.setLayoutParams(new TableRow.LayoutParams
+                                (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+
+                        rowcursor.addView(GSTRate);
+                        rowcursor.addView(TaxableValue);
+                        rowcursor.addView(CAmt);
+                        rowcursor.addView(SAmt);
+
+                        tblReport.addView(rowcursor);
+
+                    }
+                }
+
+
+            }.execute();
+        }
+    }
     void GSTR1_HSNSummary()
     {
         Cursor cursor = dbReport.getitems_outward_details(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
@@ -8291,8 +8413,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                     int count =1;
                     TableRow rowcursor;
-
-                    do {
+                    do
+                    {
                         String POS_str = cursor.getString(cursor.getColumnIndex("POS"));
                         String custStateCode_str = cursor.getString(cursor.getColumnIndex("CustStateCode"));
                         if (POS_str.equals("")== false && !POS_str.equals(custStateCode_str))  { // for interstate only + >2.5l

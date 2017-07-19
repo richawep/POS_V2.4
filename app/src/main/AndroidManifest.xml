@@ -49,7 +49,6 @@
 
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -203,12 +202,10 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".AddRolesActivity"
-            android:label="@string/title_activity_fast_selling_report"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".UserManagementActivity"
-            android:label="@string/title_activity_fast_selling_report"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden" />
         <!-- Components required for MSwipe Integration Start -->
@@ -235,7 +232,6 @@
         <activity
             android:name=".UploadFilePickerActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:label="@string/title_activity_upload_file_picker"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -246,7 +242,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".TaxConfigSubActivity"
-            android:label="@string/title_activity_tax_config_sub"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".GST.GSTHomeActivity" />
@@ -391,11 +386,10 @@
         <activity
             android:name=".InwardActivity"
             android:screenOrientation="sensorLandscape"
-            android:label="@string/title_activity_inward" />
+             />
         <activity
             android:name=".SupplierDetailsActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:label="@string/title_activity_supplier_details"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
 
@@ -403,7 +397,6 @@
         <activity
             android:name=".InwardItemActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:label="@string/title_activity_inward_item"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
 
@@ -412,8 +405,7 @@
             android:name=".ItemSupplierLinkageActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            android:label="@string/title_activity_item_supplier_linkage">
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
 
         </activity>
     </application>

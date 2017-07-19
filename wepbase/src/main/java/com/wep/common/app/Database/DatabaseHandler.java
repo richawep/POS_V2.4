@@ -386,6 +386,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_BATCH_NO = "batchNo";
     private static final String KEY_VOUCHER_NO = "voucherNo";
     private static final String KEY_REFERENCE_NO = "refNo";
+    private static final String KEY_BillNoPrefix = "BillNoPrefix";
     private static final String KEY_SALES_TYPE = "saleType";
     private static final String KEY_CARD_NO = "cardNo";
 
@@ -671,7 +672,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     String QUERY_CREATE_TABLE_OWNER_DETAILS = "CREATE TABLE " + TBL_OWNER_DETAILS + " ( " +
             KEY_GSTIN + " TEXT, " + KEY_Owner_Name + "  TEXT, " + KEY_FIRM_NAME + " TEXT, " + KEY_PhoneNo + " TEXT, " +
             KEY_POS +" TEXT,"+ KEY_DeviceId+" Text, "+KEY_DeviceName+" Text, "+KEY_USER_EMAIL+" TEXT, "+
-            KEY_REFERENCE_NO+" TEXT, "+
+            KEY_REFERENCE_NO+" TEXT, "+ KEY_BillNoPrefix +" TEXT, "+
             KEY_Address + " TEXT, " + KEY_TINCIN + " TEXT, " + KEY_IsMainOffice + "  TEXT ) ";
 
     String QUERY_CREATE_TABLE_Stock_Outward = "CREATE TABLE " + TBL_StockOutward + " ( " +
@@ -1748,6 +1749,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("Status", 0);
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
 
+
+
         // Tax Config
         cvDbValues = new ContentValues();
         cvDbValues.put("TaxDescription", "Sales");
@@ -1771,6 +1774,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         cvDbValues = new ContentValues();
         cvDbValues.put("ReportsName", "GSTR1-Documents Issued");
+        cvDbValues.put("ReportsType", 4);
+        cvDbValues.put("Status", 0);
+        db.insert(TBL_REPORTSMASTER, null, cvDbValues);
+
+        cvDbValues = new ContentValues();
+        cvDbValues.put("ReportsName", "GSTR4-Composite Report");
         cvDbValues.put("ReportsType", 4);
         cvDbValues.put("Status", 0);
         db.insert(TBL_REPORTSMASTER, null, cvDbValues);
@@ -4636,6 +4645,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try
         {
             crsr = db.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' AND "
+                    +KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            crsr = null;
+        }
+        finally {
+            return crsr;
+        }
+    }public Cursor getItemsFromBillItem(int InvoiceNo, String InvoiceDate) {
+        // return dbFNB.rawQuery("Select * from BillItem, BillDetail where BillDetail.BillNumber = '" + BillNumber + "' AND BillItem.BillNumber = BillDetail.BillNumber", null);
+        /*SQLiteDatabase db = this.getReadableDatabase();*/
+        Cursor crsr = null;
+        try
+        {
+            crsr = dbFNB.rawQuery("Select * from " + TBL_BILLITEM + " where InvoiceNo = '" + InvoiceNo + "' AND "
                     +KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null);
         }
         catch(Exception e)
@@ -7540,7 +7566,7 @@ public int makeBillVoid(int InvoiceNo ) {
     }
 
 
-    public long addOwnerDetails(String name, String gstin, String phone, String email, String address, String pos, String office, String RefernceNo)
+    public long addOwnerDetails(String name, String gstin, String phone, String email, String address, String pos, String office, String RefernceNo, String billPrefix)
     {
         long status = 0;
         ContentValues cvDbValues = new ContentValues();
@@ -7552,6 +7578,7 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_POS,pos);
         cvDbValues.put(KEY_IsMainOffice,office);
         cvDbValues.put(KEY_REFERENCE_NO,RefernceNo);
+        cvDbValues.put(KEY_BillNoPrefix,billPrefix);
 
         cvDbValues.put(KEY_DeviceId, "MACID_00");
         cvDbValues.put(KEY_DeviceName, "TAB2200+");
@@ -7575,7 +7602,21 @@ public int makeBillVoid(int InvoiceNo ) {
 
     }
 
-
+    public int updateOwnerDetails(String BillNoPrefix)
+    {
+        int result =0;
+        try{
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_BillNoPrefix, BillNoPrefix);
+            result= dbFNB.update(TBL_OWNER_DETAILS, cvDbValues, null, null);
+        }catch (Exception e){
+            e.printStackTrace();
+            result = 0;
+        }finally {
+            //db.close();
+            return result;
+        }
+    }
     public String getGstin_owner() {
         String gstin = "";
         String selectQuery = "Select * FROM " + TBL_OWNER_DETAILS;
@@ -7584,6 +7625,24 @@ public int makeBillVoid(int InvoiceNo ) {
             gstin = result.getString(result.getColumnIndex(KEY_GSTIN));
         }
         return gstin;
+    }
+    public String getBillNoPrefix() {
+        String billNoPrefix = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String selectQuery = "Select BillNoPrefix FROM " + TBL_OWNER_DETAILS;
+        try{
+            Cursor result = db.rawQuery(selectQuery, null);
+            if (result != null && result.moveToFirst()) {
+                billNoPrefix = result.getString(result.getColumnIndex(KEY_BillNoPrefix));
+                if(billNoPrefix == null)
+                    billNoPrefix = "";
+            }
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            billNoPrefix = "";
+        }
+        return billNoPrefix.trim();
     }
     public String getOwnerPOS() {
         String pos = "";

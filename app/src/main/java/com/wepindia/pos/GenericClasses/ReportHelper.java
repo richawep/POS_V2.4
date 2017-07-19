@@ -1526,6 +1526,56 @@ public class ReportHelper{
 			//rowColumnCaption.addView(SubTotal);
 
 
+		}else if(ReportName.equalsIgnoreCase("GSTR4-Composite Report")){
+
+
+
+
+			TextView TaxableValue = new TextView(activityContext);
+			TaxableValue.setWidth(200);
+			TaxableValue.setTextSize(15);
+            TaxableValue.setGravity(Gravity.END);
+			TaxableValue.setTextColor(Color.WHITE);
+			TaxableValue.setText("Taxable Value");
+
+			TextView GSTRate = new TextView(activityContext);
+			GSTRate.setWidth(75);
+			GSTRate.setTextSize(15);
+			GSTRate.setGravity(Gravity.START);
+			GSTRate.setTextColor(Color.WHITE);
+			GSTRate.setText("Tax Rate(%)");
+
+
+			TextView CGSTAmt = new TextView(activityContext);
+			CGSTAmt.setWidth(150);
+			CGSTAmt.setTextSize(15);
+			CGSTAmt.setGravity(Gravity.END);
+			CGSTAmt.setTextColor(Color.WHITE);
+			CGSTAmt.setText("CGST Amt");
+
+
+
+			TextView SGSTAmt = new TextView(activityContext);
+			SGSTAmt.setWidth(150);
+			SGSTAmt.setTextSize(15);
+			SGSTAmt.setTextColor(Color.WHITE);
+			SGSTAmt.setGravity(Gravity.END);
+			SGSTAmt.setText("SGST Amt");
+
+			TextView cessAmt = new TextView(activityContext);
+			cessAmt.setWidth(10);
+			cessAmt.setTextSize(15);
+			cessAmt.setGravity(Gravity.CENTER);
+			cessAmt.setTextColor(Color.WHITE);
+			//cessAmt.setText("cess      Amt");
+
+
+			rowColumnCaption.addView(GSTRate);
+            rowColumnCaption.addView(TaxableValue);
+			rowColumnCaption.addView(CGSTAmt);
+			rowColumnCaption.addView(SGSTAmt);
+			rowColumnCaption.addView(cessAmt);
+
 		}else if(ReportName.equalsIgnoreCase("GSTR1-B2B")){
 
 			TextView SNo = new TextView(activityContext);
