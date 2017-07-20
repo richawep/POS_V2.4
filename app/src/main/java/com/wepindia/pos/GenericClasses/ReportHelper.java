@@ -406,7 +406,7 @@ public class ReportHelper{
 			Amount.setTextSize(15);
 			Amount.setGravity(Gravity.CENTER);
 			Amount.setTextColor(Color.WHITE);
-			Amount.setText("Taxable27 Amount");
+			Amount.setText("Taxable Amount");
 									
 			// Add views to row
 			rowColumnCaption.addView(SNo);

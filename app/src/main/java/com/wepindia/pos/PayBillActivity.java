@@ -313,6 +313,14 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                 edtDiscount.setText("0");
             else
             {
+                for(AddedItemsToOrderTableClass item : orderList_recieved) {
+
+                    totalIGSTAmount += item.getIgstAmt();
+                    totalCGSTAmount += item.getCgstAmt();
+                    totalSGSTAmount += item.getSgstAmt();
+                    totalcessAmount += item.getCessAmt();
+
+                }
                 discAmt = Double.parseDouble(disAmount_str);
                 totalBillAmount = Double.parseDouble(strTotal);
                 totalBillAmount -= discAmt;
