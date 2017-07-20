@@ -79,6 +79,7 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
 
             MsgBox = new MessageDialog(myContext);
             InitializeViewVariables(view);
+            ammendList = new ArrayList<>();
             Clear(null);
 
         }
@@ -121,7 +122,7 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ammendList!=null)
+                if(ammendList.size()>0)
                     ammendList.clear();
                 ammendAdapter = null;
                 listview_gstr2_amend.setAdapter(null);
@@ -132,7 +133,7 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ammendList!=null)
+                if(ammendList.size()>0)
                     ammendList.clear();
                 ammendAdapter = null;
                 listview_gstr2_amend.setAdapter(null);
@@ -262,7 +263,7 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
             ammend.setIgstamt(cursor.getFloat(cursor.getColumnIndex("IGSTAmount")));
             ammend.setCgstamt(cursor.getFloat(cursor.getColumnIndex("CGSTAmount")));
             ammend.setSgstamt(cursor.getFloat(cursor.getColumnIndex("SGSTAmount")));
-            ammend.setCsamt(cursor.getFloat(cursor.getColumnIndex(" cessAmount")));
+            ammend.setCsamt(cursor.getFloat(cursor.getColumnIndex("cessAmount")));
             ammend.setCustStateCode(cursor.getString(cursor.getColumnIndex("CustStateCode")));
             ammendList.add(ammend);
         }
@@ -277,7 +278,10 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
         }
         if(ammendAdapter == null)
         {
-            ammendAdapter = new GSTR2_B2B_AmendAdapter(getActivity(),ammendList, dbAmmend_b2b_GSTR1,1);
+            String gstin = et_gstin_ori.getText().toString();
+            String invNoOri = et_invno_ori.getText().toString();
+            String invDate = et_invdate_ori.getText().toString();
+            ammendAdapter = new GSTR2_B2B_AmendAdapter(getActivity(),ammendList, dbAmmend_b2b_GSTR1,1,gstin,invNoOri,invDate,"");
             listview_gstr2_amend.setAdapter(ammendAdapter);
         }
         else
@@ -307,7 +311,7 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
         et_gstin_ecom.setText("");
         et_invno_rev.setText("");
         et_invdate_rev.setText("");
-        et_value.setText("");
+        et_value.setText("0.00");
         //et_pos.setText("14");
         spnr_custStateCode.setSelection(0);
         spnr_g_s.setSelection(0);
@@ -443,7 +447,10 @@ void Reset()
                     }
                     ammendList.add(ammend);
                     if (ammendAdapter == null) {
-                        ammendAdapter = new GSTR2_B2B_AmendAdapter(getActivity(), ammendList, dbAmmend_b2b_GSTR1,1);
+                        String gstin = et_gstin_ori.getText().toString();
+                        String invNoOri = et_invno_ori.getText().toString();
+                        String invDate = et_invdate_ori.getText().toString();
+                        ammendAdapter = new GSTR2_B2B_AmendAdapter(getActivity(),ammendList, dbAmmend_b2b_GSTR1,1,gstin,invNoOri,invDate,"");
                         listview_gstr2_amend.setAdapter(ammendAdapter);
                     } else {
                         ammendAdapter.notifyNewDataAdded(ammendList);

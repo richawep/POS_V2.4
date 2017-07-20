@@ -139,6 +139,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="14dp"
+                        android:maxLength="8"
                         android:id="@+id/et_hsn_rev"/>
                 </LinearLayout>
                 <LinearLayout
@@ -427,6 +428,7 @@
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:text="HSN(Ori)"
+                    android:visibility="gone"
                     android:layout_weight="1"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -452,6 +454,7 @@
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:text="HSN(Rev)"
+                    android:visibility="gone"
                     android:layout_weight="1"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -504,6 +507,14 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="SGST Amt"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="cess Amt"/>
 
 
                 <TextView

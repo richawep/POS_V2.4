@@ -44,16 +44,19 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="Inv No"/>
+
         <TextView
             android:id="@+id/tvinvdate_rev"
             android:layout_width="107dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Inv Date"/>
+            android:layout_weight="1"
+            android:text="Inv Date" />
+
         <TextView
             android:id="@+id/tvhsn"
             android:layout_width="60dp"
             android:layout_weight="1"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:text="HSN"/>
         <TextView
@@ -66,6 +69,7 @@
         <TextView
             android:id="@+id/tvValue"
             android:layout_width="86dp"
+            android:visibility="gone"
             android:layout_weight="1"
             android:layout_height="match_parent"
             />
@@ -92,6 +96,13 @@
 
         <TextView
             android:id="@+id/tvSGSTAmount"
+            android:layout_width="80dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Amt"/>
+
+        <TextView
+            android:id="@+id/tvcessAmount"
             android:layout_width="80dp"
             android:layout_weight="1"
             android:layout_height="match_parent"

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,7 @@ public class GSTR1_B2CS_AmendAdapter extends BaseAdapter {
         TextView IGSTAmount;
         TextView CGSTAmount;
         TextView SGSTAmount;
+        TextView cessAmount;
         ImageView btndel;
     }
 
@@ -105,6 +107,7 @@ public class GSTR1_B2CS_AmendAdapter extends BaseAdapter {
             viewHolder.IGSTAmount = (TextView) convertView.findViewById(R.id.tvIGSTAmount);
             viewHolder.CGSTAmount = (TextView) convertView.findViewById(R.id.tvCGSTAmount);
             viewHolder.SGSTAmount = (TextView) convertView.findViewById(R.id.tvSGSTAmount);
+            viewHolder.cessAmount = (TextView) convertView.findViewById(R.id.tvcessAmount);
 
             viewHolder.btndel = (ImageView) convertView.findViewById(R.id.btnItemDelete);
             viewHolder.btndel.setTag(count++);
@@ -122,11 +125,12 @@ public class GSTR1_B2CS_AmendAdapter extends BaseAdapter {
         viewHolder.hsn_rev.setText(itemOutward.getHsn_rev());
         viewHolder.taxableValue.setText(String.format("%.2f", itemOutward.getTaxableValue()));
         viewHolder.pos_ori.setText(itemOutward.getPos_ori());
-        viewHolder.pos_rev.setText(itemOutward.getPos_rev());
+        viewHolder.pos_rev.setText(itemOutward.getCustStateCode());
 
         viewHolder.IGSTAmount.setText(String.format("%.2f", itemOutward.getIgstamt()));
         viewHolder.CGSTAmount.setText(String.format("%.2f", itemOutward.getCgstamt()));
         viewHolder.SGSTAmount.setText(String.format("%.2f", itemOutward.getSgstamt()));
+        viewHolder.cessAmount.setText(String.format("%.2f", itemOutward.getCsamt()));
 
         viewHolder.btndel.setLayoutParams(new TableRow.LayoutParams(40, 35));
         viewHolder.btndel.setBackground(activity.getResources().getDrawable(R.drawable.delete_icon_border));
@@ -152,14 +156,18 @@ public class GSTR1_B2CS_AmendAdapter extends BaseAdapter {
                                 String taxMonth = (obj.getTaxMonth());
                                 String hsn_ori = (obj.getHsn_ori());
                                 String pos_ori = obj.getPos_ori();
-                                String pos_rev = obj.getPos_rev();
+                                String pos_rev = obj.getCustStateCode();
                                 long lResult = handler.DeleteAmmend_GSTR1_B2CSA(taxMonth,hsn_ori, obj.getTaxableValue()
-                                ,pos_ori,pos_rev);
+                                ,pos_ori,pos_rev, obj.getIgstamt(),obj.getCgstamt(), obj.getSgstamt(),obj.getCsamt());
 
                                 if (lResult > 0) {
+                                   // Log.d("GSTR1_B2CSA","Deleted sucessfully");
                                     ammendArraylist.remove(i);
                                     notifyDataSetChanged();
-                                }
+                                }/*else
+                                {
+                                    //Log.d("GSTR1_B2CSA","Cannot delete entry");
+                                }*/
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

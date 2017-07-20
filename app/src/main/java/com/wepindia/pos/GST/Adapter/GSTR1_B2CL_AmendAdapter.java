@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +29,24 @@ public class GSTR1_B2CL_AmendAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList<GSTR2_B2B_Amend> amendArrayList;
     private DatabaseHandler handler;
+    private String recipientStateCode ;
+    private String recipientName ;
+    private String invoiceNo;
+    private String invoiceDate;
+    private String CustStateCode;
 
 
-    public GSTR1_B2CL_AmendAdapter(Activity activity, ArrayList<GSTR2_B2B_Amend> amendArrayList, DatabaseHandler handler ){
+    public GSTR1_B2CL_AmendAdapter(Activity activity, ArrayList<GSTR2_B2B_Amend> amendArrayList, DatabaseHandler handler,
+                                   String recipientStateCode,String recipientName,String invoiceNo,String invoiceDate,
+                                   String CustStateCode){
         this.activity = activity;
         this. amendArrayList = amendArrayList;
         this.handler = handler;
-
-
+        this.recipientStateCode = recipientStateCode;
+        this.recipientName = recipientName;
+        this.invoiceNo = invoiceNo;
+        this.invoiceDate = invoiceDate;
+        this.CustStateCode = CustStateCode;
     }
 
 
@@ -77,6 +88,7 @@ public class GSTR1_B2CL_AmendAdapter extends BaseAdapter {
         TextView invdate_rev;
 
         TextView IGSTAmount;
+        TextView cessAmount;
         TextView hsnCode;
         TextView tvg_s;
         TextView taxableValue;
@@ -105,6 +117,7 @@ public class GSTR1_B2CL_AmendAdapter extends BaseAdapter {
 
             //viewHolder.IGSTRate = (TextView) convertView.findViewById(R.id.tvIGSTRate);
             viewHolder.IGSTAmount = (TextView) convertView.findViewById(R.id.tvIGSTAmount);
+            viewHolder.cessAmount = (TextView) convertView.findViewById(R.id.tvcessAmount);
             //viewHolder.CGSTRate = (TextView) convertView.findViewById(R.id.tvCGSTRate);
             //viewHolder.CGSTAmount = (TextView) convertView.findViewById(R.id.tvCGSTAmount);
             //viewHolder.SGSTRate = (TextView) convertView.findViewById(R.id.tvSGSTRate);
@@ -134,6 +147,7 @@ public class GSTR1_B2CL_AmendAdapter extends BaseAdapter {
         //viewHolder.pos.setText(itemOutward.getPOS());
         //viewHolder.IGSTRate.setText(String.format("%.2f",itemOutward.getIrt()));
         viewHolder.IGSTAmount.setText(String.format("%.2f",itemOutward.getIgstamt()));
+        viewHolder.cessAmount.setText(String.format("%.2f",itemOutward.getCsamt()));
         //viewHolder.CGSTRate.setText(String.format("%.2f",itemOutward.getCrt()));
         //viewHolder.CGSTAmount.setText(String.format("%.2f",itemOutward.getCgstamt()));
         //viewHolder.SGSTRate.setText(String.format("%.2f",itemOutward.getSrt()));
@@ -170,7 +184,7 @@ public class GSTR1_B2CL_AmendAdapter extends BaseAdapter {
                                 String inv_date_rev = String.valueOf(date.getTime());
                                 String hsn= (obj.getHSn());
                                 long lResult = handler.DeleteAmmend_GSTR1_b2cl(inv_no_ori, inv_date_ori,inv_no_rev,
-                                            inv_date_rev,hsn,obj.getTaxableValue());
+                                            inv_date_rev,hsn,obj.getTaxableValue(),obj.getIgstamt(),obj.getCsamt());
 
                                 if(lResult>0)
                                 {
@@ -178,6 +192,8 @@ public class GSTR1_B2CL_AmendAdapter extends BaseAdapter {
                                     /*ArrayList<GSTR2_B2B_Amend> newAmmendList = new ArrayList<GSTR2_B2B_Amend>();
                                     newAmmendList.addAll(amendArrayList);
                                     */
+                                    amendArrayList.clear();
+                                    load_GSTR1();
                                     notifyDataSetChanged();
                                     /*notifyDataSetChanged(amendArrayList);
                                     adapter.notifyDataSetChanged();
@@ -196,6 +212,45 @@ public class GSTR1_B2CL_AmendAdapter extends BaseAdapter {
 
         }
     };
+
+    public void load_GSTR1()
+    {   try{
+        if(amendArrayList == null)
+            amendArrayList = new ArrayList<GSTR2_B2B_Amend>();
+        Date dd  = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
+        Cursor cursor = handler.getAmmends_GSTR1_b2cl(recipientName,recipientStateCode,invoiceNo,String.valueOf(dd.getTime()),CustStateCode);
+        int count =1;
+        while (cursor != null && cursor.moveToNext()) {
+            GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
+            ammend.setSno(count++);
+            ammend.setRecipientName(cursor.getString(cursor.getColumnIndex("CustName")));
+            ammend.setRecipientStateCode(cursor.getString(cursor.getColumnIndex("POS")));
+            long invdate_ori = cursor.getLong(cursor.getColumnIndex("OriginalInvoiceDate"));
+            Date date = new Date(invdate_ori);
+            String dd1 = new SimpleDateFormat("dd-MM-yyyy").format(date);
+            ammend.setInvoiceDate_ori(dd1);
+            ammend.setInvoiceNo_ori(cursor.getString(cursor.getColumnIndex("OriginalInvoiceNo")));
+            ammend.setInvoiceNo_rev(cursor.getString(cursor.getColumnIndex("InvoiceNo")));
+            long invdate_rev = cursor.getLong(cursor.getColumnIndex("InvoiceDate"));
+            dd1 = new SimpleDateFormat("dd-MM-yyyy").format(invdate_rev);
+            ammend.setInvoiceDate_rev(dd1);
+            ammend.setType(cursor.getString(cursor.getColumnIndex("SupplyType")));
+            ammend.setHSn(cursor.getString(cursor.getColumnIndex("HSNCode")));
+            ammend.setValue(cursor.getDouble(cursor.getColumnIndex("Value")));
+            ammend.setTaxableValue(cursor.getDouble(cursor.getColumnIndex("TaxableValue")));
+            ammend.setIgstrate(cursor.getFloat(cursor.getColumnIndex("IGSTRate")));
+            ammend.setIgstamt(cursor.getFloat(cursor.getColumnIndex("IGSTAmount")));
+            ammend.setPOS(cursor.getString(cursor.getColumnIndex("RevisedPOS")));
+            ammend.setCustStateCode(cursor.getString(cursor.getColumnIndex("CustStateCode")));
+            ammend.setCsamt(cursor.getDouble(cursor.getColumnIndex("cessAmount")));
+            amendArrayList.add(ammend);
+        }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
 }
 
 

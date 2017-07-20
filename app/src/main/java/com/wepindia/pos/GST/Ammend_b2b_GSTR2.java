@@ -172,7 +172,7 @@ public class Ammend_b2b_GSTR2 extends Activity{
         }
         if(ammendAdapter == null)
         {
-            ammendAdapter = new GSTR2_B2B_AmendAdapter(this,ammendList,dbAmmend_b2b_GSTR2,2);
+            ammendAdapter = new GSTR2_B2B_AmendAdapter(this,ammendList,dbAmmend_b2b_GSTR2,2,"","","","");
             listview_gstr2_amend.setAdapter(ammendAdapter);
         }
         else
@@ -271,7 +271,7 @@ public class Ammend_b2b_GSTR2 extends Activity{
             ammendList.add(ammend);
             if(ammendAdapter == null)
             {
-                ammendAdapter = new GSTR2_B2B_AmendAdapter(this,ammendList,dbAmmend_b2b_GSTR2,2);
+                ammendAdapter = new GSTR2_B2B_AmendAdapter(this,ammendList,dbAmmend_b2b_GSTR2,2,"","","","");
                 listview_gstr2_amend.setAdapter(ammendAdapter);
             }
             else

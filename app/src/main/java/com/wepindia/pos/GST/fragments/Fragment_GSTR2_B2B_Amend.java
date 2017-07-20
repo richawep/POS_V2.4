@@ -248,8 +248,9 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
 
     public void load(View v,int from)
     {   String pos = "";
+        String supplierType = "";
         try{
-            String supplierType = spnr_SupplierType.getSelectedItem().toString();
+            supplierType = spnr_SupplierType.getSelectedItem().toString();
             if(supplierType.equals(""))
             {
                 MsgBox.Show("Insufficient Information", "Please select supplier type");
@@ -305,8 +306,10 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
         }
         if(ammendAdapter == null)
         {
-            ammendAdapter = new GSTR2_B2B_AmendAdapter(getActivity(),ammendList,dbAmmend_b2b_GSTR2,2);
-
+            String gstin = et_gstin_ori.getText().toString();
+            String invoiceNo = et_invno_ori.getText().toString();
+            String invoiceDate = et_invdate_ori.getText().toString();
+            ammendAdapter = new GSTR2_B2B_AmendAdapter(getActivity(),ammendList,dbAmmend_b2b_GSTR2,2,gstin, invoiceNo,invoiceDate,supplierType);
             listview_gstr2_amend.setAdapter(ammendAdapter);
         }
         else
@@ -337,7 +340,7 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
         et_gstin_rev.setText("");
         et_invno_rev.setText("");
         et_invdate_rev.setText("");
-        et_value.setText("");
+        et_value.setText("0.00");
         //et_pos.setText("14");
         spnr_pos.setSelection(0);
         spnr_g_s.setSelection(0);
@@ -476,8 +479,10 @@ public class Fragment_GSTR2_B2B_Amend extends Fragment {
                     }
                     ammendList.add(ammend);
                     if (ammendAdapter == null) {
-                        ammendAdapter = new GSTR2_B2B_AmendAdapter(getActivity(), ammendList, dbAmmend_b2b_GSTR2,2);
-
+                        String gstin = et_gstin_ori.getText().toString();
+                        String invoiceNo = et_invno_ori.getText().toString();
+                        String invoiceDate = et_invdate_ori.getText().toString();
+                        ammendAdapter = new GSTR2_B2B_AmendAdapter(getActivity(),ammendList,dbAmmend_b2b_GSTR2,2,gstin, invoiceNo,invoiceDate,supplierType);
                         listview_gstr2_amend.setAdapter(ammendAdapter);
                     } else {
                         ammendAdapter.notifyNewDataAdded(ammendList);

@@ -2170,11 +2170,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 +KEY_HSNCode+" LIKE '"+hsn_ori+"' AND "+KEY_BusinessType+" LIKE 'B2CSA'";
         return dbFNB.rawQuery(whereClause, null);
     }
-    public long DeleteAmmend_GSTR1_B2CSA(String taxMonth, String hsn_ori, double taxableVal,String pos_ori, String pos_rev)
+    public long DeleteAmmend_GSTR1_B2CSA(String taxMonth, String hsn_ori, double taxableVal,String pos_ori, String custStateCode,
+                                         double IGSTAmt,double CGSTAmt,double SGSTAmt,double cessAmt)
     {
         String deleteClause = KEY_MONTH+" LIKE '"+taxMonth+"' AND "+
                 KEY_HSNCode+" LIKE '"+hsn_ori+"' AND "+KEY_TaxableValue+" = "+taxableVal+" AND "+
-                KEY_POS+" LIKE '"+pos_ori+"' AND "+KEY_POS_REV+" LIKE '"+pos_rev+"' AND "+
+                KEY_IGSTAmount+" = "+IGSTAmt+" AND "+KEY_CGSTAmount+" = "+CGSTAmt+" AND "+
+                KEY_SGSTAmount+" = "+SGSTAmt+" AND "+KEY_cessAmount+" = "+cessAmt+" AND "+
+                KEY_POS+" LIKE '"+pos_ori+"' AND "+KEY_CustStateCode+" LIKE '"+custStateCode+"' AND "+
                 KEY_BusinessType+" LIKE 'B2CSA'";
         return dbFNB.delete(TBL_GSTR1_AMEND, deleteClause, null);
     }
@@ -2262,10 +2265,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.rawQuery(whereClause, null);
     }
     public long DeleteAmmend_GSTR1_b2cl(String inv_no_ori, String inv_date_ori,String inv_no_rev,
-                                        String inv_date_rev,String hsn, double taxableVal)
+                                        String inv_date_rev,String hsn, double taxableVal,double IGSTAmount,double cessAmount)
     {
         String deleteClause = KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+"' AND "+
                 KEY_InvoiceNo+" LIKE '"+inv_no_rev+"' AND "+KEY_InvoiceDate+" LIKE '"+inv_date_rev+"' AND "+
+                KEY_IGSTAmount+" = "+IGSTAmount+" AND "+KEY_cessAmount+" ="+cessAmount+" AND "+
                 KEY_HSNCode+" LIKE '"+hsn+"' AND "+KEY_TaxableValue+" = "+taxableVal+" AND "+KEY_BusinessType+" LIKE 'B2CLA'";
         return dbFNB.delete(TBL_GSTR1_AMEND, deleteClause, null);
     }
@@ -2315,11 +2319,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.rawQuery(whereClause, null);
     }
     public long DeleteAmmend_GSTR1_B2BA(String inv_no_ori, String inv_date_ori,String inv_no_rev,
-                                        String inv_date_rev,String hsn, double taxableVal)
+                                        String inv_date_rev,String hsn, double taxableVal,
+                                        double IgstAmt, double CgstAmt, double SgstAmt)
     {
         String deleteClause = KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+"' AND "+
                 KEY_InvoiceNo+" LIKE '"+inv_no_rev+"' AND "+KEY_InvoiceDate+" LIKE '"+inv_date_rev+"' AND "+
-                KEY_HSNCode+" LIKE '"+hsn+"' AND "+KEY_TaxableValue+" = "+taxableVal+" AND "+KEY_BusinessType+" LIKE 'B2BA'";
+                KEY_HSNCode+" LIKE '"+hsn+"' AND "+KEY_TaxableValue+" = "+taxableVal+" AND "+
+                KEY_IGSTAmount+" = "+IgstAmt+" AND "+KEY_CGSTAmount+" = "+CgstAmt+" AND "+KEY_SGSTAmount+" = "+SgstAmt+" AND "+
+                KEY_BusinessType+" LIKE 'B2BA'";
         return dbFNB.delete(TBL_GSTR1_AMEND, deleteClause, null);
     }
 
@@ -2336,10 +2343,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
     public long DeleteAmmend_GSTR2_B2BA(String inv_no_ori, String inv_date_ori,String inv_no_rev,
-                                        String inv_date_rev,String hsn, double taxableVal)
+                                        String inv_date_rev,String hsn, double taxableVal,
+                                        double IgstAmt, double CgstAmt, double SgstAmt)
     {
         String deleteClause = KEY_OriginalInvoiceNo+" LIKE '"+inv_no_ori+"' AND "+KEY_OriginalInvoiceDate+" LIKE '"+inv_date_ori+"' AND "+
                 KEY_InvoiceNo+" LIKE '"+inv_no_rev+"' AND "+KEY_InvoiceDate+" LIKE '"+inv_date_rev+"' AND "+
+                KEY_IGSTAmount+" = "+IgstAmt+" AND "+KEY_CGSTAmount+" = "+CgstAmt+" AND "+KEY_SGSTAmount+" = "+SgstAmt+" AND "+
                 KEY_HSNCode+" LIKE '"+hsn+"' AND "+KEY_TaxableValue+" = "+taxableVal;
         return dbFNB.delete(TBL_GSTR2_AMEND, deleteClause, null);
     }

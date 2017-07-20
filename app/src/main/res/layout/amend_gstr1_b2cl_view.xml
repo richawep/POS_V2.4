@@ -44,7 +44,7 @@
         android:id="@+id/tvhsn"
         android:layout_width="match_parent"
         android:layout_weight="1"
-
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:text="HSN"/>
     <TextView
@@ -67,6 +67,13 @@
         android:id="@+id/tvIGSTAmount"
         android:layout_width="match_parent"
 
+        android:layout_weight="0.97"
+        android:layout_height="wrap_content"
+        android:text="IGST Amount"/>
+
+    <TextView
+        android:id="@+id/tvcessAmount"
+        android:layout_width="match_parent"
         android:layout_weight="0.97"
         android:layout_height="wrap_content"
         android:text="IGST Amount"/>

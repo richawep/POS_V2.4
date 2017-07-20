@@ -65,6 +65,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fragment__gstr1__b2_cs__amend, container, false);
         myContext = getActivity();
         MsgBox = new MessageDialog(myContext);
+
         try{
             dbAmmend_b2cs_GSTR1.CloseDatabase();
             dbAmmend_b2cs_GSTR1.CreateDatabase();
@@ -324,9 +325,7 @@ void Reset()
                 (igstrate1.equals(""))|| (sgstrate1.equals(""))||(cgstrate1.equals("")) ||
                 (igstamt1.equals(""))|| (sgstamt1.equals(""))||(cgstamt1.equals("")) || cessamt1.equals(""))
         {
-            MsgBox.setTitle(" Error ")
-                    .setMessage(" Please fill all details ")
-                    .show();
+            MsgBox.Show("Error", " Please fill all details ");
         }else {
             String taxval = String.format("%.2f",Float.parseFloat(et_taxval.getText().toString()));
             String igstrate = String.format("%.2f",Float.parseFloat(et_igstrate.getText().toString()));
@@ -379,7 +378,8 @@ void Reset()
 
         }
     } catch (Exception e) {
-        e.printStackTrace();MsgBox.Show("Error",e.getMessage());
+        e.printStackTrace();
+        MsgBox.Show("Error",e.getMessage());
     }
 
     }

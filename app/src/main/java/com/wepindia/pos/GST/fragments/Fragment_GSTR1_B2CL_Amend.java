@@ -225,15 +225,18 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
     }
 
     public void load(View v,int from)
-    {   try{
+    {
+        String recipientStateCode = "", recipientName= "", invoiceNo= "", invoiceDate = "",CustStateCode="";
+        try{
         if(ammendList == null)
             ammendList = new ArrayList<GSTR2_B2B_Amend>();
-        String recipientStateCode = et_recipientStateCode.getText().toString();
-        String recipientName = et_recipientName.getText().toString();
-        String invoiceNo = et_invno_ori.getText().toString();
-        String invoiceDate = et_invdate_ori.getText().toString();
+        recipientStateCode = et_recipientStateCode.getText().toString();
+        recipientName = et_recipientName.getText().toString();
+        invoiceNo = et_invno_ori.getText().toString();
+        invoiceDate = et_invdate_ori.getText().toString();
         String custStateCode_str = spnr_CustStateCode.getSelectedItem().toString();
-        String CustStateCode = custStateCode_str.substring(custStateCode_str.length()-2, custStateCode_str.length());
+        if (!custStateCode_str.equals(""))
+            CustStateCode = custStateCode_str.substring(custStateCode_str.length()-2, custStateCode_str.length());
         Date dd  = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
         Cursor cursor = dbAmmend_b2cl_GSTR1.getAmmends_GSTR1_b2cl(recipientName,recipientStateCode,invoiceNo,String.valueOf(dd.getTime()),CustStateCode);
         int count =1;
@@ -273,7 +276,8 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
     }
     if(ammendAdapter == null)
     {
-        ammendAdapter = new GSTR1_B2CL_AmendAdapter(getActivity(),ammendList, dbAmmend_b2cl_GSTR1);
+        ammendAdapter = new GSTR1_B2CL_AmendAdapter(getActivity(),ammendList, dbAmmend_b2cl_GSTR1,
+                recipientStateCode,recipientName,invoiceNo,invoiceDate,CustStateCode);
         listview_gstr2_amend.setAdapter(ammendAdapter);
     }
     else
@@ -375,17 +379,19 @@ void Reset()
 
 
     public void Add(View v)
-    {try {
-        String recipientStateCode = et_recipientStateCode.getText().toString();
-        String recipientName = et_recipientName.getText().toString();
-        String invno_ori = et_invno_ori.getText().toString();
+    {
+        String recipientStateCode = "", recipientName= "", invno_ori= "", invdate_ori = "",CustStateCode="";
+        try {
+        recipientStateCode = et_recipientStateCode.getText().toString();
+        recipientName = et_recipientName.getText().toString();
+        invno_ori = et_invno_ori.getText().toString();
         String invno_rev = et_invno_rev.getText().toString();
-        String invdate_ori = et_invdate_ori.getText().toString();
+        invdate_ori = et_invdate_ori.getText().toString();
         String invdate_rev = et_invdate_rev.getText().toString();
         String hsn = et_hsn.getText().toString();
         //String pos1 = et_pos.getText().toString();
         String custStateCode_temp = spnr_CustStateCode.getSelectedItem().toString().trim();
-        String CustStateCode = "";
+        CustStateCode = "";
         if (!custStateCode_temp.equals(""))
         {
             int length = custStateCode_temp.length();
@@ -445,7 +451,8 @@ void Reset()
                     }
                     ammendList.add(ammend);
                     if (ammendAdapter == null) {
-                        ammendAdapter = new GSTR1_B2CL_AmendAdapter(getActivity(),ammendList, dbAmmend_b2cl_GSTR1);
+                        ammendAdapter = new GSTR1_B2CL_AmendAdapter(getActivity(),ammendList, dbAmmend_b2cl_GSTR1,
+                                recipientStateCode,recipientName,invno_ori,invdate_ori,CustStateCode);
                         listview_gstr2_amend.setAdapter(ammendAdapter);
                     } else {
                         ammendAdapter.notifyNewDataAdded(ammendList);

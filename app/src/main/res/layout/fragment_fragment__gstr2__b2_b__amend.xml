@@ -54,7 +54,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="Supplier Type"
+                            android:text="Supplier Type*"
                              />
 
                         <Spinner
@@ -77,7 +77,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="GSTIN/Name" />
+                        android:text="GSTIN/Name*" />
 
                     <EditText
                         android:id="@+id/et_gstin_ori"
@@ -97,7 +97,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="InvoiceNo" />
+                        android:text="InvoiceNo*" />
 
                     <EditText
                         android:id="@+id/et_invno_ori"
@@ -117,7 +117,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Invoice Date   " />
+                        android:text="Invoice Date*   " />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -200,7 +200,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Invoice No" />
+                        android:text="Invoice No*" />
 
                     <EditText
                         android:id="@+id/et_invno_rev"
@@ -220,7 +220,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Invoice Date" />
+                        android:text="Invoice Date*" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -258,7 +258,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="invisible">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -279,7 +280,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    >
 
                     <TextView
                         android:layout_width="match_parent"
@@ -556,7 +559,7 @@
                     android:text="Sno"/>
 
                 <TextView
-                    android:layout_width="348dp"
+                    android:layout_width="360dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:background="@drawable/pinkborder"
@@ -564,7 +567,7 @@
                     android:text="Original Details"/>
 
                 <TextView
-                    android:layout_width="545dp"
+                    android:layout_width="420dp"
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:gravity="center"
@@ -572,35 +575,42 @@
                     android:text="Revised Details"/>
 
                 <TextView
-                    android:layout_width="85dp"
+                    android:layout_width="95dp"
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Taxable "/>
                 <TextView
-                    android:layout_width="50dp"
+                    android:layout_width="52dp"
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="IGST"/>
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_width="82dp"
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="CGST"/>
                 <TextView
-                    android:layout_width="65dp"
+                    android:layout_width="80dp"
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="SGST"/>
                 <TextView
-                    android:layout_width="50dp"
+                    android:layout_width="82dp"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:text="cess"/>
+                <TextView
+                    android:layout_width="55dp"
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:gravity="center"
@@ -673,6 +683,7 @@
                     android:layout_width="60dp"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
@@ -692,6 +703,7 @@
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:text="Value"/>
                 <TextView
@@ -721,6 +733,14 @@
                     android:gravity="center"
                     android:text="Amt"/>
 
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Amt"/>
                 <TextView
                     android:layout_width="80dp"
                     android:layout_weight="1"

@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="HSN(Ori)"
+        android:visibility="gone"
         android:layout_weight="1"/>
     <TextView
         android:id="@+id/tvtype_ori"
@@ -42,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="HSN(Rev)"
+        android:visibility="gone"
         android:layout_weight="1"/>
     <TextView
         android:id="@+id/tvtype_rev"
@@ -79,6 +81,13 @@
 
     <TextView
         android:id="@+id/tvSGSTAmount"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+
+        android:text="SGST Amt"/>
+    <TextView
+        android:id="@+id/tvcessAmount"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="match_parent"

@@ -71,7 +71,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Recipient's Name"/>
+                        android:text="Recipient's Name*"/>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -89,7 +89,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="InvoiceNo"/>
+                        android:text="InvoiceNo*"/>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -106,7 +106,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Invoice Date   "/>
+                        android:text="Invoice Date*   "/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -154,6 +154,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="invisible"
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="match_parent"
@@ -172,6 +173,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="invisible"
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="match_parent"
@@ -196,7 +198,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Taxable Value"/>
+                        android:text="Taxable Value*"/>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -214,7 +216,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Invoice No"/>
+                        android:text="Invoice No*"/>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -231,7 +233,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Invoice Date"/>
+                        android:text="Invoice Date*"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -451,6 +453,7 @@
                     android:background="@drawable/pinkborder"
                     android:textColor="@color/txtColorAccent"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
                     android:text="HSN"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -479,6 +482,15 @@
                     android:layout_weight="0.97"
                     android:layout_height="match_parent"
                     android:text="IGST Amount"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:background="@drawable/pinkborder"
+                    android:textColor="@color/txtColorAccent"
+                    android:gravity="center"
+                    android:layout_weight="0.97"
+                    android:layout_height="match_parent"
+                    android:text="cess Amount"/>
 
                 <TextView
                     android:layout_width="match_parent"
