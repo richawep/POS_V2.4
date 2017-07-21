@@ -55,6 +55,7 @@ import com.wep.common.app.print.BillKotItem;
 import com.wep.common.app.print.BillServiceTaxItem;
 import com.wep.common.app.print.BillSubTaxItem;
 import com.wep.common.app.print.BillTaxItem;
+import com.wep.common.app.print.BillTaxSlab;
 import com.wep.common.app.print.PrintKotBillItem;
 import com.wep.common.app.utils.Preferences;
 import com.wep.common.app.views.WepButton;
@@ -2895,24 +2896,15 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     String tableId = "0";
                     waiterId = 0;
                     orderId = Integer.parseInt(tvBillNumber.getText().toString().trim());
-                    ArrayList<BillKotItem> billKotItems = billPrint();
                     ArrayList<BillTaxItem> billOtherChargesItems = otherChargesPrint();
                     ArrayList<BillTaxItem> billTaxItems ;
                     ArrayList<BillServiceTaxItem> billServiceTaxItems = new ArrayList<BillServiceTaxItem>();
                     ArrayList<BillServiceTaxItem> billcessTaxItems = new ArrayList<BillServiceTaxItem>();
+                    ArrayList<BillTaxSlab> billTaxSlabs = new ArrayList<BillTaxSlab>();
 
-                    if(chk_interstate.isChecked())
-                    {
-                        billTaxItems = taxPrint_IGST();
-                    }
-                    else
-                    {
-                        billTaxItems = taxPrint();
-                        billServiceTaxItems = SGSTtaxPrint();
-                    }
-
+                    ArrayList<BillKotItem> billKotItems = billPrint(billTaxSlabs);
                     billcessTaxItems = cessTaxPrint();
-                    ArrayList<BillSubTaxItem> billSubTaxItems = subtaxPrint();
+                    //ArrayList<BillSubTaxItem> billSubTaxItems = subtaxPrint();
                     PrintKotBillItem item = new PrintKotBillItem();
 
                     Cursor crsrCustomer = db.getCustomerById(Integer.parseInt(customerId));
@@ -2921,10 +2913,26 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     } else {
                         item.setCustomerName(" - - - ");
                     }
+                    if(reprintBillingMode>0) {
+                        item.setIsDuplicate("\n(Duplicate Bill)");
+                    }else{
+                        item.setIsDuplicate("");
+                    }
+                    if(chk_interstate.isChecked())
+                    {
+                        item.setIsInterState("y");
+                        billTaxSlabs = TaxSlabPrint_InterState();
+                    }
+                    else
+                    {
+                        item.setIsInterState("n");
+                        billTaxSlabs = TaxSlabPrint_IntraState();
+                    }
                     item.setBillKotItems(billKotItems);
                     item.setBillOtherChargesItems(billOtherChargesItems);
-                    item.setBillTaxItems(billTaxItems);
-                    item.setBillServiceTaxItems(billServiceTaxItems);
+                    //item.setBillTaxItems(billTaxItems);
+                    //item.setBillServiceTaxItems(billServiceTaxItems);
+                    item.setBillTaxSlabs(billTaxSlabs);
                     item.setBillcessTaxItems(billcessTaxItems);
                     //item.setBillSubTaxItems(billSubTaxItems);
                     item.setSubTotal(Double.parseDouble(tvSubTotal.getText().toString().trim()));
@@ -3063,10 +3071,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         tokens[1] = "";
                         tokens[2] = "";
                         Cursor crsrHeaderFooterSetting = null;
-                        crsrHeaderFooterSetting = db.getBillSettings();
+                        crsrHeaderFooterSetting = db.getOwnerDetail_counter();
                         if (crsrHeaderFooterSetting.moveToFirst()) {
                             try {
-                                tokens = crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText")).split(Pattern.quote("|"));
+                                tokens[0] = crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("GSTIN"));
+                                tokens[1] = crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FirmName"));
+                                tokens[2] = crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("Address"));
                             } catch (Exception e) {
                                 tokens[0] = "";
                                 tokens[1] = "";
@@ -3076,21 +3086,15 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 item.setAddressLine1(tokens[0]);
                             if (!tokens[1].equalsIgnoreCase(""))
                                 item.setAddressLine2(tokens[1]);
-                            if (!tokens[2].equalsIgnoreCase(""))
-                            {
-                                String addres3= tokens[2];
-                                if(chk_interstate.isChecked())
-                                {
-                                    addres3 = addres3 + " ("+(spnr_pos.getSelectedItem().toString())+") ";
-                                }
-                                if(reprintBillingMode>0) {
-                                    item.setAddressLine3(addres3+"\n(Duplicate Bill)");
-                                }else{
-                                    item.setAddressLine3(addres3);
-                                }
-                            }
 
-                            item.setFooterLine(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText")));
+                            if(chk_interstate.isChecked())
+                            {
+                                tokens[2] =  tokens[2] + "\n ("+(spnr_pos.getSelectedItem().toString())+") ";;
+                            }
+                            item.setAddressLine3(tokens[2]);
+                            crsrHeaderFooterSetting = db.getBillSettings();
+                            if(crsrHeaderFooterSetting.moveToNext())
+                                item.setFooterLine(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText")));
                         } else {
                             Log.d(TAG, "DisplayHeaderFooterSettings No data in BillSettings table");
                         }
@@ -3115,7 +3119,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }
     }
 
-    public ArrayList<BillKotItem> billPrint() {
+    public ArrayList<BillKotItem> billPrint(ArrayList<BillTaxSlab> billTaxSlabs) {
         ArrayList<BillKotItem> billKotItems = new ArrayList<BillKotItem>();
         int count = 1;
         for (int iRow = 0; iRow < tblOrderItems.getChildCount(); iRow++) {
@@ -3127,14 +3131,36 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             EditText itemRate = (EditText) row.getChildAt(4);
             TextView itemAmount = (TextView) row.getChildAt(5);
             TextView printstatus = (TextView) row.getChildAt(21);
+            TextView UOM_tv = (TextView) row.getChildAt(22);
+            TextView IGST_tv = (TextView) row.getChildAt(23);
+            TextView CGST_tv = (TextView) row.getChildAt(6);
+            TextView SGST_tv = (TextView) row.getChildAt(15);
+
             int id = Integer.parseInt(itemId.getText().toString().trim());
             int sno = count;
             String name = itemName.getText().toString().trim();
             String hsncode = HSNCode.getText().toString().trim();
+            String UOM = UOM_tv.getText().toString().trim();
             Double qty = Double.parseDouble(itemQty.getText().toString().trim());
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
-            double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-            BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount, hsncode);
+            //double amount = Double.parseDouble(itemAmount.getText().toString().trim());
+            double amount = rate *qty;
+            String taxIndex = "";
+            double TaxRate =0;
+            if(chk_interstate.isChecked())
+                TaxRate = Double.parseDouble(IGST_tv.getText().toString().trim());
+            else
+                TaxRate = Double.parseDouble(CGST_tv.getText().toString().trim()) + Double.parseDouble(SGST_tv.getText().toString().trim());
+
+            for (BillTaxSlab taxEntry : billTaxSlabs)
+            {
+                if(String.format("%.2f",TaxRate).equals(String.format("%.2f",taxEntry.getTaxRate())))
+                {
+                    taxIndex = taxEntry.getTaxIndex();
+                    break;
+                }
+            }
+            BillKotItem billKotItem = new BillKotItem(sno, name, qty, rate, amount, hsncode,UOM,taxIndex);
             billKotItems.add(billKotItem);
             count++;
 
@@ -3296,6 +3322,102 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         finally
         {
             return billcessTaxItems;
+        }
+
+    }
+    public ArrayList<BillTaxSlab> TaxSlabPrint_IntraState() {
+        ArrayList<BillTaxSlab> billTaxSlabs = new ArrayList<BillTaxSlab>();
+
+        try {
+            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(tvDate.getText().toString());
+            Cursor crsrTax = db.getItemsForTaxSlabPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            int count = 0;
+            //System.out.println(crsrTax.getCount());
+            if (crsrTax.moveToFirst()) {
+                do {
+                    Double taxpercent = crsrTax.getDouble(crsrTax.getColumnIndex("CGSTRate")) +
+                                                crsrTax.getDouble(crsrTax.getColumnIndex("SGSTRate"));
+
+                    Double cgstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("CGSTAmount")));
+                    Double sgstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("SGSTAmount")));
+                    Double taxableValue  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxableValue")));
+
+                    BillTaxSlab taxItem = new BillTaxSlab("",taxpercent, 0.00,cgstamt,sgstamt, taxableValue,cgstamt+sgstamt);
+                    int found =0;
+                    for (BillTaxSlab taxSlabItem : billTaxSlabs )
+                    {
+                        if (taxSlabItem.getTaxRate() == taxpercent)
+                        {
+                            taxSlabItem.setCGSTAmount(taxSlabItem.getCGSTAmount()+cgstamt);
+                            taxSlabItem.setSGSTAmount(taxSlabItem.getSGSTAmount()+sgstamt);
+                            taxSlabItem.setTaxableValue(taxSlabItem.getTaxableValue()+taxableValue);
+                            taxSlabItem.setTotalTaxAmount(taxSlabItem.getTotalTaxAmount()+cgstamt+sgstamt);
+                            found =1;
+                            break;
+                        }
+                    }
+                    if(found == 0){
+                        taxItem.setTaxIndex(Character.toString((char)('A'+count)));
+                        count++;
+                        billTaxSlabs.add(taxItem);
+                    }
+
+                } while (crsrTax.moveToNext());
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            billTaxSlabs = new ArrayList<BillTaxSlab>();
+        }
+        finally
+        {
+            return billTaxSlabs;
+        }
+
+    }
+    public ArrayList<BillTaxSlab> TaxSlabPrint_InterState() {
+        ArrayList<BillTaxSlab> billTaxSlabs = new ArrayList<BillTaxSlab>();
+
+        try {
+            Date date = new SimpleDateFormat("dd-MM-yyyy").parse(tvDate.getText().toString());
+            Cursor crsrTax = db.getItemsForTaxSlabPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            int count = 0;
+            //System.out.println(crsrTax.getCount());
+            if (crsrTax.moveToFirst()) {
+                do {
+                    Double taxpercent = crsrTax.getDouble(crsrTax.getColumnIndex("IGSTRate"));
+                    Double igstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("IGSTAmount")));
+                    Double taxableValue  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxableValue")));
+
+                    BillTaxSlab taxItem = new BillTaxSlab("",taxpercent, igstamt,0.00,0.00, taxableValue,igstamt);
+                    int found =0;
+                    for (BillTaxSlab taxSlabItem : billTaxSlabs )
+                    {
+                        if (taxSlabItem.getTaxRate() == taxpercent)
+                        {
+                            taxSlabItem.setIGSTAmount(taxSlabItem.getIGSTAmount()+igstamt);
+                            taxSlabItem.setTaxableValue(taxSlabItem.getTaxableValue()+taxableValue);
+                            taxSlabItem.setTotalTaxAmount(taxSlabItem.getTotalTaxAmount()+igstamt);
+                            found =1;
+                            break;
+                        }
+                    }
+                    if(found == 0){
+                        taxItem.setTaxIndex(Character.toString((char)('A'+count)));
+                        count++;
+                        billTaxSlabs.add(taxItem);
+                    }
+
+                } while (crsrTax.moveToNext());
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            billTaxSlabs = new ArrayList<BillTaxSlab>();
+        }
+        finally
+        {
+            return billTaxSlabs;
         }
 
     }
@@ -3485,6 +3607,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                         if (RowBillItem.getChildAt(26) != null) {
                                             TextView cessAmount = (TextView) RowBillItem.getChildAt(26);
                                             cessAmount.setText(String.format("%.2f",item.getCessAmt()));
+                                        }
+                                        if (RowBillItem.getChildAt(5) != null) {
+                                            TextView TaxableValue = (TextView) RowBillItem.getChildAt(5);
+                                            TaxableValue.setText(String.format("%.2f",item.getTaxableValue()));
                                         }
                                     }
                                 }
@@ -3934,7 +4060,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         TextView tvHSn, tvName, tvAmount, tvTaxPercent, tvTaxAmt, tvDiscPercent, tvDiscAmt, // tvQty,
                 // tvRate,
                 tvDeptCode, tvCategCode, tvKitchenCode, tvTaxType, tvModifierCharge, tvServiceTaxPercent,
-                tvServiceTaxAmt;
+                tvServiceTaxAmt , tvUOM;
         EditText etQty, etRate;
         CheckBox Number;
         ImageButton ImgDelete;
@@ -4032,6 +4158,35 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 tvServiceTaxAmt = new TextView(BillingCounterSalesActivity.this);
                 tvServiceTaxAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SGSTAmount")));
 
+                // UOM
+                tvUOM = new TextView(BillingCounterSalesActivity.this);
+                tvUOM.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("UOM")));
+
+                // space
+                TextView tvSpace = new TextView(BillingCounterSalesActivity.this);
+                TextView tvSpace1 = new TextView(BillingCounterSalesActivity.this);
+                TextView tvPrintKOTStatus = new TextView(BillingCounterSalesActivity.this);
+
+                // SupplyType
+                TextView SupplyType = new TextView(BillingCounterSalesActivity.this);
+                SupplyType.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SupplyType")));
+
+                // IGSTRate
+                TextView tvIGSTRate = new TextView(BillingCounterSalesActivity.this);
+                tvIGSTRate.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("IGSTRate")));
+
+                // IGSTAmount
+                TextView tvIGSTAmt = new TextView(BillingCounterSalesActivity.this);
+                tvIGSTAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("IGSTAmount")));
+
+                // cessRate
+                TextView tvcess = new TextView(BillingCounterSalesActivity.this);
+                tvcess.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("cessRate")));
+
+                // IGSTAmount
+                TextView tvcessAmt = new TextView(BillingCounterSalesActivity.this);
+                tvcessAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("cessAmount")));
+
                 // Delete
                 int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
                 ImgDelete = new ImageButton(BillingCounterSalesActivity.this);
@@ -4040,25 +4195,33 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                 // Add all text views and edit text to Item Row
                 // rowItem.addView(tvNumber);
-                rowItem.addView(Number);
-                rowItem.addView(tvName);
-                rowItem.addView(tvHSn);
-                rowItem.addView(etQty);
-                rowItem.addView(etRate);
-                rowItem.addView(tvAmount);
-                rowItem.addView(tvTaxPercent);
-                rowItem.addView(tvTaxAmt);
-                rowItem.addView(tvDiscPercent);
-                rowItem.addView(tvDiscAmt);
-                rowItem.addView(tvDeptCode);
-                rowItem.addView(tvCategCode);
-                rowItem.addView(tvKitchenCode);
-                rowItem.addView(tvTaxType);
-                rowItem.addView(tvModifierCharge);
-                rowItem.addView(tvServiceTaxPercent);
-                rowItem.addView(tvServiceTaxAmt);
-                rowItem.addView(ImgDelete);
-
+                rowItem.addView(Number); //0
+                rowItem.addView(tvName);//1
+                rowItem.addView(tvHSn);//2
+                rowItem.addView(etQty);//3
+                rowItem.addView(etRate);//4
+                rowItem.addView(tvAmount);//5
+                rowItem.addView(tvTaxPercent);//6
+                rowItem.addView(tvTaxAmt);//7
+                rowItem.addView(tvDiscPercent);//8
+                rowItem.addView(tvDiscAmt);//9
+                rowItem.addView(tvDeptCode);//10
+                rowItem.addView(tvCategCode);//11
+                rowItem.addView(tvKitchenCode);//12
+                rowItem.addView(tvTaxType);//13
+                rowItem.addView(tvModifierCharge);//14
+                rowItem.addView(tvServiceTaxPercent);//15
+                rowItem.addView(tvServiceTaxAmt);//16
+                rowItem.addView(SupplyType);//17
+                rowItem.addView(tvSpace);//18
+                rowItem.addView(ImgDelete);//19
+                rowItem.addView(tvSpace1);//20
+                rowItem.addView(tvPrintKOTStatus);//21
+                rowItem.addView(tvUOM);//22
+                rowItem.addView(tvIGSTRate);//23
+                rowItem.addView(tvIGSTAmt);//24
+                rowItem.addView(tvcess);//25
+                rowItem.addView(tvcessAmt);//26
                 // Add row to table
                 tblOrderItems.addView(rowItem, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
@@ -4071,7 +4234,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }
     }
 
-    private void CalculateTotalAmountforRePrint() {
+    /*private void CalculateTotalAmountforRePrint() {
 
         double dSubTotal = 0, dTaxTotal = 0, dModifierAmt = 0, dServiceTaxAmt = 0, dOtherCharges = 0, dTaxAmt = 0, dSerTaxAmt = 0;
         float dTaxPercent = 0, dSerTaxPercent = 0;
@@ -4193,7 +4356,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             }
         }
     }
-
+*/
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 

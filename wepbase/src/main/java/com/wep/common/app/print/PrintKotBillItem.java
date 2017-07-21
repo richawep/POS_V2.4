@@ -26,6 +26,7 @@ public class PrintKotBillItem implements Serializable {
     private ArrayList<BillServiceTaxItem> billServiceTaxItems;
     private ArrayList<BillServiceTaxItem> billcessTaxItems;
     private ArrayList<BillSubTaxItem> billSubTaxItems;
+    private ArrayList<BillTaxSlab> billTaxSlabs;
 
     private ArrayList<BillTaxItem> billOtherChargesItems;
     private String strBillingModeName = "";
@@ -38,6 +39,9 @@ public class PrintKotBillItem implements Serializable {
     private float fTotalsubTaxPercent = 0;
     private float fdiscount = 0;
     private float fdiscountPercentage = 0;
+    private String isInterState = "";
+    private String isDuplicate = "";
+
 
     public PrintKotBillItem() {
     }
@@ -73,6 +77,30 @@ public class PrintKotBillItem implements Serializable {
         this.fdiscountPercentage = fdiscountPercentage;
         this.billOtherChargesItems = otherCharges;
         this.strBillingModeName = BillingModeName;
+    }
+
+    public ArrayList<BillTaxSlab> getBillTaxSlabs() {
+        return billTaxSlabs;
+    }
+
+    public void setBillTaxSlabs(ArrayList<BillTaxSlab> billTaxSlabs) {
+        this.billTaxSlabs = billTaxSlabs;
+    }
+
+    public String getIsDuplicate() {
+        return isDuplicate;
+    }
+
+    public void setIsDuplicate(String isDuplicate) {
+        this.isDuplicate = isDuplicate;
+    }
+
+    public String getIsInterState() {
+        return isInterState;
+    }
+
+    public void setIsInterState(String isInterState) {
+        this.isInterState = isInterState;
     }
 
     public ArrayList<BillServiceTaxItem> getBillcessTaxItems() {

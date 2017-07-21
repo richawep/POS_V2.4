@@ -12,27 +12,46 @@ public class BillKotItem implements Serializable {
     private double rate;
     private double amount;
     private String HSNCode;
-
+    private String UOM;
+    private String TaxIndex;
     public BillKotItem() {
     }
 
-    public BillKotItem(String itemName, double qty, double rate, double amount, String HSNCode) {
+    public BillKotItem(String itemName, double qty, double rate, double amount, String HSNCode, String UOM) {
         this.itemName = itemName;
         this.qty = qty;
         this.rate = rate;
         this.amount = amount;
         this.HSNCode = HSNCode;
+        this.UOM = UOM;
     }
 
-    public BillKotItem(int itemId, String itemName, double qty, double rate, double amount, String HSNCode) {
+    public BillKotItem(int itemId, String itemName, double qty, double rate, double amount, String HSNCode, String UOM, String TaxIndex) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.qty = qty;
         this.rate = rate;
         this.amount = amount;
         this.HSNCode = HSNCode;
+        this.UOM = UOM;
+        this.TaxIndex = TaxIndex;
     }
 
+    public String getTaxIndex() {
+        return TaxIndex;
+    }
+
+    public void setTaxIndex(String taxIndex) {
+        TaxIndex = taxIndex;
+    }
+
+    public String getUOM() {
+        return UOM;
+    }
+
+    public void setUOM(String UOM) {
+        this.UOM = UOM;
+    }
 
     public String getHSNCode() {
         return HSNCode;

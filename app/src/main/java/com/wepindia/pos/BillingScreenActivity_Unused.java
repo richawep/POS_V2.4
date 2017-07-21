@@ -4987,7 +4987,7 @@ public class BillingScreenActivity_Unused extends WepPrinterBaseActivity {
                 Double qty = Double.parseDouble(itemQty.getText().toString().trim());
                 double rate = Double.parseDouble(itemRate.getText().toString().trim());
                 double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-                BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount,hsn);
+                BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount,hsn,"","");
                 billKotItems.add(billKotItem);
                 count++;
             }
@@ -5014,7 +5014,7 @@ public class BillingScreenActivity_Unused extends WepPrinterBaseActivity {
             Double qty = Double.parseDouble(itemQty.getText().toString().trim());
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
             double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-            BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount,hsn);
+            BillKotItem billKotItem = new BillKotItem(sno, name, qty.intValue(), rate, amount,hsn,"","");
             billKotItems.add(billKotItem);
             count++;
 

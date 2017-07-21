@@ -2418,6 +2418,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
 
     }
+    public Cursor getOwnerDetail_counter() {
+        SQLiteDatabase db = getReadableDatabase();
+        String Selectquery = "Select * FROM " + TBL_OWNER_DETAILS ;
+        Cursor result = null;
+        try {
+            result = db.rawQuery(Selectquery, null);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            result = null;
+        }finally {
+            return result;
+        }
+
+
+
+    }
 
     public int deleteOwnerDetails() {
         SQLiteDatabase db = getWritableDatabase();
@@ -8471,6 +8488,24 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             //db.close();
         }
         return cursor;
+    }
+
+    public Cursor getItemsForTaxSlabPrints(int InvoiceNo, String InvoiceDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.rawQuery("Select IGSTRate, CGSTRate, SGSTRate, IGSTAmount, CGSTAmount, SGSTAmount, TaxableValue  from " + TBL_BILLITEM +
+                    " where InvoiceNo = '" + InvoiceNo + "' AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+            db.close();
+        }finally {
+            return cursor;
+
+        }
+
+
     }
 
     /*public Cursor getItemsForSGSTTaxPrint(int InvoiceNo) {

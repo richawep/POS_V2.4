@@ -10,6 +10,7 @@ import com.wep.common.app.print.BillKotItem;
 import com.wep.common.app.print.BillServiceTaxItem;
 import com.wep.common.app.print.BillSubTaxItem;
 import com.wep.common.app.print.BillTaxItem;
+import com.wep.common.app.print.BillTaxSlab;
 import com.wep.common.app.print.Payment;
 import com.wep.common.app.print.PrintIngredientsModel;
 import com.wep.common.app.print.PrintKotBillItem;
@@ -433,6 +434,193 @@ public class PrinterUtil {
         EscCommand esc = new EscCommand();
         //esc.addPrintAndFeedLines((byte)2);
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+        esc.addText("OUTWARDS INVOICE"+item.getIsDuplicate()+"\n");
+        esc.addPrintAndLineFeed();
+
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
+        esc.addText("GSTIN     : "+item.getAddressLine1()+"\n");
+        esc.addText("Name      : "+item.getAddressLine2()+"\n");
+        esc.addText("Address   : "+item.getAddressLine3()+"\n");
+        esc.addPrintAndLineFeed();
+
+        esc.addText("Bill no         : "+item.getBillNo()+"\n");
+        if(item.getBillingMode().equals("1"))
+            esc.addText("Table           : "+item.getTableNo()+"\n");
+        esc.addText("Date            : "+item.getDate() +"      Time : "+item.getTime() +"\n");
+       /* esc.addText("Date            : "+item.getDate() +"\n");
+        esc.addText("Time            : "+item.getTime() +"\n");*/
+        esc.addText("Cashier         : "+item.getOrderBy()+"\n");
+        esc.addText("Customer Name   : "+item.getCustomerName()+"\n");
+        if(item.getBillingMode().equalsIgnoreCase("4") || item.getBillingMode().equalsIgnoreCase("3")) {
+            esc.addText("Payment Status  : " + item.getPaymentStatus()+"\n");
+        }
+
+
+        if(item.getBillingMode().equalsIgnoreCase("1") || item.getBillingMode().equalsIgnoreCase("2") ||
+                item.getBillingMode().equalsIgnoreCase("3") || item.getBillingMode().equalsIgnoreCase("4")){
+            esc.addText("Service         : "+ item.getStrBillingModeName() + "\n");
+        } else {
+            esc.addText("-----------" + "\n");
+        }
+
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+        esc.addText("================================================"+"\n");
+        esc.addText("SI  ITEM NAME       QTY     RATE       AMOUNT "+"\n");
+        esc.addText("================================================"+"\n");
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+        ArrayList<BillKotItem> billKotItems = item.getBillKotItems();
+        Iterator it = billKotItems.iterator();
+        int totalitemtypes =0, totalquantitycount =0;
+        while (it.hasNext())
+        {
+            BillKotItem billKotItem = (BillKotItem) it.next();
+
+            String preId = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getItemId()),3,1);
+            String preName = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(billKotItem.getItemName()),10,1),11,1);
+            String HSN = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(billKotItem.getHSNCode()),7,1),7,1);
+
+            String preQty = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.valueOf(billKotItem.getQty())+billKotItem.getUOM(),8,1),9,1);
+            String preRate = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getRate()),9,1),10,1);
+            String preAmount = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getAmount())
+                                                                                                +billKotItem.getTaxIndex(),14,1),14,1);
+            String pre = preId+preName+/*HSN+*/preQty+preRate+preAmount;
+            esc.addText(pre+"\n");
+            totalitemtypes++;
+            totalquantitycount += billKotItem.getQty();
+        }
+        esc.addText("------------------------------------------------"+"\n");
+        esc.addText(getSpaceFormater("Total Item(s) : "+totalitemtypes+" /Qty : "+totalquantitycount,String.format("%.2f",item.getSubTotal()),48,1)+"\n");
+        float discount = item.getFdiscount();
+        float discountPercentage = item.getdiscountPercentage();
+        if(discountPercentage > 0)
+        {
+            String DiscName = getPostAddedSpaceFormat("","Discount Amount",23,1);
+            String DiscPercent = getPostAddedSpaceFormat("","@ " + String.format("%.2f",discountPercentage) + " %",15,1);
+            String DiscValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",discount),10,1),8 ,1);
+            String pre = DiscName + DiscPercent + DiscValue;
+            esc.addText(pre+"\n");
+        }
+        else if (discount > 0)
+        {
+            esc.addText(getSpaceFormater("Discount Amount",String.format("%.2f",discount),48,1)+"\n");
+        }
+        ArrayList<BillTaxItem> billOtherChargesItems = item.getBillOtherChargesItems();
+        if(billOtherChargesItems.size()>0)
+        {
+            Iterator it1 = billOtherChargesItems.iterator();
+            while (it1.hasNext())
+            {
+                BillTaxItem billKotItem = (BillTaxItem) it1.next();
+                String TxName = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getTxName()),23,1);
+                String TxPercent = getPostAddedSpaceFormat("","",15,1);
+                String TxValue = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getPrice()),10,1),8 ,1);
+                String pre = TxName + TxPercent + TxValue;
+                esc.addText(pre+"\n");
+            }
+        }
+        // Tax Slab
+        double dTotTaxAmt = 0;
+        ArrayList<BillTaxSlab> billTaxSlab = item.getBillTaxSlabs();
+        Iterator it11 = billTaxSlab.iterator();
+        if(item.getIsInterState().equalsIgnoreCase("n")) // IntraState
+        {
+            if (it11.hasNext())
+            {
+                esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+                esc.addText("================================================"+"\n");
+                esc.addText("Tax(%)   TaxableVal   CGSTAmt  SGSTAmt    TaxAmt"+"\n");
+                esc.addText("================================================"+"\n");
+                esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+                do
+                {
+                    BillTaxSlab billTaxSlabEntry = (BillTaxSlab) it11.next();
+                    if(billTaxSlabEntry.getTaxRate()> 0)
+                    {
+                        String TxIndex = getPostAddedSpaceFormat("",String.valueOf(billTaxSlabEntry.getTaxIndex())+" "+
+                                String.format("%.2f",billTaxSlabEntry.getTaxRate()),7,1);
+                        String TaxableValue = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", billTaxSlabEntry.getTaxableValue()),12,1),13,1);
+                        String CGSTAmt = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", billTaxSlabEntry.getCGSTAmount()),8,1),9,1);
+                        String SGSTAmt = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", billTaxSlabEntry.getSGSTAmount()),8,1),9,1);
+                        String TotalTax = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f",billTaxSlabEntry.getTotalTaxAmount()),10,1),10,1);
+
+                        String pre = TxIndex + TaxableValue + CGSTAmt+ SGSTAmt + TotalTax;
+                        dTotTaxAmt += billTaxSlabEntry.getCGSTAmount()+billTaxSlabEntry.getSGSTAmount();
+                        esc.addText(pre+"\n");
+
+                    }
+                }while (it11.hasNext());
+            }
+        }else // InterState
+        {
+            if (it11.hasNext())
+            {
+                esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+                esc.addText("================================================"+"\n");
+                esc.addText("Tax(%)   TaxableVal   IGSTAmt             TaxAmt"+"\n");
+                esc.addText("================================================"+"\n");
+                esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
+                do
+                {
+                    BillTaxSlab billTaxSlabEntry = (BillTaxSlab) it11.next();
+                    if(billTaxSlabEntry.getTaxRate()> 0)
+                    {
+                        String TxIndex = getPostAddedSpaceFormat("",String.valueOf(billTaxSlabEntry.getTaxIndex())+" "+
+                                String.format("%.2f",billTaxSlabEntry.getTaxRate()),7,1);
+                        String TaxableValue = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", billTaxSlabEntry.getTaxableValue()),12,1),13,1);
+                        String IGSTAmt = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", billTaxSlabEntry.getIGSTAmount()),8,1),9,1);
+                        String CGSTAmt = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init("",8,1),9,1);
+                        String TotalTax = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f",billTaxSlabEntry.getTotalTaxAmount()),10,1),10,1);
+
+                        String pre = TxIndex + TaxableValue + IGSTAmt+ CGSTAmt + TotalTax;
+                        dTotTaxAmt += billTaxSlabEntry.getCGSTAmount()+billTaxSlabEntry.getSGSTAmount();
+                        esc.addText(pre+"\n");
+
+                    }
+                }while (it11.hasNext());
+            }
+        }
+
+        esc.addText("\n");
+        double  dtotalcessAmt =0;
+        ArrayList<BillServiceTaxItem> billcessTaxItems = item.getBillcessTaxItems();
+        Iterator it21 = billcessTaxItems.iterator();
+        while (it21.hasNext()) {
+
+            BillServiceTaxItem billKotItem = (BillServiceTaxItem) it21.next();
+            if (billKotItem.getServicePercent() > 0){
+
+                String TxName = getPostAddedSpaceFormat("", String.valueOf(billKotItem.getServiceTxName()), 23, 1);
+                String TxPercent = getPostAddedSpaceFormat("", "@ " + String.format("%.2f", billKotItem.getServicePercent()) + " %", 15, 1);
+                String TxValue = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f", billKotItem.getServicePrice()), 10, 1), 8, 1);
+                dtotalcessAmt += billKotItem.getServicePrice();
+                String pre = TxName + TxPercent + TxValue;
+                esc.addText(pre + "\n");
+            }
+        }
+        double dTotalTaxAmt = dTotTaxAmt +dtotalcessAmt;
+        if(dTotalTaxAmt >0)
+        {   esc.addText(getSpaceFormater("Total Tax Amount",String.format("%.2f",dTotalTaxAmt),48,1)+"\n");}
+        esc.addText("================================================"+"\n");
+        esc.addText(getSpaceFormater("TOTAL",String.format("%.2f",item.getNetTotal()),48,1)+"\n");
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+        esc.addText("================================================\n");
+        if(!item.getFooterLine().equals(""))
+            esc.addText(item.getFooterLine()+"\n");
+        esc.addPrintAndFeedLines((byte)3);
+
+        Vector<Byte> datas = esc.getCommand();
+        Byte[] Bytes = datas.toArray(new Byte[datas.size()]);
+        byte[] bytes = ArrayUtils.toPrimitive(Bytes);
+        String str = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return str;
+    }
+
+    /*public String getPrintBill_old(PrintKotBillItem item) {
+        EscCommand esc = new EscCommand();
+        //esc.addPrintAndFeedLines((byte)2);
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);
         //esc.addText("Resturant Bill"+"\n");
         esc.addText(item.getAddressLine1()+"\n");
@@ -460,7 +648,7 @@ public class PrinterUtil {
             esc.addText("Payment Status   : " + item.getPaymentStatus()+"\n");
         }
         // -----------
-       /* if(item.getBillingMode().equalsIgnoreCase("1")) {
+       *//* if(item.getBillingMode().equalsIgnoreCase("1")) {
             esc.addText("Dine In" + "\n\n");
         } else if(item.getBillingMode().equalsIgnoreCase("2")) {
             esc.addText("Counter Sales" + "\n\n");
@@ -470,7 +658,7 @@ public class PrinterUtil {
             esc.addText("Home Delivery" + "\n\n");
         } else {
             esc.addText("-----------" + "\n");
-        }*/
+        }*//*
 
         if(item.getBillingMode().equalsIgnoreCase("1") || item.getBillingMode().equalsIgnoreCase("2") ||
                 item.getBillingMode().equalsIgnoreCase("3") || item.getBillingMode().equalsIgnoreCase("4")){
@@ -488,9 +676,9 @@ public class PrinterUtil {
         {
             BillKotItem billKotItem = (BillKotItem) it.next();
 
-            /*String amt = getFormatedCharacterForPrint(String.format("%.2f",billKotItem.getAmount()),6,1);
+            *//*String amt = getFormatedCharacterForPrint(String.format("%.2f",billKotItem.getAmount()),6,1);
             if(amt.length() < 6)
-                amt = ""+amt;*/
+                amt = ""+amt;*//*
             String preId = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getItemId()),4,1);
             String preName = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(billKotItem.getItemName()),10,1),11,1);
             String HSN = getPostAddedSpaceFormat("",getFormatedCharacterForPrint(String.valueOf(billKotItem.getHSNCode()),7,1),7,1);
@@ -500,7 +688,7 @@ public class PrinterUtil {
             //String preAmount = getPostAddedSpaceFormat("",String.format("%.2f",billKotItem.getAmount()),7,1);
             String preRate = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getRate()),10,1),11,1);
             String preAmount = getPostAddedSpaceFormat("",getFormatedCharacterForPrint_init(String.format("%.2f",billKotItem.getAmount()),13,1),15,1);
-            String pre = preId+preName+/*HSN+*/preQty+preRate+preAmount;
+            String pre = preId+preName+*//*HSN+*//*preQty+preRate+preAmount;
             esc.addText(pre+"\n");
         }
         esc.addText("================================================"+"\n");
@@ -559,14 +747,14 @@ public class PrinterUtil {
         }
         // Service Sub Tax Calculation
         double dSerSubTaxPer = 0, dSerSubTaxAmt = 0;
-        /*ArrayList<BillSubTaxItem> billSubTaxItemsCal = item.getBillSubTaxItems();
+        *//*ArrayList<BillSubTaxItem> billSubTaxItemsCal = item.getBillSubTaxItems();
         Iterator itCal = billSubTaxItemsCal.iterator();
         while (itCal.hasNext())
         {
             BillSubTaxItem billKotItem = (BillSubTaxItem) itCal.next();
             dSerSubTaxPer += billKotItem.getPercent();
             dSerSubTaxAmt += billKotItem.getPrice();
-        }*/
+        }*//*
 
         // Service Tax
         double dServiceTaxPer = 0, dServiceTaxAmt = 0, dtotalServiceAmt =0;
@@ -643,7 +831,7 @@ public class PrinterUtil {
         String str = Base64.encodeToString(bytes, Base64.DEFAULT);
         return str;
     }
-
+*/
     public String getPrintIngredients(ArrayList<PrintIngredientsModel> item) {
         EscCommand esc = new EscCommand();
         esc.addPrintAndFeedLines((byte)2);

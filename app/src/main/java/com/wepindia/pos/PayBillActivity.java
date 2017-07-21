@@ -275,6 +275,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     item.setCgstAmt(cgstAmt_new);
                     item.setSgstAmt(sgstAmt_new);
                     item.setCessAmt(cessAmt_new);
+                    item.setTaxableValue(discountedrate_item);
                     item.setDiscountamount(discountamount);
                     //item.setTaxableValue(discountedrate);
                 }
@@ -363,6 +364,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                 item.setCgstAmt(cgstAmt_new);
                 item.setSgstAmt(sgstAmt_new);
                 item.setCessAmt(cessAmt_new);
+                item.setTaxableValue(rate*quantity);
 
             }
         }
