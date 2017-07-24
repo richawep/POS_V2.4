@@ -1,25 +1,25 @@
 package com.wepindia.pos.utils;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.text.format.DateFormat;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
+        import android.app.Activity;
+        import android.content.Context;
+        import android.content.Intent;
+        import android.graphics.Bitmap;
+        import android.net.Uri;
+        import android.os.Environment;
+        import android.provider.MediaStore;
+        import android.text.format.DateFormat;
+        import android.util.Log;
+        import android.view.View;
+        import android.widget.Toast;
 
-import com.wepindia.pos.HomeActivity;
+        import com.wepindia.pos.HomeActivity;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Random;
+        import java.io.File;
+        import java.io.FileNotFoundException;
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+        import java.util.Date;
+        import java.util.Random;
 
 /**
  * Created by ALV on 17-09-2016.

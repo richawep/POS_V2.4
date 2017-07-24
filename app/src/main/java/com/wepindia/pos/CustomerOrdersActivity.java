@@ -658,6 +658,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         if((BILLING_MODE.equalsIgnoreCase("3") && txtPaidStatus.getText().toString().equalsIgnoreCase("Paid")))
         {
             MsgBox.setTitle("Note")
+					.setIcon((R.drawable.ic_launcher))
                     .setMessage(" Paid Order cannot be modified. Do you want to print bill")
                     .setNegativeButton("Cancel",null)
                     .setNeutralButton("Finish", new DialogInterface.OnClickListener() {
@@ -701,10 +702,11 @@ public class CustomerOrdersActivity extends WepBaseActivity{
                     .show();
         }else if( (BILLING_MODE.equalsIgnoreCase("4")) && txtPaidStatus.getText().toString().equalsIgnoreCase("Paid"))
         {
-            MsgBox.setTitle("Note")
+            /*MsgBox.setTitle("Note")
                     .setMessage(" Paid Order cannot be modified.")
                     .setNegativeButton("Cancel",null)
-                    .show();
+                    .show();*/
+			MsgBox.Show("Note","Paid order cannot be modified.");
         }else
         {
             Intent intentBillScreen = new Intent(myContext,BillingHomeDeliveryActivity.class);
@@ -730,6 +732,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				if (BILLING_MODE.equals("3") && strPaymentStatus.equalsIgnoreCase("PAID"))
                 {
                     MsgBox.setTitle("Note")
+							.setIcon((R.drawable.ic_launcher))
                             .setMessage(" Bill is already paid. Do you want to go back and print it")
                             .setNegativeButton("Cancel",null)
                             .setNeutralButton("Finish", new DialogInterface.OnClickListener() {
@@ -907,6 +910,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 				{
 					MessageDialog msg1 = new MessageDialog(myContext);
 					msg1.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill")
+							.setIcon((R.drawable.ic_launcher))
 							.setMessage("Payment for this order has been done. Are you sure to delete this order.")
 							.setNegativeButton("Cancel", null)
 							.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
@@ -925,7 +929,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 													Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
 													String msg = "Bill Number "+InvoiceNo+ " is already voided";
-													//MsgBox.Show("VoidBill",msg);
+													MsgBox.Show("Note",msg);
 													Log.d("VoidBill",msg);
 												}}
 										} else {
@@ -948,13 +952,14 @@ public class CustomerOrdersActivity extends WepBaseActivity{
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
                         .setTitle("Delete")
+						.setIcon((R.drawable.ic_launcher))
                         .setMessage("Are you sure you want to Delete this Order")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 int iResult = dbCustomerOrder.deleteKOTItems(Integer.valueOf(txtCustId.getText().toString()), String.valueOf(BILLING_MODE));
                                 Log.d("Delivery:", "Items deleted from pending KOT:" + iResult);
-                                MsgBox.Show("", "Customer Order Deleted Successfully");
+                                MsgBox.Show("Delete Order", "Customer Order Deleted Successfully");
 
                                 ResetCustomerOrder();
                                 LoadOrderToList();

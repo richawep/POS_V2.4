@@ -1811,16 +1811,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         public void onClick(View v) {
                             final View v1 = v;
                             AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
-
-                            LayoutInflater UserAuthorization = (LayoutInflater) myContext
-                                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                            View vwAuthorization = UserAuthorization.inflate(R.layout.deleteconfirmation, null);
-
-
                             AuthorizationDialog
-                                    .setTitle("Confimation")
-                                    .setView(vwAuthorization)
+                                    .setIcon(R.drawable.ic_launcher)
+                                    .setTitle("Confirmation")
+                                    .setMessage("Are you sure to delete this item")
                                     .setNegativeButton("Cancel", null)
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -2407,13 +2401,15 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         tvIGSTValue.setText("0.00");
         tvBillAmount.setText("0.00");
         tvcessValue.setText("0.00");
-        chk_interstate.setChecked(false);
+
         aTViewSearchItem.setText("");
         aTViewSearchMenuCode.setText("");
 
         btnDeleteKOT.setEnabled(false);
         btnAddCustomer.setEnabled(true);
+        chk_interstate.setChecked(false);
         spnr_pos.setSelection(0);
+        spnr_pos.setEnabled(false);
         // Clear order item table
         tblOrderItems.removeAllViews();
         edtCustName.setText("");
@@ -2586,16 +2582,6 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
             String printStatus_str = printstatus.getText().toString();
 
-            // TokenNumber
-            //objPendingKOT.setTokenNumber(iTokenNumber);
-            /*if (et_pos.getText().toString().equals(""))
-            {
-                objPendingKOT.setPOS("");
-            }
-            else
-            {
-                objPendingKOT.setPOS(et_pos.getText().toString());
-            }*/
             objPendingKOT.setPOS("");
             if (jBillingMode == Byte.parseByte("1")) {
                 // TableNumber
@@ -3856,28 +3842,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             Log.d("InsertBillDetail", "Table Split No: "+objBillDetail.getTableSplitNo());
         }
 
-
-        // pos
-        if (chk_interstate.isChecked()) {
-            String str = spnr_pos.getSelectedItem().toString();
-            int length = str.length();
-            String sub = "";
-            if (length > 0) {
-                sub = str.substring(length - 2, length);
-            }
-            objBillDetail.setCustStateCode(sub);
-            Log.d("InsertBillDetail", "CustStateCode :" + sub+" - "+str);
-        } else {
-            String userPOS = dbBillScreen.getOwnerPOS();
-            objBillDetail.setCustStateCode(userPOS);
-            Log.d("InsertBillDetail", "CustStateCode : "+objBillDetail.getCustStateCode());
-        }
-
-
         objBillDetail.setPOS(dbBillScreen.getOwnerPOS());// to be retrieved from database later -- richa to do
         Log.d("InsertBillDetail", "POS : "+objBillDetail.getPOS());
-
-
 
         // Total Items
         objBillDetail.setTotalItems(iTotalItems);
@@ -3951,17 +3917,12 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             objBillDetail.setCustStateCode(sub);
             Log.d("InsertBillDetail", "CustStateCode :" + sub+" - "+str);
         } else {
-            objBillDetail.setCustStateCode("29");// to be retrieved from database later -- richa to do
-            Log.d("InsertBillDetail", "CustStateCode :"+objBillDetail.getCustStateCode());
+            String userPOS = dbBillScreen.getOwnerPOS();
+            objBillDetail.setCustStateCode(userPOS);
+            Log.d("InsertBillDetail", "CustStateCode : "+objBillDetail.getCustStateCode());
         }
-        /*String str = spnr_pos.getSelectedItem().toString();
-        int length = str.length();
-        String custStateCode = "";
-        if (length > 0) {
-            custStateCode = str.substring(length - 2, length);
-        }*/
-        /*objBillDetail.setCustStateCode(custStateCode);
-        Log.d("InsertBillDetail", "CustStateCode :" + custStateCode);*/
+
+
 
 
         // BusinessType
@@ -4392,8 +4353,14 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
     public void VoidKOT(View v) {
         AlertDialog.Builder VoidKOT = new AlertDialog.Builder(myContext);
         final EditText txtReason = new EditText(myContext);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT );
+        params.setMargins(15, 5, 5, 5);
+        txtReason.setLayoutParams(params);
 
-        VoidKOT.setTitle("Void KOT").setMessage("Please enter reason for voiding KOT").setView(txtReason)
+        VoidKOT .setIcon(R.drawable.ic_launcher)
+                .setTitle("Void KOT")
+                .setMessage("Please enter reason for voiding KOT")
+                .setView(txtReason)
                 .setNegativeButton("Cancel", null).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
@@ -4700,8 +4667,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         });
 
 
-        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill")
-                .setView(vwAuthorization).setNegativeButton("Cancel", null)
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher)
+                .setTitle("Delete Bill")
+                .setView(vwAuthorization)
+                .setNegativeButton("Cancel", null)
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -4728,15 +4697,15 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                                         VoidBill(InvoiceNo,String.valueOf(date.getTime()));
                                     } else {
 
-                                        Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
+                                       // Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
                                         String msg = "Bill Number "+InvoiceNo+ " is already voided";
-                                        //MsgBox.Show("VoidBill",msg);
+                                        MsgBox.Show("Note",msg);
                                         Log.d("VoidBill",msg);
                                     }
                                 } else {
-                                    Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
                                     String msg = "No bill found with bill number " + InvoiceNo;
-                                    //MsgBox.Show("VoidBill",msg);
+                                    MsgBox.Show("Note",msg);
                                     Log.d("VoidBill",msg);
                                 }
                                 ClearAll();
@@ -4780,7 +4749,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         });
 
 
-        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("RePrint Bill")
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher)
+                .setTitle("RePrint Bill")
                 .setView(vwAuthorization).setNegativeButton("Cancel", null)
                 .setPositiveButton("RePrint", new DialogInterface.OnClickListener() {
 
@@ -4820,9 +4790,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                                             chk_interstate.setChecked(true);
                                             int index = getIndex_pos(custStateCode);
                                             spnr_pos.setSelection(index);
+                                           // System.out.println("reprint : InterState");
                                         } else {
                                             chk_interstate.setChecked(false);
                                             spnr_pos.setSelection(0);
+                                            //System.out.println("reprint : IntraState");
                                         }
                                         fTotalDiscount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
                                         float discper = cursor.getFloat(cursor.getColumnIndex("DiscPercentage"));
@@ -5920,10 +5892,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     tableId = Integer.parseInt(tvTableNumber.getText().toString().trim());
                     waiterId = Integer.parseInt(tvWaiterNumber.getText().toString().trim());
                     orderId = Integer.parseInt(tvBillNumber.getText().toString().trim());
-                    //ArrayList<BillKotItem> billKotItems = billPrint();
                     ArrayList<BillTaxItem> billOtherChargesItems = otherChargesPrint();
-                    //ArrayList<BillTaxItem> billTaxItems ;
-                    //ArrayList<BillServiceTaxItem> billServiceTaxItems = new ArrayList<BillServiceTaxItem>();;
                     ArrayList<BillServiceTaxItem> billcessTaxItems = new ArrayList<BillServiceTaxItem>();
                     ArrayList<BillTaxSlab> billTaxSlabs = new ArrayList<BillTaxSlab>();
 
@@ -5957,11 +5926,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
                     item.setBillKotItems(billKotItems);
                     item.setBillOtherChargesItems(billOtherChargesItems);
-                    /*item.setBillTaxItems(billTaxItems);
-                    item.setBillServiceTaxItems(billServiceTaxItems);*/
                     item.setBillTaxSlabs(billTaxSlabs);
                     item.setBillcessTaxItems(billcessTaxItems);
-                    //item.setBillSubTaxItems(billSubTaxItems);
                     item.setSubTotal(Double.parseDouble(tvSubTotal.getText().toString().trim()));
                     item.setNetTotal(Double.parseDouble(tvBillAmount.getText().toString().trim()));
                     String tablemsg = String.valueOf(tableId);
@@ -6110,7 +6076,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
                             if(chk_interstate.isChecked())
                             {
-                                tokens[2] =  tokens[2] + "\n ("+(spnr_pos.getSelectedItem().toString())+") ";;
+                                item.setCustomerName(item.getCustomerName()+ "  ("+(spnr_pos.getSelectedItem().toString())+") ");
+                                tokens[2] =  tokens[2] + "\n ("+getState_pos(db.getOwnerPOS_counter())+") ";
                             }
                             item.setAddressLine3(tokens[2]);
                             crsrHeaderFooterSetting = db.getBillSettings();
@@ -6553,13 +6520,13 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             txtUserId.setVisibility(View.GONE);
             txtPassword.setVisibility(View.GONE);
             AuthorizationDialog
+                    .setIcon((R.drawable.ic_launcher))
                     .setTitle("Are you sure you want to exit ?")
-                    .setView(vwAuthorization)
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            /*Intent returnIntent = new Intent();
-                            setResult(Activity.RESULT_OK, returnIntent);*/
+                           db.close();
+                            dbBillScreen.CloseDatabase();
                             finish();
                         }
                     })

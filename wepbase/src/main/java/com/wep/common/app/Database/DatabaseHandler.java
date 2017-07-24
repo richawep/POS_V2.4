@@ -4509,6 +4509,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("TableSplitNo", objPendingKOT.getTableSplitNo());
         cvDbValues.put("PrintKOTStatus", objPendingKOT.getPrintKOTStatus());
         cvDbValues.put(KEY_HSNCode, objPendingKOT.getHSNCode());
+        cvDbValues.put(KEY_UOM, objPendingKOT.getUOM());
         cvDbValues.put(KEY_POS, objPendingKOT.getPOS());
         cvDbValues.put(KEY_SupplyType, objPendingKOT.getSupplyType());
         cvDbValues.put(KEY_IGSTRate, objPendingKOT.getIGSTRate());
@@ -4553,6 +4554,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("TableSplitNo", objPendingKOT.getTableSplitNo());
         cvDbValues.put("PrintKOTStatus", objPendingKOT.getPrintKOTStatus());
         cvDbValues.put(KEY_HSNCode, objPendingKOT.getHSNCode());
+        cvDbValues.put(KEY_UOM, objPendingKOT.getUOM());
         cvDbValues.put(KEY_POS, objPendingKOT.getPOS());
         cvDbValues.put(KEY_SupplyType, objPendingKOT.getSupplyType());
         cvDbValues.put(KEY_IGSTRate, objPendingKOT.getIGSTRate());

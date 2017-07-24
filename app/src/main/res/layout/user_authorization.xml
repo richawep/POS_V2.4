@@ -10,6 +10,7 @@
     <TableRow
         android:id="@+id/rowAuthorizationUserId"
         android:layout_width="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin1"
         android:layout_height="wrap_content" >
 
         <TextView
@@ -32,6 +33,7 @@
     <TableRow
         android:id="@+id/rowAuthorizationUserPassword"
         android:layout_width="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin1"
         android:layout_height="wrap_content" >
 
         <TextView

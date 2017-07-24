@@ -423,6 +423,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         etCustGSTIN.setText("");
         chk_interstate.setChecked(false);
         spnr_pos.setSelection(0);
+        spnr_pos.setEnabled(false);
         tvBillNumber.setText(String.valueOf(db.getNewBillNumber()));
         setInvoiceDate();
         fTotalDiscount =0;
@@ -1264,11 +1265,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         {
                             final View v1 = v;
                             AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(BillingCounterSalesActivity.this);
-                            LayoutInflater UserAuthorization = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                            View vwAuthorization = UserAuthorization.inflate(R.layout.deleteconfirmation, null);
+                            /*LayoutInflater UserAuthorization = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            View vwAuthorization = UserAuthorization.inflate(R.layout.deleteconfirmation, null);*/
                             AuthorizationDialog
-                                    .setTitle("Confimation")
-                                    .setView(vwAuthorization)
+                                    .setIcon(R.drawable.ic_launcher)
+                                    .setTitle("Confirmation")
+                                    .setMessage("Are you sure to delete this item")
                                     .setNegativeButton("Cancel", null)
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
@@ -2896,15 +2898,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     String tableId = "0";
                     waiterId = 0;
                     orderId = Integer.parseInt(tvBillNumber.getText().toString().trim());
-                    ArrayList<BillTaxItem> billOtherChargesItems = otherChargesPrint();
                     ArrayList<BillTaxItem> billTaxItems ;
                     ArrayList<BillServiceTaxItem> billServiceTaxItems = new ArrayList<BillServiceTaxItem>();
+                    ArrayList<BillTaxItem> billOtherChargesItems = otherChargesPrint();
                     ArrayList<BillServiceTaxItem> billcessTaxItems = new ArrayList<BillServiceTaxItem>();
                     ArrayList<BillTaxSlab> billTaxSlabs = new ArrayList<BillTaxSlab>();
+                    ArrayList<BillKotItem> billKotItems = new ArrayList<>();
 
-                    ArrayList<BillKotItem> billKotItems = billPrint(billTaxSlabs);
-                    billcessTaxItems = cessTaxPrint();
-                    //ArrayList<BillSubTaxItem> billSubTaxItems = subtaxPrint();
                     PrintKotBillItem item = new PrintKotBillItem();
 
                     Cursor crsrCustomer = db.getCustomerById(Integer.parseInt(customerId));
@@ -2928,13 +2928,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         item.setIsInterState("n");
                         billTaxSlabs = TaxSlabPrint_IntraState();
                     }
+
+                    billcessTaxItems = cessTaxPrint();
+                    billKotItems = billPrint(billTaxSlabs);
                     item.setBillKotItems(billKotItems);
                     item.setBillOtherChargesItems(billOtherChargesItems);
-                    //item.setBillTaxItems(billTaxItems);
-                    //item.setBillServiceTaxItems(billServiceTaxItems);
                     item.setBillTaxSlabs(billTaxSlabs);
                     item.setBillcessTaxItems(billcessTaxItems);
-                    //item.setBillSubTaxItems(billSubTaxItems);
                     item.setSubTotal(Double.parseDouble(tvSubTotal.getText().toString().trim()));
                     item.setNetTotal(Double.parseDouble(tvBillAmount.getText().toString().trim()));
                     item.setTableNo(tableId);
@@ -3089,7 +3089,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                             if(chk_interstate.isChecked())
                             {
-                                tokens[2] =  tokens[2] + "\n ("+(spnr_pos.getSelectedItem().toString())+") ";;
+                                item.setCustomerName(item.getCustomerName()+ "  ("+(spnr_pos.getSelectedItem().toString())+") ");
+                                tokens[2] =  tokens[2] + "\n ("+getState_pos(db.getOwnerPOS_counter())+") ";
                             }
                             item.setAddressLine3(tokens[2]);
                             crsrHeaderFooterSetting = db.getBillSettings();
@@ -3145,12 +3146,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
             //double amount = Double.parseDouble(itemAmount.getText().toString().trim());
             double amount = rate *qty;
-            String taxIndex = "";
+            String taxIndex = " ";
             double TaxRate =0;
             if(chk_interstate.isChecked())
                 TaxRate = Double.parseDouble(IGST_tv.getText().toString().trim());
             else
                 TaxRate = Double.parseDouble(CGST_tv.getText().toString().trim()) + Double.parseDouble(SGST_tv.getText().toString().trim());
+
 
             for (BillTaxSlab taxEntry : billTaxSlabs)
             {
@@ -3342,7 +3344,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     Double sgstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("SGSTAmount")));
                     Double taxableValue  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxableValue")));
 
+                    if (taxpercent == 0)
+                        continue;
                     BillTaxSlab taxItem = new BillTaxSlab("",taxpercent, 0.00,cgstamt,sgstamt, taxableValue,cgstamt+sgstamt);
+
                     int found =0;
                     for (BillTaxSlab taxSlabItem : billTaxSlabs )
                     {
@@ -3388,6 +3393,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     Double taxpercent = crsrTax.getDouble(crsrTax.getColumnIndex("IGSTRate"));
                     Double igstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("IGSTAmount")));
                     Double taxableValue  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxableValue")));
+
+                    if (taxpercent == 0)
+                        continue;
 
                     BillTaxSlab taxItem = new BillTaxSlab("",taxpercent, igstamt,0.00,0.00, taxableValue,igstamt);
                     int found =0;
@@ -3792,8 +3800,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 DateSelection(tv_inv_date);
             }
         });
-        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill").setMessage("Enter Bill Number")
-                .setView(vwAuthorization).setNegativeButton("Cancel", null)
+
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher)
+                .setTitle("Delete Bill")
+                /*.setMessage("Enter Bill Number")*/
+                .setView(vwAuthorization)
+                .setNegativeButton("Cancel", null)
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -3818,13 +3830,16 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                     if (result.getInt(result.getColumnIndex("BillStatus")) != 0) {
                                         VoidBill(InvoiceNo, String.valueOf(date.getTime()));
                                     } else {
-                                        Toast.makeText(BillingCounterSalesActivity.this, "Bill is already voided", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(BillingCounterSalesActivity.this, "Bill is already voided", Toast.LENGTH_SHORT).show();
+
                                         String msg = "Bill Number " + InvoiceNo + " is already voided";
+                                        messageDialog.Show("Note",msg);
                                         Log.d("VoidBill", msg);
                                     }
                                 } else {
-                                    Toast.makeText(BillingCounterSalesActivity.this, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(BillingCounterSalesActivity.this, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
                                     String msg = "No bill found with bill number " + InvoiceNo;
+                                    messageDialog.Show("Note",msg);
                                     Log.d("VoidBill", msg);
                                 }
                                 ClearAll();
@@ -3852,8 +3867,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
         final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
 
-        AuthorizationDialog.setTitle("Authorization").setIcon(R.drawable.ic_launcher).setView(vwAuthorization)
-                .setNegativeButton("Cancel", null).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        AuthorizationDialog.setTitle("Authorization")
+                .setIcon(R.drawable.ic_launcher)
+                .setView(vwAuthorization)
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated method stub
@@ -3950,9 +3968,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                             chk_interstate.setChecked(true);
                                             int index = getIndex_pos(custStateCode);
                                             spnr_pos.setSelection(index);
+                                            //System.out.println("reprint : InterState");
                                         } else {
                                             chk_interstate.setChecked(false);
                                             spnr_pos.setSelection(0);
+                                            //System.out.println("reprint : IntraState");
                                         }
                                         fTotalDiscount = cursor.getFloat(cursor.getColumnIndex("TotalDiscountAmount"));
                                         float discper = cursor.getFloat(cursor.getColumnIndex("DiscPercentage"));
@@ -4372,13 +4392,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             txtUserId.setVisibility(View.GONE);
             txtPassword.setVisibility(View.GONE);
             AuthorizationDialog
+                    .setIcon((R.drawable.ic_launcher))
                     .setTitle("Are you sure you want to exit ?")
-                    .setView(vwAuthorization)
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            /*Intent returnIntent =new Intent();
-                            setResult(Activity.RESULT_OK,returnIntent);*/
+                            db.close();
                             finish();
                         }
                     })

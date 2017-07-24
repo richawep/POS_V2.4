@@ -574,7 +574,7 @@ public class PrinterUtil {
                         String TotalTax = getPostAddedSpaceFormat("", getFormatedCharacterForPrint_init(String.format("%.2f",billTaxSlabEntry.getTotalTaxAmount()),10,1),10,1);
 
                         String pre = TxIndex + TaxableValue + IGSTAmt+ CGSTAmt + TotalTax;
-                        dTotTaxAmt += billTaxSlabEntry.getCGSTAmount()+billTaxSlabEntry.getSGSTAmount();
+                        dTotTaxAmt += billTaxSlabEntry.getIGSTAmount();
                         esc.addText(pre+"\n");
 
                     }

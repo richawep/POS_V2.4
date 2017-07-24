@@ -437,37 +437,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                     else if(jBillingMode==4)
                                         MsgBox.Show("Warning", " KOT is already present for this customer, please goto Delivery Status for modification  or billing");
                                     return;
-//                                    MsgBox.setTitle("Warning")
-//                                            .setMessage("KOT already present for this customer. Press \"Load\" to load already made KOT or press \"Cancel\" " +
-//                                                    "to make fresh KOT")
-//                                            .setPositiveButton("Load", new DialogInterface.OnClickListener() {
-//                                                Cursor BillItems = cursor_KOT;
-//                                                @Override
-//                                                public void onClick(DialogInterface dialog, int which) {
-//                                                    CustomerDetailsFilled = true;
-//                                                    tblOrderItems.removeAllViews();
-//                                                    LoadModifyKOTItems(BillItems);
-//                                                    return;
-//                                                }
-//                                            })
-//                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(DialogInterface dialog, int which) {
-//                                                    btnAddCustomer.setVisibility(View.INVISIBLE);
-//                                                    ControlsSetEnabled();
-//                                                    if(jBillingMode!=2) {
-//                                                        btnPrintBill.setEnabled(false);
-//                                                        btnPayBill.setEnabled(false);
-//                                                    }
-//                                                    else
-//                                                    {
-//                                                        btnPrintBill.setEnabled(true);
-//                                                        btnPayBill.setEnabled(true);
-//                                                    }
-//                                                }
-//                                            })
-//                                            .show();
-
+//
                                 }else {
                                     btnAddCustomer.setVisibility(View.INVISIBLE);
                                     ControlsSetEnabled();
@@ -1717,16 +1687,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                         public void onClick(View v) {
                             final View v1 = v;
                             AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
-
-                            LayoutInflater UserAuthorization = (LayoutInflater) myContext
-                                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                            View vwAuthorization = UserAuthorization.inflate(R.layout.deleteconfirmation, null);
-
-
                             AuthorizationDialog
-                                    .setTitle("Confimation")
-                                    .setView(vwAuthorization)
+                                    .setIcon(R.drawable.ic_launcher)
+                                    .setTitle("Confirmation")
+                                    .setMessage("Are you sure to delete this item")
                                     .setNegativeButton("Cancel", null)
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -2230,6 +2194,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         tvcessValue.setText("0.00");
         tvBillAmount.setText("0.00");
         chk_interstate.setChecked(false);
+        spnr_pos.setSelection(0);
+        spnr_pos.setEnabled(false);
         aTViewSearchItem.setText("");
         aTViewSearchMenuCode.setText("");
         CustomerDetailsFilled = false;
@@ -2301,17 +2267,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             TextView IGSTAmt = (TextView) RowKOTItem.getChildAt(24);
             TextView cessRate = (TextView) RowKOTItem.getChildAt(25);
             TextView cessAmt = (TextView) RowKOTItem.getChildAt(26);
-
-            // TokenNumber
-            //objPendingKOT.setTokenNumber(iTokenNumber);
-            /*if (et_pos.getText().toString().equals(""))
-            {
-                objPendingKOT.setPOS("");
-            }
-            else
-            {
-                objPendingKOT.setPOS(et_pos.getText().toString());
-            }*/
 
 
             objPendingKOT.setTableNumber(0);
@@ -2759,11 +2714,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             // Get Token number
             iTokenNumber = crsrBillItems.getInt(crsrBillItems.getColumnIndex("TokenNumber"));
 
-            // Get waiter Id
-            //tvWaiterNumber.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("EmployeeId")));
-
-            // Get Table number
-            //tvTableNumber.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TableNumber")));
 
             // Get Sub Udf number
             tvSubUdfValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SubUdfNumber")));
@@ -4686,8 +4636,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         });
 
 
-        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("Delete Bill").setMessage("Enter Bill Number")
-                .setView(vwAuthorization).setNegativeButton("Cancel", null)
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher)
+                .setTitle("Delete Bill")
+                /*.setMessage("Enter Bill Number")*/
+                .setView(vwAuthorization)
+                .setNegativeButton("Cancel", null)
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
@@ -4728,15 +4681,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                                         }
                                     } else {
 
-                                        Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
                                         String msg = "Bill Number " + InvoiceNo + " is already voided";
-                                        //MsgBox.Show("VoidBill",msg);
+                                        MsgBox.Show("Note",msg);
                                         Log.d("VoidBill", msg);
                                     }
                                 } else {
-                                    Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
                                     String msg = "No bill found with bill number " + InvoiceNo;
-                                    //MsgBox.Show("VoidBill",msg);
+                                    MsgBox.Show("Note",msg);
                                     Log.d("VoidBill", msg);
                                 }
                                 ClearAll();
@@ -4779,7 +4732,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         });
 
 
-        DineInTenderDialog.setIcon(R.drawable.ic_launcher).setTitle("RePrint Bill")
+        DineInTenderDialog.setIcon(R.drawable.ic_launcher)
+                .setTitle("RePrint Bill")
                 .setView(vwAuthorization).setNegativeButton("Cancel", null)
                 .setPositiveButton("RePrint", new DialogInterface.OnClickListener() {
 
@@ -5453,7 +5407,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
             //double amount = Double.parseDouble(itemAmount.getText().toString().trim());
             double amount = rate *qty;
-            String taxIndex = "";
+            String taxIndex = " ";
             double TaxRate =0;
             if(chk_interstate.isChecked())
                 TaxRate = Double.parseDouble(IGST_tv.getText().toString().trim());
@@ -5493,6 +5447,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     Double cgstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("CGSTAmount")));
                     Double sgstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("SGSTAmount")));
                     Double taxableValue  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxableValue")));
+                    if(taxpercent ==0)
+                        continue;
 
                     BillTaxSlab taxItem = new BillTaxSlab("",taxpercent, 0.00,cgstamt,sgstamt, taxableValue,cgstamt+sgstamt);
                     int found =0;
@@ -5540,7 +5496,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     Double taxpercent = crsrTax.getDouble(crsrTax.getColumnIndex("IGSTRate"));
                     Double igstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("IGSTAmount")));
                     Double taxableValue  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxableValue")));
-
+                    if(taxpercent ==0)
+                        continue;
                     BillTaxSlab taxItem = new BillTaxSlab("",taxpercent, igstamt,0.00,0.00, taxableValue,igstamt);
                     int found =0;
                     for (BillTaxSlab taxSlabItem : billTaxSlabs )
@@ -6135,7 +6092,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
                             if(chk_interstate.isChecked())
                             {
-                                tokens[2] =  tokens[2] + "\n ("+(spnr_pos.getSelectedItem().toString())+") ";;
+                                item.setCustomerName(item.getCustomerName()+ "  ("+(spnr_pos.getSelectedItem().toString())+") ");
+                                tokens[2] =  tokens[2] + "\n ("+getState_pos(db.getOwnerPOS_counter())+") ";
                             }
                             item.setAddressLine3(tokens[2]);
                             crsrHeaderFooterSetting = db.getBillSettings();
@@ -6485,8 +6443,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         btnPrintBill.setEnabled(true);
         btnPrintKOT.setEnabled(true);
 
-        chk_interstate.setChecked(false);
-        spnr_pos.setSelection(0);
+        //chk_interstate.setChecked(false);
+        //spnr_pos.setSelection(0);
 
         /*if(tblOrderItems.getChildCount()>0)
         {
@@ -6522,13 +6480,13 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
             txtUserId.setVisibility(View.GONE);
             txtPassword.setVisibility(View.GONE);
             AuthorizationDialog
+                    .setIcon((R.drawable.ic_launcher))
                     .setTitle("Are you sure you want to exit ?")
-                    .setView(vwAuthorization)
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            /*Intent returnIntent = new Intent();
-                            setResult(Activity.RESULT_OK, returnIntent);*/
+                            db.close();
+                            dbBillScreen.CloseDatabase();
                             finish();
                         }
                     })
