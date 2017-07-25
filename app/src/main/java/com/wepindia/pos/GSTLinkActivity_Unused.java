@@ -56,7 +56,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPRequestCompletedListener, DownloadFileFromURL.OnFileDownloadCompletedListener,AuthFragment.OnLocalAuthCompletedListener {
+public class GSTLinkActivity_Unused extends Activity implements HTTPAsyncTask.OnHTTPRequestCompletedListener, DownloadFileFromURL.OnFileDownloadCompletedListener,AuthFragment.OnLocalAuthCompletedListener {
 
     private static final int REQUEST_GET_GSTR1_SUMMERY = 1002;
     private static final int REQUEST_GET_GSTR3 = 1003;
@@ -88,17 +88,17 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
 
     private void getGSTR3All() {
         progressDialog.show();
-        new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR3, Config.GSTR3_GET).execute();
+        new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR3, Config.GSTR3_GET).execute();
     }
 
     private void getGSTR1AllSummery() {
         progressDialog.show();
-        new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMERY, Config.GSTR1_SUMMERY_GET_API).execute();
+        new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMERY, Config.GSTR1_SUMMERY_GET_API).execute();
     }
     // After Tab UI Completes Put All codes below
 
     private void init() {
-        MsgBox = new MessageDialog(GSTLinkActivity.this);
+        MsgBox = new MessageDialog(GSTLinkActivity_Unused.this);
         etReportDateStart = (EditText) findViewById(R.id.etReportDateStart);
         etReportDateEnd = (EditText) findViewById(R.id.etReportDateEnd);
         myContext = this;
@@ -125,12 +125,12 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
             e.printStackTrace();
             MsgBox.Show("Error", e.getMessage());
         }
-        dataController = new GSTDataController(GSTLinkActivity.this,dbGSTLink);
-        progressDialog = new ProgressDialog(GSTLinkActivity.this);
+        dataController = new GSTDataController(GSTLinkActivity_Unused.this,dbGSTLink);
+        progressDialog = new ProgressDialog(GSTLinkActivity_Unused.this);
         progressDialog.setMessage("Please Wait..");
         progressDialog.setCancelable(false);
 
-        pDialog = new ProgressDialog(GSTLinkActivity.this);
+        pDialog = new ProgressDialog(GSTLinkActivity_Unused.this);
         pDialog.setMessage("Downloading file. Please wait...");
         pDialog.setIndeterminate(false);
         pDialog.setMax(100);
@@ -139,8 +139,8 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
     }
     private void DateSelection(final int DateType) {        // StartDate: DateType = 1 EndDate: DateType = 2
         try {
-            AlertDialog.Builder dlgReportDate = new AlertDialog.Builder(GSTLinkActivity.this);
-            final DatePicker dateReportDate = new DatePicker(GSTLinkActivity.this);
+            AlertDialog.Builder dlgReportDate = new AlertDialog.Builder(GSTLinkActivity_Unused.this);
+            final DatePicker dateReportDate = new DatePicker(GSTLinkActivity_Unused.this);
             // Initialize date picker value to business date
             dateReportDate.updateDate(objDate.getYear(), objDate.getMonth(), objDate.getDay());
             String strMessage = "";
@@ -431,7 +431,7 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
         //Toast.makeText(myContext, "hello", Toast.LENGTH_SHORT).show();
         String startDate = DateUtil.getDateForDatePicker(etReportDateStart.getText().toString()) ;
         String endDate = DateUtil.getDateForDatePicker(etReportDateEnd.getText().toString()) ;
-        if(ConnectionDetector.isInternetConnection(GSTLinkActivity.this))
+        if(ConnectionDetector.isInternetConnection(GSTLinkActivity_Unused.this))
         {
             progressDialog.show();
             ArrayList<GSTR1B2CSData> list = new ArrayList<GSTR1B2CSData>();
@@ -465,17 +465,17 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
             GSTR1Data gstr1Data = new GSTR1Data(dbGSTLink.getGSTIN(),str[2]+str[0],gt,list,b2CSADataArrayList,cdnList);
             GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1Data);
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
-            new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1, Config.GSTR1_URL).execute();
+            new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1, Config.GSTR1_URL).execute();
         }
         else
         {
-            Toast.makeText(GSTLinkActivity.this, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GSTLinkActivity_Unused.this, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void onClickDownloadGSTR2A(View view) {
         pDialog.show();
-        new DownloadFileFromURL(GSTLinkActivity.this,pDialog,"B2B", Config.GSTR_GET_API).execute();
+        new DownloadFileFromURL(GSTLinkActivity_Unused.this,pDialog,"B2B", Config.GSTR_GET_API).execute();
     }
 
     public void onFileDownloadComplete(boolean status, String filePath) {
@@ -494,7 +494,7 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
     public void saveGSTR2(String userName) {
         String startDate = DateUtil.getDateForDatePicker(etReportDateStart.getText().toString()) ;
         String endDate = DateUtil.getDateForDatePicker(etReportDateEnd.getText().toString()) ;
-        if(ConnectionDetector.isInternetConnection(GSTLinkActivity.this))
+        if(ConnectionDetector.isInternetConnection(GSTLinkActivity_Unused.this))
         {
             /*ArrayList<GSTR2B2BData> gstr2B2BDatasList = dataController.getB2BItems(startDate,endDate);
             String str[] = startDate.split("-");
@@ -504,11 +504,11 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
             progressDialog.show();
             GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1Data);
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
-            new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR2, Config.GSTR2_URL).execute();
+            new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR2, Config.GSTR2_URL).execute();
         */}
         else
         {
-            Toast.makeText(GSTLinkActivity.this, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GSTLinkActivity_Unused.this, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -554,12 +554,12 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
     }
 // public void onClickGetGstr1Summary(View view) {
 //        progressDialog.show();
-//        new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, Config.GSTR1_SUMMERY_GET_API).execute();
+//        new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMARY, Config.GSTR1_SUMMERY_GET_API).execute();
 //    }
 
     public void onClickGetGstr1ASummary(View view) {
         progressDialog.show();
-        new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1A_SUMMARY, Config.GSTR1A_SUMMERY_GET_API).execute();
+        new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1A_SUMMARY, Config.GSTR1A_SUMMERY_GET_API).execute();
     }
 
     public void onClickSaveGstr1(View view) {
@@ -599,7 +599,7 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
 
         String startDate = DateUtil.getDateForDatePicker(etReportDateStart.getText().toString()) ;
         String endDate = DateUtil.getDateForDatePicker(etReportDateEnd.getText().toString()) ;
-        if(ConnectionDetector.isInternetConnection(GSTLinkActivity.this))
+        if(ConnectionDetector.isInternetConnection(GSTLinkActivity_Unused.this))
         {
             GSTR2B2BAItemDetails gstr2B2BAItemDetails = new GSTR2B2BAItemDetails("S","S1991",6210.99,0,0,37.4,8874614.44,33.41,5.68,null);
             ArrayList<GSTR2B2BAItemDetails> itm_detList = new ArrayList<GSTR2B2BAItemDetails>();
@@ -614,11 +614,11 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
             GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1AData);
             progressDialog.show();
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
-            new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1A, Config.GSTR1A_URL).execute();
+            new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1A, Config.GSTR1A_URL).execute();
         }
         else
         {
-            Toast.makeText(GSTLinkActivity.this, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GSTLinkActivity_Unused.this, "No Internet Connection! Try again Later", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -632,7 +632,7 @@ public class GSTLinkActivity extends Activity implements HTTPAsyncTask.OnHTTPReq
 
     public void onClickGetGstr2B2B(View view) {
         progressDialog.show();
-        new HTTPAsyncTask(GSTLinkActivity.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR2_B2B, Config.GSTR2_B2B_GET_API).execute();
+        new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR2_B2B, Config.GSTR2_B2B_GET_API).execute();
     }
 
     public void onClickSaveGstr2(View view) {

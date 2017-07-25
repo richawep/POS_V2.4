@@ -10,7 +10,7 @@ import android.widget.TabHost.TabSpec;
 
 
 @SuppressWarnings("deprecation")
-public class StatusActivity extends TabActivity {
+public class StatusActivity_unused extends TabActivity {
 	
 	Context myContext;
 	
@@ -37,7 +37,7 @@ public class StatusActivity extends TabActivity {
         // Home Delivery Status tab
         TabSpec tabHomeDeliveryStatus = tabStatus.newTabSpec("HomeDeliveryStatus");
         tabHomeDeliveryStatus.setIndicator("Home Delivery Status");
-        tabHomeDeliveryStatus.setContent(new Intent(myContext,HomeDeliveryStatusActivity.class));
+        //tabHomeDeliveryStatus.setContent(new Intent(myContext,HomeDeliveryStatusActivity.class));
         
         // KOT Status tab
         TabSpec tabKOTStatus = tabStatus.newTabSpec("KOTStatus");

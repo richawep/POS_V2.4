@@ -1,7 +1,7 @@
 /****************************************************************************
  * Project Name		:	VAJRA
  * 
- * File Name		:	EmployeeActivity
+ * File Name		:	EmployeeActivity_Unused
  * 
  * Purpose			:	Represents Employee Detail activity, takes care of all
  * 						UI back end operations in this activity, such as event
@@ -18,7 +18,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,13 +39,13 @@ import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.Employee;
 
 
-public class EmployeeActivity extends Activity{
+public class EmployeeActivity_Unused extends Activity{
 	
 	// Context object
 	Context myContext;
 	
 	// DatabaseHandler object
-	DatabaseHandler dbEmployee = new DatabaseHandler(EmployeeActivity.this);
+	DatabaseHandler dbEmployee = new DatabaseHandler(EmployeeActivity_Unused.this);
 						
 	// View handlers
 	EditText txtName, txtPhone, txtSearchId, txtSearchName;

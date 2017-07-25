@@ -83,12 +83,7 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".StatusActivity"
-            android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".HomeDeliveryStatusActivity"
+            android:name=".StatusActivity_unused"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden" />
@@ -118,7 +113,7 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".EmployeeActivity"
+            android:name=".EmployeeActivity_Unused"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden" />
@@ -272,7 +267,7 @@
             android:screenOrientation="sensorLandscape"/>
         <activity android:name=".GST.GSTConfiguration_Activity"
             android:screenOrientation="sensorLandscape"/>
-        <activity android:name=".GSTLinkActivity"
+        <activity android:name=".GSTLinkActivity_Unused"
             android:screenOrientation="sensorLandscape"/>
         <activity android:name=".GST.GSTFileActivity"
             android:screenOrientation="sensorLandscape"/>
@@ -348,9 +343,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".PaymentConfirmActivity"
-            android:screenOrientation="sensorLandscape" />
         <activity android:name="com.wepindia.printers.MainActivity" />
         <activity
             android:name=".TabbedReportActivity"

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -822,6 +824,29 @@ public class ConvertIngredientActivity extends Activity {
     {
         //dbIngredientManagement.CloseDatabase();
         this.finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
+            AuthorizationDialog
+                    .setTitle("Are you sure you want to exit ?")
+                    .setIcon(R.drawable.ic_launcher)
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent returnIntent = new Intent();
+                            setResult(Activity.RESULT_OK, returnIntent);
+                            dbIngredientManagement.CloseDatabase();
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
 /*@Override

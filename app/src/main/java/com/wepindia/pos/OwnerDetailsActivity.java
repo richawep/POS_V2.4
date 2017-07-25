@@ -1,11 +1,15 @@
 package com.wepindia.pos;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -191,5 +195,27 @@ public class OwnerDetailsActivity extends WepBaseActivity {
     @Override
     public void onHomePressed() {
         ActionBarUtils.navigateHome(this);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
+            AuthorizationDialog
+                    .setTitle("Are you sure you want to exit ?")
+                    .setIcon(R.drawable.ic_launcher)
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent returnIntent = new Intent();
+                            setResult(Activity.RESULT_OK, returnIntent);
+                            dbHelper.CloseDatabase();
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -1,5 +1,6 @@
 package com.wepindia.pos;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -1825,6 +1827,28 @@ public class InwardItemActivity extends WepBaseActivity {
             }
         }
         super.onActivityResult( requestCode,  resultCode,  data);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
+            AuthorizationDialog
+                    .setTitle("Are you sure you want to exit ?")
+                    .setIcon(R.drawable.ic_launcher)
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent returnIntent = new Intent();
+                            setResult(Activity.RESULT_OK, returnIntent);
+                            dbInwardItem.CloseDatabase();
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
 

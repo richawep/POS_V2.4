@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mswipetech.wisepad.sdktest.view.Constants;
-import com.wepindia.pos.GSTLinkActivity;
+import com.wepindia.pos.GSTLinkActivity_Unused;
 import com.wepindia.pos.R;
 
 /**
@@ -64,7 +64,7 @@ public class AuthFragment extends DialogFragment {
                 }
                 else
                 {
-                    Cursor User = ((GSTLinkActivity)getActivity()).dbGSTLink.getUser(txtUser, txtPass);
+                    Cursor User = ((GSTLinkActivity_Unused)getActivity()).dbGSTLink.getUser(txtUser, txtPass);
                     if(User!=null) {
                         if (User.getCount() > 0) {
                             if(User.moveToFirst()){
