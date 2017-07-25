@@ -6209,6 +6209,8 @@ public int makeBillVoid(int InvoiceNo ) {
         return dbFNB.update(TBL_ITEM_Inward, cvDbValues, "MenuCode=" + objItem.getiMenuCode(), null);
     }
 
+
+
     public int updateItem_inward(int MenuCode, int taxationtype, String g_s, int suppliercode, String suppliername,
                                  String hsnCode, String ItemName, float IGSTRate, float igstamount, float CGSTRate, float cgstamount,
                                  float SGSTRate, float sgstamount, String ImageUri, int AdditionalTaxId, float quantity, String MOU_str,
@@ -6282,8 +6284,31 @@ public int makeBillVoid(int InvoiceNo ) {
         return cursor;
     }
 
+/*
+    clear the Inward Item Data base
+     */
 
+    public int clearInwardItemdatabase() {
+        return dbFNB.delete(TBL_ITEM_Inward, null, null);
+    }
 
+       /*
+    clear the Inward Item Data base  based on current date
+     */
+
+    public int clearInwardStock(String currentdate) {
+        int del = 0;
+        del = dbFNB.delete(TBL_StockInward, KEY_BusinessDate + " LIKE '" + currentdate + "' ", null);
+        return del;
+    }
+
+/*
+    clear the supplier linked Data base
+     */
+
+    public int clearSupplierLinkage() {
+        return dbFNB.delete(TBL_SupplierItemLinkage, null, null);
+    }
     /*
     public ArrayList<String> getAllSupplierName_nonGST() {
         ArrayList<String> list = new ArrayList<String>();

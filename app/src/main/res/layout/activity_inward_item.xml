@@ -615,10 +615,11 @@ tools:context="com.wepindia.pos.InwardItemActivity">
 
                 </LinearLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1">
@@ -628,6 +629,7 @@ tools:context="com.wepindia.pos.InwardItemActivity">
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="bottom"
+                        android:id="@+id/Message"
                         android:layout_weight="1">
 
 
@@ -647,7 +649,51 @@ tools:context="com.wepindia.pos.InwardItemActivity">
 
                     </LinearLayout>
 
-                </FrameLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvFileName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="right"
+                            android:text="FileName" />
+
+                        <com.wep.common.app.views.WepButton
+                            android:id="@+id/buttonUploadExcel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_btn"
+                            android:text="Browse File"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/WepButtonWithMarigin" />
+
+                        <com.wep.common.app.views.WepButton
+                            android:id="@+id/buttonSaveExcel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="right"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_btn"
+                            android:text="Upload File"
+                            android:textColor="@android:color/white"
+                            android:theme="@style/WepButtonWithMarigin" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"

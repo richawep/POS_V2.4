@@ -1,10 +1,13 @@
 package com.wepindia.pos;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -31,8 +34,13 @@ import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.ItemInwardAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
+import com.wepindia.pos.utils.StockInwardMaintain;
 
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -58,7 +66,9 @@ public class InwardItemActivity extends WepBaseActivity {
     EditText et_Inw_SGSTRate, et_Inw_CGSTRate,et_Inw_IGSTRate,et_Inw_cessRate;
     TextView tvMenuCode;
     ListView lstInwardItem;
-    TextView  tv_AverageRate,et_Inw_Amount;
+    TextView  tv_AverageRate,et_Inw_Amount,tvFileName;
+    private BufferedReader mBufferReader;
+    private boolean mFlag;
     //ImageView imgItemImage;
     //TextView tvFileName;
 
@@ -68,6 +78,33 @@ public class InwardItemActivity extends WepBaseActivity {
     String businessDate="";
     String itemname_clicked;
 
+    private double IGSTRate = 0;
+    private double CGSTRate = 0;
+    private double SGSTRate = 0;
+    private double cessRate = 0;
+    private double IGSTAmt = 0;
+    private double CGSTAmt = 0;
+    private double SGSTAmt = 0;
+    private double cessAmt = 0;
+
+    private String mUserCSVInvalidValue = "";
+    private int mCheckCSVValueType;
+
+    private int mMenuCode;
+    private String mItemName;
+    private String mSupplyType;
+    private double mRate;
+    private double mQuantity;
+    private String mUOM;
+    private double mCGSTRate;
+    private double mSGSTRate;
+    private double mIGSTRate;
+    private double mCESSRate;
+
+    private String mCurrentTime;
+    private final int CHECK_INTEGER_VALUE = 0;
+    private final int CHECK_DOUBLE_VALUE = 1;
+    private final int CHECK_STRING_VALUE = 2;
 
     int count =1;
     float rate_prev_for_touched_item =0;
@@ -258,6 +295,37 @@ public class InwardItemActivity extends WepBaseActivity {
                         btnEdit.setEnabled(true);
                     }
 
+                }
+            });
+            btnUploadExcel.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(myContext, FilePickerActivity.class);
+                    intent.putExtra("contentType", "csv");
+                    startActivityForResult(intent, FilePickerActivity.FILE_PICKER_CODE);
+                }
+            });
+            btnSaveExcel.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    try {
+                        AssetManager manager = myContext.getAssets();
+                        if (strUploadFilepath.equalsIgnoreCase("")) {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_found_file), Toast.LENGTH_SHORT).show();
+                        } else {
+                            String path = strUploadFilepath;
+                            FileInputStream inputStream = new FileInputStream(path);
+                            mBufferReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                            Cursor cursor = dbInwardItem.getCurrentDate();
+
+                            setCSVFileToDB(InwardItemList);
+                        }
+                    } catch (IOException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    } finally {
+                        tvFileName.setText(getResources().getString(R.string.select_filename));
+                        strUploadFilepath = "";
+                    }
                 }
             });
 
@@ -506,6 +574,345 @@ public class InwardItemActivity extends WepBaseActivity {
 
     }
 
+
+    /**
+     * Display exiting data as well as new data from data base
+     *
+     * @param inwardItemList - List of ItemInward
+     */
+
+    private void setCSVFileToDB(ArrayList<ItemInward> inwardItemList) {
+
+        if (inwardItemList.size() > 0) {
+            showCSVAlertMessage();
+        } else {
+            downloadCSVData();
+        }
+    }
+
+    /**
+     * Ask User permission to dispaly old data or new data from CSV file
+     */
+
+    private void showCSVAlertMessage() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
+                .setIcon(R.drawable.ic_launcher)
+                .setTitle(getResources().getString(R.string.replace_item))
+                .setMessage(getResources().getString(R.string.are_you_sure_you_want_replace_all_exiting_item))
+                .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dbInwardItem.clearInwardItemdatabase();
+                        dbInwardItem.clearInwardStock(businessDate);
+                        dbInwardItem.clearSupplierLinkage();
+                        InwardItemList.clear();
+                        InwardItemAdapter.notifyDataSetChanged(InwardItemList);
+                        downloadCSVData();
+
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        DisplayItems();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    /**
+     * Download all data in Background then it will be return to UI
+     */
+
+    private void downloadCSVData() {
+        new AsyncTask<Void, Void, Void>() {
+            ProgressDialog pd;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                pd = new ProgressDialog(InwardItemActivity.this);
+                pd.setMessage(getResources().getString(R.string.loading));
+                pd.setCancelable(false);
+                pd.show();
+            }
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                readCSVValue(businessDate);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                try {
+                    ResetItem();
+                    if(mFlag== true){
+                        MsgBox1.Show("Error",mUserCSVInvalidValue );
+                        dbInwardItem.clearInwardItemdatabase();
+                        InwardItemList.clear();
+                        InwardItemAdapter.notifyDataSetChanged(InwardItemList);
+                    }else {
+                        DisplayItems();
+                        Toast.makeText(InwardItemActivity.this, getResources().getString(R.string.item_import_successfully), Toast.LENGTH_SHORT).show();
+                    }
+                    pd.dismiss();
+                } catch (Exception e) {
+                    Toast.makeText(InwardItemActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }.execute();
+    }
+
+    /**
+     * Read response from CSV file and set data to in Data base
+     * checking All possible validation
+     *
+     * @param currentDate - need to current date
+     */
+
+    private void readCSVValue(String currentDate) {
+
+        String checkUOMTypye = "Pk Lt Ml Gm Kg Bg Bx No Mt Dz Sa St Bt Pl Pc";
+        String[] checkSupplyType = {"G", "S"};
+        String csvHeading = "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,CESS RATE,IMAGEURL";
+        boolean flag;
+        try {
+            String line;
+            String chechCSVHeaderLine;
+            chechCSVHeaderLine = mBufferReader.readLine();
+
+            flag = csvHeading.equals(chechCSVHeaderLine);
+            mFlag = false;
+            if (!flag) {
+                mFlag = true;
+                mUserCSVInvalidValue = getResources().getString(R.string.header_value_empty) + "\n"
+                        + "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,CESS RATE";
+                return;
+            }
+
+            int count =0;
+            while ((line = mBufferReader.readLine()) != null) {
+                count++;
+                final String[] colums = line.split(",");
+
+                if (colums[0].length() > 0 && colums[0].trim().length() > 0 && colums[0] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[0]);
+                    if (mCheckCSVValueType == CHECK_INTEGER_VALUE) {
+                        mMenuCode = Integer.parseInt(colums[0]);
+                    } else {
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.menu_code_invalid) + " "+ colums[1]+" at position "+count;;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    if(colums[1].length() > 0  && colums[0].trim().length() > 0 ) {
+                        mUserCSVInvalidValue = getResources().getString(R.string.menu_code_empty) + " "+ colums[1]+" at position "+count;;
+                        break;
+                    } else {
+                        mUserCSVInvalidValue = getResources().getString(R.string.please_enter_item_name)+ " at position "+count;
+                        break;
+                    }
+                }
+
+                if (colums[1].length() > 0 && colums[1].trim().length() > 0 && colums[1] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[1]);
+                    if (mCheckCSVValueType == CHECK_STRING_VALUE) {
+                        mItemName = colums[1];
+                    } else {
+                        // TODO: 7/19/2017  alert messge
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.item_name_invalid) + " "+ colums[0]+" at position "+count;;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    mUserCSVInvalidValue = getResources().getString(R.string.item_name_empty) + " "+ colums[0]+" at position "+count;;
+                    break;
+                }
+
+                if (colums[2].length() > 0 && colums[2].trim().length() > 0 && colums[2] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[2]);
+                    if (mCheckCSVValueType == CHECK_STRING_VALUE) {
+
+                        if (checkSupplyType[0].equals(colums[2])) {
+                            mSupplyType = colums[2];
+                        } else if (checkSupplyType[1].equals(colums[2])) {
+                            mSupplyType = colums[2];
+                        } else {
+                            mFlag = true;
+                            mUserCSVInvalidValue = getResources().getString(R.string.supply_type_invalid)+ " " + colums[1] + " at position "+count+" e.g " + checkSupplyType;
+                            break;
+                        }
+
+                    } else {
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.supply_type_invalid) + " "+ colums[1]+" at position "+count;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    mUserCSVInvalidValue = getResources().getString(R.string.supply_type_empty)+ " " + colums[1]+" at position "+count;;
+                    break;
+                }
+
+                if (colums[3].length() > 0 && colums[3].trim().length() > 0 && colums[3] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[3]);
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                        mRate = Double.parseDouble(colums[3]);
+                    } else {
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.rate_invalid)+ " " + colums[1]+" at position "+count;;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    mUserCSVInvalidValue = getResources().getString(R.string.rate_empty) + " "+ colums[1]+" at position "+count;;
+                    break;
+                }
+
+                if (colums[4].length() > 0 && colums[4].trim().length() > 0 && colums[4] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[4]);
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                        mQuantity = Double.parseDouble(colums[4]);
+                    } else {
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.quantity_invalid) + " "+ colums[1]+" at position "+count;;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    mUserCSVInvalidValue = getResources().getString(R.string.quantity_empty) + " "+ colums[1]+" at position "+count;;
+                    break;
+                }
+
+                if (colums[5].length() > 0 && colums[5].trim().length() > 0 && colums[5] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[5]);
+                    if (mCheckCSVValueType == CHECK_STRING_VALUE) {
+
+                        if (colums[5].trim().length() == 2 && checkUOMTypye.contains(colums[5])) {
+                            mUOM = colums[5];
+                        } else {
+                            mFlag = true;
+                            mUserCSVInvalidValue = getResources().getString(R.string.uom_invalid)+ " " + colums[1] +" at position "+count+ " e.g " + checkUOMTypye;
+                            break;
+                        }
+                    } else {
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.uom_invalid) + " "+ colums[1]+" at position "+count;;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    mUserCSVInvalidValue = getResources().getString(R.string.uom_empty)+ " " + colums[1]+" at position "+count;;
+                    break;
+                }
+
+                if (colums[6].length() > 0 && colums[6].trim().length() > 0 && colums[6] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[6]);
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                        mCGSTRate = Double.parseDouble(colums[6]);
+                    } else {
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.cgst_rate_invalid) + " "+ colums[1]+" at position "+count;;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    mUserCSVInvalidValue = getResources().getString(R.string.cgst_rate_empty) + " "+ colums[1]+" at position "+count;;
+                    break;
+                }
+
+                if (colums[7].length() > 0 && colums[7].trim().length() > 0 && colums[7] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[7]);
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                        mSGSTRate = Double.parseDouble(colums[7]);
+                    } else {
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.sgst_rate_invalid) + " "+ colums[1]+" at position "+count;;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    mUserCSVInvalidValue = getResources().getString(R.string.sgst_rate_empty)+ " " + colums[1]+" at position "+count;;
+                    break;
+                }
+
+                if (colums[8].length() > 0 && colums[8].trim().length() > 0 && colums[8] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[8]);
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                        mIGSTRate = Double.parseDouble(colums[8]);
+                    } else {
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.igst_rate_invalid) + " "+ colums[1]+" at position "+count;;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    mUserCSVInvalidValue = getResources().getString(R.string.igst_rate_empty)+ " " + colums[1]+" at position "+count;;
+                    break;
+                }
+
+                if (colums[9].length() > 0 && colums[9].trim().length() > 0 && colums[9] != null) {
+                    mCheckCSVValueType = checkCSVTypeValue(colums[9]);
+                    if (mCheckCSVValueType == CHECK_DOUBLE_VALUE) {
+                        mCESSRate = Double.parseDouble(colums[9]);
+                    } else {
+                        mFlag = true;
+                        mUserCSVInvalidValue = getResources().getString(R.string.cess_rate_invalid)+ " " + colums[1]+" at position "+count;;
+                        break;
+                    }
+                } else {
+                    mFlag = true;
+                    mUserCSVInvalidValue = getResources().getString(R.string.cess_rate_empty)+ " " + colums[1]+" at position "+count;;
+                    break;
+                }
+
+                ItemInward itemInwardObj = new ItemInward(mMenuCode, mItemName, "Barcode", colums[6].trim(), "HSNCode",
+                        mRate, mQuantity, mUOM,
+                        mIGSTRate, IGSTAmt, mCGSTRate, CGSTAmt, mSGSTRate, SGSTAmt, mCESSRate, cessAmt,
+                        "TaxationType", mSupplyType);
+
+                long lRowId = dbInwardItem.addItem_InwardDatabase(itemInwardObj);
+            }
+            StockInwardMaintain stock_outward = new StockInwardMaintain(InwardItemActivity.this, dbInwardItem);
+            stock_outward.saveOpeningStock_Inward(currentDate);
+
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+    }
+
+    /**
+     * checking types of data validation(Integer , Double , String)
+     *
+     * @param value - csv value
+     */
+
+    public static int checkCSVTypeValue(String value) {
+        int flag;
+        try {
+            Integer.parseInt(value);
+            flag = 0;
+            return flag;
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+        try {
+            Double.parseDouble(value);
+            flag = 1;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            flag = 2;
+        }
+        return flag;
+    }
+
     private void InitializeViewVariables() {
 
         //tvFileName = (TextView) view.findViewById(R.id.tvFileName);
@@ -535,6 +942,7 @@ public class InwardItemActivity extends WepBaseActivity {
         btnCloseItem = (WepButton) findViewById(R.id.btnCloseItem);
         btnUploadExcel = (WepButton) findViewById(R.id.buttonUploadExcel);
         btnSaveExcel = (WepButton) findViewById(R.id.buttonSaveExcel);
+        tvFileName = (TextView) findViewById(R.id.tvFileName);
 
 
 
@@ -1413,11 +1821,12 @@ public class InwardItemActivity extends WepBaseActivity {
 //                    imgItemImage.setImageResource(R.drawable.img_noimage);
 //                }
                 strUploadFilepath = data.getStringExtra(UploadFilePickerActivity.EXTRA_FILE_PATH);
-                // tvFileName.setText(strUploadFilepath.substring(strUploadFilepath.lastIndexOf("/")+1));
+                tvFileName.setText(strUploadFilepath.substring(strUploadFilepath.lastIndexOf("/")+1));
             }
         }
         super.onActivityResult( requestCode,  resultCode,  data);
     }
+
 
     @Override
     public void onHomePressed() {
