@@ -253,7 +253,7 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
             txtPassword.setVisibility(View.GONE);
             AuthorizationDialog
                     .setTitle("Are you sure you want to exit ?")
-                    .setView(vwAuthorization)
+                    .setIcon(R.drawable.ic_launcher)
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
