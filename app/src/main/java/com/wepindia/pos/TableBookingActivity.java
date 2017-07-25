@@ -111,7 +111,7 @@ public class TableBookingActivity extends WepBaseActivity {
             String strUserName = getIntent().getStringExtra("USER_NAME");
             Date d = new Date();
             CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-            com.wep.common.app.ActionBarUtils.setupToolbarMenu(this,toolbar,getSupportActionBar(),"Table Booking",strUserName," Date:"+s.toString());
+            com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Table Booking",strUserName," Date:"+s.toString());
             /*tvTitleUserName.setText(strUserName.toUpperCase());
             Date d = new Date();
             CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());

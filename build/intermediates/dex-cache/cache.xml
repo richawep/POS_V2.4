@@ -3,255 +3,111 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\9595608f55ff9c0d717870f0cdf532de1c9caf7c\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7fe11909cf4843eaa4754557809c6a71a5e97620\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\57b05fd21c6ab2a4bb6483c0c14dcfa762b24625\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_47f48aaec524ac0da0a41fa3a970eb8a1b9b024b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\a8fc6493235e44b349cc5c34a2a2d4ed440373da\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="0fb891e8f0cfba0513043a7bb357513d229ca2cd">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b9d6a935f43b4534be27f32dd687b82c855308fc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\4eb610eba3f3d05ecf35d1f7fb1bc244f230d87f\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_22accfb049bd0ec1d39b5a94513533f930c91c2c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e167a22a1b14a955b357d0589112ad2d2a68e565">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_a3733525b3d4df42b11401e7ee686c974517f5fe\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\0efbf05a8117c7c39b192956b084c3f5d1ade7f7\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5a060571698521fcc3f6fc25d4b5724b1e1c47f0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\simplyprintapi-android-1.3.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_fdf61c97b351accbb029871f1b5ed3951067d5ac\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\build\intermediates\bundles\default\libs\effica_lib.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="f08f74e75f377d011d8a34e1522ca9fa41376558">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_3ce9f6b52e5a8d6e6befc7d8a5974b207ae43f14\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\ef5b747f4b10b991c34dd1d26eecc0381269ac19\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="7bde4c34162092e0a77e7f12dc85ed77c484cf5c">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0fe49c6eb1592eeba3034fd673783d39dee7e30c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\0f1f460e7af4915affd53cb9900b663cc530c393\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="ecb496cc08dd52551fc5ec6db3bc0632e95a89bb">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ddb61503f54cac8c62804bb24a0995b277eebef4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\libs\poi-3.8.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\2\poi-3.8_15b6b9b29a2dcd0fd2258fbf57d6d0b95189168d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\1f80b2c8ba9051214f767ceb2fd96308d669c874\output\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c07fb99b729345908dda75fadbbf882e300631ff">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_9767c8d1496d16791391c341f9f42299cff2b4df\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\apachehttp.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_a9757233693ad8463ad129ca737f7018eec97ca5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.gradle\caches\modules-2\files-2.1\com.mcxiaoke.volley\library\1.0.19\a8f23f65fc1e522ee4a1a697ee569901a46741fa\library-1.0.19.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="a8f23f65fc1e522ee4a1a697ee569901a46741fa">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\library-1.0.19_da6d5eb735777cfafd0df4beb23bfc994673a4a7\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\build\intermediates\bundles\default\libs\commons-lang-2.6.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="7b864bf2ded4300446c9316d5cfff88effcbbfd2">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\commons-lang-2.6_29d0e68b3c06c158e9e7443a6db31ae4ad26d2e5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\MswipeWisepadDRDSDKAPIVer2.5.4.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="74a20528ad1e765e90f00fd30446521eb9e67185">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\MswipeWisepadDRDSDKAPIVer2.5.4_7cc3a06ee1c28884e11a18f941fefa800e2b4770\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\b8645a7fce36c5bc6d6b73d8a1b78e334a944900\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="02741d05d4b697fba5e279e9881aaa1da0ca7c7f">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8d5396bd09a4e607ce31168822896de03dd1bbfc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\5b578496cca104442521ca61c2a42b6cdbb9a335\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c03bf57f358aa10d253f21989e93bcf6014b3b17">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1d5b37e5ce17dd179898171cfe4bf30d34622b5d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\9a004f29f1e42f2e9d562823c14f342d5cf4ab10\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="0d191c1a09e4892d059e5ce749e4ad4e08129e35">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_13cf1303e2f0f4ea33f089bcf5c4f25f77c11722\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\build\intermediates\bundles\default\libs\jcc-bate-0.7.3.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="f03b2771ee9e00f44746d2532efb188ad31fff33">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\jcc-bate-0.7.3_7073f19f07f980f2aa1939a68554a7e26632f127\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\libs\imageLib.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\2\imageLib_677abff324fee22cab3e245e963674a8c738d34d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\8ea2bc8c7ebaa50d9c2d555ff7920ea00547e766\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b93711e4d656fa1f6054eff06fa6945d10ad7406\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_0b05a4d3a9543aacba00b5841889cf63bd7d777e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\richaa\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.1.1\support-annotations-25.1.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b59b6ee8d6ecc03e672d253800430343493a6ed8">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.1.1_f6e37776c3661c5f39749cac89b913c568d81fe6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\build\intermediates\bundles\default\libs\gprinter-2.1.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_7d67dc37e661c6227d48e88df89ebdb3c2cbc46f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\build\intermediates\bundles\default\libs\apachestrlib.jar"
+        jar="D:\richa\25jul\wepfnb_gst\printers\build\intermediates\bundles\default\libs\apachestrlib.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="2a6e72794eeecaf83ed38b185d735a3d24b36669">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachestrlib_dc64025af4ac35cbaf8b320eaf452e9840cf7f0e\classes.dex" />
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachestrlib_ec4928ca84432c2e8a502e806ad9f7417be139d4\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\cd9f2801cb52f373b73f92d206e85871358a0b6c\output\jars\classes.jar"
+        jar="D:\richa\25jul\wepfnb_gst\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="e2719c102dca3a7a5b02ce07f769362da6ddb4ab">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6fbe5e670f2a1a8d0a918d0531a214cfdf209157\classes.dex" />
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_badb5b37427afaf1773ce96fc12b49e6935c2bc6\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\richaa\.android\build-cache\98d5d9707fbbac84d57052c423fdab4d2cccbab8\output\jars\classes.jar"
+        jar="D:\richa\25jul\wepfnb_gst\printers\build\intermediates\bundles\default\libs\jcc-bate-0.7.3.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="3e04ac8ca644ea7baddf6fdcf72e15c79e9df94a">
-        <dex dex="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3543c3b0fd4b2001bd7946a1ba6abc431aeb70f4\classes.dex" />
+        sha1="f03b2771ee9e00f44746d2532efb188ad31fff33">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\jcc-bate-0.7.3_c06e6e3c06d04e1a744d05c4a76895f829d9a712\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\printers\build\intermediates\bundles\default\libs\gprinter-2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_0aa942cd2fc0382a4a8702447c4695fd5518dbe4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\printers\build\intermediates\bundles\default\libs\effica_lib.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f08f74e75f377d011d8a34e1522ca9fa41376558">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_63bba0630dca01a01eea324c54d4119e2af4dd19\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\MswipeWisepadDRDSDKAPIVer2.5.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="74a20528ad1e765e90f00fd30446521eb9e67185">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\MswipeWisepadDRDSDKAPIVer2.5.4_1a8211807a12f36d5b7beb866e8e9c0bf945e5cf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\simplyprintapi-android-1.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1cd73303b1f95e4dd2198fdf09c6d7c0dc360257">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\simplyprintapi-android-1.3.0_4b30d15067f7dfd50db4c5822c69c18af02432c8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\app\libs\poi-3.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="552a7703d32c57adb611df084b45f7158e8653f3">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\2\poi-3.8_7b3d447dd7231bb0dda48e69987f9133e15ff405\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\app\libs\imageLib.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\2\imageLib_404659f06c210de0a91cf520032811584d951164\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="de103950fef1afd3a6c9d32ba0b3a6f1d368c67b">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_9e8897beaf1aa848c65376e2fddaff9791044f2b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\mSwipe\build\intermediates\bundles\default\libs\apachehttp.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0157ab08038f6006a7f50a7ea892531d9516192f">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\apachehttp_cd385ac1685a109be11616819bab1c551c12012d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\printers\build\intermediates\bundles\default\libs\commons-lang-2.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7b864bf2ded4300446c9316d5cfff88effcbbfd2">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\commons-lang-2.6_c81272109e0e6a9435d3052b0afde4e154b8cd79\classes.dex" />
     </item>
 
 </items>

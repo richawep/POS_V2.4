@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin1"
             android:gravity="center"
+            android:layout_gravity="center_vertical"
             android:text="ItemCode" />
 
         <TextView
@@ -26,27 +27,32 @@
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_gravity="center_vertical"
             android:text="Name" />
         <TextView
             android:id="@+id/tvDineIn1"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="0" />
         <TextView
             android:id="@+id/tvDineIn2"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="0" />
         <TextView
             android:id="@+id/tvDineIn3"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="0" />
 
         <TextView
             android:id="@+id/tvStock"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="0" />
 
         <ImageView

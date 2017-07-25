@@ -46,7 +46,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="left|center_vertical"
                 android:maxLength="15"
                 android:hint="GSTIN"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -76,7 +76,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="left|center_vertical"
                 android:hint="Name"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -96,7 +96,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="left|center_vertical"
                 android:hint="Mobile No"
                 android:inputType="number"
                 android:maxLength="10"

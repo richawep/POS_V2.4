@@ -1,5 +1,6 @@
 package com.wep.common.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 public abstract class WepBaseActivity extends AppCompatActivity {
 
@@ -24,6 +26,12 @@ public abstract class WepBaseActivity extends AppCompatActivity {
     }
 
     public abstract void onHomePressed();
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(getCurrentFocus()!=null)
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -31,6 +39,7 @@ public abstract class WepBaseActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
+            hideKeyboard();
             finish();
         }else if (id == R.id.action_home) {
             /*Intent intent = new Intent(this, HomeActivity.class);

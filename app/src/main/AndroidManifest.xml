@@ -207,7 +207,8 @@
         <activity
             android:name=".UserManagementActivity"
             android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
         <!-- Components required for MSwipe Integration Start -->
 
         <activity
