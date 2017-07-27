@@ -266,7 +266,33 @@
                             android:maxLength="20"
                             android:textSize="13dp" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        >
 
+                        <TextView
+                            android:id="@+id/tv_UOM"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1.4"
+                            android:gravity="left|center_vertical"
+                            android:text="UoM*"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <Spinner
+                            android:id="@+id/spnr_UOM"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:entries="@array/UOM"
+                            android:gravity="bottom" />
+
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -514,24 +540,26 @@
                         android:weightSum="2">
 
                         <TextView
-                            android:id="@+id/tv_UOM"
+                            android:id="@+id/tv_Discount"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="15dp"
-                            android:layout_weight="1.4"
+                            android:layout_weight="1"
                             android:gravity="left|center_vertical"
-                            android:text="UoM*"
+                            android:text="Discount%"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <Spinner
-                            android:id="@+id/spnr_UOM"
+                        <EditText
+                            android:id="@+id/etItemDiscount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            style="@android:style/Widget.Holo.Light.Spinner"
-                            android:entries="@array/UOM"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:maxLength="5"
+                            android:selectAllOnFocus="true"
+                            android:textSize="13dp" />
 
                     </LinearLayout>
                 </LinearLayout>

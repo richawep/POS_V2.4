@@ -109,6 +109,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Column Names for the tables
     private static final String KEY_ServiceTaxPercent = "ServiceTaxPercent";
     private static final String KEY_TaxType = "TaxType";
+    private static final String KEY_DiscountType = "DiscountType";
     private static final String KEY_FastBillingMode = "FastBillingMode";
     private static final String KEY_CategCode = "CategCode";
     private static final String KEY_DeptCode = "DeptCode";
@@ -718,6 +719,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_DineInPrice3 + " REAL, "
             + KEY_DiscId + " NUMERIC, "
             + KEY_DiscountEnable + " NUMERIC, "
+            + KEY_DiscountPercent + " REAL, "
             + KEY_ItemBarcode + " TEXT, "
             + KEY_KitchenCode + " NUMERIC, "
             + KEY_MenuCode + " INTEGER, "
@@ -1012,6 +1014,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_BillwithoutStock + " NUMERIC, "
             + KEY_Tax + " NUMERIC, "
             + KEY_TaxType + " NUMERIC, "
+            + KEY_DiscountType + " NUMERIC, "
             + KEY_FastBillingMode + " NUMERIC, "
             + KEY_KOT + " NUMERIC, "
             + KEY_Token + " NUMERIC, "
@@ -1431,6 +1434,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("BillwithoutStock", 0);
         cvDbValues.put("Tax", 1);
         cvDbValues.put("TaxType", 1);
+        cvDbValues.put(KEY_DiscountType, 0); // 1 itemwise, 0 billwise
         cvDbValues.put("KOT", 1);
         cvDbValues.put("Token", 0);
         cvDbValues.put("Kitchen", 1);
@@ -2855,6 +2859,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("BillwithoutStock", objBillSetting.getBillwithoutStock());
         cvDbValues.put("Tax", objBillSetting.getTax());
         cvDbValues.put("TaxType", objBillSetting.getTaxType());
+        cvDbValues.put(KEY_DiscountType, objBillSetting.getDiscountType());
         cvDbValues.put("KOT", objBillSetting.getKOT());
         cvDbValues.put("Token", objBillSetting.getToken());
         cvDbValues.put("Kitchen", objBillSetting.getKitchen());
@@ -4042,6 +4047,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("Quantity", objItem.getStock());
         cvDbValues.put("ImageUri", objItem.getImageUri());
         cvDbValues.put("TaxType", 0);
+        cvDbValues.put(KEY_DiscountPercent, objItem.getItemDiscount());
         cvDbValues.put(KEY_HSNCode, objItem.getHSN());
         cvDbValues.put(KEY_IGSTRate, objItem.getIGSTRate());
         cvDbValues.put(KEY_CGSTRate, objItem.getCGSTRate());
@@ -4327,7 +4333,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                           int OptionalTaxId1, int OptionalTaxId2, int DiscId, double Stock, int PriceChange, int DiscountEnable,
                           int BillWithStock, String ImageUri, int TaxType, double frate, String hsnCode,
                           String g_s, String MOU_str, String taxationtype_str, double IGSTRate, double CGSTRate, double SGSTRate,double cessRate,
-                          float fSalesTax, float fServiceTax, int ItemId) {
+                          float fSalesTax, float fServiceTax, int ItemId , double itemDiscount) {
 
         cvDbValues = new ContentValues();
 
@@ -4356,6 +4362,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("ImageUri", ImageUri);
         cvDbValues.put("TaxType", TaxType);
 
+        cvDbValues.put(KEY_DiscountPercent, itemDiscount);
         cvDbValues.put(KEY_Rate, frate);
         cvDbValues.put(KEY_HSNCode, hsnCode);
         cvDbValues.put(KEY_IGSTRate, IGSTRate);
@@ -8521,7 +8528,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
         try{
-            cursor = db.rawQuery("Select IGSTRate, CGSTRate, SGSTRate, IGSTAmount, CGSTAmount, SGSTAmount, TaxableValue  from " + TBL_BILLITEM +
+            cursor = db.rawQuery("Select IGSTRate, CGSTRate, SGSTRate, IGSTAmount, CGSTAmount, SGSTAmount, TaxableValue from " + TBL_BILLITEM +
                     " where InvoiceNo = '" + InvoiceNo + "' AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null);
         }catch (Exception e){
             e.printStackTrace();

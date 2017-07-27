@@ -185,6 +185,7 @@
 
                             <TextView
                                 android:id="@+id/tvTax"
+                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
@@ -192,6 +193,7 @@
 
                             <RadioGroup
                                 android:id="@+id/rgTax"
+                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
@@ -207,6 +209,31 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Reverse" />
+                            </RadioGroup>
+                            <TextView
+                                android:id="@+id/tvDiscountType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="Discount Type (Choose One)" />
+
+                            <RadioGroup
+                                android:id="@+id/rgDiscountType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/rbDiscountItemwise"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Itemwise" />
+
+                                <RadioButton
+                                    android:id="@+id/rbDiscountBillwise"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Billwise" />
                             </RadioGroup>
 
                             <TextView

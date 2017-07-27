@@ -92,7 +92,7 @@ public class ItemManagementActivity extends WepBaseActivity {
     TableLayout tblItems;
     TextView tvDineIn1Caption, tvDineIn2Caption, tvDineIn3Caption, tvFileName;
     Spinner spnrG_S, spnrMOU, spnrtaxationtype;
-    EditText etRate ,etQuantity ,etHSN ,etGstTax  ;
+    EditText etRate ,etQuantity ,etHSN ,etGstTax ,etItemDiscount ;
     FrameLayout frame_rate_nongst, frame_rate_gst, frame_serviceTax, frame_salesTax, frame_GSTTax;
     EditText edtMenuCode, edtItemCGSTTax, edtItemSGSTTax, edtIGSTTax,edtcessTax;
     //TextView tvCaptionSNo,tvCaptionLongName,tvCaptionDineInPrice1,tvCaptionDineInPrice2,tvCaptionDineInPrice3,tvCaptionStock, tvCaptionRate,tvCaptionQuanity,tvCaptionMOU,tvCaptionGSTRate,tvCaptionImage,tvCaptionDelete;
@@ -272,7 +272,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                                         Double.parseDouble(colums[3].trim()), Double.parseDouble(colums[4].trim()),Double.parseDouble(colums[5].trim()),
                                                                         0, 0, 0, "","",i, Double.parseDouble(colums[6].trim()),Double.parseDouble(colums[7].trim()),
                                                                         Double.parseDouble(colums[6].trim())+ Double.parseDouble(colums[7].trim()),0,
-                                                                        colums[8].trim(), "HSN_"+i,"GST", "G" ) ;
+                                                                        colums[8].trim(), "HSN_"+i,"GST", "G" ,0) ;
                                                                 long lRowId = dbItems.addItem(item_add);
 
 
@@ -372,7 +372,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                                                         Double.parseDouble(colums[3].trim()), Double.parseDouble(colums[4].trim()),Double.parseDouble(colums[5].trim()),
                                                         0, 0, 0, "","",i,Double.parseDouble(colums[6].trim()),
                                                         Double.parseDouble(colums[7].trim()),Double.parseDouble(colums[6].trim())+ Double.parseDouble(colums[7].trim()),0,
-                                                        colums[8].trim(), "HSN_"+i,"GST", "G" ) ;
+                                                        colums[8].trim(), "HSN_"+i,"GST", "G",0 ) ;
                                                 long lRowId = dbItems.addItem(item_add);
                                                 i++;
                                             }
@@ -600,6 +600,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         etQuantity = (EditText) findViewById(R.id.et_quantity);
         etHSN = (EditText) findViewById(R.id.etHSNCode);
         etGstTax = (EditText)findViewById(R.id.etGSTTax);
+        etItemDiscount = (EditText)findViewById(R.id.etItemDiscount);
 
 
         /*frame_rate_gst = (FrameLayout) findViewById(R.id.frame_rate_gst);
@@ -748,6 +749,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         edtItemSGSTTax.setText(String.format("%.2f",item.getSGSTRate()));
         edtIGSTTax.setText(String.format("%.2f",item.getIGSTRate()));
         edtcessTax.setText(String.format("%.2f",item.getCessRate()));
+        etItemDiscount.setText(String.format("%.2f",item.getItemDiscount()));
 
         String uom_temp = item.getUOM();
         String uom = "("+uom_temp+")";
@@ -867,6 +869,7 @@ public class ItemManagementActivity extends WepBaseActivity {
             item.setItemId(cursorItem.getInt(cursorItem.getColumnIndex("ItemId")));
             item.setHSN(cursorItem.getString(cursorItem.getColumnIndex("HSNCode")));
             item.setTaxationType(cursorItem.getString(cursorItem.getColumnIndex("TaxationType")));
+            item.setItemDiscount(cursorItem.getDouble(cursorItem.getColumnIndex("DiscountPercent")));
 
             dataList.add(item);
         }
@@ -1549,7 +1552,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         String strMenuCode = "", strLongName = "", strShortName = "", strBarcode = "";
         int iDeptCode = 0, iCategCode = 0, iKitchenCode = 0, iSalesTaxId = 0, iAdditionalTaxId = 0, iOptionalTaxId1 = 0,
                 iOptionalTaxId2 = 0, iDiscountId = 0, iPriceChange = 0, iDiscountEnable = 0, iBillWithStock = 0,iTaxType = 0;
-        double fDineIn1 = 0, fDineIn2 = 0, fDineIn3 = 0, fTakeAway = 0, fPickUp = 0, fDelivery = 0, fStock = 0;
+        double fDineIn1 = 0, fDineIn2 = 0, fDineIn3 = 0, fTakeAway = 0, fPickUp = 0, fDelivery = 0, fStock = 0, itemDiscount;
 
         strMenuCode = edtMenuCode.getText().toString();
         strLongName = txtLongName.getText().toString().toUpperCase();
@@ -1558,6 +1561,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         fDineIn1 = Double.parseDouble(txtDineIn1.getText().toString());
         fDineIn2 = Double.parseDouble(txtDineIn2.getText().toString());
         fDineIn3 = Double.parseDouble(txtDineIn3.getText().toString());
+
         fPickUp = 0.00f;
         fTakeAway = 0.00f;
         fDelivery = 0.00f;
@@ -1591,6 +1595,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         float fSGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtItemSGSTTax.getText().toString())));
         float fIGSTTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtIGSTTax.getText().toString())));
         float fcessTax = Float.parseFloat(String.format("%.2f",Float.parseFloat(edtcessTax.getText().toString())));
+        itemDiscount = Double.parseDouble((String.format("%.2f",Double.parseDouble(etItemDiscount.getText().toString()))));
 
 
 
@@ -1616,7 +1621,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
                 ItemOutward item_add = new ItemOutward(iMenuCode,strLongName, fDineIn1, fDineIn2,fDineIn3,fStock,
                         iDeptCode,iCategCode,iKitchenCode, strBarcode,strImageUri,iMenuCode, fCGSTTax,fSGSTTax,fIGSTTax,fcessTax,
-                        MOU_str, hsnCode,taxationtype_str, g_s ) ;
+                        MOU_str, hsnCode,taxationtype_str, g_s ,itemDiscount) ;
                 long lRowId = dbItems.addItem(item_add);
                 if (lRowId>0)
                 {
@@ -1647,7 +1652,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                         iSalesTaxId, iAdditionalTaxId, iOptionalTaxId1, iOptionalTaxId2, iDiscountId, fStock, iPriceChange,
                         iDiscountEnable, iBillWithStock, strImageUri, iTaxType, frate, hsnCode, g_s, MOU_str,
                         taxationtype_str, fIGSTTax, fCGSTTax, fSGSTTax,fcessTax,
-                        fSalesTax, fServiceTax, Integer.valueOf(strItemId));
+                        fSalesTax, fServiceTax, Integer.valueOf(strItemId), itemDiscount);
                 if (iRowId > 0)
                 {
                     Log.d("Item Management : ", "Updated Rows: " + String.valueOf(iRowId));
@@ -1701,10 +1706,11 @@ public class ItemManagementActivity extends WepBaseActivity {
         edtcessTax.setText("0.00");
         edtMenuCode.setText("");
 
-        etRate.setText("0");
-        etQuantity.setText("0");
+        etRate.setText("0.00");
+        etQuantity.setText("0.00");
+        etItemDiscount.setText("0.00");
         etHSN.setText("0");
-        etGstTax.setText("0");
+        etGstTax.setText("0.00");
         itemName_beforeChange_in_update="";
         spnrMOU.setSelection(0);
         spnrG_S.setSelection(0);
@@ -1813,24 +1819,35 @@ public class ItemManagementActivity extends WepBaseActivity {
         }*/
 
         if (txtDineIn1.getText().toString().equalsIgnoreCase("")) {
-            txtDineIn1.setText("0");
+            txtDineIn1.setText("0.00");
         }
 
         if (txtDineIn2.getText().toString().equalsIgnoreCase("")) {
-            txtDineIn2.setText("0");
+            txtDineIn2.setText("0.00");
         }
 
         if (txtDineIn3.getText().toString().equalsIgnoreCase("")) {
-            txtDineIn3.setText("0");
+            txtDineIn3.setText("0.00");
         }
 
         if (txtStock.getText().toString().equalsIgnoreCase("")) {
-            txtStock.setText("0");
+            txtStock.setText("0.00");
         }else
         {
             double stock = Double.parseDouble(txtStock.getText().toString());
             if(stock>9999.99){
                 MsgBox.Show("Warning","Please enter stock between 0 and 9999.99");
+                return;
+            }
+        }
+
+        if (etItemDiscount.getText().toString().equalsIgnoreCase("")) {
+            etItemDiscount.setText("0.00");
+        }else
+        {
+            double discount = Double.parseDouble(etItemDiscount.getText().toString());
+            if(discount>99.99){
+                MsgBox.Show("Warning","Please enter discount between 0 and 99.99");
                 return;
             }
         }
@@ -1985,38 +2002,38 @@ public class ItemManagementActivity extends WepBaseActivity {
             }
 
             if (txtDineIn1.getText().toString().equalsIgnoreCase("")) {
-                txtDineIn1.setText("0");
+                txtDineIn1.setText("0.00");
             }
 
             if (txtDineIn2.getText().toString().equalsIgnoreCase("")) {
-                txtDineIn2.setText("0");
+                txtDineIn2.setText("0.00");
             }
 
             if (txtDineIn3.getText().toString().equalsIgnoreCase("")) {
-                txtDineIn3.setText("0");
+                txtDineIn3.setText("0.00");
             }
 
             if (txtStock.getText().toString().equalsIgnoreCase("")) {
-                txtStock.setText("0");
+                txtStock.setText("0.00");
+            }else
+            {
+                double stock = Double.parseDouble(txtStock.getText().toString());
+                if(stock>9999.99){
+                    MsgBox.Show("Warning","Please enter stock between 0 and 9999.99");
+                    return;
+                }
+            }
+            if (etItemDiscount.getText().toString().equalsIgnoreCase("")) {
+                etItemDiscount.setText("0.00");
+            }else
+            {
+                double discount = Double.parseDouble(etItemDiscount.getText().toString());
+                if(discount>99.99){
+                    MsgBox.Show("Warning","Please enter discount between 0 and 99.99");
+                    return;
+                }
             }
 
-
-        /*if (etRate.getText().toString().equals(""))
-        {
-            etRate.setText("0");
-        }
-        if (etQuantity.getText().toString().equals(""))
-        {
-            etQuantity.setText("0");
-        }
-        if (etHSN.getText().toString().equals(""))
-        {
-            etHSN.setText("0");
-        }
-        if (etGstTax.getText().toString().equals(""))
-        {
-            etGstTax.setText("0");
-        }*/
 
             String CGSTTax_str = edtItemCGSTTax.getText().toString();
             if (CGSTTax_str.equalsIgnoreCase("")) {

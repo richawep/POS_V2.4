@@ -25,7 +25,7 @@ public class FragmentSettingsOther extends Fragment {
     MessageDialog MsgBox;// = new MessageDialog(DineInSettingsActivity.this);
     RadioButton rbDateTimeAuto, rbDateTimeManual, rbPriceChangeEnable, rbPriceChangeDisable;
     RadioButton rbBillwithStockEnable, rbBillwithStockDisable;
-    RadioButton rbTaxForward, rbTaxReverse, rbTaxTypeItemwise, rbTaxTypeBillwise;
+    RadioButton rbTaxForward, rbTaxReverse, rbTaxTypeItemwise, rbTaxTypeBillwise,rbDiscountItemwise,rbDiscountBillwise;
     RadioButton rbFastBillingItems, rbFastBillingDeptItems, rbFastBillingDeptCategItems;
     RadioButton rbBillNoResetEnable, rbBillNoResetDisable;
     RadioButton rbItemNoResetAuto, rbItemNoResetManual;
@@ -102,6 +102,9 @@ public class FragmentSettingsOther extends Fragment {
 
         rbTaxTypeItemwise = (RadioButton) view.findViewById(R.id.rbTaxTypeItemwise);
         rbTaxTypeBillwise = (RadioButton) view.findViewById(R.id.rbTaxTypeBillwise);
+
+        rbDiscountItemwise = (RadioButton) view.findViewById(R.id.rbDiscountItemwise);
+        rbDiscountBillwise = (RadioButton) view.findViewById(R.id.rbDiscountBillwise);
 
         btnApply = (Button) view.findViewById(R.id.btnApplyOtherSettings);
         btnClose = (Button) view.findViewById(R.id.btnCloseOtherSettings);
@@ -188,6 +191,12 @@ public class FragmentSettingsOther extends Fragment {
             } else {
                 rbTaxTypeBillwise.setChecked(true);
             }
+            // Discount Type
+            if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("DiscountType")) == 1) {
+                rbDiscountItemwise.setChecked(true);
+            } else {
+                rbDiscountBillwise.setChecked(true);
+            }
 
             // Fast Billing Mode
             if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("FastBillingMode")) == 1) {
@@ -236,7 +245,7 @@ public class FragmentSettingsOther extends Fragment {
 
         // Local variables
         int iLoginWith = 0, iPeripherals = 0;
-        int iDateAndTime = 0, iPriceChange = 0, iBillwithStock = 0, iBillwithoutStock = 0, iTax = 0, iTaxType = 0;
+        int iDateAndTime = 0, iPriceChange = 0, iBillwithStock = 0, iBillwithoutStock = 0, iTax = 0, iTaxType = 0,iDiscountType =0;
         int iKOT = 0, iToken = 0, iKitchen = 0;
         int iOtherChargesItemwise = 0, iOtherChargesBillwise = 0, iRestoreDefault = 0;
         int fastBillingMode = 0, iItemNoReset = 0, iPrintPreview = 0, iTableSpliting = 0;
@@ -275,6 +284,14 @@ public class FragmentSettingsOther extends Fragment {
             iTaxType = 1;
         } else {
             iTaxType = 0;
+        }
+
+
+        // DiscountType
+        if (rbDiscountItemwise.isChecked() == true) {
+            iDiscountType = 1;
+        } else {
+            iDiscountType = 0;
         }
 
         // Fast Billing Mode
@@ -323,6 +340,7 @@ public class FragmentSettingsOther extends Fragment {
         objBillSettings.setBillwithoutStock(0);
         objBillSettings.setTax(iTax);
         objBillSettings.setTaxType(iTaxType);
+        objBillSettings.setDiscountType(iDiscountType);
         objBillSettings.setKOT(0);
         objBillSettings.setToken(0);
         objBillSettings.setKitchen(0);

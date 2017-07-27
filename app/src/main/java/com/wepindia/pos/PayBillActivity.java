@@ -578,7 +578,11 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                 MsgBox.Show("Invalid","Discount is not applicable in reverse tax.");
                 return;
             }
-
+            if(crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("DiscountType")) == 1) // Itemwise Discount
+            {
+                MsgBox.Show("Invalid","Discount not allowed here as itemwise discount is enabled");
+                return;
+            }
         }
 
 
@@ -1383,19 +1387,9 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
             AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
-            LayoutInflater UserAuthorization = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
-            final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
-            final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
-            final TextView tvAuthorizationUserId= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserId);
-            final TextView tvAuthorizationUserPassword= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserPassword);
-            tvAuthorizationUserId.setVisibility(View.GONE);
-            tvAuthorizationUserPassword.setVisibility(View.GONE);
-            txtUserId.setVisibility(View.GONE);
-            txtPassword.setVisibility(View.GONE);
             AuthorizationDialog
                     .setTitle("Are you sure you want to exit ?")
-                    .setView(vwAuthorization)
+                    .setIcon(R.drawable.ic_launcher)
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

@@ -28,7 +28,7 @@ public class BillSetting {
 	String DineInCaption, CounterSalesCaption, TakeAwayCaption, HomeDeliveryCaption;
 
 	int iLoginWith, iPeripherals;
-	int iDateAndTime, iPriceChange, iBillwithStock, iBillwithoutStock, iTax, iTaxType, iKOT, iToken, iKitchen;
+	int iDateAndTime, iPriceChange, iBillwithStock, iBillwithoutStock, iTax, iTaxType, iKOT, iToken, iKitchen,iDiscountType;
 	int iOtherChargesItemwise, iOtherChargesBillwise, iRestoreDefault;
 	int idinein, icountersales, ipickup, ihomedelivery, GSTEnable;
 	int fastBillingMode, iItemNoReset, iPrintPreview;
@@ -74,6 +74,7 @@ public class BillSetting {
 		this.iBillwithoutStock = 0;
 		this.iTax = 0;
 		this.iTaxType = 0;
+		this.iDiscountType = 0;
 		this.iKOT = 0;
 		this.iToken = 0;
 		this.iKitchen = 0;
@@ -448,6 +449,9 @@ public class BillSetting {
 	public int getTaxType() {
 		return this.iTaxType;
 	}
+	public int getDiscountType() {
+		return this.iDiscountType;
+	}
 
 	public int getKOT() {
 		return this.iKOT;
@@ -638,6 +642,10 @@ public class BillSetting {
 
 	public void setTaxType(int TaxType) {
 		this.iTaxType = TaxType;
+	}
+
+	public void setDiscountType(int DiscountType) {
+		this.iDiscountType = DiscountType;
 	}
 
 	public void setKOT(int KOT) {

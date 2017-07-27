@@ -27,6 +27,7 @@ public class ItemOutward {
     private String HSN;
     private String TaxationType;
     private String SupplyType;
+    private  double itemDiscount;
 
     public ItemOutward() {
 
@@ -46,6 +47,7 @@ public class ItemOutward {
         SGSTRate = 0;
         IGSTRate = 0;
         cessRate = 0;
+        itemDiscount = 0;
         this.UOM = "";
         this.HSN = "";
         this.TaxationType="GST";
@@ -53,7 +55,9 @@ public class ItemOutward {
     }
 
     public ItemOutward(int menuCode, String longName, double dineIn1, double dineIn2, double dineIn3, double stock,
-                       int deptCode, int categCode, int kitchenCode, String barCode, String imageUri, int itemId, double CGSTRate, double SGSTRate, double IGSTRate, double cessRate, String UOM, String HSN, String taxationType, String SupplyType) {
+                       int deptCode, int categCode, int kitchenCode, String barCode, String imageUri, int itemId,
+                       double CGSTRate, double SGSTRate, double IGSTRate, double cessRate, String UOM, String HSN,
+                       String taxationType, String SupplyType, double itemDiscount) {
         this.menuCode = menuCode;
         this.ItemName = longName;
         this.DineIn1 = dineIn1;
@@ -74,6 +78,15 @@ public class ItemOutward {
         this.HSN = HSN;
         this.TaxationType = taxationType;
         this.SupplyType = SupplyType;
+        this.itemDiscount = itemDiscount;
+    }
+
+    public double getItemDiscount() {
+        return itemDiscount;
+    }
+
+    public void setItemDiscount(double itemDiscount) {
+        this.itemDiscount = itemDiscount;
     }
 
     public String getSupplyType() {

@@ -473,8 +473,10 @@ public class PrinterUtil {
         ArrayList<BillKotItem> billKotItems = item.getBillKotItems();
         Iterator it = billKotItems.iterator();
         int totalitemtypes =0, totalquantitycount =0;
+        double subtotal =0;
         while (it.hasNext())
         {
+
             BillKotItem billKotItem = (BillKotItem) it.next();
 
             String preId = getPostAddedSpaceFormat("",String.valueOf(billKotItem.getItemId()),3,1);
@@ -489,9 +491,10 @@ public class PrinterUtil {
             esc.addText(pre+"\n");
             totalitemtypes++;
             totalquantitycount += billKotItem.getQty();
+            subtotal += billKotItem.getAmount();
         }
         esc.addText("------------------------------------------------"+"\n");
-        esc.addText(getSpaceFormater("Total Item(s) : "+totalitemtypes+" /Qty : "+totalquantitycount,String.format("%.2f",item.getSubTotal()),48,1)+"\n");
+        esc.addText(getSpaceFormater("Total Item(s) : "+totalitemtypes+" /Qty : "+totalquantitycount,String.format("%.2f",subtotal),48,1)+"\n");
         float discount = item.getFdiscount();
         float discountPercentage = item.getdiscountPercentage();
         if(discountPercentage > 0)

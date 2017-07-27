@@ -126,7 +126,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     String businessDate="";
     int reprintBillingMode =0;
     boolean isReprint = false;
-   // String ownerPos= "";
+    int ItemwiseDiscountEnabled =0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -633,33 +633,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 CounterSalesCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeCounterSalesCaption"));
                 HomeDeliveryCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeHomeDeliveryCaption"));
                 TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
-                //ownerPos = crsrSettings.getString(crsrSettings.getColumnIndex("POSNumber"));
 
-               /* if (crsrSettings.getInt(crsrSettings.getColumnIndex("DateAndTime")) == 1) {
-                    Date date1 = new Date();
-                    try {
-                        CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
-                        tvDate.setText(String.valueOf(sdate));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    String strDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
-                    try {
-                        tvDate.setText(String.valueOf(strDate));
-                        Date date1 = new Date();
-                        CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
-                        if (strDate.equals(sdate.toString()))
-                            idd_date.setVisibility(View.INVISIBLE);
-                        else
-                            idd_date.setVisibility(View.VISIBLE);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }*/
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
+                ItemwiseDiscountEnabled = crsrSettings.getInt(crsrSettings.getColumnIndex("DiscountType"));
 
                 fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
+
                 // Handling Null pointer Exception
                 if (fastBillingMode == null)
                     fastBillingMode = "";
@@ -904,7 +883,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 Rate.setSelectAllOnFocus(true);
                                 TextView Amount = (TextView) Row.getChildAt(5);
                                 dRate = Double.parseDouble(Rate.getText().toString().equalsIgnoreCase("") ? "0" : Rate.getText().toString()); // Temp
-                                Amount.setText(String.format("%.2f", (Double.parseDouble(Qty.getText().toString()) * dRate)));
+
                                 // Tax and Discount Amount
                                 TextView TaxPer = (TextView) Row.getChildAt(6);
                                 TextView TaxAmt = (TextView) Row.getChildAt(7);
@@ -953,6 +932,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                     ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
                                     cessAmt.setText(String.format("%.2f", dcessAmt));
                                     IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
+                                    Amount.setText(String.format("%.2f", (Double.parseDouble(Qty.getText().toString()) * (dRate-dTempAmt))));
 
                                 } else {// reverse tax
                                     double dBasePrice = 0;
@@ -981,6 +961,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                     DiscAmt.setText(String.format("%.2f", dDiscAmt));
                                     cessAmt.setText(String.format("%.2f", dcessAmt));
                                     IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
+                                    Amount.setText(String.format("%.2f", (Double.parseDouble(Qty.getText().toString()) * (dRate))));
                                 }
 
 
@@ -1125,18 +1106,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         etInputValidate.ValidateDecimalInput(etRate);
                     }
 
-                    // Amount
-                    tvAmount = new TextView(BillingCounterSalesActivity.this);
-                    tvAmount.setWidth(60); // 97px ~= 145dp
-                    tvAmount.setTextSize(11);
-                    tvAmount.setGravity(Gravity.RIGHT | Gravity.END);
-                    tvAmount.setText(String.format("  %.2f", dRate));
+
 
 
                     // Discount Percent - Check whether Discount is enabled for
                     // the item,
                     // if enabled get discount percentage from discount table
-                    if (crsrItem.getInt(crsrItem.getColumnIndex("DiscountEnable")) == 1) {
+                    /*if (crsrItem.getInt(crsrItem.getColumnIndex("DiscountEnable")) == 1) {
                         iDiscId = crsrItem.getInt(crsrItem.getColumnIndex("DiscId"));
                         crsrDiscount = db.getDiscountConfig(iDiscId);
                         if (!crsrDiscount.moveToFirst()) {
@@ -1146,6 +1122,15 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                             dDiscPercent = crsrDiscount.getDouble(crsrDiscount.getColumnIndex("DiscPercentage"));
                         }
+                    }
+                    tvDiscPercent = new TextView(BillingCounterSalesActivity.this);
+                    tvDiscPercent.setWidth(50);
+                    tvDiscPercent.setText(String.format("%.2f", dDiscPercent));*/
+
+                    if(ItemwiseDiscountEnabled ==1 && crsrItem.getString(crsrItem.getColumnIndex("DiscountPercent"))!=null)  // 1->itemwise discount , 0-> billwise discount
+                    {
+                        dDiscPercent = Double.parseDouble(String.format("%.2f",
+                                                            crsrItem.getDouble(crsrItem.getColumnIndex("DiscountPercent"))));
                     }
                     tvDiscPercent = new TextView(BillingCounterSalesActivity.this);
                     tvDiscPercent.setWidth(50);
@@ -1163,7 +1148,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     tvDiscAmt = new TextView(BillingCounterSalesActivity.this);
                     tvDiscAmt.setWidth(50);
                     tvDiscAmt.setText(String.format("%.2f", dDiscAmt));
-
+// Amount
+                    tvAmount = new TextView(BillingCounterSalesActivity.this);
+                    tvAmount.setWidth(60); // 97px ~= 145dp
+                    tvAmount.setTextSize(11);
+                    tvAmount.setGravity(Gravity.RIGHT | Gravity.END);
+                    tvAmount.setText(String.format("  %.2f", dRate-dDiscAmt));
 
                     dTaxPercent = crsrItem.getDouble(crsrItem.getColumnIndex("CGSTRate"));
                     tvTaxPercent = new TextView(BillingCounterSalesActivity.this);
@@ -2341,6 +2331,21 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 Log.d("InsertBillItems", "Rate:" + Rate.getText().toString());
             }
 
+
+            // Discount %
+            if (RowBillItem.getChildAt(8) != null) {
+                TextView DiscountPercent = (TextView) RowBillItem.getChildAt(8);
+                objBillItem.setDiscountPercent(Float.parseFloat(DiscountPercent.getText().toString()));
+                Log.d("InsertBillItems", "Disc %:" + DiscountPercent.getText().toString());
+            }
+
+            // Discount Amount
+            if (RowBillItem.getChildAt(9) != null) {
+                TextView DiscountAmount = (TextView) RowBillItem.getChildAt(9);
+                objBillItem.setDiscountAmount(Float.parseFloat(DiscountAmount.getText().toString()));
+                Log.d("InsertBillItems", "Disc Amt:" + DiscountAmount.getText().toString());
+                // fTotalDiscount += Float.parseFloat(DiscountAmount.getText().toString());
+            }
             // Amount
             if (RowBillItem.getChildAt(5) != null) {
                 TextView Amount = (TextView) RowBillItem.getChildAt(5);
@@ -2456,21 +2461,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 Log.d("InsertBillItems", "cess Amt: " + objBillItem.getCessAmount());
             }
 
-            // Discount %
-            if (RowBillItem.getChildAt(8) != null) {
-                TextView DiscountPercent = (TextView) RowBillItem.getChildAt(8);
-                objBillItem.setDiscountPercent(Float.parseFloat(DiscountPercent.getText().toString()));
-                Log.d("InsertBillItems", "Disc %:" + DiscountPercent.getText().toString());
-            }
 
-            // Discount Amount
-            if (RowBillItem.getChildAt(9) != null) {
-                TextView DiscountAmount = (TextView) RowBillItem.getChildAt(9);
-                objBillItem.setDiscountAmount(Float.parseFloat(DiscountAmount.getText().toString()));
-                Log.d("InsertBillItems", "Disc Amt:" + DiscountAmount.getText().toString());
-
-                // fTotalDiscount += Float.parseFloat(DiscountAmount.getText().toString());
-            }
 
             // Department Code
             if (RowBillItem.getChildAt(10) != null) {
@@ -2513,12 +2504,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 TextView SupplyType = (TextView) RowBillItem.getChildAt(17);
                 objBillItem.setSupplyType(SupplyType.getText().toString());
                 Log.d("InsertBillItems", "SupplyType:" + SupplyType.getText().toString());
-                /*if (GSTEnable.equals("1")) {
-                    objBillItem.setSupplyType(SupplyType.getText().toString());
-                    Log.d("InsertBillItems", "SupplyType:" + SupplyType.getText().toString());
-                } else {
-                    objBillItem.setSupplyType("");
-                }*/
+
             }
             if (RowBillItem.getChildAt(22) != null) {
                 TextView UOM = (TextView) RowBillItem.getChildAt(22);
@@ -2663,6 +2649,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Log.d("InsertBillDetail", "Discount Percentage:" + objBillDetail.getTotalDiscountPercentage());
 
         // Discount Amount
+        if(ItemwiseDiscountEnabled ==1)
+            calculateDiscountAmount();
         objBillDetail.setTotalDiscountAmount(fTotalDiscount);
         Log.d("InsertBillDetail", "Total Discount:" + fTotalDiscount);
 
@@ -2883,6 +2871,17 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         long Result2 = db.UpdateBillNoResetInvoiceNos(Integer.parseInt(tvBillNumber.getText().toString()));
     }
 
+    void calculateDiscountAmount()
+    {
+        fTotalDiscount =0;
+        for(int i=0;i<tblOrderItems.getChildCount();i++)
+        {
+            TableRow row = (TableRow)tblOrderItems.getChildAt(i);
+            TextView discountAmt = (TextView) row.getChildAt(9);
+            if(discountAmt.getText().toString()!= null && !discountAmt.getText().toString().equals("") )
+                fTotalDiscount += Double.parseDouble(discountAmt.getText().toString());
+        }
+    }
     protected void PrintNewBill() {
         if (isPrinterAvailable) {
             if (tblOrderItems.getChildCount() < 1)
@@ -2949,6 +2948,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         item.setPaymentStatus(strPaymentStatus);
                     }
                     item.setdiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
+                    if(ItemwiseDiscountEnabled ==1)
+                        calculateDiscountAmount();
                     item.setFdiscount(fTotalDiscount);
                     Log.d("Discount :",String.valueOf(fTotalDiscount));
                     item.setTotalsubTaxPercent(fTotalsubTaxPercent);
