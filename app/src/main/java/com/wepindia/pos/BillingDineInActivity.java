@@ -514,7 +514,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             // DINE IN BILLING
             if (jBillingMode == 1) {
                 if (tvTableNumber.getText().toString().equalsIgnoreCase("") && tvTableSplitNo.getText().toString().equalsIgnoreCase("")) {
-                    MsgBox.Show("", "No KOT's Found");
+                    MsgBox.Show("Note", "No KOT's Found");
                 } else {
 //                            Integer.parseInt(tvSubUdfValue.getText().toString()), Integer.parseInt(tvTableSplitNo.getText().toString()));
 //                    if (LoadKOT.moveToFirst()) {
@@ -616,7 +616,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                             Toast.makeText(myContext, "Customer Fetched Successfully", Toast.LENGTH_LONG).show();
                             //}
                         } else {
-                            MsgBox.Show("", "Customer is not Found, Please Add Customer before Order");
+                            MsgBox.Show("Note", "Customer is not Found, Please Add Customer before Order");
                         }
                     } else {
 
@@ -2430,14 +2430,14 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
 
 
+
                     // Amount
                     EditText Rate = (EditText) Row.getChildAt(4);
                     Rate.setSelectAllOnFocus(true);
                     TextView Amount = (TextView) Row.getChildAt(5);
                     dRate = Double.parseDouble(
                             Rate.getText().toString().equalsIgnoreCase("") ? "0" : Rate.getText().toString()); // Temp
-                    Amount.setText(
-                            String.format("%.2f", (strQty * dRate)));
+
 
                     // Tax and Discount Amount
                     TextView TaxPer = (TextView) Row.getChildAt(6);
@@ -2482,11 +2482,14 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         dcessAmt = dcessAmt * strQty;
 
 
+
                         TaxAmt.setText(String.format("%.2f", dTaxAmt));
                         DiscAmt.setText(String.format("%.2f", dDiscAmt));
                         ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
+                        Amount.setText(
+                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
 
                     } else {// reverse tax
                         double dBasePrice = 0;
@@ -2516,8 +2519,9 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         DiscAmt.setText(String.format("%.2f", dDiscAmt));
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
+                        Amount.setText(
+                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
                     }
-
                     // // delete
                     // Delete.setText("Hi");
 
@@ -3854,6 +3858,255 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
         if (crsrBillItems.moveToFirst()) {
 
+            iTokenNumber = crsrBillItems.getInt(crsrBillItems.getColumnIndex("TokenNumber"));
+
+           /* et_pos.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("POS")));
+            if (et_pos.getText().toString().equals(""))
+            {
+                chk_interstate.setChecked(false);
+            }
+            else
+            {
+                chk_interstate.setChecked(true);
+            }
+            */// Get waiter Id
+            tvWaiterNumber.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("EmployeeId")));
+
+            // Get Table number
+            tvTableNumber.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TableNumber")));
+
+            // Get Table Split No
+            tvTableSplitNo.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TableSplitNo")));
+
+            // Get Sub Udf number
+            tvSubUdfValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SubUdfNumber")));
+
+            // Get Cust Id
+            edtCustId.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("CustId")));
+            Cursor crsrCustomer = db.getCustomerById(crsrBillItems.getInt(crsrBillItems.getColumnIndex("CustId")));
+            if (crsrCustomer.moveToFirst()) {
+                edtCustPhoneNo.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustContactNumber")));
+                edtCustName.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName")));
+                edtCustAddress.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustAddress")));
+            }
+
+            // Display items in table
+            do {
+                rowItem = new TableRow(myContext);
+                rowItem.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                // Item Number
+                Number = new CheckBox(myContext);
+                Number.setWidth(40);
+                Number.setTextSize(0);
+                Number.setTextColor(Color.TRANSPARENT);
+                Number.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemNumber")));
+
+                // Item Name
+                tvName = new TextView(myContext);
+                tvName.setWidth(135);
+                tvName.setTextSize(11);
+                tvName.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemName")));
+
+                //hsn code
+                tvHSn = new TextView(myContext);
+                tvHSn.setWidth(67); // 154px ~= 230dp
+                tvHSn.setTextSize(11);
+                if (GSTEnable.equalsIgnoreCase("1") && (HSNEnable_out != null) && HSNEnable_out.equals("1")) {
+                    tvHSn.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("HSNCode")));
+                }
+                // Quantity
+                etQty = new EditText(myContext);
+                etQty.setWidth(55);
+                etQty.setTextSize(11);
+                if (crsrBillItems.getString(crsrBillItems.getColumnIndex("PrintKOTStatus")).equalsIgnoreCase("1")) {
+                    etQty.setEnabled(true);
+                } else {
+                    etQty.setEnabled(false);
+                }
+                etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
+                etQty.setSelectAllOnFocus(true);
+                etQty.setTag("QTY_RATE");
+                etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
+                if(jBillingMode ==2 || jBillingMode ==3 || jBillingMode ==4)
+                {
+                    etQty.setOnClickListener(Qty_Rate_Click);
+                    etQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
+                    etInputValidate.ValidateDecimalInput(etQty);
+                    etQty.addTextChangedListener(new TextWatcher() {
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        public void afterTextChanged(Editable s) {
+                            Qty_Rate_Edit();
+                        }
+                    });
+                }
+
+
+                // Rate
+                etRate = new EditText(myContext);
+                etRate.setWidth(70);
+                etRate.setEnabled(false);
+                etRate.setTextSize(11);
+                etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
+                etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                etRate.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Rate"))));
+
+                // Amount
+                tvAmount = new TextView(myContext);
+                tvAmount.setWidth(60);
+                tvAmount.setTextSize(11);
+                tvAmount.setGravity(Gravity.RIGHT | Gravity.END);
+                tvAmount.setText(
+                        String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Amount"))));
+
+                // Sales Tax%
+                tvTaxPercent = new TextView(myContext);
+                tvTaxPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxPercent")));
+
+                // Sales Tax Amount
+                tvTaxAmt = new TextView(myContext);
+                tvTaxAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxAmount")));
+
+                // Discount %
+                tvDiscPercent = new TextView(myContext);
+                tvDiscPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("DiscountPercent")));
+
+                // Discount Amount
+                tvDiscAmt = new TextView(myContext);
+                tvDiscAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("DiscountAmount")));
+
+                // Dept Code
+                tvDeptCode = new TextView(myContext);
+                tvDeptCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("DeptCode")));
+
+                // Categ Code
+                tvCategCode = new TextView(myContext);
+                tvCategCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("CategCode")));
+
+                // Kitchen Code
+                tvKitchenCode = new TextView(myContext);
+                tvKitchenCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("KitchenCode")));
+
+                // Tax Type
+                tvTaxType = new TextView(myContext);
+                tvTaxType.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxType")));
+
+                // Modifier Amount
+                tvModifierCharge = new TextView(myContext);
+                tvModifierCharge.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ModifierAmount")));
+
+                // Service Tax %
+                tvServiceTaxPercent = new TextView(myContext);
+                tvServiceTaxPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ServiceTaxPercent")));
+
+                // Service Tax Amount
+                tvServiceTaxAmt = new TextView(myContext);
+                tvServiceTaxAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ServiceTaxAmount")));
+
+                // Service Tax Amount
+                TextView tvSupplyType = new TextView(myContext);
+                tvSupplyType.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SupplyType")));
+
+
+                // Delete
+                int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
+                ImgDelete = new ImageButton(myContext);
+                // ImgDeleteKOT.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemNumber")));
+                ImgDelete.setImageResource(res);
+                ImgDelete.setOnClickListener(mListener);
+
+                TextView tvSpace = new TextView(myContext);
+                tvSpace.setText("        ");
+
+                TextView tvSpace1 = new TextView(myContext);
+                tvSpace1.setText("       ");
+
+                TextView tvPrintKOTStatus = new TextView(myContext);
+                if(REPRINT_KOT == 1)
+                    tvPrintKOTStatus.setText("1");
+                else
+                    tvPrintKOTStatus.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("PrintKOTStatus")));
+
+                TextView tvIGSTRate = new TextView(BillingDineInActivity.this);
+                tvIGSTRate.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("IGSTRate")));
+
+                TextView tvIGSTAmt = new TextView(BillingDineInActivity.this);
+                tvIGSTAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("IGSTAmount")));
+
+                TextView tvcessRate = new TextView(BillingDineInActivity.this);
+                tvcessRate.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("cessRate")));
+
+                TextView tvcessAmt = new TextView(BillingDineInActivity.this);
+                tvcessAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("cessAmount")));
+
+
+                TextView tvUOM = new TextView(BillingDineInActivity.this);
+                tvUOM.setWidth(50);
+                tvUOM.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("UOM")));
+
+                // Add all text views and edit text to Item Row
+                // rowItem.addView(tvNumber);
+                rowItem.addView(Number);
+                rowItem.addView(tvName);
+                rowItem.addView(tvHSn);
+                rowItem.addView(etQty);
+                rowItem.addView(etRate);
+                rowItem.addView(tvAmount);
+                rowItem.addView(tvTaxPercent);
+                rowItem.addView(tvTaxAmt);
+                rowItem.addView(tvDiscPercent);
+                rowItem.addView(tvDiscAmt);
+                rowItem.addView(tvDeptCode);
+                rowItem.addView(tvCategCode);
+                rowItem.addView(tvKitchenCode);
+                rowItem.addView(tvTaxType);
+                rowItem.addView(tvModifierCharge);
+                rowItem.addView(tvServiceTaxPercent);
+                rowItem.addView(tvServiceTaxAmt);
+                rowItem.addView(tvSupplyType);
+                rowItem.addView(tvSpace);
+                rowItem.addView(ImgDelete);
+                rowItem.addView(tvSpace1);
+                rowItem.addView(tvPrintKOTStatus);
+                rowItem.addView(tvUOM);//22
+                rowItem.addView(tvIGSTRate);//23
+                rowItem.addView(tvIGSTAmt);//24
+                rowItem.addView(tvcessRate);//25
+                rowItem.addView(tvcessAmt);//26
+
+                // Add row to table
+                tblOrderItems.addView(rowItem, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            } while (crsrBillItems.moveToNext());
+
+            CalculateTotalAmount();
+
+        } else {
+            Log.d("LoadKOTItems", "No rows in cursor");
+        }
+    }
+/*
+private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
+        EditTextInputHandler etInputValidate = new EditTextInputHandler();
+        TableRow rowItem;
+        TextView tvHSn, tvName, tvAmount, tvTaxPercent, tvTaxAmt, tvDiscPercent, tvDiscAmt, // tvQty,
+                // tvRate,
+                tvDeptCode, tvCategCode, tvKitchenCode, tvTaxType, tvModifierCharge, tvServiceTaxPercent,
+                tvServiceTaxAmt;
+        EditText etQty, etRate;
+        CheckBox Number;
+        ImageButton ImgDelete;
+
+        if (crsrBillItems.moveToFirst()) {
+
             // Get Token number
             iTokenNumber = crsrBillItems.getInt(crsrBillItems.getColumnIndex("TokenNumber"));
 
@@ -4103,6 +4356,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             Log.d("LoadKOTItems", "No rows in cursor");
         }
     }
+*/
 
     private View.OnClickListener mListener = new View.OnClickListener() {
 
@@ -5105,7 +5359,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
         if (tblOrderItems.getChildCount() > 0) {
             DisplayModifyKOT();
         } else {
-            MsgBox.Show("", "No Items Found in KOT");
+            MsgBox.Show("Note", "No Items Found in KOT");
         }
     }
 
@@ -7145,7 +7399,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
             } else {
                 Cursor crsrCust = dbBillScreen.getCustomer(edtCustPhoneNo.getText().toString());
                 if (crsrCust.moveToFirst()) {
-                    MsgBox.Show("", "Customer Already Exists");
+                    MsgBox.Show("Note", "Customer Already Exists");
                 } else {
                     String gstin = etCustGSTIN.getText().toString();
                     if (gstin == null) {

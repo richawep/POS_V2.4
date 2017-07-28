@@ -205,21 +205,6 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
         int pos = spinnerRole.getSelectedItemPosition() + 1;
         String txtRole = String.valueOf(pos);
 
-        /*if (txtLogin.equalsIgnoreCase("") || txtPass.equalsIgnoreCase("") || txtName.equalsIgnoreCase("") || txtMobile.equalsIgnoreCase("") || txtRole.equalsIgnoreCase("") ||  !isValidEmailAddress(editTextEmail.getText().toString().toString())) {
-            if (txtName.equalsIgnoreCase("")) {
-                Toast.makeText(UserManagementActivity.this, "Invalid Name", Toast.LENGTH_SHORT).show();
-            } else if (txtMobile.equalsIgnoreCase("")) {
-                Toast.makeText(UserManagementActivity.this, "Invalid Mobile Number", Toast.LENGTH_SHORT).show();
-            } else if (txtRole.equalsIgnoreCase("") || txtRole.equalsIgnoreCase("Select Role")) {
-                Toast.makeText(UserManagementActivity.this, "Invalid Role", Toast.LENGTH_SHORT).show();
-            } else if (txtLogin.equalsIgnoreCase("")) {
-                Toast.makeText(UserManagementActivity.this, "Invalid Login", Toast.LENGTH_SHORT).show();
-            } else if (txtPass.equalsIgnoreCase("")) {
-                Toast.makeText(UserManagementActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
-            }else if (!isValidEmailAddress(editTextEmail.getText().toString().toString())) {
-                Toast.makeText(UserManagementActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
-            }
-        }*/
         if (txtLogin.equalsIgnoreCase("") || txtPass.equalsIgnoreCase("") || txtName.equalsIgnoreCase("") || txtMobile.equalsIgnoreCase("") || txtRole.equalsIgnoreCase(""))
         {
             if (txtName.equalsIgnoreCase("")) {
@@ -233,6 +218,10 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
             } else if (txtPass.equalsIgnoreCase("")) {
                 Toast.makeText(UserManagementActivity.this, "Please enter password", Toast.LENGTH_SHORT).show();
             }
+        } else if (txtName.equalsIgnoreCase("admin")){
+            Toast.makeText(UserManagementActivity.this, "Name cannot be "+txtName+". Please another name.", Toast.LENGTH_SHORT).show();
+        }else if (txtLogin.equalsIgnoreCase("admin")){
+            Toast.makeText(UserManagementActivity.this, "Login cannot be "+txtLogin+". Please another login.", Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -370,8 +359,17 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
         {
             Toast.makeText(myContext, "Select user to delete", Toast.LENGTH_SHORT).show();
         }
-        else
+        else if(editTextLogin.getText().toString().trim().equalsIgnoreCase("admin"))
         {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setIcon(R.drawable.ic_launcher);
+            builder.setTitle("Note");
+            builder.setMessage("This login cannot be deleted.");
+            builder.setNegativeButton("Cancel", null);
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        else {
             askForDelete();
         }
     }
@@ -397,10 +395,9 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
     public void askForDelete()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
+        builder.setIcon(R.drawable.ic_launcher);
         builder.setTitle("Confirmation");
         builder.setMessage("Are you sure want to delete?");
-
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
@@ -420,7 +417,6 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
                 dialog.dismiss();
             }
         });
-
         AlertDialog alert = builder.create();
         alert.show();
     }

@@ -362,7 +362,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 Cursor crsrCust = db.getFnbCustomer(editTextMobile.getText().toString());
                 if (crsrCust.moveToFirst())
                 {
-                    messageDialog.Show("", "Customer Already Exists");
+                    messageDialog.Show("Note", "Customer Already Exists");
                 }
                 else
                 {
@@ -577,7 +577,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 btn_PayBill.setEnabled(true);
                             }
                         } else {
-                            messageDialog.Show("", "Customer is not Found, Please Add Customer before Order");
+                            messageDialog.Show("Note", "Customer is not Found, Please Add Customer before Order");
                             btn_DineInAddCustomer.setVisibility(View.VISIBLE);
                             //ControlsSetDisabled();
                             btn_DineInAddCustomer.setEnabled(true);
@@ -1372,8 +1372,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     TextView Amount = (TextView) Row.getChildAt(5);
                     dRate = Double.parseDouble(
                             Rate.getText().toString().equalsIgnoreCase("") ? "0" : Rate.getText().toString()); // Temp
-                    Amount.setText(
-                            String.format("%.2f", (strQty * dRate)));
+
 
                     // Tax and Discount Amount
                     TextView TaxPer = (TextView) Row.getChildAt(6);
@@ -1424,6 +1423,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
+                        Amount.setText(
+                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
 
                     } else {// reverse tax
                         double dBasePrice = 0;
@@ -1453,6 +1454,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         DiscAmt.setText(String.format("%.2f", dDiscAmt));
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
+                        Amount.setText(
+                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
                     }
 
                     // // delete
