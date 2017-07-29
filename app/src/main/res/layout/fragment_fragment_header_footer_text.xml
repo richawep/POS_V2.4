@@ -12,22 +12,31 @@
         <RelativeLayout
             android:layout_width="400dp"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="72dp">
-
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:id="@+id/tv_header"
+                android:text="Header Text"/>
             <EditText
                 android:id="@+id/addressLine1"
+                android:layout_toEndOf="@id/tv_header"
+                android:layout_alignBaseline="@id/tv_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="Address line 1"
+                android:hint="Header"
                 android:imeOptions="flagNoExtractUi"
-                android:maxLength="38"
+                android:maxLength="50"
                 android:minHeight="40dp"
-                android:minLines="2" />
+                android:maxLines="1" />
 
             <EditText
                 android:id="@+id/addressLine2"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/addressLine1"
@@ -36,7 +45,7 @@
                 android:imeOptions="flagNoExtractUi"
                 android:maxLength="38"
                 android:minHeight="40dp"
-                android:minLines="2" />
+                android:maxLines="2" />
 
             <EditText
                 android:id="@+id/addressLine3"
@@ -44,23 +53,33 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/addressLine2"
                 android:layout_margin="20dp"
+                android:visibility="gone"
                 android:hint="Address line 3"
                 android:imeOptions="flagNoExtractUi"
                 android:maxLength="38"
                 android:minHeight="40dp"
                 android:minLines="2" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Footer Text"
+                android:id="@+id/tv_footer"
+                android:layout_below="@id/tv_header"
+                android:layout_marginTop="40dp"/>
             <EditText
                 android:id="@+id/addressLineFooter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/addressLine3"
+                android:layout_toEndOf="@id/tv_footer"
+                android:layout_alignBaseline="@id/tv_footer"
                 android:layout_margin="20dp"
                 android:hint="Footer"
                 android:imeOptions="flagNoExtractUi"
                 android:maxLength="38"
                 android:minHeight="40dp"
-                android:minLines="2" />
+                android:maxLines="2"
+                />
         </RelativeLayout>
     </RelativeLayout>
 

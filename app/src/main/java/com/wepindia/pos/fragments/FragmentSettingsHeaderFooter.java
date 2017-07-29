@@ -46,8 +46,8 @@ public class FragmentSettingsHeaderFooter extends Fragment {
         myContext = getActivity();
         MsgBox = new MessageDialog(myContext);
         addressLine1 = (EditText)view.findViewById(R.id.addressLine1);
-        addressLine2 = (EditText)view.findViewById(R.id.addressLine2);
-        addressLine3 = (EditText)view.findViewById(R.id.addressLine3);
+        /*addressLine2 = (EditText)view.findViewById(R.id.addressLine2);
+        addressLine3 = (EditText)view.findViewById(R.id.addressLine3);*/
         addressLineFooter = (EditText)view.findViewById(R.id.addressLineFooter);
         btnApplyHeaderFooter = (Button) view.findViewById(R.id.btnApplyHeaderFooter);
         btnApplyHeaderFooter.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class FragmentSettingsHeaderFooter extends Fragment {
         Cursor crsrHeaderFooterSetting = null;
         crsrHeaderFooterSetting = dbHeaderFooterSettings.getBillSetting();
         if(crsrHeaderFooterSetting.moveToFirst()){
-            try{
+            /*try{
                 tokens = crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText")).split(Pattern.quote("|"));
             }catch (Exception e){
                 tokens[0] = "";
@@ -102,7 +102,8 @@ public class FragmentSettingsHeaderFooter extends Fragment {
             if(!tokens[1].equalsIgnoreCase(""))
                 addressLine2.setText(tokens[1]);
             if(!tokens[2].equalsIgnoreCase(""))
-                addressLine3.setText(tokens[2]);
+                addressLine3.setText(tokens[2]);*/
+            addressLine1.setText(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText")));
             addressLineFooter.setText(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText")));
         }
         else{
@@ -111,7 +112,7 @@ public class FragmentSettingsHeaderFooter extends Fragment {
     }
 
     public void Apply(){
-        if(addressLine1.getText().toString().trim().equalsIgnoreCase("") || addressLine2.getText().toString().trim().equalsIgnoreCase(""))
+        if(false)/*addressLine1.getText().toString().trim().equalsIgnoreCase("") || addressLine2.getText().toString().trim().equalsIgnoreCase(""))*/
         {
             if(addressLine1.getText().toString().trim().equalsIgnoreCase(""))
             {
@@ -124,7 +125,7 @@ public class FragmentSettingsHeaderFooter extends Fragment {
         }
         else
         {
-            String str1 = addressLine1.getText().toString().trim()+" |"+addressLine2.getText().toString().trim()+" |"+" "+addressLine3.getText().toString().trim();
+            String str1 = addressLine1.getText().toString().trim();//+" |"+addressLine2.getText().toString().trim()+" |"+" "+addressLine3.getText().toString().trim();
             String str2 = addressLineFooter.getText().toString().trim();
             int iResult = 0;
             // Update new settings in database

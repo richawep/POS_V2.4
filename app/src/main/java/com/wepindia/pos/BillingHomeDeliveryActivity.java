@@ -6936,8 +6936,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                             }
                             item.setAddressLine3(tokens[2]);
                             crsrHeaderFooterSetting = db.getBillSettings();
-                            if(crsrHeaderFooterSetting.moveToNext())
+                            if(crsrHeaderFooterSetting.moveToNext()) {
+                                item.setHeaderLine(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("HeaderText")));
                                 item.setFooterLine(crsrHeaderFooterSetting.getString(crsrHeaderFooterSetting.getColumnIndex("FooterText")));
+                            }
                         } else {
                             Log.d(TAG, "DisplayHeaderFooterSettings No data in BillSettings table");
                         }

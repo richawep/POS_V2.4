@@ -1418,7 +1418,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("DineIn3From", 3);
         cvDbValues.put("DineIn3To", 30);
         cvDbValues.put("FooterText", " Thankyou ");
-        cvDbValues.put("HeaderText", "Restaurant|St Marks Road|Bangalore|");
+        cvDbValues.put("HeaderText", "Restaurant");
+        //cvDbValues.put("HeaderText", "Restaurant|St Marks Road|Bangalore|");
         cvDbValues.put("KOTType", 1);
         cvDbValues.put("MaximumTables", 12);
         cvDbValues.put("MaximumWaiters", 4);

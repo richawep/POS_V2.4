@@ -20,6 +20,7 @@ public class PrintKotBillItem implements Serializable {
     private String addressLine1 = "";
     private String addressLine2 = "";
     private String addressLine3 = "";
+    private String HeaderLine = "";
     private String footerLine = "";
     private ArrayList<BillKotItem> billKotItems;
     private ArrayList<BillTaxItem> billTaxItems;
@@ -48,7 +49,7 @@ public class PrintKotBillItem implements Serializable {
 
     public PrintKotBillItem(String billNo, String tableNo, int waiterNo, String orderBy, String customerName, String date,
                             String time, double subTotal, double netTotal, String addressLine1, String addressLine2,
-                            String addressLine3, String footerLine, ArrayList<BillKotItem> billKotItems, ArrayList<BillTaxItem> billTaxItems,
+                            String addressLine3, String footerLine,String HeaderLine, ArrayList<BillKotItem> billKotItems, ArrayList<BillTaxItem> billTaxItems,
                             String BillingMode, String PaymentStatus, String TotalSalesTaxAmount, String TotalServiceTaxAmount,
                             Float TotalsubTaxPercent,  ArrayList<BillTaxItem> otherCharges, String BillingModeName,float fdiscount, float fdiscountPercentage) {
         this.billNo = billNo;
@@ -64,6 +65,7 @@ public class PrintKotBillItem implements Serializable {
         this.addressLine2 = addressLine2;
         this.addressLine3 = addressLine3;
         this.footerLine = footerLine;
+        this.HeaderLine = HeaderLine;
         this.billKotItems = billKotItems;
         this.billTaxItems = billTaxItems;
 
@@ -269,6 +271,12 @@ public class PrintKotBillItem implements Serializable {
 
     public void setFooterLine(String footerLine) {
         this.footerLine = footerLine;
+    }
+
+    public String getHeaderLine() { return HeaderLine; }
+
+    public void setHeaderLine(String HeaderLine) {
+        this.HeaderLine = HeaderLine;
     }
 
     public ArrayList<BillKotItem> getBillKotItems() {

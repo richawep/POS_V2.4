@@ -436,6 +436,8 @@ public class PrinterUtil {
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
         esc.addText("OUTWARDS INVOICE"+item.getIsDuplicate()+"\n");
+        if(item.getHeaderLine()!=null && !item.getHeaderLine().equals("") )
+            esc.addText(item.getHeaderLine()+"\n");
         esc.addPrintAndLineFeed();
 
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
