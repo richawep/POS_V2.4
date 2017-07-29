@@ -60,7 +60,6 @@ public abstract class WepBaseActivity extends AppCompatActivity {
                     INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
-        System.out.println("onTouchEvent");
         return true;
     }
 }

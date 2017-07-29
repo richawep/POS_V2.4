@@ -48,14 +48,5 @@ import java.util.List;
  */
 
 public abstract class WepPrinterBaseActivity extends HeyDeyBaseActivity {
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if(getCurrentFocus() != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.
-                    INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
-        return true;
-    }
 
 }

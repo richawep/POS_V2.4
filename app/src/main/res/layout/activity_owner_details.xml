@@ -116,6 +116,8 @@ tools:context="com.wepindia.pos.OwnerDetailsActivity">
                     android:hint="Enter Name"
                     android:id="@+id/ownerName"
                     android:layout_weight="1"
+                    android:singleLine="true"
+                    android:maxLength="50"
                     android:inputType="text"/>
             </LinearLayout>
             <LinearLayout
@@ -136,6 +138,9 @@ tools:context="com.wepindia.pos.OwnerDetailsActivity">
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="enter GSTIN"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:maxLength="15"
                     android:id="@+id/ownerGstin"
                     android:layout_weight="1" />
             </LinearLayout>
@@ -157,6 +162,8 @@ tools:context="com.wepindia.pos.OwnerDetailsActivity">
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="reference no"
+                    android:maxLength="15"
+                    android:singleLine="true"
                     android:id="@+id/ownerReferenceNo"
                     android:layout_weight="1" />
             </LinearLayout>
@@ -224,7 +231,8 @@ tools:context="com.wepindia.pos.OwnerDetailsActivity">
                     android:layout_height="match_parent"
                     android:hint="Enter Address"
                     android:id="@+id/ownerAddress"
-                    android:inputType="text"
+                    android:singleLine="true"
+                    android:maxLength="50"
                     android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
@@ -296,7 +304,6 @@ tools:context="com.wepindia.pos.OwnerDetailsActivity">
                     android:layout_weight="1"
                     style="@android:style/Widget.Holo.Light.Spinner"
                     android:entries="@array/y_n"
-
                     android:spinnerMode="dropdown" />
             </LinearLayout>
 
