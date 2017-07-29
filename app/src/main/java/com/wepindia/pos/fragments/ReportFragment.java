@@ -7192,6 +7192,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         {
             AlertDialog.Builder MsgBox = new AlertDialog.Builder(myContext);
             MsgBox .setTitle("Error while fetching items details")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage(e.getMessage())
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         //@Override
@@ -8828,6 +8829,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             {
                 //MsgBox = new AlertDialog.Builder(myContext);
                 MsgBox .setTitle("Error while fetching items details")
+                        .setIcon(R.drawable.ic_launcher)
                         .setMessage(e.getMessage())
                         .setPositiveButton("OK",null)
                         .show();
@@ -10212,6 +10214,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                 {
                                     //MsgBox = new AlertDialog.Builder(myContext);
                                     MsgBox .setTitle("Error while fetching items details")
+                                            .setIcon(R.drawable.ic_launcher)
                                             .setMessage(e.getMessage())
                                             .setPositiveButton("OK",null)
                                             .show();
@@ -10654,6 +10657,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                                 {
                                     //MsgBox = new AlertDialog.Builder(myContext);
                                     MsgBox .setTitle("Error while fetching items details")
+                                            .setIcon(R.drawable.ic_launcher)
                                             .setMessage(e.getMessage())
                                             .setPositiveButton("OK",null)
                                             .show();

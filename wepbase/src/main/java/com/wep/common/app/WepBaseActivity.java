@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,5 +51,16 @@ public abstract class WepBaseActivity extends AppCompatActivity {
             ActionBarUtils.takeScreenshot(WepBaseActivity.this,findViewById(android.R.id.content).getRootView());
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.
+                    INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        System.out.println("onTouchEvent");
+        return true;
     }
 }

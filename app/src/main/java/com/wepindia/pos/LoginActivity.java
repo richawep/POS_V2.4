@@ -24,8 +24,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import android.widget.TextView;
 import com.mswipetech.wisepad.sdktest.view.ApplicationData;
 import com.wep.common.app.Database.BillSetting;
 import com.wep.common.app.Database.DatabaseHandler;
+import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.utils.Preferences;
 import com.wepindia.pos.GenericClasses.BillNoReset;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -43,7 +46,7 @@ import java.util.Date;
 import java.util.Locale;
 
 @SuppressWarnings("Since15")
-public class LoginActivity extends Activity {
+public class LoginActivity extends WepBaseActivity {
 
     // DatabaseHandler object
     DatabaseHandler dbLogin = new DatabaseHandler(LoginActivity.this);
@@ -226,24 +229,13 @@ public class LoginActivity extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
             AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(this);
-            LayoutInflater UserAuthorization = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
-            final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
-            final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
-            final TextView tvAuthorizationUserId= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserId);
-            final TextView tvAuthorizationUserPassword= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserPassword);
-            tvAuthorizationUserId.setVisibility(View.GONE);
-            tvAuthorizationUserPassword.setVisibility(View.GONE);
-            txtUserId.setVisibility(View.GONE);
-            txtPassword.setVisibility(View.GONE);
             AuthorizationDialog
                     .setTitle("Are you sure you want to exit ?")
-                    .setView(vwAuthorization)
+                    .setIcon(R.drawable.ic_launcher)
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            /*Intent returnIntent =new Intent();
-                            setResult(Activity.RESULT_OK,returnIntent);*/
+                            dbLogin.CloseDatabase();
                             finish();
                         }
                     })
@@ -252,4 +244,15 @@ public class LoginActivity extends Activity {
 
         return super.onKeyDown(keyCode, event);
     }
+
+    /*public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
+    }*/
+
+    @Override
+    public void onHomePressed()
+    {}
 }

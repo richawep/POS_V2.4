@@ -174,6 +174,7 @@ public class FragmentPayment extends Fragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
                     .setTitle("Delete")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Are you sure you want to Delete this Payment Description")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

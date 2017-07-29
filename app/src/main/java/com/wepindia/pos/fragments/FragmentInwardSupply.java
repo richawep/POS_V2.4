@@ -1492,6 +1492,7 @@ public class FragmentInwardSupply extends Fragment {
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
                 .setTitle("Delete")
+                .setIcon(R.drawable.ic_launcher)
                 .setMessage("Are you sure you want to Delete this Item. " +
                         "\nPlease note that this item has only one supplier now." +
                         "\nThis will delete the item from Inward Item database also" +
@@ -1553,6 +1554,7 @@ public class FragmentInwardSupply extends Fragment {
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
                 .setTitle("Delete")
+                .setIcon(R.drawable.ic_launcher)
                 .setMessage("Are you sure you want to Delete this Item. " +
                         "\nPlease note that quantity will also be reduced from Inward Item database." +
                         "\nTo delete only item for this supplier, without reducing the quantity, kindly first reset the quantity , then delete this.")
@@ -1816,10 +1818,7 @@ public class FragmentInwardSupply extends Fragment {
         int suppliercode = dbInwardItem.getSuppliercode(suppliername);
         if (suppliercode<0)
         {
-            MsgBox.setTitle(" Warning")
-                    .setMessage(" Supplier not found in list. Please save supplier first")
-                    .setPositiveButton("Ok", null)
-                    .show();
+            MsgBox1.Show(" Warning"," Supplier not found in list. Please save supplier first");
             return;
         }
         itemname = autocomplete_inw_ItemName.getText().toString().toUpperCase();
@@ -1920,6 +1919,7 @@ public class FragmentInwardSupply extends Fragment {
 
 
                 MsgBox.setTitle("Item not found in database. Do you want to add it ?")
+                        .setIcon(R.drawable.ic_launcher)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 InsertItem( suppliercode1,  suppliername1, itemname1,  strBarcode1, rate1,  quantity1, mou1, ImageUri1, SalesTax1, ServiceTax1,igstrate,supplytype1,HSNCode1);
@@ -2060,6 +2060,7 @@ public class FragmentInwardSupply extends Fragment {
         }
 
         MsgBox.setTitle("Incomplete Information")
+                .setIcon(R.drawable.ic_launcher)
                 .setPositiveButton("Ok", null);
 
         String supplierType_str = "UnRegistered";
@@ -2075,6 +2076,7 @@ public class FragmentInwardSupply extends Fragment {
         if(labelsSupplierGSTIN.contains(suppliergstin_str))
         {
             MsgBox.setTitle("Warning")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Supplier with gstin already present in list")
                     .setPositiveButton("OK",null)
                     .show();
@@ -2086,6 +2088,7 @@ public class FragmentInwardSupply extends Fragment {
             if (suppliername_str.equalsIgnoreCase(supplier))
             {
                 MsgBox.setTitle("Warning")
+                        .setIcon(R.drawable.ic_launcher)
                         .setMessage("Supplier with name already present in list")
                         .setPositiveButton("OK",null)
                         .show();
@@ -2211,6 +2214,7 @@ public class FragmentInwardSupply extends Fragment {
         if (flag ==0)
         {
             MsgBox.setTitle("Warning")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Supplier not list. Please add supplier first")
                     .setPositiveButton("OK",null)
                     .show();
@@ -2219,6 +2223,7 @@ public class FragmentInwardSupply extends Fragment {
         String item_name = autocomplete_inw_ItemName.getText().toString().toUpperCase();
         if (item_name.equalsIgnoreCase("")) {
             MsgBox.setTitle("Warning")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Please enter item name")
                     .show();
             return;
@@ -2227,6 +2232,7 @@ public class FragmentInwardSupply extends Fragment {
         if(supplierCode_str == null || supplierCode_str.equalsIgnoreCase(""))
         {
             MsgBox.setTitle("Warning")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Supplier not list. Please add supplier first")
                     .setPositiveButton("OK",null)
                     .show();
@@ -2235,6 +2241,7 @@ public class FragmentInwardSupply extends Fragment {
         if(IsItemExists_withSupplier(item_name, Integer.parseInt(supplierCode_str)))
         {
             MsgBox.setTitle("Warning")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage(item_name+" is already present with supplier "+suppliername_str)
                     .setPositiveButton("OK",null)
                     .show();
@@ -2243,6 +2250,7 @@ public class FragmentInwardSupply extends Fragment {
         String uom = spnrUOM.getSelectedItem().toString();
         if (uom.equalsIgnoreCase("") || uom.equalsIgnoreCase("Select")) {
             MsgBox.setTitle("Warning")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Please select item UoM")
                     .setPositiveButton("Ok",null)
                     .show();
@@ -2257,6 +2265,7 @@ public class FragmentInwardSupply extends Fragment {
             if(!mou_temp.equalsIgnoreCase(uom_already_saved))
             {
                 MsgBox.setTitle("Warning")
+                        .setIcon(R.drawable.ic_launcher)
                         .setMessage(item_name+" is already present in database with unit "+uom_already_saved+". " +
                                 "\nKindly set the unit to "+uom_already_saved+
                                 "\nOr to change the unit , kindly delete this item for all the suppliers." +
@@ -2295,6 +2304,7 @@ public class FragmentInwardSupply extends Fragment {
         }*/
         if (et_inw_rate.getText().toString().equalsIgnoreCase("")) {
             MsgBox.setTitle("Warning")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Please enter item rate")
                     .setPositiveButton("Ok",null)
                     .show();
@@ -2327,6 +2337,7 @@ public class FragmentInwardSupply extends Fragment {
     public void ResetQuantity(View v)
     {
         MsgBox.setTitle("Warning")
+                .setIcon(R.drawable.ic_launcher)
                 .setMessage("Please note only quantity for this item and supplier will be reset to 0. " +
                         "\nAll other changes, if any , will be discarded")
                 .setNegativeButton("Cancel", null)
@@ -2422,6 +2433,7 @@ public class FragmentInwardSupply extends Fragment {
         if (mou_temp.equalsIgnoreCase("Unit") || mou_temp.equalsIgnoreCase("Select Unit"))
         {
             MsgBox.setTitle("Error")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Please Select the Unit for the item.")
                     .setPositiveButton("OK",null)
                     .show();

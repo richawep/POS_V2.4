@@ -1094,6 +1094,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
 
         AuthorizationDialog
                 .setTitle("Authorization")
+                .setIcon(R.drawable.ic_launcher)
                 .setView(vwAuthorization)
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

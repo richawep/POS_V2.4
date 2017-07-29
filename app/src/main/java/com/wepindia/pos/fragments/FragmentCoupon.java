@@ -197,6 +197,7 @@ public class FragmentCoupon extends Fragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
                     .setTitle("Delete")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Are you sure you want to Delete this Coupon")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

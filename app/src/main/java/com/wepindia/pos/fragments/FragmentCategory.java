@@ -218,7 +218,8 @@ public class FragmentCategory extends Fragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(myContext)
                     .setTitle("Delete")
-                    .setMessage("Are you sure you want to Delete this Category. It will delete corresponding Items also")
+                    .setIcon(R.drawable.ic_launcher)
+                    .setMessage("Are you sure you want to Delete this Category. It will delete corresponding Items linkage also")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
 
