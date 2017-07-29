@@ -416,7 +416,12 @@ public class FragmentSettingsPrice extends Fragment {
 
         if(strDI1From.equalsIgnoreCase("") || strDI2From.equalsIgnoreCase("") || strDI3From.equalsIgnoreCase("") || strDI1To.equalsIgnoreCase("") ||
                 strDI2To.equalsIgnoreCase("") || strDI3To.equalsIgnoreCase("") || strMaxWaiter.equalsIgnoreCase("") || strMaxTables.equalsIgnoreCase("")){
-            Toast.makeText(myContext, "Please fill all the text boxes before saving the settings", Toast.LENGTH_LONG).show();
+            //Toast.makeText(myContext, "Please fill all the text boxes before saving the settings", Toast.LENGTH_LONG).show();
+            MsgBox.Show("Note","Please fill all the text boxes before saving the settings");
+            return 0;
+        }else if (strMaxTables.equals("") || strMaxTables.equals("0"))
+        {
+            MsgBox.Show("Note","Max tables cannot be 0. Please configure atleast one table.");
             return 0;
         }
         else{

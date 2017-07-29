@@ -2,11 +2,15 @@ package com.wepindia.pos;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -64,7 +68,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     RelativeLayout rl_dinein, rl_CounterSales,rl_pickup,rl_delivery,rl_inward_invoice_entry,rl_amend,rl_cdn;
     TextView txtUserName;
     TextView tvDineInOption, tvCounterSalesOption, tvPickUpOption1, tvDeliveryOption;
-    BillSetting objBillSettings = new BillSetting();
+    BillSetting objBillSettings;
     private Toolbar toolbar;
 	ArrayList<String> listAccesses ;
     Cursor settingcrsr;
@@ -84,13 +88,10 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             strUserId = ApplicationData.getUserId(this);//ApplicationData.USER_ID;
             strUserName = ApplicationData.getUserName(this);//ApplicationData.USER_NAME;
             strUserRole = Integer.valueOf(ApplicationData.getUserRole(this));
-            //dbHomeScreen.DeleteDatabase();
+
             getDb().CreateDatabase();
-            //dbHomeScreen.OpenDatabase();
             listAccesses = getDb().getPermissionsNamesForRole(getDb().getRoleName(strUserRole+""));
 
-            txtUserName = (TextView) findViewById(R.id.txtViewUserName);
-            txtUserName.setText(strUserName.toUpperCase());
             InitializeViews();
             Display();
             checkForAutoDayEnd(); // called after display because settingcrsr is being set in Display()
@@ -218,8 +219,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     {
         settingcrsr = getDb().getBillSetting();
 
-        if (settingcrsr!=null && settingcrsr.moveToNext())
-        {
+        if (settingcrsr!=null && settingcrsr.moveToNext()) {
 
             // displaying Captions as per settings
             String DineInCaption = settingcrsr.getString(settingcrsr.getColumnIndex("HomeDineInCaption"));
@@ -227,69 +227,22 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             String TakeAwayCaption = settingcrsr.getString(settingcrsr.getColumnIndex("HomeTakeAwayCaption"));
             String HomeDeliveryCaption = settingcrsr.getString(settingcrsr.getColumnIndex("HomeHomeDeliveryCaption"));
 
-            if (DineInCaption != null)
-            {
+            if (DineInCaption != null) {
                 tvDineInOption.setText(DineInCaption);
             }
-            if (CounterSalesCaption != null)
-            {
+            if (CounterSalesCaption != null) {
                 tvCounterSalesOption.setText(CounterSalesCaption);
             }
-            if (TakeAwayCaption != null)
-            {
+            if (TakeAwayCaption != null) {
                 tvPickUpOption1.setText(TakeAwayCaption);
             }
-            if ( HomeDeliveryCaption!= null)
-            {
+            if (HomeDeliveryCaption != null) {
                 tvDeliveryOption.setText(HomeDeliveryCaption);
             }
-
-
-            // displaying buttons as per GST enabled or disabled
-            String GSTEnable = settingcrsr.getString(settingcrsr.getColumnIndex("GSTEnable"));
-            if (false)/*(GSTEnable!=null && GSTEnable.equals("1"))*/
-            {
-                rl_dinein.setVisibility(View.GONE);
-                rl_pickup.setVisibility(View.GONE);
-                rl_delivery.setVisibility(View.GONE);
-                rl_CounterSales.setVisibility(View.VISIBLE);
-                rl_inward_invoice_entry.setVisibility(View.VISIBLE);
-                rl_amend.setVisibility(View.VISIBLE);
-                rl_cdn.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                /// GST disable
-                rl_dinein.setVisibility(View.VISIBLE);
-                rl_pickup.setVisibility(View.VISIBLE);
-                rl_delivery.setVisibility(View.VISIBLE);
-                rl_CounterSales.setVisibility(View.VISIBLE);
-                rl_inward_invoice_entry.setVisibility(View.GONE);
-                //rl_amend.setVisibility(View.GONE);
-                //rl_cdn.setVisibility(View.GONE);
-            }
-        }
-        else
-        {
-            // default setting -- GST Disable
-            rl_dinein.setVisibility(View.VISIBLE);
-            rl_pickup.setVisibility(View.VISIBLE);
-            rl_delivery.setVisibility(View.VISIBLE);
-            rl_CounterSales.setVisibility(View.VISIBLE);
-            rl_inward_invoice_entry.setVisibility(View.GONE);
-            rl_amend.setVisibility(View.GONE);
-            rl_cdn.setVisibility(View.GONE);
         }
     }
     void InitializeViews()
     {
-        rl_dinein = (RelativeLayout) findViewById(R.id.rl_dinein);
-        rl_CounterSales = (RelativeLayout) findViewById(R.id.rl_CounterSales);
-        rl_pickup = (RelativeLayout) findViewById(R.id.rl_pickup);
-        rl_delivery = (RelativeLayout) findViewById(R.id.rl_delivery);
-        rl_inward_invoice_entry= (RelativeLayout) findViewById(R.id.rl_inward_invoice_entry);
-        rl_amend = (RelativeLayout) findViewById(R.id.rl_amend);
-        rl_cdn= (RelativeLayout) findViewById(R.id.rl_cdn);
         tvDeliveryOption = (TextView)findViewById(R.id.tvDeliveryOption);
         tvDineInOption = (TextView) findViewById(R.id.tvDineInOption);
         tvCounterSalesOption = (TextView) findViewById(R.id.tvCounterSalesOption);
@@ -299,11 +252,36 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 
 
     @SuppressWarnings("deprecation")
+    private void DayEnd_new()
+    {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+
+
+    }
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+            dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+            return  dialog;
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            //btnDate.setText(ConverterDate.ConvertDate(year, month + 1, day));
+            Toast.makeText(getContext(), ""+year, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), ""+month, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), ""+day, Toast.LENGTH_SHORT).show();
+        }
+    }
     private void DayEnd() {
         try {
-            int iResult = 0;
-            /*iResult = dbHomeScreen.deleteAllKOTItems();
-            Log.d("DayEnd", "Items deleted from Pending KOT table:" + iResult);*/
 
             AlertDialog.Builder DayEndDialog = new AlertDialog.Builder(myContext);
             final DatePicker dateNextDate = new DatePicker(myContext);
@@ -317,7 +295,7 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             } else {
                 objDate = new Date();
             }
-
+            final String date_str1 = date_str;
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             Date d = (Date) formatter.parse(date_str);
             Calendar c = Calendar.getInstance();
@@ -325,13 +303,18 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             int day = c.get(Calendar.DAY_OF_MONTH);
             int month = c.get(Calendar.MONTH);
             int year = c.get(Calendar.YEAR);
-            //String date = objDate.strStringDate;
-            /*int day = Integer.parseInt(date.substring(0,2));
-            int month = Integer.parseInt(date.substring(3,5));
-            int year = Integer.parseInt(date.substring(6,10));
-			*/
-            // Initialize date picker value to business date
             dateNextDate.updateDate(year, month, day + 1);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                Calendar prevDate = Calendar.getInstance();
+                prevDate.add(Calendar.MONTH,-1);
+                int qday = prevDate.get(Calendar.DAY_OF_MONTH);
+                prevDate.add(Calendar.DAY_OF_MONTH, -(qday));
+                dateNextDate.setMinDate(prevDate.getTimeInMillis());
+                Calendar nextDate = Calendar.getInstance();
+                nextDate.add(Calendar.DAY_OF_MONTH,5);
+                dateNextDate.setMaxDate(nextDate.getTimeInMillis());
+            }
+
 
             DayEndDialog
                     .setIcon(R.drawable.ic_launcher)
@@ -343,16 +326,51 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                         public void onClick(DialogInterface dialog, int which) {
                             // TODO Auto-generated method stub
 
-					/*try {
+                            String strNextDate = "";
 
-						if(objDate.getDay() <= dateNextDate.getDayOfMonth()){
-							MsgBox.Show("Warning", "Selected date less than present date or same as present date, please select next date");
-							return;
-						}
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
+                            if (dateNextDate.getDayOfMonth() < 10) {
+                                strNextDate = "0" + String.valueOf(dateNextDate.getDayOfMonth());
+                            } else {
+                                strNextDate = String.valueOf(dateNextDate.getDayOfMonth());
+                            }
+                            if (dateNextDate.getMonth() < 9) {
+                                strNextDate += "-" + "0" + String.valueOf(dateNextDate.getMonth() + 1) + "-";
+                            } else {
+                                strNextDate += "-" + String.valueOf(dateNextDate.getMonth() + 1) + "-";
+                            }
+                            strNextDate += String.valueOf(dateNextDate.getYear());
+
+                            try{
+                                if(!date_str1.equals("") && !date_str1.equals(strNextDate)){
+                                    Date dd = new SimpleDateFormat("dd-MM-yyyy").parse(strNextDate);
+                                    Cursor cc = getDb().getBillDetailByInvoiceDate(dd.getTime());
+                                    if(cc!= null && cc.getCount()>0)
+                                    {
+                                        MsgBox.Show("Error","Since bill for date "+strNextDate+" is already present in database, therefore this date cannot be selected");
+                                        return;
+                                    }
+                                }else if(date_str1.equals(strNextDate))
+                                {
+                                    return;
+                                }
+                            }catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                            int result = 0;
+                            result = getDb().deleteAllKOTItems();
+                            Log.d("ManualDayEnd", "Items deleted from Pending KOT status: :" + result);
+                            result =0;
+                            result = getDb().deleteAllVoidedKOT();
+                            Log.d("ManualDayEnd", "Items deleted from Void KOT status: :" + result);
+                            result = 0;
+                            result = getDb().deleteAllReservedTables();
+                            Log.d("ManualDayEnd", "No of Reserved Tables deleted :" + result);
+
+                            // reset KOT No
+
+                            long Result = getDb().updateKOTNo(0);
+                            Log.d("ManualDayEnd", "KOT No reset to 0 status :"+Result);
 
                             try
                             {   Cursor businessdate_cursor = getDb().getCurrentDate();
@@ -395,37 +413,6 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                                 e.printStackTrace();
                             }
 
-                            String strNextDate = "";
-
-
-                            if (dateNextDate.getDayOfMonth() < 10) {
-                                strNextDate = "0" + String.valueOf(dateNextDate.getDayOfMonth());
-                            } else {
-                                strNextDate = String.valueOf(dateNextDate.getDayOfMonth());
-                            }
-                            if (dateNextDate.getMonth() < 9) {
-                                strNextDate += "-" + "0" + String.valueOf(dateNextDate.getMonth() + 1) + "-";
-                            } else {
-                                strNextDate += "-" + String.valueOf(dateNextDate.getMonth() + 1) + "-";
-                            }
-                            strNextDate += String.valueOf(dateNextDate.getYear());
-
-
-                            int result = 0;
-                            result = getDb().deleteAllKOTItems();
-                            Log.d("ManualDayEnd", "Items deleted from Pending KOT status: :" + result);
-                            result =0;
-                            result = getDb().deleteAllVoidedKOT();
-                            Log.d("ManualDayEnd", "Items deleted from Void KOT status: :" + result);
-                            result = 0;
-                            result = getDb().deleteAllReservedTables();
-                            Log.d("ManualDayEnd", "No of Reserved Tables deleted :" + result);
-
-                            // reset KOT No
-
-                            long Result = getDb().updateKOTNo(0);
-                            Log.d("ManualDayEnd", "KOT No reset to 0 status :"+Result);
-
                             //UpdateStock();
                             long iResult = getDb().updateBusinessDate(String.valueOf(strNextDate));
                             Log.d("ManualDayEnd", "Bussiness Date updation status :" + iResult);
@@ -444,16 +431,6 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                             } else {
                                 MsgBox.Show("Warning", "Error: DayEnd is not done");
                             }
-
-
-
-
-                            /*View v = null;
-                            GSTHomeActivity gs = new GSTHomeActivity();
-                            */
-                            /*GSTR1_upload_forDay(d);
-                            GSTR2_upload_forDay(d);
-*/
                         }
 
                     })
@@ -469,46 +446,6 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
-
-    public void GSTR1_upload_forDay(Date date)
-    {
-
-        /*SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        String startDate = sdf.format(date);
-        String gstin_owner = "123wsd_out";
-
-        gstin_owner = getDb().getGstin_owner();
-        Cursor gstr1_crsr = getDb().getInvoice_outward(startDate);
-        float taxval = 0;
-        while (gstr1_crsr!=null && gstr1_crsr.moveToNext())
-        {
-            taxval += Float.parseFloat(gstr1_crsr.getString(gstr1_crsr.getColumnIndex("TaxableValue")));
-        }
-
-        String paramStr = "gstin="+gstin_owner+"&date="+startDate+"&purchasevalue="+taxval+"";
-        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR1_DAY+paramStr).execute();*/
-
-    }
-
-    public void GSTR2_upload_forDay(Date date)
-    {
-
-        /*SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        String startDate = sdf.format(date);
-        String gstin_owner = "123wsd_out";
-
-        gstin_owner = getDb().getGstin_owner();
-        Cursor gstr1_crsr = getDb().getInvoice_inward(startDate);
-        float taxval = 0;
-        while (gstr1_crsr!=null && gstr1_crsr.moveToNext())
-        {
-            taxval += Float.parseFloat(gstr1_crsr.getString(gstr1_crsr.getColumnIndex("TaxableValue")));
-        }
-
-        String paramStr = "gstin="+gstin_owner+"&date="+startDate+"&salevalue="+taxval+"";
-        new HTTPAsyncTask(HomeActivity.this,HTTPAsyncTask.HTTP_GET,"",1111, Config.GSTR2_DAY+paramStr).execute();*/
-
     }
 
 
@@ -528,12 +465,8 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         }
         else if (v.getContentDescription().toString().equalsIgnoreCase("PickUp"))
         {
-            // Launch Billing screen activity in PickUp billing mode
-//			Intent intentPickUp = new Intent(myContext,CustomerOrdersActivity.class);
             Intent intentPickUp = new Intent(myContext, BillingHomeDeliveryActivity.class);
             intentPickUp.putExtra("BILLING_MODE", PICKUP);
-            //intentPickUp.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            //intentPickUp.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
             intentPickUp.putExtra("CUST_ID", 0);
             startActivity(intentPickUp);
 
@@ -542,23 +475,10 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 
             Intent intentDelivery = new Intent(myContext, BillingHomeDeliveryActivity.class);
             intentDelivery.putExtra("BILLING_MODE", DELIVERY);
-            //intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            //intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
             intentDelivery.putExtra("CUST_ID", 0);
             startActivity(intentDelivery);
 
-        } /*else if (v.getContentDescription().toString().equalsIgnoreCase("gst")) {
-            // Launch Billing screen activity in Delivery billing mode
-
-            Intent intentDelivery = new Intent(myContext, GSTHomeActivity.class);
-            intentDelivery.putExtra("BILLING_MODE", DELIVERY);
-            intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            intentDelivery.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
-            intentDelivery.putExtra("CUST_ID", 0);
-            startActivity(intentDelivery);
-
-        }*/  else if (v.getContentDescription().toString().equalsIgnoreCase("Ammend")) {
-            // Launch Billing screen activity in Delivery billing mode
+        }  else if (v.getContentDescription().toString().equalsIgnoreCase("Ammend")) {
 
             Intent intentDelivery = new Intent(myContext, TabbedAmmendActivity.class);
             intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
@@ -568,7 +488,6 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
 
         } else if (v.getContentDescription().toString().equalsIgnoreCase("cdnr")) {
 
-           // Intent intentDelivery = new Intent(myContext, CreditDebitActivity.class);
             Intent intentDelivery = new Intent(myContext, TabbedCreditDebitNote.class);
             intentDelivery.putExtra("BILLING_MODE", DELIVERY);
             intentDelivery.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
@@ -585,7 +504,6 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
                 intentMasters.putExtra("USER_ID", strUserId);
                 intentMasters.putExtra("USER_NAME", strUserName);
                 startActivityForResult(intentMasters,1);
-//				startActivity(new Intent(myContext,MasterActivity.class));
             }
             else
             {
@@ -622,78 +540,37 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
             }
 
         } else if (v.getContentDescription().toString().equalsIgnoreCase("DayEnd")) {
-            if(settingcrsr!=null)
-            {
+            if (settingcrsr != null) {
                 int autoDayend = settingcrsr.getInt(settingcrsr.getColumnIndex("DateAndTime"));
-                if(autoDayend== 1) //DateChange -> 1 - auto, 0 = manual
+                if (autoDayend == 1) //DateChange -> 1 - auto, 0 = manual
                 {
                     MsgBox.Show(" Day End ", "Day End has been to auto mode. To manually set Date and Time , please go to settings ");
                     return;
                 }
             }
-            Cursor PendingKOT = getDb().getKOTPendingReport();
-            Cursor DeletedKOT = getDb().getKOTDeletedReport();
+            AlertDialog.Builder dlgDayEnd = new AlertDialog.Builder(myContext);
+            dlgDayEnd
+                    .setIcon(R.drawable.ic_launcher)
+                    .setTitle("Day End")
+                    .setMessage("Day End operation will erase all pending KOT ,Voided KOT and Table Booking details from database (if any)"
+                            + " and changes transaction date to next date. " +
+                            "\nAlso please note, back date (upto last month) can only be selected if, no bill was made for that date."
+                            + "\n" + "Do you want to proceed?")
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
-            if (PendingKOT.moveToFirst() || DeletedKOT.moveToFirst()) {
-                // start DatePicker dialog
-                AlertDialog.Builder dlgDayEnd = new AlertDialog.Builder(myContext);
-                dlgDayEnd
-                        .setIcon(R.drawable.ic_launcher)
-                        .setTitle("Day End")
-                        .setMessage("Day End operation will erase all pending KOT ,Voided KOT and Table Booking details from database"
-                                + "\n" + "and changes transaction date to next date."
-                                + "\n" + "Do you want to proceed?")
-                        .setNegativeButton("No", null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
 
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-
-                                DayEnd();
-                            }
-                        })
-                        .show();
-            } else {
-                DayEnd();
-            }
-
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("LogOut")) {
-            // Close master options window, set result and get back to Home screen
-            Intent intentResult = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intentResult);
-            this.finish();
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("Exit")) {
-            // Close master options window, set result and get back to Home screen
-			/*Intent intentResult = new Intent();
-			setResult(RESULT_OK,intentResult);*/
-            this.finish();
-        } else if (v.getContentDescription().toString().equalsIgnoreCase("GoodsInwardNote")) {
-            // Launch Billing screen activity in dine in billing mode
-            Intent intentInwardSupply = new Intent(myContext, GoodsInwardNoteActivity.class);
-            intentInwardSupply.putExtra("BILLING_MODE", DINEIN);
-            intentInwardSupply.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            intentInwardSupply.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
-            intentInwardSupply.putExtra("CUST_ID", 0);
-            startActivity(intentInwardSupply);
-        }else if (v.getContentDescription().toString().equalsIgnoreCase("PurchaseOrder")) {
-            // Launch Billing screen activity in dine in billing mode
-            Intent intentInwardSupply = new Intent(myContext, PurchaseOrderActivity.class);
-            intentInwardSupply.putExtra("BILLING_MODE", DINEIN);
-            intentInwardSupply.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
-            intentInwardSupply.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
-            intentInwardSupply.putExtra("CUST_ID", 0);
-            startActivity(intentInwardSupply);
+                            DayEnd();
+                        }
+                    })
+                    .show();
         }
         getDb().CloseDatabase();
         dbHomeScreen = null;
     }
 
-
-
-
-    public void Screenshot(View v) {
-        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgScreenshot), findViewById(R.id.homeParent));
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -710,119 +587,24 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     public void onHttpRequestComplete(int requestCode, String data) {
         //progressDialog.dismiss();
         if (data != null) {
-            if (requestCode == 0/*true*/) // GSTR1
-            {
-                if (data.equalsIgnoreCase("")) {
-                    Toast.makeText(this, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        JSONObject jsonObject = new JSONObject(data);
-                        if (jsonObject.getBoolean("success")) {
-                            Toast.makeText(this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        Toast.makeText(this, "Error due to " + e, Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                }
-            } else if (requestCode == 1) // GSTR2REQUEST_GET_GSTR2_B2B
-            {
-                if (data.equalsIgnoreCase("")) {
-                    Toast.makeText(this, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        JSONObject jsonObject = new JSONObject(data);
-                        if (jsonObject.getBoolean("success")) {
-                            Toast.makeText(this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        Toast.makeText(this, "Error due to " + e, Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                }
-            } else if (requestCode == 1111) // GSTR2REQUEST_GET_GSTR2_B2B
-            {
-                Toast.makeText(this, "Success in uploading ", Toast.LENGTH_SHORT).show();
-//                if (data.equalsIgnoreCase("Success")) {
-//                    Toast.makeText(this, "Success in uploading ", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(this, "Error due to empty response", Toast.LENGTH_SHORT).show();
-//                }
-            } else if (requestCode == Upload_Invoice_Count) // Upload_invoice count for metering
-            {
-                if(data.contains("\"success\":true,\"message\":\"Data Updated Successfully\""))
+            try{
+                if (requestCode == Upload_Invoice_Count) // Upload_invoice count for metering
                 {
-                    Toast.makeText(myContext, "No of invoices uploaded sucessfully.", Toast.LENGTH_SHORT).show();
-                }
-                else if (data.contains("\"success\":false,\"message\":\"Check Parameters\""))
-                {
-                    Toast.makeText(myContext, "No of invoices uploading failed.", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG,"No of invoices uploading failed.");
-                }
-            } else if (requestCode == 2) // REQUEST_GET_GSTR2_B2B
-            {
-                //GetGSTR2B2BFinal getGSTR2B2BFinal = null;
-                ArrayList<GetGSTR2B2BFinal> finalsList = new ArrayList<GetGSTR2B2BFinal>();
-                data = data.replaceAll("\\\\", "");
-                data = data.substring(1, data.length() - 1);
-                if (data.equalsIgnoreCase("")) {
-                    Toast.makeText(this, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        JSONObject jsonObject = new JSONObject(data);
-                        JSONArray jsonArray = jsonObject.getJSONArray("b2b");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                            GetGSTR2B2BFinal getGSTR2B2BFinal = new GetGSTR2B2BFinal();
-                            getGSTR2B2BFinal.setCtin(jsonObject1.getString("ctin"));
-                            JSONArray jsonArrayInv = jsonObject1.getJSONArray("inv");
-                            ArrayList<GetGSTR2B2BInvoice> getGSTR2B2BInvoicesList = new ArrayList<GetGSTR2B2BInvoice>();
-                            for (int j = 0; j < jsonArrayInv.length(); j++) {
-                                GetGSTR2B2BInvoice getGSTR2B2BInvoice = new GetGSTR2B2BInvoice();
-                                JSONObject jsonObjectInv = jsonArrayInv.getJSONObject(j);
-                                ArrayList<GetGSTR2B2BItem> itemsLis = new ArrayList<GetGSTR2B2BItem>();
-                                //some items like inum, idt
-                                getGSTR2B2BInvoice.setInum(jsonObjectInv.getString("inum"));
-                                getGSTR2B2BInvoice.setIdt(jsonObjectInv.getString("idt"));
-                                getGSTR2B2BInvoice.setVal(jsonObjectInv.getDouble("val"));
-                                getGSTR2B2BInvoice.setPos(jsonObjectInv.getString("pos"));
-                                getGSTR2B2BInvoice.setRchrg(jsonObjectInv.getString("rchrg"));
-                                getGSTR2B2BInvoice.setPro_ass(jsonObjectInv.getString("pro_ass"));
-
-                                JSONArray jsonArrayBillItems = jsonObjectInv.getJSONArray("itms");
-                                for (int k = 0; k < jsonArrayBillItems.length(); k++) {
-                                    JSONObject jsonObjectItem = jsonArrayBillItems.getJSONObject(k);
-                                    int lineNum = jsonObjectItem.getInt("num");
-                                    JSONObject jsonObjectitm_det = jsonObjectItem.getJSONObject("itm_det");
-                                    GetGSTR2B2BItem item = new GetGSTR2B2BItem(
-                                            lineNum,
-                                            jsonObjectitm_det.getString("ty"),
-                                            jsonObjectitm_det.getString("hsn_sc"),
-                                            jsonObjectitm_det.getDouble("txval"),
-                                            jsonObjectitm_det.getDouble("irt"),
-                                            jsonObjectitm_det.getDouble("iamt"),
-                                            jsonObjectitm_det.getDouble("crt"),
-                                            jsonObjectitm_det.getDouble("camt"),
-                                            jsonObjectitm_det.getDouble("srt"),
-                                            jsonObjectitm_det.getDouble("samt")
-                                    );
-                                    itemsLis.add(item);
-                                }
-                                getGSTR2B2BInvoice.setItems(itemsLis);
-                                getGSTR2B2BInvoicesList.add(getGSTR2B2BInvoice);
-                            }
-                            getGSTR2B2BFinal.setInvoicesList(getGSTR2B2BInvoicesList);
-                            finalsList.add(getGSTR2B2BFinal);
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(this, "Error due to " + e, Toast.LENGTH_SHORT).show();
-                        finalsList = null;
-                        e.printStackTrace();
+                    if(data.contains("\"success\":true,\"message\":\"Data Updated Successfully\""))
+                    {
+                        Toast.makeText(myContext, "No of invoices uploaded sucessfully.", Toast.LENGTH_SHORT).show();
                     }
-                    // Add to db
-                    getDb().addGSTR2B2BItems(finalsList);
+                    else if (data.contains("\"success\":false,\"message\":\"Check Parameters\""))
+                    {
+                        Toast.makeText(myContext, "No of invoices uploading failed.", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG,"No of invoices uploading failed.");
+                    }
                 }
+            } catch (Exception e) {
+                Toast.makeText(this, "Error due to " + e, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
+
         } else {
             Toast.makeText(this, "Sending error", Toast.LENGTH_SHORT).show();
         }
@@ -835,24 +617,13 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
             AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
-            LayoutInflater UserAuthorization = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
-            final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
-            final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
-            final TextView tvAuthorizationUserId= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserId);
-            final TextView tvAuthorizationUserPassword= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserPassword);
-            tvAuthorizationUserId.setVisibility(View.GONE);
-            tvAuthorizationUserPassword.setVisibility(View.GONE);
-            txtUserId.setVisibility(View.GONE);
-            txtPassword.setVisibility(View.GONE);
             AuthorizationDialog
                     .setTitle("Are you sure you want to exit ?")
                     .setIcon(R.drawable.ic_launcher)
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            /*Intent returnIntent =new Intent();
-                            setResult(Activity.RESULT_OK,returnIntent);*/
+                            getDb().CloseDatabase();
                             finish();
                         }
                     })

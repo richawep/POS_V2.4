@@ -30,6 +30,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/ownerName"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:inputType="text"/>
         </LinearLayout>
@@ -50,7 +51,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="enter GSTIN"
+                android:hint="owner GSTIN"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/ownerGstin"
                 android:layout_weight="1" />
@@ -73,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="reference no"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/ownerReferenceNo"
                 android:layout_weight="1" />
@@ -96,6 +99,7 @@
                 android:layout_height="match_parent"
                 android:hint="Enter Contact Number"
                 android:id="@+id/ownerContact"
+                android:textStyle="bold"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -122,6 +126,7 @@
                 android:id="@+id/ownerEmail"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:inputType="textEmailAddress"
+                android:textStyle="bold"
                 android:layout_weight="1"/>
         </LinearLayout>
         <LinearLayout
@@ -145,6 +150,7 @@
                 android:id="@+id/ownerAddress"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:inputType="text"
+                android:textStyle="bold"
                 android:layout_weight="1"/>
         </LinearLayout>
         <LinearLayout

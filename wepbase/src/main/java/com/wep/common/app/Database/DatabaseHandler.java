@@ -5164,6 +5164,13 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     public Cursor getBillDetail(int InvoiceNumber) {
         return dbFNB.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber, null, null, null, null);
     }
+    public Cursor getBillDetailByInvoiceDate(long InvoiceDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        if(db!=null)
+            return db.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceDate + "=" + InvoiceDate, null, null, null, null);
+        else
+            return null;
+    }
     public Cursor getBillDetail_counter(int InvoiceNumber) {
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null)
@@ -7299,7 +7306,7 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put("DineIn3From", 3);
         cvDbValues.put("DineIn3To", 30);
         cvDbValues.put("FooterText", " Thankyou ");
-        cvDbValues.put("HeaderText", "Restaurant|St Marks Road|Bangalore|");
+        cvDbValues.put("HeaderText", "Restaurant");
         cvDbValues.put("KOTType", 1);
         cvDbValues.put("MaximumTables", 12);
         cvDbValues.put("MaximumWaiters", 4);
@@ -7315,6 +7322,7 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put("BillwithoutStock", 0);
         cvDbValues.put("Tax", 1);
         cvDbValues.put("TaxType", 1);
+        cvDbValues.put(KEY_DiscountType, 0); // 1 itemwise, 0 billwise
         cvDbValues.put("KOT", 1);
         cvDbValues.put("Token", 0);
         cvDbValues.put("Kitchen", 1);

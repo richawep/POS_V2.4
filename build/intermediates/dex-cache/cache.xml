@@ -30,21 +30,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\richa\25jul\wepfnb_gst\printers\build\intermediates\bundles\default\libs\gprinter-2.1.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
-        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_0aa942cd2fc0382a4a8702447c4695fd5518dbe4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\richa\25jul\wepfnb_gst\printers\build\intermediates\bundles\default\libs\effica_lib.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="f08f74e75f377d011d8a34e1522ca9fa41376558">
         <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\effica_lib_63bba0630dca01a01eea324c54d4119e2af4dd19\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\richa\25jul\wepfnb_gst\printers\build\intermediates\bundles\default\libs\gprinter-2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c5156b56ae3a8f99c46456ede9495dfb1e22c910">
+        <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\8\gprinter-2.1.2_0aa942cd2fc0382a4a8702447c4695fd5518dbe4\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -88,7 +88,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="5bbba0ff1563b6c00381f84bbd274294b128767e">
+        sha1="f8d82e34be72a7fc310821c1df93e31c4980e952">
         <dex dex="D:\richa\25jul\wepfnb_gst\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_9e8897beaf1aa848c65376e2fddaff9791044f2b\classes.dex" />
     </item>
     <item

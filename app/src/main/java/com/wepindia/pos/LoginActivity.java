@@ -188,9 +188,6 @@ public class LoginActivity extends WepBaseActivity {
                     else
                         startActivity(intentOwnerDetail);
 
-                objBillSettings.setDateAndTime(1);
-                long iResult = dbLogin.updateDateAndTime(objBillSettings);
-
                     finish();
 
                 } else {

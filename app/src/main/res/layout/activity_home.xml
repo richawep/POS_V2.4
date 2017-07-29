@@ -15,71 +15,12 @@
         android:layout_below="@+id/toolbar"
         android:background="@drawable/home_back">
 
-        <RelativeLayout
-            android:id="@+id/boxTop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/imageViewUser"
-                android:layout_width="@dimen/bar_icon"
-                android:layout_height="@dimen/bar_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="7dp"
-                android:layout_marginTop="7dp"
-                android:src="@drawable/user" />
-
-            <TextView
-                android:id="@+id/txtViewUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="7dp"
-                android:layout_marginTop="7dp"
-                android:layout_toRightOf="@+id/imageViewUser"
-                android:text="Welcome User" />
-
-            <ImageView
-                android:id="@+id/imageViewBell"
-                android:layout_width="@dimen/bar_icon"
-                android:layout_height="@dimen/bar_icon"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="7dp"
-                android:layout_marginTop="7dp"
-                android:src="@drawable/bell"
-                android:visibility="invisible" />
-
-            <ImageView
-                android:id="@+id/imgScreenshot"
-                android:layout_width="@dimen/bar_icon"
-                android:layout_height="@dimen/bar_icon"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="7dp"
-                android:layout_marginTop="7dp"
-                android:onClick="Screenshot"
-                android:src="@drawable/screenshot" />
-
-            <TextView
-                android:id="@+id/textViewUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:gravity="bottom"
-                android:text="Welcome User"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/boxContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/boxButton"
-            android:layout_below="@+id/boxTop">
+            android:layout_above="@+id/boxButton">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -234,37 +175,6 @@
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
-                    <RelativeLayout
-                        android:id="@+id/rl_inward_invoice_entry"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
-                        android:layout_weight="1"
-                        android:visibility="gone">
-
-                        <ImageButton
-                            android:id="@+id/inward_supply_invoice"
-                            android:layout_width="120dp"
-                            android:layout_height="100dp"
-                            android:background="@drawable/gradient_button"
-                            android:contentDescription="InwardSupplyInvoicesEntry"
-                            android:onClick="LaunchActivity"
-                            android:padding="3dp"
-                            android:src="@drawable/inwardsupply" />
-
-                        <TextView
-                            android:id="@+id/tvPickUpOption"
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/inward_supply_invoice"
-                            android:gravity="center"
-                            android:text="Inward  Supply "
-                            android:textSize="@dimen/menu_box_font_size"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-
-
-
 
                 </LinearLayout>
 
@@ -436,58 +346,6 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/boxButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"
-            android:paddingBottom="7dp"
-            android:paddingTop="7dp"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/imgLogOut"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/background_btn"
-                android:contentDescription="LogOut"
-                android:minHeight="40dp"
-                android:onClick="LaunchActivity"
-                android:text="Log Out"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin" />
-
-            <Button
-                android:id="@+id/imgGSt"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-                android:layout_toRightOf="@+id/imgLogOut"
-                android:background="@drawable/background_btn"
-                android:contentDescription="GST"
-                android:minHeight="40dp"
-                android:onClick="LaunchActivity"
-                android:text="GST"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin"
-                android:visibility="invisible" />
-
-
-            <Button
-                android:id="@+id/imgExit"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/background_btn"
-                android:contentDescription="Exit"
-                android:minHeight="40dp"
-                android:onClick="LaunchActivity"
-                android:text="Exit"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin" />
-        </RelativeLayout>
     </RelativeLayout>
 
 
