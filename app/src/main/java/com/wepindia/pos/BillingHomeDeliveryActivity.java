@@ -1454,7 +1454,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
                     etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etInputValidate.ValidateDecimalInput(etQty);
-                    /*etQty.addTextChangedListener(new TextWatcher() {
+                    etQty.addTextChangedListener(new TextWatcher() {
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                         }
@@ -1466,7 +1466,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                         public void afterTextChanged(Editable s) {
                             Qty_Rate_Edit();
                         }
-                    });*/
+                    });
 
                     if (BillwithStock == 1) {
                         if (crsrItem.getFloat(crsrItem.getColumnIndex("Quantity")) < Float.valueOf(etQty.getText().toString())) {
@@ -2307,99 +2307,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
 
 
-                    EditText Rate = (EditText) Row.getChildAt(4);
-                    Rate.setSelectAllOnFocus(true);
-                    TextView Amount = (TextView) Row.getChildAt(5);
-                    dRate = Double.parseDouble(Rate.getText().toString().equalsIgnoreCase("") ? "0" : Rate.getText().toString()); // Temp
-
-                    // Tax and Discount Amount
-                    TextView TaxPer = (TextView) Row.getChildAt(6);
-                    TextView TaxAmt = (TextView) Row.getChildAt(7);
-                    TextView DiscPer = (TextView) Row.getChildAt(8);
-                    TextView DiscAmt = (TextView) Row.getChildAt(9);
-                    TextView ServiceTax = (TextView) Row.getChildAt(15);
-                    TextView ServiceTaxAmt = (TextView) Row.getChildAt(16);
-                    TextView IGSTRate = (TextView) Row.getChildAt(23);
-                    TextView IGSTAmt = (TextView) Row.getChildAt(24);
-                    TextView cessRate = (TextView) Row.getChildAt(25);
-                    TextView cessAmt = (TextView) Row.getChildAt(26);
 
 
-                    dTaxPercent = Double.parseDouble(TaxPer.getText().toString().equalsIgnoreCase("") ? "0"
-                            : TaxPer.getText().toString()); // Temp
-                    dServiceTaxPercent = Double.parseDouble(ServiceTax.getText().toString().equalsIgnoreCase("") ? "0"
-                            : ServiceTax.getText().toString()); // Tempd
-                    double dIGSTRate = Double.parseDouble(IGSTRate.getText().toString().equalsIgnoreCase("") ? "0"
-                            : IGSTRate.getText().toString()); // Temp
-                    double dcessRate  = Double.parseDouble(cessRate.getText().toString().equalsIgnoreCase("") ? "0"
-                            : cessRate.getText().toString()); // Temp
-                    dDiscPercent = Double.parseDouble(DiscPer.getText().toString().equalsIgnoreCase("") ? "0"
-                            : DiscPer.getText().toString()); // Temp
-
-                    if (crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1) { // forward tax
-                        // Discount
-                        dDiscAmt = dRate * (dDiscPercent / 100);
-                        dTempAmt = dDiscAmt;
-                        dDiscAmt = dDiscAmt * Double.parseDouble(Qty.getText().toString());
-
-                        // Tax
-                        dTaxAmt = (dRate - dTempAmt) * (dTaxPercent / 100);
-                        dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
-
-                        dServiceTaxAmt = (dRate - dTempAmt) * (dServiceTaxPercent / 100);
-                        dServiceTaxAmt = dServiceTaxAmt * Double.parseDouble(Qty.getText().toString());
-
-                        dIGSTAmt = (dRate - dTempAmt) * (dIGSTRate / 100);
-                        dIGSTAmt = dIGSTAmt * Double.parseDouble(Qty.getText().toString());
-
-                        dcessAmt = (dRate - dTempAmt) * (dcessRate / 100);
-                        dcessAmt = dcessAmt * Double.parseDouble(Qty.getText().toString());
-
-                        TaxAmt.setText(String.format("%.2f", dTaxAmt));
-                        DiscAmt.setText(String.format("%.2f", dDiscAmt));
-                        ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
-                        cessAmt.setText(String.format("%.2f", dcessAmt));
-                        IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
-                        Amount.setText(String.format("%.2f", (Double.parseDouble(Qty.getText().toString()) * (dRate-dTempAmt))));
-
-                    } else {// reverse tax
-                        double dBasePrice = 0;
-                        dBasePrice = dRate *(1-(dDiscPercent/100))/ (1 + (dTaxPercent / 100)+(dServiceTaxPercent/100));
-
-                        // Discount
-                        dDiscAmt = dBasePrice * (dDiscPercent / 100);
-                        dTempAmt = dDiscAmt;
-                        dDiscAmt = dDiscAmt * Double.parseDouble(Qty.getText().toString());
-
-                        // Tax
-                        dTaxAmt = (dBasePrice ) * (dTaxPercent / 100);
-                        dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
-                        //Service tax
-                        dServiceTaxAmt = (dBasePrice ) * (dServiceTaxPercent / 100);
-                        dServiceTaxAmt = dServiceTaxAmt * Double.parseDouble(Qty.getText().toString());
-
-                        dIGSTAmt = (dBasePrice ) * (dIGSTRate/ 100);
-                        dIGSTAmt = dIGSTAmt * Double.parseDouble(Qty.getText().toString());
-                        //Service tax
-                        dcessAmt = (dBasePrice ) * (dcessRate / 100);
-                        dcessAmt = dcessAmt * Double.parseDouble(Qty.getText().toString());
-
-                        ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
-                        TaxAmt.setText(String.format("%.2f", dTaxAmt));
-                        DiscAmt.setText(String.format("%.2f", dDiscAmt));
-                        cessAmt.setText(String.format("%.2f", dcessAmt));
-                        IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
-                        Amount.setText(String.format("%.2f", (Double.parseDouble(Qty.getText().toString()) * (dRate))));
-                    }
-
-                    /*// Amount
+                    // Amount
                     EditText Rate = (EditText) Row.getChildAt(4);
                     Rate.setSelectAllOnFocus(true);
                     TextView Amount = (TextView) Row.getChildAt(5);
                     dRate = Double.parseDouble(
                             Rate.getText().toString().equalsIgnoreCase("") ? "0" : Rate.getText().toString()); // Temp
-                    Amount.setText(
-                            String.format("%.2f", (strQty * dRate)));
+
 
                     // Tax and Discount Amount
                     TextView TaxPer = (TextView) Row.getChildAt(6);
@@ -2444,11 +2360,14 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                         dcessAmt = dcessAmt * strQty;
 
 
+
                         TaxAmt.setText(String.format("%.2f", dTaxAmt));
                         DiscAmt.setText(String.format("%.2f", dDiscAmt));
                         ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
+                        Amount.setText(
+                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
 
                     } else {// reverse tax
                         double dBasePrice = 0;
@@ -2478,8 +2397,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                         DiscAmt.setText(String.format("%.2f", dDiscAmt));
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
-                    }*/
-
+                        Amount.setText(
+                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
+                    }
                     // // delete
                     // Delete.setText("Hi");
 
@@ -2491,10 +2411,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     dTaxAmt = 0;
                     dDiscAmt = 0;
                     dTempAmt = 0;
-                    dIGSTAmt =0;
-                    dcessAmt =0;
-                    dcessRate =0;
-                    dIGSTRate =0;
                     //bItemExists = true;
 
                 }

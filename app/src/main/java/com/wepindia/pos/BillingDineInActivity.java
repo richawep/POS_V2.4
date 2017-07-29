@@ -1597,7 +1597,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                     etQty.setOnKeyListener(Qty_Rate_KeyPressEvent);
                     etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etInputValidate.ValidateDecimalInput(etQty);
-                    /*etQty.addTextChangedListener(new TextWatcher() {
+                    etQty.addTextChangedListener(new TextWatcher() {
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                         }
@@ -1609,7 +1609,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                         public void afterTextChanged(Editable s) {
                             Qty_Rate_Edit();
                         }
-                    });*/
+                    });
 
                     if (BillwithStock == 1) {
                         if (crsrItem.getFloat(crsrItem.getColumnIndex("Quantity")) < Float.valueOf(etQty.getText().toString())) {
