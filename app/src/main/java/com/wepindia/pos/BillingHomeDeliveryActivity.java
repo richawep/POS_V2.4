@@ -223,7 +223,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                     relative_Interstate.setVisibility(View.VISIBLE);
                 }
             }
-            HSNEnable_out = "1";
             GSTEnable = "1";
             Cursor crssOtherChrg = null;
             if (jBillingMode == 4) {

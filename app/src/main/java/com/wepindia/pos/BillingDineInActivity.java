@@ -193,7 +193,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
 
                 // GSt
                 HSNEnable_out = crsrSettings.getString(crsrSettings.getColumnIndex("HSNCode_Out"));
-                if (HSNEnable_out == null || HSNEnable_out.equals("0")) {
+                if (HSNEnable_out == null || HSNEnable_out.equals("0")|| HSNEnable_out.equals("")) {
                     HSNEnable_out = "0";
                     tvHSNCode_out.setVisibility(View.INVISIBLE);
                 }
@@ -207,8 +207,6 @@ public class BillingDineInActivity extends WepPrinterBaseActivity {
                 }else {
                     relative_Interstate.setVisibility(View.VISIBLE);
                 }
-
-                HSNEnable_out = "1";
                 GSTEnable = "1";
 
             }

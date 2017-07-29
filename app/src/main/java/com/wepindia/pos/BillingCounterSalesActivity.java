@@ -662,7 +662,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 businessDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
                 // GSt
                 HSNEnable_out = crsrSettings.getString(crsrSettings.getColumnIndex("HSNCode_Out"));
-                if (HSNEnable_out == null || HSNEnable_out.equals("0")) {
+                if (HSNEnable_out == null || HSNEnable_out.equals("")|| HSNEnable_out.equals("0")) {
                     HSNEnable_out = "0";
                     tvHSNCode_out.setVisibility(View.INVISIBLE);
                 } else {
@@ -676,7 +676,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 } else {
                     relative_Interstate.setVisibility(View.VISIBLE);
                 }
-                HSNEnable_out = "1";
                 GSTEnable = "1";
             }
         } catch (Exception e) {
