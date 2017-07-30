@@ -690,10 +690,10 @@ public class ItemManagementActivity extends WepBaseActivity {
         txtLongName.setText(item.getItemName());
         itemName_beforeChange_in_update = item.getItemName();
         txtBarcode.setText(item.getBarCode());
-        txtDineIn1.setText(String.valueOf(item.getDineIn1()));
-        txtDineIn2.setText(String.valueOf(item.getDineIn2()));
-        txtDineIn3.setText(String.valueOf(item.getDineIn3()));
-        txtStock.setText(String.valueOf(item.getStock()));
+        txtDineIn1.setText(String.format("%.2f",item.getDineIn1()));
+        txtDineIn2.setText(String.format("%.2f",item.getDineIn2()));
+        txtDineIn3.setText(String.format("%.2f",item.getDineIn3()));
+        txtStock.setText(String.format("%.2f",item.getStock()));
 
         strImageUri = item.getImageUri();
 
@@ -852,24 +852,24 @@ public class ItemManagementActivity extends WepBaseActivity {
             ItemOutward item = new ItemOutward();
             item.setMenuCode(cursorItem.getInt(cursorItem.getColumnIndex("MenuCode")));
             item.setItemName(cursorItem.getString(cursorItem.getColumnIndex("ItemName")));
-            item.setDineIn1(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice1")));
-            item.setDineIn2(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice2")));
-            item.setDineIn3(cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice3")));
-            item.setStock(cursorItem.getFloat(cursorItem.getColumnIndex("Quantity")));
+            item.setDineIn1(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice1")))));
+            item.setDineIn2(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice2")))));
+            item.setDineIn3(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice3")))));
+            item.setStock(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("Quantity")))));
             item.setDeptCode(cursorItem.getInt(cursorItem.getColumnIndex("DeptCode")));
             item.setCategCode(cursorItem.getInt(cursorItem.getColumnIndex("CategCode")));
             item.setKitchenCode(cursorItem.getInt(cursorItem.getColumnIndex("KitchenCode")));
             item.setBarCode(cursorItem.getString(cursorItem.getColumnIndex("ItemBarcode")));
             item.setImageUri(cursorItem.getString(cursorItem.getColumnIndex("ImageUri")));
             item.setUOM(cursorItem.getString(cursorItem.getColumnIndex("UOM")));
-            item.setCGSTRate(cursorItem.getFloat(cursorItem.getColumnIndex("CGSTRate")));
-            item.setSGSTRate(cursorItem.getFloat(cursorItem.getColumnIndex("SGSTRate")));
-            item.setIGSTRate(cursorItem.getFloat(cursorItem.getColumnIndex("IGSTRate")));
-            item.setCessRate(cursorItem.getFloat(cursorItem.getColumnIndex("cessRate")));
+            item.setCGSTRate(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("CGSTRate")))));
+            item.setSGSTRate(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("SGSTRate")))));
+            item.setIGSTRate(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("IGSTRate")))));
+            item.setCessRate(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("cessRate")))));
             item.setItemId(cursorItem.getInt(cursorItem.getColumnIndex("ItemId")));
             item.setHSN(cursorItem.getString(cursorItem.getColumnIndex("HSNCode")));
             item.setTaxationType(cursorItem.getString(cursorItem.getColumnIndex("TaxationType")));
-            item.setItemDiscount(cursorItem.getDouble(cursorItem.getColumnIndex("DiscountPercent")));
+            item.setItemDiscount(Float.parseFloat(String.format("%.2f",cursorItem.getDouble(cursorItem.getColumnIndex("DiscountPercent")))));
 
             dataList.add(item);
         }
@@ -1558,9 +1558,9 @@ public class ItemManagementActivity extends WepBaseActivity {
         strLongName = txtLongName.getText().toString().toUpperCase();
         strBarcode = txtBarcode.getText().toString();
 
-        fDineIn1 = Double.parseDouble(txtDineIn1.getText().toString());
-        fDineIn2 = Double.parseDouble(txtDineIn2.getText().toString());
-        fDineIn3 = Double.parseDouble(txtDineIn3.getText().toString());
+        fDineIn1 = Double.parseDouble(String.format("%.2f",Double.parseDouble(txtDineIn1.getText().toString())));
+        fDineIn2 = Double.parseDouble(String.format("%.2f",Double.parseDouble(txtDineIn2.getText().toString())));
+        fDineIn3 = Double.parseDouble(String.format("%.2f",Double.parseDouble(txtDineIn3.getText().toString())));
 
         fPickUp = 0.00f;
         fTakeAway = 0.00f;
