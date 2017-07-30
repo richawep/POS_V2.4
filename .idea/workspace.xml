@@ -20,10 +20,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/printers/printers.iml" afterPath="$PROJECT_DIR$/printers/printers.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/wepbase.iml" afterPath="$PROJECT_DIR$/wepbase/wepbase.iml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -7059,13 +7055,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00056" summary="1. including Invoicedate in delete bill&#10;">
-      <created>1495454795641</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1495454795642</updated>
-    </task>
     <task id="LOCAL-00057" summary="implemented reverse tax and forward tax">
       <created>1495543336559</created>
       <option name="number" value="00057" />
@@ -7402,7 +7391,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501371127730</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="issue - item and stock showing value in more than 2 digits after decimal.">
+      <created>1501431510926</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1501431510927</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7518,7 +7514,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adding time(current) in report printing" />
     <MESSAGE value="limiting hsn limit to 8 in amends modules&#10;" />
     <MESSAGE value="handling &quot;&quot; issue on changing quantity directly, in billing modules&#10;" />
     <MESSAGE value="adding upgrade module" />
@@ -7543,7 +7538,8 @@
     <MESSAGE value="header setting" />
     <MESSAGE value="controlling day end back date limit" />
     <MESSAGE value="bug fixing - when user changes quantity to 'zero' from '1' in 'Counter Sales', Amount fied is not updated to Amount '0.0'." />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fixing - when user changes quantity to 'zero' from '1' in 'Counter Sales', Amount fied is not updated to Amount '0.0'." />
+    <MESSAGE value="issue - item and stock showing value in more than 2 digits after decimal." />
+    <option name="LAST_COMMIT_MESSAGE" value="issue - item and stock showing value in more than 2 digits after decimal." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7676,6 +7672,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="475">
           <caret line="240" column="44" selection-start-line="240" selection-start-column="44" selection-end-line="240" selection-end-column="44" />
+          <folding>
+            <element signature="e#469#2316#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
