@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -39,8 +40,8 @@ public class ActionBarUtils {
     }
 
     public static void takeScreenshot(final Activity activity, final View view1) {
-        Date now = new Date();
-        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+        String dd = new SimpleDateFormat("dd-MM-yyyy_hh:mm:ss").format(new Date());
+
 
         try {
             String path = "";
@@ -49,8 +50,13 @@ public class ActionBarUtils {
             }else {
                 path = Environment.getExternalStorageDirectory().toString();
             }
+            path = path+"/WeP_ScreenShots/";
+            File screenPath = new File(path);
+            if(screenPath.exists() == false)
+                screenPath.mkdir();
+
             // image naming and path  to include sd card  appending name you choose for file
-            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + "Screenshot" + ".jpg";
+            String mPath = path + "/" + "Screenshot_" +dd+ ".jpg";
 
             // create bitmap screen capture
             View v1 = view1;//activity.getWindow().getDecorView().getRootView();
