@@ -20,8 +20,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/ActionBarUtils.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/ActionBarUtils.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -7062,13 +7060,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00058" summary="total amt was displaying as 0 after applying discount in % in pay bill window&#10;">
-      <created>1495685251641</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1495685251641</updated>
-    </task>
     <task id="LOCAL-00059" summary="1. disabling manual entry of discount in paybill&#10;2. GST link -&gt;downloading and saving returns&#10;3. setting limits on rate and quantity in additemtoTable">
       <created>1495785157172</created>
       <option name="number" value="00059" />
@@ -7405,7 +7396,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501431751820</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="issue - Screenshots not saving properly">
+      <created>1501481876385</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1501481876385</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7521,7 +7519,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="limiting hsn limit to 8 in amends modules&#10;" />
     <MESSAGE value="handling &quot;&quot; issue on changing quantity directly, in billing modules&#10;" />
     <MESSAGE value="adding upgrade module" />
     <MESSAGE value="controlling miscellanous settings for auto dayend settings&#10;" />
@@ -7546,7 +7543,8 @@
     <MESSAGE value="controlling day end back date limit" />
     <MESSAGE value="bug fixing - when user changes quantity to 'zero' from '1' in 'Counter Sales', Amount fied is not updated to Amount '0.0'." />
     <MESSAGE value="issue - item and stock showing value in more than 2 digits after decimal." />
-    <option name="LAST_COMMIT_MESSAGE" value="issue - item and stock showing value in more than 2 digits after decimal." />
+    <MESSAGE value="issue - Screenshots not saving properly" />
+    <option name="LAST_COMMIT_MESSAGE" value="issue - Screenshots not saving properly" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
