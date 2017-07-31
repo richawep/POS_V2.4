@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/back_fnb"
     android:orientation="vertical"
     android:weightSum="3"
@@ -10,19 +10,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".5"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvTopLine"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:background="#777777" />
 
         <TableRow
             android:id="@+id/rowLoginScreenTop"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="2dp">
@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/tvTopLine1"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:background="#777777" />
 
@@ -48,9 +48,9 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:layout_weight="1.8"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="0.75"
         android:orientation="vertical">
 
         <EditText
@@ -61,10 +61,10 @@
             android:background="@android:drawable/edit_text"
             android:ems="10"
             android:hint="User Id"
+            android:text="admin"
             android:imeOptions="flagNoExtractUi"
             android:inputType="text"
-            android:text="admin"
-            android:textColorHint="@android:color/black">
+            >
 
             <requestFocus />
         </EditText>
@@ -78,11 +78,11 @@
             android:layout_marginTop="20dp"
             android:background="@android:drawable/edit_text"
             android:ems="10"
+            android:text=""
             android:hint="Password"
             android:imeOptions="flagNoExtractUi"
             android:inputType="textPassword"
-            android:text="admin"
-            android:textColorHint="@android:color/black" />
+             />
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/checkboxRememberMe"
@@ -90,9 +90,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtPassword"
             android:layout_centerHorizontal="true"
-            android:text="Remember Me "
             android:textColor="@color/white"
-            app:buttonTint="@color/white" />
+            app:buttonTint="@color/white"
+            android:text="Remember Me " />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,7 +106,7 @@
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="120dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/btn_marigin"
                 android:layout_marginRight="@dimen/btn_marigin"
@@ -114,14 +114,13 @@
                 android:contentDescription="Click here to go to main screen"
                 android:onClick="onLogin"
                 android:text="Log In"
-                android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:theme="@style/WepButtonWithMarigin" />
 
             <Button
                 android:id="@+id/btnClose"
                 android:layout_width="120dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="@dimen/btn_marigin"
@@ -129,9 +128,8 @@
                 android:contentDescription="Click here to close the application"
                 android:onClick="Close"
                 android:text="Exit"
-                android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:theme="@style/WepButtonWithMarigin" />
 
         </LinearLayout>
 
@@ -139,9 +137,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".7"
-        android:weightSum="1"
+        android:layout_height="match_parent"
+        android:layout_weight="1.25"
         android:orientation="vertical">
 
         <TextView
@@ -153,15 +150,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_weight=".6"
             android:gravity="right">
 
             <Button
                 android:id="@+id/btnMonthDisplay"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="right"
                 android:layout_margin="0dp"
                 android:background="@drawable/img_monthyear"
@@ -169,14 +165,13 @@
                 android:contentDescription="Month button"
                 android:focusable="false"
                 android:text="March"
-                android:textAllCaps="false"
-                android:textColor="#0000FF"
-                android:textSize="18sp" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#0000FF" />
 
             <Button
                 android:id="@+id/btnDateDisplay"
                 android:layout_width="120dp"
-                android:layout_height="match_parent"
+                android:layout_height="80dp"
                 android:layout_gravity="right"
                 android:layout_margin="0dp"
                 android:background="@drawable/img_date"
@@ -184,14 +179,13 @@
                 android:contentDescription="Month button"
                 android:focusable="false"
                 android:text="30"
-                android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="30sp" />
+                android:textSize="50dp" />
 
             <Button
                 android:id="@+id/btnYearDisplay"
                 android:layout_width="120dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="right"
                 android:layout_margin="0dp"
                 android:background="@drawable/img_monthyear"
@@ -199,38 +193,29 @@
                 android:contentDescription="Month button"
                 android:focusable="false"
                 android:text="2013"
-                android:textAllCaps="false"
-                android:textColor="#0000FF"
-                android:textSize="18sp" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#0000FF" />
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/tvBottomLine"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:background="#777777" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:layout_weight=".4">
-
-
 
         <TextView
             android:id="@+id/tvCopyRightsLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:gravity="center"
+            android:layout_gravity="center"
             android:background="@color/greenyellow"
             android:text="WeP Solutions Limited."
-            android:textSize="18sp" />
-
-        </LinearLayout>
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>
 
-</LinearLayout>
+</LinearLayout><!--
+</HorizontalScrollView>
+</ScrollView>
+-->

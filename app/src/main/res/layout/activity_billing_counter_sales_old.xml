@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar_wep"
-        />
+        layout="@layout/toolbar_wep" />
 
     <RelativeLayout
         android:id="@+id/lnrBillingScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@+id/toolbar"
         android:background="@drawable/home_back">
 
         <LinearLayout
@@ -26,74 +26,70 @@
 
             <EditText
                 android:id="@+id/etCustGSTIN"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.96"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:hint="Customer GSTIN"
                 android:inputType="text"
-                android:maxLength="15"
-                android:singleLine="true"
                 android:minHeight="40dp"
+                android:maxLength="15"
                 android:selectAllOnFocus="true"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                />
 
             <EditText
                 android:id="@+id/edtCustName"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:gravity="left|center_vertical"
-                android:singleLine="true"
+                android:gravity="left"
                 android:hint="Name"
+                android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/edtCustPhoneNo"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:drawableRight="@drawable/searchicon_img"
                 android:gravity="left"
                 android:hint="Mobile No"
                 android:inputType="number"
-                android:singleLine="true"
                 android:maxLength="10"
+                android:drawableRight="@drawable/searchicon_img"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/edtCustAddress"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="left"
+                android:hint="Address"
                 android:singleLine="true"
                 android:maxLength="50"
-                android:hint="Address"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btn_DineInAddCustomer"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/background_btn"
                 android:gravity="center"
                 android:onClick="AddCustomer"
-                android:text="@string/add"
-                android:textAllCaps="false"
-                android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp"
+                android:text="Add"
                 android:theme="@style/WepButtonWithMarigin" />
         </LinearLayout>
-
 
         <RelativeLayout
             android:id="@+id/boxContent"
@@ -138,10 +134,11 @@
                                 android:layout_marginRight="5dp"
                                 android:layout_weight="1"
                                 android:completionThreshold="1"
-                                android:drawableRight="@drawable/searchicon_img"
                                 android:gravity="center"
+                                android:drawableRight="@drawable/searchicon_img"
                                 android:hint="Search Item Name"
                                 android:imeOptions="flagNoExtractUi"
+                                android:minHeight="40dp"
                                 android:textSize="10sp" />
 
                             <AutoCompleteTextView
@@ -157,6 +154,7 @@
                                 android:hint="Search Item Code"
                                 android:imeOptions="flagNoExtractUi"
                                 android:inputType="numberSigned"
+                                android:minHeight="40dp"
                                 android:textSize="10sp" />
                         </LinearLayout>
 
@@ -164,36 +162,38 @@
                             android:id="@+id/boxFields"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/search_boxes">
+                            android:layout_below="@+id/search_boxes"
+                            >
 
                             <LinearLayout
                                 android:id="@+id/relative_interstate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:minHeight="40dp"
                                 android:layout_weight="1"
-                                android:minHeight="40dp">
+                                >
 
                                 <CheckBox
                                     android:id="@+id/checkbox_interstate"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
                                     android:layout_weight="1.4"
-                                    android:gravity="center"
+                                    android:layout_height="match_parent"
                                     android:text="InterState"
                                     android:textColor="@color/gray"
-                                    android:textSize="@dimen/counter_sale_text_size_12sp_720dp_11sp_600dp" />
+                                    android:gravity="center"
+                                    android:textSize="15sp" />
 
                                 <Spinner
                                     android:id="@+id/spnr_pos"
-                                    style="@android:style/Widget.Holo.Light.Spinner"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:layout_weight="1"
                                     android:layout_gravity="center"
+                                    style="@android:style/Widget.Holo.Light.Spinner"
                                     android:layout_marginLeft="5dp"
-                                    android:layout_weight="1" />
+                                    />
 
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -203,24 +203,25 @@
                                 <TextView
                                     android:id="@+id/textViewLabelOrderNo"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:text="Order No"
-                                    android:textSize="@dimen/counter_sale_text_size_12sp_720dp_11sp_600dp" />
+                                    android:text="Order No" />
 
                                 <EditText
                                     android:id="@+id/tvBillNumberValue"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_weight="1"
                                     android:enabled="false"
+                                    android:layout_weight="1"
+                                    android:layout_marginLeft="10dp"
                                     android:minWidth="90dp"
                                     android:textAlignment="center"
                                     android:textAppearance="?android:attr/textAppearanceMedium"
                                     android:textSize="12dp" />
                             </LinearLayout>
+
+
                         </LinearLayout>
 
                         <RelativeLayout
@@ -233,71 +234,58 @@
                                 android:id="@+id/rowBillColumnCaption"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginRight="1dp"
                                 android:background="@color/colorPrimaryLight">
 
                                 <TextView
-
                                     android:id="@+id/tvColItemName"
-                                    android:layout_width="@dimen/counter_sale_140dp_720dp_110dp_600dp"
+                                    android:layout_width="130dp"
                                     android:layout_height="wrap_content"
-                                    android:gravity="start"
+                                    android:layout_marginLeft="5dp"
                                     android:text="Name"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/txtColorAccent"
-                                    android:textSize="@dimen/counter_sale_text_size_14sp_720dp_10sp_600dp" />
+                                    android:textColor="@color/txtColorAccent" />
 
                                 <TextView
                                     android:id="@+id/tvColHSN"
-                                    android:layout_width="@dimen/counter_sale_70dp_720dp_60dp_600dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="80dp"
                                     android:text="HSN"
+                                    android:layout_height="wrap_content"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/txtColorAccent"
-                                    android:textSize="@dimen/counter_sale_text_size_14sp_720dp_10sp_600dp" />
+                                    android:textColor="@color/txtColorAccent" />
 
                                 <TextView
                                     android:id="@+id/tvColItemQty"
-                                    android:layout_width="@dimen/counter_sale_60dp_720dp_55dp_600dp"
+                                    android:layout_width="55dp"
                                     android:layout_height="wrap_content"
                                     android:text="Qty"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/txtColorAccent"
-                                    android:textSize="@dimen/counter_sale_text_size_14sp_720dp_10sp_600dp" />
+                                    android:textColor="@color/txtColorAccent" />
 
                                 <TextView
                                     android:id="@+id/tvColRate"
-                                    android:layout_width="@dimen/counter_sale_60dp_720dp_55dp_600dp"
+                                    android:layout_width="70dp"
                                     android:layout_height="wrap_content"
                                     android:text="Rate"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/txtColorAccent"
-                                    android:textSize="@dimen/counter_sale_text_size_14sp_720dp_10sp_600dp" />
+                                    android:textColor="@color/txtColorAccent" />
 
                                 <TextView
                                     android:id="@+id/tvColAmount"
-                                    android:layout_width="@dimen/counter_sale_115dp_720dp_80dp_600dp"
+                                    android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:text="Amount"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/txtColorAccent"
-                                    android:textSize="@dimen/counter_sale_text_size_14sp_720dp_10sp_600dp" />
-
-                                <TextView
-                                android:layout_width="@dimen/counter_sale_115dp_720dp_80dp_600dp"
-                                android:layout_height="wrap_content" />
+                                    android:textColor="@color/txtColorAccent" />
 
                                 <TextView
                                     android:id="@+id/tvColDelete"
-                                    android:layout_width="@dimen/counter_sale_60dp_720dp_55dp_600dp"
+                                    android:layout_width="70dp"
                                     android:layout_height="wrap_content"
                                     android:text="Delete"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/txtColorAccent"
-                                    android:textSize="@dimen/counter_sale_text_size_14sp_720dp_10sp_600dp" />
+                                    android:textColor="@color/txtColorAccent" />
                             </TableRow>
 
                             <ScrollView
@@ -328,7 +316,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_alignParentStart="true"
                             android:background="@color/azure"
                             android:orientation="horizontal"
                             android:weightSum="2">
@@ -337,7 +324,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="5dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginRight="20dp"
                                 android:layout_marginTop="1dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
@@ -364,10 +351,9 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:background="@color/colorPrimaryLight"
-                                            android:text="IGST-Tax :"
-                                            android:textAppearance="?android:attr/textAppearanceSmall"
                                             android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:text="IGST-Tax :"
+                                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                         <TextView
                                             android:id="@+id/tvIGSTValue"
@@ -375,11 +361,10 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:background="@color/colorPrimaryLight"
+                                            android:textColor="@color/txtColorAccent"
                                             android:gravity="right"
                                             android:text="0.00"
-                                            android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -401,8 +386,7 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:text="CGST-Tax :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textColor="@color/txtColorAccent" />
 
                                         <TextView
                                             android:id="@+id/tvTaxTotalValue"
@@ -412,9 +396,8 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:gravity="right"
                                             android:text="0.00"
-                                            android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -436,8 +419,7 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:text="SGST-Tax :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textColor="@color/txtColorAccent" />
 
                                         <TextView
                                             android:id="@+id/tvServiceTaxValue"
@@ -447,10 +429,8 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:gravity="right"
                                             android:text="0.00"
-                                            android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
-
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
                                         <TextView
                                             android:id="@+id/tvDiscountPercentage"
                                             android:layout_width="match_parent"
@@ -459,10 +439,9 @@
                                             android:background="#ffffff"
                                             android:gravity="right"
                                             android:text="0"
+                                            android:visibility="gone"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="#000000"
-                                            android:visibility="gone" />
-
+                                            android:textColor="#000000" />
                                         <TextView
                                             android:id="@+id/tvDiscountAmount"
                                             android:layout_width="match_parent"
@@ -471,21 +450,21 @@
                                             android:background="#ffffff"
                                             android:gravity="right"
                                             android:text="0"
+                                            android:visibility="gone"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="#000000"
-                                            android:visibility="gone" />
+                                            android:textColor="#000000" />
                                     </LinearLayout>
 
                                     <LinearLayout
-                                        android:id="@+id/idd_date"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_below="@+id/idd3"
+                                        android:id="@+id/idd_date"
                                         android:layout_marginBottom="5dp"
                                         android:layout_marginTop="2.5dp"
                                         android:layout_weight="1"
-                                        android:orientation="horizontal"
                                         android:visibility="invisible"
+                                        android:orientation="horizontal"
                                         android:weightSum="2">
 
                                         <TextView
@@ -496,19 +475,17 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:text="Date :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textColor="@color/txtColorAccent" />
 
                                         <TextView
                                             android:id="@+id/tvBillDateValue"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:background="@color/colorPrimaryLight"
                                             android:gravity="right"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:background="@color/colorPrimaryLight"
+                                            android:textColor="@color/txtColorAccent" />
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
@@ -516,6 +493,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_marginLeft="20dp"
                                 android:layout_marginRight="5dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
@@ -543,8 +521,7 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:text="Taxable Value :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textColor="@color/txtColorAccent" />
 
                                         <TextView
                                             android:id="@+id/tvSubTotalValue"
@@ -554,11 +531,9 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:gravity="right"
                                             android:text="0.00"
-                                            android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
                                     </LinearLayout>
-
                                     <LinearLayout
                                         android:id="@+id/idd11"
                                         android:layout_width="match_parent"
@@ -577,8 +552,7 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:text="cess Tax :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textColor="@color/txtColorAccent" />
 
                                         <TextView
                                             android:id="@+id/tvcessValue"
@@ -588,9 +562,8 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:gravity="right"
                                             android:text="0.00"
-                                            android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -612,8 +585,7 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:text="Other Charges :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textColor="@color/txtColorAccent" />
 
                                         <TextView
                                             android:id="@+id/txtOthercharges"
@@ -623,9 +595,8 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:gravity="right"
                                             android:text="0.00"
-                                            android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -647,8 +618,7 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:text="TOTAL :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textColor="@color/txtColorAccent" />
 
                                         <TextView
                                             android:id="@+id/tvBillTotalValue"
@@ -658,9 +628,8 @@
                                             android:background="@color/colorPrimaryLight"
                                             android:gravity="right"
                                             android:text="0.00"
-                                            android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/txtColorAccent"
-                                            android:textSize="@dimen/counter_sale_text_size_12sp_720dp_12sp_600dp" />
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textColor="@color/txtColorAccent" />
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
@@ -723,8 +692,7 @@
                             android:id="@+id/listViewFilter2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_below="@+id/btnLabel2" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -741,7 +709,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/colorPrimaryLight"
-                            android:text="Item"
+                            android:text="Items"
                             android:textColor="@color/white" />
 
                         <GridView
@@ -757,7 +725,6 @@
 
         </RelativeLayout>
 
-
         <LinearLayout
             android:id="@+id/boxBtn"
             android:layout_width="match_parent"
@@ -765,12 +732,11 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
-            android:padding="4dp"
-            android:weightSum="5">
+            android:padding="4dp">
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btn_PrintBill"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/btn_marigin"
@@ -779,14 +745,12 @@
                 android:background="@drawable/background_btn"
                 android:gravity="center"
                 android:onClick="printBILL"
-                android:text="@string/print_bill"
-                android:textAllCaps="false"
-                android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp"
+                android:text="Print Bill"
                 android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btn_PayBill"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/btn_marigin"
@@ -795,14 +759,12 @@
                 android:background="@drawable/background_btn"
                 android:gravity="center"
                 android:onClick="Tender"
-                android:text="@string/pay_bill"
-                android:textAllCaps="false"
-                android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp"
+                android:text="Pay Bill"
                 android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btn_Clear"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/btn_marigin"
@@ -810,15 +772,13 @@
                 android:layout_weight="1"
                 android:background="@drawable/background_btn"
                 android:gravity="center"
-                android:onClick="CLEAR"
-                android:text="@string/clear"
-                android:textAllCaps="false"
-                android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp"
+                android:onClick="Clear"
+                android:text="Clear"
                 android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btn_DeleteBill"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/btn_marigin"
@@ -827,15 +787,13 @@
                 android:background="@drawable/background_btn"
                 android:gravity="center"
                 android:onClick="DeleteBill"
-                android:text="@string/delete_bill"
-                android:textAllCaps="false"
-                android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp"
+                android:text="Delete Bill"
                 android:theme="@style/WepButtonWithMarigin" />
 
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btn_Reprint"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/btn_marigin"
@@ -844,12 +802,8 @@
                 android:background="@drawable/background_btn"
                 android:gravity="center"
                 android:onClick="ReprintBill"
-                android:text="@string/reprint_bill"
-                android:textAllCaps="false"
-                android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp"
+                android:text="Reprint Bill"
                 android:theme="@style/WepButtonWithMarigin" />
         </LinearLayout>
-
-
     </RelativeLayout>
 </RelativeLayout>
