@@ -18,8 +18,6 @@ import com.wep.common.app.Database.DatabaseHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
 
-import java.util.regex.Pattern;
-
 public class FragmentSettingsHeaderFooter extends Fragment {
 
     Context myContext;

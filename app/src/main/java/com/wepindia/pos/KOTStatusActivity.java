@@ -1,10 +1,8 @@
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -49,15 +46,6 @@ public class KOTStatusActivity extends WepBaseActivity {
 		setContentView(R.layout.activity_kotstatus);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		/*getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.application_title_bar);
-		TextView tvTitleText = (TextView) findViewById(R.id.tvTitleBarCaption);
-		TextView tvTitleUserName = (TextView) findViewById(R.id.tvTitleBarUserName);
-		TextView tvTitleDate = (TextView) findViewById(R.id.tvTitleBarDate);
-		ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
-		ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-		ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.lnrKOTStatus));*/
-
-		//tvTitleText.setText("KOT Status");
 
 		myContext = this;
 		MsgBox = new MessageDialog(myContext);

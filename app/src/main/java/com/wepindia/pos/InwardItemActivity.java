@@ -155,7 +155,7 @@ public class InwardItemActivity extends WepBaseActivity {
             e.printStackTrace();
         }
         finally {
-            com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Item Inward",userName," Date:"+s.toString());
+            com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Inward Items Master",userName," Date:"+s.toString());
         }
     }
 
@@ -1371,7 +1371,7 @@ public class InwardItemActivity extends WepBaseActivity {
         } else if (Type == 2)
         { // update
             int menuCode = Integer.parseInt(tvMenuCode.getText().toString());
-            ItemInward item =  new ItemInward( 0, itemname,  strBarcode, imageURI, HSNCode,averageRate,quantity, uom,
+            ItemInward item =  new ItemInward( menuCode, itemname,  strBarcode, imageURI, HSNCode,averageRate,quantity, uom,
                     igstRate, igstAmount,cgstRate, cgstAmount, sgstRate, sgstAmount, cessRate, cessAmount,
                     taxationType,supplyType);
 

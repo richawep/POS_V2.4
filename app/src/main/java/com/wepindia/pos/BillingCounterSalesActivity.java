@@ -203,63 +203,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     }
 
 
-    private static int checkScreenResolutionWidthType(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
-        int width = metrics.widthPixels;
-        int height = metrics.heightPixels;
-        return height;
-    }
-
-    private void getScreenResolutionWidthType(int screenResolutionType) {
-
-        switch (screenResolutionType) {
-
-            case mSamsungTab3VScreenResolutionWidth:
-                mDataMiniDeviceTextsize = 8;
-                mItemNameWidth = 105;
-                mHSNWidth = 50;
-                mQuantityWidth = 55;
-                mRateWidth = 60;
-                mAmountWidth = 60;
-                break;
-
-            case mSamsungT561ScreenResolutionWidth:
-                mHeadingTextSize = 14;
-                mDataMiniDeviceTextsize = 9;
-                mItemNameWidth = 140;
-                mHSNWidth = 70;
-                mQuantityWidth = 65;
-                mRateWidth = 65;
-                mAmountWidth = 75;
-                mItemNameTextView.setTextSize(mHeadingTextSize);
-                mHSNTextView.setTextSize(mHeadingTextSize);
-                mQuantityTextView.setTextSize(mHeadingTextSize);
-                mRateTextView.setTextSize(mHeadingTextSize);
-                mAmountTextView.setTextSize(mHeadingTextSize);
-                mDeleteTextView.setTextSize(mHeadingTextSize);
-                break;
-
-            case mDataMiniScreenResolutionWidth:
-                mHeadingTextSize = 18;
-                mDataMiniDeviceTextsize = 11;
-                mItemNameWidth = 135;
-                mHSNWidth = 60;
-                mQuantityWidth = 65;
-                mRateWidth = 65;
-                mAmountWidth = 85;
-                mItemNameTextView.setTextSize(mHeadingTextSize);
-                mHSNTextView.setTextSize(mHeadingTextSize);
-                mQuantityTextView.setTextSize(mHeadingTextSize);
-                mRateTextView.setTextSize(mHeadingTextSize);
-                mAmountTextView.setTextSize(mHeadingTextSize);
-                mDeleteTextView.setTextSize(mHeadingTextSize);
-                break;
-        }
-    }
-    @Override
+        @Override
     public void onClick(View v)
     {
         super.onClick(v);
@@ -513,6 +457,68 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         setInvoiceDate();
         fTotalDiscount =0;
     }
+    private static int checkScreenResolutionWidthType(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        return height;
+    }
+
+    private void getScreenResolutionWidthType(int screenResolutionType) {
+
+        switch (screenResolutionType) {
+
+            case mSamsungTab3VScreenResolutionWidth:
+                mDataMiniDeviceTextsize = 8;
+                mItemNameWidth = 105;
+                mHSNWidth = 50;
+                mQuantityWidth = 55;
+                mRateWidth = 60;
+                mAmountWidth = 60;
+                break;
+
+            case mSamsungT561ScreenResolutionWidth:
+                mHeadingTextSize = 14;
+                mDataMiniDeviceTextsize = 9;
+
+                mItemNameWidth = 140;
+                mHSNWidth = 70;
+                mQuantityWidth = 65;
+                mRateWidth = 65;
+                mAmountWidth = 75;
+
+                mItemNameTextView.setTextSize(mHeadingTextSize);
+                mHSNTextView.setTextSize(mHeadingTextSize);
+                mQuantityTextView.setTextSize(mHeadingTextSize);
+                mRateTextView.setTextSize(mHeadingTextSize);
+                mAmountTextView.setTextSize(mHeadingTextSize);
+                mDeleteTextView.setTextSize(mHeadingTextSize);
+                break;
+
+            case mDataMiniScreenResolutionWidth:
+                mHeadingTextSize = 14;
+                mDataMiniDeviceTextsize = 11;
+
+                mItemNameWidth = 140;
+                mHSNWidth = 70;
+                mQuantityWidth = 65;
+                mRateWidth = 65;
+                mAmountWidth = 85;
+
+                mItemNameTextView.setTextSize(mHeadingTextSize);
+                mHSNTextView.setTextSize(mHeadingTextSize);
+                mQuantityTextView.setTextSize(mHeadingTextSize);
+                mRateTextView.setTextSize(mHeadingTextSize);
+                mAmountTextView.setTextSize(mHeadingTextSize);
+                mDeleteTextView.setTextSize(mHeadingTextSize);
+                break;
+        }
+    }
+
+
     void setInvoiceDate()
     {
         Cursor crsrSetting = db.getBillSettings();
@@ -4365,37 +4371,58 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                 // Item Name
                 tvName = new TextView(BillingCounterSalesActivity.this);
-                tvName.setWidth(135);
-                tvName.setTextSize(11);
+                /*tvName.setWidth(135);
+                tvName.setTextSize(11);*/
+                tvName.setWidth(mItemNameWidth); // 154px ~= 230dp
+                tvName.setTextSize(mDataMiniDeviceTextsize);
                 tvName.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemName")));
 
                 //hsn code
                 tvHSn = new TextView(BillingCounterSalesActivity.this);
-                tvHSn.setWidth(67); // 154px ~= 230dp
-                tvHSn.setTextSize(11);
+                //  tvHSn.setWidth(67); // 154px ~= 230dp
+                //   tvHSn.setTextSize(11);
+
+
+                tvHSn.setWidth(mHSNWidth); // 154px ~= 230dp
+                tvHSn.setTextSize(mDataMiniDeviceTextsize);
+
                 if (GSTEnable.equalsIgnoreCase("1") && (HSNEnable_out != null) && HSNEnable_out.equals("1")) {
                     tvHSn.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("HSNCode")));
                 }
 
                 // Quantity
                 etQty = new EditText(BillingCounterSalesActivity.this);
-                etQty.setWidth(55);
-                etQty.setTextSize(11);
+                //  etQty.setWidth(55); // 57px ~= 85dp
+                // etQty.setTextSize(11);
+
+
+                etQty.setWidth(mQuantityWidth); // 57px ~= 85dp
+                etQty.setTextSize(mDataMiniDeviceTextsize);
+
                 etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
                 etQty.setOnClickListener(Qty_Rate_Click);
                 etInputValidate.ValidateDecimalInput(etQty);
 
                 // Rate
                 etRate = new EditText(BillingCounterSalesActivity.this);
-                etRate.setWidth(75);
                 etRate.setEnabled(false);
-                etRate.setTextSize(11);
+
+                //    etRate.setWidth(70); // 74px ~= 110dp
+                //      etRate.setTextSize(11);
+
+
+                etRate.setWidth(mRateWidth); // 74px ~= 110dp
+                etRate.setTextSize(mDataMiniDeviceTextsize);
+
+
                 etRate.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Value"))));
 
                 // Amount
                 tvAmount = new TextView(BillingCounterSalesActivity.this);
-                tvAmount.setWidth(105);
-                tvAmount.setTextSize(11);
+                /*tvAmount.setWidth(105);
+                tvAmount.setTextSize(11);*/
+                tvAmount.setWidth(mAmountWidth); // 97px ~= 145dp
+                tvAmount.setTextSize(mDataMiniDeviceTextsize);
                 tvAmount.setText(
                         String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("TaxableValue"))));
 

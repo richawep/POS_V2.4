@@ -7,4 +7,69 @@
     <dimen name="bar_icon">50dp</dimen>
     <dimen name="menu_box_font_size">18sp</dimen>
     <dimen name="textSizePayment">20sp</dimen>
+
+
+        <dimen name="margin_left">10dp</dimen>
+        <dimen name="margin_1dp">1dp</dimen>
+        <dimen name="margin_2dp">2dp</dimen>
+        <dimen name="margin_3dp">3dp</dimen>
+        <dimen name="margin_4dp">4dp</dimen>
+        <dimen name="margin_5dp">5dp</dimen>
+        <dimen name="margin_6dp">6dp</dimen>
+        <dimen name="margin_8dp">8dp</dimen>
+
+        <dimen name="margin_10dp">10dp</dimen>
+        <dimen name="margin_12dp">12dp</dimen>
+        <dimen name="margin_14dp">14dp</dimen>
+        <dimen name="margin_16dp">16dp</dimen>
+        <dimen name="margin_18dp">18dp</dimen>
+
+        <dimen name="margin_20dp">20dp</dimen>
+        <dimen name="margin_22dp">22dp</dimen>
+        <dimen name="margin_24dp">24dp</dimen>
+        <dimen name="margin_26dp">26dp</dimen>
+        <dimen name="margin_28dp">28dp</dimen>
+
+        <dimen name="margin_30dp">30dp</dimen>
+        <dimen name="margin_32dp">32dp</dimen>
+        <dimen name="margin_34dp">34dp</dimen>
+        <dimen name="margin_36dp">36dp</dimen>
+        <dimen name="margin_38dp">38dp</dimen>
+
+        <dimen name="margin_40dp">40dp</dimen>
+        <dimen name="margin_42dp">42dp</dimen>
+        <dimen name="margin_44dp">44dp</dimen>
+        <dimen name="margin_46dp">46dp</dimen>
+        <dimen name="margin_48dp">48dp</dimen>
+
+        <dimen name="margin_50dp">50dp</dimen>
+        <dimen name="margin_55dp">55dp</dimen>
+        <dimen name="margin_60dp">60dp</dimen>
+        <dimen name="margin_65dp">65dp</dimen>
+        <dimen name="margin_70dp">70dp</dimen>
+        <dimen name="margin_75dp">75dp</dimen>
+        <dimen name="margin_80dp">80dp</dimen>
+        <dimen name="margin_85dp">85dp</dimen>
+        <dimen name="margin_90dp">90dp</dimen>
+        <dimen name="margin_95dp">95dp</dimen>
+        <dimen name="margin_100dp">100dp</dimen>
+        <dimen name="margin_105dp">105dp</dimen>
+        <dimen name="margin_110dp">110dp</dimen>
+        <dimen name="margin_120dp">120dp</dimen>
+        <dimen name="margin_130dp">130dp</dimen>
+        <dimen name="margin_140dp">140dp</dimen>
+        <dimen name="margin_150dp">150dp</dimen>
+        <dimen name="margin_160dp">160dp</dimen>
+        <dimen name="margin_170dp">170dp</dimen>
+        <dimen name="margin_180dp">180dp</dimen>
+        <dimen name="margin_190dp">190dp</dimen>
+        <dimen name="margin_200dp">200dp</dimen>
+        <dimen name="margin_210dp">210dp</dimen>
+        <dimen name="margin_220dp">220dp</dimen>
+        <dimen name="margin_240dp">240dp</dimen>
+        <dimen name="margin_250dp">250dp</dimen>
+        <dimen name="margin_275dp">275dp</dimen>
+        <dimen name="margin_300dp">300dp</dimen>
+
+
 </resources>

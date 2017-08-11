@@ -89,10 +89,10 @@
                         android:background="#000000" />
 
                     <FrameLayout
+                        android:id="@+id/frame_split"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
-                        android:id="@+id/frame_split"
                         android:layout_weight="1.2">
 
                         <LinearLayout
@@ -305,29 +305,39 @@
             android:gravity="center"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9">
+                </FrameLayout>
+
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btn_DineInTableBooking"
-                    android:layout_width="150dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="DineInTableBooking"
                     android:text="Table Booking"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btn_TableCancel"
-                    android:layout_width="100dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="Cancel"
                     android:text="Cancel"
@@ -336,9 +346,12 @@
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btn_TableDineIn"
-                    android:layout_width="100dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="DineIn"
                     android:text="DineIn"
@@ -347,9 +360,12 @@
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btn_TableOK"
-                    android:layout_width="100dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="OK"
                     android:text="OK"
@@ -358,14 +374,23 @@
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btn_DineInTableStatus"
-                    android:layout_width="150dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="DineInTableStatus"
                     android:text="Table Status"
                     android:textColor="@android:color/white"
                     android:theme="@style/WepButtonWithMarigin" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9">
+
+                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

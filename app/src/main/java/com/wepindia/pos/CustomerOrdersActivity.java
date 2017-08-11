@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -104,15 +103,6 @@ public class CustomerOrdersActivity extends WepBaseActivity{
         setContentView(R.layout.activity_customerorders);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-
-        /*getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.application_title_bar);
-        TextView tvTitleText = (TextView)findViewById(R.id.tvTitleBarCaption);
-        TextView tvTitleUserName = (TextView) findViewById(R.id.tvTitleBarUserName);
-        TextView tvTitleDate = (TextView) findViewById(R.id.tvTitleBarDate);
-		ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
-		ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-		ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.lnrCustomerOrder));*/
-        //tvTitleText.setText("Customer Orders");
 
         myContext = this;
 

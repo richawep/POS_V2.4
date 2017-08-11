@@ -1,6 +1,5 @@
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,9 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -55,14 +52,8 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_management);
-        /*TextView tvTitleText = (TextView) findViewById(R.id.tvTitleBarCaption);
-        TextView tvTitleUserName = (TextView) findViewById(R.id.tvTitleBarUserName);
-        TextView tvTitleDate = (TextView) findViewById(R.id.tvTitleBarDate);
-        ActionBarUtils.goBack(UserManagementActivity.this, findViewById(R.id.imgTitleBackIcon));
-        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.relativeParent));*/
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //tvTitleText.setText("Add Users");
         myContext = this;
         MsgBox = new MessageDialog(myContext);
 

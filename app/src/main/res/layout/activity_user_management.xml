@@ -11,15 +11,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:layout_above="@+id/boxBtn"
+            android:orientation="horizontal"
             android:weightSum="3">
 
             <LinearLayout
@@ -28,9 +28,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="20dp"
-                android:orientation="vertical"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
+                android:orientation="vertical"
                 android:padding="10dp">
 
                 <LinearLayout
@@ -46,7 +46,8 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:text="Name *:"
-                        android:textSize="22sp" />
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/text_size_22sp_720dp_20sp_600dp" />
 
                     <EditText
                         android:id="@+id/editTextName"
@@ -71,7 +72,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:text="Mobile *:"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/text_size_22sp_720dp_20sp_600dp" />
 
                     <EditText
                         android:id="@+id/editTextMobile"
@@ -97,7 +98,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:text="Designation :"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/text_size_22sp_720dp_20sp_600dp" />
 
                     <EditText
                         android:id="@+id/editTextDesignation"
@@ -123,7 +124,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:text="Role *:"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/text_size_22sp_720dp_20sp_600dp" />
 
                     <Spinner
                         android:id="@+id/spinnerRole"
@@ -146,7 +147,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:text="Login *:"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/text_size_22sp_720dp_20sp_600dp" />
 
                     <EditText
                         android:id="@+id/editTextLogin"
@@ -171,7 +172,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:text="Password *:"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/text_size_22sp_720dp_20sp_600dp" />
 
                     <EditText
                         android:id="@+id/editTextPass"
@@ -179,8 +180,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:background="@android:drawable/edit_text"
-                        android:hint="Password"
-                        />
+                        android:hint="Password" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -196,7 +196,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:text="Aadhar :"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/text_size_22sp_720dp_20sp_600dp" />
 
                     <EditText
                         android:id="@+id/editTextAadhar"
@@ -222,7 +222,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:text="Email :"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/text_size_22sp_720dp_20sp_600dp" />
 
                     <EditText
                         android:id="@+id/editTextEmail"
@@ -247,7 +247,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:text="Address :"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/text_size_22sp_720dp_20sp_600dp" />
 
                     <EditText
                         android:id="@+id/editTextAddress"
@@ -263,8 +263,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_gravity="center_horizontal">
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/textViewAttachment"
@@ -272,23 +272,24 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="Attach Address Proof"
-                        android:textColor="@android:color/black"
-                         />
+                        android:textColor="@android:color/black" />
                 </RelativeLayout>
 
 
             </LinearLayout>
+
             <View
                 android:layout_width="3dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@color/black"/>
+                android:background="@color/black" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/_5dp_720dp_4dp_600dp"
+                android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
                 android:layout_weight="2">
 
                 <TableLayout
@@ -305,30 +306,37 @@
 
                         <TextView
                             android:id="@+id/tvCaptionUserId"
-                            android:layout_width="100dp"
+                            android:layout_width="@dimen/_80dp_720dp_75dp_600dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="@dimen/_5dp_720dp_4dp_600dp"
+                            android:layout_marginRight="30dp"
                             android:text="S.No"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/txtColorAccent" />
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/txtColorAccent"
+                            android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp" />
 
                         <TextView
                             android:id="@+id/tvCaptionUserName"
-                            android:layout_width="120dp"
+                            android:layout_width="@dimen/_110dp_720dp_105dp_600dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="0dp"
+                            android:layout_marginLeft="@dimen/_20dp_720dp_15dp_600dp"
+                            android:layout_marginRight="@dimen/_20dp_720dp_15dp_600dp"
                             android:text="Name"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/txtColorAccent" />
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/txtColorAccent"
+                            android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp" />
 
                         <TextView
                             android:id="@+id/tvCaptionAccessLevel"
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/_120dp_720dp_115dp_600dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="60dp"
+
+                            android:layout_marginLeft="@dimen/_5dp_720dp_4dp_600dp"
                             android:text="Role"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/txtColorAccent" />
+
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/txtColorAccent"
+                            android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp" />
 
                     </TableRow>
 
@@ -367,59 +375,65 @@
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnSubmitUser"
                     android:layout_width="120dp"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/view1"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/btn_marigin"
+                    android:layout_marginRight="@dimen/btn_marigin"
                     android:background="@drawable/background_btn"
                     android:gravity="center"
                     android:minHeight="40dp"
                     android:onClick="SubmitFormData"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="Submit" />
+                    android:text="Submit"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnDeleteUser"
                     android:layout_width="120dp"
-                    android:layout_height="45dp"
-                    android:background="@drawable/background_btn"
-                    android:theme="@style/WepButtonWithMarigin"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/btn_marigin"
                     android:layout_marginRight="@dimen/btn_marigin"
+                    android:background="@drawable/background_btn"
                     android:minHeight="40dp"
                     android:onClick="DeleteItem"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:text="Delete" />
+                    android:text="Delete"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnClearUser"
                     android:layout_width="120dp"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/btn_marigin"
+                    android:layout_marginRight="@dimen/btn_marigin"
                     android:layout_toRightOf="@+id/btn1"
                     android:background="@drawable/background_btn"
                     android:minHeight="40dp"
                     android:onClick="clearFormData"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="Clear" />
+                    android:text="Clear"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnCloseUser"
                     android:layout_width="120dp"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/btn_marigin"
+                    android:layout_marginRight="@dimen/btn_marigin"
                     android:layout_toRightOf="@+id/btn1"
                     android:background="@drawable/background_btn"
                     android:minHeight="40dp"
                     android:onClick="Close"
-                    android:theme="@style/WepButtonWithMarigin"
-                    android:layout_marginLeft="@dimen/btn_marigin"
-                    android:layout_marginRight="@dimen/btn_marigin"
-                    android:text="Close" />
+                    android:text="Close"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

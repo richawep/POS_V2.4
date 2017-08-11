@@ -213,6 +213,12 @@
     <string name="tender">Tender</string>
     <string name="close">Close</string>
     <string name="cancel_order">Cancel Order</string>
-
+    <string name="title_activity_table_booking">TableBookingActivity</string>
+    // table booking
+    <string name="sno">S.No</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="table_for_booking">Table For Booking</string>
+    <string name="table_no">Table No</string>
+    <string name="mobile_no">Mobile No</string>
 
 </resources>

@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.wepindia.pos.InwardActivity">
-
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_wep" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -25,9 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center"
-            >
-
+            android:layout_gravity="center">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -57,6 +53,7 @@
                     android:textSize="@dimen/menu_box_font_size"
                     android:textStyle="bold" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,10 +78,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgiteminward"
                     android:gravity="center"
-                    android:text="Inward Item Masters"
+                    android:text="Inward Items Master"
                     android:textSize="@dimen/menu_box_font_size"
                     android:textStyle="bold" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,9 +111,6 @@
                     android:textSize="@dimen/menu_box_font_size"
                     android:textStyle="bold" />
             </RelativeLayout>
-
-
-
 
             <RelativeLayout
                 android:id="@+id/rl_inward_invoice_entry"
@@ -157,9 +152,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="1">
-
             </RelativeLayout>
 
         </LinearLayout>
@@ -168,8 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-           android:layout_gravity="center">
-
+            android:layout_gravity="center">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -197,6 +189,7 @@
                     android:textSize="@dimen/menu_box_font_size"
                     android:textStyle="bold" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -239,8 +232,7 @@
                     android:contentDescription="Ingredients"
                     android:onClick="LaunchActivity"
                     android:padding="3dp"
-                    android:src="@drawable/ingredients"
-                    />
+                    android:src="@drawable/ingredients"/>
 
                 <TextView
                     android:id="@+id/tvIngredientsOption"
@@ -253,14 +245,8 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
-
-
-
         </LinearLayout>
 
-
     </LinearLayout>
-
-
 
 </RelativeLayout>

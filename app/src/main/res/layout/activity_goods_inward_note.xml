@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,110 +11,120 @@
         android:id="@+id/activity_goods_inward_note"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="5dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp">
 
 
         <!-- end of additional charge layout-->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/linear_inward_buttons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="67dp"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:weightSum="2"
+            android:layout_gravity="bottom">
 
-            >
-
-            <TextView
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:background="#000000" />
 
             <LinearLayout
                 android:id="@+id/linear_inward_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-                android:layout_marginRight="@dimen/activity_horizontal_margin1"
-                android:gravity="center_horizontal|center_vertical"
-
-                >
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnAddSupplier"
-                    android:layout_width="120dp"
-                    android:layout_height="45dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                    android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
-                    android:textColor="@android:color/white"
-                    android:theme="@style/WepButtonWithMarigin"
                     android:onClick="AddSupplier"
-                    android:text="Add Supplier" />
+                    android:text="Add Supplier"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
 
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnSaveItem"
-                    android:layout_width="120dp"
-                    android:layout_height="45dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                    android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
-                    android:textColor="@android:color/white"
-                    android:theme="@style/WepButtonWithMarigin"
                     android:onClick="SaveNote"
-                    android:text="Save Note" />
+                    android:text="Save Note"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnSubmitItem"
-                    android:layout_width="120dp"
-                    android:layout_height="45dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                    android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
-                    android:textColor="@android:color/white"
-                    android:theme="@style/WepButtonWithMarigin"
                     android:onClick="GoodsInward"
-                    android:text="Goods Inward" />
+                    android:text="Goods Inward"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnClearItem"
-                    android:layout_width="120dp"
-                    android:layout_height="45dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                    android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
-                    android:textColor="@android:color/white"
-                    android:theme="@style/WepButtonWithMarigin"
                     android:onClick="Clear_inward"
-                    android:text="Clear" />
+                    android:text="Clear"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btnCloseItem"
-                    android:layout_width="120dp"
-                    android:layout_height="45dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                    android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
-                    android:textColor="@android:color/white"
-                    android:theme="@style/WepButtonWithMarigin"
                     android:onClick="Close_inward"
-                    android:text="Close" />
+                    android:text="Close"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                    android:theme="@style/WepButtonWithMarigin" />
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/linear_inward_additional_charge"
@@ -244,10 +253,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.05"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="Sno." />
+                    android:text="Sno."
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <!--<TextView
                     android:layout_width="match_parent"
@@ -263,139 +274,161 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.01"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="HSNCode" />
+                    android:text="HSNCode"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.9"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="Item Name" />
+                    android:text="Item Name"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="Rate" />
+                    android:text="Rate"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.02"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="Qty" />
+                    android:text="Qty"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.02"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
                     android:gravity="center"
-                    android:textStyle="bold"
-                    android:text="UoM" />
+                    android:text="UoM"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.95"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="Taxable Value" />
+                    android:text="Taxable Value"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="IGST Amt" />
+                    android:text="IGST Amt"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="CGST Amt" />
+                    android:text="CGST Amt"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="SGST Amt" />
+                    android:text="SGST Amt"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="cess Amt" />
+                    android:text="cess Amt"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.96"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="Amount" />
+                    android:text="Amount"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.05"
                     android:background="@drawable/heading_border"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:text="Del" />
+                    android:text="Del"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                    android:textStyle="bold" />
             </LinearLayout>
             <!-- end of child 1 : table_heading layout -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1">
-
-
-            <ListView
-                android:id="@+id/lv_inward_item_details"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorGreyBackground"
-                android:layout_marginBottom="10dp"
-                >
-            </ListView>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1">
+
+
+                <ListView
+                    android:id="@+id/lv_inward_item_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/colorGreyBackground"></ListView>
             </LinearLayout>
         </LinearLayout>
 
@@ -412,8 +445,8 @@
                 android:id="@+id/linear_Inward_entry_heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tx_inward_entry_heading"
@@ -424,8 +457,7 @@
                     android:text=" * please enter inward entry details"
                     android:textColor="#cc0000"
                     android:textSize="15dp"
-                    android:textStyle="italic"
-                    />
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -484,8 +516,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="bottom"
-                            android:textSize="15dp"
                             android:text="Supplier Name "
+                            android:textSize="15dp"
                             android:textStyle="bold" />
 
                         <EditText
@@ -496,13 +528,14 @@
                             android:visibility="gone" />
 
                         <AutoCompleteTextView
+                            android:id="@+id/autocompletetv_suppliername"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawableRight="@drawable/searchicon_img"
-                            android:id="@+id/autocompletetv_suppliername"/>
+                            android:drawableRight="@drawable/searchicon_img" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -515,8 +548,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="bottom"
-                            android:textSize="15dp"
                             android:text="Supplier Phone "
+                            android:textSize="15dp"
                             android:textStyle="bold" />
 
                         <EditText
@@ -539,16 +572,16 @@
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="bottom"
-                            android:textSize="15dp"
                             android:text="Supplier Address "
+                            android:textSize="15dp"
                             android:textStyle="bold" />
 
                         <EditText
                             android:id="@+id/et_supplier_address"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:maxLength="100"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:maxLength="100" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -576,16 +609,16 @@
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="bottom"
-                            android:textSize="15dp"
                             android:text="Purchase Order "
+                            android:textSize="15dp"
                             android:textStyle="bold" />
 
                         <AutoCompleteTextView
                             android:id="@+id/autocompletetv_purchase_order"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:inputType="number" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -602,16 +635,16 @@
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="bottom"
-                            android:textSize="15dp"
                             android:text="Invoice No."
+                            android:textSize="15dp"
                             android:textStyle="bold" />
 
                         <EditText
                             android:id="@+id/tx_inward_supply_invoice_number"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:inputType="number" />
 
                         <AutoCompleteTextView
                             android:id="@+id/autocompletetv_invoiceno"
@@ -639,8 +672,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="bottom"
-                                android:textSize="15dp"
                                 android:text="Invoice Date "
+                                android:textSize="15dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -690,47 +723,51 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:gravity="bottom"
-                            android:textSize="15dp"
                             android:paddingBottom="@dimen/activity_horizontal_margin1"
                             android:text="Supplier GSTIN "
+                            android:textSize="15dp"
                             android:textStyle="bold" />
 
                         <EditText
                             android:id="@+id/et_supplier_GSTIN"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:maxLength="15"
                             android:layout_marginLeft="10dp"
-                            android:text=""
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:maxLength="15"
+                            android:text="" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="15dp"
                         android:layout_weight="1">
+
                         <CheckBox
                             android:id="@+id/chk_interState"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="Supplier StateCode"
+                            android:checked="false"
                             android:gravity="bottom"
-                            android:textSize="15dp"
                             android:paddingBottom="@dimen/activity_horizontal_margin1"
-                            android:checked="false"/>
+                            android:text="Supplier StateCode"
+                            android:textSize="15dp" />
+
                         <Spinner
                             android:id="@+id/spnrSupplierStateCode"
+                            style="@android:style/Widget.Holo.Light.Spinner"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
                             android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-                            style="@android:style/Widget.Holo.Light.Spinner"
-                            android:entries="@array/poscode"/>
+                            android:layout_weight="1"
+                            android:entries="@array/poscode" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -758,17 +795,17 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="bottom"
-                            android:textSize="15dp"
                             android:paddingBottom="@dimen/activity_horizontal_margin1"
-                            android:textStyle="bold"
-                            android:text="Item Name " />
+                            android:text="Item Name "
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
                         <AutoCompleteTextView
                             android:id="@+id/autocompletetv_itemlist"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-							android:drawableRight="@drawable/searchicon_img"
-                            android:layout_weight="0.7">
+                            android:layout_weight="0.7"
+                            android:drawableRight="@drawable/searchicon_img">
 
                         </AutoCompleteTextView>
 
@@ -784,9 +821,9 @@
                             android:id="@+id/et_inward_item_quantity"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="3"
                             android:layout_marginBottom="5dp"
                             android:layout_marginTop="10dp"
+                            android:layout_weight="3"
                             android:hint="Enter the quantity"
                             android:inputType="numberDecimal"
                             android:textStyle="italic" />
@@ -794,13 +831,16 @@
                         <com.wep.common.app.views.WepButton
                             android:id="@+id/btn_add_new_item"
                             android:layout_width="120dp"
-                            android:layout_height="45dp"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                            android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                            android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
                             android:background="@drawable/background_btn"
+                            android:text="Add Item"
                             android:textColor="@android:color/white"
-                            android:theme="@style/WepButtonWithMarigin"
-                            android:text="Add Item" />
+                            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                            android:theme="@style/WepButtonWithMarigin" />
                         <!--<ImageButton
                             android:id="@+id/btnimage_new_item"
                             android:layout_width="40sp"

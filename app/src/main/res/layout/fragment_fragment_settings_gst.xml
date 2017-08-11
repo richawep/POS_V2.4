@@ -19,8 +19,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_weight="0.15"
+                android:orientation="horizontal"
                 android:weightSum="2">
 
                 <FrameLayout
@@ -36,17 +36,17 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/Inward_head"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/Inward_head"
                             android:text=" Inward Supply Configuration"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="500dp"
                             android:layout_height="3dp"
-                            android:visibility="invisible"
                             android:background="#000"
-                            />
+                            android:visibility="invisible" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -175,26 +175,26 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/Outward_head"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/Outward_head"
                             android:text=" Outward Supply Configuration"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="200dp"
                             android:layout_height="3dp"
-                            android:visibility="invisible"
                             android:layout_below="@id/Outward_head"
                             android:layout_marginTop="10dp"
-                            />
+                            android:visibility="invisible" />
 
 
                     </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_marginTop="50dp"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="50dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -202,15 +202,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
-                            android:visibility="gone"
-                            android:text="GSTIN  (Choose One)" />
+                            android:text="GSTIN  (Choose One)"
+                            android:visibility="gone" />
 
                         <RadioGroup
                             android:id="@+id/rgGstin_out"
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <RadioButton
                                 android:id="@+id/rbGstinEnable_out"
@@ -324,7 +324,7 @@
 
     <TextView
         android:id="@+id/tvOtherSettingHLine"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_above="@+id/boxBtn"
         android:background="#000000" />
@@ -336,29 +336,33 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="@dimen/_5dp_720dp_4dp_600dp">
 
-        <com.wep.common.app.views.WepButton
+        <Button
             android:id="@+id/btnApplyOtherSettings"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_10dp_720dp_7dp_600dp"
             android:background="@drawable/background_btn"
-            android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
             android:onClick="Apply"
-            android:text="Apply" />
-
-        <com.wep.common.app.views.WepButton
-            android:id="@+id/btnCloseOtherSettings"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
-            android:background="@drawable/background_btn"
+            android:text="Apply"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
-            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
 
+        <Button
+            android:id="@+id/btnCloseOtherSettings"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+            android:background="@drawable/background_btn"
             android:onClick="Close"
-            android:text="Close" />
+            android:text="Close"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
     </LinearLayout>
 
 </RelativeLayout>

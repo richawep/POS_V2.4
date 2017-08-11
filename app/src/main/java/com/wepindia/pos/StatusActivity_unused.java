@@ -52,7 +52,7 @@ public class StatusActivity_unused extends TabActivity {
         // Table Booking tab
         TabSpec tabTableBooking = tabStatus.newTabSpec("TableBooking");
         tabTableBooking.setIndicator("Table Booking");
-        tabTableBooking.setContent(new Intent(myContext,TableBookingActivity.class));
+        tabTableBooking.setContent(new Intent(myContext,TableBookingActivity_old.class));
                 
         // Add all the tabs to tab  host
         tabStatus.addTab(tabHomeDeliveryStatus);

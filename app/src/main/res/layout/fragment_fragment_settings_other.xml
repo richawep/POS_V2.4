@@ -185,10 +185,10 @@
 
                             <TextView
                                 android:id="@+id/tvTax"
-                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
+                                android:visibility="gone"
                                 android:text="Tax (Choose One)" />
 
                             <RadioGroup
@@ -326,7 +326,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
                                 android:text="Print Preview (Choose One)"
-                                android:visibility="invisible"/>
+                                android:visibility="invisible" />
 
                             <RadioGroup
                                 android:id="@+id/rgPrintPreview"
@@ -361,7 +361,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:visibility="invisible" >
+                                android:visibility="invisible">
 
                                 <RadioButton
                                     android:id="@+id/rbTaxTypeItemwise"
@@ -387,7 +387,7 @@
 
     <TextView
         android:id="@+id/tvOtherSettingHLine"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_above="@+id/boxBtn"
         android:background="#000000" />
@@ -399,26 +399,31 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="@dimen/_5dp_720dp_4dp_600dp">
 
         <Button
             android:id="@+id/btnApplyOtherSettings"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_10dp_720dp_7dp_600dp"
             android:background="@drawable/background_btn"
+            android:text="Apply"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
-            android:text="Apply" />
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
 
         <Button
             android:id="@+id/btnCloseOtherSettings"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
             android:background="@drawable/background_btn"
+            android:text="Close"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
             android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
-            android:text="Close" />
+            android:theme="@style/WepButtonWithMarigin" />
     </LinearLayout>
 
 </RelativeLayout>

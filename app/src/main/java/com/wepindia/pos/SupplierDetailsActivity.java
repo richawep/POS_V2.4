@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,9 +38,9 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     MessageDialog MsgBox;
     Toolbar toolbar;
     ListView lstSupplierDetails;
-    EditText edt_supplierGSTIN,et_inw_supplierAddress;
+    EditText edt_supplierGSTIN,et_inw_supplierAddress,autocompletetv_supplierPhn;
     TextView tv_suppliercode;
-    AutoCompleteTextView autocompletetv_supplierPhn, autocompletetv_suppliername;
+    AutoCompleteTextView  autocompletetv_suppliername;
     WepButton btnAddSupplier,btnUpdateSupplier, btnClear,btnClose;
     ArrayList<Supplier_Model> SupplierList ;
     com.wepindia.pos.adapters.SupplierAdapter SupplierAdapter;
@@ -90,7 +89,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         tv_suppliercode = (TextView) findViewById(R.id.tv_suppliercode);;
         edt_supplierGSTIN = (EditText) findViewById(R.id.edt_supplierGSTIN);;
         et_inw_supplierAddress = (EditText) findViewById(R.id.et_inw_supplierAddress);
-        autocompletetv_supplierPhn = (AutoCompleteTextView) findViewById(R.id.autocompletetv_supplierPhn);
+        autocompletetv_supplierPhn = (EditText) findViewById(R.id.autocompletetv_supplierPhn);
         autocompletetv_suppliername = (AutoCompleteTextView) findViewById(R.id.autocompletetv_suppliername);
         btnAddSupplier = (WepButton) findViewById(R.id.btnAddSupplier);
         btnUpdateSupplier = (WepButton) findViewById(R.id.btnUpdateSupplier);

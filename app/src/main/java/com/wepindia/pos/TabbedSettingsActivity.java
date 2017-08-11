@@ -10,12 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
@@ -23,11 +19,10 @@ import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.fragments.FragmentSettingsGST;
 import com.wepindia.pos.fragments.FragmentSettingsHeaderFooter;
 import com.wepindia.pos.fragments.FragmentSettingsMachine;
-import com.wepindia.pos.fragments.FragmentSettingsMiscellaneous;
 import com.wepindia.pos.fragments.FragmentSettingsOther;
 import com.wepindia.pos.fragments.FragmentSettingsPrice;
 import com.wepindia.pos.fragments.FragmentSettingsPrint;
-import com.wepindia.pos.fragments.Fragment_DisplayOwnerDetail;
+import com.wepindia.pos.fragments.FragmentSettingsDisplayOwnerDetail;
 import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.util.ArrayList;
@@ -93,7 +88,7 @@ public class TabbedSettingsActivity extends WepBaseActivity{
         //
         Bundle bundle3=new Bundle();
         bundle3.putString("REPORT_TYPE", "3");
-        Fragment_DisplayOwnerDetail reportFragment3 = new Fragment_DisplayOwnerDetail();
+        FragmentSettingsDisplayOwnerDetail reportFragment3 = new FragmentSettingsDisplayOwnerDetail();
         reportFragment3.setArguments(bundle3);
         adapter.addFragment(reportFragment3, "Owner Detail");
 

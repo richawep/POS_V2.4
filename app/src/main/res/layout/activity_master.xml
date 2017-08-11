@@ -12,10 +12,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:background="@drawable/home_back"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/home_back">
 
         <RelativeLayout
             android:id="@+id/boxTop"
@@ -97,21 +97,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/bottom_margin_20dp"
+                    android:layout_marginEnd="@dimen/right_margin_220dp"
+                    android:layout_marginLeft="@dimen/left_margin_220dp"
+                    android:layout_marginRight="@dimen/right_margin_220dp"
+                    android:layout_marginStart="@dimen/left_margin_220dp"
                     android:orientation="horizontal"
-                    android:layout_marginRight="@dimen/menu_box_marigin"
-                    android:layout_marginLeft="@dimen/menu_box_marigin"
-                   >
+                    android:weightSum="4">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
+                        android:layout_margin="30dp"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgConfigurations"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Configurations"
                             android:onClick="LaunchActivity"
@@ -120,27 +124,27 @@
 
                         <TextView
                             android:id="@+id/tvConfigurationOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgConfigurations"
                             android:gravity="center"
                             android:text="Configurations"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
+
                     </RelativeLayout>
 
-
-
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
+                        android:layout_margin="30dp"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgItems"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Item"
                             android:onClick="LaunchActivity"
@@ -149,25 +153,26 @@
 
                         <TextView
                             android:id="@+id/tvItemOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgItems"
                             android:gravity="center"
-                            android:text="Outward Supply Items"
+                            android:text="Outward Items Master"
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
+                        android:layout_margin="30dp"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgPriceStock"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="PriceStock"
                             android:onClick="LaunchActivity"
@@ -176,24 +181,27 @@
 
                         <TextView
                             android:id="@+id/tvPriceStockOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgPriceStock"
                             android:gravity="center"
                             android:text="Price and Stock"
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
+
                     </RelativeLayout>
+
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/menu_box_marigin"
+                        android:layout_margin="30dp"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgStock"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Inward"
                             android:onClick="LaunchActivity"
@@ -202,13 +210,14 @@
 
                         <TextView
                             android:id="@+id/tvStockOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgStock"
                             android:gravity="center"
                             android:text="Inward Management "
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
+
                     </RelativeLayout>
 
 
@@ -223,7 +232,6 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_weight="1">
 
                     </RelativeLayout>
@@ -233,19 +241,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/bottom_margin_20dp"
+                    android:layout_marginEnd="@dimen/right_margin_220dp"
+                    android:layout_marginLeft="@dimen/left_margin_220dp"
+                    android:layout_marginRight="@dimen/right_margin_220dp"
+                    android:layout_marginStart="@dimen/left_margin_220dp"
                     android:orientation="horizontal"
-                    >
+                    android:weightSum="5">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgUser"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Users"
                             android:onClick="LaunchActivity"
@@ -254,25 +268,28 @@
 
                         <TextView
                             android:id="@+id/tvUserOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgUser"
                             android:gravity="center"
                             android:text="Add Role"
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
+
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgEmployee"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Employee"
                             android:onClick="LaunchActivity"
@@ -281,7 +298,7 @@
 
                         <TextView
                             android:id="@+id/tvEmployeeOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgEmployee"
                             android:gravity="center"
@@ -291,15 +308,16 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgCustomer"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Customers"
                             android:onClick="LaunchActivity"
@@ -308,26 +326,27 @@
 
                         <TextView
                             android:id="@+id/tvCustomerOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgCustomer"
                             android:gravity="center"
                             android:text="Customers"
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
+
                     </RelativeLayout>
 
-
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgSettings"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Settings"
                             android:onClick="LaunchActivity"
@@ -336,24 +355,27 @@
 
                         <TextView
                             android:id="@+id/tvSettingsOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgSettings"
                             android:gravity="center"
                             android:text="Settings"
                             android:textSize="@dimen/menu_box_font_size"
+
                             android:textStyle="bold" />
                     </RelativeLayout>
+
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgBack"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Back"
                             android:onClick="LaunchActivity"
@@ -362,16 +384,16 @@
 
                         <TextView
                             android:id="@+id/tvBackOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgBack"
                             android:gravity="center"
                             android:text="Home"
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
+
                     </RelativeLayout>
                 </LinearLayout>
-
 
             </LinearLayout>
         </RelativeLayout>
@@ -395,7 +417,9 @@
                 android:contentDescription="LogOut"
                 android:minHeight="40dp"
                 android:onClick="LaunchActivity"
-                android:text="Log Out" />
+                android:text="Log Out"
+                android:textAllCaps="false"
+                android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp" />
 
             <Button
                 android:id="@+id/imgExit"
@@ -406,7 +430,9 @@
                 android:contentDescription="Exit"
                 android:minHeight="40dp"
                 android:onClick="LaunchActivity"
-                android:text="Exit" />
+                android:text="Exit"
+                android:textAllCaps="false"
+                android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp" />
         </RelativeLayout>
     </RelativeLayout>
 

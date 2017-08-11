@@ -169,7 +169,7 @@
             android:layout_below="@+id/boxTop">
 
             <include
-                layout="@layout/test_order_page_content_homedelivery"
+                layout="@layout/order_page_content_homedelivery"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true" />
 
@@ -314,9 +314,10 @@
 
                 <com.wep.common.app.views.WepButton
                     android:id="@+id/btn_DeliveryStatus"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:layout_marginLeft="@dimen/btn_marigin"
                     android:layout_marginRight="@dimen/btn_marigin"
                     android:background="@drawable/background_btn"

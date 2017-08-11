@@ -71,10 +71,11 @@
                                             android:layout_marginRight="10dp"
                                             android:layout_weight="1"
                                             android:background="@drawable/background_btn"
+                                            android:text="Department"
+                                            android:textAllCaps="false"
                                             android:textColor="@android:color/white"
-                                            android:theme="@style/WepButtonWithMarigin"
-                                            android:minHeight="40dp"
-                                            android:text="Department" />
+                                            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                                            android:theme="@style/WepButtonWithMarigin" />
 
                                         <com.wep.common.app.views.WepButton
                                             android:id="@+id/btn_Stockcateg"
@@ -84,10 +85,12 @@
                                             android:layout_marginRight="10dp"
                                             android:layout_weight="1"
                                             android:background="@drawable/background_btn"
-                                            android:textColor="@android:color/white"
-                                            android:theme="@style/WepButtonWithMarigin"
                                             android:minHeight="40dp"
-                                            android:text="Category" />
+                                            android:text="Category"
+                                            android:textAllCaps="false"
+                                            android:textColor="@android:color/white"
+                                            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                                            android:theme="@style/WepButtonWithMarigin" />
 
                                         <com.wep.common.app.views.WepButton
                                             android:id="@+id/btn_Stockitem"
@@ -97,10 +100,12 @@
                                             android:layout_marginRight="20dp"
                                             android:layout_weight="1"
                                             android:background="@drawable/background_btn"
-                                            android:textColor="@android:color/white"
-                                            android:theme="@style/WepButtonWithMarigin"
                                             android:minHeight="40dp"
-                                            android:text="Item" />
+                                            android:text="Item"
+                                            android:textAllCaps="false"
+                                            android:textColor="@android:color/white"
+                                            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                                            android:theme="@style/WepButtonWithMarigin" />
                                     </LinearLayout>
                                 </FrameLayout>
 
@@ -111,61 +116,56 @@
                                     android:background="#000000" />
 
                                 <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="0dp"
+                                    android:layout_weight="0.15"
+                                    android:orientation="horizontal">
+
+
+                                    <ListView
+                                        android:id="@+id/listViewFilter1"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:orientation="horizontal"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginTop="0dp"
-                                        android:layout_weight="0.15">
+                                        android:layout_marginTop="5dp"
+                                        android:layout_weight="1"
+                                        android:divider="#000000"
+                                        android:dividerHeight="1dp" />
 
+                                    <TextView
+                                        android:id="@+id/tvStockdeptline"
+                                        android:layout_width="3dp"
+                                        android:layout_height="match_parent"
+                                        android:background="#000000" />
 
+                                    <ListView
+                                        android:id="@+id/listViewFilter2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:divider="#000000"
+                                        android:dividerHeight="1dp" />
 
-                                        <ListView
-                                            android:id="@+id/listViewFilter1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginTop="5dp"
-                                            android:layout_weight="1"
-                                            android:divider="#000000"
-                                            android:dividerHeight="1dp"
-                                             />
+                                    <TextView
+                                        android:id="@+id/tvStockcategline"
+                                        android:layout_width="3dp"
+                                        android:layout_height="match_parent"
+                                        android:background="#000000" />
 
-                                        <TextView
-                                            android:id="@+id/tvStockdeptline"
-                                            android:layout_width="3dp"
-                                            android:layout_height="match_parent"
-                                            android:background="#000000" />
+                                    <GridView
+                                        android:id="@+id/listViewFilter3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
 
-                                        <ListView
-                                            android:id="@+id/listViewFilter2"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_weight="1"
-                                            android:divider="#000000"
-                                            android:dividerHeight="1dp"
-                                             />
+                                    <!--<TextView
+                                        android:layout_width="3dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginRight="5dp"
+                                        android:background="#000000" />-->
 
-                                        <TextView
-                                            android:id="@+id/tvStockcategline"
-                                            android:layout_width="3dp"
-                                            android:layout_height="match_parent"
-                                            android:background="#000000" />
-
-                                        <GridView
-                                            android:id="@+id/listViewFilter3"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_weight="1"
-                                             />
-
-                                        <!--<TextView
-                                            android:layout_width="3dp"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginRight="5dp"
-                                            android:background="#000000" />-->
-
-                                    </LinearLayout>
-
+                                </LinearLayout>
 
 
                                 <!--<TextView
@@ -201,164 +201,166 @@
                             android:layout_marginTop="10dp"
                             android:layout_weight="1.3">
 
-                           <LinearLayout
-                               android:layout_width="match_parent"
-                               android:layout_height="match_parent"
-                               android:layout_marginLeft="20dp"
-                               android:orientation="vertical">
-                               <LinearLayout
-                                   android:layout_width="match_parent"
-                                   android:layout_height="match_parent"
-                                   android:layout_weight="1"
-                                   android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:orientation="vertical">
 
-                                   <TableRow
-                                       android:id="@+id/rowItemLongName"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_alignParentLeft="true">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                                       <TextView
-                                           android:id="@+id/tvItemLongName"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:text="Item Name"
-                                           android:textAppearance="?android:attr/textAppearanceMedium" />
+                                    <TableRow
+                                        android:id="@+id/rowItemLongName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true">
 
-                                       <AutoCompleteTextView
-                                           android:id="@+id/autoTextItemLongNameValue"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:completionThreshold="1"
-                                           android:imeOptions="flagNoExtractUi"
-                                           android:inputType="text"
-                                           android:textAppearance="?android:attr/textAppearanceMedium" />
-                                   </TableRow>
+                                        <TextView
+                                            android:id="@+id/tvItemLongName"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Item Name"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                                   <TableRow
-                                       android:id="@+id/rowItemExistingStock"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content">
+                                        <AutoCompleteTextView
+                                            android:id="@+id/autoTextItemLongNameValue"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:completionThreshold="1"
+                                            android:imeOptions="flagNoExtractUi"
+                                            android:inputType="text"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                                    </TableRow>
 
-                                       <TextView
-                                           android:id="@+id/tvItemExistingStock"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:text="Existing Stock"
-                                           android:textAppearance="?android:attr/textAppearanceMedium" />
+                                    <TableRow
+                                        android:id="@+id/rowItemExistingStock"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content">
 
-                                       <TextView
-                                           android:id="@+id/tvItemExistingStockValue"
-                                           android:layout_width="200dp"
-                                           android:layout_height="35dp"
-                                           android:text="0"
-                                           android:textAppearance="?android:attr/textAppearanceMedium"
-                                           android:textStyle="bold" />
-                                   </TableRow>
+                                        <TextView
+                                            android:id="@+id/tvItemExistingStock"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Existing Stock"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                                   <TableRow
-                                       android:id="@+id/rowItemNewStock"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content">
+                                        <TextView
+                                            android:id="@+id/tvItemExistingStockValue"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="0"
+                                            android:textAppearance="?android:attr/textAppearanceMedium"
+                                            android:textStyle="bold" />
+                                    </TableRow>
 
-                                       <TextView
-                                           android:id="@+id/tvItemNewStock"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:text="New Stock"
-                                           android:textAppearance="?android:attr/textAppearanceMedium" />
+                                    <TableRow
+                                        android:id="@+id/rowItemNewStock"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content">
 
-                                       <EditText
-                                           android:id="@+id/etItemNewStock"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:ems="5"
-                                           android:inputType="numberDecimal"
-                                           android:selectAllOnFocus="true" />
-                                   </TableRow>
+                                        <TextView
+                                            android:id="@+id/tvItemNewStock"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="New Stock"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                                   <TableRow
-                                       android:id="@+id/rowItemRate1"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content">
+                                        <EditText
+                                            android:id="@+id/etItemNewStock"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:ems="5"
+                                            android:inputType="numberDecimal"
+                                            android:selectAllOnFocus="true" />
+                                    </TableRow>
 
-                                       <TextView
-                                           android:id="@+id/tvItemRate1"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:text="Rate1"
-                                           android:textAppearance="?android:attr/textAppearanceMedium" />
+                                    <TableRow
+                                        android:id="@+id/rowItemRate1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content">
 
-                                       <EditText
-                                           android:id="@+id/etItemRate1"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:ems="5"
-                                           android:inputType="numberDecimal"
-                                           android:selectAllOnFocus="true" />
+                                        <TextView
+                                            android:id="@+id/tvItemRate1"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Rate1"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                                   </TableRow>
+                                        <EditText
+                                            android:id="@+id/etItemRate1"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:ems="5"
+                                            android:inputType="numberDecimal"
+                                            android:selectAllOnFocus="true" />
 
-                                   <TableRow
-                                       android:id="@+id/rowItemRate2"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_marginTop="0dp">
+                                    </TableRow>
 
-                                       <TextView
-                                           android:id="@+id/tvItemRate2"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:text="Rate2"
-                                           android:textAppearance="?android:attr/textAppearanceMedium" />
+                                    <TableRow
+                                        android:id="@+id/rowItemRate2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="0dp">
 
-                                       <EditText
-                                           android:id="@+id/etItemRate2"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:ems="5"
-                                           android:inputType="numberDecimal"
-                                           android:selectAllOnFocus="true" />
+                                        <TextView
+                                            android:id="@+id/tvItemRate2"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Rate2"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                                   </TableRow>
+                                        <EditText
+                                            android:id="@+id/etItemRate2"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:ems="5"
+                                            android:inputType="numberDecimal"
+                                            android:selectAllOnFocus="true" />
 
-                                   <TableRow
-                                       android:id="@+id/rowItemRate3"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_marginTop="0dp">
+                                    </TableRow>
 
-                                       <TextView
-                                           android:id="@+id/tvItemRate3"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:text="Rate3"
-                                           android:textAppearance="?android:attr/textAppearanceMedium" />
+                                    <TableRow
+                                        android:id="@+id/rowItemRate3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="0dp">
 
-                                       <EditText
-                                           android:id="@+id/etItemRate3"
-                                           android:layout_width="200dp"
-                                           android:layout_height="wrap_content"
-                                           android:ems="5"
-                                           android:inputType="numberDecimal"
-                                           android:selectAllOnFocus="true" />
+                                        <TextView
+                                            android:id="@+id/tvItemRate3"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Rate3"
+                                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                                   </TableRow>
+                                        <EditText
+                                            android:id="@+id/etItemRate3"
+                                            android:layout_width="@dimen/_200dp_720dp_150dp_600dp"
+                                            android:layout_height="wrap_content"
+                                            android:ems="5"
+                                            android:inputType="numberDecimal"
+                                            android:selectAllOnFocus="true" />
 
-                               </LinearLayout>
-                               <LinearLayout
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   android:layout_marginTop="5dp"
-                                   android:layout_marginBottom="5dp"
-                                   >
-                                   <TextView
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:textColor="@color/red"
-                                       android:text="*Please note, new stock will be added to existing stock"/>
-                               </LinearLayout>
-                           </LinearLayout>
+                                    </TableRow>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                                    android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*Please note, new stock will be added to existing stock"
+                                        android:textColor="@color/red" />
+                                </LinearLayout>
+                            </LinearLayout>
                         </FrameLayout>
                     </LinearLayout>
                 </FrameLayout>
@@ -381,42 +383,45 @@
             android:layout_alignParentBottom="true"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:padding="@dimen/_5dp_720dp_4dp_600dp">
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnUpdateStock"
-                android:layout_width="100dp"
+                android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_btn"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin"
-                android:minHeight="40dp"
                 android:onClick="UpdateStock"
-                android:text="Update" />
+                android:text="Update"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnClearStock"
-                android:layout_width="100dp"
+                android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/background_btn"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin"
-                android:minHeight="40dp"
                 android:onClick="ClearStock"
-                android:text="Clear" />
+                android:text="Clear"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnCloseStock"
-                android:layout_width="100dp"
+                android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/background_btn"
-                android:textColor="@android:color/white"
-                android:theme="@style/WepButtonWithMarigin"
-                android:minHeight="40dp"
                 android:onClick="CloseStock"
-                android:text="Close" />
+                android:text="Close"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin" />
         </LinearLayout>
 
     </RelativeLayout>

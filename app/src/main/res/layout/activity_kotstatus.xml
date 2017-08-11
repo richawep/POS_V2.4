@@ -36,19 +36,21 @@
 
                     <TextView
                         android:id="@+id/tvCaptionSNo"
-                        android:layout_width="100dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="S.No"
+                        android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/txtColorAccent" />
 
                     <TextView
                         android:id="@+id/tvCaptionTokenNo"
-                        android:layout_width="120dp"
+                        android:layout_width="@dimen/_120dp_720dp_115dp_600dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="KOT No"
+                        android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/txtColorAccent" />
 
@@ -58,6 +60,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Table No"
+                        android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/txtColorAccent" />
 
@@ -67,15 +70,17 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Waiter No"
+                        android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/txtColorAccent" />
 
                     <TextView
                         android:id="@+id/tvCaptionInTime"
-                        android:layout_width="120dp"
+                        android:layout_width="@dimen/_120dp_720dp_115dp_600dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="In Time"
+                        android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/txtColorAccent" />
 
@@ -84,6 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Time Count"
+                        android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/txtColorAccent" />
 
@@ -93,6 +99,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Status"
+                        android:textSize="@dimen/text_size_16sp_720dp_14sp_600dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/txtColorAccent" />
                 </TableRow>
@@ -127,9 +134,11 @@
 
             <Button
                 android:id="@+id/btnSearchKOTStatus"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="10dp"
+                android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                 android:background="@drawable/background_btn"
                 android:textColor="@android:color/white"
                 android:theme="@style/WepButtonWithMarigin"
@@ -139,9 +148,11 @@
 
             <Button
                 android:id="@+id/btnClearKOTStatus"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="10dp"
+                android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                 android:background="@drawable/background_btn"
                 android:textColor="@android:color/white"
                 android:theme="@style/WepButtonWithMarigin"
@@ -151,15 +162,17 @@
 
             <Button
                 android:id="@+id/btnCloseKOTStatus"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="10dp"
+                android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                 android:background="@drawable/background_btn"
                 android:textColor="@android:color/white"
                 android:theme="@style/WepButtonWithMarigin"
                 android:onClick="CloseKOTStatus"
                 android:text="Close"
-                 />
+                />
         </TableRow>
 
     </RelativeLayout>

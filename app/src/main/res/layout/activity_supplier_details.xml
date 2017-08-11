@@ -15,6 +15,7 @@ tools:context="com.wepindia.pos.SupplierDetailsActivity">
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
+        android:layout_above="@+id/ll_btns"
         android:orientation="vertical"
         android:weightSum="2"
         >
@@ -283,71 +284,7 @@ tools:context="com.wepindia.pos.SupplierDetailsActivity">
                 </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2.7"
-                    android:layout_gravity="bottom"
-                    android:orientation="horizontal">
 
-
-                    <com.wep.common.app.views.WepButton
-                        android:id="@+id/btnAddSupplier"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_btn"
-                        android:text="Add Supplier"
-                        android:textColor="@android:color/white"
-                        android:theme="@style/WepButtonWithMarigin" />
-
-                    <com.wep.common.app.views.WepButton
-                        android:id="@+id/btnUpdateSupplier"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_btn"
-                        android:text="Update Supplier "
-                        android:textColor="@android:color/white"
-                        android:theme="@style/WepButtonWithMarigin" />
-
-                    <com.wep.common.app.views.WepButton
-                        android:id="@+id/btnClear"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_btn"
-                        android:text="Clear"
-                        android:textColor="@android:color/white"
-                        android:theme="@style/WepButtonWithMarigin" />
-
-                    <com.wep.common.app.views.WepButton
-                        android:id="@+id/btnClose"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_btn"
-                        android:text="Close"
-                        android:textColor="@android:color/white"
-                        android:theme="@style/WepButtonWithMarigin" />
-                </LinearLayout>
             </LinearLayout>
 
             <!-- Invissible -->
@@ -356,8 +293,78 @@ tools:context="com.wepindia.pos.SupplierDetailsActivity">
 
 
         </FrameLayout>
-    </LinearLayout>
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:id="@+id/ll_btns"
+        android:orientation="horizontal">
+
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/btnAddSupplier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:textAllCaps="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_btn"
+            android:text="Add Supplier"
+            android:textColor="@android:color/white"
+            android:theme="@style/WepButtonWithMarigin" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/btnUpdateSupplier"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:textAllCaps="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_btn"
+            android:text="Update Supplier "
+            android:textColor="@android:color/white"
+            android:theme="@style/WepButtonWithMarigin" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/btnClear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:background="@drawable/background_btn"
+            android:text="Clear"
+            android:textColor="@android:color/white"
+            android:theme="@style/WepButtonWithMarigin" />
+
+        <com.wep.common.app.views.WepButton
+            android:id="@+id/btnClose"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_btn"
+            android:text="Close"
+            android:textColor="@android:color/white"
+            android:theme="@style/WepButtonWithMarigin" />
+    </LinearLayout>
 
 </RelativeLayout>
 

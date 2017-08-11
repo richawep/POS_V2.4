@@ -15,7 +15,6 @@ import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -725,7 +724,7 @@ public class IngredientManagementActivity extends WepBaseActivity {
         LayoutInflater UserAuthorization = (LayoutInflater) myContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View vwAuthorization = UserAuthorization.inflate(R.layout.activity_convert_ingredients, null);
+        View vwAuthorization = UserAuthorization.inflate(R.layout.activity_convert_ingredients_old, null);
 
 
         //tv_convert_item_authorize = (TextView)findViewById(R.id.tv_convert_item);

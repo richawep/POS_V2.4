@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbar"
@@ -20,45 +20,51 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
-            android:background="#DDDDDD" >
+            android:background="#DDDDDD">
 
             <TableLayout
                 android:id="@+id/tblTableStatus"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <TableRow
                     android:id="@+id/rowCaptionTableStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimaryLight" >
+                    android:background="@color/colorPrimaryLight">
 
                     <TextView
                         android:id="@+id/tvCaptionTableSNo"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="S.No"
                         android:gravity="center"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/txtColorAccent" />
+                        android:text="S.No"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/txtColorAccent"
+                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                     <TextView
                         android:id="@+id/tvCaptionTableTableNo"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:text="Table No"
                         android:gravity="center"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/txtColorAccent" />
+                        android:text="Table No"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/txtColorAccent"
+                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                     <TextView
                         android:id="@+id/tvCaptionTableInTime"
-                        android:layout_width="100dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
                         android:layout_height="wrap_content"
-                        android:text="In Time"
                         android:gravity="center"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/txtColorAccent" />
+                        android:text="In Time"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/txtColorAccent"
+                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                     <!--<TextView
                         android:id="@+id/tvCaptionTableTimeCount"
@@ -66,17 +72,21 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="200dp"
                         android:text="Time Count"
+                         android:textAllCaps="false"
+                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#ffffff" />-->
 
                     <TextView
                         android:id="@+id/tvCaptionTableStatus"
-                        android:layout_width="150dp"
+                        android:layout_width="@dimen/_150dp_720dp_135dp_600dp"
                         android:layout_height="wrap_content"
-                        android:text="Status"
                         android:gravity="center"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/txtColorAccent" />
+                        android:text="Status"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/txtColorAccent"
+                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
                 </TableRow>
             </TableLayout>
         </ScrollView>
@@ -88,7 +98,6 @@
             android:layout_above="@+id/rowButtonsTableStatus"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="3dp"
             android:background="#000000" />
 
         <TableRow
@@ -97,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp" >
+            android:padding="5dp">
 
             <EditText
                 android:id="@+id/etTableSearchTable"
@@ -110,31 +119,37 @@
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnSearchTableStatus"
                 android:layout_width="100dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:background="@drawable/background_btn"
                 android:onClick="SearchTableStatus"
                 android:text="Search"
-                android:background="@drawable/background_btn"
-                android:textColor="@color/white" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnClearTableStatus"
                 android:layout_width="100dp"
                 android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
-                android:text="Clear"
                 android:background="@drawable/background_btn"
-                android:textColor="@color/white" />
+                android:text="Clear"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnCloseTableStatus"
                 android:layout_width="100dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:background="@drawable/background_btn"
                 android:onClick="CloseTableStatus"
                 android:text="Close"
-                android:background="@drawable/background_btn"
-                android:textColor="@color/white" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp" />
         </TableRow>
 
     </RelativeLayout>

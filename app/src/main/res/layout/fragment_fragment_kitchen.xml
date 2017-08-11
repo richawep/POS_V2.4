@@ -3,44 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="HardcodedText,UselessParent" >
+    tools:ignore="HardcodedText,UselessParent">
 
     <TableRow
         android:id="@+id/rowKitchenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_alignStart="@id/scrlKitchenTable"
+        android:layout_alignEnd="@id/scrlKitchenTable"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp" >
+        android:layout_marginTop="75dp">
 
         <TextView
             android:id="@+id/tvKitchenName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kitchen Name"
             android:layout_marginRight="5dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="Kitchen Name"
+            android:textAllCaps="false"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="@dimen/main_text_heading_17sp_720dp_15sp_600dp" />
 
         <EditText
             android:id="@+id/etKitchenName"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:ems="5"
-            android:maxLength="16"
             android:hint="Kitchen Name"
-            android:inputType="text" />
+            android:inputType="text"
+            android:maxLength="16"
+            android:textSize="@dimen/main_text_heading_17sp_720dp_15sp_600dp" />
     </TableRow>
 
     <ScrollView
         android:id="@+id/scrlKitchenTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#DDDDDD"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/rowKitchenName"
         android:layout_alignBottom="@+id/tvHorizontalLine"
+        android:layout_below="@+id/rowKitchenName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp" >
+        android:background="#DDDDDD">
+
         <TableLayout
             android:id="@+id/tblKitchen"
             android:layout_width="wrap_content"
@@ -57,26 +63,32 @@
                     android:id="@+id/tvCaptionKitchenSno"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="S.No"
                     android:gravity="center"
+                    android:text="S.No"
+                    android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                 <TextView
                     android:id="@+id/tvCaptionKitchenCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Code"
+                    android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                 <TextView
                     android:id="@+id/tvCaptionKitchenName"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:text="Description"
+                    android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
             </TableRow>
         </TableLayout>
     </ScrollView>
@@ -97,50 +109,58 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp" >
+        android:layout_marginBottom="5dp">
 
         <com.wep.common.app.views.WepButton
             android:id="@+id/btnAddKitchen"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/background_btn"
-            android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
             android:onClick="AddKitchen"
-            android:text="Add" />
+            android:text="Add"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
 
         <com.wep.common.app.views.WepButton
             android:id="@+id/btnEditKitchen"
-            android:background="@drawable/background_btn"
-            android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/background_btn"
             android:onClick="EditCateg"
-            android:text="Update" />
+            android:text="Update"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
 
         <com.wep.common.app.views.WepButton
             android:id="@+id/btnClearKitchen"
-            android:background="@drawable/background_btn"
-            android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/background_btn"
             android:onClick="ClearKitchen"
-            android:text="Clear" />
+            android:text="Clear"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
 
         <com.wep.common.app.views.WepButton
             android:id="@+id/btnCloseKitchen"
-            android:background="@drawable/background_btn"
-            android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/background_btn"
             android:onClick="CloseKitchen"
-            android:text="Close" />
+            android:text="Close"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
 
     </TableRow>
 

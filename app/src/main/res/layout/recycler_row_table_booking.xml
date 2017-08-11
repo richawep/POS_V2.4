@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#cccccc"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".35" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.3"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="13">
+
+            <TextView
+                android:id="@+id/tvCaptionTBSNo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sno"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+            <TextView
+                android:id="@+id/tvCaptionTBCustomerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15dp_720dp_10dp_600dp"
+                android:layout_weight="3"
+                android:text="@string/customer_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+            <TextView
+                android:id="@+id/tvCaptionTBTimeBooking"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15dp_720dp_10dp_600dp"
+                android:layout_weight="2.5"
+                android:text="@string/table_for_booking"
+                android:textColor="@color/black"
+                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+            <TextView
+                android:id="@+id/tvCaptionTBAllocateTable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15dp_720dp_10dp_600dp"
+                android:layout_weight="1.5"
+                android:text="@string/table_no"
+                android:textColor="@color/black"
+                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+            <TextView
+                android:id="@+id/tvCaptionTBMobileNo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15dp_720dp_10dp_600dp"
+                android:layout_weight="2.5"
+                android:text="@string/mobile_no"
+                android:textColor="@color/black"
+                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+            <ImageView
+                android:id="@+id/ivCaptionTBDelete"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/_15dp_720dp_10dp_600dp"
+                android:layout_weight="1"
+                android:contentDescription="@null"
+                android:src="@drawable/delete_icon_border" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1dp_720dp_1dp_600dp"
+            android:background="@android:color/black" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".35" />
+
+</LinearLayout>

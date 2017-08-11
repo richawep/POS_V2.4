@@ -5,19 +5,17 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -32,6 +30,8 @@ import com.wep.common.app.Database.TableBooking;
 import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.RecyclerDirectory.TableBookingAdapter;
+import com.wepindia.pos.RecyclerDirectory.TableBookingResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +39,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class TableBookingActivity extends WepBaseActivity {
+
+import com.wepindia.pos.R;
+
+public class TableBookingActivity extends WepBaseActivity implements TableBookingAdapter.OnTableViewClickListener {
 
     // Context object
     Context myContext;
@@ -50,7 +53,7 @@ public class TableBookingActivity extends WepBaseActivity {
     MessageDialog MsgBox;// = new MessageDialog(HeaderFooterActivity.this);
     String strTime = "", strTableNo = "";
     // View handlers
-    int iMaxTables =0;
+    int iMaxTables = 0;
     ArrayList<Integer> arrlstTableNumbers, arrlstTableNumbers_reserved;
     EditText tvCustomerName, tvTimeBooking, tvTableNo, tvMobileNo, tvSearchMobileNo;
     TableLayout tblTableBooking;
@@ -63,15 +66,36 @@ public class TableBookingActivity extends WepBaseActivity {
 
     GridView grdTable;
     TextView txtTblNo;
-    String previous_time_pendingKOT="0", next_time_pendingKOT="0";
+    String previous_time_pendingKOT = "0", next_time_pendingKOT = "0";
     //String strUserName;
+
+
+    private ArrayList<TableBookingResponse> mTableBookingList;
+    private RecyclerView mRecyclerView;
+    private TableBookingAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //old   activity_tablebooking layout
+        // second  test_tablebooking
+
+        // adapter layout test
+        //    layout test_2
         setContentView(R.layout.activity_tablebooking);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mTableBookingList = new ArrayList<>();
+
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
 
         //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         //setContentView(R.layout.activity_tablebooking);
@@ -99,10 +123,11 @@ public class TableBookingActivity extends WepBaseActivity {
         tvSearchMobileNo = (EditText) findViewById(R.id.etTBSearchMobileNo);
         tblTableBooking = (TableLayout) findViewById(R.id.tblTableBooking);
 
+
         btnAddTB = (com.wep.common.app.views.WepButton) findViewById(R.id.btnTBAdd);
         btnSaveTB = (com.wep.common.app.views.WepButton) findViewById(R.id.btnTBSave);
 
-        linear_table = (LinearLayout)findViewById(R.id.linear_table);
+        linear_table = (LinearLayout) findViewById(R.id.linear_table);
 
         arrlstTableNumbers = new ArrayList<Integer>();
         arrlstTableNumbers_reserved = new ArrayList<Integer>();
@@ -111,7 +136,7 @@ public class TableBookingActivity extends WepBaseActivity {
             String strUserName = getIntent().getStringExtra("USER_NAME");
             Date d = new Date();
             CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-            com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Table Booking",strUserName," Date:"+s.toString());
+            com.wep.common.app.ActionBarUtils.setupToolbar(this, toolbar, getSupportActionBar(), "Table Booking", strUserName, " Date:" + s.toString());
             /*tvTitleUserName.setText(strUserName.toUpperCase());
             Date d = new Date();
             CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
@@ -119,6 +144,7 @@ public class TableBookingActivity extends WepBaseActivity {
             dbTableBooking.CreateDatabase();
             dbTableBooking.OpenDatabase();
             ResetTableBooking();
+
             // DisplayItems();
 
             DisplayTableBooking();
@@ -135,138 +161,31 @@ public class TableBookingActivity extends WepBaseActivity {
 
         Cursor crsrTBooking;
         crsrTBooking = dbTableBooking.getAllTableBooking();
-
-        TableRow rowTBooking = null;
-        TextView tvSno, tviewTBookId, tviewCustomerName, tviewTimeBooking, tviewTableNo, tviewMobileNo;
+        mTableBookingList.clear();
 
         int i = 1;
         if (crsrTBooking.moveToFirst()) {
             do {
-                rowTBooking = new TableRow(myContext);
-                rowTBooking.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-                rowTBooking.setBackgroundResource(R.drawable.row_background);
+                TableBookingResponse tableBookingResponse = new TableBookingResponse();
 
-                tvSno = new TextView(myContext);
-                tvSno.setTextSize(18);
-                tvSno.setGravity(1);
-                tvSno.setText(String.valueOf(i));
-                rowTBooking.addView(tvSno);
+                tableBookingResponse.setsNo(i);
+                tableBookingResponse.setCustomerName(crsrTBooking.getString(1));
+                tableBookingResponse.setTimeBooking(crsrTBooking.getString(2));
+                tableBookingResponse.setTableNo(Integer.parseInt(crsrTBooking.getString(3)));
+                tableBookingResponse.setMobileNo(crsrTBooking.getString(4));
 
-                tviewTBookId = new TextView(myContext);
-                tviewTBookId.setTextSize(18);
-                tviewTBookId.setText(crsrTBooking.getString(0));
-                rowTBooking.addView(tviewTBookId);
+                mTableBookingList.add(tableBookingResponse);
 
-                tviewCustomerName = new TextView(myContext);
-                tviewCustomerName.setTextSize(18);
-                tviewCustomerName.setText(crsrTBooking.getString(1));
-                rowTBooking.addView(tviewCustomerName);
-
-                tviewTimeBooking = new TextView(myContext);
-                tviewTimeBooking.setTextSize(18);
-                tviewTimeBooking.setGravity(1);
-                tviewTimeBooking.setText(crsrTBooking.getString(2));
-                rowTBooking.addView(tviewTimeBooking);
-
-                tviewTableNo = new TextView(myContext);
-                tviewTableNo.setTextSize(18);
-                tviewTableNo.setGravity(1);
-                tviewTableNo.setText(crsrTBooking.getString(3));
-                rowTBooking.addView(tviewTableNo);
-
-                tviewMobileNo = new TextView(myContext);
-                tviewMobileNo.setTextSize(18);
-                tviewMobileNo.setText(crsrTBooking.getString(4));
-                rowTBooking.addView(tviewMobileNo);
-
-
-                Button ImgDelete = new Button(myContext);
-                ImgDelete.setBackground(getResources().getDrawable(R.drawable.delete_icon_border));
-                ImgDelete.setLayoutParams(new TableRow.LayoutParams(40, 40));
-                ImgDelete.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        final View v1 = v;
-                        MsgBox = new MessageDialog(myContext);
-                        MsgBox.setTitle("Confirm")
-                                .setMessage("Do you want to Delete this Booking")
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                       try
-                                       {
-                                           TableRow tblrow = (TableRow) v1.getParent();
-                                           TextView CustName = (TextView) tblrow.getChildAt(2);
-                                           TextView Time = (TextView) tblrow.getChildAt(3);
-                                           TextView TableNo = (TextView) tblrow.getChildAt(4);
-                                           TextView CustPhone = (TextView) tblrow.getChildAt(5);
-                                           int deleted = dbTableBooking.DeleteTableBooking_WithDetails(CustName.getText().toString(),
-                                                   Time.getText().toString(), TableNo.getText().toString(), CustPhone.getText().toString());
-                                           View row = (View) v1.getParent();
-                                           ViewGroup container = ((ViewGroup) row.getParent());
-                                           container.removeView(row);
-                                           container.invalidate();
-                                           int child = tblTableBooking.getChildCount();
-                                           int count =0;
-                                           for(int i =1;i< child ;i++)
-                                           {
-                                               if(i==1)
-                                                   count =0;
-
-                                               TableRow row1 = (TableRow) tblTableBooking.getChildAt(i);
-                                               TextView Sn = (TextView) row1.getChildAt(0);
-                                               count++;
-                                               if(Sn!=null)
-                                                Sn.setText(String.valueOf(count));
-                                           }
-                                       }catch (Exception e)
-                                       {
-                                           e.printStackTrace();
-                                           MsgBox.Show("Error", e.getMessage());
-                                       }
-                                    }
-                                })
-                                .setNegativeButton("No",null)
-                                .show();
-                    }
-                });
-
-                rowTBooking.addView(ImgDelete);
-                rowTBooking.setOnClickListener(new View.OnClickListener() {
-
-                    public void onClick(View v) {
-                        // TODO Auto-generated method stub
-                        if (String.valueOf(v.getTag()) == "TAG") {
-                            TableRow Row = (TableRow) v;
-                            TextView TBookId = (TextView) Row.getChildAt(1);
-                            TextView CustName = (TextView) Row.getChildAt(2);
-                            TextView TimeBooking = (TextView) Row.getChildAt(3);
-                            TextView TableNo = (TextView) Row.getChildAt(4);
-                            TextView MobileNo = (TextView) Row.getChildAt(5);
-
-                            iTBookId = Integer.valueOf(TBookId.getText().toString());
-                            tvCustomerName.setText(CustName.getText().toString());
-                            tvTimeBooking.setText(TimeBooking.getText().toString());
-                            tvTableNo.setText(TableNo.getText().toString());
-                            tvMobileNo.setText(MobileNo.getText().toString());
-                            btnAddTB.setEnabled(false);
-                            btnSaveTB.setEnabled(true);
-                            //btnAddTB.setTextColor(Color.GRAY);
-                            //btnSaveTB.setTextColor(Color.BLACK);
-                            linear_table.setVisibility(View.VISIBLE);
-                            tvMobileNo.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
-                rowTBooking.setTag("TAG");
-
-                tblTableBooking.addView(rowTBooking,
-                        new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
                 i++;
             } while (crsrTBooking.moveToNext());
         } else {
             Log.d("Display Table Booking", "No Table Booking found");
         }
+
+        mAdapter = new TableBookingAdapter(mTableBookingList);
+        mAdapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(mAdapter);
+
     }
 
     public void TimeSelection(View view) {
@@ -283,9 +202,8 @@ public class TableBookingActivity extends WepBaseActivity {
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
                             String mins_str = String.valueOf(minute);
-                            if(minute>0 && minute<10)
-                            {
-                                mins_str = "0"+minute;
+                            if (minute > 0 && minute < 10) {
+                                mins_str = "0" + minute;
                             }
                             tvTimeBooking.setText(hourOfDay + ":" + mins_str);
                             strTimeBooking = hourOfDay + ":" + mins_str;
@@ -302,8 +220,7 @@ public class TableBookingActivity extends WepBaseActivity {
 
     public void TableSelection(View view) {
         try {
-            if(strTimeBooking== null || strTimeBooking.equals(""))
-            {
+            if (strTimeBooking == null || strTimeBooking.equals("")) {
                 MsgBox = new MessageDialog(myContext);
                 MsgBox.Show(" Information ", " Please Select Time First");
                 return;
@@ -327,7 +244,7 @@ public class TableBookingActivity extends WepBaseActivity {
             Date previous_time = calendar.getTime();
 
             calendar.setTime(sdf.parse(strTimeBooking));
-            calendar.add(Calendar.MINUTE,30);
+            calendar.add(Calendar.MINUTE, 30);
             Date next_time = calendar.getTime();
             long millis = previous_time.getTime();
 
@@ -343,12 +260,11 @@ public class TableBookingActivity extends WepBaseActivity {
             String strTimeBookingEnd = df.format(next_time);
 
 
-
             Cursor OccupiedTables = dbTableBooking.getBookedTableBetweenTime(strTimeBookingStart, strTimeBookingEnd);
 
             //Cursor OccupiedTables = dbTableBooking.getOccupiedTables();
             arrlstTableNumbers_reserved.clear();
-            if (OccupiedTables!= null && OccupiedTables.moveToFirst()) {
+            if (OccupiedTables != null && OccupiedTables.moveToFirst()) {
                 do {
                     // Add table number to array list
                     arrlstTableNumbers_reserved.add(OccupiedTables.getInt(3));
@@ -360,7 +276,7 @@ public class TableBookingActivity extends WepBaseActivity {
             previous_time = calendar.getTime();
 
             calendar.setTime(sdf.parse(strTimeBooking));
-            calendar.add(Calendar.MINUTE,30);
+            calendar.add(Calendar.MINUTE, 30);
             next_time = calendar.getTime();
             strTimeBookingStart = df.format(previous_time);
             strTimeBookingEnd = df.format(next_time);
@@ -370,7 +286,7 @@ public class TableBookingActivity extends WepBaseActivity {
 
             //Cursor OccupiedTables = dbTableBooking.getOccupiedTables();
             arrlstTableNumbers.clear();
-            if (OccupiedTables!= null && OccupiedTables.moveToFirst()) {
+            if (OccupiedTables != null && OccupiedTables.moveToFirst()) {
                 do {
                     // Add table number to array list
                     arrlstTableNumbers.add(OccupiedTables.getInt(OccupiedTables.getColumnIndex("TableNumber")));
@@ -378,13 +294,11 @@ public class TableBookingActivity extends WepBaseActivity {
             }
 
             Cursor crsrSettings = dbTableBooking.getBillSetting();
-            if (crsrSettings!= null && crsrSettings.moveToFirst()) {
+            if (crsrSettings != null && crsrSettings.moveToFirst()) {
                 iMaxTables = crsrSettings.getInt(crsrSettings.getColumnIndex("MaximumTables"));
 
                 InitializeTableGrid(iMaxTables);
             }
-
-
 
 
             TableSelectionDialog.setIcon(R.drawable.ic_launcher)
@@ -432,7 +346,7 @@ public class TableBookingActivity extends WepBaseActivity {
                         flag = true;
                 }
                 if (flag) {*/
-                if(arrlstTableNumbers.contains(position+1)){
+                if (arrlstTableNumbers.contains(position + 1)) {
                     MsgBox.Show("Warning", "Please Select Another Table, this Table is Occupied");
                     txtTblNo.setText("");
                 } else {
@@ -449,7 +363,7 @@ public class TableBookingActivity extends WepBaseActivity {
         String[] TableImage = new String[Limit];
         int[] TableId = new int[Limit];
 
-        selection -=1;
+        selection -= 1;
 
         for (int i = 0; i < Limit; i++) {
             TableText[i] = "Table" + String.valueOf(i + 1);
@@ -560,27 +474,26 @@ public class TableBookingActivity extends WepBaseActivity {
                     calendar.setTime(sdf.parse(strTimeBooking));
                     calendar.add(Calendar.MINUTE, 15);
                     Date next_time = calendar.getTime();
-                     long millis = previous_time.getTime();
+                    long millis = previous_time.getTime();
 
                     // Create an instance of SimpleDateFormat used for formatting
                     // the string representation of date (month/day/year)
                     SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 
                     // Get the date today using Calendar object.
-                                        Date today = Calendar.getInstance().getTime();
+                    Date today = Calendar.getInstance().getTime();
                     // Using DateFormat format method we can create a string
                     // representation of a date with the defined format.
                     String strTimeBookingStart = df.format(previous_time);
                     String strTimeBookingEnd = df.format(next_time);
 
 
-
                     Cursor crsr = dbTableBooking.checkBookingStatus(iTableNo, strTimeBookingStart, strTimeBookingEnd);
                     if (crsr != null && crsr.moveToFirst()) {
-                        String timeBookedAt= "";
+                        String timeBookedAt = "";
                         do {
-                            timeBookedAt += crsr.getString(crsr.getColumnIndex("TimeForBooking"))+ ", ";
-                        }while(crsr.moveToNext());
+                            timeBookedAt += crsr.getString(crsr.getColumnIndex("TimeForBooking")) + ", ";
+                        } while (crsr.moveToNext());
                         //String timeBookedAt = crsr.getString(crsr.getColumnIndex("TimeForBooking"));
                         String msg = " Table " + iTableNo + " is already booked for " + timeBookedAt + " Do you still want to book it ";
                         MsgBox.setMessage(msg)
@@ -592,7 +505,8 @@ public class TableBookingActivity extends WepBaseActivity {
                                         Log.d("Insert TableBooking", "Table Booking Id: " + String.valueOf(iTBookId));
                                         InsertTableBooking(iTBookId, strCustomerName, strTimeBooking, strMobileNo, iTableNo);
                                         ResetTableBooking();
-                                        ClearTableBooking();
+                                        //    ClearTableBooking();
+                                        mTableBookingList.clear();
                                         DisplayTableBooking();
                                     }
                                 })
@@ -605,11 +519,11 @@ public class TableBookingActivity extends WepBaseActivity {
                         Log.d("Insert TableBooking", "Table Booking Id: " + String.valueOf(iTBookId));
                         InsertTableBooking(iTBookId, strCustomerName, strTimeBooking, strMobileNo, iTableNo);
                         ResetTableBooking();
-                        ClearTableBooking();
+                        //     ClearTableBooking();
+                        mTableBookingList.clear();
                         DisplayTableBooking();
                     }
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     Toast.makeText(myContext, ex.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d("Table Booking :", ex.getMessage());
                 }
@@ -641,7 +555,8 @@ public class TableBookingActivity extends WepBaseActivity {
             Log.d("updateDept", "Updated Rows: " + String.valueOf(iResult));
             ResetTableBooking();
             if (iResult > 0) {
-                ClearTableBooking();
+                //    ClearTableBooking();
+                mTableBookingList.clear();
                 DisplayTableBooking();
             } else {
                 MsgBox.Show("Warning", "Update failed");
@@ -651,7 +566,8 @@ public class TableBookingActivity extends WepBaseActivity {
 
     public void ClearTableBooking(View v) {
         ResetTableBooking();
-        ClearTableBooking();
+        //  ClearTableBooking();
+        mTableBookingList.clear();
         DisplayTableBooking();
     }
 
@@ -662,95 +578,46 @@ public class TableBookingActivity extends WepBaseActivity {
     }
 
     public void SearchTableBooking(View v) {
-        ClearTableBooking();
-        DisplayTBookingByMobileNo();
+        //   ClearTableBooking();
+        mTableBookingList.clear();
+        //   DisplayTBookingByMobileNo();
+        DisplayTBookingByMobileNoTest();
     }
 
-    public void DisplayTBookingByMobileNo() {
+    public void DisplayTBookingByMobileNoTest() {
         if (tvSearchMobileNo.getText().toString().equalsIgnoreCase("")) {
             MsgBox.Show("Warning", "Please fill MobileNo for Search");
         } else {
             Cursor crsrTBooking;
             crsrTBooking = dbTableBooking.getTableBookingByMobile(tvSearchMobileNo.getText().toString());
 
-            TableRow rowTBooking = null;
-            TextView tvSno, tviewTBookId, tviewCustomerName, tviewTimeBooking, tviewTableNo, tviewMobileNo;
-
             int i = 1;
             if (crsrTBooking.moveToFirst()) {
                 do {
-                    rowTBooking = new TableRow(myContext);
-                    rowTBooking.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-                    rowTBooking.setBackgroundResource(R.drawable.row_background);
+                    TableBookingResponse tableBookingResponse = new TableBookingResponse();
 
-                    tvSno = new TextView(myContext);
-                    tvSno.setTextSize(18);
-                    tvSno.setGravity(1);
-                    tvSno.setText(String.valueOf(i));
-                    rowTBooking.addView(tvSno);
+                    tableBookingResponse.setsNo(i);
+                    tableBookingResponse.setCustomerName(crsrTBooking.getString(1));
+                    tableBookingResponse.setTimeBooking(crsrTBooking.getString(2));
+                    tableBookingResponse.setTableNo(Integer.parseInt(crsrTBooking.getString(3)));
+                    tableBookingResponse.setMobileNo(crsrTBooking.getString(4));
 
-                    tviewTBookId = new TextView(myContext);
-                    tviewTBookId.setTextSize(18);
-                    tviewTBookId.setText(crsrTBooking.getString(0));
-                    rowTBooking.addView(tviewTBookId);
+                    mTableBookingList.add(tableBookingResponse);
 
-                    tviewCustomerName = new TextView(myContext);
-                    tviewCustomerName.setTextSize(18);
-                    tviewCustomerName.setText(crsrTBooking.getString(1));
-                    rowTBooking.addView(tviewCustomerName);
-
-                    tviewTimeBooking = new TextView(myContext);
-                    tviewTimeBooking.setTextSize(18);
-                    tviewTimeBooking.setGravity(1);
-                    tviewTimeBooking.setText(crsrTBooking.getString(2));
-                    rowTBooking.addView(tviewTimeBooking);
-
-                    tviewTableNo = new TextView(myContext);
-                    tviewTableNo.setTextSize(18);
-                    tviewTableNo.setGravity(1);
-                    tviewTableNo.setText(crsrTBooking.getString(3));
-                    rowTBooking.addView(tviewTableNo);
-
-                    tviewMobileNo = new TextView(myContext);
-                    tviewMobileNo.setTextSize(18);
-                    tviewMobileNo.setText(crsrTBooking.getString(4));
-                    rowTBooking.addView(tviewMobileNo);
-
-                    rowTBooking.setOnClickListener(new View.OnClickListener() {
-
-                        public void onClick(View v) {
-                            // TODO Auto-generated method stub
-                            if (String.valueOf(v.getTag()) == "TAG") {
-                                TableRow Row = (TableRow) v;
-                                TextView TBookId = (TextView) Row.getChildAt(1);
-                                TextView CustName = (TextView) Row.getChildAt(2);
-                                TextView TimeBooking = (TextView) Row.getChildAt(3);
-                                TextView TableNo = (TextView) Row.getChildAt(4);
-                                TextView MobileNo = (TextView) Row.getChildAt(5);
-
-                                iTBookId = Integer.valueOf(TBookId.getText().toString());
-                                tvCustomerName.setText(CustName.getText().toString());
-                                tvTimeBooking.setText(TimeBooking.getText().toString());
-                                tvTableNo.setText(TableNo.getText().toString());
-                                tvMobileNo.setText(MobileNo.getText().toString());
-                                btnAddTB.setEnabled(false);
-                                btnSaveTB.setEnabled(true);
-                                //btnAddTB.setTextColor(Color.GRAY);
-                                //btnSaveTB.setTextColor(Color.BLACK);
-                            }
-                        }
-                    });
-
-                    rowTBooking.setTag("TAG");
-
-                    tblTableBooking.addView(rowTBooking,
-                            new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
                     i++;
                 } while (crsrTBooking.moveToNext());
             } else {
                 MsgBox.Show("Warning", "Table Booking not found");
                 Log.d("Display Table Booking", "No Table Booking found");
             }
+
+            mAdapter = new TableBookingAdapter(mTableBookingList);
+            mRecyclerView.setAdapter(mAdapter);
+
+            btnAddTB.setEnabled(false);
+            btnSaveTB.setEnabled(true);
+            //btnAddTB.setTextColor(Color.GRAY);
+            //btnSaveTB.setTextColor(Color.BLACK);
         }
     }
 
@@ -763,8 +630,8 @@ public class TableBookingActivity extends WepBaseActivity {
             View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
             final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
             final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
-            final TextView tvAuthorizationUserId= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserId);
-            final TextView tvAuthorizationUserPassword= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserPassword);
+            final TextView tvAuthorizationUserId = (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserId);
+            final TextView tvAuthorizationUserPassword = (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserPassword);
             tvAuthorizationUserId.setVisibility(View.GONE);
             tvAuthorizationUserPassword.setVisibility(View.GONE);
             txtUserId.setVisibility(View.GONE);
@@ -790,5 +657,48 @@ public class TableBookingActivity extends WepBaseActivity {
     public void onHomePressed() {
         //ActionBarUtils.navigateHome(this);
         finish();
+    }
+
+    @Override
+    public void onItemClick(int position, View v) {
+
+        Log.d("position", " hi" + position);
+        tvCustomerName.setText(mTableBookingList.get(position).getCustomerName());
+        tvTimeBooking.setText(mTableBookingList.get(position).getTimeBooking());
+        tvTableNo.setText("" + mTableBookingList.get(position).getTableNo());
+        tvMobileNo.setText(mTableBookingList.get(position).getMobileNo());
+        btnAddTB.setEnabled(false);
+        btnSaveTB.setEnabled(true);
+        //btnAddTB.setTextColor(Color.GRAY);
+        //btnSaveTB.setTextColor(Color.BLACK);
+        linear_table.setVisibility(View.VISIBLE);
+        tvMobileNo.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void onDeleteItemClick(final int position) {
+        MsgBox.setTitle("Confirm")
+                .setIcon((R.drawable.ic_launcher))
+                .setMessage("Do you want to delete this Booking")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            dbTableBooking.DeleteTableBooking_WithDetails(mTableBookingList.get(position).getCustomerName(),
+                                    mTableBookingList.get(position).getTimeBooking(), String.valueOf(mTableBookingList.get(position).getTableNo()),
+                                    mTableBookingList.get(position).getMobileNo());
+                            mTableBookingList.remove(position);
+
+                            mAdapter = new TableBookingAdapter(mTableBookingList);
+                            mRecyclerView.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            MsgBox.Show("Error", e.getMessage());
+                        }
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }

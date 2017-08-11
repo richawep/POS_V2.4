@@ -70,7 +70,7 @@ public class FragmentInwardStock extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fragment_inward_stock, container, false);
         
         myContext = getActivity();
-        MsgBox = new MessageDialog(myContext);      
+        MsgBox = new MessageDialog(myContext);
 
         try{
             InitializeViews(view);
@@ -369,7 +369,7 @@ public class FragmentInwardStock extends Fragment {
                 Cursor cursor = dbStockInward.getAllSupplierName_nonGST();
                 if (cursor != null && cursor.moveToFirst()) {
                     do {
-                        Supplier_Model  supplier  = new Supplier_Model();
+                        Supplier_Model supplier  = new Supplier_Model();
                         supplier.setSupplierCode(cursor.getInt(cursor.getColumnIndex("SupplierCode")));
                         supplier.setSupplierName(cursor.getString(cursor.getColumnIndex("SupplierName")));
                         supplier.setSupplierAddress(cursor.getString(cursor.getColumnIndex("SupplierAddress")));

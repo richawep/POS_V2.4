@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,9 +11,9 @@
         android:id="@+id/lnrCustomerDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
         android:background="#FFFFFF">
 
         <LinearLayout
@@ -44,8 +43,8 @@
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="50dp"
-                    android:ems="5"
                     android:drawableRight="@drawable/searchicon_img"
+                    android:ems="5"
                     android:hint="Search Mobile No"
                     android:inputType="number"
                     android:maxLength="10" />
@@ -65,8 +64,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:completionThreshold="1"
-                    android:gravity="left"
                     android:drawableRight="@drawable/searchicon_img"
+                    android:gravity="left"
                     android:hint="Search Customer Name"
                     android:imeOptions="flagNoExtractUi"
                     android:inputType="text"
@@ -90,7 +89,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.35">
+                android:layout_weight="0.33">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,8 +112,7 @@
                             <TableRow
                                 android:id="@+id/rowCustomerGSTIN"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                >
+                                android:layout_height="wrap_content">
 
                                 <TextView
                                     android:id="@+id/tvCustomerGSTIN"
@@ -131,6 +129,7 @@
                                     android:hint="Customer GSTIN"
                                     android:maxLength="15" />
                             </TableRow>
+
                             <TableRow
                                 android:id="@+id/rowCustomerName"
                                 android:layout_width="wrap_content"
@@ -217,8 +216,6 @@
                             </TableRow>
 
 
-
-
                         </LinearLayout>
 
                     </FrameLayout>
@@ -253,7 +250,7 @@
                                 <TableRow
                                     android:id="@+id/rowCaption"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:background="@color/colorPrimaryLight">
 
                                     <TextView
@@ -262,24 +259,27 @@
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
                                         android:text="S.No"
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="@color/txtColorAccent" />
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
                                         android:id="@+id/tvCaptionSerialNumber"
                                         android:layout_width="100dp"
                                         android:layout_height="wrap_content"
                                         android:text="#"
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="@color/txtColorAccent" />
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
                                         android:id="@+id/tvCaptionCustomerName"
-                                        android:layout_width="130dp"
+                                        android:layout_width="170dp"
                                         android:layout_height="wrap_content"
                                         android:text="Name"
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="@color/txtColorAccent" />
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
 
                                     <TextView
@@ -288,42 +288,56 @@
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
                                         android:text="Last Transn."
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="@color/txtColorAccent" />
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
                                         android:id="@+id/tvCaptionTotalTransaction"
-                                        android:layout_width="150dp"
+                                        android:layout_width="@dimen/_165dp_720dp_145dp_600dp"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
                                         android:text="Total Transn."
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="@color/txtColorAccent" />
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
                                         android:id="@+id/tvCaptionCustomerPhone"
                                         android:layout_width="120dp"
                                         android:layout_height="wrap_content"
                                         android:text="Phone"
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="@color/txtColorAccent" />
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
                                         android:id="@+id/tvCaptionCustomerAddress"
                                         android:layout_width="150dp"
                                         android:layout_height="wrap_content"
                                         android:text="Address"
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="@color/txtColorAccent" />
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                     <TextView
                                         android:id="@+id/tvCaptionCreditAmount"
-                                        android:layout_width="120dp"
+                                        android:layout_width="100dp"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
                                         android:text="Credit Amt"
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="@color/txtColorAccent" />
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
+
+                                    <TextView
+                                        android:id="@+id/tvColDelete"
+                                        android:layout_width="@dimen/counter_sale_60dp_720dp_55dp_600dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="Delete"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/txtColorAccent"
+                                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                                 </TableRow>
                             </TableLayout>
@@ -344,9 +358,9 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1.65">
+                android:layout_gravity="bottom"
+                android:layout_weight="1.65"
+                android:padding="@dimen/_5dp_720dp_4dp_600dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -356,45 +370,53 @@
 
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnAddCustomer"
-                        android:layout_width="100dp"
-                        android:layout_height="45dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/background_btn"
                         android:onClick="AddCustomer"
                         android:text="Add"
+                        android:textAllCaps="false"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
 
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnEditCustomer"
-                        android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
                         android:background="@drawable/background_btn"
                         android:onClick="EditCustomer"
                         android:text="Update"
+                        android:textAllCaps="false"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
 
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnClearCustomer"
-                        android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
                         android:background="@drawable/background_btn"
                         android:onClick="ClearCustomer"
                         android:text="Clear"
+                        android:textAllCaps="false"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
 
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnCloseCustomer"
-                        android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
                         android:background="@drawable/background_btn"
                         android:onClick="CloseCustomer"
                         android:text="Close"
+                        android:textAllCaps="false"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
                 </LinearLayout>
             </FrameLayout>

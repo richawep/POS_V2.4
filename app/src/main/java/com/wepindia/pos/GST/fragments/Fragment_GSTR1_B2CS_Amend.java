@@ -62,7 +62,8 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_fragment__gstr1__b2_cs__amend, container, false);
+        View view = inflater.inflate(R.layout.test_fragment__gstr1__b2_cs__amend, container, false);
+        //View view = inflater.inflate(R.layout.fragment_fragment__gstr1__b2_cs__amend, container, false);
         myContext = getActivity();
         MsgBox = new MessageDialog(myContext);
 
@@ -186,7 +187,7 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
         while (cursor != null && cursor.moveToNext()) {
             GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
             ammend.setSno(count++);
-            ammend.setTaxMonth(cursor.getString(cursor.getColumnIndex("Month")));
+            ammend.setTaxMonth(cursor.getString( cursor.getColumnIndex("Month")));
             ammend.setHsn_ori(cursor.getString(cursor.getColumnIndex("HSNCode")));
             ammend.setType_ori(cursor.getString(cursor.getColumnIndex("SupplyType")));
             ammend.setPos_ori(cursor.getString(cursor.getColumnIndex("POS")));

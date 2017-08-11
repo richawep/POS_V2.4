@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -53,7 +55,7 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
 
 
     WepButton btnLinkItem, btnDelinkItem, btnClose, btnClear;
-    Spinner spnrUOM,spnr_supplytype;
+    EditText spnrUOM,spnr_supplytype;
     EditText et_inw_supplierAddress,et_inw_ItemBarcode,et_inw_HSNCode;
 
     AutoCompleteTextView autocompletetv_supplierPhn, autocompletetv_suppliername,autocomplete_inw_ItemName;
@@ -77,28 +79,25 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
 
         myContext = this;
         strUserName = getIntent().getStringExtra("USER_NAME");
-    try
-    {
-        Date d = new Date();
-        CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-        com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Supplier Item Linkage",strUserName," Date:"+s.toString());
+        try
+        {
+            Date d = new Date();
+            CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
+            com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),"Supplier Item Linkage",strUserName," Date:"+s.toString());
 
-        myContext = this;
-        MsgBox = new MessageDialog(myContext);
-        dbSupplierItemLink = new DatabaseHandler(myContext);
+            myContext = this;
+            MsgBox = new MessageDialog(myContext);
+            dbSupplierItemLink = new DatabaseHandler(myContext);
 
-        dbSupplierItemLink.CloseDatabase();
-        dbSupplierItemLink.CreateDatabase();
-        dbSupplierItemLink.OpenDatabase();
+            dbSupplierItemLink.CloseDatabase();
+            dbSupplierItemLink.CreateDatabase();
+            dbSupplierItemLink.OpenDatabase();
 
-        InitializeViewVariables();
-        OnClickEvents();
-        Reset();
-        loadAutoCompleteData();
-        DisplayItems(-1); // display all data
-
-
-
+            InitializeViewVariables();
+            OnClickEvents();
+            Reset();
+            loadAutoCompleteData();
+            DisplayItems(-1); // display all data
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -122,21 +121,18 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
         et_Inw_AverageRate = (TextView)findViewById(R.id.et_Inw__AverageRate);
         et_inw_ItemBarcode = (EditText) findViewById(R.id.et_inw_ItemBarcode);
         et_inw_HSNCode = (EditText) findViewById(R.id.et_inw_HSNCode);
-        spnrUOM= (Spinner)findViewById(R.id.spnrUOM);
-        spnr_supplytype = (Spinner)findViewById(R.id.spnr_supplytype);
-
+        spnrUOM= (EditText)findViewById(R.id.spnrUOM);
+        spnr_supplytype = (EditText)findViewById(R.id.spnr_supplytype);
 
         et_Inw_SGSTRate = (EditText) findViewById(R.id.et_Inw_SGSTRate);
         et_Inw_CGSTRate = (EditText) findViewById(R.id.et_Inw_CGSTRate);
         et_Inw_IGSTRate = (EditText) findViewById(R.id.et_Inw_IGSTRate);
         et_Inw_cessRate = (EditText) findViewById(R.id.et_Inw_cessRate);
 
-
         btnLinkItem = (WepButton) findViewById(R.id.btnLinkItem);
         btnDelinkItem = (WepButton) findViewById(R.id.btnDelinkItem);
         btnClear = (WepButton) findViewById(R.id.btnClear);
         btnClose = (WepButton) findViewById(R.id.btnClose);
-
 
         btnLinkItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +158,6 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
                 Close(v);
             }
         });
-
     }
 
     public void  LinkItem(View v)
@@ -316,15 +311,17 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
                     et_Inw_CGSTRate.setText(String.format("%.2f",crsritem.getDouble(crsritem.getColumnIndex("CGSTRate"))));
                     et_Inw_SGSTRate.setText(String.format("%.2f",crsritem.getDouble(crsritem.getColumnIndex("SGSTRate"))));
                     et_Inw_cessRate.setText(String.format("%.2f",crsritem.getDouble(crsritem.getColumnIndex("cessRate"))));
-
-                    if(crsritem.getString(crsritem.getColumnIndex("SupplyType")).equalsIgnoreCase("G"))
-                        spnr_supplytype.setSelection(0);
-                    else
-                        spnr_supplytype.setSelection(1);
+                    spnr_supplytype.setText(crsritem.getString(crsritem.getColumnIndex("SupplyType")));
+//                    if(crsritem.getString(crsritem.getColumnIndex("SupplyType")).equalsIgnoreCase("G"))
+//                        spnr_supplytype.setSelection(0);
+//                    else
+//                        spnr_supplytype.setSelection(1);
 
                     String uom_temp = crsritem.getString(crsritem.getColumnIndex("UOM"));
-                    String uom = "("+uom_temp+")";
-                    spnrUOM.setSelection(getIndex_uom(uom));
+                   // String uom = "("+uom_temp+")";
+
+//                    spnrUOM.setSelection(getIndex_uom(uom));
+                    spnrUOM.setText(uom_temp);
                 }
                 if (suppliername.equals(""))
                 { // itemwise
@@ -341,8 +338,8 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
                     Cursor cursor = dbSupplierItemLink.isLinked(suppliercode, menuCode);
                     if (cursor !=null && cursor.moveToFirst())
                     {
-                            btnLinkItem.setEnabled(false);
-                            btnDelinkItem.setEnabled(true);
+                        btnLinkItem.setEnabled(false);
+                        btnDelinkItem.setEnabled(true);
                     }else
                     {
                         btnLinkItem.setEnabled(true);
@@ -370,17 +367,18 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
                 tv_menucode.setText(String.valueOf(link.getMenuCode()));
                 et_Inw_AverageRate.setText(String.format("%.2f",link.getAverageRate()));
                 et_inw_HSNCode.setText(link.getHsnCode());
-                if(link.getSupplyType().equalsIgnoreCase("G"))
-                    spnr_supplytype.setSelection(0);
-                else if(link.getSupplyType().equalsIgnoreCase("S"))
-                    spnr_supplytype.setSelection(1);
-                spnrUOM.setSelection(getIndex(link.getUom()));
+//                if(link.getSupplyType().equalsIgnoreCase("G"))
+//                    spnr_supplytype.setSelection(0);
+//                else if(link.getSupplyType().equalsIgnoreCase("S"))
+//                    spnr_supplytype.setSelection(1);
+                spnr_supplytype.setText(link.getSupplyType());
+                spnrUOM.setText(link.getUom());
                 et_Inw_CGSTRate.setText(String.format("%.2f",link.getCGSTRate()));
                 et_Inw_SGSTRate.setText(String.format("%.2f",link.getSGSTRate()));
                 et_Inw_IGSTRate.setText(String.format("%.2f",link.getIGSTRate()));
                 et_Inw_cessRate.setText(String.format("%.2f",link.getCessRate()));
 
-                 btnLinkItem.setEnabled(false);
+                btnLinkItem.setEnabled(false);
                 btnDelinkItem.setEnabled(true);
             }catch (Exception e)
             {
@@ -390,20 +388,20 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
         }
     };
 
-    private int getIndex_uom(String substring){
-
-        int index = 0;
-        for (int i = 0; index==0 && i < spnrUOM.getCount(); i++){
-
-            if (spnrUOM.getItemAtPosition(i).toString().contains(substring)){
-                index = i;
-            }
-
-        }
-
-        return index;
-
-    }
+    //    private int getIndex_uom(String substring){
+//
+//        int index = 0;
+//        for (int i = 0; index==0 && i < spnrUOM.getCount(); i++){
+//
+//            if (spnrUOM.getItemAtPosition(i).toString().contains(substring)){
+//                index = i;
+//            }
+//
+//        }
+//
+//        return index;
+//
+//    }
     @SuppressWarnings("deprecation")
     private void  DisplayItems(int suppliercode_recv ) {
         // if suppliercode_recv == -1 , then display all whole data , i.e. all items for all the suppliers
@@ -626,10 +624,12 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
         et_inw_ItemBarcode.setText("");
         et_Inw_AverageRate.setText("0.00");
         et_inw_HSNCode.setText("");
-        spnrUOM.setSelection(0);
-        spnrUOM.setEnabled(true);
-        spnr_supplytype.setSelection(0);
-        spnr_supplytype.setEnabled(true);
+
+        // spnr_supplytype.setSelection(0);
+        //  spnr_supplytype.setEnabled(true);
+
+        spnr_supplytype.setText("");
+        spnrUOM.setText("");
 
         et_Inw_SGSTRate.setText("0");
         et_Inw_CGSTRate.setText("0");
@@ -646,7 +646,7 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
 
     public void ClearingAndDisplaying()
     {
-;
+        ;
         if(sema_display == ALL)
         {
 
@@ -738,20 +738,20 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
         autocomplete_inw_ItemName.setAdapter(dataAdapter);
 
     }
-    private int getIndex(String substring){
-
-        int index = 0;
-        for (int i = 0; index==0 && i < spnrUOM.getCount(); i++){
-
-            if (spnrUOM.getItemAtPosition(i).toString().contains(substring)){
-                index = i;
-            }
-
-        }
-
-        return index;
-
-    }
+//    private int getIndex(String substring){
+//
+//        int index = 0;
+//        for (int i = 0; index==0 && i < spnrUOM.getCount(); i++){
+//
+//            if (spnrUOM.getItemAtPosition(i).toString().contains(substring)){
+//                index = i;
+//            }
+//
+//        }
+//
+//        return index;
+//
+//    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -781,6 +781,7 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
     public void onHomePressed() {
         ActionBarUtils.navigateHome(this);
     }
+
 
 
 }

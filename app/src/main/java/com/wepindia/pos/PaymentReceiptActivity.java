@@ -14,34 +14,27 @@
  ****************************************************************************/
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.Database.PaymentReceipt;
 import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.views.WepButton;
-import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.PrintClasses.SendDataToSerialPort;

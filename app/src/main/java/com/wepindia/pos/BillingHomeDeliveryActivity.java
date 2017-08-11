@@ -41,6 +41,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -98,6 +99,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
     ListView listViewDept, listViewCateg, lstvwKOTModifiers;
     private DepartmentAdapter departmentAdapter;
     private CategoryAdapter categoryAdapter;
+    RelativeLayout boxDept, boxCat,boxItem;
     private GridView gridViewItems;
     private ItemsAdapter itemsAdapter;
     TableLayout tblOrderItems;
@@ -277,32 +279,32 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
                 if (FASTBILLINGMODE.equalsIgnoreCase("1")) {
                     // setting visibility of buttons
-                    btndepart.setVisibility(View.GONE);
-                    btncateg.setVisibility(View.GONE);
-                    btnitem.setVisibility(View.VISIBLE);
+                    boxDept.setVisibility(View.GONE);
+                    boxCat.setVisibility(View.GONE);
+                   // btnitem.setVisibility(View.VISIBLE);
 
                     // setting visibility of grids/listviews
                     gridViewItems.setNumColumns(6);
                     loadItems(0);
-                    tvdeptline.setVisibility(View.GONE);
-                    tvcategline.setVisibility(View.GONE);
-                    listViewDept.setVisibility(View.GONE);
-                    listViewCateg.setVisibility(View.GONE);
+                    /*tvdeptline.setVisibility(View.GONE);
+                    tvcategline.setVisibility(View.GONE);*/
+                    /*listViewDept.setVisibility(View.GONE);
+                    listViewCateg.setVisibility(View.GONE);*/
 
                 } else if (FASTBILLINGMODE.equalsIgnoreCase("2")) {
-                    btndepart.setVisibility(View.VISIBLE);
-                    btncateg.setVisibility(View.GONE);
-                    btnitem.setVisibility(View.VISIBLE);
+                    boxDept.setVisibility(View.VISIBLE);
+                    boxCat.setVisibility(View.GONE);
+                    //btnitem.setVisibility(View.VISIBLE);
 
                     gridViewItems.setNumColumns(4);
                     loadItems(0);
-                    tvcategline.setVisibility(View.GONE);
-                    listViewCateg.setVisibility(View.GONE);
+                    //tvcategline.setVisibility(View.GONE);
+                    //listViewCateg.setVisibility(View.GONE);
 
                 } else if (FASTBILLINGMODE.equalsIgnoreCase("3")) {
-                    btndepart.setVisibility(View.VISIBLE);
-                    btncateg.setVisibility(View.VISIBLE);
-                    btnitem.setVisibility(View.VISIBLE);
+                    boxDept.setVisibility(View.VISIBLE);
+                    boxCat.setVisibility(View.VISIBLE);
+                    //btnitem.setVisibility(View.VISIBLE);
                     loadItems(0);
                 }
             }
@@ -575,7 +577,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 break;
 
             case mDataMiniScreenResolutionWidth:
-                mHeadingTextSize = 18;
+                mHeadingTextSize = 14;
                 mDataMiniDeviceTextsize = 11;
 
                 mItemNameWidth = 140;
@@ -593,6 +595,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
                 break;
         }
     }
+
 
 
     void setInvoiceDate()
@@ -811,6 +814,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         tvDate = (TextView) findViewById(R.id.tvBillDateValue);
         tvBillNumber = (EditText) findViewById(R.id.tvBillNumberValue);
 
+        boxDept = (RelativeLayout) findViewById(R.id.boxDept);
+        boxCat = (RelativeLayout) findViewById(R.id.boxCat);
+        boxItem = (RelativeLayout) findViewById(R.id.boxItem);
+
         mItemNameTextView = (TextView) findViewById(R.id.tvColItemName);
         mHSNTextView = (TextView) findViewById(R.id.tvColHSN);
         mQuantityTextView = (TextView) findViewById(R.id.tvColItemQty);
@@ -833,8 +840,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         btncateg.setOnClickListener(this);
         btnitem.setOnClickListener(this);
 
-        tvdeptline = (TextView) findViewById(R.id.tvdeptline);
-        tvcategline = (TextView) findViewById(R.id.tvcategline);
+        //tvdeptline = (TextView) findViewById(R.id.tvdeptline);
+        //tvcategline = (TextView) findViewById(R.id.tvcategline);
         listViewDept = (ListView) findViewById(R.id.lstDepartmentNames);
         listViewDept.setOnItemClickListener(deptClick);
         listViewCateg = (ListView) findViewById(R.id.lstCategoryNames);
@@ -3342,21 +3349,29 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
                 // Item Name
                 tvName = new TextView(myContext);
-                tvName.setWidth(135);
-                tvName.setTextSize(11);
+                //tvName.setWidth(135);
+                //tvName.setTextSize(11);
+                tvName.setWidth(mItemNameWidth); // 154px ~= 230dp
+                tvName.setTextSize(mDataMiniDeviceTextsize);
                 tvName.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("ItemName")));
 
                 //hsn code
                 tvHSn = new TextView(myContext);
-                tvHSn.setWidth(67); // 154px ~= 230dp
-                tvHSn.setTextSize(11);
+                tvHSn.setWidth(mHSNWidth); // 154px ~= 230dp
+                tvHSn.setTextSize(mDataMiniDeviceTextsize);
+
+                //tvHSn.setWidth(67); // 154px ~= 230dp
+               // tvHSn.setTextSize(11);
                 if (GSTEnable.equalsIgnoreCase("1") && (HSNEnable_out != null) && HSNEnable_out.equals("1")) {
                     tvHSn.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("HSNCode")));
                 }
                 // Quantity
                 etQty = new EditText(myContext);
-                etQty.setWidth(55);
-                etQty.setTextSize(11);
+                //etQty.setWidth(55);
+                //etQty.setTextSize(11);
+                etQty.setWidth(mQuantityWidth); // 57px ~= 85dp
+                etQty.setTextSize(mDataMiniDeviceTextsize);
+
                 if (crsrBillItems.getString(crsrBillItems.getColumnIndex("PrintKOTStatus")).equalsIgnoreCase("1")) {
                     etQty.setEnabled(true);
                 } else {
@@ -3390,17 +3405,22 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
 
                 // Rate
                 etRate = new EditText(myContext);
-                etRate.setWidth(70);
+                //etRate.setWidth(70);
                 etRate.setEnabled(false);
-                etRate.setTextSize(11);
+                //etRate.setTextSize(11);
+                etRate.setWidth(mRateWidth); // 74px ~= 110dp
+                etRate.setTextSize(mDataMiniDeviceTextsize);
                 etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                 etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 etRate.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Rate"))));
 
                 // Amount
                 tvAmount = new TextView(myContext);
-                tvAmount.setWidth(60);
-                tvAmount.setTextSize(11);
+                //tvAmount.setWidth(60);
+                //tvAmount.setTextSize(11);
+                tvAmount.setWidth(mAmountWidth); // 97px ~= 145dp
+                tvAmount.setTextSize(mDataMiniDeviceTextsize);
+
                 tvAmount.setGravity(Gravity.RIGHT | Gravity.END);
                 tvAmount.setText(
                         String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Amount"))));
@@ -4885,26 +4905,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity {
         ClearAll();
         ControlsSetEnabled();
 
-        /*if (FASTBILLINGMODE.equalsIgnoreCase("1")) {
-            gridViewItems.setNumColumns(6);
-            loadItems(0);
-            tvdeptline.setVisibility(View.GONE);
-            tvcategline.setVisibility(View.GONE);
-            listViewDept.setVisibility(View.GONE);
-            listViewCateg.setVisibility(View.GONE);
-        } else if (FASTBILLINGMODE.equalsIgnoreCase("2")) {
-            gridViewItems.setNumColumns(4);
-            loadItems(0);
-            tvcategline.setVisibility(View.GONE);
-            listViewCateg.setVisibility(View.GONE);
-            listViewDept.setAdapter(null);
-            gridViewItems.setAdapter(null);
-        } else {
-            loadItems(0);
-            listViewDept.setAdapter(null);
-            listViewCateg.setAdapter(null);
-            gridViewItems.setAdapter(null);
-        }*/
     }
 
     /*************************************************************************************************************************************

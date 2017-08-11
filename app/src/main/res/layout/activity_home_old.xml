@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,50 +11,119 @@
         android:id="@+id/homeParent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:background="@drawable/home_back">
+        android:background="@drawable/home_back"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
 
+        <RelativeLayout
+            android:id="@+id/boxTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imageViewUser"
+                android:layout_width="@dimen/bar_icon"
+                android:layout_height="@dimen/bar_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/user" />
+
+            <TextView
+                android:id="@+id/txtViewUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@+id/imageViewUser"
+                android:text="Welcome User" />
+
+            <ImageView
+                android:id="@+id/imageViewBell"
+                android:layout_width="@dimen/bar_icon"
+                android:layout_height="@dimen/bar_icon"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/bell"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/imgScreenshot"
+                android:layout_width="@dimen/bar_icon"
+                android:layout_height="@dimen/bar_icon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="7dp"
+                android:onClick="Screenshot"
+                android:src="@drawable/screenshot" />
+
+            <TextView
+                android:id="@+id/textViewUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="bottom"
+                android:text="Welcome User"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/boxContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/boxButton">
+            android:layout_above="@+id/boxButton"
+            android:layout_below="@+id/boxTop">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
+                     android:layout_marginBottom="@dimen/bottom_margin_20dp"
+                    android:layout_marginLeft="@dimen/left_margin_220dp"
+                    android:layout_marginRight="@dimen/right_margin_220dp"
+                    android:layout_marginStart="@dimen/left_margin_220dp"
+                    android:layout_marginEnd="@dimen/right_margin_220dp"
                     android:orientation="horizontal"
-                    >
+                    android:weightSum="5">
 
                     <RelativeLayout
                         android:id="@+id/rl_dinein"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgDineIn"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+
                             android:background="@drawable/gradient_button"
                             android:contentDescription="DineIn"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/img_dinein" />
+                            android:src="@drawable/img_dinein"
+                            android:layout_alignParentTop="true" />
 
                         <TextView
                             android:id="@+id/tvDineInOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgDineIn"
                             android:gravity="center"
@@ -66,14 +134,14 @@
 
                     <RelativeLayout
                         android:id="@+id/rl_CounterSales"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgTakeAway"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="CounterSales"
@@ -83,7 +151,7 @@
 
                         <TextView
                             android:id="@+id/tvCounterSalesOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgTakeAway"
                             android:gravity="center"
@@ -94,14 +162,14 @@
 
                     <RelativeLayout
                         android:id="@+id/rl_pickup"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgPickUp"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="PickUp"
@@ -111,7 +179,7 @@
 
                         <TextView
                             android:id="@+id/tvPickUpOption1"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgPickUp"
                             android:gravity="center"
@@ -122,14 +190,14 @@
 
                     <RelativeLayout
                         android:id="@+id/rl_delivery"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgDelivery"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Delivery"
@@ -139,7 +207,7 @@
 
                         <TextView
                             android:id="@+id/tvDeliveryOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgDelivery"
                             android:gravity="center"
@@ -150,15 +218,17 @@
 
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgPaymentReceipt"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="PaymentReceipt"
                             android:onClick="LaunchActivity"
@@ -167,49 +237,70 @@
 
                         <TextView
                             android:id="@+id/tvPayemntReceiptOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgPaymentReceipt"
                             android:gravity="center"
-                            android:text="Payment / Receipt"
+                            android:text="Payment/Receipt"
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="5">
-
                     <RelativeLayout
+                        android:id="@+id/rl_inward_invoice_entry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/menu_box_marigin"
+                        android:layout_weight="1"
+                        android:visibility="gone">
 
-                        android:layout_weight="1">
+                        <ImageButton
+                            android:id="@+id/inward_supply_invoice"
+                            android:layout_width="120dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/gradient_button"
+                            android:contentDescription="InwardSupplyInvoicesEntry"
+                            android:onClick="LaunchActivity"
+                            android:padding="3dp"
+                            android:src="@drawable/inwardsupply" />
 
+                        <TextView
+                            android:id="@+id/tvPickUpOption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/inward_supply_invoice"
+                            android:gravity="center"
+                            android:text="Inward  Supply "
+                            android:textSize="@dimen/menu_box_font_size"
+                            android:textStyle="bold" />
                     </RelativeLayout>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/left_margin_220dp"
+                    android:layout_marginRight="@dimen/right_margin_220dp"
+                    android:layout_marginStart="@dimen/left_margin_220dp"
+                    android:layout_marginEnd="@dimen/right_margin_220dp"
+                    android:layout_marginTop="@dimen/top_margin_20dp"
                     android:orientation="horizontal"
                     android:weightSum="5">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgMasters"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Masters"
                             android:onClick="LaunchActivity"
@@ -218,7 +309,7 @@
 
                         <TextView
                             android:id="@+id/tvMasterOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgMasters"
                             android:gravity="center"
@@ -228,18 +319,15 @@
                     </RelativeLayout>
 
 
-
-
-
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgReports"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Reports"
@@ -249,7 +337,7 @@
 
                         <TextView
                             android:id="@+id/tvReportOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgReports"
                             android:gravity="center"
@@ -260,16 +348,15 @@
 
                     <RelativeLayout
                         android:id="@+id/rl_amend"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
-                        android:layout_weight="1"
-                        >
+                        android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/img_ammend"
-                            android:layout_width="120dp"
-                            android:layout_height="100dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Ammend"
                             android:onClick="LaunchActivity"
@@ -278,7 +365,7 @@
 
                         <TextView
                             android:id="@+id/tvammend"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/img_ammend"
                             android:gravity="center"
@@ -286,18 +373,18 @@
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/rl_cdn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
-                        android:layout_weight="1"
-                        >
+                        android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/img_cdn"
-                            android:layout_width="120dp"
-                            android:layout_height="100dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="cdnr"
                             android:onClick="LaunchActivity"
@@ -306,7 +393,7 @@
 
                         <TextView
                             android:id="@+id/tv_cdn"
-                            android:layout_width="142dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/img_cdn"
                             android:gravity="center"
@@ -314,16 +401,19 @@
                             android:textSize="@dimen/menu_box_font_size"
                             android:textStyle="bold" />
                     </RelativeLayout>
+
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
                             android:id="@+id/imgDayEnd"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="DayEnd"
                             android:onClick="LaunchActivity"
@@ -332,7 +422,7 @@
 
                         <TextView
                             android:id="@+id/tvDayEndOption"
-                            android:layout_width="140dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgDayEnd"
                             android:gravity="center"
@@ -342,10 +432,78 @@
                     </RelativeLayout>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="1">
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
 
             </LinearLayout>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/boxButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/imgLogOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/background_btn"
+                android:contentDescription="LogOut"
+                android:minHeight="40dp"
+                android:onClick="LaunchActivity"
+                android:text="Log Out"
+                android:textColor="@android:color/white"
+                android:theme="@style/WepButtonWithMarigin" />
+
+            <Button
+                android:id="@+id/imgGSt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+                android:layout_toRightOf="@+id/imgLogOut"
+                android:background="@drawable/background_btn"
+                android:contentDescription="GST"
+                android:minHeight="40dp"
+                android:onClick="LaunchActivity"
+                android:text="GST"
+                android:textColor="@android:color/white"
+                android:theme="@style/WepButtonWithMarigin"
+                android:visibility="invisible" />
+
+
+            <Button
+                android:id="@+id/imgExit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/background_btn"
+                android:contentDescription="Exit"
+                android:minHeight="40dp"
+                android:onClick="LaunchActivity"
+                android:text="Exit"
+                android:textColor="@android:color/white"
+                android:theme="@style/WepButtonWithMarigin" />
+        </RelativeLayout>
     </RelativeLayout>
 
 

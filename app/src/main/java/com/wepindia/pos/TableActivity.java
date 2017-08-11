@@ -14,7 +14,6 @@
 
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,7 +23,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
@@ -41,9 +39,6 @@ import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.WaiterAdapter;
-import com.wepindia.pos.utils.ActionBarUtils;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -432,14 +427,14 @@ public class TableActivity extends WepBaseActivity {
                 if (crsrTableBooking.moveToFirst()) {
                     String CustName = crsrTableBooking.getString(crsrTableBooking.getColumnIndex("CustName"));
                     String Time = crsrTableBooking.getString(crsrTableBooking.getColumnIndex("TimeForBooking"));
-                    MsgBox.Show("", "This table is booked by the Customer - " + CustName + " at - " + Time);
+                    MsgBox.Show("Note", "This table is booked by the Customer - " + CustName + " at - " + Time);
                 }
 
                 if(TableSplitEnable == 0)
                 {
                     if (arrlstTableNumbers.contains(Integer.parseInt(strTableNumber)))
                     {
-                        MsgBox.Show("", "This table is already in use. Please select another table");
+                        MsgBox.Show("Note", "This table is already in use. Please select another table");
                         return;
                     }
                 }
@@ -686,7 +681,7 @@ public class TableActivity extends WepBaseActivity {
         intentTableBooking.putExtra("CUST_ID", 0);
         startActivity(intentTableBooking);
 
-       /* Intent intentTableBooking = new Intent(myContext,TableBookingActivity.class);
+       /* Intent intentTableBooking = new Intent(myContext,TableBookingActivity_old.class);
         startActivity(intentTableBooking);*/
     }
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-    tools:ignore="HardcodedText,UselessParent" >
+    tools:ignore="HardcodedText,UselessParent">
 
     <TextView
         android:id="@+id/tvDineInPriceRange"
@@ -15,16 +15,19 @@
         android:layout_marginTop="75dp"
         android:gravity="center"
         android:text="Price Range "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAllCaps="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="@dimen/main_text_heading_17sp_720dp_15sp_600dp" />
+
     <TableRow
         android:id="@+id/rowDineInCaption"
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_height="@dimen/_70dp_720dp_65dp_600dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
         android:layout_marginBottom="@dimen/activity_horizontal_margin1"
-        android:layout_marginTop="110dp" >
+        android:layout_marginLeft="@dimen/_20dp_720dp_15dp_600dp"
+        android:layout_marginTop="@dimen/_110dp_720dp_105dp_600dp">
 
         <TextView
             android:id="@+id/tvFor"
@@ -41,8 +44,10 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="From"
-            android:visibility="gone"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAllCaps="false"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvTo"
@@ -51,8 +56,10 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="To"
-            android:visibility="gone"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAllCaps="false"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/etDineIn"
@@ -97,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rowDineInCaption"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp" >
+        android:layout_marginTop="15dp">
 
         <EditText
             android:id="@+id/etDineIn1Caption"
@@ -114,8 +121,8 @@
             android:layout_marginLeft="5dp"
             android:ems="10"
             android:inputType="number"
-            android:visibility="gone"
-            android:maxLength="3" >
+            android:maxLength="3"
+            android:visibility="gone">
 
             <requestFocus />
         </EditText>
@@ -127,8 +134,8 @@
             android:layout_marginLeft="5dp"
             android:ems="10"
             android:inputType="number"
-            android:visibility="gone"
-            android:maxLength="3" />
+            android:maxLength="3"
+            android:visibility="gone" />
 
         <CheckBox
             android:id="@+id/chkDineIn1"
@@ -165,7 +172,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rowDineIn1"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp" >
+        android:layout_marginTop="30dp">
 
         <EditText
             android:id="@+id/etDineIn2Caption"
@@ -182,8 +189,8 @@
             android:layout_marginLeft="5dp"
             android:ems="10"
             android:inputType="number"
-            android:visibility="gone"
-            android:maxLength="3" />
+            android:maxLength="3"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/etDineInPrice2To"
@@ -192,8 +199,8 @@
             android:layout_marginLeft="5dp"
             android:ems="10"
             android:inputType="number"
-            android:visibility="gone"
-            android:maxLength="3" />
+            android:maxLength="3"
+            android:visibility="gone" />
 
         <CheckBox
             android:id="@+id/chkDineIn2"
@@ -230,7 +237,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rowDineIn2"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp" >
+        android:layout_marginTop="30dp">
 
         <EditText
             android:id="@+id/etDineIn3Caption"
@@ -247,8 +254,8 @@
             android:layout_marginLeft="5dp"
             android:ems="10"
             android:inputType="number"
-            android:visibility="gone"
-            android:maxLength="3" />
+            android:maxLength="3"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/etDineInPrice3To"
@@ -257,8 +264,8 @@
             android:layout_marginLeft="5dp"
             android:ems="10"
             android:inputType="number"
-            android:visibility="gone"
-            android:maxLength="3" />
+            android:maxLength="3"
+            android:visibility="gone" />
 
         <CheckBox
             android:id="@+id/chkDineIn3"
@@ -295,19 +302,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rowDineIn3"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp" >
+        android:layout_marginTop="30dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TableRow
                 android:id="@+id/rowMaxWaiters"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/rowDineIn2"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tvMaxWaiter"
@@ -330,7 +337,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/rowMaxWaiters"
-                android:layout_alignTop="@+id/rowDineIn3" >
+                android:layout_alignTop="@+id/rowDineIn3">
 
                 <TextView
                     android:id="@+id/tvMaxTable"
@@ -349,7 +356,6 @@
             </TableRow>
         </LinearLayout>
     </TableRow>
-
 
 
     <!--
@@ -371,7 +377,6 @@
         android:layout_above="@+id/rowButtons"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="2dp"
         android:background="#000000" />
 
     <TableRow
@@ -380,28 +385,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp" >
+        android:padding="@dimen/_5dp_720dp_4dp_600dp">
 
         <Button
             android:id="@+id/btnApplyDineInSettings"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_10dp_720dp_7dp_600dp"
             android:background="@drawable/background_btn"
+            android:text="Apply"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
-            android:text="Apply" />
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
 
         <Button
             android:id="@+id/btnCloseDineInSettings"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
             android:background="@drawable/background_btn"
+            android:text="Close"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:theme="@style/WepButtonWithMarigin"
-            android:text="Close" />
+            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+            android:theme="@style/WepButtonWithMarigin" />
     </TableRow>
-
 
 
 </RelativeLayout>

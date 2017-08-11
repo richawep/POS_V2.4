@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar_wep"
-        />
+        layout="@layout/toolbar_wep" />
 
     <RelativeLayout
         android:id="@+id/activity_ingredient_management"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/toolbar"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_alignParentEnd="true">
+        android:orientation="horizontal">
 
         <View
             android:id="@+id/view_left"
@@ -84,13 +82,13 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
                             android:layout_weight="1.8"
                             android:gravity="bottom"
-                            android:layout_marginLeft="15dp"
-                            android:textSize="15dp"
                             android:paddingBottom="10dp"
-                            android:textStyle="bold"
-                            android:text="Select Item" />
+                            android:text="Select Item"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
                         <AutoCompleteTextView
                             android:id="@+id/autocompletetv_itemslist"
@@ -106,22 +104,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1.6"
-                            android:maxLength="6"
                             android:hint="Enter Quantity"
-                            android:inputType="numberDecimal" />
+                            android:inputType="numberDecimal"
+                            android:maxLength="6" />
 
                         <TextView
                             android:id="@+id/tv_item_uom"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="1.9"
                             android:gravity="bottom"
-                            android:layout_marginLeft="10dp"
-                            android:textSize="15dp"
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp"
                             android:hint="UOM"
-                            android:paddingLeft="5dp" />
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -136,22 +134,22 @@
                             android:id="@+id/textView5"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
                             android:layout_weight="1.2"
                             android:gravity="bottom"
-                            android:layout_marginLeft="15dp"
-                            android:textSize="15dp"
-                            android:textStyle="bold"
                             android:paddingBottom="10dp"
-                            android:text="Select Ingredient" />
+                            android:text="Select Ingredient"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
                         <AutoCompleteTextView
                             android:id="@+id/autocompletetv_ingredientlist"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:paddingLeft="5dp"
                             android:drawableRight="@drawable/searchicon_img"
-                            android:hint="Type Ingredient Here" />
+                            android:hint="Type Ingredient Here"
+                            android:paddingLeft="5dp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -166,34 +164,38 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1.1"
-                            android:maxLength="6"
                             android:hint="Enter Quantity"
-                            android:inputType="numberDecimal" />
+                            android:inputType="numberDecimal"
+                            android:maxLength="6" />
 
                         <TextView
                             android:id="@+id/tv_ingredient_uom"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
                             android:layout_weight="1.3"
                             android:gravity="bottom"
-                            android:layout_marginLeft="15dp"
-                            android:paddingBottom="10dp"
-                            android:textSize="15dp"
-                            android:textStyle="bold"
                             android:hint="UOM"
-                            android:paddingLeft="3dp" />
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="3dp"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
                         <com.wep.common.app.views.WepButton
                             android:id="@+id/btn_add_new_item"
-                            android:layout_width="120dp"
-                            android:layout_height="45dp"
+                            android:layout_width="@dimen/_120dp_720dp_115dp_600dp"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                            android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                            android:layout_marginRight="@dimen/_5dp_720dp_4dp_600dp"
+                            android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
                             android:background="@drawable/background_btn"
+                            android:text="Add Item"
+                            android:textAllCaps="false"
                             android:textColor="@android:color/white"
-                            android:theme="@style/WepButtonWithMarigin"
-                            android:layout_marginRight="10dp"
-                            android:text="Add Item" />
+                            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                            android:theme="@style/WepButtonWithMarigin" />
 
                     </LinearLayout>
 
@@ -226,11 +228,12 @@
                                 android:layout_marginLeft="3dp"
                                 android:layout_weight="1.1"
                                 android:background="@drawable/heading_border"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
                                 android:gravity="center"
                                 android:text="SNo"
-                                android:textSize="17dp" />
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/textView10"
@@ -239,11 +242,12 @@
                                 android:layout_weight="0.7"
                                 android:background="@drawable/heading_border"
                                 android:gravity="center"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
                                 android:text="Ingredients"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/white"
 
-                                android:textSize="17dp" />
+                                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -251,34 +255,37 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/heading_border"
                                 android:gravity="center"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
                                 android:text="Quantity"
-                                android:textSize="17dp" />
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                                android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/textView6"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1.05"
                                 android:background="@drawable/heading_border"
                                 android:gravity="center"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
                                 android:text="UoM "
-                                android:textSize="17dp"
-                                android:id="@+id/textView6" />
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_marginRight="2dp"
                                 android:layout_weight="1.1"
                                 android:background="@drawable/heading_border"
                                 android:gravity="center"
                                 android:text="Delete"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:layout_marginRight="2dp"
-                                android:textSize="17dp" />
+                                android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                         <ListView
@@ -289,104 +296,116 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="2dp"
                             android:layout_marginTop="2dp"
-                            android:layout_weight="0.1"
-                            />
+                            android:layout_weight="0.1" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/ingredients_buttons"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="67dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
+                        android:layout_gravity="bottom">
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/black">
-
-                        </View>
+                            android:layout_height="2dp"
+                            android:layout_gravity="bottom"
+                            android:background="#000000" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center">
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnPrint"
-                                android:layout_width="130dp"
-                                android:layout_height="45dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                                android:layout_marginRight="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/background_btn"
-                                android:theme="@style/WepButtonWithMarigin"
-                                android:layout_marginLeft="@dimen/btn_marigin"
-                                android:layout_marginRight="@dimen/btn_marigin"
                                 android:onClick="PrintIngredients"
-                                android:text="Print Ingred. List" />
+                                android:text="Print Ingred. List"
+                                android:textAllCaps="false"
+                                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                                android:theme="@style/WepButtonWithMarigin" />
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnSave"
-                                android:layout_width="120dp"
-                                android:layout_height="45dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                                android:layout_marginRight="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/background_btn"
-                                android:theme="@style/WepButtonWithMarigin"
-                                android:layout_marginLeft="@dimen/btn_marigin"
-                                android:layout_marginRight="@dimen/btn_marigin"
                                 android:onClick="Save"
-                                android:text="Save" />
+                                android:text="Save"
+                                android:textAllCaps="false"
+                                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                                android:theme="@style/WepButtonWithMarigin" />
 
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnSubmit"
-                                android:layout_width="120dp"
-                                android:layout_height="45dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginBottom="5dp"
-                                android:theme="@style/WepButtonWithMarigin"
-                                android:layout_marginLeft="@dimen/btn_marigin"
-                                android:layout_marginRight="@dimen/btn_marigin"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                                android:layout_marginRight="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/background_btn"
                                 android:onClick="Submit"
-                                android:text="Submit" />
+                                android:text="Submit"
+                                android:textAllCaps="false"
+                                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                                android:theme="@style/WepButtonWithMarigin" />
 
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnClearItem"
-                                android:layout_width="120dp"
-                                android:layout_height="45dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginBottom="5dp"
-                                android:theme="@style/WepButtonWithMarigin"
-                                android:layout_marginLeft="@dimen/btn_marigin"
-                                android:layout_marginRight="@dimen/btn_marigin"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                                android:layout_marginRight="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/background_btn"
                                 android:onClick="Clear"
-                                android:text="Clear" />
+                                android:text="Clear"
+                                android:textAllCaps="false"
+                                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                                android:theme="@style/WepButtonWithMarigin" />
 
                             <com.wep.common.app.views.WepButton
                                 android:id="@+id/btnCloseItem"
-                                android:layout_width="120dp"
-                                android:layout_height="45dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginBottom="5dp"
-                                android:theme="@style/WepButtonWithMarigin"
-                                android:layout_marginLeft="@dimen/btn_marigin"
-                                android:layout_marginRight="@dimen/btn_marigin"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                                android:layout_marginRight="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/background_btn"
                                 android:onClick="Close"
-                                android:text="Close" />
+                                android:text="Close"
+                                android:textAllCaps="false"
+                                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                                android:theme="@style/WepButtonWithMarigin" />
                         </LinearLayout>
-                    </LinearLayout>
+                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -426,9 +445,10 @@
                             android:background="@drawable/heading_border"
                             android:gravity="center"
                             android:text="SNo"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textSize="17dp" />
+                            android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -437,9 +457,10 @@
                             android:background="@drawable/heading_border"
                             android:gravity="center"
                             android:text="Items"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textSize="17dp" />
+                            android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -448,9 +469,10 @@
                             android:background="@drawable/heading_border"
                             android:gravity="center"
                             android:text="Delete"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textSize="17dp" />
+                            android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -506,8 +528,8 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
                             android:layout_weight="5"
-                            android:visibility="invisible"
-                            android:src="@drawable/img_search" />
+                            android:src="@drawable/img_search"
+                            android:visibility="invisible" />
                     </LinearLayout>
 
                     <TextView

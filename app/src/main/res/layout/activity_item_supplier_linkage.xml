@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-tools:context="com.wepindia.pos.ItemSupplierLinkageActivity"
-android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wepindia.pos.ItemSupplierLinkageActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -13,9 +13,9 @@ android:layout_height="match_parent">
         android:id="@+id/lnrItemMaster"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:background="#FFFFFF"
         android:orientation="vertical"
-        android:layout_below="@+id/toolbar"
         android:weightSum="2">
 
         <FrameLayout
@@ -38,42 +38,47 @@ android:layout_height="match_parent">
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="S.No"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/txtColorAccent"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                 <TextView
                     android:id="@+id/tvCaptionplierName"
-                    android:layout_width="300dp"
+                    android:layout_width="310dp"
                     android:layout_height="wrap_content"
                     android:text="Supplier Name"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/txtColorAccent"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                 <TextView
                     android:id="@+id/tvCaptionLongName"
-                    android:layout_width="300dp"
+                    android:layout_width="340dp"
                     android:layout_height="wrap_content"
                     android:text="Item Name"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/txtColorAccent"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                 <TextView
                     android:id="@+id/Inw_Rate"
-                    android:layout_width="140dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="Average Rate"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/txtColorAccent"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                 <TextView
                     android:id="@+id/Inw_Quantity"
-                    android:layout_width="140dp"
+                    android:layout_width="132dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text=""
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/txtColorAccent"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                 <TextView
                     android:id="@+id/Inw_AMU"
@@ -81,9 +86,9 @@ android:layout_height="match_parent">
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="UoM"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/txtColorAccent" />
-
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/txtColorAccent"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
 
                 <TextView
@@ -91,8 +96,9 @@ android:layout_height="match_parent">
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="Image"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/txtColorAccent"
+                    android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"
                     android:visibility="invisible" />
 
             </TableRow>
@@ -126,7 +132,7 @@ android:layout_height="match_parent">
             <TextView
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="55dp"
+                android:layout_marginBottom="67dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="2dp"
                 android:background="#000000" />
@@ -135,39 +141,29 @@ android:layout_height="match_parent">
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:layout_marginBottom="55dp"
+                android:layout_marginBottom="67dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="2dp"
                 android:background="#000000" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="55dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="#000000" />
-
             <LinearLayout
+                android:id="@+id/linear_5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/activity_horizontal_margin1"
                 android:orientation="vertical">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="1">
-
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tv_suppliercode"
@@ -200,11 +196,12 @@ android:layout_height="match_parent">
                             android:drawableRight="@drawable/searchicon_img" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/textView12"
@@ -220,18 +217,19 @@ android:layout_height="match_parent">
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:enabled="false"
                             android:layout_weight="0.65"
+                            android:enabled="false"
                             android:maxLength="15"
                             android:textSize="15dp" />
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -248,8 +246,8 @@ android:layout_height="match_parent">
                             android:layout_gravity="center"
                             android:layout_weight="0.65"
                             android:completionThreshold="1"
-                            android:hint="+91"
                             android:enabled="false"
+                            android:hint="+91"
                             android:inputType="number"
                             android:maxLength="10"
                             android:textSize="15dp" />
@@ -278,9 +276,9 @@ android:layout_height="match_parent">
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="0.65"
+                            android:enabled="false"
                             android:gravity="center"
                             android:hint="eg. M.G Road"
-                            android:enabled="false"
                             android:inputType="text"
                             android:maxLength="100"
                             android:textSize="15dp" />
@@ -291,19 +289,19 @@ android:layout_height="match_parent">
                 </LinearLayout>
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:layout_marginTop="@dimen/activity_horizontal_margin1"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:layout_alignParentRight="true"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tv_menucode"
@@ -315,6 +313,7 @@ android:layout_height="match_parent">
                             android:text="MenuCode"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:visibility="gone" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -327,7 +326,7 @@ android:layout_height="match_parent">
                             android:id="@+id/autocomplete_inw_ItemName"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_gravity="bottom"
                             android:layout_weight="0.65"
                             android:completionThreshold="1"
                             android:drawableRight="@drawable/searchicon_img"
@@ -339,11 +338,12 @@ android:layout_height="match_parent">
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -357,19 +357,21 @@ android:layout_height="match_parent">
                             android:id="@+id/et_Inw__AverageRate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:layout_weight="0.5"
+                            android:enabled="false"
                             android:gravity="center"
                             android:hint="0.00"
-                            android:enabled="false"
                             android:inputType="numberDecimal"
                             android:maxLength="7"
                             android:textSize="15dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -383,19 +385,21 @@ android:layout_height="match_parent">
                             android:id="@+id/et_inw_HSNCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:layout_weight="0.5"
-                            android:gravity="center"
                             android:enabled="false"
+                            android:gravity="center"
                             android:maxLength="8"
                             android:textSize="15dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="horizontal"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="1.05"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
                         <TextView
@@ -406,24 +410,22 @@ android:layout_height="match_parent">
                             android:text="Supply Type (Goods/Supply)"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <Spinner
+                        <EditText
                             android:id="@+id/spnr_supplytype"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="bottom"
                             android:layout_weight="1"
                             android:enabled="false"
-                            style="@android:style/Widget.Holo.Light.Spinner"
-                            android:entries="@array/g_s">
-
-                        </Spinner>
+                            android:gravity="center"
+                            android:text="G" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.05"
                         android:orientation="horizontal">
-
-
 
                         <TextView
                             android:layout_width="match_parent"
@@ -433,28 +435,25 @@ android:layout_height="match_parent">
                             android:text="UoM*"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                        <Spinner
+                        <EditText
                             android:id="@+id/spnrUOM"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_gravity="bottom"
                             android:layout_weight="1"
                             android:enabled="false"
-                            style="@android:style/Widget.Holo.Light.Spinner"
-                            android:entries="@array/UOM" />
+                            android:gravity="center"
+                            android:text="Select" />
 
                     </LinearLayout>
-
-
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+                        android:layout_weight="1"
                         android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:layout_weight="1"  >
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/tvBarcode"
@@ -485,24 +484,20 @@ android:layout_height="match_parent">
                             android:src="@drawable/searchicon_img" />-->
 
                     </LinearLayout>
-
-
-
-
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:layout_marginTop="@dimen/activity_horizontal_margin1"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight=".98"
-                        android:orientation="horizontal"/>
+                        android:orientation="horizontal" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -523,11 +518,11 @@ android:layout_height="match_parent">
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.6"
+                            android:enabled="false"
                             android:gravity="center"
                             android:hint="%"
                             android:inputType="numberDecimal"
                             android:maxLength="7"
-                            android:enabled="false"
                             android:textSize="15dp" />
                     </LinearLayout>
 
@@ -550,9 +545,9 @@ android:layout_height="match_parent">
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.6"
+                            android:enabled="false"
                             android:gravity="center"
                             android:hint="%"
-                            android:enabled="false"
                             android:inputType="numberDecimal"
                             android:maxLength="7"
 
@@ -578,10 +573,10 @@ android:layout_height="match_parent">
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.6"
-                            android:gravity="center"
-                            android:hint="%"
                             android:enabled="false"
                             android:focusable="false"
+                            android:gravity="center"
+                            android:hint="%"
                             android:inputType="numberDecimal"
                             android:maxLength="7"
                             android:textSize="15dp" />
@@ -623,91 +618,99 @@ android:layout_height="match_parent">
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1.1">
+                    android:layout_weight="1.1" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom" />
 
-                </FrameLayout>
+            </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/FrameLayout_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="67dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="#000000" />
 
-                <FrameLayout
-                    android:id="@+id/FrameLayout_buttons"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.97">
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
+                    <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnLinkItem"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        >
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn"
+                        android:text="Link Item"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                        android:theme="@style/WepButtonWithMarigin" />
 
-                        <com.wep.common.app.views.WepButton
-                            android:id="@+id/btnLinkItem"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/background_btn"
-                            android:onClick="LinkItem"
-                            android:text="Link Item"
-                            android:textColor="@android:color/white"
-                            android:theme="@style/WepButtonWithMarigin" />
+                    <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnDelinkItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn"
+                        android:text="DeLink Item"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                        android:theme="@style/WepButtonWithMarigin" />
 
+                    <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnClear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn"
+                        android:text="Clear"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                        android:theme="@style/WepButtonWithMarigin" />
 
-
-
-                        <com.wep.common.app.views.WepButton
-                            android:id="@+id/btnDelinkItem"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/background_btn"
-                            android:onClick="DelinkItem"
-                            android:text="DeLink Item"
-                            android:textColor="@android:color/white"
-                            android:theme="@style/WepButtonWithMarigin" />
-
-                        <com.wep.common.app.views.WepButton
-                            android:id="@+id/btnClear"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/background_btn"
-                            android:onClick="Clear"
-                            android:text="Clear"
-                            android:textColor="@android:color/white"
-                            android:theme="@style/WepButtonWithMarigin" />
-
-                        <com.wep.common.app.views.WepButton
-                            android:id="@+id/btnClose"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/background_btn"
-                            android:onClick="Close"
-                            android:text="Close"
-                            android:textColor="@android:color/white"
-                            android:theme="@style/WepButtonWithMarigin" />
-                    </LinearLayout>
-                </FrameLayout>
-            </LinearLayout>
+                    <com.wep.common.app.views.WepButton
+                        android:id="@+id/btnClose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/_5dp_720dp_4dp_600dp"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_btn"
+                        android:text="Close"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                        android:theme="@style/WepButtonWithMarigin" />
+                </LinearLayout>
+            </RelativeLayout>
         </FrameLayout>
     </LinearLayout>
 

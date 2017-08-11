@@ -7,13 +7,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <TableRow
             android:id="@+id/rowCategName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_alignStart="@id/scrlCategoryTable"
+            android:layout_alignEnd="@id/scrlCategoryTable"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="75dp">
 
@@ -23,7 +27,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="Category Name:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/main_text_heading_17sp_720dp_15sp_600dp" />
 
             <EditText
                 android:id="@+id/etCategName"
@@ -32,32 +38,35 @@
                 android:ems="5"
                 android:hint="Category Name"
                 android:inputType="text"
-                android:maxLength="16" />
+                android:maxLength="16"
+                android:textSize="@dimen/main_text_heading_17sp_720dp_15sp_600dp" />
         </TableRow>
 
         <TableRow
             android:id="@+id/rowDeptId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="150dp">
+            android:layout_alignStart="@+id/scrlCategoryTable"
+            android:layout_alignEnd="@+id/scrlCategoryTable"
+            android:layout_below="@+id/rowCategName"
+            android:layout_marginTop="32dp">
 
             <TextView
                 android:id="@+id/tvDeptId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:gravity="left"
+                android:layout_marginRight="10dp"
                 android:text="Department Name:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/main_text_heading_17sp_720dp_15sp_600dp" />
 
             <Spinner
                 android:id="@+id/spnrDeptName"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/main_text_heading_17sp_720dp_15sp_600dp" />
         </TableRow>
 
         <ScrollView
@@ -85,36 +94,44 @@
 
                     <TextView
                         android:id="@+id/tvCaptionCategSno"
-                        android:layout_width="80dp"
+                        android:layout_width="@dimen/_80dp_720dp_75dp_600dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="S.No"
+                        android:textAllCaps="false"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#ffffff" />
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                     <TextView
                         android:id="@+id/tvCaptionCategCode"
-                        android:layout_width="100dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
                         android:layout_height="wrap_content"
                         android:text="Code	"
+                        android:textAllCaps="false"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#ffffff" />
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp" />
 
                     <TextView
                         android:id="@+id/tvCaptionCategName"
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:text="Category"
+                        android:textAllCaps="false"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#ffffff" />
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
 
                     <TextView
                         android:id="@+id/tvCaptionDeptCode"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:text="Dept Name"
+                        android:textAllCaps="false"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#ffffff" />
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />
                 </TableRow>
             </TableLayout>
         </ScrollView>
@@ -139,45 +156,53 @@
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnAddCateg"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
+                android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/background_btn"
                 android:onClick="AddCateg"
                 android:text="Add"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                 android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnEditCateg"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
+                android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/background_btn"
                 android:onClick="EditCateg"
                 android:text="Update"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                 android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnClearCateg"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
+                android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/background_btn"
                 android:onClick="ClearCateg"
                 android:text="Clear"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                 android:theme="@style/WepButtonWithMarigin" />
 
             <com.wep.common.app.views.WepButton
                 android:id="@+id/btnCloseCateg"
-                android:layout_width="100dp"
-                android:layout_height="45dp"
+                android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/background_btn"
                 android:onClick="CloseCateg"
                 android:text="Close"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                 android:theme="@style/WepButtonWithMarigin" />
         </TableRow>
 

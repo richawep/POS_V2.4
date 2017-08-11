@@ -12,10 +12,10 @@
         android:id="@+id/lnrCustomerOrder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:background="#FFFFFF"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:background="#FFFFFF">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +50,9 @@
                     android:layout_alignParentTop="true"
                     android:gravity="center"
                     android:text="Customer Pending Orders"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp" />
 
 
                 <View
@@ -84,7 +86,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Pending Order Details"
-                        android:textAppearance="?android:attr/textAppearanceLarge" />
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp" />
 
                     <ScrollView
                         android:id="@+id/scrlPendingOrderDetailsTable"
@@ -165,7 +169,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="Customer Details"
-                        android:textAppearance="?android:attr/textAppearanceLarge" />
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp" />
 
                     <LinearLayout
                         android:id="@+id/boxx1"
@@ -292,6 +298,7 @@
                             android:inputType="textPostalAddress"
                             android:maxLength="150" />
                     </LinearLayout>
+
                     <LinearLayout
 
                         android:layout_width="match_parent"
@@ -307,9 +314,9 @@
                             android:layout_weight="2"
                             android:ems="5"
                             android:focusable="false"
-                            android:text="0"
                             android:inputType="textPostalAddress"
-                            android:maxLength="150" />
+                            android:maxLength="150"
+                            android:text="0" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -338,6 +345,7 @@
                             android:inputType="textPostalAddress"
                             android:maxLength="150" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/rowCustPaidStatus"
                         android:layout_width="match_parent"
@@ -455,7 +463,6 @@
                             </LinearLayout>
 
 
-
                             <LinearLayout
                                 android:id="@+id/rowCustSubmit"
                                 android:layout_width="match_parent"
@@ -504,103 +511,143 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
             android:paddingBottom="2dp">
 
             <TextView
                 android:id="@+id/tvHorizontalLine"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:background="#000000" />
 
-            <TableRow
+            <LinearLayout
                 android:id="@+id/rowOrderCustomerButtons"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvHorizontalLine"
                 android:layout_centerHorizontal="true"
-                android:gravity="center">
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9">
+                </FrameLayout>
 
 
                 <Button
                     android:id="@+id/btn_OrderCustomerAddCustomer"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/background_btn"
                     android:onClick="Add"
                     android:text="Add"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin"
                     android:visibility="gone" />
 
                 <Button
                     android:id="@+id/btn_OrderCustomerOrder"
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="Order"
-                    android:text="Modify Order"
+                    android:text="@string/modify_order"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
 
                 <Button
                     android:id="@+id/btn_OrderCustomerTender"
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="Tender"
-                    android:text="Tender"
+                    android:text="@string/tender"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
 
                 <Button
                     android:id="@+id/btn_OrderCustomerDelivery"
-                    android:layout_width="130dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="Delivery"
                     android:text="Delivery"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
 
                 <Button
                     android:id="@+id/btn_DeliveryOrderCancel"
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="CancelOrder"
-                    android:layout_marginRight="10dp"
-                    android:text="Cancel Order"
+                    android:text="@string/cancel_order"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
 
                 <Button
                     android:id="@+id/btn_OrderCustomerClear"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="Clear"
-                    android:text="Clear"
+                    android:text="@string/clear"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
 
                 <Button
                     android:id="@+id/btn_OrderCustomerClose"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_btn"
                     android:onClick="Close"
-                    android:text="Close"
+                    android:text="@string/close"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
+                    android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
-            </TableRow>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9">
+
+                </FrameLayout>
+
+            </LinearLayout>
         </RelativeLayout>
 
     </RelativeLayout>

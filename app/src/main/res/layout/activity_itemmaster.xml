@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center_horizontal"
-                    android:text="Stock"
+                    android:text="Quantity"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/txtColorAccent" />
 
@@ -515,7 +515,7 @@
                             android:layout_marginLeft="15dp"
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
-                            android:text="Stock"
+                            android:text="Quantity"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <EditText
@@ -1150,7 +1150,9 @@
                             android:background="@drawable/background_btn"
                             android:onClick="Browse"
                             android:text="Browse Image"
+                            android:textAllCaps="false"
                             android:textColor="@android:color/white"
+                            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                             android:theme="@style/WepButtonWithMarigin" />
                     </LinearLayout>
 
@@ -1190,7 +1192,9 @@
                             android:layout_weight="1"
                             android:background="@drawable/background_btn"
                             android:text="Browse File"
+                            android:textAllCaps="false"
                             android:textColor="@android:color/white"
+                            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                             android:theme="@style/WepButtonWithMarigin" />
 
                         <com.wep.common.app.views.WepButton
@@ -1203,7 +1207,9 @@
                             android:layout_weight="1"
                             android:background="@drawable/background_btn"
                             android:text="Upload File"
+                            android:textAllCaps="false"
                             android:textColor="@android:color/white"
+                            android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                             android:theme="@style/WepButtonWithMarigin" />
                     </LinearLayout>
 
@@ -1219,60 +1225,69 @@
 
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnAddItem"
-                        android:layout_width="100dp"
-                        android:layout_height="45dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_btn"
                         android:onClick="AddItem"
                         android:text="Add"
+                        android:textAllCaps="false"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
 
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnEditItem"
-                        android:layout_width="100dp"
-                        android:layout_height="45dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_btn"
                         android:onClick="EditItem"
                         android:text="Update"
+                        android:textAllCaps="false"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
 
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnClearItem"
-                        android:layout_width="100dp"
-                        android:layout_height="45dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_btn"
                         android:onClick="ClearItem"
                         android:text="Clear"
+                        android:textAllCaps="false"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
 
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnCloseItem"
-                        android:layout_width="100dp"
-                        android:layout_height="45dp"
+                        android:layout_width="@dimen/_100dp_720dp_95dp_600dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
+                        android:layout_marginTop="@dimen/_5dp_720dp_4dp_600dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_btn"
                         android:onClick="CloseItem"
                         android:text="Close"
+                        android:textAllCaps="false"
+                        android:layout_marginRight="@dimen/_10dp_720dp_7dp_600dp"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                         android:theme="@style/WepButtonWithMarigin" />
+
                 </LinearLayout>
             </LinearLayout>
 

@@ -127,7 +127,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         strUserName = getIntent().getStringExtra("USER_NAME");
         Date d = new Date();
         CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
-        com.wep.common.app.ActionBarUtils.setupToolbar(ItemManagementActivity.this,toolbar,getSupportActionBar(),"Item Master",strUserName," Date:"+s.toString());
+        com.wep.common.app.ActionBarUtils.setupToolbar(ItemManagementActivity.this,toolbar,getSupportActionBar(),"Outward Items Master",strUserName," Date:"+s.toString());
         try {
 
             InitializeViewVariables();
@@ -471,7 +471,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                         {
                             // since already billing done for this businessdate, hence stock cannot be updated from here.
                             // to update stock , goto Price & Stock module
-                            MsgBox.Show("Restriction", "You cannot update stock after making bill for the day. \n\nTo update stock , " +
+                            MsgBox.Show("Restriction", "You cannot update quantity after making bill for the day. \n\nTo update quantity , " +
                                     "please goto Price & Stock module \n\n Or make Day End  to update from here ");
                             return;
                         }
@@ -1836,7 +1836,7 @@ public class ItemManagementActivity extends WepBaseActivity {
         {
             double stock = Double.parseDouble(txtStock.getText().toString());
             if(stock>9999.99){
-                MsgBox.Show("Warning","Please enter stock between 0 and 9999.99");
+                MsgBox.Show("Warning","Please enter quantity between 0 and 9999.99");
                 return;
             }
         }
@@ -2019,7 +2019,7 @@ public class ItemManagementActivity extends WepBaseActivity {
             {
                 double stock = Double.parseDouble(txtStock.getText().toString());
                 if(stock>9999.99){
-                    MsgBox.Show("Warning","Please enter stock between 0 and 9999.99");
+                    MsgBox.Show("Warning","Please enter quantity between 0 and 9999.99");
                     return;
                 }
             }
