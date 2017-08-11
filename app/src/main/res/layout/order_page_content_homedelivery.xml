@@ -85,8 +85,8 @@
                             android:minHeight="40dp"
                             android:textSize="@dimen/text_size_14sp_720dp_10sp_600dp" />
 
-                        <EditText
-                            android:id="@+id/etSearchItemBarcode"
+                        <AutoCompleteTextView
+                            android:id="@+id/aCTVSearchItemBarcode"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -94,9 +94,10 @@
                             android:hint="Search Item Barcode"
                             android:inputType="text"
                             android:minHeight="40dp"
+                            android:drawableRight="@drawable/searchicon_img"
                             android:selectAllOnFocus="true"
                             android:textSize="10sp"
-                            android:visibility="invisible" />
+                            />
 
 
                     </LinearLayout>

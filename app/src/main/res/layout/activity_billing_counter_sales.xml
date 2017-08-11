@@ -137,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:padding="4dp"
-                            android:weightSum="2">
+                            >
 
                             <AutoCompleteTextView
                                 android:id="@+id/aCTVSearchItem"
@@ -169,6 +169,20 @@
                                 android:inputType="numberSigned"
                                 android:minHeight="40dp"
                                 android:textSize="@dimen/text_size_14sp_720dp_10sp_600dp" />
+                            <AutoCompleteTextView
+                                android:id="@+id/aCTVSearchItemBarcode"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.8"
+                                android:gravity="center"
+                                android:drawableRight="@drawable/searchicon_img"
+                                android:hint="Item Barcode"
+                                android:completionThreshold="1"
+                                android:minHeight="40dp"
+                                android:imeOptions="flagNoExtractUi"
+                                android:selectAllOnFocus="true"
+                                android:textSize="@dimen/text_size_14sp_720dp_10sp_600dp"
+                                />
                         </LinearLayout>
 
                         <LinearLayout

@@ -74,8 +74,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ItemManagementActivity extends WepBaseActivity {
 
+
+
+public class ItemManagementActivity extends WepBaseActivity  implements  TextWatcher{
+    String tx = "";
     Context myContext;
     BufferedReader buffer ;
     DatabaseHandler dbItems = new DatabaseHandler(ItemManagementActivity.this);
@@ -446,6 +449,50 @@ public class ItemManagementActivity extends WepBaseActivity {
         }
     }
 
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        String str = charSequence.toString();
+        View view = getCurrentFocus();
+        if(view== null)
+            return;
+        switch(view.getId()){
+            case R.id.etItemLongName:
+                tx = txtLongName.getText().toString();
+                break;
+            case R.id.etItemDineInPrice1:
+                tx = txtDineIn1.getText().toString();
+                break;
+            case R.id.etItemDineInPrice2:
+                tx = txtDineIn2.getText().toString();
+                break;
+            case R.id.etItemDineInPrice3:
+                tx = txtDineIn3.getText().toString();
+                break;
+            case R.id.etItemStock:
+                tx = txtStock.getText().toString();
+                break;
+            case R.id.etHSNCode:
+                tx = etHSN.getText().toString();
+                break;
+            case R.id.edtMenuCode:
+                tx = edtMenuCode.getText().toString();
+                break;
+            case R.id.edtItemCGSTTax:
+                tx = edtItemCGSTTax.getText().toString();
+                break;
+            case R.id.edtItemSGSTTax:
+                tx = edtItemSGSTTax.getText().toString();
+                break;
+            case R.id.edtIGSTTax:
+                tx = edtIGSTTax.getText().toString();
+                break;
+
+        }
+    }
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+    public void afterTextChanged(Editable editable) {    }
+
+
     private void InitializeViewVariables() {
         EditTextInputHandler etInputValidate = new EditTextInputHandler();
 
@@ -621,6 +668,16 @@ public class ItemManagementActivity extends WepBaseActivity {
                 listItemClickEvent(itemListAdapter.getItems(position));
             }});
 
+        txtDineIn1.addTextChangedListener(this);
+        txtDineIn2.addTextChangedListener(this);
+        txtDineIn3.addTextChangedListener(this);
+        txtStock.addTextChangedListener(this);
+        txtLongName.addTextChangedListener(this);
+        edtMenuCode.addTextChangedListener(this);
+        etHSN.addTextChangedListener(this);
+        edtItemCGSTTax.addTextChangedListener(this);
+        edtItemSGSTTax.addTextChangedListener(this);
+        edtIGSTTax.addTextChangedListener(this);
 
         edtItemSGSTTax.addTextChangedListener(new TextWatcher() {
             @Override
@@ -1445,7 +1502,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
 
 
-    private boolean IsItemExists(String ItemFullName, int MenuCode, int type) {
+    private boolean IsItemExists(String ItemFullName, int MenuCode, String barcode, int type) {
         boolean isItemExists = false;
 
         if(type==1){
@@ -1467,7 +1524,13 @@ public class ItemManagementActivity extends WepBaseActivity {
                             "\n Therefore you cannot add it again");
                     isItemExists = true;
                     break;
-                }
+                }/*else if (!barcode.equals("") && item.getBarCode().equalsIgnoreCase(barcode))
+                {
+                    MsgBox = new MessageDialog(myContext);
+                    MsgBox.Show("Inconsistent"," Item "+ItemFullName +" already present with BarCode "+barcode);
+                    isItemExists = true;
+                    break;
+                }*/
             }
         }else if(type ==2)
         {
@@ -1579,8 +1642,8 @@ public class ItemManagementActivity extends WepBaseActivity {
 
         iDiscountId = 0;
         hsnCode = etHSN.getText().toString();
-        if(hsnCode.equals(""))
-            hsnCode= "0";
+        /*if(hsnCode.equals(""))
+            hsnCode= "0";*/
         String g_s = spnrG_S.getItemAtPosition(spnrG_S.getSelectedItemPosition()).toString();
         //String MOU_str = spnrMOU.getItemAtPosition(spnrMOU.getSelectedItemPosition()).toString();
         String MOU_str_temp = spnrMOU.getSelectedItem().toString();
@@ -1687,6 +1750,7 @@ public class ItemManagementActivity extends WepBaseActivity {
 
 
     private void ResetItem() {
+        tx = "";
         strItemId = "";
         strImageUri = "";
         txtLongName.setText("");
@@ -1794,7 +1858,7 @@ public class ItemManagementActivity extends WepBaseActivity {
             else {
                 iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
                 String ItemFullName = txtLongName.getText().toString().toUpperCase();
-                if(IsItemExists( ItemFullName,  iMenuCode,1))
+                if(IsItemExists( ItemFullName,  iMenuCode,txtBarcode.getText().toString().trim(),1))
                 {
                     return;
                 }
@@ -1984,7 +2048,7 @@ public class ItemManagementActivity extends WepBaseActivity {
                     iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
                     iMenuCode = Integer.valueOf(edtMenuCode.getText().toString());
                     String ItemFullName = txtLongName.getText().toString().toUpperCase();
-                    if(IsItemExists( ItemFullName,  iMenuCode,2))
+                    if(IsItemExists( ItemFullName,  iMenuCode,txtBarcode.getText().toString().trim(),2))
                     {
                         return;
                     }
@@ -2616,6 +2680,65 @@ public class ItemManagementActivity extends WepBaseActivity {
     public void onBackPressed() {
         txtLongName.clearFocus();
         txtLongName.setCursorVisible(false);
+    }
+
+
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        /*char pressedKey = (char) event.getUnicodeChar();
+        String Barcode = "" + pressedKey;
+        Toast.makeText(getApplicationContext(), "barcode--->>>" + Barcode, Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(myContext, "keyUp:"+keyCode+" : "+event.toString(), Toast.LENGTH_SHORT).show();*/
+        long dd = event.getEventTime()-event.getDownTime();
+        /*long time1= System.currentTimeMillis();
+        long time= SystemClock.uptimeMillis();*/
+        //long dd = time - event.getEventTime();
+        /*Log.d("TAG",String.valueOf(dd));
+        Log.d("TAG1",String.valueOf(event.getEventTime()-event.getDownTime()));
+        Log.d("TAG",String.valueOf(event));*/
+        if (dd<15 && dd >0)
+        {
+            View v = getCurrentFocus();
+            System.out.println(v);
+            EditText etbar = (EditText)findViewById(R.id.etItemBarcode);
+            //EditText ed = (WepEditText)findViewById(v.getId());
+
+            if (v.getId()!= R.id.etItemBarcode)
+            {
+
+                switch (v.getId())
+                {
+                    case R.id.etItemLongName :txtLongName.setText(tx);
+                        break;
+                    case R.id.etHSNCode:  etHSN.setText(tx);
+                        break;
+
+                    case R.id.etItemDineInPrice1:
+                    case R.id.etItemDineInPrice2:
+                    case R.id.etItemDineInPrice3:
+                    case R.id.etItemStock:
+                    case R.id.et_hsn:
+                    case R.id.edtMenuCode:
+                    case R.id.edtItemCGSTTax:
+                    case R.id.edtItemSGSTTax:
+                    case R.id.edtIGSTTax:
+                        EditText ed = (EditText)findViewById(v.getId());
+                        //String ed_str = ed.getText().toString();
+                        ed.setText(tx);
+                }
+                String bar_str = etbar.getText().toString();
+                bar_str += (char)event.getUnicodeChar();
+                etbar.setText(bar_str);
+
+            }
+
+
+        }
+        /*Toast.makeText(myContext, "keyUp:"+keyCode+" : "+dd, Toast.LENGTH_SHORT).show();*/
+
+        return true;
     }
 
 

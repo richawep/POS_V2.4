@@ -5192,6 +5192,76 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
             return null;
     }
 
+
+    public List<String> getAllBarCodes() {
+        SQLiteDatabase db = getWritableDatabase();
+        List<String> list = new ArrayList<String>();
+
+        try{
+            // Select All Query
+            String selectQuery = "SELECT  ItemBarcode FROM " + TBL_ITEM_Outward;
+            Cursor cursor = db.rawQuery(selectQuery, null);// selectQuery,selectedArguments
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    String br = cursor.getString(cursor.getColumnIndex("ItemBarcode"));
+                    if(br!=null &&  !br.equals("") && !list.contains(br))
+                        list.add(br);// adding
+                    // 2nd
+                    // column
+                    // data
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            list = null;
+        }finally {
+            //db.close();
+        }
+        // returning lables
+        return list;
+    }
+
+    public Cursor getItemssbyBarCode(String Barcode) {
+                SQLiteDatabase db = getWritableDatabase();
+                Cursor cursor = null;
+                try{
+                        cursor = db.query(TBL_ITEM_Outward, new String[]{"*"}, KEY_ItemBarcode+" LIKE '" + Barcode+"'", null, null, null, null);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        cursor = null;
+                    }finally {
+                        //db.close();
+                            }
+                return cursor;
+            }
+    public List<String> getAllBarCode_fnb() {
+                List<String> list = new ArrayList<String>();
+
+                       try{
+                        // Select All Query
+                                String selectQuery = "SELECT  ItemBarcode FROM " + TBL_ITEM_Outward;
+                        Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArguments
+                        // looping through all rows and adding to list
+                                if (cursor.moveToFirst()) {
+                               do {
+                                        String br = cursor.getString(cursor.getColumnIndex("ItemBarcode"));
+                                        if(br!=null &&  !br.equals("") && !list.contains(br))
+                                                list.add(br);// adding
+                                        // 2nd
+                                                // column
+                                                        // data
+                                                            } while (cursor.moveToNext());
+                            }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        list = null;
+                    }finally {
+                        //db.close();
+                            }
+                return list;
+            }
+
     // -----Retrieve single bill details by Customer Id-----
     public Cursor getBillDetailByCustomer(int CustId, int BillStatus, float BillAmount) {
         try {

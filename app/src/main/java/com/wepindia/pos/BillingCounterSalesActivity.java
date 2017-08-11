@@ -80,7 +80,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class BillingCounterSalesActivity extends WepPrinterBaseActivity implements View.OnClickListener {
+public class BillingCounterSalesActivity extends WepPrinterBaseActivity implements View.OnClickListener ,TextWatcher {
+    String tx ="";
+    int CUSTOMER_FOUND =0;
 
     private static final String TAG = BillingCounterSalesActivity.class.getSimpleName();
     private Toolbar toolbar;
@@ -98,7 +100,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private EditText editTextName,editTextMobile,editTextAddress, tvBillNumber;
     EditText tvWaiterNumber;
     EditText  edtCustName, edtCustPhoneNo, edtCustAddress, edtCustDineInPhoneNo, etCustGSTIN;
-    private AutoCompleteTextView autoCompleteTextViewSearchItem, autoCompleteTextViewSearchMenuCode;
+    private AutoCompleteTextView autoCompleteTextViewSearchItem, autoCompleteTextViewSearchMenuCode, autoCompleteTextViewSearchItemBarcode;
     private RelativeLayout boxDept,boxCat,boxItem;
     private LinearLayout idd_date;
     private Button btnDept,btnCat,btnItems;
@@ -431,6 +433,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     private void ClearAll()
     {
+        tx = "";
+        autoCompleteTextViewSearchItemBarcode.setText("");
         isReprint = false;
         reprintBillingMode=0;
         tvSubTotal.setText("0.00");
@@ -595,6 +599,40 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         tvcessValue = (TextView) findViewById(R.id.tvcessValue);
         chk_interstate = (CheckBox) findViewById(R.id.checkbox_interstate);
         try{
+            autoCompleteTextViewSearchItemBarcode = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItemBarcode);
+                        autoCompleteTextViewSearchItemBarcode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        try {
+                                            /*Toast.makeText(BillingScreenActivity.this, aTViewSearchMenuCode.getText().toString(),
++                            Toast.LENGTH_SHORT).show();*/
+                                                        if ((autoCompleteTextViewSearchItemBarcode.getText().toString().equals(""))) {
+                                                        messageDialog.Show("Warning", "Scan BarCode");
+                                                    } else {
+                                                        Cursor BarcodeItem = db
+                                                                        .getItemssbyBarCode((autoCompleteTextViewSearchItemBarcode.getText().toString().trim()));
+                                                        int i =0, added =0;
+                                                        while (BarcodeItem.moveToNext()) {
+                                                                if(i!=position)
+                                                                    {
+                                                                                i++;
+                                                                    continue;
+                                                                }
+                                                                added =1;
+                                                                btn_Clear.setEnabled(true);
+                                                                AddItemToOrderTable(BarcodeItem);
+                                                                autoCompleteTextViewSearchItemBarcode.setText("");
+                                                                // ((EditText)v).setText("");
+                                                                    } if(added==0) {
+                                                                messageDialog.Show("Warning", "Item not found for Selected BarCode");
+                                                            }
+                                                    }
+                                            } catch (Exception ex) {
+                                                Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                    }
+            });
+
         autoCompleteTextViewSearchItem = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItem);
         autoCompleteTextViewSearchItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -647,6 +685,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 }
             }
         });
+
         tvBillNumber = (EditText) findViewById(R.id.tvBillNumberValue);
         boxDept = (RelativeLayout) findViewById(R.id.boxDept);
         boxCat = (RelativeLayout) findViewById(R.id.boxCat);
@@ -719,13 +758,108 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 }
             }
         });
+            etCustGSTIN.addTextChangedListener(this);
+            editTextName.addTextChangedListener(this);
+            editTextMobile.addTextChangedListener(this);
+            editTextAddress.addTextChangedListener(this);
+            autoCompleteTextViewSearchItem.addTextChangedListener(this);
+            autoCompleteTextViewSearchMenuCode.addTextChangedListener(this);
+            autoCompleteTextViewSearchItemBarcode.addTextChangedListener(this);
         }catch(Exception e)
         {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+               String str = charSequence.toString();
+                View view = getCurrentFocus();
+                if(view== null)
+                        return;
+                switch(view.getId()){
+                        case R.id.etCustGSTIN:
+                                tx = etCustGSTIN.getText().toString();
+                                break;
+                        case R.id.edtCustName:
+                                tx = editTextName.getText().toString();
+                                break;
+                        case R.id.edtCustPhoneNo:
+                                tx = editTextMobile.getText().toString();
+                                break;
+                        case R.id.edtCustAddress:
+                                tx = editTextAddress.getText().toString();
+                                break;
+                        case R.id.aCTVSearchItem:
+                                tx = autoCompleteTextViewSearchItem.getText().toString();
+                                break;
+                        case R.id.aCTVSearchMenuCode:
+                                tx = autoCompleteTextViewSearchMenuCode.getText().toString();
+                                break;
+                        case R.id.aCTVSearchItemBarcode:
+                                tx = autoCompleteTextViewSearchItemBarcode.getText().toString();
+                                break;
 
+                           }
+
+
+                            }
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            public void afterTextChanged(Editable s) {
+                try {
+                        View view = getCurrentFocus();
+                        if(view== null  || CUSTOMER_FOUND==1)
+                                return;
+                        if(view.getId() == R.id.edtCustPhoneNo){
+                            if (editTextMobile.getText().toString().length() == 10) {
+                                    Cursor crsrCust = db.getFnbCustomer(editTextMobile.getText().toString());
+                                    if (crsrCust.moveToFirst()) {
+                                            CUSTOMER_FOUND = 1;
+                                            customerId = crsrCust.getString(crsrCust.getColumnIndex("CustId"));
+                                            editTextName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
+                                            editTextAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
+                                            String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
+                                            if (gstin == null)
+                                                    etCustGSTIN.setText("");
+                                            else
+                                                etCustGSTIN.setText(gstin);
+                                            ControlsSetEnabled();
+                                            btn_DineInAddCustomer.setEnabled(false);
+                                            if (jBillingMode != 2) {
+                                                    btn_PrintBill.setEnabled(false);
+                                                    btn_PayBill.setEnabled(false);
+                                                } else {
+                                                    btn_PrintBill.setEnabled(true);
+                                                    btn_PayBill.setEnabled(true);
+                                                }
+                                            CUSTOMER_FOUND = 0;
+                                        } else {
+                                            messageDialog.Show("", "Customer is not Found, Please Add Customer before Order");
+                                            btn_DineInAddCustomer.setVisibility(View.VISIBLE);
+                                            //ControlsSetDisabled();
+                                                    btn_DineInAddCustomer.setEnabled(true);
+                                       }
+                                }else if (editTextMobile.getText().toString().trim().equals("")){
+                                    CUSTOMER_FOUND=1;
+                                    editTextName.setText("");
+                                    customerId = "0";
+                                    editTextAddress.setText("");
+                                    etCustGSTIN.setText("");
+                                    CUSTOMER_FOUND=0;
+                                    //Toast.makeText(this, "Please select customer for billing , if required", Toast.LENGTH_SHORT).show();
+
+                                                } else {
+                                    btn_DineInAddCustomer.setEnabled(true);
+                                }
+                        }/*else if (view.getId() == R.id.aCTVSearchItemBarcode)
+            {
+                Toast.makeText(this, "afterTextChanged", Toast.LENGTH_SHORT).show();
+                autoCompleteTextViewSearchItemBarcode.setSelection(autoCompleteTextViewSearchItem.getText().toString().length());
+           }*/
+                    }catch (Exception ex) {
+                        messageDialog.Show("Error " + ex.toString(), ex.getMessage());
+                    }
+            }
     private void init() {
         try {
             if (crsrSettings != null && crsrSettings.moveToFirst()) {
@@ -4048,6 +4182,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         POS_LIST = ArrayAdapter.createFromResource(this, R.array.poscode, android.R.layout.simple_spinner_item);
         spnr_pos.setAdapter(POS_LIST);
 
+        // barcode
+                List<String> labelsBarCode = db.getAllBarCodes();
+                ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                                labelsBarCode);
+                dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
+                autoCompleteTextViewSearchItemBarcode.setAdapter(dataAdapter11);
+
     }
 
     /*************************************************************************************************************************************
@@ -4698,4 +4839,73 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         return super.onKeyDown(keyCode, event);
     }
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+                /*char pressedKey = (char) event.getUnicodeChar();
+        String Barcode = "" + pressedKey;
+        Toast.makeText(getApplicationContext(), "barcode--->>>" + Barcode, Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(myContext, "keyUp:"+keyCode+" : "+event.toString(), Toast.LENGTH_SHORT).show();*/
+                        long dd = event.getEventTime()-event.getDownTime();
+                /*long time1= System.currentTimeMillis();
+        long time= SystemClock.uptimeMillis();*/
+                        //long dd = time - event.getEventTime();
+                                /*Log.d("TAG",String.valueOf(dd));
+        Log.d("TAG1",String.valueOf(event.getEventTime()-event.getDownTime()));
+        Log.d("TAG",String.valueOf(event));*/
+                                        if (dd<15 && dd >0 && CUSTOMER_FOUND==0)
+                    {
+                                View v = getCurrentFocus();
+                    System.out.println(v);
+                    EditText etbar = (EditText)findViewById(R.id.etItemBarcode);
+                    //EditText ed = (WepEditText)findViewById(v.getId());
+                                                    if (v.getId()!= R.id.aCTVSearchItemBarcode)
+                        {
+                                    switch (v.getId())
+                        {
+                                    case R.id.aCTVSearchItem :autoCompleteTextViewSearchItem.setText(tx);
+                                break;
+                            case R.id.aCTVSearchMenuCode:  autoCompleteTextViewSearchMenuCode.setText(tx);
+                                break;
+
+                                    case R.id.etCustGSTIN:
+                            case R.id.edtCustName:
+                            case R.id.edtCustPhoneNo: if (tx.equals(""))
+                                                            {
+                                                                        Toast.makeText(this, "Please select customer for billing , if required", Toast.LENGTH_SHORT).show();
+                                                        }
+                            case R.id.edtCustAddress:
+                                EditText ed = (EditText)findViewById(v.getId());
+                                //String ed_str = ed.getText().toString();
+                                        ed.setText(tx);
+                        }
+                        String bar_str = autoCompleteTextViewSearchItemBarcode.getText().toString();
+                        bar_str += (char)event.getUnicodeChar();
+                        autoCompleteTextViewSearchItemBarcode.setText(bar_str.trim());
+                        autoCompleteTextViewSearchItemBarcode.showDropDown();
+
+                            }else if (v.getId()== R.id.aCTVSearchItemBarcode){
+                            /*tx = autoCompleteTextViewSearchMenuCode.getText().toString();
+                String bar_str = autoCompleteTextViewSearchItemBarcode.getText().toString().trim();*/
+                                    tx += (char)event.getUnicodeChar();
+                            autoCompleteTextViewSearchItemBarcode.setText(tx.trim());
+                            autoCompleteTextViewSearchItemBarcode.showDropDown();
+                            /*Toast.makeText(this, ""+bar_str+" : "+bar_str.length(), Toast.LENGTH_SHORT).show();
+                if(bar_str.length()>2)
+                {
+                    String ss = bar_str.substring(1,bar_str.length())+bar_str.substring(0,1);
+                    autoCompleteTextViewSearchItemBarcode.setText(ss.trim());
+                    Toast.makeText(this, ""+ss, Toast.LENGTH_SHORT).show();
+                    autoCompleteTextViewSearchItemBarcode.showDropDown();
+                }*/
+
+
+
+                                                        }
+                }
+                /*Toast.makeText(myContext, "keyUp:"+keyCode+" : "+dd, Toast.LENGTH_SHORT).show();*/
+
+
+                                        return true;
+            }
 }
