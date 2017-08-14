@@ -129,6 +129,7 @@ public class FragmentSettingsMachine extends Fragment {
 
         AuthorizationDialog
                 .setTitle("Authorization")
+                .setIcon(R.drawable.ic_launcher)
                 .setView(vwAuthorization)
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -179,6 +180,7 @@ public class FragmentSettingsMachine extends Fragment {
 
         AuthorizationDialog
                 .setTitle("Authorization")
+                .setIcon(R.drawable.ic_launcher)
                 .setView(vwAuthorization)
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -229,6 +231,7 @@ public class FragmentSettingsMachine extends Fragment {
 
         AuthorizationDialog
                 .setTitle("Authorization")
+                .setIcon(R.drawable.ic_launcher)
                 .setView(vwAuthorization)
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

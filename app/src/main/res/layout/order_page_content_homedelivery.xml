@@ -63,6 +63,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:completionThreshold="1"
+                            android:singleLine="true"
                             android:drawableRight="@drawable/searchicon_img"
                             android:gravity="center"
                             android:hint="Search Item Name"
@@ -79,6 +80,7 @@
                             android:completionThreshold="1"
                             android:drawableRight="@drawable/searchicon_img"
                             android:gravity="center"
+                            android:singleLine="true"
                             android:hint="Search Item Code"
                             android:imeOptions="flagNoExtractUi"
                             android:inputType="numberSigned"
@@ -90,13 +92,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+
                             android:gravity="center"
                             android:hint="Search Item Barcode"
                             android:inputType="text"
                             android:minHeight="40dp"
                             android:drawableRight="@drawable/searchicon_img"
                             android:selectAllOnFocus="true"
-                            android:textSize="10sp"
+                            android:textSize="@dimen/text_size_14sp_720dp_10sp_600dp"
                             />
 
 

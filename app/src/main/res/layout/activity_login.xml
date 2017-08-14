@@ -63,8 +63,8 @@
             android:hint="User Id"
             android:imeOptions="flagNoExtractUi"
             android:inputType="text"
-            android:text="admin"
-            android:textColorHint="@android:color/black">
+            android:text="admin">
+            <!--android:textColorHint="@android:color/black">-->
 
             <requestFocus />
         </EditText>
@@ -80,9 +80,8 @@
             android:ems="10"
             android:hint="Password"
             android:imeOptions="flagNoExtractUi"
-            android:inputType="textPassword"
-            android:text="admin"
-            android:textColorHint="@android:color/black" />
+            android:inputType="textPassword"/>
+            <!--android:textColorHint="@android:color/black" />-->
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/checkboxRememberMe"

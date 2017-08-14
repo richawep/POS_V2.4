@@ -237,7 +237,7 @@
                             android:contentDescription="PaymentReceipt"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/img_payreceive" />
+                            android:src="@drawable/img_payment_receipt" />
 
                         <TextView
                             android:id="@+id/tvPayemntReceiptOption"
@@ -309,7 +309,7 @@
                             android:contentDescription="Masters"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/img_master" />
+                            android:src="@drawable/img_master1" />
 
                         <TextView
                             android:id="@+id/tvMasterOption"

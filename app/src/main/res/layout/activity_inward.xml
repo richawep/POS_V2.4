@@ -12,12 +12,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:gravity="center"
-        android:layout_below="@+id/toolbar"
         android:background="@drawable/home_back"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -39,7 +38,7 @@
                     android:contentDescription="SupplierDetails"
                     android:onClick="LaunchActivity"
                     android:padding="3dp"
-                    android:src="@drawable/inwardsupplyitem"
+                    android:src="@drawable/img_suppliers1"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true" />
 
@@ -68,7 +67,7 @@
                     android:contentDescription="InwardItemEntry"
                     android:onClick="LaunchActivity"
                     android:padding="3dp"
-                    android:src="@drawable/inwardsupplyitem"
+                    android:src="@drawable/img_inward_items"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true" />
 
@@ -97,7 +96,7 @@
                     android:contentDescription="SupplierItemLinkage"
                     android:onClick="LaunchActivity"
                     android:padding="3dp"
-                    android:src="@drawable/inwardsupplyitem"
+                    android:src="@drawable/img_supplier_item_linkage"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true" />
 
