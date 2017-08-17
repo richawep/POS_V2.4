@@ -98,15 +98,15 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     Calendar Time; // Time variable
     private WepButton btn_PrintBill,btn_PayBill, btn_Clear, btn_DeleteBill, btn_Reprint,btn_DineInAddCustomer;
     private EditText editTextName,editTextMobile,editTextAddress, tvBillNumber;
-    EditText tvWaiterNumber;
-    EditText  edtCustName, edtCustPhoneNo, edtCustAddress, edtCustDineInPhoneNo, etCustGSTIN;
+
+    EditText   etCustGSTIN;
     private AutoCompleteTextView autoCompleteTextViewSearchItem, autoCompleteTextViewSearchMenuCode, autoCompleteTextViewSearchItemBarcode;
     private RelativeLayout boxDept,boxCat,boxItem;
     private LinearLayout idd_date;
     private Button btnDept,btnCat,btnItems;
     ArrayAdapter<CharSequence> POS_LIST;
     Spinner spnr_pos;
-    //String strUserId = "", strUserName = "", strDate = "";
+
     private byte jBillingMode = 2, jWeighScale = 0;
     private TableLayout tblOrderItems;
     private String GSTEnable = "", HSNEnable_out = "", POSEnable = "";
@@ -169,25 +169,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
         iCustId = getIntent().getIntExtra("CUST_ID", 0);
         db = new DatabaseHandler(this);
-        gridViewItems = (GridView) findViewById(R.id.listViewFilter3);
-        gridViewItems.setOnItemClickListener(itemsClick);
-        listViewDept = (ListView) findViewById(R.id.listViewFilter1);
-        listViewDept.setOnItemClickListener(deptClick);
-        listViewCat = (ListView) findViewById(R.id.listViewFilter2);
-        listViewCat.setOnItemClickListener(catClick);
-        tblOrderItems = (TableLayout) findViewById(R.id.tblOrderItems);
         crsrSettings = db.getBillSettings();
-        initViews();
+        initialiseViewVariables();
+        onClickEvents();
         init();
 
         com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),CounterSalesCaption,userName," Date:"+s.toString());
-        textViewOtherCharges = (TextView) findViewById(R.id.txtOthercharges);
-        tvTaxTotal = (TextView) findViewById(R.id.tvTaxTotalValue);
-        tvServiceTaxTotal = (TextView) findViewById(R.id.tvServiceTaxValue);
-        tvDiscountAmount = (TextView) findViewById(R.id.tvDiscountAmount);
-        tvDiscountPercentage = (TextView) findViewById(R.id.tvDiscountPercentage);
-        tvSubTotal = (TextView) findViewById(R.id.tvSubTotalValue);
-        tvBillAmount = (TextView) findViewById(R.id.tvBillTotalValue);
+
         ClearAll();
         loadAutoCompleteData();
         loadItems(0);
@@ -458,7 +446,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         spnr_pos.setSelection(0);
         spnr_pos.setEnabled(false);
         tvBillNumber.setText(String.valueOf(db.getNewBillNumber()));
-        setInvoiceDate();
+
         fTotalDiscount =0;
     }
     private static int checkScreenResolutionWidthType(Context context) {
@@ -540,12 +528,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             }
             else
             {
-                String strDate = crsrSetting.getString(crsrSetting.getColumnIndex("BusinessDate"));
+                businessDate = crsrSetting.getString(crsrSetting.getColumnIndex("BusinessDate"));
                 try {
-                    tvDate.setText(String.valueOf(strDate));
+                    tvDate.setText(String.valueOf(businessDate));
                     Date date1 = new Date();
                     CharSequence sdate = DateFormat.format("dd-MM-yyyy", date1.getTime());
-                    if(strDate.equals(sdate.toString()))
+                    if(businessDate.equals(sdate.toString()))
                         idd_date.setVisibility(View.INVISIBLE);
                     else
                         idd_date.setVisibility(View.VISIBLE);
@@ -555,209 +543,77 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             }
         }
     }
-    private void initViews() {
+    private void initialiseViewVariables() {
 
-        mItemNameTextView = (TextView) findViewById(R.id.tvColItemName);
-        mHSNTextView = (TextView) findViewById(R.id.tvColHSN);
-        mQuantityTextView = (TextView) findViewById(R.id.tvColItemQty);
-        mRateTextView = (TextView) findViewById(R.id.tvColRate);
-        mAmountTextView = (TextView) findViewById(R.id.tvColAmount);
-        mDeleteTextView = (TextView) findViewById(R.id.tvColDelete);
+        try {
+            mItemNameTextView = (TextView) findViewById(R.id.tvColItemName);
+
+            mHSNTextView = (TextView) findViewById(R.id.tvColHSN);
+            mQuantityTextView = (TextView) findViewById(R.id.tvColItemQty);
+            mRateTextView = (TextView) findViewById(R.id.tvColRate);
+            mAmountTextView = (TextView) findViewById(R.id.tvColAmount);
+            mDeleteTextView = (TextView) findViewById(R.id.tvColDelete);
+
+            etCustGSTIN = (EditText) findViewById(R.id.etCustGSTIN);
+            editTextName = (EditText) findViewById(R.id.edtCustName);
+            editTextMobile = (EditText) findViewById(R.id.edtCustPhoneNo);
+            editTextAddress = (EditText) findViewById(R.id.edtCustAddress);
+            btn_DineInAddCustomer = (WepButton) findViewById(R.id.btn_DineInAddCustomer);
+            btn_DineInAddCustomer.setOnClickListener(this);
+
+            btnDept = (Button) findViewById(R.id.btnLabel1);
+            btnDept.setOnClickListener(this);
+            btnCat = (Button) findViewById(R.id.btnLabel2);
+            btnCat.setOnClickListener(this);
+            btnItems = (Button) findViewById(R.id.btnLabel3);
+            btnItems.setOnClickListener(this);
+            boxDept = (RelativeLayout) findViewById(R.id.boxDept);
+            boxCat = (RelativeLayout) findViewById(R.id.boxCat);
+            boxItem = (RelativeLayout) findViewById(R.id.boxItem);
+            gridViewItems = (GridView) findViewById(R.id.listViewFilter3);
+            gridViewItems.setOnItemClickListener(itemsClick);
+            listViewDept = (ListView) findViewById(R.id.listViewFilter1);
+            listViewDept.setOnItemClickListener(deptClick);
+            listViewCat = (ListView) findViewById(R.id.listViewFilter2);
+            listViewCat.setOnItemClickListener(catClick);
 
 
-        btn_PrintBill = (WepButton) findViewById(R.id.btn_PrintBill);
-        btn_PrintBill.setOnClickListener(this);
-        //btn_PrintBill.setEnabled(false);
-        btn_PayBill = (WepButton) findViewById(R.id.btn_PayBill);
-        btn_PayBill.setOnClickListener(this);
-        btn_Clear = (WepButton) findViewById(R.id.btn_Clear);
-        btn_Clear.setOnClickListener(this);
-        btn_DeleteBill = (WepButton) findViewById(R.id.btn_DeleteBill);
-        btn_DeleteBill.setOnClickListener(this);
-        btn_Reprint = (WepButton) findViewById(R.id.btn_Reprint);
-        btn_Reprint.setOnClickListener(this);
-        //btn_Reprint.setEnabled(false);
-        btn_DineInAddCustomer = (WepButton) findViewById(R.id.btn_DineInAddCustomer);
-        btn_DineInAddCustomer.setOnClickListener(this);
-        btnDept = (Button) findViewById(R.id.btnLabel1);
-        btnDept.setOnClickListener(this);
-        btnCat = (Button) findViewById(R.id.btnLabel2);
-        btnCat.setOnClickListener(this);
-        btnItems = (Button) findViewById(R.id.btnLabel3);
-        btnItems.setOnClickListener(this);
-        spnr_pos = (Spinner) findViewById(R.id.spnr_pos);
-        editTextName = (EditText) findViewById(R.id.edtCustName);
-        editTextMobile = (EditText) findViewById(R.id.edtCustPhoneNo);
-        editTextAddress = (EditText) findViewById(R.id.edtCustAddress);
-        idd_date = (LinearLayout) findViewById(R.id.idd_date);
-
-        // GST implementation
-        etCustGSTIN = (EditText) findViewById(R.id.etCustGSTIN);
-        tvHSNCode_out = (TextView) findViewById(R.id.tvColHSN);
-        relative_Interstate = (LinearLayout) findViewById(R.id.relative_interstate);
-        tvIGSTValue = (TextView) findViewById(R.id.tvIGSTValue);
-        tvcessValue = (TextView) findViewById(R.id.tvcessValue);
-        chk_interstate = (CheckBox) findViewById(R.id.checkbox_interstate);
-        try{
+            autoCompleteTextViewSearchItem = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItem);
+            autoCompleteTextViewSearchMenuCode = (AutoCompleteTextView) findViewById(R.id.aCTVSearchMenuCode);
             autoCompleteTextViewSearchItemBarcode = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItemBarcode);
-                        autoCompleteTextViewSearchItemBarcode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        try {
-                                            /*Toast.makeText(BillingScreenActivity.this, aTViewSearchMenuCode.getText().toString(),
-+                            Toast.LENGTH_SHORT).show();*/
-                                                        if ((autoCompleteTextViewSearchItemBarcode.getText().toString().equals(""))) {
-                                                        messageDialog.Show("Warning", "Scan BarCode");
-                                                    } else {
-                                                        Cursor BarcodeItem = db
-                                                                        .getItemssbyBarCode((autoCompleteTextViewSearchItemBarcode.getText().toString().trim()));
-                                                        int i =0, added =0;
-                                                        while (BarcodeItem.moveToNext()) {
-                                                                if(i!=position)
-                                                                    {
-                                                                                i++;
-                                                                    continue;
-                                                                }
-                                                                added =1;
-                                                                btn_Clear.setEnabled(true);
-                                                                AddItemToOrderTable(BarcodeItem);
-                                                                autoCompleteTextViewSearchItemBarcode.setText("");
-                                                                // ((EditText)v).setText("");
-                                                                    } if(added==0) {
-                                                                messageDialog.Show("Warning", "Item not found for Selected BarCode");
-                                                            }
-                                                    }
-                                            } catch (Exception ex) {
-                                                Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
-                                            }
-                                    }
-            });
-
-        autoCompleteTextViewSearchItem = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItem);
-        autoCompleteTextViewSearchItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                try {
-                    /*Toast.makeText(BillingScreenActivity.this, aTViewSearchItem.getText().toString(),
-                            Toast.LENGTH_SHORT).show();*/
-                    if ((autoCompleteTextViewSearchItem.getText().toString().equals(""))) {
-                        messageDialog.Show("Warning", "Enter Item Name");
-                    } else {
-                        Cursor MenucodeItem = db.getItemLists(autoCompleteTextViewSearchItem.getText().toString().trim());
-                        if (MenucodeItem.moveToFirst()) {
-                            btn_Clear.setEnabled(true);
-                            AddItemToOrderTable(MenucodeItem);
-                            autoCompleteTextViewSearchItem.setText("");
-                            // ((EditText)v).setText("");
-                        } else {
-                            messageDialog.Show("Warning", "Item not found for Selected Item");
-                        }
-                    }
-                } catch (Exception ex) {
-                    Toast.makeText(BillingCounterSalesActivity.this, ex.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        autoCompleteTextViewSearchMenuCode = (AutoCompleteTextView) findViewById(R.id.aCTVSearchMenuCode);
-        autoCompleteTextViewSearchMenuCode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    /*Toast.makeText(BillingScreenActivity.this, aTViewSearchMenuCode.getText().toString(),
-                            Toast.LENGTH_SHORT).show();*/
-                    if ((autoCompleteTextViewSearchMenuCode.getText().toString().equals(""))) {
-                        messageDialog.Show("Warning", "Enter Menu Code");
-                    } else {
-                        Cursor MenucodeItem = db
-                                .getItemss(Integer.parseInt(autoCompleteTextViewSearchMenuCode.getText().toString().trim()));
-                        if (MenucodeItem.moveToFirst()) {
-                            btn_Clear.setEnabled(true);
-                            AddItemToOrderTable(MenucodeItem);
-                            autoCompleteTextViewSearchMenuCode.setText("");
-                            // ((EditText)v).setText("");
-                        } else {
-                            messageDialog.Show("Warning", "Item not found for Selected Item Code");
-                        }
-                    }
-                } catch (Exception ex) {
-                    Toast.makeText(BillingCounterSalesActivity.this, ex.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        tvBillNumber = (EditText) findViewById(R.id.tvBillNumberValue);
-        boxDept = (RelativeLayout) findViewById(R.id.boxDept);
-        boxCat = (RelativeLayout) findViewById(R.id.boxCat);
-        boxItem = (RelativeLayout) findViewById(R.id.boxItem);
-        tvDate = (TextView) findViewById(R.id.tvBillDateValue);
-        tvWaiterNumber = (EditText) findViewById(R.id.tvWaiterNoValue);
-        editTextMobile.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-                try {
-                    if (editTextMobile.getText().toString().length() == 10) {
-                        Cursor crsrCust = db.getFnbCustomer(editTextMobile.getText().toString());
-                        if (crsrCust.moveToFirst()) {
-                            customerId = crsrCust.getString(crsrCust.getColumnIndex("CustId"));
-                            editTextName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
-                            editTextAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
-                            String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
-                            if (gstin == null)
-                                etCustGSTIN.setText("");
-                            else
-                                etCustGSTIN.setText(gstin);
-                            ControlsSetEnabled();
-                            btn_DineInAddCustomer.setEnabled(false);
-                            if (jBillingMode != 2) {
-                                btn_PrintBill.setEnabled(false);
-                                btn_PayBill.setEnabled(false);
-                            } else {
-                                btn_PrintBill.setEnabled(true);
-                                btn_PayBill.setEnabled(true);
-                            }
-                        } else {
-                            messageDialog.Show("Note", "Customer is not Found, Please Add Customer before Order");
-                            btn_DineInAddCustomer.setVisibility(View.VISIBLE);
-                            //ControlsSetDisabled();
-                            btn_DineInAddCustomer.setEnabled(true);
-                        }
-                    } else {
-                        btn_DineInAddCustomer.setEnabled(true);
-                    }
-                } catch (Exception ex) {
-                    messageDialog.Show("Error " + ex.toString(), ex.getMessage());
-                }
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-        });
-
-        chk_interstate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked == false) {
-                    //et_pos.setBackgroundColor(Color.WHITE);
-                    spnr_pos.setSelection(0);
-                    spnr_pos.setEnabled(false);
-                    tvIGSTValue.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
-                    tvTaxTotal.setTextColor(Color.WHITE);
-                    tvServiceTaxTotal.setTextColor(Color.WHITE);
-                } else {
-                    // interstate
-                    //et_pos.setBackground(Color.GRAY);
-                    spnr_pos.setSelection(0);
-                    spnr_pos.setEnabled(true);
-                    tvIGSTValue.setTextColor(Color.WHITE);
-                    tvTaxTotal.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
-                    tvServiceTaxTotal.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+            relative_Interstate = (LinearLayout) findViewById(R.id.relative_interstate);
+            chk_interstate = (CheckBox) findViewById(R.id.checkbox_interstate);
+            spnr_pos = (Spinner) findViewById(R.id.spnr_pos);
+            tvBillNumber = (EditText) findViewById(R.id.tvBillNumberValue);
+            tblOrderItems = (TableLayout) findViewById(R.id.tblOrderItems);
+            tvHSNCode_out = (TextView) findViewById(R.id.tvColHSN);
 
 
-                }
-            }
-        });
+            textViewOtherCharges = (TextView) findViewById(R.id.txtOthercharges);
+            tvIGSTValue = (TextView) findViewById(R.id.tvIGSTValue);
+            tvTaxTotal = (TextView) findViewById(R.id.tvTaxTotalValue);
+            tvServiceTaxTotal = (TextView) findViewById(R.id.tvServiceTaxValue);
+            tvDiscountAmount = (TextView) findViewById(R.id.tvDiscountAmount);
+            tvDiscountPercentage = (TextView) findViewById(R.id.tvDiscountPercentage);
+            tvSubTotal = (TextView) findViewById(R.id.tvSubTotalValue);
+            tvcessValue = (TextView) findViewById(R.id.tvcessValue);
+            tvBillAmount = (TextView) findViewById(R.id.tvBillTotalValue);
+
+            tvDate = (TextView) findViewById(R.id.tvBillDateValue);
+            idd_date = (LinearLayout) findViewById(R.id.idd_date);
+
+            btn_PrintBill = (WepButton) findViewById(R.id.btn_PrintBill);
+            btn_PrintBill.setOnClickListener(this);
+            btn_PayBill = (WepButton) findViewById(R.id.btn_PayBill);
+            btn_PayBill.setOnClickListener(this);
+            btn_Clear = (WepButton) findViewById(R.id.btn_Clear);
+            btn_Clear.setOnClickListener(this);
+            btn_DeleteBill = (WepButton) findViewById(R.id.btn_DeleteBill);
+            btn_DeleteBill.setOnClickListener(this);
+            btn_Reprint = (WepButton) findViewById(R.id.btn_Reprint);
+            btn_Reprint.setOnClickListener(this);
+
             etCustGSTIN.addTextChangedListener(this);
             editTextName.addTextChangedListener(this);
             editTextMobile.addTextChangedListener(this);
@@ -765,101 +621,260 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             autoCompleteTextViewSearchItem.addTextChangedListener(this);
             autoCompleteTextViewSearchMenuCode.addTextChangedListener(this);
             autoCompleteTextViewSearchItemBarcode.addTextChangedListener(this);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            messageDialog.Show("Error","An error occured");
+        }
+
+    }
+
+    private void onClickEvents() {
+        try{
+
+            autoCompleteTextViewSearchItemBarcode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        if ((autoCompleteTextViewSearchItemBarcode.getText().toString().equals(""))) {
+                            messageDialog.Show("Warning", "Scan BarCode");
+                        } else {
+                            Cursor BarcodeItem = db
+                                    .getItemssbyBarCode((autoCompleteTextViewSearchItemBarcode.getText().toString().trim()));
+                            int i =0, added =0;
+                            while (BarcodeItem.moveToNext()) {
+                                if(i!=position)
+                                {
+                                    i++;
+                                    continue;
+                                }
+                                added =1;
+                                btn_Clear.setEnabled(true);
+                                AddItemToOrderTable(BarcodeItem);
+                                autoCompleteTextViewSearchItemBarcode.setText("");
+                                // ((EditText)v).setText("");
+                            } if(added==0) {
+                                messageDialog.Show("Warning", "Item not found for Selected BarCode");
+                            }
+                        }
+                    } catch (Exception ex) {
+                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+
+            autoCompleteTextViewSearchItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    try {
+                        if ((autoCompleteTextViewSearchItem.getText().toString().equals(""))) {
+                            messageDialog.Show("Warning", "Enter Item Name");
+                        } else {
+                            Cursor MenucodeItem = db.getItemLists(autoCompleteTextViewSearchItem.getText().toString().trim());
+                            if (MenucodeItem.moveToFirst()) {
+                                btn_Clear.setEnabled(true);
+                                AddItemToOrderTable(MenucodeItem);
+                                autoCompleteTextViewSearchItem.setText("");
+                                // ((EditText)v).setText("");
+                            } else {
+                                messageDialog.Show("Warning", "Item not found for Selected Item");
+                            }
+                        }
+                    } catch (Exception ex) {
+                        Toast.makeText(BillingCounterSalesActivity.this, ex.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            autoCompleteTextViewSearchMenuCode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                    /*Toast.makeText(BillingScreenActivity.this, aTViewSearchMenuCode.getText().toString(),
+                            Toast.LENGTH_SHORT).show();*/
+                        if ((autoCompleteTextViewSearchMenuCode.getText().toString().equals(""))) {
+                            messageDialog.Show("Warning", "Enter Menu Code");
+                        } else {
+                            Cursor MenucodeItem = db
+                                    .getItemss(Integer.parseInt(autoCompleteTextViewSearchMenuCode.getText().toString().trim()));
+                            if (MenucodeItem.moveToFirst()) {
+                                btn_Clear.setEnabled(true);
+                                AddItemToOrderTable(MenucodeItem);
+                                autoCompleteTextViewSearchMenuCode.setText("");
+                                // ((EditText)v).setText("");
+                            } else {
+                                messageDialog.Show("Warning", "Item not found for Selected Item Code");
+                            }
+                        }
+                    } catch (Exception ex) {
+                        Toast.makeText(BillingCounterSalesActivity.this, ex.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+
+            /*editTextMobile.addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) {
+                    try {
+                        if (editTextMobile.getText().toString().length() == 10) {
+                            Cursor crsrCust = db.getFnbCustomer(editTextMobile.getText().toString());
+                            if (crsrCust.moveToFirst()) {
+                                customerId = crsrCust.getString(crsrCust.getColumnIndex("CustId"));
+                                editTextName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
+                                editTextAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
+                                String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
+                                if (gstin == null)
+                                    etCustGSTIN.setText("");
+                                else
+                                    etCustGSTIN.setText(gstin);
+                                ControlsSetEnabled();
+                                btn_DineInAddCustomer.setEnabled(false);
+                                if (jBillingMode != 2) {
+                                    btn_PrintBill.setEnabled(false);
+                                    btn_PayBill.setEnabled(false);
+                                } else {
+                                    btn_PrintBill.setEnabled(true);
+                                    btn_PayBill.setEnabled(true);
+                                }
+                            } else {
+                                messageDialog.Show("Note", "Customer is not Found, Please Add Customer before Order");
+                                btn_DineInAddCustomer.setVisibility(View.VISIBLE);
+                                //ControlsSetDisabled();
+                                btn_DineInAddCustomer.setEnabled(true);
+                            }
+                        } else {
+                            btn_DineInAddCustomer.setEnabled(true);
+                        }
+                    } catch (Exception ex) {
+                        messageDialog.Show("Error " + ex.toString(), ex.getMessage());
+                    }
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+            });*/
+
+            chk_interstate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked == false) {
+                        //et_pos.setBackgroundColor(Color.WHITE);
+                        spnr_pos.setSelection(0);
+                        spnr_pos.setEnabled(false);
+                        tvIGSTValue.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+                        tvTaxTotal.setTextColor(Color.WHITE);
+                        tvServiceTaxTotal.setTextColor(Color.WHITE);
+                    } else {
+                        // interstate
+                        //et_pos.setBackground(Color.GRAY);
+                        spnr_pos.setSelection(0);
+                        spnr_pos.setEnabled(true);
+                        tvIGSTValue.setTextColor(Color.WHITE);
+                        tvTaxTotal.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+                        tvServiceTaxTotal.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+
+
+                    }
+                }
+            });
         }catch(Exception e)
         {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
+
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               String str = charSequence.toString();
-                View view = getCurrentFocus();
-                if(view== null)
-                        return;
-                switch(view.getId()){
-                        case R.id.etCustGSTIN:
-                                tx = etCustGSTIN.getText().toString();
-                                break;
-                        case R.id.edtCustName:
-                                tx = editTextName.getText().toString();
-                                break;
-                        case R.id.edtCustPhoneNo:
-                                tx = editTextMobile.getText().toString();
-                                break;
-                        case R.id.edtCustAddress:
-                                tx = editTextAddress.getText().toString();
-                                break;
-                        case R.id.aCTVSearchItem:
-                                tx = autoCompleteTextViewSearchItem.getText().toString();
-                                break;
-                        case R.id.aCTVSearchMenuCode:
-                                tx = autoCompleteTextViewSearchMenuCode.getText().toString();
-                                break;
-                        case R.id.aCTVSearchItemBarcode:
-                                tx = autoCompleteTextViewSearchItemBarcode.getText().toString();
-                                break;
+        String str = charSequence.toString();
+        View view = getCurrentFocus();
+        if (view == null)
+            return;
+        try {
+            switch (view.getId()) {
+                case R.id.etCustGSTIN:
+                    tx = etCustGSTIN.getText().toString();
+                    break;
+                case R.id.edtCustName:
+                    tx = editTextName.getText().toString();
+                    break;
+                case R.id.edtCustPhoneNo:
+                    tx = editTextMobile.getText().toString();
+                    break;
+                case R.id.edtCustAddress:
+                    tx = editTextAddress.getText().toString();
+                    break;
+                case R.id.aCTVSearchItem:
+                    tx = autoCompleteTextViewSearchItem.getText().toString();
+                    break;
+                case R.id.aCTVSearchMenuCode:
+                    tx = autoCompleteTextViewSearchMenuCode.getText().toString();
+                    break;
+                case R.id.aCTVSearchItemBarcode:
+                    tx = autoCompleteTextViewSearchItemBarcode.getText().toString();
+                    break;
 
-                           }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            messageDialog.Show("Error","An error occured");
+    }
 
 
-                            }
+    }
+
+
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-            public void afterTextChanged(Editable s) {
-                try {
-                        View view = getCurrentFocus();
-                        if(view== null  || CUSTOMER_FOUND==1)
-                                return;
-                        if(view.getId() == R.id.edtCustPhoneNo){
-                            if (editTextMobile.getText().toString().length() == 10) {
-                                    Cursor crsrCust = db.getFnbCustomer(editTextMobile.getText().toString());
-                                    if (crsrCust.moveToFirst()) {
-                                            CUSTOMER_FOUND = 1;
-                                            customerId = crsrCust.getString(crsrCust.getColumnIndex("CustId"));
-                                            editTextName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
-                                            editTextAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
-                                            String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
-                                            if (gstin == null)
-                                                    etCustGSTIN.setText("");
-                                            else
-                                                etCustGSTIN.setText(gstin);
-                                            ControlsSetEnabled();
-                                            btn_DineInAddCustomer.setEnabled(false);
-                                            if (jBillingMode != 2) {
-                                                    btn_PrintBill.setEnabled(false);
-                                                    btn_PayBill.setEnabled(false);
-                                                } else {
-                                                    btn_PrintBill.setEnabled(true);
-                                                    btn_PayBill.setEnabled(true);
-                                                }
-                                            CUSTOMER_FOUND = 0;
-                                        } else {
-                                            messageDialog.Show("", "Customer is not Found, Please Add Customer before Order");
-                                            btn_DineInAddCustomer.setVisibility(View.VISIBLE);
-                                            //ControlsSetDisabled();
-                                                    btn_DineInAddCustomer.setEnabled(true);
-                                       }
-                                }else if (editTextMobile.getText().toString().trim().equals("")){
-                                    CUSTOMER_FOUND=1;
-                                    editTextName.setText("");
-                                    customerId = "0";
-                                    editTextAddress.setText("");
+    public void afterTextChanged(Editable s) {
+        try {
+            View view = getCurrentFocus();
+            if(view== null  || CUSTOMER_FOUND==1)
+                return;
+            if(view.getId() == R.id.edtCustPhoneNo){
+                if (editTextMobile.getText().toString().length() == 10) {
+                    Cursor crsrCust = db.getFnbCustomer(editTextMobile.getText().toString());
+                    if (crsrCust.moveToFirst()) {
+                            CUSTOMER_FOUND = 1;
+                            customerId = crsrCust.getString(crsrCust.getColumnIndex("CustId"));
+                            editTextName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
+                            editTextAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
+                            String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
+                            if (gstin == null)
                                     etCustGSTIN.setText("");
-                                    CUSTOMER_FOUND=0;
-                                    //Toast.makeText(this, "Please select customer for billing , if required", Toast.LENGTH_SHORT).show();
+                            else
+                                etCustGSTIN.setText(gstin);
+                            ControlsSetEnabled();
+                            btn_DineInAddCustomer.setEnabled(false);
+                            btn_PrintBill.setEnabled(true);
+                            btn_PayBill.setEnabled(true);
+                            CUSTOMER_FOUND = 0;
+                        } else {
+                            messageDialog.Show("Note", "Customer is not Found, Please Add Customer before Order");
+                            btn_DineInAddCustomer.setVisibility(View.VISIBLE);
+                            btn_DineInAddCustomer.setEnabled(true);
+                       }
+                }else if (editTextMobile.getText().toString().trim().equals("")){
+                    CUSTOMER_FOUND=1;
+                    editTextName.setText("");
+                    customerId = "0";
+                    editTextAddress.setText("");
+                    etCustGSTIN.setText("");
+                    CUSTOMER_FOUND=0;
+                    //Toast.makeText(this, "Please select customer for billing , if required", Toast.LENGTH_SHORT).show();
 
-                                                } else {
-                                    btn_DineInAddCustomer.setEnabled(true);
-                                }
-                        }/*else if (view.getId() == R.id.aCTVSearchItemBarcode)
-            {
-                Toast.makeText(this, "afterTextChanged", Toast.LENGTH_SHORT).show();
-                autoCompleteTextViewSearchItemBarcode.setSelection(autoCompleteTextViewSearchItem.getText().toString().length());
-           }*/
-                    }catch (Exception ex) {
-                        messageDialog.Show("Error " + ex.toString(), ex.getMessage());
-                    }
+                } else {
+                    btn_DineInAddCustomer.setEnabled(true);
+                }
             }
+        }catch (Exception ex) {
+            messageDialog.Show("Error " , ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
     private void init() {
         try {
             if (crsrSettings != null && crsrSettings.moveToFirst()) {
@@ -912,6 +927,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 }
                 GSTEnable = "1";
             }
+            setInvoiceDate();
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -1041,17 +1057,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         String strQty = "0";
         double dRate = 0, dTaxPercent = 0, dDiscPercent = 0, dTaxAmt = 0, dIGSTAmt =0, dcessAmt = 0,dDiscAmt = 0, dTempAmt = 0, dServiceTaxPercent = 0;
         double dServiceTaxAmt = 0;
-        int iTaxId = 0, iServiceTaxId = 0, iDiscId = 0;
         boolean bItemExists = false;
         TableRow rowItem = null;
-        Cursor crsrTax, crsrDiscount;
+
         TextView tvName, tvAmount, tvTaxPercent, tvTaxAmt, tvDiscPercent, tvDiscAmt, tvDeptCode, tvCategCode, tvKitchenCode, tvTaxType, tvModifierCharge, tvServiceTaxPercent, tvServiceTaxAmt;
         EditText etQty, etRate;
         TextView tvHSn;
         CheckBox chkNumber;
-        int crsrSettingsCount = crsrSettings.getCount();
-        int crsrItemCount = crsrItem.getCount();
-        TextView HSNCode;
+
         if (crsrItem.moveToFirst() && crsrSettings.moveToFirst())
         {
             do {
@@ -1078,7 +1091,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         TextView PrintKOTStatus = (TextView) Row.getChildAt(21);
                         // Check for item number and name, if name is not same
                         // add new
-                        if (Number.getText().toString().equalsIgnoreCase(crsrItem.getString(crsrItem.getColumnIndex("MenuCode"))) && ItemName.getText().toString().equalsIgnoreCase(crsrItem.getString(crsrItem.getColumnIndex("ItemName"))))
+                        if (Number.getText().toString().equalsIgnoreCase(crsrItem.getString(crsrItem.getColumnIndex("MenuCode")))
+                                && ItemName.getText().toString().equalsIgnoreCase(crsrItem.getString(crsrItem.getColumnIndex("ItemName"))))
                         {
                             if (PrintKOTStatus.getText().toString().equalsIgnoreCase("0"))
                             {
@@ -1230,10 +1244,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     rowItem.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     //crsrSettings = db.getBillSetting();
 
-                    int DineInRate = crsrSettings.getInt(crsrSettings.getColumnIndex("DineInRate"));
                     int CounterSalesRate = crsrSettings.getInt(crsrSettings.getColumnIndex("CounterSalesRate"));
-                    int PickUpRate = crsrSettings.getInt(crsrSettings.getColumnIndex("PickUpRate"));
-                    int HomeDeliveryRate = crsrSettings.getInt(crsrSettings.getColumnIndex("HomeDeliveryRate"));
+
                     if (CounterSalesRate == 1) {
                         dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
                     } else if (CounterSalesRate == 2) {
@@ -1248,7 +1260,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     chkNumber.setTextSize(0);
                     chkNumber.setTextColor(Color.TRANSPARENT);
                     chkNumber.setText(crsrItem.getString(crsrItem.getColumnIndex("MenuCode")));
-                    //Toast.makeText(getApplicationContext(), chkNumber.getText().toString(), Toast.LENGTH_SHORT).show();
 
                     // Item Name
                     tvName = new TextView(BillingCounterSalesActivity.this);
@@ -1349,31 +1360,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
 
 
-                    // Discount Percent - Check whether Discount is enabled for
-                    // the item,
-                    // if enabled get discount percentage from discount table
-                    /*if (crsrItem.getInt(crsrItem.getColumnIndex("DiscountEnable")) == 1) {
-                        iDiscId = crsrItem.getInt(crsrItem.getColumnIndex("DiscId"));
-                        crsrDiscount = db.getDiscountConfig(iDiscId);
-                        if (!crsrDiscount.moveToFirst()) {
-                            messageDialog.Show("Warning", "Failed to read Discount from crsrDiscount");
-                            return;
-                        } else {
-
-                            dDiscPercent = crsrDiscount.getDouble(crsrDiscount.getColumnIndex("DiscPercentage"));
-                        }
-                    }
-                    tvDiscPercent = new TextView(BillingCounterSalesActivity.this);
-                    tvDiscPercent.setWidth(50);
-                    tvDiscPercent.setText(String.format("%.2f", dDiscPercent));*/
-
                     if(ItemwiseDiscountEnabled ==1 && crsrItem.getString(crsrItem.getColumnIndex("DiscountPercent"))!=null)  // 1->itemwise discount , 0-> billwise discount
                     {
                         dDiscPercent = Double.parseDouble(String.format("%.2f",
                                                             crsrItem.getDouble(crsrItem.getColumnIndex("DiscountPercent"))));
                     }
                     tvDiscPercent = new TextView(BillingCounterSalesActivity.this);
-                    tvDiscPercent.setWidth(50);
                     tvDiscPercent.setText(String.format("%.2f", dDiscPercent));
 
                     // Discount Amount
@@ -1388,7 +1380,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     tvDiscAmt = new TextView(BillingCounterSalesActivity.this);
                     tvDiscAmt.setWidth(50);
                     tvDiscAmt.setText(String.format("%.2f", dDiscAmt));
-// Amount
+
+                    // Amount
                     tvAmount = new TextView(BillingCounterSalesActivity.this);
 //                    tvAmount.setWidth(60); // 97px ~= 145dp
 //                    tvAmount.setTextSize(11);
@@ -1431,36 +1424,29 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         dcessAmt = (dBasePrice ) * (dcessPercent / 100);
                     }
                     tvTaxAmt = new TextView(BillingCounterSalesActivity.this);
-                    //tvTaxAmt.setWidth(50);
                     tvTaxAmt.setText(String.format("%.2f", dTaxAmt));
 
                     tvServiceTaxAmt = new TextView(BillingCounterSalesActivity.this);
-                    //tvServiceTaxAmt.setWidth(50);
                     tvServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
 
                     TextView tvIGSTAmt = new TextView(BillingCounterSalesActivity.this);
-                    //tvIGSTAmt.setWidth(50);
                     tvIGSTAmt.setText(String.format("%.2f", dIGSTAmt));
 
                     TextView tvcessAmt = new TextView(BillingCounterSalesActivity.this);
-                    //tvcessAmt.setWidth(50);
                     tvcessAmt.setText(String.format("%.2f", dcessAmt));
 
 
 
                     // Department Code
                     tvDeptCode = new TextView(BillingCounterSalesActivity.this);
-                    //tvDeptCode.setWidth(50);
                     tvDeptCode.setText(crsrItem.getString(crsrItem.getColumnIndex("DeptCode")));
 
                     // Category Code
                     tvCategCode = new TextView(BillingCounterSalesActivity.this);
-                    //tvCategCode.setWidth(50);
                     tvCategCode.setText(crsrItem.getString(crsrItem.getColumnIndex("CategCode")));
 
                     // Kitchen Code
                     tvKitchenCode = new TextView(BillingCounterSalesActivity.this);
-                    //tvKitchenCode.setWidth(50);
                     tvKitchenCode.setText(crsrItem.getString(crsrItem.getColumnIndex("KitchenCode")));
 
                     // Tax Type [Forward - 1/ Reverse - 0]
@@ -1471,18 +1457,15 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                     // Modifier Charge
                     tvModifierCharge = new TextView(BillingCounterSalesActivity.this);
-                    //tvModifierCharge.setWidth(50);
                     tvModifierCharge.setText("0.0");
 
                     TextView tvUOM = new TextView(BillingCounterSalesActivity.this);
-                    //tvUOM.setWidth(50);
                     tvUOM.setText(crsrItem.getString(crsrItem.getColumnIndex("UOM")));
 
 
                     // SupplyType
                     TextView SupplyType = new TextView(BillingCounterSalesActivity.this);
                     SupplyType.setText(crsrItem.getString(crsrItem.getColumnIndex("SupplyType")));
-                    //SupplyType.setWidth(30);
 
                     TextView tvSpace = new TextView(BillingCounterSalesActivity.this);
                     tvSpace.setText("        ");
@@ -1491,14 +1474,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     int res = getResources().getIdentifier("delete", "drawable", this.getPackageName());
                     ImageButton ImgDelete = new ImageButton(BillingCounterSalesActivity.this);
                     ImgDelete.setImageResource(res);
-                    // btnDelete.setText(crsrItem.getString(crsrItem.getColumnIndex("MenuCode")));
                     ImgDelete.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v)
                         {
                             final View v1 = v;
                             AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(BillingCounterSalesActivity.this);
-                            /*LayoutInflater UserAuthorization = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                            View vwAuthorization = UserAuthorization.inflate(R.layout.deleteconfirmation, null);*/
                             AuthorizationDialog
                                     .setIcon(R.drawable.ic_launcher)
                                     .setTitle("Confirmation")
@@ -1665,7 +1645,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
                         Amount.setText(
-                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
+                                String.format("%.2f", (strQty * (dRate-dTempAmt))));
 
                     } else {// reverse tax
                         double dBasePrice = 0;
@@ -1696,7 +1676,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
                         Amount.setText(
-                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
+                                String.format("%.2f", (strQty * (dRate-dTempAmt))));
                     }
                     // // delete
                     // Delete.setText("Hi");
@@ -2005,7 +1985,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         if (crsrSettings.moveToFirst()) {
             if (crsrSettings.getString(crsrSettings.getColumnIndex("Tax")).equalsIgnoreCase("1"))  // forward tax
             {
-                if (crsrSettings.getString(crsrSettings.getColumnIndex("TaxType")).equalsIgnoreCase("1")) // itemwise
+                if (crsrSettings.getString(crsrSettings.getColumnIndex("TaxType")).equalsIgnoreCase("1"))
                 {
                     tvIGSTValue.setText(String.format("%.2f", dIGSTAmt));
                     tvTaxTotal.setText(String.format("%.2f", dTaxTotal));
@@ -2359,11 +2339,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     }
 
 
-    /*************************************************************************************************************************************
+   /* *//*************************************************************************************************************************************
      * Loads KOT order items to billing table
      *
      * @param crsrBillItems : Cursor with KOT order item details
-     *************************************************************************************************************************************/
+     *************************************************************************************************************************************//*
     private void LoadKOTItems(Cursor crsrBillItems) {
         EditTextInputHandler etInputValidate = new EditTextInputHandler();
         TableRow rowItem;
@@ -2373,14 +2353,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         ImageButton ImgDelete;
         if (crsrBillItems.moveToFirst())
         {
-            /*iTokenNumber = crsrBillItems.getInt(crsrBillItems.getColumnIndex("TokenNumber"));
+            *//*iTokenNumber = crsrBillItems.getInt(crsrBillItems.getColumnIndex("TokenNumber"));
             tvWaiterNumber.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("EmployeeId")));
             // Get Table number
             tvTableNumber.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TableNumber")));
             // Get Table Split No
             tvTableSplitNo.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TableSplitNo")));
             // Get Sub Udf number
-            tvSubUdfValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SubUdfNumber")));*/
+            tvSubUdfValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SubUdfNumber")));*//*
             // Get Cust Id
             customerId = crsrBillItems.getString(crsrBillItems.getColumnIndex("CustId"));
             Cursor crsrCustomer = db.getCustomerById(crsrBillItems.getInt(crsrBillItems.getColumnIndex("CustId")));
@@ -2530,10 +2510,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 tvSpace1.setText("       ");
 
                 TextView tvPrintKOTStatus = new TextView(BillingCounterSalesActivity.this);
-                /*if(REPRINT_KOT == 1)
+                *//*if(REPRINT_KOT == 1)
                     tvPrintKOTStatus.setText("1");
                 else
-                    tvPrintKOTStatus.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("PrintKOTStatus")));*/
+                    tvPrintKOTStatus.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("PrintKOTStatus")));*//*
 
 
 
@@ -2574,7 +2554,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         } else {
             Log.d("LoadKOTItems", "No rows in cursor");
         }
-    }
+    }*/
 
     // -----Print Bill Code Started-----
 
@@ -3233,13 +3213,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
 
         // Employee Id (Waiter / Rider)
-        if (jBillingMode == 1 ) {
-            objBillDetail.setEmployeeId(Integer.parseInt(tvWaiterNumber.getText().toString()));
-            Log.d("InsertBillDetail", "EmployeeId:" + tvWaiterNumber.getText().toString());
-        } else {
-            objBillDetail.setEmployeeId(0);
-            Log.d("InsertBillDetail", "EmployeeId:0");
-        }
+        objBillDetail.setEmployeeId(0);
+        Log.d("InsertBillDetail", "EmployeeId:0");
 
         // Customer Id
         objBillDetail.setCustId(Integer.valueOf(customerId));

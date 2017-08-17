@@ -457,7 +457,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
                                 //}
                             } else {
-                                MsgBox.Show("Note", "Customer is not Found, Please Add Customer before Order");
+                               // MsgBox.Show("Note", "Customer is not Found, Please Add Customer before Order");
                                 btnAddCustomer.setVisibility(View.VISIBLE);
                                 //ControlsSetDisabled();
                             }
@@ -2654,7 +2654,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
                         Amount.setText(
-                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
+                                String.format("%.2f", (strQty * (dRate-dTempAmt))));
 
                     } else {// reverse tax
                         double dBasePrice = 0;
@@ -2685,7 +2685,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
                         Amount.setText(
-                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
+                                String.format("%.2f", (strQty * (dRate-dTempAmt))));
                     }
                     // // delete
                     // Delete.setText("Hi");

@@ -353,9 +353,9 @@ public class GSTUploadFunctions {
         try {
             Cursor cursor = dbReport.getOutwardB2Cs(StartDate, EndDate);
             if (cursor == null || !cursor.moveToFirst()) {
-                MsgBox.setMessage("No data for entered period B2CS")
+               /* MsgBox.setMessage("No data for entered period B2CS")
                         .setPositiveButton("OK", null)
-                        .show();
+                        .show();*/
             }
             else {
                 do {// item_detail table

@@ -1062,7 +1062,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                                                         Toast.makeText(myContext, "Customer Fetched Successfully", Toast.LENGTH_LONG).show();
                                                         //}
                                                             } else {
-                                                        MsgBox.Show("", "Customer is not Found, Please Add Customer before Order");
+                                                        MsgBox.Show("Note ", "Customer is not Found, Please Add Customer before Order");
                                                     }
                                             } else if (edtCustPhoneNo.getText().toString().trim().equals("")){
                                                 CUSTOMER_FOUND=1;
@@ -2727,7 +2727,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
                         Amount.setText(
-                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
+                                String.format("%.2f", (strQty * (dRate-dTempAmt))));
 
                     } else {// reverse tax
                         double dBasePrice = 0;
@@ -2758,7 +2758,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
                         Amount.setText(
-                                String.format("%.2f", (strQty * (dRate-dDiscAmt))));
+                                String.format("%.2f", (strQty * (dRate-dTempAmt))));
                     }
                     // // delete
                     // Delete.setText("Hi");
