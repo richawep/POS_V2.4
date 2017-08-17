@@ -7718,10 +7718,10 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_IsMainOffice,office);
         cvDbValues.put(KEY_REFERENCE_NO,RefernceNo);
         cvDbValues.put(KEY_BillNoPrefix,billPrefix);
-
+        cvDbValues.put(KEY_FIRM_NAME, name);
         cvDbValues.put(KEY_DeviceId, "MACID_00");
         cvDbValues.put(KEY_DeviceName, "TAB2200+");
-        cvDbValues.put(KEY_FIRM_NAME, "Sharma & Sons");
+
         cvDbValues.put(KEY_TINCIN, "1234567890");
         cvDbValues.put(KEY_IsMainOffice, "YES");
 

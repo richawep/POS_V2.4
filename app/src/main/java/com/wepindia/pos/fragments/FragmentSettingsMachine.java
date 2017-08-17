@@ -4,6 +4,7 @@ package com.wepindia.pos.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.OwnerDetailsActivity;
 import com.wepindia.pos.R;
 
 import java.io.File;
@@ -244,24 +246,25 @@ public class FragmentSettingsMachine extends Fragment {
                             String roleName = User.getString(User.getColumnIndex("RoleId"));
                             //ArrayList<String> list = dbBackup.getPermissionsNamesForRole(roleName);
                             String str = "1";
-                            //Boolean status = false;
-                            /*if (list == null)
-                                Log.d("BackUp()", "No access to " + txtUserId.getText().toString());*/
 
-                            /*for (String s : list) {
-                                if (str.equalsIgnoreCase(s)) {
-                                    Log.d("BackUp()", txtUserId.getText().toString() + " has access for backup");
-                                    status = true;
-                                    break;
-                                }
-                            }*/
                             if (str.equalsIgnoreCase(roleName)) {
                                 Log.d("RestoreDefault()", "Factory Resetted");
                                 //dbBackup.FactoryReset();
                                 String DB_PATH = Environment.getExternalStorageDirectory().getPath() + "/WeP_FnB/";
                                 myContext.deleteDatabase(DB_PATH + "WeP_FnB_Database.db");
-                                Toast.makeText(myContext, "Factory Reset Successfully", Toast.LENGTH_LONG).show();
-                                //MsgBox.Show("", "Factory Reset Successfully");
+                                //Toast.makeText(myContext, "Factory Reset Successfully", Toast.LENGTH_LONG).show();
+                                MsgBox.setIcon(R.drawable.ic_launcher)
+                                .setTitle("Note")
+                                .setMessage("Factory Reset Successfully")
+                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dbBackup.CloseDatabase();
+                                                Intent  intent = new Intent(myContext, OwnerDetailsActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        })
+                                        .show();
                                 //System.exit(0);
                             } else {
                                 MsgBox.Show("Warning", "Could not proceed due to in suffiecient access privilage");
@@ -276,6 +279,7 @@ public class FragmentSettingsMachine extends Fragment {
 
     public void Close()
     {
+        dbBackup.CloseDatabase();
         getActivity().finish();
     }
 }
