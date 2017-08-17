@@ -199,7 +199,7 @@
             android:name=".AddRolesActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".UserManagementActivity"
             android:screenOrientation="sensorLandscape"

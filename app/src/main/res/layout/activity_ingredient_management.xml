@@ -96,6 +96,8 @@
                             android:layout_height="match_parent"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
                             android:drawableRight="@drawable/searchicon_img"
                             android:hint="Type Item Here" />
 
@@ -147,6 +149,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
                             android:drawableRight="@drawable/searchicon_img"
                             android:hint="Type Ingredient Here"
                             android:paddingLeft="5dp" />
@@ -520,6 +524,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
                             android:drawableRight="@drawable/searchicon_img"
                             android:hint="Search Item" />
 

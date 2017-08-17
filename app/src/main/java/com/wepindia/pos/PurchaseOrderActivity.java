@@ -261,6 +261,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         if(suppliercode <1)
                         {
                             MsgBox.setTitle("Insufficient Information")
+                                    .setIcon(R.drawable.ic_launcher)
                                     .setMessage(" Please Select/Add Supplier ")
                                     .setPositiveButton("OK", null)
                                     .show();
@@ -268,6 +269,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         {
                             MsgBox.setTitle("Insufficient Information")
                                     .setMessage(" Please Select Item ")
+                                    .setIcon(R.drawable.ic_launcher)
                                     .setPositiveButton("OK", null)
                                     .show();
                         }
@@ -286,6 +288,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         et_inward_item_quantity.setBackgroundColor(Color.WHITE);
                         et_inward_item_quantity.setEnabled(true);
                         MsgBox.setTitle("Error")
+                                .setIcon(R.drawable.ic_launcher)
                                 .setMessage(" Please Enter the Quantity ")
                                 .setPositiveButton("OK", null)
                                 .show();
@@ -299,6 +302,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                         else
                         {
                             MsgBox.setTitle(" Insufficient Information")
+                                    .setIcon(R.drawable.ic_launcher)
                                     .setMessage(" Item not found in database for this Supplier." +
                                             "\nKindly goto \"Supplier Item Linkage\" and add the desired item" +
                                             "\nPlease save your data , if any , before leaving this screen")
@@ -464,6 +468,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                             AlertDialog.Builder MsgBox = new AlertDialog.Builder(myContext);
                             MsgBox. setMessage("Item Name , value and Quantity cannot be  blank. Please all details")
                                     .setPositiveButton("OK", null)
+                                    .setIcon(R.drawable.ic_launcher)
+                                    .setTitle("Note")
                                     .show();
                             set_list_spnr();
                         }
@@ -472,6 +478,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                             AlertDialog.Builder MsgBox = new AlertDialog.Builder(myContext);
                             MsgBox. setMessage("Please Select the UOM")
                                     .setPositiveButton("OK", null)
+                                    .setIcon(R.drawable.ic_launcher)
+                                    .setTitle("Note")
                                     .show();
                             set_list_spnr();
                         }
@@ -567,6 +575,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 if (duplicacy_crsr!= null && duplicacy_crsr.moveToFirst())
                 {
                     MsgBox.setTitle(" Duplicate ")
+                            .setIcon(R.drawable.ic_launcher)
                             .setMessage(" Purchase Order No already present for Supplier. Do you want to overwrite")
                             .setNegativeButton("No", null)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -700,6 +709,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 }
             }else { // no duplicacy
                 MsgBox.setTitle(" Error ")
+                        .setIcon(R.drawable.ic_launcher)
                         .setMessage(" This Purchase Order No is not present. Do you want to create new ")
                         .setNegativeButton("No", null)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -1712,6 +1722,8 @@ void populate_old(int type)
         catch(Exception e )
         {
             MsgBox.setMessage(e.getMessage())
+                    .setTitle("Error")
+                    .setIcon(R.drawable.ic_launcher)
                     .setNeutralButton("OK", null)
                     .show();
         }
@@ -1814,6 +1826,7 @@ void populate_old(int type)
                 for (String supplier : labelsSupplierName) {
                     if (suppliername.equalsIgnoreCase(supplier)) {
                         MsgBox.setTitle("Warning")
+                                .setIcon(R.drawable.ic_launcher)
                                 .setMessage("Supplier already present in list")
                                 .setPositiveButton("OK", null)
                                 .show();
@@ -1824,6 +1837,7 @@ void populate_old(int type)
                 if(gstin!=null && !gstin.equals("") && labelsSupplierGSTIN.contains(gstin))
                 {
                     MsgBox.setTitle("Warning")
+                            .setIcon(R.drawable.ic_launcher)
                             .setMessage("Supplier already present in list")
                             .setPositiveButton("OK", null)
                             .show();
@@ -1861,6 +1875,8 @@ void populate_old(int type)
 
             } catch (Exception e) {
                 MsgBox.setMessage(e.getMessage())
+                        .setIcon(R.drawable.ic_launcher)
+                        .setTitle("Error")
                         .setNeutralButton("Ok", null)
                         .show();
             }

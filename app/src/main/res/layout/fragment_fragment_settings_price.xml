@@ -68,6 +68,7 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Dine In"
+            android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <EditText
@@ -77,6 +78,7 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Counter Sales"
+            android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <EditText
@@ -85,6 +87,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:gravity="center"
+            android:singleLine="true"
             android:text="Pick Up"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -94,6 +97,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:gravity="center"
+            android:singleLine="true"
             android:text="Home Delivery"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </TableRow>
@@ -112,6 +116,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLength="12"
+            android:focusable="false"
             android:text="Price Slab1" />
 
         <EditText
@@ -180,6 +185,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLength="12"
+            android:focusable="false"
             android:text="Price Slab2" />
 
         <EditText
@@ -245,6 +251,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLength="12"
+            android:focusable="false"
             android:text="Price Slab3" />
 
         <EditText

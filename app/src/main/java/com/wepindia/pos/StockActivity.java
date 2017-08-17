@@ -24,6 +24,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
@@ -507,7 +508,15 @@ public class StockActivity extends WepBaseActivity {
     public void CloseStock(View v) {
         // Close Database connection and finish the activity
         dbStock.CloseDatabase();
+        hideKeyboard();
         this.finish();
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(getCurrentFocus()!=null)
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     private void LoadDepartments(Cursor crsrDept) {

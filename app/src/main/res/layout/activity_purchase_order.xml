@@ -53,6 +53,7 @@
                     android:background="@drawable/background_btn"
                     android:onClick="AddSupplier"
                     android:text="Add Supplier"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
@@ -70,6 +71,7 @@
                     android:background="@drawable/background_btn"
                     android:onClick="GeneratePO"
                     android:text="Generate PO"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
@@ -86,6 +88,7 @@
                     android:background="@drawable/background_btn"
                     android:onClick="EditPO"
                     android:text="Update PO"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
@@ -102,6 +105,7 @@
                     android:background="@drawable/background_btn"
                     android:onClick="Clear_inward"
                     android:text="Clear"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
@@ -119,6 +123,7 @@
                     android:background="@drawable/background_btn"
                     android:onClick="Close_inward"
                     android:text="Close"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                     android:theme="@style/WepButtonWithMarigin" />
@@ -168,6 +173,7 @@
                         android:layout_marginLeft="3dp"
                         android:layout_weight="1"
                         android:enabled="false"
+                        android:singleLine="true"
                         android:hint="Additional Charge Name"
                         android:textSize="15dp"
                         android:textStyle="italic" />
@@ -202,6 +208,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:hint="00.00"
+                        android:inputType="numberDecimal"
                         android:paddingLeft="@dimen/activity_horizontal_margin1" />
 
                     <TextView
@@ -218,6 +225,7 @@
                         android:layout_marginRight="3dp"
                         android:layout_weight="1"
                         android:hint="00.00"
+                        android:inputType="numberDecimal"
                         android:paddingLeft="@dimen/activity_horizontal_margin1" />
                 </LinearLayout>
             </LinearLayout>
@@ -323,6 +331,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
                             android:drawableRight="@drawable/searchicon_img" />
 
                     </LinearLayout>
@@ -374,6 +384,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:singleLine="true"
                             android:maxLength="100" />
                     </LinearLayout>
                 </LinearLayout>
@@ -411,6 +422,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:imeOptions="actionNext"
                             android:inputType="number" />
                     </LinearLayout>
 
@@ -445,6 +457,8 @@
                                 android:id="@+id/autocompletetv_itemlist"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:singleLine="true"
+                                android:imeOptions="actionNext"
                                 android:layout_weight="1">
 
                             </AutoCompleteTextView>
@@ -475,6 +489,7 @@
                                 android:layout_marginLeft="@dimen/_10dp_720dp_7dp_600dp"
                                 android:background="@drawable/background_btn"
                                 android:text="Add Item"
+                                android:textAllCaps="false"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
                                 android:theme="@style/WepButtonWithMarigin" />
@@ -520,6 +535,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1.3"
                                 android:maxLength="15"
+                                android:singleLine="true"
                                 android:paddingLeft="5dp" />
                         </LinearLayout>
 

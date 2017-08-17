@@ -127,6 +127,8 @@
                     android:id="@+id/autocompletetv_convert_ingredient"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
                     android:layout_weight="0.8" />
 
                 <EditText

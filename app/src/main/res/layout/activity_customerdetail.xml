@@ -126,6 +126,7 @@
                                     android:layout_width="225dp"
                                     android:layout_height="wrap_content"
                                     android:ems="5"
+                                    android:singleLine="true"
                                     android:hint="Customer GSTIN"
                                     android:maxLength="15" />
                             </TableRow>
@@ -190,6 +191,7 @@
                                     android:layout_width="225dp"
                                     android:layout_height="wrap_content"
                                     android:ems="5"
+                                    android:singleLine="true"
                                     android:hint="Address"
                                     android:maxLength="150" />
                             </TableRow>

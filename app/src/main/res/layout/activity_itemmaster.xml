@@ -1061,6 +1061,7 @@
                             android:gravity="center"
                             android:hint=" "
                             android:maxLength="8"
+                            android:singleLine="true"
                             android:selectAllOnFocus="true"
                             android:textSize="13dp" />
                     </LinearLayout>

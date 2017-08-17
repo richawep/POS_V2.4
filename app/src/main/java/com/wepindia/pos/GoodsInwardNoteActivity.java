@@ -363,16 +363,10 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
                         if(suppliercode <1)
                         {
-                            MsgBox.setTitle("Insufficient Information")
-                                    .setMessage(" Please Select/Add Supplier ")
-                                    .setPositiveButton("OK", null)
-                                    .show();
+                            MsgBox.Show("Insufficient Information"," Please Select/Add Supplier ");
                         } else
                         {
-                            MsgBox.setTitle("Error")
-                                    .setMessage(" Please Select Item ")
-                                    .setPositiveButton("OK", null)
-                                    .show();
+                            MsgBox.Show("Error"," Please Select Item ");
                         }
 
                     } else if (item.equalsIgnoreCase("Not in list") ||  item.equalsIgnoreCase("Add new item"))
@@ -388,10 +382,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                     {
                         et_inward_item_quantity.setBackgroundColor(Color.WHITE);
                         et_inward_item_quantity.setEnabled(true);
-                        MsgBox.setTitle("Error")
-                                .setMessage(" Please Enter the Quantity ")
-                                .setPositiveButton("OK", null)
-                                .show();
+                        MsgBox.Show("Error"," Please Enter the Quantity ");
                     }
                     else {
                         // check whether user has entered new item without going through inputwindow()
@@ -410,12 +401,9 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                                     })
                                     .setNegativeButton("Cancel", null)
                                     .show();*/
-                            MsgBox.setTitle(" Insufficient Information")
-                                    .setMessage(" Item not found in database for this Supplier." +
+                            MsgBox.Show(" Insufficient Information"," Item not found in database for this Supplier." +
                                             "\nKindly goto \"Supplier Item Linkage\" and add the desired item" +
-                                            "\nPlease save your data , if any , before leaving this screen")
-                                    .setPositiveButton("Ok",null)
-                                    .show();
+                                            "\nPlease save your data , if any , before leaving this screen");
                         }
                     }
                 }
@@ -598,18 +586,11 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
                         if (Item_name.equals("") ||  quantity.equals("") || rate.equals(""))
                         {
-                            AlertDialog.Builder MsgBox = new AlertDialog.Builder(myContext);
-                            MsgBox. setMessage("Item Name , value and Quantity cannot be  blank. Please all details")
-                                    .setPositiveButton("OK", null)
-                                    .show();
-                            set_list_spnr();
+                            MsgBox. Show("Insufficient Information","Item Name , value and Quantity cannot be  blank. Please all details");                     set_list_spnr();
                         }
                         else if (Item_uom.equals("") ||  Item_uom.equalsIgnoreCase("Unit"))
                         {
-                            AlertDialog.Builder MsgBox = new AlertDialog.Builder(myContext);
-                            MsgBox. setMessage("Please Select the UOM")
-                                    .setPositiveButton("OK", null)
-                                    .show();
+                            MsgBox. Show("Insufficeint Information","Please Select the UOM");
                             set_list_spnr();
                         }
                         else
@@ -697,6 +678,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             if (duplicacy_crsr!= null && duplicacy_crsr.moveToFirst())
             {
                 MsgBox.setTitle(" Duplicate ")
+                        .setIcon(R.drawable.ic_launcher)
                         .setMessage(" Purchase Order No already present for Supplier. Do you want to overwrite")
                         .setNegativeButton("No", null)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -1716,6 +1698,8 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             AlertDialog.Builder msg = new AlertDialog.Builder(myContext);
             msg.setMessage(" Do you want to clear supplier details ")
                     .setNegativeButton("No", null)
+                    .setIcon(R.drawable.ic_launcher)
+                    .setTitle("Note")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     reset_inward(1);
@@ -1765,9 +1749,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         }
         catch(Exception e )
         {
-            MsgBox.setMessage(e.getMessage())
-                    .setNeutralButton("OK", null)
-                    .show();
+            MsgBox.Show("Error",e.getMessage());
         }
 
     }
@@ -1854,6 +1836,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 for (String supplier : labelsSupplierName) {
                     if (suppliername.equalsIgnoreCase(supplier)) {
                         MsgBox.setTitle("Warning")
+                                .setIcon(R.drawable.ic_launcher)
                                 .setMessage("Supplier already present in list")
                                 .setPositiveButton("OK", null)
                                 .show();
@@ -1864,6 +1847,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 if(gstin!=null && !gstin.equals("")&& labelsSupplierGSTIN.contains(gstin))
                 {
                     MsgBox.setTitle("Warning")
+                            .setIcon(R.drawable.ic_launcher)
                             .setMessage("Supplier already present in list")
                             .setPositiveButton("OK", null)
                             .show();
@@ -1899,6 +1883,8 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
             } catch (Exception e) {
                 MsgBox.setMessage(e.getMessage())
+                        .setIcon(R.drawable.ic_launcher)
+                        .setTitle("Error")
                         .setNeutralButton("Ok", null)
                         .show();
             }
