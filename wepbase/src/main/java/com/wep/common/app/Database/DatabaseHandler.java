@@ -7345,7 +7345,7 @@ public int makeBillVoid(int InvoiceNo ) {
 
         return dbFNB.rawQuery("Select ReportsId as _id, ReportsName FROM ReportsMaster where ReportsType=" +
                 ReportsType + " AND ReportsName not in ('Service Tax Report','Kitchen wise Report'," +
-                " 'GSTR1-1A Validation','GSTR2-2A Validation','GSTR2A','GSTR2-B2C') order by ReportsName asc", null);
+                " 'GSTR1-1A Validation','GSTR2-2A Validation','GSTR2A','GSTR2-B2C','GSTR4-Composite Report') order by ReportsName asc", null);
     }
 
     // Getting Values for PAYBILL
