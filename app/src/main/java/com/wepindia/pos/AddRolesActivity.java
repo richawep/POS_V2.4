@@ -1,36 +1,24 @@
 package com.wepindia.pos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,19 +29,6 @@ import com.wepindia.pos.RecyclerDirectory.AddRoleClickListener;
 import com.wepindia.pos.RecyclerDirectory.UserRolesAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 
-import android.os.Bundle;
-import android.os.Environment;
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -67,7 +42,6 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
     private com.wep.common.app.views.WepButton btnAddRole,btnClose;
     private ArrayList<String> rolesList;
     private RecyclerView gridViewRoles;
-    //ImageView imageViewBack, imageViewHome;
     private UserRolesAdapter rolesAdapter;
     private ArrayAdapter<String> adapterAccess;
     private DatabaseHandler dbHelper;
@@ -79,106 +53,92 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
     private Toolbar toolbar;
     ArrayList<String> listsAccess=null;
     GridView gridViewAccesses=null;
+    Button btndelete, btnupdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_role);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        /*TextView tvTitleText = (TextView) findViewById(R.id.tvTitleBarCaption);
-        TextView tvTitleUserName = (TextView) findViewById(R.id.tvTitleBarUserName);
-        TextView tvTitleDate = (TextView) findViewById(R.id.tvTitleBarDate);
-        ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
-        ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.relativeParent));
-        tvTitleText.setText("Add Role");*/
         myContext = this;
         MsgBox = new MessageDialog(myContext);
-        MsgBox.setIcon(R.drawable.ic_launcher);
+        dbHelper = new DatabaseHandler(AddRolesActivity.this);
         strUserName = getIntent().getStringExtra("USER_NAME");
-
-        //tvTitleUserName.setText(strUserName.toUpperCase());
         Date d = new Date();
         CharSequence s = DateFormat.format("dd-MM-yyyy", d.getTime());
         com.wep.common.app.ActionBarUtils.setupToolbar(AddRolesActivity.this, toolbar, getSupportActionBar(), "Add Role", strUserName, " Date:" + s.toString());
-        //tvTitleDate.setText("Date : " + s);
 
-        dbHelper = new DatabaseHandler(AddRolesActivity.this);
-        editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
-        btnClearRole = (Button) findViewById(R.id.btnclearAccess);
-        btnAddRole = (com.wep.common.app.views.WepButton) findViewById(R.id.btnAddRole);
-        btnAddRole.setOnClickListener(this);
-        //imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
-        //imageViewHome = (ImageView) findViewById(R.id.imageViewHome);
-        //imageViewHome.setOnClickListener(this);
-        //imageViewBack.setOnClickListener(this);
-        listsAccess = getAllAccesses();
-        gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
-        adapterAccess = new ArrayAdapter<String>(AddRolesActivity.this, android.R.layout.simple_list_item_multiple_choice, listsAccess);
-        gridViewAccesses.setAdapter(adapterAccess);
-        gridViewAccesses.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+
         rolesList = new ArrayList<String>();
         rolesAdapter = null;
-        Button delete=(Button)findViewById(R.id.btnDeleteRole);
-        Button update=(Button)findViewById(R.id.btnGrantAccess);
-        btnClose=(com.wep.common.app.views.WepButton)findViewById(R.id.closeRole);
-        delete.setEnabled(false);
-        update.setEnabled(false);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //dbHelper.deleteRole(roleName)
-                close(v);
-            }
-        });
-        gridViewRoles = (RecyclerView) findViewById(R.id.gridViewRoles);
-        gridViewRoles.addOnItemTouchListener(new RecyclerTouchListener(this,
-                gridViewRoles, new AddRoleClickListener() {
-
-            @Override
-            public void onClick(View view, final int position) {
-                ArrayList<String> list = rolesAdapter.getItems();
-                String roleName = list.get(position);
-                showDialog(roleName, position);
-                editTextAddUser=(EditText)findViewById(R.id.editTextAddUser);
-                editTextAddUser.setText(roleName);
-                Button delete=(Button)findViewById(R.id.btnDeleteRole);
-                Button update=(Button)findViewById(R.id.btnGrantAccess);
-                Button addrole=(Button)findViewById(R.id.btnAddRole);
-                delete.setEnabled(true);
-                update.setEnabled(true);
-                addrole.setEnabled(false);
-                editTextAddUser.setEnabled(false);
-
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
-//        gridViewRoles.setOnToistener(new AdapterView.OnClickListener() {
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                ArrayList<String> list = rolesAdapter.getItems();
-//                String roleName = list.get(position);
-//                //showAccessDialog();
-//                showDialog(roleName, position);
-//                //showDialog(roleName);
-//            }
-//        });
+        initialiseViewVariables();
 
         try {
             dbHelper.CreateDatabase();
             dbHelper.OpenDatabase();
-
-            //crsrRole = dbHelper.getAllRoles();
-
-            updateGrid();
+            displayAccessList();
+            displayRoleList();
         } catch (Exception ex) {
             MsgBox.Show("Error", ex.getMessage());
         }
     }
 
+    private void displayAccessList()
+    {
+        listsAccess = getAllAccesses();
+
+        adapterAccess = new ArrayAdapter<String>(AddRolesActivity.this, android.R.layout.simple_list_item_multiple_choice, listsAccess);
+        gridViewAccesses.setAdapter(adapterAccess);
+        gridViewAccesses.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+    }
+    private void initialiseViewVariables()
+    {
+        try {
+            editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
+            gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
+            btnClearRole = (Button) findViewById(R.id.btnclearAccess);
+            btnAddRole = (com.wep.common.app.views.WepButton) findViewById(R.id.btnAddRole);
+            btnAddRole.setOnClickListener(this);
+            btndelete = (Button) findViewById(R.id.btnDeleteRole);
+            btnupdate = (Button) findViewById(R.id.btnGrantAccess);
+            btndelete.setEnabled(false);
+            btnupdate.setEnabled(false);
+            btnClose = (com.wep.common.app.views.WepButton) findViewById(R.id.closeRole);
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    dbHelper.CloseDatabase();
+                    close(v);
+                }
+            });
+            gridViewRoles = (RecyclerView) findViewById(R.id.gridViewRoles);
+            gridViewRoles.addOnItemTouchListener(new RecyclerTouchListener(this,
+                    gridViewRoles, new AddRoleClickListener() {
+
+                @Override
+                public void onClick(View view, final int position) {
+                    ArrayList<String> list = rolesAdapter.getItems();
+                    String roleName = list.get(position);
+                    showDialog(roleName, position);
+                    editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
+                    editTextAddUser.setText(roleName);
+
+                    btndelete.setEnabled(true);
+                    btnupdate.setEnabled(true);
+                    btnAddRole.setEnabled(false);
+                    editTextAddUser.setEnabled(false);
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                }
+            }));
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            MsgBox.Show("Error",e.getMessage());
+        }
+    }
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.btnAddRole) {
@@ -210,7 +170,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
                             if (rolesAdapter == null) {
                                 rolesAdapter = new UserRolesAdapter(this, listsAccess);
                             } else {
-                                /*updateGrid();
+                                /*displayRoleList();
                                 gridViewRoles.setAdapter(rolesAdapter);
 */                              rolesAdapter.add(txt,rolesAdapter.getItemCount());
                             }
@@ -232,6 +192,323 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
             }
         }
     }
+
+    public void displayRoleList() {
+
+        ArrayList<String> list = dbHelper.getAllRoles();
+        if (rolesAdapter != null) {
+            rolesList.clear();
+            rolesList= dbHelper.getAllRoles();
+            rolesAdapter.notifyDataSetChanged();
+
+        } else {
+            rolesAdapter = new UserRolesAdapter(AddRolesActivity.this, list);
+            gridViewRoles.setLayoutManager(new LinearLayoutManager(this));
+            gridViewRoles.setAdapter(rolesAdapter);
+        }
+    }
+
+    private void showDialog(final String roleName, final int roleId) {
+        listsAccess = getAllAccesses();
+        gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
+        adapterAccess = new ArrayAdapter<String>(AddRolesActivity.this, android.R.layout.simple_list_item_multiple_choice, listsAccess);
+        gridViewAccesses.setAdapter(adapterAccess);
+        gridViewAccesses.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+        //gridViewAccesses.setItemChecked(0, true);
+        ArrayList<Integer> list = dbHelper.getPermissionsForRole(roleName);
+        Iterator<Integer> it = list.iterator();
+        int count = 0;
+        while (it.hasNext()) {
+            count++;
+            gridViewAccesses.setItemChecked(it.next(), true);
+        }
+        if (count == 0)
+            gridViewAccesses.setItemChecked(0, true);
+
+        Button btnGrantAccess = (Button) findViewById(R.id.btnGrantAccess);
+        btnGrantAccess.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View id) {
+                gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
+                int c=gridViewAccesses.getCheckedItemCount();
+                if(c==0){
+                    Toast.makeText(myContext, "Select Permissions", Toast.LENGTH_SHORT).show();
+                } else {
+                    SparseBooleanArray checkedItems = gridViewAccesses.getCheckedItemPositions();
+                    int l = dbHelper.deleteAccessesForRole(roleName);
+                    dbHelper.addAccessesForRole(roleName, listsAccess, checkedItems);
+                    btnClearRole.performClick();
+                }
+            }
+        });
+        Button btnCloseRole = (Button) findViewById(R.id.closeRole);
+        Button btnDeleteRole = (Button) findViewById(R.id.btnDeleteRole);
+        btnDeleteRole.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //dbHelper.deleteRole(roleName);
+                //displayRoleList();
+                askForDelete(roleName);
+
+            }
+        });
+        btnClearRole.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //dbHelper.deleteRole(roleName)
+                editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
+                editTextAddUser.setText("");
+                editTextAddUser.setEnabled(true);
+                int c = gridViewAccesses.getCheckedItemCount();
+                SparseBooleanArray arr = new SparseBooleanArray(c);
+                arr = gridViewAccesses.getCheckedItemPositions();
+                int size = arr.size();
+                for (int i = 0; i < size; i++) {
+                    int key = arr.keyAt(i);
+                    gridViewAccesses.setItemChecked(key, false);
+                }
+                //displayRoleList();
+                Button delete=(Button)findViewById(R.id.btnDeleteRole);
+                Button update=(Button)findViewById(R.id.btnGrantAccess);
+                Button addrole=(Button)findViewById(R.id.btnAddRole);
+                delete.setEnabled(false);
+                update.setEnabled(false);
+                addrole.setEnabled(true);
+
+            }
+        });
+        btnCloseRole.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //dbHelper.deleteRole(roleName)
+                close(v);
+            }
+        });
+    }
+
+    private void close(View v)
+    {
+        dbHelper.close();
+        this.finish();
+    }
+      /*public void askForClear()
+      {
+          editTextAddUser=(EditText)findViewById(R.id.editTextAddUser);
+          editTextAddUser.setText("");
+          gridViewAccess1 = (GridView) findViewById(R.id.gridViewAccesses);
+           SparseBooleanArray arr1[]=new SparseBooleanArray[gridViewAccess1.getCheckedItemCount()];
+           SparseBooleanArray  arr=gridViewAccess1.getCheckedItemPositions();
+          while()
+          {
+              gridViewAccess1.setItemChecked(i,false);
+          }
+      }*/
+    /*private void showDialog(final String roleName) {
+        final ArrayList<String> listsAccess = getAllAccesses();
+        final GridView gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
+        adapterAccess = new ArrayAdapter<String>(AddRolesActivity.this, android.R.layout.simple_list_item_multiple_choice, listsAccess);
+        gridViewAccesses.setAdapter(adapterAccess);
+        gridViewAccesses.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+        gridViewAccesses.setItemChecked(0, true);
+        ArrayList<Integer> list = dbHelper.getPermissionsForRole(roleName);
+        Iterator<Integer> it = list.iterator();
+        while (it.hasNext()) {
+            gridViewAccesses.setItemChecked(it.next(), true);
+        }
+        Button btnCancelAccess = (Button) findViewById(R.id.btnCancelAccess);
+        btnCancelAccess.setOnClickListene(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                return;
+            }
+        });
+        Button btnGrantAccess = (Button)findViewById(R.id.btnGrantAccess);
+        btnGrantAccess.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                SparseBooleanArray checkedItems = gridViewAccesses.getCheckedItemPositions();
+                dbHelper.addAccessesForRole(roleName, listsAccess, checkedItems);
+
+            }
+        });
+    }*/
+
+    public ArrayList<String> getAllAccesses() {
+        ArrayList<String> list = new ArrayList<String>();
+        list.add(0, "Operator");
+        list.add(1, "Masters");
+        list.add(2, "Payment & Receipt");
+        list.add(3, "Reports");
+        list.add(4, "Purchase Order");
+        return list;
+    }
+
+    public boolean isContains(String str) {
+        boolean status = false;
+        ArrayList<String> list = dbHelper.getAllRoles();
+        for (String s : list) {
+            if (str.equalsIgnoreCase(s)) {
+                status = true;
+                break;
+            }
+        }
+        return status;
+    }
+
+    public ArrayList<String> getAllRoles(Cursor crsrRole) {
+        ArrayList<String> list = new ArrayList<String>();
+        list = new ArrayList<String>();
+//        list.add(0, "Manager");
+//        list.add(1, "Head Cook");
+//        list.add(2, "Waiter");
+
+//		String SELECT_QUERY = "SELECT * FROM " + TBL_USERSROLE;
+//		Cursor cursor = dbFNB.rawQuery(SELECT_QUERY, null);
+        if (crsrRole != null) {
+            //Log.d(TAG,"fetched "+cursor.getCount()+" Items");
+            while (crsrRole.moveToNext()) {
+                String role = crsrRole.getString(crsrRole.getColumnIndex("RoleName"));
+                list.add(role);
+            }
+        }
+        return list;
+    }
+
+    public void askForDelete(final String roleName) {
+        if(roleName.equalsIgnoreCase("Manager") || roleName.equalsIgnoreCase("HeadCook") || roleName.equalsIgnoreCase("Waiter")
+            || roleName.equalsIgnoreCase("Rider"))
+        {
+            MsgBox.Show("Error","Default roles can not be deleted");
+            return;
+        }
+         int roleId = dbHelper.getRoleIdForUserName(strUserName);
+        if(roleId <1) {
+            System.out.println("roleId received from database : "+roleId);
+            Toast.makeText(myContext, "Sorry cannot delete",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String getRoleName = dbHelper.getRoleName(String.valueOf(roleId));
+        if(getRoleName.equals("")) {
+            System.out.println("roleName received from database : "+getRoleName);
+            Toast.makeText(myContext, "Sorry cannot delete",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(getRoleName.equalsIgnoreCase(roleName))
+        {
+            String msg = "You are logged in with user name \""+strUserName+"\" which is assigned role \""+getRoleName+"\".\n" +
+                    "If you want to delete this role, then kindly login with different user name, who is not assigned this role.";
+            MsgBox.Show("Error",msg);
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Confirmation");
+        builder.setIcon(R.drawable.ic_launcher);
+        builder.setMessage("Are you sure want to delete? \nPlease note all the logins for this role(if any) will also be deleted.");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing but close the dialog
+                int roleIdtoDelete = dbHelper.getRoleIdforRoleName(roleName);
+                int deleterole = dbHelper.deleteRole(roleName);
+                int deleteuserName = dbHelper.deleteUser(roleIdtoDelete);
+                rolesAdapter.remove(roleName);
+                btnClearRole.performClick();
+                dialog.dismiss();
+
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            //@Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(AddRolesActivity.this);
+            LayoutInflater UserAuthorization = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
+            final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
+            final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
+            final TextView tvAuthorizationUserId= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserId);
+            final TextView tvAuthorizationUserPassword= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserPassword);
+            tvAuthorizationUserId.setVisibility(View.GONE);
+            tvAuthorizationUserPassword.setVisibility(View.GONE);
+            txtUserId.setVisibility(View.GONE);
+            txtPassword.setVisibility(View.GONE);
+            AuthorizationDialog
+                    .setIcon((R.drawable.ic_launcher))
+                    .setTitle("Are you sure you want to exit ?")
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onHomePressed() {
+        ActionBarUtils.navigateHome(this);
+    }
+
+    //implementing on click for recyclre view
+    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+
+        private AddRoleClickListener clicklistener;
+        private GestureDetector gestureDetector;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recycleView, final AddRoleClickListener clicklistener) {
+
+            this.clicklistener = clicklistener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recycleView.findChildViewUnder(e.getX(), e.getY());
+                    if (child != null && clicklistener != null) {
+                        clicklistener.onLongClick(child, recycleView.getChildAdapterPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clicklistener != null && gestureDetector.onTouchEvent(e)) {
+                clicklistener.onClick(child, rv.getChildAdapterPosition(child));
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    }
+
 
     //    public void createPDF(String name,String list)
 //
@@ -488,298 +765,6 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
 //            Toast.makeText(AddRolesActivity.this, "Can't read pdf file", Toast.LENGTH_SHORT).show();
 //        }
 //    }
-    public void updateGrid() {
-
-        ArrayList<String> list = dbHelper.getAllRoles();
-        if (rolesAdapter != null) {
-            rolesList.clear();
-            rolesList= dbHelper.getAllRoles();
-            rolesAdapter.notifyDataSetChanged();
-
-        } else {
-            rolesAdapter = new UserRolesAdapter(AddRolesActivity.this, list);
-            gridViewRoles.setLayoutManager(new LinearLayoutManager(this));
-            gridViewRoles.setAdapter(rolesAdapter);
-        }
-    }
-
-    private void showDialog(final String roleName, final int roleId) {
-        listsAccess = getAllAccesses();
-        gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
-        adapterAccess = new ArrayAdapter<String>(AddRolesActivity.this, android.R.layout.simple_list_item_multiple_choice, listsAccess);
-        gridViewAccesses.setAdapter(adapterAccess);
-        gridViewAccesses.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
-        //gridViewAccesses.setItemChecked(0, true);
-        ArrayList<Integer> list = dbHelper.getPermissionsForRole(roleName);
-        Iterator<Integer> it = list.iterator();
-        int count = 0;
-        while (it.hasNext()) {
-            count++;
-            gridViewAccesses.setItemChecked(it.next(), true);
-        }
-        if (count == 0)
-            gridViewAccesses.setItemChecked(0, true);
-        /*Button btnCancelAccess = (Button) findViewById(R.id.btnCancelAccess);
-        btnCancelAccess.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-
-            }
-        });*/
-        Button btnGrantAccess = (Button) findViewById(R.id.btnGrantAccess);
-        btnGrantAccess.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View id) {
-                gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
-                int c=gridViewAccesses.getCheckedItemCount();
-                if(c==0){
-                    Toast.makeText(myContext, "Select Permissions", Toast.LENGTH_SHORT).show();
-                } else {
-                    SparseBooleanArray checkedItems = gridViewAccesses.getCheckedItemPositions();
-                    int l = dbHelper.deleteAccessesForRole(roleName);
-                    dbHelper.addAccessesForRole(roleName, listsAccess, checkedItems);
-                    btnClearRole.performClick();
-                }
-            }
-        });
-        Button btnCloseRole = (Button) findViewById(R.id.closeRole);
-        Button btnDeleteRole = (Button) findViewById(R.id.btnDeleteRole);
-        btnDeleteRole.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //dbHelper.deleteRole(roleName);
-                //updateGrid();
-                askForDelete(roleName);
-
-            }
-        });
-        btnClearRole.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //dbHelper.deleteRole(roleName)
-                editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
-                editTextAddUser.setText("");
-                editTextAddUser.setEnabled(true);
-                int c = gridViewAccesses.getCheckedItemCount();
-                SparseBooleanArray arr = new SparseBooleanArray(c);
-                arr = gridViewAccesses.getCheckedItemPositions();
-                int size = arr.size();
-                for (int i = 0; i < size; i++) {
-                    int key = arr.keyAt(i);
-                    gridViewAccesses.setItemChecked(key, false);
-                }
-                //updateGrid();
-                Button delete=(Button)findViewById(R.id.btnDeleteRole);
-                Button update=(Button)findViewById(R.id.btnGrantAccess);
-                Button addrole=(Button)findViewById(R.id.btnAddRole);
-                delete.setEnabled(false);
-                update.setEnabled(false);
-                addrole.setEnabled(true);
-
-            }
-        });
-        btnCloseRole.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //dbHelper.deleteRole(roleName)
-                close(v);
-            }
-        });
-    }
-
-    private void close(View v)
-    {
-        dbHelper.close();
-        this.finish();
-    }
-      /*public void askForClear()
-      {
-          editTextAddUser=(EditText)findViewById(R.id.editTextAddUser);
-          editTextAddUser.setText("");
-          gridViewAccess1 = (GridView) findViewById(R.id.gridViewAccesses);
-           SparseBooleanArray arr1[]=new SparseBooleanArray[gridViewAccess1.getCheckedItemCount()];
-           SparseBooleanArray  arr=gridViewAccess1.getCheckedItemPositions();
-          while()
-          {
-              gridViewAccess1.setItemChecked(i,false);
-          }
-      }*/
-    /*private void showDialog(final String roleName) {
-        final ArrayList<String> listsAccess = getAllAccesses();
-        final GridView gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
-        adapterAccess = new ArrayAdapter<String>(AddRolesActivity.this, android.R.layout.simple_list_item_multiple_choice, listsAccess);
-        gridViewAccesses.setAdapter(adapterAccess);
-        gridViewAccesses.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
-        gridViewAccesses.setItemChecked(0, true);
-        ArrayList<Integer> list = dbHelper.getPermissionsForRole(roleName);
-        Iterator<Integer> it = list.iterator();
-        while (it.hasNext()) {
-            gridViewAccesses.setItemChecked(it.next(), true);
-        }
-        Button btnCancelAccess = (Button) findViewById(R.id.btnCancelAccess);
-        btnCancelAccess.setOnClickListene(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                return;
-            }
-        });
-        Button btnGrantAccess = (Button)findViewById(R.id.btnGrantAccess);
-        btnGrantAccess.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                SparseBooleanArray checkedItems = gridViewAccesses.getCheckedItemPositions();
-                dbHelper.addAccessesForRole(roleName, listsAccess, checkedItems);
-
-            }
-        });
-    }*/
-
-    public ArrayList<String> getAllAccesses() {
-        ArrayList<String> list = new ArrayList<String>();
-        list.add(0, "Operator");
-        list.add(1, "Masters");
-        list.add(2, "Payment & Receipt");
-        list.add(3, "Reports");
-        list.add(4, "Purchase Order");
-        return list;
-    }
-
-    public boolean isContains(String str) {
-        boolean status = false;
-        ArrayList<String> list = dbHelper.getAllRoles();
-        for (String s : list) {
-            if (str.equalsIgnoreCase(s)) {
-                status = true;
-                break;
-            }
-        }
-        return status;
-    }
-
-    public ArrayList<String> getAllRoles(Cursor crsrRole) {
-        ArrayList<String> list = new ArrayList<String>();
-        list = new ArrayList<String>();
-//        list.add(0, "Manager");
-//        list.add(1, "Head Cook");
-//        list.add(2, "Waiter");
-
-//		String SELECT_QUERY = "SELECT * FROM " + TBL_USERSROLE;
-//		Cursor cursor = dbFNB.rawQuery(SELECT_QUERY, null);
-        if (crsrRole != null) {
-            //Log.d(TAG,"fetched "+cursor.getCount()+" Items");
-            while (crsrRole.moveToNext()) {
-                String role = crsrRole.getString(crsrRole.getColumnIndex("RoleName"));
-                list.add(role);
-            }
-        }
-        return list;
-    }
-
-    public void askForDelete(final String roleName) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Confirmation");
-        builder.setIcon(R.drawable.ic_launcher);
-        builder.setMessage("Are you sure want to delete?");
-
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing but close the dialog
-                dbHelper.deleteRole(roleName);
-                rolesAdapter.remove(roleName);
-                btnClearRole.performClick();
-                dialog.dismiss();
-
-            }
-        });
-
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-            //@Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-            AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(AddRolesActivity.this);
-            LayoutInflater UserAuthorization = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View vwAuthorization = UserAuthorization.inflate(R.layout.user_authorization, null);
-            final EditText txtUserId = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserId);
-            final EditText txtPassword = (EditText) vwAuthorization.findViewById(R.id.etAuthorizationUserPassword);
-            final TextView tvAuthorizationUserId= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserId);
-            final TextView tvAuthorizationUserPassword= (TextView) vwAuthorization.findViewById(R.id.tvAuthorizationUserPassword);
-            tvAuthorizationUserId.setVisibility(View.GONE);
-            tvAuthorizationUserPassword.setVisibility(View.GONE);
-            txtUserId.setVisibility(View.GONE);
-            txtPassword.setVisibility(View.GONE);
-            AuthorizationDialog
-                    .setIcon((R.drawable.ic_launcher))
-                    .setTitle("Are you sure you want to exit ?")
-                    .setNegativeButton("No", null)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    })
-                    .show();
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public void onHomePressed() {
-        ActionBarUtils.navigateHome(this);
-    }
-
-    //implementing on click for recyclre view
-    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private AddRoleClickListener clicklistener;
-        private GestureDetector gestureDetector;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recycleView, final AddRoleClickListener clicklistener) {
-
-            this.clicklistener = clicklistener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recycleView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clicklistener != null) {
-                        clicklistener.onLongClick(child, recycleView.getChildAdapterPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clicklistener != null && gestureDetector.onTouchEvent(e)) {
-                clicklistener.onClick(child, rv.getChildAdapterPosition(child));
-            }
-
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
-    }
 }
 
 

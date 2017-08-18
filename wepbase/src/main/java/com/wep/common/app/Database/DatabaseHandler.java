@@ -7039,29 +7039,46 @@ public int makeBillVoid(int InvoiceNo ) {
         return status;
     }
 
-    public String getRole(String roleName) {
-        String str = "";
+    public int getRoleIdforRoleName(String roleName) {
+        int roleId = -1;
 
         try {
-            Cursor cursor = dbFNB.query(TBL_USERSROLE, null, "RoleId=?",
+            Cursor cursor = dbFNB.query(TBL_USERSROLE, null, "RoleName=?",
                     new String[]{String.valueOf(roleName)}, null, null, null, null);
             if (cursor != null)
                 while (cursor.moveToNext()) {
-                    str = cursor.getString(cursor.getColumnIndex("RoleId"));
+                    roleId = cursor.getInt(cursor.getColumnIndex("RoleId"));
                     break;
                 }
         } catch (Exception e) {
-            str = "";
+            roleId = -1;
             Log.d(TAG,e.toString());
         }
-        return str;
+        return roleId;
+    }
+    public int getRoleIdForUserName(String userName) {
+        int roleId =-1;
+
+        try {
+            Cursor cursor = dbFNB.query(TBL_USERS, null, "Name=?",
+                    new String[]{userName}, null, null, null, null);
+            if (cursor != null)
+                while (cursor.moveToNext()) {
+                    roleId = cursor.getInt(cursor.getColumnIndex("RoleId"));
+                    break;
+                }
+        } catch (Exception e) {
+            roleId =-1;
+            Log.d(TAG,e.toString());
+        }
+        return roleId;
     }
 
-    public String getRoleName(String roleName) {
+    public String getRoleName(String roleId) {
         String str = "";
         try {
             Cursor cursor = dbFNB.query(TBL_USERSROLE, null, "RoleId=?",
-                    new String[]{String.valueOf(roleName)}, null, null, null, null);
+                    new String[]{String.valueOf(roleId)}, null, null, null, null);
             if (cursor != null)
                 while (cursor.moveToNext()) {
                     str = cursor.getString(cursor.getColumnIndex("RoleName"));
@@ -7135,8 +7152,8 @@ public int makeBillVoid(int InvoiceNo ) {
         }
         return status;
     }
-    public void deleteRole(String roleName) {
-        dbFNB.delete(TBL_USERSROLE, "RoleName" + " = ?", new String[]{String.valueOf(roleName)});
+    public int deleteRole(String roleName) {
+        return dbFNB.delete(TBL_USERSROLE, "RoleName" + " = ?", new String[]{String.valueOf(roleName)});
     }
 
     public ArrayList<Integer> getPermissionsForRole(String roleName) {
@@ -7255,6 +7272,9 @@ public int makeBillVoid(int InvoiceNo ) {
 
     public void deleteUser(String login) {
         dbFNB.delete(TBL_USERS, "LoginId" + " = ?", new String[]{String.valueOf(login)});
+    }
+    public int deleteUser(int roleId) {
+        return dbFNB.delete(TBL_USERS, "RoleId" + " = ?", new String[]{String.valueOf(roleId)});
     }
 
     public Cursor getUsers(String UserId) {

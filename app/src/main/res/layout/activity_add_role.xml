@@ -114,6 +114,7 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:singleLine="true"
+                        android:inputType="textEmailAddress"
                         android:layout_marginStart="10dp"
                         android:minHeight="40dp" />
 
