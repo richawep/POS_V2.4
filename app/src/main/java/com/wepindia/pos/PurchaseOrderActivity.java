@@ -252,6 +252,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
             btn_add_new_item.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    hideKeyboard();
                     MsgBox = new MessageDialog(myContext);
                     String item = autocompletetv_itemlist.getText().toString();
                     int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
@@ -952,7 +953,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
                 Item_quantity = purchase_crsr.getString(purchase_crsr.getColumnIndex("Quantity"));
                 if (Item_quantity == null || Item_quantity.equals(""))
-                    po.setQuantity(0);
+                    po.setQuantity(0.00);
                 else
                     po.setQuantity(Double.parseDouble(String.format("%.2f", Float.parseFloat(Item_quantity))));
 
@@ -1069,13 +1070,13 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
                     Item_quantity = et_inward_item_quantity.getText().toString();
                     if (Item_quantity == null || Item_quantity.equals(""))
-                        po.setQuantity(0);
+                        po.setQuantity(0.00);
                     else
                         po.setQuantity(Double.parseDouble(String.format("%.2f", Float.parseFloat(Item_quantity))));
 
 
-                    float rate_f = Float.parseFloat(Rate);
-                    float qty_f = Float.parseFloat(Item_quantity);
+                    float rate_f = (float)po.getValue();
+                    float qty_f = (float)po.getQuantity();
                     float taxval_f = rate_f * qty_f;
                     po.setTaxableValue(Double.parseDouble(String.format("%.2f", taxval_f)));
 

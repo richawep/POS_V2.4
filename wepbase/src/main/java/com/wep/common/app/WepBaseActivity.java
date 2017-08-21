@@ -27,7 +27,7 @@ public abstract class WepBaseActivity extends AppCompatActivity {
     }
 
     public abstract void onHomePressed();
-    private void hideKeyboard() {
+    public void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         if(getCurrentFocus()!=null)
