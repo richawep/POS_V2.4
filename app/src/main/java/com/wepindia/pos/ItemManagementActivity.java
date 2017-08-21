@@ -912,7 +912,7 @@ public class ItemManagementActivity extends WepBaseActivity  implements  TextWat
             item.setDineIn1(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice1")))));
             item.setDineIn2(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice2")))));
             item.setDineIn3(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("DineInPrice3")))));
-            item.setStock(Float.parseFloat(String.format("%.2f",cursorItem.getFloat(cursorItem.getColumnIndex("Quantity")))));
+            item.setStock(  Float.parseFloat(String.format("%.2f",cursorItem.getDouble(cursorItem.getColumnIndex("Quantity")))));
             item.setDeptCode(cursorItem.getInt(cursorItem.getColumnIndex("DeptCode")));
             item.setCategCode(cursorItem.getInt(cursorItem.getColumnIndex("CategCode")));
             item.setKitchenCode(cursorItem.getInt(cursorItem.getColumnIndex("KitchenCode")));
@@ -1628,7 +1628,7 @@ public class ItemManagementActivity extends WepBaseActivity  implements  TextWat
         fPickUp = 0.00f;
         fTakeAway = 0.00f;
         fDelivery = 0.00f;
-        fStock = Double.parseDouble((txtStock.getText().toString()));
+        fStock = Double.parseDouble(String.format("%.2f",Double.parseDouble((txtStock.getText().toString()))));
 
         if(!spnrDepartment.getSelectedItem().toString().equalsIgnoreCase("Select"))
             iDeptCode = dbItems.getDepartmentIdByName(labelsDept.get(spnrDepartment.getSelectedItemPosition()));

@@ -209,10 +209,10 @@ public class StockActivity extends WepBaseActivity {
                 if (Item.moveToNext()) {
                     strMenuCode = Item.getString(Item.getColumnIndex("MenuCode"));
                     ItemLongName.setText(Item.getString(Item.getColumnIndex("ItemName")));
-                    tvExistingStock.setText(Item.getString(Item.getColumnIndex("Quantity")));
-                    txtRate1.setText(Item.getString(Item.getColumnIndex("DineInPrice1")));
-                    txtRate2.setText(Item.getString(Item.getColumnIndex("DineInPrice2")));
-                    txtRate3.setText(Item.getString(Item.getColumnIndex("DineInPrice3")));
+                    tvExistingStock.setText(String.format("%.2f",Item.getDouble(Item.getColumnIndex("Quantity"))));
+                    txtRate1.setText(String.format("%.2f",Item.getDouble(Item.getColumnIndex("DineInPrice1"))));
+                    txtRate2.setText(String.format("%.2f",Item.getDouble(Item.getColumnIndex("DineInPrice2"))));
+                    txtRate3.setText(String.format("%.2f",Item.getDouble(Item.getColumnIndex("DineInPrice3"))));
                     txtNewStock.setText("0");
                     btnUpdate.setEnabled(true);
                 }
@@ -461,19 +461,24 @@ public class StockActivity extends WepBaseActivity {
             return;
         }
 
-        UpdateItemStock(Integer.parseInt(strMenuCode), (Float.parseFloat(strExistingStock) + Float.parseFloat(strNewStock)),
-                Float.parseFloat(strRate1), Float.parseFloat(strRate2), Float.parseFloat(strRate3));
+        float newStock = Float.parseFloat(String.format("%.2f",Float.parseFloat(strNewStock)));
+
+        UpdateItemStock(Integer.parseInt(strMenuCode), (Float.parseFloat(strExistingStock) + newStock),
+                Float.parseFloat(String.format("%.2f",Float.parseFloat(strRate1))),
+                Float.parseFloat(String.format("%.2f",Float.parseFloat(strRate2))),
+                Float.parseFloat(String.format("%.2f",Float.parseFloat(strRate3))) );
+
         //Toast.makeText(myContext, "Price & Stock Updated Successfully", Toast.LENGTH_LONG).show();
         //DisplayItems();
         // updating in table outwardStock
         String itemName = ItemLongName.getText().toString();
         double rate =0;
         if(Double.parseDouble(strRate1) >0)
-            rate = Double.parseDouble(strRate1);
+            rate =Double.parseDouble(String.format("%.2f",Float.parseFloat(strRate1)));
         else if(Double.parseDouble(strRate2) >0)
-            rate = Double.parseDouble(strRate2);
+            rate = Double.parseDouble(String.format("%.2f",Float.parseFloat(strRate2)));
         else if(Double.parseDouble(strRate3) >0)
-            rate = Double.parseDouble(strRate3);
+            rate = Double.parseDouble(String.format("%.2f",Float.parseFloat(strRate3)));
 
             Cursor date_cursor = dbStock.getCurrentDate();
         String currentdate = "";

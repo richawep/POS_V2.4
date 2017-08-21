@@ -107,7 +107,7 @@ public class ItemOutwardAdapter extends BaseAdapter {
         viewHolder.rate1.setText(String.format("%.2f",itemOutward.getDineIn1()));
         viewHolder.rate2.setText(String.format("%.2f",itemOutward.getDineIn2()));
         viewHolder.rate3.setText(String.format("%.2f",itemOutward.getDineIn3()));
-        viewHolder.stock.setText(String.valueOf(itemOutward.getStock()));
+        viewHolder.stock.setText(String.format("%.2f",itemOutward.getStock()));
 
         TableRow.LayoutParams rowparams = new TableRow.LayoutParams(60, 40);
         rowparams.gravity = Gravity.CENTER;
