@@ -813,8 +813,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
      * appropriate controls
      ************************************************************************************************************************************/
     private void IntializeViewVariables() {
-
-        Time = Calendar.getInstance();
         tvDate = (TextView) findViewById(R.id.tvBillDateValue);
         tvBillNumber = (EditText) findViewById(R.id.tvBillNumberValue);
 
@@ -1097,7 +1095,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                             CUSTOMER_FOUND=0;
                             //}
                         } else {
-                            MsgBox.Show("", "Customer is not Found, Please Add Customer before Order");
+                            MsgBox.Show("Note", "Customer is not Found, Please Add Customer before Order");
                             btnAddCustomer.setVisibility(View.VISIBLE);
                             //ControlsSetDisabled();
                         }
@@ -2968,6 +2966,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
      *************************************************************************************************************************************/
     private void ClearAll() {
 
+        Time = Calendar.getInstance();
         tx = "";
         autoCompleteTextViewSearchItemBarcode.setText("");
         isReprint = false;
@@ -3003,16 +3002,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     }
 
 
-    private static String formatInterval(final long l)
-    {
-        final long hr = TimeUnit.MILLISECONDS.toHours(l);
-        final long min = TimeUnit.MILLISECONDS.toMinutes(l - TimeUnit.HOURS.toMillis(hr));
-        final long sec = TimeUnit.MILLISECONDS.toSeconds(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min));
-        final long ms = TimeUnit.MILLISECONDS.toMillis(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min) - TimeUnit.SECONDS.toMillis(sec));
-        return String.format("%02d:%02d:%02d.%03d", hr, min, sec, ms);
-    }
-
-
     /*************************************************************************************************************************************
      * Inserts all the ordered item data to database with table number as
      * reference
@@ -3032,10 +3021,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             objPendingKOT.setTokenNumber(iKOTNo);
         }*/
         objPendingKOT.setTokenNumber(KOTNo);
-        Time = Calendar.getInstance();
-        String strTime = String.format("%tR", Time);
-        //System.out.println(formatInterval(Time.getTimeInMillis()));
-        System.out.println(new SimpleDateFormat("kk:mm:ss").format(Time.getTime()));
+        String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
+        //String strTime = String.format("%tR", Time);
         String msg =  "Time:" + strTime+" No : "+KOTNo;
         Log.v("KOT Time, No",msg);
 
@@ -4443,8 +4430,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
 
         // Time
-        objBillDetail.setTime(String.format("%tR", Time));
-        Log.d("InsertBillDetail", "Time:" + String.format("%tR", Time));
+        //objBillDetail.setTime(String.format("%tR", Time));
+        String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
+        objBillDetail.setTime(strTime);
+        Log.d("InsertBillDetail", "Time:" + strTime);
 
         // Bill Number
         objBillDetail.setBillNumber(Integer.parseInt(tvBillNumber.getText().toString()));
@@ -5788,6 +5777,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         }  else {
                             try
                             {
+                                int billStatus =0;
                                 int billNo = Integer.valueOf(txtReprintBillNo.getText().toString());
                                 String date_reprint = tv_inv_date.getText().toString();
                                 tvDate.setText(date_reprint);
@@ -5798,7 +5788,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                 {
                                     Cursor cursor = dbBillScreen.getBillDetail(billNo,String.valueOf(date.getTime()));
                                     if (cursor != null && cursor.moveToFirst()) {
-                                        int billStatus = cursor.getInt(cursor.getColumnIndex("BillStatus"));
+                                        billStatus  = cursor.getInt(cursor.getColumnIndex("BillStatus"));
                                         if (billStatus == 0) {
                                             MsgBox.Show("Warning", "This bill has been deleted");
                                             setInvoiceDate();
@@ -5839,7 +5829,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                     setInvoiceDate();
                                     return;
                                 }
-                                strPaymentStatus = "Paid";
+                                if(reprintBillingMode ==4 && billStatus ==2)
+                                {
+                                    strPaymentStatus = "Cash On Delivery";
+                                }
+                                else
+                                    strPaymentStatus = "Paid";
                                 isReprint = true;
                                 PrintNewBill();
                                 // update bill reprint count
@@ -6323,10 +6318,19 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                         CalculateTotalAmountforRePrint();
                                     }
                                     isReprint = true;
-                                    PrintNewBill();
-                                    int iResult = dbBillScreen.deleteKOTItems(iCustId, String.valueOf(jBillingMode));
-                                    Log.d("HomeDeliveryBillingAct:", "1 Items deleted from pending KOT:" + iResult);
-                                    ClearAll();
+                                    if (isPrinterAvailable) {
+                                        PrintNewBill();
+                                        int iResult = dbBillScreen.deleteKOTItems(iCustId, String.valueOf(jBillingMode));
+                                        Log.d("HomeDeliveryBillingAct:", "1 Items deleted from pending KOT:" + iResult);
+                                        ClearAll();
+                                    } else {
+                                        askForConfig();
+                                        PrintNewBill();
+                                        int iResult = dbBillScreen.deleteKOTItems(iCustId, String.valueOf(jBillingMode));
+                                        Log.d("HomeDeliveryBillingAct:", "1 Items deleted from pending KOT:" + iResult);
+                                        ClearAll();
+                                    }
+
 
 
                                 }else if(isFinish)
@@ -6829,7 +6833,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     item.setOrderBy(strUserName);
                     item.setBillingMode(String.valueOf(jBillingMode));
                     item.setDate(tvDate.getText().toString());
-                    item.setTime(String.format("%tR", Time));
+                    String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
+                    item.setTime(strTime);
 //                    item.setDate(businessDate);
 //                    item.setTime(TimeUtil.getTime());
             /*Intent intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);
@@ -7023,8 +7028,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                             item.setStrBillingModeName(HomeDeliveryCaption);
                         else if (jBillingMode == 3)
                             item.setStrBillingModeName(TakeAwayCaption);
+
                         item.setDate(tvDate.getText().toString());
-                        item.setTime(String.format("%tR", Time));
+                        String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
+                        item.setTime(strTime);
 
                     }else
                     {

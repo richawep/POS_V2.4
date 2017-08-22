@@ -179,7 +179,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         ClearAll();
         loadAutoCompleteData();
         loadItems(0);
-        Time = Calendar.getInstance();
         ClearAll();
         Cursor crssOtherChrg = db.getKOTModifierByModes_new(CounterSalesCaption);
         double dOtherChrgs = 0;
@@ -421,6 +420,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     private void ClearAll()
     {
+        Time = Calendar.getInstance();
         tx = "";
         autoCompleteTextViewSearchItemBarcode.setText("");
         isReprint = false;
@@ -2981,8 +2981,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         }
 
         // Time
-        objBillDetail.setTime(String.format("%tR", Time));
-        Log.d("InsertBillDetail", "Time:" + String.format("%tR", Time));
+        //objBillDetail.setTime(String.format("%tR", Time));
+        String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
+        objBillDetail.setTime(strTime);
+        Log.d("InsertBillDetail", "Time:" + strTime);
 
         // Bill Number
         objBillDetail.setBillNumber(Integer.parseInt(tvBillNumber.getText().toString()));
@@ -3336,7 +3338,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     if(reprintBillingMode == 0) {
                         item.setStrBillingModeName(CounterSalesCaption);
                         item.setDate(tvDate.getText().toString());
-                        item.setTime(String.format("%tR", Time));
+                        String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
+                        item.setTime(strTime);
 
                     }else
                     {
@@ -4334,6 +4337,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                             return;
                         } else {
                             try {
+                                int billStatus =0;
                                 int billNo = Integer.valueOf(txtReprintBillNo.getText().toString());
                                 String date_reprint = tv_inv_date.getText().toString();
                                 tvDate.setText(date_reprint);
@@ -4343,7 +4347,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 if (LoadItemForReprint.moveToFirst()) {
                                     Cursor cursor = db.getBillDetail_counter(billNo, String.valueOf(date.getTime()));
                                     if (cursor != null && cursor.moveToFirst()) {
-                                        int billStatus = cursor.getInt(cursor.getColumnIndex("BillStatus"));
+                                        billStatus = cursor.getInt(cursor.getColumnIndex("BillStatus"));
                                         if (billStatus == 0) {
                                             messageDialog.Show("Warning", "This bill has been deleted");
                                             setInvoiceDate();
@@ -4388,7 +4392,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                     setInvoiceDate();
                                     return;
                                 }
-                                strPaymentStatus = "Paid";
+                                if(reprintBillingMode ==4 && billStatus ==2)
+                                {
+                                    strPaymentStatus = "Cash On Delivery";
+                                }
+                                else
+                                    strPaymentStatus = "Paid";
                                 isReprint = true;
                                 PrintNewBill();
                                 // update bill reprint count

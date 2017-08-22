@@ -450,7 +450,7 @@ public class PrinterUtil {
         esc.addText("Bill no         : "+item.getBillNo()+"\n");
         if(item.getBillingMode().equals("1"))
             esc.addText("Table           : "+item.getTableNo()+"\n");
-        esc.addText("Date            : "+item.getDate() +"      Time : "+item.getTime() +"\n");
+        esc.addText("Date            : "+item.getDate() +"    Time : "+item.getTime() +"\n");
        /* esc.addText("Date            : "+item.getDate() +"\n");
         esc.addText("Time            : "+item.getTime() +"\n");*/
         esc.addText("Cashier         : "+item.getOrderBy()+"\n");

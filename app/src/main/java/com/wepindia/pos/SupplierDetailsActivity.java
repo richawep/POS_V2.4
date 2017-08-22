@@ -102,19 +102,21 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         btnAddSupplier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddSupplier();
-                loadAutoCompleteSupplierName();
-                Clear();
-                Display();
+                if(AddSupplier()) {
+                    loadAutoCompleteSupplierName();
+                    Clear();
+                    Display();
+                }
             }
         });
         btnUpdateSupplier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateSupplier();
-                loadAutoCompleteSupplierName();
-                Clear();
-                Display();
+                if(UpdateSupplier() ){
+                    loadAutoCompleteSupplierName();
+                    Clear();
+                    Display();
+                }
             }
         });
         btnClear.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +196,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     }
 
 
-    private  void UpdateSupplier() {
+    private  boolean UpdateSupplier() {
         long l =0;
         Cursor cursor = dbSupplierDetails.getAllSupplierName_nonGST();
         labelsSupplierName = new ArrayList<String>();
@@ -222,27 +224,22 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             suppliergstin_str = "";
 
         if (labelsSupplierGSTIN.contains(suppliergstin_str) && !suppliergstin_str.equalsIgnoreCase(suppliergstin_clicked) ) {
-            MsgBox.setTitle("Warning")
-                    .setMessage("Supplier with gstin already present in list")
-                    .setPositiveButton("OK", null)
-                    .show();
-            return;
+            MsgBox.Show("Warning","Supplier with gstin already present in list");
+            return false;
         }
 
         for (String supplier : labelsSupplierName) {
             if (suppliername_str.equalsIgnoreCase(supplier) && !suppliername_str.equalsIgnoreCase(suppliername_clicked)) {
-                MsgBox.setTitle("Warning")
-                        .setMessage("Supplier with name already present in list")
-                        .setPositiveButton("OK", null)
-                        .show();
-                return;
+                MsgBox.Show("Warning","Supplier with name already present in list");
+                return false;
             }
         }
 
 
         if (suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn_str.equals("")) {
-            MsgBox.setMessage("Please fill all details of Supplier")
-                    .show();
+            MsgBox.Show("Incomplete Details","Please fill all details of Supplier");
+            return false;
+
         } else {
             l = dbSupplierDetails.updateSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
                     supplierphn_str, supplieraddress_str, Integer.parseInt(tv_suppliercode.getText().toString()));
@@ -252,9 +249,9 @@ public class SupplierDetailsActivity extends WepBaseActivity {
 
             }
         }
-
+        return true;
     }
-    private  void AddSupplier() {
+    private  boolean AddSupplier() {
         long l = 0;
         Cursor cursor = dbSupplierDetails.getAllSupplierName_nonGST();
         labelsSupplierName = new ArrayList<String>();
@@ -282,27 +279,21 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             suppliergstin_str = "";
 
         if (labelsSupplierGSTIN.contains(suppliergstin_str)) {
-            MsgBox.setTitle("Warning")
-                    .setMessage("Supplier with gstin already present in list")
-                    .setPositiveButton("OK", null)
-                    .show();
-            return;
+            MsgBox.Show("Warning","Supplier with gstin already present in list") ;
+            return false;
         }
 
         for (String supplier : labelsSupplierName) {
             if (suppliername_str.equalsIgnoreCase(supplier)) {
-                MsgBox.setTitle("Warning")
-                        .setMessage("Supplier with name already present in list")
-                        .setPositiveButton("OK", null)
-                        .show();
-                return;
+                MsgBox.Show("Warning","Supplier with name already present in list");
+                return false;
             }
         }
 
 
         if (suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn_str.equals("")) {
-            MsgBox.setMessage("Please fill all details of Supplier")
-                    .show();
+            MsgBox.Show("Insufficient Information","Please fill all details of Supplier");
+            return false;
         } else {
             l = dbSupplierDetails.saveSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
                     supplierphn_str, supplieraddress_str);
@@ -312,7 +303,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
 
             }
         }
-
+        return true;
     }
 
     public void loadAutoCompleteSupplierName()

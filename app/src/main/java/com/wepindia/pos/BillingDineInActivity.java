@@ -664,7 +664,6 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         tvSalesTax = (TextView) findViewById(R.id.tvTaxTotal);
         tvServiceTax = (TextView) findViewById(R.id.tvServiceTax);
         tvcessValue = (TextView) findViewById(R.id.tvcessValue);
-        Time = Calendar.getInstance();
         btndepart = (Button) findViewById(R.id.btn_depart);
         btncateg = (Button) findViewById(R.id.btn_categ);
         btnitem = (Button) findViewById(R.id.btn_item);
@@ -3123,6 +3122,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
      *************************************************************************************************************************************/
     private void ClearAll() {
 
+        Time = Calendar.getInstance();
         isReprint = false;
         //txtSearchItemBarcode.setText("");
         tx = "";
@@ -3286,7 +3286,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
             objPendingKOT.setTokenNumber(iKOTNo);
         }*/
         objPendingKOT.setTokenNumber(KOTNo);
-        String strTime = String.format("%tR", Time);
+        //String strTime = String.format("%tR", Time);
+        String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
         String msg =  "Time:" + strTime+" No : "+KOTNo;
         Log.v("KOT Time, No",msg);
 
@@ -5116,7 +5117,9 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         }
 
         // Time
-        objBillDetail.setTime(String.format("%tR", Time));
+        //objBillDetail.setTime(String.format("%tR", Time));
+        String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
+        objBillDetail.setTime(strTime);
         Log.d("InsertBillDetail", "Time:" + String.format("%tR", Time));
 
         // Bill Number
@@ -6071,6 +6074,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                         }  else {
                             try
                             {
+                                int billStatus =0;
                                 int billNo = Integer.valueOf(txtReprintBillNo.getText().toString());
                                 String date_reprint = tv_inv_date.getText().toString();
                                 tvDate.setText(date_reprint);
@@ -6081,7 +6085,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                                 {
                                     Cursor cursor = dbBillScreen.getBillDetail(billNo,String.valueOf(date.getTime()));
                                     if (cursor != null && cursor.moveToFirst()) {
-                                        int billStatus = cursor.getInt(cursor.getColumnIndex("BillStatus"));
+                                        billStatus = cursor.getInt(cursor.getColumnIndex("BillStatus"));
                                         if (billStatus == 0) {
                                             MsgBox.Show("Warning", "This bill has been deleted");
                                             setInvoiceDate();
@@ -6124,7 +6128,12 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                                     setInvoiceDate();
                                     return;
                                 }
-                                strPaymentStatus = "Paid";
+                                if(reprintBillingMode ==4 && billStatus ==2)
+                                {
+                                    strPaymentStatus = "Cash On Delivery";
+                                }
+                                else
+                                    strPaymentStatus = "Paid";
                                 isReprint = true;
                                 PrintNewBill();
                                 // update bill reprint count
@@ -6452,10 +6461,6 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                         Log.v("Tender Result", "Discount Amount:" + fTotalDiscount);
                         tvDiscountAmount.setText(String.valueOf(fTotalDiscount));
                         tvDiscountPercentage.setText(String.valueOf(dDiscPercent));
-                        /*float total = Float.parseFloat(tvBillAmount.getText().toString());
-                        //total = Math.round(total);
-                        total -= fTotalDiscount;
-                        tvBillAmount.setText(String.format("%.2f",total));*/
                         double igst = data.getDoubleExtra("TotalIGSTAmount",0);
                         double cgst = data.getDoubleExtra("TotalCGSTAmount",0);
                         double sgst = data.getDoubleExtra("TotalSGSTAmount",0);
@@ -7054,7 +7059,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     item.setOrderBy(strUserName);
                     item.setBillingMode(String.valueOf(jBillingMode));
                     item.setDate(tvDate.getText().toString());
-                    item.setTime(String.format("%tR", Time));
+                    String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
+                    item.setTime(strTime);
                     /*item.setDate(TimeUtil.getDate());
                     item.setTime(TimeUtil.getTime());*/
             /*Intent intent = new Intent(getApplicationContext(), PrinterSohamsaActivity.class);
@@ -7238,7 +7244,9 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     if(reprintBillingMode == 0) {
                         item.setStrBillingModeName(DineInCaption);
                         item.setDate(tvDate.getText().toString());
-                        item.setTime(String.format("%tR", Time));
+                        //item.setTime(String.format("%tR", Time));
+                        String strTime = new SimpleDateFormat("kk:mm:ss").format(Time.getTime());
+                        item.setTime(strTime);
 
                     }else
                     {

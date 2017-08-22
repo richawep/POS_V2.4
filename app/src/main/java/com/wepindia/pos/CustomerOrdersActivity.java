@@ -158,7 +158,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 		lblHeadingOrderDetails = (TextView)findViewById(R.id.tvHeadingPendingOrderDetails);
 
 		txtCustPhone = (EditText)findViewById(R.id.etOrderCustomerPhone);
-		txtCustPhone.setOnKeyListener(Phone_Search_KeyPress);
+		//txtCustPhone.setOnKeyListener(Phone_Search_KeyPress);
 		txtCustName = (EditText)findViewById(R.id.etOrderCustomerName);
 		txtCustAddress = (EditText)findViewById(R.id.etOrderCustomerAddress);
 		txtCustId = (EditText)findViewById(R.id.etOrderCustomerId);
@@ -226,7 +226,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 	}
 
-	OnKeyListener Phone_Search_KeyPress = new OnKeyListener() {
+	/*OnKeyListener Phone_Search_KeyPress = new OnKeyListener() {
 
 		public boolean onKey(View v, int keyCode, KeyEvent event) {
 			// TODO Auto-generated method stub
@@ -261,7 +261,7 @@ public class CustomerOrdersActivity extends WepBaseActivity{
 
 			return false;
 		}
-	};
+	};*/
 
 	OnItemClickListener CustomerOrderListClick = new OnItemClickListener(){
 
