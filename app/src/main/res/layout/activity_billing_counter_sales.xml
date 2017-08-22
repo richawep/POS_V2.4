@@ -6,8 +6,7 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_wep"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+         />
 
     <RelativeLayout
         android:id="@+id/lnrBillingScreen"
@@ -605,6 +604,7 @@
                                             android:id="@+id/tvSubTotal"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
+                                            android:layout_weight="1"
                                             android:background="@color/colorPrimaryLight"
                                             android:text="Taxable Value :"
                                             android:textAppearance="?android:attr/textAppearanceSmall"

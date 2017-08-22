@@ -1776,11 +1776,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     int DineInRate = crsrSettings.getInt(crsrSettings.getColumnIndex("DineInRate"));
 
                     if (DineInRate == 1) {
-                        dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
+                        dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice1"))));
                     } else if (DineInRate == 2) {
-                        dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice2"));
+                        dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice2"))));
                     } else if (DineInRate == 3) {
-                        dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice3"));
+                        dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice3"))));
                     }
 
                     // Menu Code

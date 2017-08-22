@@ -1247,11 +1247,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     int CounterSalesRate = crsrSettings.getInt(crsrSettings.getColumnIndex("CounterSalesRate"));
 
                     if (CounterSalesRate == 1) {
-                        dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
+                        dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice1"))));
                     } else if (CounterSalesRate == 2) {
-                        dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice2"));
+                        dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice2"))));
                     } else if (CounterSalesRate == 3) {
-                        dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice3"));
+                        dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice3"))));
                     }
 
                     // Menu Code

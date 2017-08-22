@@ -2651,10 +2651,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 // richa - making single tax value
                 SalesTax = new TextView(myContext);
                 double tax =0;
-                tax = Double.parseDouble(String.format("%,2f",Report.getDouble(Report.getColumnIndex("CGSTAmount"))));
-                tax += Double.parseDouble(String.format("%,2f",Report.getDouble(Report.getColumnIndex("SGSTAmount"))));
-                tax += Double.parseDouble(String.format("%,2f",Report.getDouble(Report.getColumnIndex("IGSTAmount"))));
-                tax += Double.parseDouble(String.format("%,2f",Report.getDouble(Report.getColumnIndex("cessAmount"))));
+                tax = Double.parseDouble(String.format("%.2f",Report.getDouble(Report.getColumnIndex("CGSTAmount"))));
+                tax += Double.parseDouble(String.format("%.2f",Report.getDouble(Report.getColumnIndex("SGSTAmount"))));
+                tax += Double.parseDouble(String.format("%.2f",Report.getDouble(Report.getColumnIndex("IGSTAmount"))));
+                tax += Double.parseDouble(String.format("%.2f",Report.getDouble(Report.getColumnIndex("cessAmount"))));
                 SalesTax.setText(String.format("%.2f",tax));
                 SalesTax.setGravity(Gravity.END);
                 SalesTax.setPadding(0,0,45,0);

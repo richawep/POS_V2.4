@@ -85,6 +85,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 
@@ -1672,20 +1673,20 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     int HomeDeliveryRate = crsrSettings.getInt(crsrSettings.getColumnIndex("HomeDeliveryRate"));
                     if (jBillingMode == 3) {
                         if (PickUpRate == 1) {
-                            dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
+                            dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice1"))));
                         } else if (PickUpRate == 2) {
-                            dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice2"));
+                            dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice2"))));
                         } else if (PickUpRate == 3) {
-                            dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice3"));
+                            dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice3"))));
                         }
                     }
                     if (jBillingMode == 4) {
                         if (HomeDeliveryRate == 1) {
-                            dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice1"));
+                            dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice1"))));
                         } else if (HomeDeliveryRate == 2) {
-                            dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice2"));
+                            dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice2"))));
                         } else if (HomeDeliveryRate == 3) {
-                            dRate = crsrItem.getInt(crsrItem.getColumnIndex("DineInPrice3"));
+                            dRate = Double.parseDouble(String.format("%.2f",crsrItem.getDouble(crsrItem.getColumnIndex("DineInPrice3"))));
                         }
                     }
 
@@ -3002,6 +3003,14 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     }
 
 
+    private static String formatInterval(final long l)
+    {
+        final long hr = TimeUnit.MILLISECONDS.toHours(l);
+        final long min = TimeUnit.MILLISECONDS.toMinutes(l - TimeUnit.HOURS.toMillis(hr));
+        final long sec = TimeUnit.MILLISECONDS.toSeconds(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min));
+        final long ms = TimeUnit.MILLISECONDS.toMillis(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min) - TimeUnit.SECONDS.toMillis(sec));
+        return String.format("%02d:%02d:%02d.%03d", hr, min, sec, ms);
+    }
 
 
     /*************************************************************************************************************************************
@@ -3023,7 +3032,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             objPendingKOT.setTokenNumber(iKOTNo);
         }*/
         objPendingKOT.setTokenNumber(KOTNo);
+        Time = Calendar.getInstance();
         String strTime = String.format("%tR", Time);
+        //System.out.println(formatInterval(Time.getTimeInMillis()));
+        System.out.println(new SimpleDateFormat("kk:mm:ss").format(Time.getTime()));
         String msg =  "Time:" + strTime+" No : "+KOTNo;
         Log.v("KOT Time, No",msg);
 
