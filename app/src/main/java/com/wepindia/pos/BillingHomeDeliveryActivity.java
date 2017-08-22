@@ -420,6 +420,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             edtCustPhoneNo.addTextChangedListener(new TextWatcher() {
                 public void afterTextChanged(Editable s) {
                     try {
+                        String phn = edtCustPhoneNo.getText().toString();
+                        if (edtCustPhoneNo.getText().toString().equals(""))
+                            return;
                         if (edtCustPhoneNo.getText().toString().length() == 10) {
                             Cursor crsrCust = db.getFnbCustomer(edtCustPhoneNo.getText().toString());
                             if (crsrCust.moveToFirst()) {
@@ -440,6 +443,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                         MsgBox.Show("Warning", " KOT is already present for this customer, please goto KOT status for modification  or billing");
                                     else if(jBillingMode==4)
                                         MsgBox.Show("Warning", " KOT is already present for this customer, please goto Delivery Status for modification  or billing");
+
+                                    etCustGSTIN.setText("");
+                                    edtCustId.setText("0");
+                                    edtCustName.setText("");
+                                    edtCustPhoneNo.setText("");
+                                    edtCustAddress.setText("");
                                     return;
 //
                                 }else {
@@ -1043,41 +1052,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                             final Cursor cursor_KOT = dbBillScreen.getKOTItems(crsrCust.getInt(crsrCust.getColumnIndex("CustId")),String.valueOf(jBillingMode) );
                             if(!CustomerDetailsFilled && cursor_KOT!=null  && cursor_KOT.moveToFirst())
                             {
-                                if(jBillingMode==3)
-                                    MsgBox.Show("Warning", " KOT is already present for this customer, please goto KOT status for modification  or billing");
-                                else if(jBillingMode==4)
-                                    MsgBox.Show("Warning", " KOT is already present for this customer, please goto Delivery Status for modification  or billing");
+                                //if(jBillingMode==3)
+                                   // MsgBox.Show("Warning", " KOT is already present for this customer, please goto KOT status for modification  or billing");
+                                //else if(jBillingMode==4)
+                                   // MsgBox.Show("Warning", " KOT is already present for this customer, please goto Delivery Status for modification  or billing");
                                 return;
-//                                    MsgBox.setTitle("Warning")
-//                                            .setMessage("KOT already present for this customer. Press \"Load\" to load already made KOT or press \"Cancel\" " +
-//                                                    "to make fresh KOT")
-//                                            .setPositiveButton("Load", new DialogInterface.OnClickListener() {
-//                                                Cursor BillItems = cursor_KOT;
-//                                                @Override
-//                                                public void onClick(DialogInterface dialog, int which) {
-//                                                    CustomerDetailsFilled = true;
-//                                                    tblOrderItems.removeAllViews();
-//                                                    LoadModifyKOTItems(BillItems);
-//                                                    return;
-//                                                }
-//                                            })
-//                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(DialogInterface dialog, int which) {
-//                                                    btnAddCustomer.setVisibility(View.INVISIBLE);
-//                                                    ControlsSetEnabled();
-//                                                    if(jBillingMode!=2) {
-//                                                        btnPrintBill.setEnabled(false);
-//                                                        btnPayBill.setEnabled(false);
-//                                                    }
-//                                                    else
-//                                                    {
-//                                                        btnPrintBill.setEnabled(true);
-//                                                        btnPayBill.setEnabled(true);
-//                                                    }
-//                                                }
-//                                            })
-//                                            .show();
+//
 
                             }else {
                                 btnAddCustomer.setVisibility(View.INVISIBLE);
