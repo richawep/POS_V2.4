@@ -194,6 +194,7 @@ tools:context="com.wepindia.pos.SupplierDetailsActivity">
                             android:layout_gravity="center"
                             android:layout_weight="0.65"
                             android:completionThreshold="1"
+                            android:maxLength="50"
                             android:drawableRight="@drawable/searchicon_img"
                             android:imeOptions="actionNext"
                             android:singleLine="true" />

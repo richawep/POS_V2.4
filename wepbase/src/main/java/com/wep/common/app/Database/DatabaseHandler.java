@@ -6110,8 +6110,13 @@ public int makeBillVoid(int InvoiceNo ) {
 
     }
 
-    public Cursor getSupplierDetails(String suppliername) {
+    public Cursor getSupplierDetailsByName(String suppliername) {
         String selectquery = "Select * FROM " + TBL_Supplier + " WHERE " + KEY_SUPPLIERNAME + " LIKE '" + suppliername + "'";
+        Cursor cursor = dbFNB.rawQuery(selectquery, null);
+        return cursor;
+    }
+    public Cursor getSupplierDetailsByPhone(String supplierPhone) {
+        String selectquery = "Select * FROM " + TBL_Supplier + " WHERE " + KEY_SupplierPhone + " LIKE '" + supplierPhone + "'";
         Cursor cursor = dbFNB.rawQuery(selectquery, null);
         return cursor;
     }

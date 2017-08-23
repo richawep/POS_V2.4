@@ -2,7 +2,6 @@ package com.wepindia.pos.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -146,7 +145,7 @@ public class FragmentSupplierDetails extends Fragment {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-                Cursor supplierdetail_cursor = dbSupplierDetails.getSupplierDetails(suppliername_str);
+                Cursor supplierdetail_cursor = dbSupplierDetails.getSupplierDetailsByName(suppliername_str);
                 int suppliercode = -1;
                 String SupplierPhone= "", SupplierAddress = "";
                 if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())

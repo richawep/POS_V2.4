@@ -12,10 +12,10 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +30,7 @@ import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class SupplierDetailsActivity extends WepBaseActivity {
 
@@ -44,9 +45,11 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     WepButton btnAddSupplier,btnUpdateSupplier, btnClear,btnClose;
     ArrayList<Supplier_Model> SupplierList ;
     com.wepindia.pos.adapters.SupplierAdapter SupplierAdapter;
-    ArrayList<String> labelsSupplierName ;
+    //    ArrayList<String> labelsSupplierName;
+    ArrayList<String> labelsSupplierPhone;
+    ArrayList<HashMap<String, String>> autoCompleteDetails;
 
-    String suppliername_clicked , suppliergstin_clicked;
+    String suppliername_clicked , suppliergstin_clicked, supplierphone_clicked;
 
 
     @Override
@@ -106,16 +109,18 @@ public class SupplierDetailsActivity extends WepBaseActivity {
                     loadAutoCompleteSupplierName();
                     Clear();
                     Display();
+                    hideKeyboard();
                 }
             }
         });
         btnUpdateSupplier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UpdateSupplier() ){
+                if(UpdateSupplier()){
                     loadAutoCompleteSupplierName();
                     Clear();
                     Display();
+                    hideKeyboard();
                 }
             }
         });
@@ -124,11 +129,13 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             public void onClick(View v) {
                 Clear();
                 Display();
+                hideKeyboard();
             }
         });
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
                 Close();
             }
         });
@@ -147,8 +154,14 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-                Cursor supplierdetail_cursor = dbSupplierDetails.getSupplierDetails(suppliername_str);
+
+                HashMap<String, String> data = autoCompleteDetails.get(position);
+
+                //String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase(); // TODO: changed here
+                //autocompletetv_suppliername.setText(data.get("name"));
+                String suppliername_str = data.get("name");
+                String supplierphone_str = data.get("phone");
+                Cursor supplierdetail_cursor = dbSupplierDetails.getSupplierDetailsByPhone(supplierphone_str); // TODO: changed here
                 int suppliercode = -1;
                 String SupplierPhone= "", SupplierAddress = "";
                 if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())
@@ -169,6 +182,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
                     suppliername_clicked = suppliername_str;
                     btnAddSupplier.setEnabled(false);
                     btnUpdateSupplier.setEnabled(true);
+                    hideKeyboard();
                 }
             }
         });
@@ -192,6 +206,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         et_inw_supplierAddress.setText(supplier.getSupplierAddress());
 
         suppliername_clicked = supplier.getSupplierName();
+        supplierphone_clicked = supplier.getSupplierPhone();
         suppliergstin_clicked = supplier.getSupplierGSTIN();
     }
 
@@ -199,11 +214,13 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     private  boolean UpdateSupplier() {
         long l =0;
         Cursor cursor = dbSupplierDetails.getAllSupplierName_nonGST();
-        labelsSupplierName = new ArrayList<String>();
+//        labelsSupplierName = new ArrayList<String>();
+        labelsSupplierPhone = new ArrayList<String>();
         ArrayList<String> labelsSupplierGSTIN = new ArrayList<String>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+//                labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+                labelsSupplierPhone.add(cursor.getString(cursor.getColumnIndex("SupplierPhone")));// adding
                 String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
                 if (gstin != null && !gstin.equals(""))
                     labelsSupplierGSTIN.add(gstin);
@@ -224,13 +241,23 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             suppliergstin_str = "";
 
         if (labelsSupplierGSTIN.contains(suppliergstin_str) && !suppliergstin_str.equalsIgnoreCase(suppliergstin_clicked) ) {
-            MsgBox.Show("Warning","Supplier with gstin already present in list");
+            MsgBox.Show("Warning", "Supplier with gstin already present in list");
             return false;
         }
 
-        for (String supplier : labelsSupplierName) {
-            if (suppliername_str.equalsIgnoreCase(supplier) && !suppliername_str.equalsIgnoreCase(suppliername_clicked)) {
-                MsgBox.Show("Warning","Supplier with name already present in list");
+//        for (String supplier : labelsSupplierName) {
+//            if (suppliername_str.equalsIgnoreCase(supplier) && !suppliername_str.equalsIgnoreCase(suppliername_clicked)) { // TODO: changed here
+//                MsgBox.setTitle("Warning")
+//                        .setMessage("Supplier with name already present in list")
+//                        .setPositiveButton("OK", null)
+//                        .show();
+//                return false;
+//            }
+//        }
+
+        for (String phone : labelsSupplierPhone) {
+            if (supplierphn_str.equalsIgnoreCase(phone) && !supplierphn_str.equalsIgnoreCase(supplierphone_clicked)) {
+                MsgBox.Show("Warning", "Supplier with phone already present in list");
                 return false;
             }
         }
@@ -251,14 +278,18 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         }
         return true;
     }
+
     private  boolean AddSupplier() {
         long l = 0;
         Cursor cursor = dbSupplierDetails.getAllSupplierName_nonGST();
-        labelsSupplierName = new ArrayList<String>();
+//        labelsSupplierName = new ArrayList<String>();
+        labelsSupplierPhone = new ArrayList<String>();
         ArrayList<String> labelsSupplierGSTIN = new ArrayList<String>();
+
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+//                labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+                labelsSupplierPhone.add(cursor.getString(cursor.getColumnIndex("SupplierPhone")));// adding TODO: changed here
                 String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
                 if (gstin != null && !gstin.equals(""))
                     labelsSupplierGSTIN.add(gstin);
@@ -283,13 +314,19 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             return false;
         }
 
-        for (String supplier : labelsSupplierName) {
-            if (suppliername_str.equalsIgnoreCase(supplier)) {
-                MsgBox.Show("Warning","Supplier with name already present in list");
+//        for (String supplier : labelsSupplierName) {
+//            if (suppliername_str.equalsIgnoreCase(supplier)) {
+//                MsgBox.Show("Warning","Supplier with name already present in list"); // TODO: changed here
+//                return false;
+//            }
+//        }
+
+        for (String phone : labelsSupplierPhone) {
+            if (supplierphn_str.equalsIgnoreCase(phone)) {
+                MsgBox.Show("Warning","Supplier with phone already present in list");
                 return false;
             }
         }
-
 
         if (suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn_str.equals("")) {
             MsgBox.Show("Insufficient Information","Please fill all details of Supplier");
@@ -309,22 +346,30 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     public void loadAutoCompleteSupplierName()
     {
         try {
+
             Cursor cursor = dbSupplierDetails.getAllSupplierName_nonGST();
-            labelsSupplierName = new ArrayList<String>();
+//            labelsSupplierName = new ArrayList<String>();
+            autoCompleteDetails = new ArrayList<HashMap<String, String>>();
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+//                    labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding // TODO: changed here
+                    HashMap<String, String> data = new HashMap<String, String>();
+                    data.put("name", cursor.getString(cursor.getColumnIndex("SupplierName")));
+                    data.put("phone", cursor.getString(cursor.getColumnIndex("SupplierPhone")));
+                    autoCompleteDetails.add(data);
+
                 } while (cursor.moveToNext());
             }
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(myContext, android.R.layout.simple_list_item_1,
-                    labelsSupplierName);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+
+            String[] fields = {"name", "phone"};
+            int[] res = {R.id.adapterName, R.id.adapterPhone};
+
+            SimpleAdapter dataAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.row_supplier_name_phone_list, fields, res);
             autocompletetv_suppliername.setAdapter(dataAdapter);
 
         } catch (Exception e) {
-            MsgBox.setMessage(e.getMessage())
-                    .setNeutralButton("Ok", null)
-                    .show();
+            e.printStackTrace();
+            MsgBox.Show("Error",e.getMessage());
         }
     }
     public void Display()
@@ -355,6 +400,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         }
 
     }
+
     public void Clear()
     {
         suppliername_clicked="";
@@ -370,6 +416,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         SupplierAdapter = null;
         lstSupplierDetails.setAdapter(SupplierAdapter);
     }
+
     public void Close() {
         dbSupplierDetails.CloseDatabase();
         finish();

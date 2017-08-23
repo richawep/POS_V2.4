@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -239,7 +236,7 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
         autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-                Cursor supplierdetail_cursor = dbSupplierItemLink.getSupplierDetails(suppliername_str);
+                Cursor supplierdetail_cursor = dbSupplierItemLink.getSupplierDetailsByName(suppliername_str);
                 int suppliercode = -1;
                 String SupplierPhone= "", SupplierAddress = "";
                 if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())

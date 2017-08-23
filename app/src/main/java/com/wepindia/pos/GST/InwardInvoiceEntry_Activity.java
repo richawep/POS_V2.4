@@ -35,11 +35,8 @@ import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.R;
 import com.wepindia.pos.utils.ActionBarUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /* Created by welcome on 08-11-2016.
 */
@@ -168,7 +165,7 @@ public class InwardInvoiceEntry_Activity extends Activity  {
             autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-                    Cursor supplierdetail_cursor = dbInwardInvoiceEntry.getSupplierDetails(suppliername_str);
+                    Cursor supplierdetail_cursor = dbInwardInvoiceEntry.getSupplierDetailsByName(suppliername_str);
                     if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())
                     {
                         et_inward_supplier_gstin.setText(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("GSTIN")));

@@ -165,7 +165,7 @@ public class Inward_Item_Entry_Activity extends WepBaseActivity {
             autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-                    Cursor supplierdetail_cursor = dbInwardItem.getSupplierDetails(suppliername_str);
+                    Cursor supplierdetail_cursor = dbInwardItem.getSupplierDetailsByName(suppliername_str);
                     if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())
                     {
                         et_inward_supplier_gstin.setText(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("GSTIN")));

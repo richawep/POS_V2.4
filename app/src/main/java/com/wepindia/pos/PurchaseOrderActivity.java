@@ -118,7 +118,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     int suppliercode = -1;
                     String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-                    Cursor supplierdetail_cursor = dbPurchaseOrder.getSupplierDetails(suppliername_str);
+                    Cursor supplierdetail_cursor = dbPurchaseOrder.getSupplierDetailsByName(suppliername_str);
                     if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())
                     {
                         et_supplier_phone.setText(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierPhone")));

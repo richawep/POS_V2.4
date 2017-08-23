@@ -106,6 +106,7 @@ public class SupplierAdapter extends BaseAdapter {
             final String SupplierName = supplier_model.getSupplierName();
             AlertDialog.Builder builder = new AlertDialog.Builder(activityContext)
                     .setTitle("Delete")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Are you sure you want to Delete supplier : "+SupplierName+"\n Please note all the items (if any) for this supplier will also be deleted.")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
