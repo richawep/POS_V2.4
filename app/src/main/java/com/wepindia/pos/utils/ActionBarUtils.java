@@ -45,7 +45,7 @@ public class ActionBarUtils {
         });
     }
 
-    public static void navigateHome(final Activity activity) {
+    public static void  navigateHome(final Activity activity) {
         Intent intent = new Intent(activity, HomeActivity.class);
         activity.startActivity(intent);
         activity.finishAffinity();

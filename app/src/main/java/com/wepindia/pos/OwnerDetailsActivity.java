@@ -58,6 +58,17 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         com.wep.common.app.ActionBarUtils.setupToolbar(OwnerDetailsActivity.this, toolbar, getSupportActionBar(), "Owner Details", strUserName, " Date:" + s.toString());
 
         dbHelper = new DatabaseHandler(OwnerDetailsActivity.this);
+        InitialseViewVariables();
+        clickEvents();
+        loadOwnerDetail();
+
+        checkEditTextTest();
+
+
+    }
+
+    private void InitialseViewVariables()
+    {
         btnAdd = (com.wep.common.app.views.WepButton) findViewById(R.id.btnAdd);
         btnClear = (com.wep.common.app.views.WepButton) findViewById(R.id.btnClear);
         btnClose = (com.wep.common.app.views.WepButton) findViewById(R.id.btnClose);
@@ -71,10 +82,9 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         spinner2 = (Spinner) findViewById(R.id.ownerOffice);
         spinner2.setSelection(1);
         Address = (EditText) findViewById(R.id.ownerAddress);
-        loadOwnerDetail();
-
-        checkEditTextTest();
-
+    }
+    private  void clickEvents()
+    {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +120,11 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                         spinner1.getSelectedItem().toString().equalsIgnoreCase("") ||
                         spinner1.getSelectedItem().toString().equalsIgnoreCase("Select") ||
                         Address.getText().toString().equalsIgnoreCase("")) {
-                    Toast.makeText(OwnerDetailsActivity.this, "detail not completed", Toast.LENGTH_SHORT).show();
+                        MsgBox.Show("Incomplete Information","Please fill required details");
+                    //Toast.makeText(OwnerDetailsActivity.this, "detail not completed", Toast.LENGTH_SHORT).show();
+                }else if (!Gstin.getText().toString().equals("") && Gstin.getText().toString().length()!=15)
+                {
+                     MsgBox.Show("Note", "GSTIN can either be empty or of 15 characters");
                 } else {
                     try {
 
@@ -120,7 +134,8 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                             dbHelper.deleteOwnerDetails();
                             updateDetails();
                         } else {
-                            Toast.makeText(OwnerDetailsActivity.this, "Please Enter Valid GSTIN", Toast.LENGTH_SHORT).show();
+                            MsgBox.Show("Invalid Information","Please Enter Valid GSTIN");
+                            //Toast.makeText(OwnerDetailsActivity.this, "Please Enter Valid GSTIN", Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -151,7 +166,6 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         });
 
     }
-
     private void checkEditTextTest() {
 
 
@@ -241,8 +255,13 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                 Phone.getText().toString(), Email.getText().toString(),
                 Address.getText().toString(), sub,
                 spinner2.getSelectedItem().toString(), RefernceNo.getText().toString(), BillNoPrefix.getText().toString());
-        if (Status > 0)
-            Toast.makeText(OwnerDetailsActivity.this, "Details Successfully Added", Toast.LENGTH_SHORT).show();
+        if(Status>0){
+            Cursor cursor = dbHelper.getOwnerDetail();
+            if(cursor!=null && cursor.moveToFirst())
+                Toast.makeText(OwnerDetailsActivity.this, "Details Successfully Updated", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(OwnerDetailsActivity.this, "Details Successfully Added", Toast.LENGTH_SHORT).show();
+        }
         else
             Toast.makeText(OwnerDetailsActivity.this, "Could Not Add Details", Toast.LENGTH_SHORT).show();
     }
@@ -251,9 +270,9 @@ public class OwnerDetailsActivity extends WepBaseActivity {
 
         Cursor cc = dbHelper.getOwnerDetail();
         if (cc != null && cc.moveToFirst()) {
+            dbHelper.close();
             Intent intentHomeScreen = new Intent(this, HomeActivity.class);
             startActivity(intentHomeScreen);
-            dbHelper.close();
             this.finish();
         } else
             Toast.makeText(myContext, "Please fill and save owner details ", Toast.LENGTH_SHORT).show();

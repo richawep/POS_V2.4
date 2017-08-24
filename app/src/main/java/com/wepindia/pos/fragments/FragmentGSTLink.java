@@ -1164,7 +1164,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
 
     public void onClickFileGstr(View view) {
         //startActivity(new Intent(myContext,GSTFileActivity.class));
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.wepaspservices.com/"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.wepgst.com/"));
         startActivity(browserIntent);
     }
 
