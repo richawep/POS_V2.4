@@ -142,6 +142,7 @@ public class ItemOutwardAdapter extends BaseAdapter {
             String ItemName = obj.getItemName();
             AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                     .setTitle("Delete")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Are you sure you want to Delete Item "+ ItemName)
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

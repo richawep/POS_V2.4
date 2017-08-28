@@ -2657,6 +2657,7 @@ public class ItemManagementActivity extends WepBaseActivity  implements  TextWat
         {
             new AlertDialog.Builder(this)
                     .setTitle("Confirmation")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Are you sure to delete all the existing Items?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 

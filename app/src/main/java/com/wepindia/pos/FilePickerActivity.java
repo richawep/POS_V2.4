@@ -129,6 +129,8 @@ public class FilePickerActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onBackPressed() {
+        if( mDirectory.toString().equals("/storage") || mDirectory.toString().equals("/storage/emulated")  )
+            super.onBackPressed();
         if(mDirectory.getParentFile() != null) {
             // Go to parent directory
             File file = mDirectory.getParentFile();
