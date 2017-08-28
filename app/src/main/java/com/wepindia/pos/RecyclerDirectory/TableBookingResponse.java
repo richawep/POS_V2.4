@@ -10,6 +10,15 @@ public class TableBookingResponse {
     private String timeBooking;
     private int tableNo;
     private String mobileNo;
+    private int iTBookId;
+
+    public int getiTBookId() {
+        return iTBookId;
+    }
+
+    public void setiTBookId(int iTBookId) {
+        this.iTBookId = iTBookId;
+    }
 
     public int getsNo() {
         return sNo;

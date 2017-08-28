@@ -197,6 +197,8 @@ public class HomeActivity extends WepBaseActivity implements HTTPAsyncTask.OnHTT
     listAccesses = getDb().getPermissionsNamesForRole(getDb().getRoleName(strUserRole+""));
     BillNoReset bs = new BillNoReset();
     bs.setBillNo(dbHomeScreen);
+    Display();
+    checkForAutoDayEnd();
     }
 
     public boolean isAccessable(String type){

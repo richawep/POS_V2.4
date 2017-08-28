@@ -79,11 +79,7 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //old   activity_tablebooking layout
-        // second  test_tablebooking
 
-        // adapter layout test
-        //    layout test_2
         setContentView(R.layout.activity_tablebooking);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,24 +92,7 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
-        //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        //setContentView(R.layout.activity_tablebooking);
-
-        //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.application_title_bar);
-
-        /*TextView tvTitleText = (TextView) findViewById(R.id.tvTitleBarCaption);
-        ActionBarUtils.goBack(this, findViewById(R.id.imgTitleBackIcon));
-        ActionBarUtils.goHome(this, findViewById(R.id.imgTitleHomeIcon));
-        ActionBarUtils.takeScreenshot(this, findViewById(R.id.imgTitleScreenshotIcon), findViewById(R.id.lnrTableBooking));
-        tvTitleText.setText("Table Booking");
-*/
         myContext = this;
-        //strUserName = getIntent().getStringExtra("USER_NAME");
-        //strBillMode = getIntent().getStringExtra("BILLING_MODE");
-        //jBillingMode = Byte.parseByte(strBillMode);
-        //strUserId = getIntent().getStringExtra("USER_ID");
-        //iCustId = getIntent().getIntExtra("CUST_ID", 0);
         MsgBox = new MessageDialog(myContext);
 
         tvCustomerName = (EditText) findViewById(R.id.etTBCustomerName);
@@ -169,10 +148,11 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
                 TableBookingResponse tableBookingResponse = new TableBookingResponse();
 
                 tableBookingResponse.setsNo(i);
-                tableBookingResponse.setCustomerName(crsrTBooking.getString(1));
-                tableBookingResponse.setTimeBooking(crsrTBooking.getString(2));
-                tableBookingResponse.setTableNo(Integer.parseInt(crsrTBooking.getString(3)));
-                tableBookingResponse.setMobileNo(crsrTBooking.getString(4));
+                tableBookingResponse.setiTBookId(crsrTBooking.getInt(crsrTBooking.getColumnIndex("TBookId")));
+                tableBookingResponse.setCustomerName(crsrTBooking.getString(crsrTBooking.getColumnIndex("CustName")));
+                tableBookingResponse.setTimeBooking(crsrTBooking.getString(crsrTBooking.getColumnIndex("TimeForBooking")));
+                tableBookingResponse.setTableNo(Integer.parseInt(crsrTBooking.getString(crsrTBooking.getColumnIndex("TableNo"))));
+                tableBookingResponse.setMobileNo(crsrTBooking.getString(crsrTBooking.getColumnIndex("MobileNo")));
 
                 mTableBookingList.add(tableBookingResponse);
 
@@ -438,6 +418,7 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
         tvSearchMobileNo.setText("");
         btnAddTB.setEnabled(true);
         btnSaveTB.setEnabled(false);
+        iTBookId =0;
         //btnAddTB.setTextColor(Color.BLACK);
         //btnSaveTB.setTextColor(Color.GRAY);
         linear_table.setVisibility(View.INVISIBLE);
@@ -497,6 +478,7 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
                         //String timeBookedAt = crsr.getString(crsr.getColumnIndex("TimeForBooking"));
                         String msg = " Table " + iTableNo + " is already booked for " + timeBookedAt + " Do you still want to book it ";
                         MsgBox.setMessage(msg)
+                                .setTitle("Note")
                                 .setIcon(R.drawable.ic_launcher)
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     @Override
@@ -549,6 +531,7 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
             strTimeBooking = tvTimeBooking.getText().toString();
             strMobileNo = tvMobileNo.getText().toString();
             iTableNo = Integer.parseInt(tvTableNo.getText().toString());
+            //TableBookingResponse cc = (TableBookingResponse)v;
             Log.d("TableBooking Selection", "Code: " + iTBookId + " Name: " + strCustomerName);
 
             int iResult = dbTableBooking.updateTableBooking(iTBookId, strCustomerName, strTimeBooking, iTableNo,
@@ -659,6 +642,7 @@ public class TableBookingActivity extends WepBaseActivity implements TableBookin
         tvTimeBooking.setText(mTableBookingList.get(position).getTimeBooking());
         tvTableNo.setText("" + mTableBookingList.get(position).getTableNo());
         tvMobileNo.setText(mTableBookingList.get(position).getMobileNo());
+        iTBookId = (mTableBookingList.get(position).getiTBookId());
         btnAddTB.setEnabled(false);
         btnSaveTB.setEnabled(true);
         //btnAddTB.setTextColor(Color.GRAY);
