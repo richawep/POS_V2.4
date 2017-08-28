@@ -15,8 +15,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -48,7 +50,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
     private ArrayList<String> allRoles;
     Cursor crsrRole;
     MessageDialog MsgBox;
-    Button btnClearRole;
+    Button btnClearRole,btnCloseRole, delete,update,addrole;
     String strUserName = "";
     private Toolbar toolbar;
     ArrayList<String> listsAccess=null;
@@ -72,7 +74,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
         rolesList = new ArrayList<String>();
         rolesAdapter = null;
         initialiseViewVariables();
-
+        clickEvents();
         try {
             dbHelper.CreateDatabase();
             dbHelper.OpenDatabase();
@@ -90,13 +92,71 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
         adapterAccess = new ArrayAdapter<String>(AddRolesActivity.this, android.R.layout.simple_list_item_multiple_choice, listsAccess);
         gridViewAccesses.setAdapter(adapterAccess);
         gridViewAccesses.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+        gridViewAccesses.setItemChecked(0, true);
+
+        gridViewAccesses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if(position ==0){
+                if(((android.support.v7.widget.AppCompatCheckedTextView)view).isChecked() == false)
+                {
+                    Toast.makeText(myContext,"Operator permission is given to all roles by default",Toast.LENGTH_SHORT).show();;
+                    gridViewAccesses.setItemChecked(0, true);
+
+                }
+            }
+        }
+    });
+    }
+
+    private void clear()
+    {
+        editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
+        editTextAddUser.setText("");
+        editTextAddUser.setEnabled(true);
+        int c = gridViewAccesses.getCheckedItemCount();
+        SparseBooleanArray arr = new SparseBooleanArray(c);
+        arr = gridViewAccesses.getCheckedItemPositions();
+        int size = arr.size();
+        for (int i = 0; i < size; i++) {
+            int key = arr.keyAt(i);
+            gridViewAccesses.setItemChecked(key, false);
+        }
+        gridViewAccesses.setItemChecked(0, true);
+        //displayRoleList();
+        delete.setEnabled(false);
+        update.setEnabled(false);
+        addrole.setEnabled(true);
+
+    }
+    private void  clickEvents()
+    {
+        btnClearRole.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //dbHelper.deleteRole(roleName)
+                clear();
+            }
+        });
+
+
+        btnCloseRole.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //dbHelper.deleteRole(roleName)
+                close(v);
+            }
+        });
     }
     private void initialiseViewVariables()
     {
         try {
+             delete=(Button)findViewById(R.id.btnDeleteRole);
+            update=(Button)findViewById(R.id.btnGrantAccess);
+            addrole=(Button)findViewById(R.id.btnAddRole);
+            btnCloseRole = (Button) findViewById(R.id.closeRole);
             editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
             gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
             btnClearRole = (Button) findViewById(R.id.btnclearAccess);
+
             btnAddRole = (com.wep.common.app.views.WepButton) findViewById(R.id.btnAddRole);
             btnAddRole.setOnClickListener(this);
             btndelete = (Button) findViewById(R.id.btnDeleteRole);
@@ -225,8 +285,8 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
         if (count == 0)
             gridViewAccesses.setItemChecked(0, true);
 
-        Button btnGrantAccess = (Button) findViewById(R.id.btnGrantAccess);
-        btnGrantAccess.setOnClickListener(new View.OnClickListener() {
+
+        update.setOnClickListener(new View.OnClickListener() {
             public void onClick(View id) {
                 gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
                 int c=gridViewAccesses.getCheckedItemCount();
@@ -236,11 +296,11 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
                     SparseBooleanArray checkedItems = gridViewAccesses.getCheckedItemPositions();
                     int l = dbHelper.deleteAccessesForRole(roleName);
                     dbHelper.addAccessesForRole(roleName, listsAccess, checkedItems);
-                    btnClearRole.performClick();
+                    clear();
                 }
             }
         });
-        Button btnCloseRole = (Button) findViewById(R.id.closeRole);
+
         Button btnDeleteRole = (Button) findViewById(R.id.btnDeleteRole);
         btnDeleteRole.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -248,36 +308,6 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
                 //displayRoleList();
                 askForDelete(roleName);
 
-            }
-        });
-        btnClearRole.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //dbHelper.deleteRole(roleName)
-                editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
-                editTextAddUser.setText("");
-                editTextAddUser.setEnabled(true);
-                int c = gridViewAccesses.getCheckedItemCount();
-                SparseBooleanArray arr = new SparseBooleanArray(c);
-                arr = gridViewAccesses.getCheckedItemPositions();
-                int size = arr.size();
-                for (int i = 0; i < size; i++) {
-                    int key = arr.keyAt(i);
-                    gridViewAccesses.setItemChecked(key, false);
-                }
-                //displayRoleList();
-                Button delete=(Button)findViewById(R.id.btnDeleteRole);
-                Button update=(Button)findViewById(R.id.btnGrantAccess);
-                Button addrole=(Button)findViewById(R.id.btnAddRole);
-                delete.setEnabled(false);
-                update.setEnabled(false);
-                addrole.setEnabled(true);
-
-            }
-        });
-        btnCloseRole.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //dbHelper.deleteRole(roleName)
-                close(v);
             }
         });
     }
@@ -333,7 +363,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
         list.add(1, "Masters");
         list.add(2, "Payment & Receipt");
         list.add(3, "Reports");
-        list.add(4, "Purchase Order");
+        //list.add(4, "Purchase Order");
         return list;
     }
 
