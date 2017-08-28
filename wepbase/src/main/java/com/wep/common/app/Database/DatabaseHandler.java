@@ -4201,7 +4201,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // -----Retrieve All Items-----
     public Cursor getAllItems() {
 
-        return dbFNB.query(TBL_ITEM_Outward, new String[]{"*"}, null, null, null, null, null);
+        return dbFNB.query(TBL_ITEM_Outward, new String[]{"*"}, null, null, null, null, " MenuCode ASC");
     }
 
 

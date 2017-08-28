@@ -94,6 +94,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     String tx ="";
     int CUSTOMER_FOUND =0;
 
+    private final int CHECK_INTEGER_VALUE = 0;
+    private final int CHECK_DOUBLE_VALUE = 1;
+    private final int CHECK_STRING_VALUE = 2;
+
     private static final String TAG = BillingHomeDeliveryActivity.class.getSimpleName();
     Context myContext;
     DatabaseHandler dbBillScreen = new DatabaseHandler(BillingHomeDeliveryActivity.this);
@@ -7436,18 +7440,69 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     if (gstin == null) {
                         gstin = "";
                     }
-                    InsertCustomer(edtCustAddress.getText().toString(), edtCustPhoneNo.getText().toString(),
-                            edtCustName.getText().toString(), 0, 0, 0, gstin);
-                    //ResetCustomer();
-                    //MsgBox.Show("", "Customer Added Successfully");
-                    Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
-                    ControlsSetEnabled();
+                    boolean mFlag = false;
+                    try {
+                        if(gstin.trim().length() == 0)
+                        {mFlag = true;}
+                        else if (gstin.trim().length() > 0 && gstin.length() == 15) {
+                            String[] part = gstin.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                            if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
+                                    && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
+                                    && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
+                                    && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
+                                    && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
+                                    && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
+                                    && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
+                                mFlag = true;
+                            } else {
+                                mFlag = false;
+                            }
+                        } else {
+                            mFlag = false;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mFlag = false;
+                    }
+                    if(mFlag)
+                    {
+                        InsertCustomer(edtCustAddress.getText().toString(), edtCustPhoneNo.getText().toString(),
+                                edtCustName.getText().toString(), 0, 0, 0, gstin);
+                        //ResetCustomer();
+                        //MsgBox.Show("", "Customer Added Successfully");
+                        Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
+                        ControlsSetEnabled();
+                    }else
+                    {
+                        MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
+                    }
 
                 }
             }
         } catch (Exception ex) {
             MsgBox.Show("Error", ex.getMessage());
         }
+    }
+
+
+    public static int checkDataypeValue(String value, String type) {
+        int flag =0;
+        try {
+            switch(type) {
+                case "Int":
+                    Integer.parseInt(value);
+                    flag = 0;
+                    break;
+                case "Double" : Double.parseDouble(value);
+                    flag = 1;
+                    break;
+                default : flag =2;
+            }
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            flag = -1;
+        }
+        return flag;
     }
 
     private void InsertCustomer(String strAddress, String strContactNumber, String strName, float fLastTransaction,

@@ -65,6 +65,10 @@ public class CustomerDetailActivity extends WepBaseActivity {
     // Context object
     Context myContext;
 
+    private final int CHECK_INTEGER_VALUE = 0;
+    private final int CHECK_DOUBLE_VALUE = 1;
+    private final int CHECK_STRING_VALUE = 2;
+
     // DatabaseHandler object
     DatabaseHandler dbCustomer = new DatabaseHandler(CustomerDetailActivity.this);
     // MessageDialog object
@@ -778,24 +782,82 @@ public class CustomerDetailActivity extends WepBaseActivity {
         String GSTIN  = txGSTIN.getText().toString();
 
         if (Name.equalsIgnoreCase("")) {
-            MsgBox.Show("Warning", "Please Enter Customer Name before adding customer");
+            MsgBox.Show("Warning", "Please enter customer name before adding customer");
         } else if (Phone.equalsIgnoreCase("")) {
-            MsgBox.Show("Warning", "Please Enter Mobile No before adding customer");
+            MsgBox.Show("Warning", "Please enter mobile no before adding customer");
         } else if(Phone.length() != 10) {
-            MsgBox.Show("Warning", "Please Enter Correct Mobile No before adding customer");
+            MsgBox.Show("Warning", "Please enter correct mobile no before adding customer");
         } else {
             if (IsCustomerExists(Phone)) {
-                MsgBox.Show("Warning", "Customer is already exists");
+                MsgBox.Show("Warning", "Customer already exists");
             } else {
-                InsertCustomer(Address, Phone, Name, 0, 0, Float.parseFloat(CreditAmount),GSTIN);
-                Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_LONG).show();
-                ResetCustomer();
-                ClearCustomerTable();
-                DisplayCustomer();
-                ((ArrayAdapter<String>)(txtSearchName.getAdapter())).add(Name);
+
+                if (GSTIN == null) {
+                    GSTIN = "";
+                }
+                boolean mFlag = false;
+                try {
+                    if(GSTIN.trim().length() == 0)
+                    {mFlag = true;}
+                    else if (GSTIN.trim().length() > 0 && GSTIN.length() == 15) {
+                        String[] part = GSTIN.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                        if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
+                                && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
+                                && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
+                                && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
+                                && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
+                                && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
+                                && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
+
+                               /* int length = gstin.length() -1;
+                                if(Integer.parseInt(String.valueOf(gstin.charAt(length))) ==  checksumGSTIN(gstin.substring(0,length)))*/
+                            mFlag = true;
+                        } else {
+                            mFlag = false;
+                        }
+                    } else {
+                        mFlag = false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mFlag = false;
+                }
+                if(mFlag)
+                {
+                    InsertCustomer(Address, Phone, Name, 0, 0, Float.parseFloat(CreditAmount),GSTIN);
+                    Toast.makeText(myContext, "Customer Added Successfully", Toast.LENGTH_LONG).show();
+                    ResetCustomer();
+                    ClearCustomerTable();
+                    DisplayCustomer();
+                    ((ArrayAdapter<String>)(txtSearchName.getAdapter())).add(Name);
+                }else
+                {
+                    MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
+                }
             }
         }
     }
+
+    public static int checkDataypeValue(String value, String type) {
+        int flag =0;
+        try {
+            switch(type) {
+                case "Int":
+                    Integer.parseInt(value);
+                    flag = 0;
+                    break;
+                case "Double" : Double.parseDouble(value);
+                    flag = 1;
+                    break;
+                default : flag =2;
+            }
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            flag = -1;
+        }
+        return flag;
+    }
+
 
     public void EditCustomer(View v) {
         Name = txtName.getText().toString();
@@ -812,20 +874,57 @@ public class CustomerDetailActivity extends WepBaseActivity {
                 MsgBox.Show("Error", name+" already registered with Phn : "+Phone );
                 return;
             }
+        }else
+        {
+            if (GSTIN == null) {
+                GSTIN = "";
+            }
+            boolean mFlag = false;
+            try {
+                if(GSTIN.trim().length() == 0)
+                {mFlag = true;}
+                else if (GSTIN.trim().length() > 0 && GSTIN.length() == 15) {
+                    String[] part = GSTIN.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                    if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
+                            && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
+                            && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
+                            && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
+                            && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
+                            && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
+                            && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
+                        mFlag = true;
+                    } else {
+                        mFlag = false;
+                    }
+                } else {
+                    mFlag = false;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mFlag = false;
+            }
+            if (mFlag)
+            {
+                Log.d("Customer Selection", "Id: " + Id + " Name: " + Name + " Phone:" + Phone + " Address:" + Address
+                        + " Last Transn.:" + LastTransaction + " Total Transan.:" + TotalTransaction+" GSTIN : "+GSTIN);
+                int iResult = dbCustomer.updateCustomer(Address, Phone, Name, Integer.parseInt(Id),
+                        Float.parseFloat(LastTransaction), Float.parseFloat(TotalTransaction), Float.parseFloat(CreditAmount), GSTIN);
+                Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
+                Toast.makeText(myContext, "Customer Updated Successfully", Toast.LENGTH_LONG).show();
+                ResetCustomer();
+                if (iResult > 0) {
+                    ClearCustomerTable();
+                    DisplayCustomer();
+                } else {
+                    MsgBox.Show("Warning", "Update failed");
+                }
+            }else
+            {
+                MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
+            }
         }
-        Log.d("Customer Selection", "Id: " + Id + " Name: " + Name + " Phone:" + Phone + " Address:" + Address
-                + " Last Transn.:" + LastTransaction + " Total Transan.:" + TotalTransaction+" GSTIN : "+GSTIN);
-        int iResult = dbCustomer.updateCustomer(Address, Phone, Name, Integer.parseInt(Id),
-                Float.parseFloat(LastTransaction), Float.parseFloat(TotalTransaction), Float.parseFloat(CreditAmount), GSTIN);
-        Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
-        Toast.makeText(myContext, "Customer Updated Successfully", Toast.LENGTH_LONG).show();
-        ResetCustomer();
-        if (iResult > 0) {
-            ClearCustomerTable();
-            DisplayCustomer();
-        } else {
-            MsgBox.Show("Warning", "Update failed");
-        }
+
+
     }
 
     public void ClearCustomer(View v) {

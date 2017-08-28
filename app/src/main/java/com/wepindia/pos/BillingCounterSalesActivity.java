@@ -132,6 +132,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     boolean isReprint = false;
     int ItemwiseDiscountEnabled =0;
 
+    private final int CHECK_INTEGER_VALUE = 0;
+    private final int CHECK_DOUBLE_VALUE = 1;
+    private final int CHECK_STRING_VALUE = 2;
 
     private float mHeadingTextSize;
     private float mDataMiniDeviceTextsize;
@@ -388,11 +391,43 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     if (gstin == null) {
                         gstin = "";
                     }
-                    insertCustomer(editTextAddress.getText().toString(), editTextMobile.getText().toString(), editTextName.getText().toString(), 0, 0, 0, gstin);
-                    //ResetCustomer();
-                    //MsgBox.Show("", "Customer Added Successfully");
-                    Toast.makeText(BillingCounterSalesActivity.this, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
-                    ControlsSetEnabled();
+                    boolean mFlag = false;
+                    try {
+                        if(gstin.trim().length() == 0)
+                        {mFlag = true;}
+                        else if (gstin.trim().length() > 0 && gstin.length() == 15) {
+                            String[] part = gstin.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                            if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
+                                    && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
+                                    && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
+                                    && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
+                                    && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
+                                    && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
+                                    && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
+
+                               /* int length = gstin.length() -1;
+                                if(Integer.parseInt(String.valueOf(gstin.charAt(length))) ==  checksumGSTIN(gstin.substring(0,length)))*/
+                                    mFlag = true;
+                            } else {
+                                mFlag = false;
+                            }
+                        } else {
+                            mFlag = false;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mFlag = false;
+                    }
+                    if (mFlag)
+                    {
+                        insertCustomer(editTextAddress.getText().toString(), editTextMobile.getText().toString(), editTextName.getText().toString(), 0, 0, 0, gstin);
+                        Toast.makeText(BillingCounterSalesActivity.this, "Customer Added Successfully", Toast.LENGTH_SHORT).show();
+                        ControlsSetEnabled();
+                    }else
+                    {
+                        messageDialog.Show("Invalid Information","Please enter valid GSTIN for customer");
+                    }
+
 
                 }
             }
@@ -400,6 +435,41 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             messageDialog.Show("Error", ex.getMessage());
         }
     }
+
+    private int checksumGSTIN(String gstin)
+    {
+        int sum = 0;
+
+        for (char c : gstin.replaceAll("\\D", "").toCharArray()) {
+            int digit = c - '0';
+            sum += digit;
+
+        }
+        if(sum>9)
+             sum = checksumGSTIN(String.valueOf(sum));
+        return sum;
+    }
+
+    public static int checkDataypeValue(String value, String type) {
+        int flag =0;
+        try {
+            switch(type) {
+                case "Int":
+                    Integer.parseInt(value);
+                    flag = 0;
+                    break;
+                case "Double" : Double.parseDouble(value);
+                    flag = 1;
+                    break;
+                default : flag =2;
+            }
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            flag = -1;
+        }
+        return flag;
+    }
+
 
     private void insertCustomer(String strAddress, String strContactNumber, String strName, float fLastTransaction, float fTotalTransaction, float fCreditAmount, String gstin)
     {

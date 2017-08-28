@@ -94,13 +94,14 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                     {mFlag = true;}
                     else if (str.trim().length() > 0 && str.length() == 15) {
                         String[] part = str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                        if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0])
-                                && CHECK_STRING_VALUE == checkDataypeValue(part[1])
-                                && CHECK_INTEGER_VALUE == checkDataypeValue(part[2])
-                                && CHECK_STRING_VALUE == checkDataypeValue(part[3])
-                                && CHECK_INTEGER_VALUE == checkDataypeValue(part[4])
-                                && CHECK_STRING_VALUE == checkDataypeValue(part[5])
-                                && CHECK_INTEGER_VALUE == checkDataypeValue(part[6])) {
+                        if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
+                                && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
+                                && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
+                                && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
+                                && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
+                                && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
+                                && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
+
                             mFlag = true;
                         } else {
                             mFlag = false;
@@ -313,7 +314,7 @@ public class OwnerDetailsActivity extends WepBaseActivity {
      * @param value - csv value
      */
 
-    public static int checkDataypeValue(String value) {
+    /*public static int checkDataypeValue(String value) {
         int flag;
         try {
             Integer.parseInt(value);
@@ -328,6 +329,25 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         } catch (NumberFormatException e) {
             e.printStackTrace();
             flag = 2;
+        }
+        return flag;
+    }*/
+    public static int checkDataypeValue(String value, String type) {
+        int flag =0;
+        try {
+            switch(type) {
+                case "Int":
+                    Integer.parseInt(value);
+                    flag = 0;
+                    break;
+                case "Double" : Double.parseDouble(value);
+                    flag = 1;
+                    break;
+                default : flag =2;
+            }
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            flag = -1;
         }
         return flag;
     }
