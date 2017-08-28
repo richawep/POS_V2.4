@@ -25,13 +25,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.WepBaseActivity;
@@ -169,6 +172,8 @@ public class ConfigurationActivity extends WepBaseActivity{
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
+
     }
 
     ViewPager.OnPageChangeListener myOnPageChangeListener =
@@ -248,5 +253,11 @@ public class ConfigurationActivity extends WepBaseActivity{
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void onUserInteraction(){
+        //Log.d("Configuration","touched");
+        hideKeyboard();
     }
 }
