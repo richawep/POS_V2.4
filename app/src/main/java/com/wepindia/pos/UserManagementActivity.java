@@ -216,7 +216,7 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
         }
         else
         {
-            if(makeAadharValidatio(editTextAdhar) || isValidEmailAddress(editTextEmail.getText().toString().trim()))
+            if(makeAadharValidatio(editTextAdhar) || !isValidEmailAddress(editTextEmail.getText().toString().trim()))
             {
                 if(editTextAdhar.getText().toString().trim().length()<12 && editTextAdhar.getText().toString().trim().length()>0)
                 {
@@ -289,19 +289,7 @@ public class UserManagementActivity extends WepBaseActivity implements View.OnCl
             return false;
     }
 
-    public boolean isValidEmailAddress(String email) {
 
-        if(email.equalsIgnoreCase(""))
-        {
-            return false;
-        }
-        else {
-            String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-            java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-            java.util.regex.Matcher m = p.matcher(email);
-            return !m.matches();
-        }
-    }
 
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

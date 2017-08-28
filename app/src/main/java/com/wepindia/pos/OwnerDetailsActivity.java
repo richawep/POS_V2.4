@@ -114,7 +114,6 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                     mFlag = false;
                 }
 
-
                 if (Name.getText().toString().equalsIgnoreCase("") ||
                         Email.getText().toString().equalsIgnoreCase("") ||
                         Phone.getText().toString().equalsIgnoreCase("") ||
@@ -126,10 +125,14 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                 }else if (!Gstin.getText().toString().equals("") && Gstin.getText().toString().length()!=15)
                 {
                      MsgBox.Show("Note", "GSTIN can either be empty or of 15 characters");
-                } else {
+                }  else{
                     try {
-
-                        if (mFlag) {
+                        boolean cc = isValidEmailAddress(Email.getText().toString().trim());
+                        if (!isValidEmailAddress(Email.getText().toString().trim()))
+                        {
+                            MsgBox.Show("Invalid Information","Please Enter Valid Email id");
+                        }
+                        else if (mFlag) {
                             dbHelper.CreateDatabase();
                             dbHelper.OpenDatabase();
                             dbHelper.deleteOwnerDetails();
@@ -138,7 +141,6 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                             MsgBox.Show("Invalid Information","Please Enter Valid GSTIN");
                             //Toast.makeText(OwnerDetailsActivity.this, "Please Enter Valid GSTIN", Toast.LENGTH_SHORT).show();
                         }
-
 
                         //dbHelper.close();
                     } catch (Exception ex) {
