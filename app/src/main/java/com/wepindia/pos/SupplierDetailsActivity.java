@@ -267,7 +267,11 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             MsgBox.Show("Incomplete Details","Please fill all details of Supplier");
             return false;
 
-        } else {
+        } else if (!isValidEmailAddress(suppliergstin_str))
+        {
+            MsgBox.Show("Invalid Information","Please fill valid gstin");
+            return false;
+        }else {
             l = dbSupplierDetails.updateSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
                     supplierphn_str, supplieraddress_str, Integer.parseInt(tv_suppliercode.getText().toString()));
             if (l > 0) {
@@ -303,7 +307,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
         String supplierphn_str = autocompletetv_supplierPhn.getText().toString();
         String supplieraddress_str = et_inw_supplierAddress.getText().toString();
-        String suppliergstin_str = edt_supplierGSTIN.getText().toString();
+        String suppliergstin_str = edt_supplierGSTIN.getText().toString().trim();
         if (suppliergstin_str != null && !suppliergstin_str.equals(""))
             supplierType_str = "Registered";
         else
@@ -331,7 +335,11 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         if (suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn_str.equals("")) {
             MsgBox.Show("Insufficient Information","Please fill all details of Supplier");
             return false;
-        } else {
+        } else if (!isValidEmailAddress(suppliergstin_str))
+        {
+            MsgBox.Show("Insufficient Information","Please fill valid gstin");
+            return false;
+        }else {
             l = dbSupplierDetails.saveSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
                     supplierphn_str, supplieraddress_str);
             if (l > 0) {

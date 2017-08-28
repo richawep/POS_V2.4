@@ -662,7 +662,7 @@ public class GSTUploadFunctions {
 
         }
         // Invoices for inward supply from unregistered person
-        cursor = dbReport.getInward_taxed(startDate,endDate);
+        cursor = dbReport.getPurchaseOrder_for_unregistered(startDate,endDate);
         if (cursor!=null && cursor.moveToFirst())
         {
             String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));

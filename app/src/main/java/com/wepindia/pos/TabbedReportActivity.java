@@ -50,7 +50,7 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
     String GSTEnable = "", reportTab1 = "";
     public boolean isPrinterAvailable = false;
     private AppCompatDelegate delegate;
-
+    private  TabbedReportActivity.ViewPagerAdapter adapter;
 
     public void onSohamsaPrinterResponses(String resp) {
 
@@ -73,13 +73,19 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed_report);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        init();
-        setupViewPager(viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        try{
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            viewPager = (ViewPager) findViewById(R.id.viewpager);
+            init();
+            setupViewPager(viewPager);
+            //viewPager.addOnPageChangeListener (myOnPageChangeListener);
+            tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(viewPager);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Nullable
@@ -165,7 +171,7 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
 
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Bundle bundle1=new Bundle();
         bundle1.putString("REPORT_TYPE", "1");

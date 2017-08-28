@@ -77,6 +77,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     private Button btn_ReportDateFrom,btn_ReportDateTo,
             btn_ReportPrint,btn_ReportExport,btn_ReportView,btn_ReportClose;
 
+    private TextView lblName;
 
 
     public ReportFragment() {
@@ -85,6 +86,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_report, container, false);
+        lblName = (TextView) view.findViewById(R.id.lblName);
+
         btn_ReportDateFrom = (Button) view.findViewById(R.id.btn_ReportDateFrom);
         btn_ReportDateFrom.setOnClickListener(this);
         btn_ReportDateTo = (Button) view.findViewById(R.id.btn_ReportDateTo);
@@ -102,6 +105,20 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    public void setMessageForGSTR(int ReportNo)
+    {
+        if(ReportNo == 4)
+        {
+            lblName.setText("*Please note GSTR reports exported here, will be not suitable for bulk upload at WeP GST Panel");
+            lblName.setTextColor(getResources().getColor(R.color.red));
+            lblName.setVisibility(View.VISIBLE);
+        }else
+        {
+            lblName.setText("");
+            lblName.setTextColor(getResources().getColor(R.color.red));
+            lblName.setVisibility(View.INVISIBLE);
+        }
+    }
     public void onInit() {
         myContext = getActivity();
         dbReport = new DatabaseHandler(getActivity());
@@ -387,6 +404,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     }
 
     public void ViewReport() {
+
         String txtStartDate = txtReportDateStart.getText().toString();
         String txtEndDate = txtReportDateEnd.getText().toString();
         if(txtStartDate.equalsIgnoreCase("") || txtEndDate.equalsIgnoreCase(""))
@@ -410,6 +428,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     return;
                 }
             }*/
+
+            if(ReportType.equals("4"))
+                setMessageForGSTR(4);
             // ReportHelper object
             ReportHelper objReportColumn = new ReportHelper(myContext);
             objReportColumn.setReportColumnCaptions(myContext, strReportName, tblReport);
@@ -598,6 +619,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     GSTR1_HSNSummary();
                     break;
                 case 46: // doc issuesd
+                    GSTR1_DocIssued();
                     break;
                 case 47: GSTR4_CompositeReport();
                     // GSTR4 composite Report
@@ -1006,6 +1028,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
                 }
             }// end for
+            if(tblReport.getChildCount()>1)
+            {
+                btnExport.setEnabled(true);
+            }
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -1293,7 +1319,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 sub.setText(String.format("%.2f",Amttot));
 
 
-
+                if(tblReport.getChildCount()>1)
+                {
+                    btnExport.setEnabled(true);
+                }
 
             }
 
@@ -1592,6 +1621,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 }
 
             }// end for
+            if(tblReport.getChildCount()>1)
+            {
+                btnExport.setEnabled(true);
+            }
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -1855,7 +1888,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 TextView sub = (TextView)rowReport.getChildAt(12);
                 sub.setText(String.format("%.2f",Amttot));
 
+                if(tblReport.getChildCount()>1)
+                {
+                    btnExport.setEnabled(true);
+                }
             }
+
 
         }catch (Exception e)
         {
@@ -8345,6 +8383,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                             tblReport.addView(rowcursor);
                         }
                     }
+                    if(tblReport.getChildCount()>1)
+                    {
+                        btnExport.setEnabled(true);
+                    }
                 }else
                 {
                     MsgBox.Show("Information","No invoice found for this period");
@@ -8356,6 +8398,242 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                 MsgBox.Show("Error",e.getMessage());
             }
         }
+    }
+
+    void GSTR1_DocIssued()
+    {
+
+
+
+        // Invoices for outward supply
+        {
+            Cursor cursor = dbReport.getAllInvoices_outward(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+            if (cursor!=null && cursor.moveToFirst()) {
+                String from = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                String to = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                int totnum = 0;
+                int cancel = 0;
+                do {
+                    to = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                    totnum++;
+                    if (cursor.getInt(cursor.getColumnIndex("BillStatus")) == 0)
+                        cancel++;
+
+                } while (cursor.moveToNext());
+
+                TextView SNo = new TextView(myContext);
+                SNo.setWidth(50);
+                SNo.setTextSize(15);
+                SNo.setText("1");
+
+                TextView DocumentnNature = new TextView(myContext);
+                DocumentnNature.setWidth(300);
+                DocumentnNature.setTextSize(15);
+                DocumentnNature.setText("Invoices for outward supply");
+
+                TextView From = new TextView(myContext);
+                From.setWidth(100);
+                From.setTextSize(15);
+                From.setGravity(Gravity.CENTER);
+                From.setText(String.valueOf(from));
+
+                TextView To = new TextView(myContext);
+                To.setWidth(100);
+                To.setTextSize(15);
+                To.setGravity(Gravity.CENTER);
+                To.setText(String.valueOf(to));
+
+                TextView TotalNumber = new TextView(myContext);
+                TotalNumber.setWidth(100);
+                TotalNumber.setTextSize(15);
+                TotalNumber.setGravity(Gravity.CENTER);
+                TotalNumber.setText(String.valueOf(totnum));
+
+                TextView Cancelled = new TextView(myContext);
+                Cancelled.setWidth(100);
+                Cancelled.setTextSize(15);
+                Cancelled.setGravity(Gravity.CENTER);
+                Cancelled.setText(String.valueOf(cancel));
+
+                TextView NetIssued = new TextView(myContext);
+                NetIssued.setWidth(100);
+                NetIssued.setTextSize(15);
+                NetIssued.setGravity(Gravity.CENTER);
+                NetIssued.setText(String.valueOf(totnum-cancel));
+
+                TableRow rowcursor = new TableRow(myContext);
+                rowcursor.setLayoutParams(new TableRow.LayoutParams
+                        (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                // Add views to row
+                rowcursor.addView(SNo);
+                rowcursor.addView(DocumentnNature);
+                rowcursor.addView(From);
+                rowcursor.addView(To);
+                rowcursor.addView(TotalNumber);
+                rowcursor.addView(Cancelled);
+                rowcursor.addView(NetIssued);
+
+                tblReport.addView(rowcursor);
+            }
+        }
+
+        // Invoices for inward supply from unregistered person
+        {
+            Cursor cursor = dbReport.getPurchaseOrder_for_unregistered(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+            if (cursor!=null && cursor.moveToFirst())
+            {
+                String gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+                if (gstin ==null  || gstin.equals(""))
+                {
+                    String from = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                    String to = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                    int totnum =0;
+                    int cancel =0;
+                    do {
+                        gstin = cursor.getString(cursor.getColumnIndex("GSTIN"));
+                        if (gstin ==null  || gstin.equals("")) {
+                            to = cursor.getString(cursor.getColumnIndex("InvoiceNo"));
+                            totnum++;
+                            /*if (cursor.getInt(cursor.getColumnIndex("BillStatus")) == 0)
+                                cancel++;*/
+                        }
+
+                    }while(cursor.moveToNext());
+
+                    TextView SNo = new TextView(myContext);
+                    SNo.setWidth(50);
+                    SNo.setTextSize(15);
+                    SNo.setText("2");
+
+                    TextView DocumentnNature = new TextView(myContext);
+                    DocumentnNature.setWidth(300);
+                    DocumentnNature.setTextSize(15);
+                    DocumentnNature.setText("Invoices for inward supply for unregistered supplier");
+
+                    TextView From = new TextView(myContext);
+                    From.setWidth(100);
+                    From.setTextSize(15);
+                    From.setGravity(Gravity.CENTER);
+                    From.setText(String.valueOf(from));
+
+                    TextView To = new TextView(myContext);
+                    To.setWidth(100);
+                    To.setTextSize(15);
+                    To.setGravity(Gravity.CENTER);
+                    To.setText(String.valueOf(to));
+
+                    TextView TotalNumber = new TextView(myContext);
+                    TotalNumber.setWidth(100);
+                    TotalNumber.setTextSize(15);
+                    TotalNumber.setGravity(Gravity.CENTER);
+                    TotalNumber.setText(String.valueOf(totnum));
+
+                    TextView Cancelled = new TextView(myContext);
+                    Cancelled.setWidth(100);
+                    Cancelled.setTextSize(15);
+                    Cancelled.setGravity(Gravity.CENTER);
+                    Cancelled.setText(String.valueOf(cancel));
+
+                    TextView NetIssued = new TextView(myContext);
+                    NetIssued.setWidth(100);
+                    NetIssued.setTextSize(15);
+                    NetIssued.setGravity(Gravity.CENTER);
+                    NetIssued.setText(String.valueOf(totnum-cancel));
+
+                    TableRow rowcursor = new TableRow(myContext);
+                    rowcursor.setLayoutParams(new TableRow.LayoutParams
+                            (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                    // Add views to row
+                    rowcursor.addView(SNo);
+                    rowcursor.addView(DocumentnNature);
+                    rowcursor.addView(From);
+                    rowcursor.addView(To);
+                    rowcursor.addView(TotalNumber);
+                    rowcursor.addView(Cancelled);
+                    rowcursor.addView(NetIssued);
+
+                    tblReport.addView(rowcursor);
+                }
+            }
+        }
+        // Credit Note
+        {
+            Cursor cursor = dbReport.getGSTR1_CDN(String.valueOf(startDate_date.getTime()), String.valueOf(endDate_date.getTime()));
+            if (cursor!=null && cursor.moveToFirst())
+            {
+                String from = cursor.getString(cursor.getColumnIndex("NoteNo"));
+                String to = cursor.getString(cursor.getColumnIndex("NoteNo"));
+                int totnum =0;
+                int cancel =0;
+                do {
+                    to = cursor.getString(cursor.getColumnIndex("NoteNo"));
+                    totnum++;
+                    /*if(cursor.getInt(cursor.getColumnIndex("BillStatus"))==0)
+                        cancel++;*/
+
+                }while(cursor.moveToNext());
+
+                TextView SNo = new TextView(myContext);
+                SNo.setWidth(50);
+                SNo.setTextSize(15);
+                SNo.setText("3");
+
+                TextView DocumentnNature = new TextView(myContext);
+                DocumentnNature.setWidth(300);
+                DocumentnNature.setTextSize(15);
+                DocumentnNature.setText("Credit/Debit Notes");
+
+                TextView From = new TextView(myContext);
+                From.setWidth(100);
+                From.setTextSize(15);
+                From.setGravity(Gravity.CENTER);
+                From.setText(String.valueOf(from));
+
+                TextView To = new TextView(myContext);
+                To.setWidth(100);
+                To.setTextSize(15);
+                To.setGravity(Gravity.CENTER);
+                To.setText(String.valueOf(to));
+
+                TextView TotalNumber = new TextView(myContext);
+                TotalNumber.setWidth(100);
+                TotalNumber.setTextSize(15);
+                TotalNumber.setGravity(Gravity.CENTER);
+                TotalNumber.setText(String.valueOf(totnum));
+
+                TextView Cancelled = new TextView(myContext);
+                Cancelled.setWidth(100);
+                Cancelled.setTextSize(15);
+                Cancelled.setGravity(Gravity.CENTER);
+                Cancelled.setText(String.valueOf(cancel));
+
+                TextView NetIssued = new TextView(myContext);
+                NetIssued.setWidth(100);
+                NetIssued.setTextSize(15);
+                NetIssued.setGravity(Gravity.CENTER);
+                NetIssued.setText(String.valueOf(totnum-cancel));
+
+                TableRow rowcursor = new TableRow(myContext);
+                rowcursor.setLayoutParams(new TableRow.LayoutParams
+                        (TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                // Add views to row
+                rowcursor.addView(SNo);
+                rowcursor.addView(DocumentnNature);
+                rowcursor.addView(From);
+                rowcursor.addView(To);
+                rowcursor.addView(TotalNumber);
+                rowcursor.addView(Cancelled);
+                rowcursor.addView(NetIssued);
+
+                tblReport.addView(rowcursor);
+
+            }
+        }
+        if(tblReport.getChildCount()>1)
+        {
+            btnExport.setEnabled(true);
+        }
+
     }
 
     void loadHSNSummary(String sply_ty, Cursor cursor)
@@ -10408,6 +10686,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
                     //tblReport.addView(rowcursor, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
                 }
+            }
+            if(tblReport.getChildCount()>1)
+            {
+                btnExport.setEnabled(true);
             }
         }// end try
         catch(Exception e)

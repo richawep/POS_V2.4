@@ -189,6 +189,64 @@ public class ReportHelper{
 			}
 			
 		}
+		else if(ReportName.equalsIgnoreCase("GSTR1-Documents Issued") ){
+			TextView SNo = new TextView(activityContext);
+			SNo.setWidth(50);
+			SNo.setTextSize(15);
+			SNo.setTextColor(Color.WHITE);
+			SNo.setText("SNo");
+
+			TextView DocumentnNature = new TextView(activityContext);
+			DocumentnNature.setWidth(300);
+			DocumentnNature.setTextSize(15);
+			DocumentnNature.setTextColor(Color.WHITE);
+			DocumentnNature.setText("Nature of Document");
+
+			TextView From = new TextView(activityContext);
+			From.setWidth(100);
+			From.setTextSize(15);
+			From.setGravity(Gravity.CENTER);
+			From.setTextColor(Color.WHITE);
+			From.setText("From");
+
+			TextView To = new TextView(activityContext);
+			To.setWidth(100);
+			To.setTextSize(15);
+			To.setGravity(Gravity.CENTER);
+			To.setTextColor(Color.WHITE);
+			To.setText("To");
+
+			TextView TotalNumber = new TextView(activityContext);
+			TotalNumber.setWidth(100);
+			TotalNumber.setTextSize(15);
+			TotalNumber.setGravity(Gravity.CENTER);
+			TotalNumber.setTextColor(Color.WHITE);
+			TotalNumber.setText("Total Number");
+
+			TextView Cancelled = new TextView(activityContext);
+			Cancelled.setWidth(100);
+			Cancelled.setTextSize(15);
+			Cancelled.setGravity(Gravity.CENTER);
+			Cancelled.setTextColor(Color.WHITE);
+			Cancelled.setText("Cancelled");
+
+			TextView NetIssued = new TextView(activityContext);
+			NetIssued.setWidth(100);
+			NetIssued.setTextSize(15);
+			NetIssued.setGravity(Gravity.CENTER);
+			NetIssued.setTextColor(Color.WHITE);
+			NetIssued.setText("Net Issued");
+
+			// Add views to row
+			rowColumnCaption.addView(SNo);
+			rowColumnCaption.addView(DocumentnNature);
+			rowColumnCaption.addView(From);
+			rowColumnCaption.addView(To);
+			rowColumnCaption.addView(TotalNumber);
+			rowColumnCaption.addView(Cancelled);
+			rowColumnCaption.addView(NetIssued);
+
+		}
 		else if(ReportName.equalsIgnoreCase("Bill wise Report") ){
 
 			TextView Date = new TextView(activityContext);
@@ -2957,7 +3015,12 @@ public class ReportHelper{
 			// Copy all the data to file from report table
 			for(iRow=0; iRow<ReportTable.getChildCount();iRow++){
 				
-				rowReport = (TableRow)ReportTable.getChildAt(iRow);
+				try{
+                    rowReport = (TableRow)ReportTable.getChildAt(iRow);
+                }catch (Exception e)
+                {
+                    continue;
+                }
 				for(iColumn=0;iColumn<rowReport.getChildCount();iColumn++){
 					
 					ReportData = (TextView)rowReport.getChildAt(iColumn);
