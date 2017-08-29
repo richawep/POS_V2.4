@@ -28,6 +28,7 @@ import com.wep.common.app.models.SupplierItemLinkageModel;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.SupplierItemLinkageAdapter;
+import com.wepindia.pos.adapters.SupplierSuggestionAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 
 
@@ -726,7 +727,8 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
         String[] fields = {"name", "phone"};
         int[] res = {R.id.adapterName, R.id.adapterPhone};
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.adapter_supplier_name, fields, res);
+        //SimpleAdapter simpleAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.adapter_supplier_name, fields, res);
+        SupplierSuggestionAdapter simpleAdapter = new SupplierSuggestionAdapter(myContext, R.layout.adapter_supplier_name, autoCompleteDetails);
         autocompletetv_suppliername.setAdapter(simpleAdapter);
 
 //        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(myContext, android.R.layout.simple_list_item_1,

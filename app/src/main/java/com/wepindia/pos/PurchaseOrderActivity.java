@@ -37,6 +37,7 @@ import com.wep.common.app.WepBaseActivity;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.PurchaseOrderAdapter;
+import com.wepindia.pos.adapters.SupplierSuggestionAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.util.ArrayList;
@@ -150,6 +151,8 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                             if(purchaseOrderAdapter!=null)
                                 purchaseOrderAdapter.notifyDataSetChanged(dataList);
                         }
+                        et_inward_sub_total.setText("00.00");
+                        et_inward_grand_total.setText("00.00");
                     }
                 }
             });
@@ -1712,7 +1715,8 @@ void populate_old(int type)
             String[] fields = {"name", "phone"};
             int[] res = {R.id.adapterName, R.id.adapterPhone};
 
-            SimpleAdapter simpleAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.adapter_supplier_name, fields, res);
+            //SimpleAdapter simpleAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.adapter_supplier_name, fields, res);
+            SupplierSuggestionAdapter simpleAdapter = new SupplierSuggestionAdapter(myContext, R.layout.adapter_supplier_name, autoCompleteDetails);
             autocompletetv_suppliername.setAdapter(simpleAdapter);
 
             ArrayList<String> labelsItemName = new ArrayList<String>();

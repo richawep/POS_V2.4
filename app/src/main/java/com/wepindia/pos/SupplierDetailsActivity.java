@@ -26,6 +26,7 @@ import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.adapters.SupplierAdapter;
+import com.wepindia.pos.adapters.SupplierSuggestionAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.util.ArrayList;
@@ -452,7 +453,8 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             String[] fields = {"name", "phone"};
             int[] res = {R.id.adapterName, R.id.adapterPhone};
 
-            SimpleAdapter dataAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.row_supplier_name_phone_list, fields, res);
+            //SimpleAdapter dataAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.row_supplier_name_phone_list, fields, res);
+            SupplierSuggestionAdapter dataAdapter = new SupplierSuggestionAdapter(myContext, R.layout.adapter_supplier_name, autoCompleteDetails);
             autocompletetv_suppliername.setAdapter(dataAdapter);
 
         } catch (Exception e) {

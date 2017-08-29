@@ -6125,7 +6125,7 @@ public int makeBillVoid(int InvoiceNo ) {
     public ArrayList<HashMap<String, String>> getAllSupplierNamePhone() {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TBL_Supplier;
+        String selectQuery = "SELECT  * FROM " + TBL_Supplier+" ORDER BY SupplierName ASC";
         Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArguments
         // looping through all rows and adding to list
         if (cursor != null && cursor.moveToFirst()) {
