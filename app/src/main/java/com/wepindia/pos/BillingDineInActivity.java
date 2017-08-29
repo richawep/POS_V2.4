@@ -5051,7 +5051,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             objBillItem.setCustName(custname);
             Log.d("InsertBillItems", "CustName :" + custname);
 
-            String custgstin = etCustGSTIN.getText().toString();
+            String custgstin = etCustGSTIN.getText().toString().trim().toUpperCase();
             objBillItem.setGSTIN(custgstin);
             Log.d("InsertBillItems", "custgstin :" + custgstin);
 
@@ -5201,7 +5201,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         objBillDetail.setCustname(custname);
         Log.d("InsertBillDetail", "CustName :" + custname);
 
-        String custgstin = etCustGSTIN.getText().toString();
+        String custgstin = etCustGSTIN.getText().toString().trim().toUpperCase();
         objBillDetail.setCustname(custgstin);
         Log.d("InsertBillDetail", "custgstin :" + custgstin);
 
@@ -5342,7 +5342,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         objBillDetail.setUserId(strUserId);
         Log.d("InsertBillDetail", "UserID:" + strUserId);
 
-        lResult = dbBillScreen.addBill(objBillDetail, etCustGSTIN.getText().toString());
+        lResult = dbBillScreen.addBill(objBillDetail, etCustGSTIN.getText().toString().trim().toUpperCase());
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
@@ -7679,7 +7679,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                 if (crsrCust.moveToFirst()) {
                     MsgBox.Show("Note", "Customer Already Exists");
                 } else {
-                    String gstin = etCustGSTIN.getText().toString();
+                    String gstin = etCustGSTIN.getText().toString().trim().toUpperCase();
                     if (gstin == null) {
                         gstin = "";
                     }

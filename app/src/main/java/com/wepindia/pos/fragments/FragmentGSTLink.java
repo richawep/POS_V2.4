@@ -773,10 +773,12 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         dataController = new GSTDataController(myContext,dbGSTLink);
         progressDialog = new ProgressDialog(myContext);
         progressDialog.setMessage("Please Wait..");
+        progressDialog.setIcon(R.drawable.ic_launcher);
         progressDialog.setCancelable(false);
 
         pDialog = new ProgressDialog(myContext);
         pDialog.setMessage("Downloading file. Please wait...");
+        pDialog.setIcon(R.drawable.ic_launcher);
         pDialog.setIndeterminate(false);
         pDialog.setMax(100);
         pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -1024,6 +1026,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         {
             //disMiss();
             MsgBox.setMessage("Please select Date")
+                    .setTitle("Invalid Date")
                     .setIcon(R.drawable.ic_launcher)
                     .setPositiveButton("OK", null)
                     .show();
@@ -1031,6 +1034,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         else if (!token1[1].equals(token2[1]))
         {
             MsgBox.setMessage("Please select Date range for one month at a time")
+                    .setTitle("Invalid Date")
                     .setIcon(R.drawable.ic_launcher)
                     .setPositiveButton("OK", null)
                     .show();

@@ -4340,7 +4340,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             objBillItem.setCustName(custname);
             Log.d("InsertBillItems", "CustName :" + custname);
 
-            String custgstin = etCustGSTIN.getText().toString();
+            String custgstin = etCustGSTIN.getText().toString().trim().toUpperCase();
             objBillItem.setGSTIN(custgstin);
             Log.d("InsertBillItems", "custgstin :" + custgstin);
 
@@ -4514,7 +4514,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         objBillDetail.setCustname(custname);
         Log.d("InsertBillDetail", "CustName :" + custname);
         // cust gstin
-        String custGSTIN = etCustGSTIN.getText().toString().trim();
+        String custGSTIN = etCustGSTIN.getText().toString().trim().toUpperCase();
         objBillDetail.setGSTIN(custGSTIN);
         Log.d("InsertBillDetail", "CustGSTIN :" + custGSTIN);
 
@@ -4667,7 +4667,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         objBillDetail.setUserId(strUserId);
         Log.d("InsertBillDetail", "UserID:" + strUserId);
 
-        lResult = db.addBilll(objBillDetail, etCustGSTIN.getText().toString());
+        lResult = db.addBilll(objBillDetail, etCustGSTIN.getText().toString().trim().toUpperCase());
         Log.d("InsertBill", "Bill inserted at position:" + lResult);
         //lResult = dbBillScreen.updateBill(objBillDetail);
 
@@ -7436,7 +7436,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 if (crsrCust.moveToFirst()) {
                     MsgBox.Show("Note", "Customer Already Exists");
                 } else {
-                    String gstin = etCustGSTIN.getText().toString();
+                    String gstin = etCustGSTIN.getText().toString().trim().toUpperCase();
                     if (gstin == null) {
                         gstin = "";
                     }

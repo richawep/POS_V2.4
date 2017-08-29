@@ -88,7 +88,7 @@ public class OwnerDetailsActivity extends WepBaseActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str = Gstin.getText().toString();
+                String str = Gstin.getText().toString().trim().toUpperCase();
                 try {
                     if(str.trim().length() == 0)
                     {mFlag = true;}
@@ -122,12 +122,12 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                         Address.getText().toString().equalsIgnoreCase("")) {
                         MsgBox.Show("Incomplete Information","Please fill required details");
                     //Toast.makeText(OwnerDetailsActivity.this, "detail not completed", Toast.LENGTH_SHORT).show();
-                }else if (!Gstin.getText().toString().equals("") && Gstin.getText().toString().length()!=15)
+                }else if (!Gstin.getText().toString().trim().toUpperCase().equals("") && Gstin.getText().toString().trim().toUpperCase().length()!=15)
                 {
                      MsgBox.Show("Note", "GSTIN can either be empty or of 15 characters");
                 }  else{
                     try {
-                        boolean cc = isValidEmailAddress(Email.getText().toString().trim());
+                       // boolean cc = isValidEmailAddress(Email.getText().toString().trim());
                         if (!isValidEmailAddress(Email.getText().toString().trim()))
                         {
                             MsgBox.Show("Invalid Information","Please Enter Valid Email id");
@@ -254,7 +254,7 @@ public class OwnerDetailsActivity extends WepBaseActivity {
             sub = str.substring(length - 2, length);
         }
 
-        Status = dbHelper.addOwnerDetails(Name.getText().toString(), Gstin.getText().toString(),
+        Status = dbHelper.addOwnerDetails(Name.getText().toString(), Gstin.getText().toString().trim().toUpperCase(),
                 Phone.getText().toString(), Email.getText().toString(),
                 Address.getText().toString(), sub,
                 spinner2.getSelectedItem().toString(), RefernceNo.getText().toString(), BillNoPrefix.getText().toString());

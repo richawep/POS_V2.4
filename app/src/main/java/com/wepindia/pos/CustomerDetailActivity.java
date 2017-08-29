@@ -779,7 +779,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
         Phone = txtPhone.getText().toString();
         Address = txtAddress.getText().toString();
         CreditAmount = txtCreditAmount.getText().toString();
-        String GSTIN  = txGSTIN.getText().toString();
+        String GSTIN  = txGSTIN.getText().toString().trim().toUpperCase();
 
         if (Name.equalsIgnoreCase("")) {
             MsgBox.Show("Warning", "Please enter customer name before adding customer");
@@ -864,7 +864,7 @@ public class CustomerDetailActivity extends WepBaseActivity {
         Phone = txtPhone.getText().toString();
         Address = txtAddress.getText().toString();
         CreditAmount = txtCreditAmount.getText().toString();
-        String GSTIN = txGSTIN.getText().toString();
+        String GSTIN = txGSTIN.getText().toString().trim().toUpperCase();
         if(!Phone.equalsIgnoreCase(upon_rowClick_Phn))
         {
             Cursor cursor = dbCustomer.getCustomer(Phone);

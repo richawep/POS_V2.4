@@ -387,7 +387,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 }
                 else
                 {
-                    String gstin = etCustGSTIN.getText().toString();
+                    String gstin = etCustGSTIN.getText().toString().trim().toUpperCase();
                     if (gstin == null) {
                         gstin = "";
                     }

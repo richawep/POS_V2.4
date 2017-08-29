@@ -13,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -135,8 +137,23 @@ public class TabbedCreditDebitNote extends WepBaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     }
-    public void onUserInteraction(){
-        //Log.d("Configuration","touched");
-        hideKeyboard();
+    public boolean dispatchTouchEvent(MotionEvent event) {
+
+        View view = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(event);
+
+        if (view instanceof EditText) {
+            View w = getCurrentFocus();
+            int location[] = new int[2];
+            w.getLocationOnScreen(location);
+            float x = event.getRawX() + w.getLeft() - location[0];
+            float y = event.getRawY() + w.getTop() - location[1];
+            if (event.getAction() == MotionEvent.ACTION_DOWN
+                    && (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w.getBottom())) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+            }
+        }
+        return ret;
     }
 }

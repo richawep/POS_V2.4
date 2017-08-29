@@ -47,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -6121,7 +6122,27 @@ public int makeBillVoid(int InvoiceNo ) {
         return cursor;
     }
 
-    // richa 2712_inward
+    public ArrayList<HashMap<String, String>> getAllSupplierNamePhone() {
+        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TBL_Supplier;
+        Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArguments
+        // looping through all rows and adding to list
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+//                list.add(cursor.getString(cursor.getColumnIndex(KEY_SUPPLIERNAME)));// adding
+
+                HashMap<String, String> data = new HashMap<String, String>();
+                data.put("name", cursor.getString(cursor.getColumnIndex(KEY_SUPPLIERNAME)));
+                data.put("phone", cursor.getString(cursor.getColumnIndex(KEY_SupplierPhone)));
+                list.add(data);
+
+            } while (cursor.moveToNext());
+        }
+        // returning lables
+        return list;
+    }
+
 
 
     // -----Update item quantity in item outward as per ingredient management-----

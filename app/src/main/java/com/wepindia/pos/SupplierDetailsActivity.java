@@ -50,7 +50,9 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     ArrayList<HashMap<String, String>> autoCompleteDetails;
 
     String suppliername_clicked , suppliergstin_clicked, supplierphone_clicked;
-
+    private final int CHECK_INTEGER_VALUE = 0;
+    private final int CHECK_DOUBLE_VALUE = 1;
+    private final int CHECK_STRING_VALUE = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -161,6 +163,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
                 //autocompletetv_suppliername.setText(data.get("name"));
                 String suppliername_str = data.get("name");
                 String supplierphone_str = data.get("phone");
+                autocompletetv_suppliername.setText(data.get("name"));
                 Cursor supplierdetail_cursor = dbSupplierDetails.getSupplierDetailsByPhone(supplierphone_str); // TODO: changed here
                 int suppliercode = -1;
                 String SupplierPhone= "", SupplierAddress = "";
@@ -234,7 +237,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
         String supplierphn_str = autocompletetv_supplierPhn.getText().toString();
         String supplieraddress_str = et_inw_supplierAddress.getText().toString();
-        String suppliergstin_str = edt_supplierGSTIN.getText().toString();
+        String suppliergstin_str = edt_supplierGSTIN.getText().toString().trim().toUpperCase();
         if (suppliergstin_str != null && !suppliergstin_str.equals(""))
             supplierType_str = "Registered";
         else
@@ -263,11 +266,39 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         }
 
 
+        boolean mFlag = false;
+        try {
+            if(suppliergstin_str.trim().length() == 0)
+            {mFlag = true;}
+            else if (suppliergstin_str.trim().length() > 0 && suppliergstin_str.length() == 15) {
+                String[] part = suppliergstin_str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
+
+                               /* int length = gstin.length() -1;
+                                if(Integer.parseInt(String.valueOf(gstin.charAt(length))) ==  checksumGSTIN(gstin.substring(0,length)))*/
+                    mFlag = true;
+                } else {
+                    mFlag = false;
+                }
+            } else {
+                mFlag = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mFlag = false;
+        }
+
         if (suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn_str.equals("")) {
             MsgBox.Show("Incomplete Details","Please fill all details of Supplier");
             return false;
 
-        } else if (!isValidEmailAddress(suppliergstin_str))
+        } else if (!mFlag)
         {
             MsgBox.Show("Invalid Information","Please fill valid gstin");
             return false;
@@ -282,6 +313,27 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         }
         return true;
     }
+
+    public static int checkDataypeValue(String value, String type) {
+        int flag =0;
+        try {
+            switch(type) {
+                case "Int":
+                    Integer.parseInt(value);
+                    flag = 0;
+                    break;
+                case "Double" : Double.parseDouble(value);
+                    flag = 1;
+                    break;
+                default : flag =2;
+            }
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            flag = -1;
+        }
+        return flag;
+    }
+
 
     private  boolean AddSupplier() {
         long l = 0;
@@ -307,7 +359,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
         String supplierphn_str = autocompletetv_supplierPhn.getText().toString();
         String supplieraddress_str = et_inw_supplierAddress.getText().toString();
-        String suppliergstin_str = edt_supplierGSTIN.getText().toString().trim();
+        String suppliergstin_str = edt_supplierGSTIN.getText().toString().trim().toUpperCase();
         if (suppliergstin_str != null && !suppliergstin_str.equals(""))
             supplierType_str = "Registered";
         else
@@ -325,6 +377,34 @@ public class SupplierDetailsActivity extends WepBaseActivity {
 //            }
 //        }
 
+
+        boolean mFlag = false;
+        try {
+            if(suppliergstin_str.trim().length() == 0)
+            {mFlag = true;}
+            else if (suppliergstin_str.trim().length() > 0 && suppliergstin_str.length() == 15) {
+                String[] part = suppliergstin_str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
+
+                               /* int length = gstin.length() -1;
+                                if(Integer.parseInt(String.valueOf(gstin.charAt(length))) ==  checksumGSTIN(gstin.substring(0,length)))*/
+                    mFlag = true;
+                } else {
+                    mFlag = false;
+                }
+            } else {
+                mFlag = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mFlag = false;
+        }
         for (String phone : labelsSupplierPhone) {
             if (supplierphn_str.equalsIgnoreCase(phone)) {
                 MsgBox.Show("Warning","Supplier with phone already present in list");
@@ -335,7 +415,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         if (suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn_str.equals("")) {
             MsgBox.Show("Insufficient Information","Please fill all details of Supplier");
             return false;
-        } else if (!isValidEmailAddress(suppliergstin_str))
+        } else if (!mFlag)
         {
             MsgBox.Show("Insufficient Information","Please fill valid gstin");
             return false;

@@ -13,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -158,6 +160,6 @@ public class TabbedAmmendActivity extends WepBaseActivity {
 
     public void onUserInteraction(){
         //Log.d("Configuration","touched");
-        hideKeyboard();
+       //hideKeyboard();
     }
 }

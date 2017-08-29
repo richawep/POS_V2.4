@@ -264,6 +264,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:maxLength="5"
                         android:inputType="numberDecimal"
                         android:textSize="14dp" />
                 </LinearLayout>
@@ -285,6 +286,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:maxLength="5"
                         android:inputType="numberDecimal"
                         android:textSize="14dp" />
                 </LinearLayout>
@@ -306,6 +308,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:maxLength="5"
                         android:inputType="numberDecimal"
                         android:textSize="14dp" />
                 </LinearLayout>
@@ -327,6 +330,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:maxLength="7"
                         android:inputType="numberDecimal"
                         android:textSize="14dp" />
                 </LinearLayout>
@@ -356,6 +360,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:maxLength="7"
                         android:inputType="numberDecimal"
                         android:textSize="14dp" />
                 </LinearLayout>
@@ -377,6 +382,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:maxLength="7"
                         android:inputType="numberDecimal"
                         android:textSize="14dp" />
                 </LinearLayout>
@@ -398,6 +404,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:maxLength="7"
                         android:inputType="numberDecimal"
                         android:textSize="14dp" />
                 </LinearLayout>
@@ -419,6 +426,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:maxLength="7"
                         android:inputType="numberDecimal"
                         android:textSize="14dp" />
 
@@ -441,6 +449,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1.6"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:layout_marginLeft="@dimen/_5dp_720dp_4dp_600dp"
+                android:text="*Please note, decimal values entered will be taken upto 2 decimal digit"/>
 
             <TextView
                 android:layout_width="match_parent"

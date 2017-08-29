@@ -257,22 +257,23 @@ public class Fragment_GSTR1_B2CL_Amend extends Fragment {
             ammend.setInvoiceDate_rev(dd1);
             ammend.setType(cursor.getString(cursor.getColumnIndex("SupplyType")));
             ammend.setHSn(cursor.getString(cursor.getColumnIndex("HSNCode")));
-            ammend.setValue(cursor.getDouble(cursor.getColumnIndex("Value")));
-            ammend.setTaxableValue(cursor.getDouble(cursor.getColumnIndex("TaxableValue")));
-            ammend.setIgstrate(cursor.getFloat(cursor.getColumnIndex("IGSTRate")));
-            ammend.setIgstamt(cursor.getFloat(cursor.getColumnIndex("IGSTAmount")));
+            ammend.setValue(Double.parseDouble(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("Value")))));
+            ammend.setTaxableValue(Double.parseDouble(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("TaxableValue")))));
+            ammend.setIgstrate(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("IGSTRate")))));
+            ammend.setIgstamt(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("IGSTAmount")))));
             ammend.setPOS(cursor.getString(cursor.getColumnIndex("RevisedPOS")));
             ammend.setCustStateCode(cursor.getString(cursor.getColumnIndex("CustStateCode")));
-            ammend.setCsamt(cursor.getDouble(cursor.getColumnIndex("cessAmount")));
+            ammend.setCsamt(Double.parseDouble(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("cessAmount")))));
             ammendList.add(ammend);
         }
     }catch (Exception e)
     {
         e.printStackTrace();
     }
-    if(from ==0 && ammendList.size()==0)
+    if( ammendList.size()==0)
     {
-        MsgBox.Show("Sorry", " No records found");
+        if(from ==0)
+            MsgBox.Show("Sorry", " No records found");
         return;
     }
     if(ammendAdapter == null)
@@ -397,32 +398,37 @@ void Reset()
         {
             int length = custStateCode_temp.length();
             CustStateCode = custStateCode_temp.substring(length - 2, length);
+        }else
+        {
+            MsgBox.Show(" Error "," Please Select Cust StateCode ");
+            return;
         }
 
         String supply = spnr_g_s.getSelectedItem().toString();
 
-        String value = String.format("%.2f",Float.parseFloat(et_val.getText().toString()));
-        String taxval = String.format("%.2f",Float.parseFloat(et_taxval.getText().toString()));
-        String igstrate = String.format("%.2f",Float.parseFloat(et_igstrate.getText().toString()));
+        String value = et_val.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_val.getText().toString()));
+        String taxval = et_taxval.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_taxval.getText().toString()));
+        String igstrate = et_igstrate.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_igstrate.getText().toString()));
 //        String cgstrate = String.format("%.2f",Float.parseFloat(et_cgstrate.getText().toString()));
 //        String sgstrate = String.format("%.2f",Float.parseFloat(et_sgstrate.getText().toString()));
-        String igstamt = String.format("%.2f",Float.parseFloat(et_igstamt.getText().toString()));
-        String cessamt = String.format("%.2f",Float.parseFloat(et_cessamt.getText().toString()));
+        String igstamt = et_igstamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_igstamt.getText().toString()));
+        String cessamt = et_cessamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_cessamt.getText().toString()));
 //        String cgstamt = String.format("%.2f",Float.parseFloat(et_cgstamt.getText().toString()));
 //        String sgstamt = String.format("%.2f",Float.parseFloat(et_sgstamt.getText().toString()));
 
         int count =listview_gstr2_amend.getCount()+1;
-
+            ValidationForAmendFields objectValidation = new ValidationForAmendFields(myContext);
 
 
         if (recipientName.equals("") || (invdate_ori.equals("")) || (invno_ori.equals(""))||
                 (invdate_rev.equals("")) || (invno_rev.equals(""))|| (taxval.equals(""))||
                 (igstrate.equals(""))|| (igstamt.equals(""))||cessamt.equals("") ||value.equals("") )
         {
-            MsgBox.setTitle(" Error ")
-                    .setMessage(" Please fill all details ")
-                    .show();
-        }else {
+            MsgBox.Show(" Error "," Please fill all details ");
+            return;
+
+        }else if (objectValidation.validationCheckpoints_GSTR1_B2CL(taxval,igstrate,igstamt,cessamt))
+        {
 
                 GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
                 ammend.setSno(count);

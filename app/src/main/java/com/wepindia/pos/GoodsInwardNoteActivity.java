@@ -26,6 +26,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -81,13 +83,13 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
     String strDate= "";
     String strUserName="", strUserId ="";
     Date d;
-
+    ArrayList<HashMap<String, String>> autoCompleteDetails = new ArrayList<HashMap<String, String>>();
     Cursor purchase_crsr;
     private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_inward_note);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -125,9 +127,17 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             });
             autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    HashMap<String, String> data = autoCompleteDetails.get(position);
+                    String suppliername_str = data.get("name");
+                    String supplierphone_str = data.get("phone");
+
+                    autocompletetv_suppliername.setText(data.get("name"));
+
                     int suppliercode = -1;
-                    String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-                    Cursor supplierdetail_cursor = dbGoodsInwardNote.getSupplierDetailsByName(suppliername_str);
+//                    String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
+//                    Cursor supplierdetail_cursor = dbGoodsInwardNote.getSupplierDetailsByName(suppliername_str);
+                    Cursor supplierdetail_cursor = dbGoodsInwardNote.getSupplierDetailsByPhone(supplierphone_str);
                     if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())
                     {
                         et_supplier_phone.setText(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierPhone")));
@@ -201,7 +211,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
             autocompletetv_purchase_order.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                     btnSubmitItem.setEnabled(true);
+                    btnSubmitItem.setEnabled(true);
                     loadTableonPurchaseOrderSelected();
 
                 }
@@ -403,8 +413,8 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                                     .setNegativeButton("Cancel", null)
                                     .show();*/
                             MsgBox.Show(" Insufficient Information"," Item not found in database for this Supplier." +
-                                            "\nKindly goto \"Supplier Item Linkage\" and add the desired item" +
-                                            "\nPlease save your data , if any , before leaving this screen");
+                                    "\nKindly goto \"Supplier Item Linkage\" and add the desired item" +
+                                    "\nPlease save your data , if any , before leaving this screen");
                         }
                     }
                 }
@@ -1717,11 +1727,18 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
     {
         try
         {
-            labelsSupplierName = dbGoodsInwardNote.getAllSupplierName();
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                    labelsSupplierName);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-            autocompletetv_suppliername.setAdapter(dataAdapter);
+//            labelsSupplierName = dbGoodsInwardNote.getAllSupplierName();
+//            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+//                    labelsSupplierName);
+//            dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+//            autocompletetv_suppliername.setAdapter(dataAdapter);
+
+            autoCompleteDetails = dbGoodsInwardNote.getAllSupplierNamePhone();
+            String[] fields = {"name", "phone"};
+            int[] res = {R.id.adapterName, R.id.adapterPhone};
+
+            SimpleAdapter simpleAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.adapter_supplier_name, fields, res);
+            autocompletetv_suppliername.setAdapter(simpleAdapter);
 
             ArrayList<String> labelsItemName = new ArrayList<String>();
             //labelsItemName.add(" ");
@@ -1775,7 +1792,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         //btnimage_new_item.setEnabled(true);
 
         btnAddSupplier.setEnabled(true);
-       // btnSubmitItem.setEnabled(false);
+        // btnSubmitItem.setEnabled(false);
         btnSaveItem.setEnabled(true);
         if (type ==0)
         {

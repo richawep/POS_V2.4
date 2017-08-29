@@ -25,6 +25,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ import com.wepindia.pos.utils.ActionBarUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -79,6 +81,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
     Cursor purchase_crsr;
     private Toolbar toolbar;
+    ArrayList<HashMap<String, String>> autoCompleteDetails = new ArrayList<HashMap<String, String>>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,9 +119,18 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             });
             autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    HashMap<String, String> data = autoCompleteDetails.get(position);
+                    String suppliername_str = data.get("name");
+                    String supplierphone_str = data.get("phone");
+
+                    autocompletetv_suppliername.setText(data.get("name"));
+
                     int suppliercode = -1;
-                    String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-                    Cursor supplierdetail_cursor = dbPurchaseOrder.getSupplierDetailsByName(suppliername_str);
+//                    String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
+//                    Cursor supplierdetail_cursor = dbPurchaseOrder.getSupplierDetailsByName(suppliername_str);
+                    Cursor supplierdetail_cursor = dbPurchaseOrder.getSupplierDetailsByPhone(supplierphone_str);
+
                     if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())
                     {
                         et_supplier_phone.setText(supplierdetail_cursor.getString(supplierdetail_cursor.getColumnIndex("SupplierPhone")));
@@ -145,7 +157,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             autocompletetv_purchase_order.setOnTouchListener(new View.OnTouchListener(){
                 @Override
                 public boolean onTouch(View v, MotionEvent event){
-                        autocompletetv_purchase_order.showDropDown();
+                    autocompletetv_purchase_order.showDropDown();
                     return false;
                 }
             });
@@ -193,7 +205,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                     if (itemname.equalsIgnoreCase("Not in list") || itemname.equalsIgnoreCase("Add new item") ) {
                         et_inward_item_quantity.setBackgroundColor(getResources().getColor(R.color.grey));
                         et_inward_item_quantity.setEnabled(false);
-                       // autocompletetv_itemlist.setText("");
+                        // autocompletetv_itemlist.setText("");
                         //input_window();
                         MsgBox.Show("Warning","Kindly goto \"Supplier Item Linkage\" and add the desired item." +
                                 "\nPlease save your data , if any , before leaving this screen");
@@ -331,7 +343,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         try
         {
             if (purchaseOrder.equalsIgnoreCase("Select/Add Supplier")) {
-               // MsgBox.Show("Insufficient Information", "Please Select/Add the Supplier");
+                // MsgBox.Show("Insufficient Information", "Please Select/Add the Supplier");
             }/*else if (purchaseOrder.equalsIgnoreCase(""))
             {
                 MsgBox.Show("Insufficient Information", "Please Select the Purchase Order");
@@ -372,7 +384,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                             et_inward_additionalchargename.setText(purchaseorder_crsr.getString(purchaseorder_crsr.getColumnIndex("AdditionalChargeName")));
                             et_inward_additionalchargeamount.setText(additionalamount);
                         }
-                                                flag = 1;
+                        flag = 1;
                     }
                     purchase_crsr = null;
                     purchase_crsr = purchaseorder_crsr;
@@ -740,7 +752,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         autocompletetv_purchase_order = (AutoCompleteTextView)findViewById(R.id.autocompletetv_purchase_order);
         autocompletetv_itemlist = (AutoCompleteTextView)findViewById(R.id.autocompletetv_itemlist);
         et_inward_item_quantity = (EditText) findViewById(R.id.et_inward_item_quantity);
-       // btnimage_new_item = (ImageButton) findViewById(R.id.btnimage_new_item);
+        // btnimage_new_item = (ImageButton) findViewById(R.id.btnimage_new_item);
 
         btnEditPO = (com.wep.common.app.views.WepButton) findViewById (R.id.btnEditPO);
         btnGeneratePO = (com.wep.common.app.views.WepButton) findViewById (R.id.btnGeneratePO);
@@ -1689,11 +1701,19 @@ void populate_old(int type)
     {
         try
         {
-            labelsSupplierName = dbPurchaseOrder.getAllSupplierName();
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                    labelsSupplierName);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-            autocompletetv_suppliername.setAdapter(dataAdapter);
+//            labelsSupplierName = dbPurchaseOrder.getAllSupplierName();
+            autoCompleteDetails = dbPurchaseOrder.getAllSupplierNamePhone();
+
+//            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+//                    labelsSupplierName);
+//            dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+//            autocompletetv_suppliername.setAdapter(dataAdapter);
+
+            String[] fields = {"name", "phone"};
+            int[] res = {R.id.adapterName, R.id.adapterPhone};
+
+            SimpleAdapter simpleAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.adapter_supplier_name, fields, res);
+            autocompletetv_suppliername.setAdapter(simpleAdapter);
 
             ArrayList<String> labelsItemName = new ArrayList<String>();
             //labelsItemName.add(" ");

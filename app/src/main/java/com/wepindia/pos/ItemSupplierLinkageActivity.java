@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.wepindia.pos.utils.ActionBarUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class ItemSupplierLinkageActivity extends WepBaseActivity {
@@ -63,7 +65,7 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
     ArrayList<String> itemlist;
     TextView tv_suppliercode, et_Inw_AverageRate,tv_count,et_Inw_Amount,tv_menucode;
 
-
+    ArrayList<HashMap<String, String>> autoCompleteDetails;
     String strMenuCode,  strUserName = "";
 
 
@@ -228,6 +230,7 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
             //@Override
             public boolean onTouch(View v, MotionEvent event){
                 autocompletetv_suppliername.showDropDown();
+
                 return false;
             }
         });
@@ -235,8 +238,15 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
 
         autocompletetv_suppliername.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
-                Cursor supplierdetail_cursor = dbSupplierItemLink.getSupplierDetailsByName(suppliername_str);
+
+                HashMap<String, String> data = autoCompleteDetails.get(position);
+                String suppliername_str = data.get("name");
+                String supplierphone_str = data.get("phone");
+
+                autocompletetv_suppliername.setText(data.get("name")); // This is required DO NOT IGNORE
+//                String suppliername_str = autocompletetv_suppliername.getText().toString().toUpperCase();
+//                Cursor supplierdetail_cursor = dbSupplierItemLink.getSupplierDetailsByName(suppliername_str);
+                Cursor supplierdetail_cursor = dbSupplierItemLink.getSupplierDetailsByPhone(supplierphone_str);
                 int suppliercode = -1;
                 String SupplierPhone= "", SupplierAddress = "";
                 if (supplierdetail_cursor!=null && supplierdetail_cursor.moveToFirst())
@@ -315,7 +325,7 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
 //                        spnr_supplytype.setSelection(1);
 
                     String uom_temp = crsritem.getString(crsritem.getColumnIndex("UOM"));
-                   // String uom = "("+uom_temp+")";
+                    // String uom = "("+uom_temp+")";
 
 //                    spnrUOM.setSelection(getIndex_uom(uom));
                     spnrUOM.setText(uom_temp);
@@ -401,7 +411,7 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
 //    }
     @SuppressWarnings("deprecation")
     private void  DisplayItems(int suppliercode_recv ) {
-        // if suppliercode_recv == -1 , then display all whole data , i.e. all items for all the suppliers
+        // if suppliercode_recv == -1 , then display all data , i.e. all items for all the suppliers
         // else display for that suppliercode
         Cursor crsrItems = null;
 
@@ -453,13 +463,13 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
                 } while (crsrMenuCode.moveToNext());
             }
         }
-        if(supplierItemLinkageList.size()==0)
-        {
+        if(supplierItemLinkageList.size()==0) {
             Toast.makeText(myContext, "No Item is linked to suppliers", Toast.LENGTH_SHORT).show();
-        }else if(supplierItemLinkageAdapter == null)
-        {
+            supplierItemLinkageAdapter.notifyDataSetChanged(supplierItemLinkageList);
+        }else if(supplierItemLinkageAdapter == null) {
             supplierItemLinkageAdapter = new SupplierItemLinkageAdapter(supplierItemLinkageList, myContext);
             lstSupplieritem.setAdapter(supplierItemLinkageAdapter);
+//            supplierItemLinkageAdapter.notifyDataSetChanged(supplierItemLinkageList);
         }else
         {
             supplierItemLinkageAdapter.notifyDataSetChanged(supplierItemLinkageList);
@@ -635,21 +645,15 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
 
         btnLinkItem.setEnabled(false);
         btnDelinkItem.setEnabled(false);
-
-
     }
 
 
 
     public void ClearingAndDisplaying()
     {
-        ;
-        if(sema_display == ALL)
-        {
-
+        if(sema_display == ALL) {
             DisplayItems(-1);
-        }else if(sema_display == SUPPLIERWISE)
-        {
+        } else if(sema_display == SUPPLIERWISE) {
             String suppliercode = tv_suppliercode.getText().toString();
             String suppliername = autocompletetv_suppliername.getText().toString();
             String supplierphn = autocompletetv_supplierPhn.getText().toString();
@@ -705,16 +709,30 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
         Cursor cursor = dbSupplierItemLink.getAllSupplierName_nonGST();
         labelsSupplierName = new ArrayList<String>();
         labelsSupplierPhn = new ArrayList<String>();
+        autoCompleteDetails = new ArrayList<HashMap<String, String>>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
-                labelsSupplierPhn.add(cursor.getString(cursor.getColumnIndex("SupplierPhone")));// adding
+//                labelsSupplierName.add(cursor.getString(cursor.getColumnIndex("SupplierName")));// adding
+//                labelsSupplierPhn.add(cursor.getString(cursor.getColumnIndex("SupplierPhone")));// adding
+
+                HashMap<String, String> data = new HashMap<String, String>();
+                data.put("name", cursor.getString(cursor.getColumnIndex("SupplierName")));
+                data.put("phone", cursor.getString(cursor.getColumnIndex("SupplierPhone")));
+                autoCompleteDetails.add(data);
+
             } while (cursor.moveToNext());
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(myContext, android.R.layout.simple_list_item_1,
-                labelsSupplierName);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        autocompletetv_suppliername.setAdapter(dataAdapter);
+
+        String[] fields = {"name", "phone"};
+        int[] res = {R.id.adapterName, R.id.adapterPhone};
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(myContext, autoCompleteDetails, R.layout.adapter_supplier_name, fields, res);
+        autocompletetv_suppliername.setAdapter(simpleAdapter);
+
+//        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(myContext, android.R.layout.simple_list_item_1,
+//                labelsSupplierName);
+//        dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+//        autocompletetv_suppliername.setAdapter(dataAdapter);
 
 
         /*ArrayAdapter<String> dataAdapter_phn = new ArrayAdapter<String>(myContext, android.R.layout.simple_list_item_1,
@@ -730,7 +748,7 @@ public class ItemSupplierLinkageActivity extends WepBaseActivity {
                 itemlist.add(cursor_item.getString(cursor_item.getColumnIndex("ItemName")));// adding
             } while (cursor_item.moveToNext());
         }
-        dataAdapter = new ArrayAdapter<String>(myContext, android.R.layout.simple_list_item_1,itemlist);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(myContext, android.R.layout.simple_list_item_1,itemlist);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         autocomplete_inw_ItemName.setAdapter(dataAdapter);
 

@@ -332,6 +332,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:singleLine="true"
+                            android:dropDownWidth="600dp"
                             android:imeOptions="actionNext"
                             android:drawableRight="@drawable/searchicon_img" />
 

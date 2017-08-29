@@ -194,14 +194,14 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
             ammend.setHsn_rev(cursor.getString(cursor.getColumnIndex("ReviseHSNCode")));
             ammend.setType_rev(cursor.getString(cursor.getColumnIndex("RevisedSupplyType")));
             ammend.setCustStateCode(cursor.getString(cursor.getColumnIndex("CustStateCode")));
-            ammend.setTaxableValue(cursor.getDouble(cursor.getColumnIndex("TaxableValue")));
-            ammend.setIgstrate(cursor.getFloat(cursor.getColumnIndex("IGSTRate")));
-            ammend.setCgstrate(cursor.getFloat(cursor.getColumnIndex("CGSTRate")));
-            ammend.setSgstrate(cursor.getFloat(cursor.getColumnIndex("SGSTRate")));
-            ammend.setIgstamt(cursor.getFloat(cursor.getColumnIndex("IGSTAmount")));
-            ammend.setCgstamt(cursor.getFloat(cursor.getColumnIndex("CGSTAmount")));
-            ammend.setSgstamt(cursor.getFloat(cursor.getColumnIndex("SGSTAmount")));
-            ammend.setCsamt(cursor.getFloat(cursor.getColumnIndex("cessAmount")));
+            ammend.setTaxableValue(Double.parseDouble(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("TaxableValue")))));
+            ammend.setIgstrate(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("IGSTRate")))));
+            ammend.setCgstrate(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("CGSTRate")))));
+            ammend.setSgstrate(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("SGSTRate")))));
+            ammend.setIgstamt(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("IGSTAmount")))));
+            ammend.setCgstamt(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("CGSTAmount")))));
+            ammend.setSgstamt(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("SGSTAmount")))));
+            ammend.setCsamt(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("cessAmount")))));
 
             ammendList.add(ammend);
         }
@@ -209,9 +209,10 @@ public class Fragment_GSTR1_B2CS_Amend extends Fragment {
     {
         e.printStackTrace();
     }
-        if(from ==0 && ammendList.size()==0)
+        if(ammendList.size()==0)
         {
-            MsgBox.Show("Sorry", " No records found");
+            if(from ==0 )
+                MsgBox.Show("Sorry", " No records found");
             return;
         }
         if(ammendAdapter == null)
@@ -305,18 +306,18 @@ void Reset()
         }
 
 
-        String taxval1 = et_taxval.getText().toString();
-        String igstrate1 = et_igstrate.getText().toString();
-        String cgstrate1 = et_cgstrate.getText().toString();
-        String sgstrate1 = et_sgstrate.getText().toString();
-        String igstamt1 = et_igstamt.getText().toString();
-        String cgstamt1 = et_cgstamt.getText().toString();
-        String sgstamt1 = et_sgstamt.getText().toString();
-        String cessamt1 = et_cessamt.getText().toString();
+        String taxval1 = et_taxval.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_taxval.getText().toString()));
+        String igstrate1 = et_igstrate.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_igstrate.getText().toString()));
+        String cgstrate1 = et_cgstrate.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_cgstrate.getText().toString()));
+        String sgstrate1 = et_sgstrate.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_sgstrate.getText().toString()));
+        String igstamt1 = et_igstamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_igstamt.getText().toString()));
+        String cgstamt1 = et_cgstamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_cgstamt.getText().toString()));
+        String sgstamt1 = et_sgstamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_sgstamt.getText().toString()));
+        String cessamt1 = et_cessamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_cessamt.getText().toString()));
 
 
         int count =listview_gstr2_amend.getCount()+1;
-
+        ValidationForAmendFields objectValidation = new ValidationForAmendFields(myContext);
 
 
         /*if (taxMonth.equals("") || pos1.equals("")|| custStateCode.equals("")||(taxval1.equals(""))||
@@ -327,15 +328,17 @@ void Reset()
                 (igstamt1.equals(""))|| (sgstamt1.equals(""))||(cgstamt1.equals("")) || cessamt1.equals(""))
         {
             MsgBox.Show("Error", " Please fill all details ");
-        }else {
-            String taxval = String.format("%.2f",Float.parseFloat(et_taxval.getText().toString()));
+        }else  if (objectValidation.validationCheckpoints_GSTR1_B2CS(  taxval1,igstrate1,cgstrate1,sgstrate1,
+                igstamt1,cgstamt1,sgstamt1,cessamt1))
+        {
+            /*String taxval = String.format("%.2f",Float.parseFloat(et_taxval.getText().toString()));
             String igstrate = String.format("%.2f",Float.parseFloat(et_igstrate.getText().toString()));
             String cgstrate = String.format("%.2f",Float.parseFloat(et_cgstrate.getText().toString()));
             String sgstrate = String.format("%.2f",Float.parseFloat(et_sgstrate.getText().toString()));
             String igstamt = String.format("%.2f",Float.parseFloat(et_igstamt.getText().toString()));
             String cgstamt = String.format("%.2f",Float.parseFloat(et_cgstamt.getText().toString()));
             String sgstamt = String.format("%.2f",Float.parseFloat(et_sgstamt.getText().toString()));
-            String cessamt = String.format("%.2f",Float.parseFloat(et_cessamt.getText().toString()));
+            String cessamt = String.format("%.2f",Float.parseFloat(et_cessamt.getText().toString()));*/
 
 
                 GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
@@ -348,14 +351,14 @@ void Reset()
                 ammend.setType_rev(type_rev);
                 ammend.setCustStateCode(custStateCode);
 
-                ammend.setTaxableValue(Double.parseDouble(taxval));
-                ammend.setIgstrate(Float.parseFloat(igstrate));
-                ammend.setIgstamt(Float.parseFloat(igstamt));
-                ammend.setCgstrate(Float.parseFloat(cgstrate));
-                ammend.setCgstamt(Float.parseFloat(cgstamt));
-                ammend.setSgstrate(Float.parseFloat(sgstrate));
-                ammend.setSgstamt(Float.parseFloat(sgstamt));
-                ammend.setCsamt(Float.parseFloat(cessamt));
+                ammend.setTaxableValue(Double.parseDouble(taxval1));
+                ammend.setIgstrate(Float.parseFloat(igstrate1));
+                ammend.setIgstamt(Float.parseFloat(igstamt1));
+                ammend.setCgstrate(Float.parseFloat(cgstrate1));
+                ammend.setCgstamt(Float.parseFloat(cgstamt1));
+                ammend.setSgstrate(Float.parseFloat(sgstrate1));
+                ammend.setSgstamt(Float.parseFloat(sgstamt1));
+                ammend.setCsamt(Float.parseFloat(cessamt1));
                 Date dd = new Date();
                 String dd1 = new SimpleDateFormat("dd-MM-yyyy").format(dd);
                 Date dd2 = new SimpleDateFormat("dd-MM-yyyy").parse(dd1);

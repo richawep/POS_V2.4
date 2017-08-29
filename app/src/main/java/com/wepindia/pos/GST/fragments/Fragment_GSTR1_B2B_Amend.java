@@ -25,6 +25,7 @@ import com.wepindia.pos.GST.Adapter.GSTR2_B2B_AmendAdapter;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.MessageDialog;
 import com.wepindia.pos.R;
+import com.wepindia.pos.GST.fragments.ValidationForAmendFields;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -254,17 +255,17 @@ public class Fragment_GSTR1_B2B_Amend extends Fragment {
             long invdate_rev = cursor.getLong(cursor.getColumnIndex("InvoiceDate"));
             dd1 = new SimpleDateFormat("dd-MM-yyyy").format(invdate_rev);
             ammend.setInvoiceDate_rev(dd1);
-            ammend.setValue(cursor.getDouble(cursor.getColumnIndex("Value")));
+            ammend.setValue(Double.parseDouble(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("Value")))));
             ammend.setType(cursor.getString(cursor.getColumnIndex("SupplyType")));
             ammend.setHSn(cursor.getString(cursor.getColumnIndex("HSNCode")));
-            ammend.setTaxableValue(cursor.getDouble(cursor.getColumnIndex("TaxableValue")));
-            ammend.setIgstrate(cursor.getFloat(cursor.getColumnIndex("IGSTRate")));
-            ammend.setCgstrate(cursor.getFloat(cursor.getColumnIndex("CGSTRate")));
-            ammend.setSgstrate(cursor.getFloat(cursor.getColumnIndex("SGSTRate")));
-            ammend.setIgstamt(cursor.getFloat(cursor.getColumnIndex("IGSTAmount")));
-            ammend.setCgstamt(cursor.getFloat(cursor.getColumnIndex("CGSTAmount")));
-            ammend.setSgstamt(cursor.getFloat(cursor.getColumnIndex("SGSTAmount")));
-            ammend.setCsamt(cursor.getFloat(cursor.getColumnIndex("cessAmount")));
+            ammend.setTaxableValue(Double.parseDouble(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("TaxableValue")))));
+            ammend.setIgstrate(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("IGSTRate")))));
+            ammend.setCgstrate(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("CGSTRate")))));
+            ammend.setSgstrate(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("SGSTRate")))));
+            ammend.setIgstamt(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("IGSTAmount")))));
+            ammend.setCgstamt(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("CGSTAmount")))));
+            ammend.setSgstamt(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("SGSTAmount")))));
+            ammend.setCsamt(Float.parseFloat(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("cessAmount")))));
             ammend.setCustStateCode(cursor.getString(cursor.getColumnIndex("CustStateCode")));
             ammendList.add(ammend);
         }
@@ -373,12 +374,13 @@ void Reset()
 
 */
 
-    public void Add(View v)
+
+    private void Add(View v)
     {
-        String gstin_ori = et_gstin_ori.getText().toString();
-        String gstin_ecom = et_gstin_ecom.getText().toString();
-        String invno_ori = et_invno_ori.getText().toString();
-        String invno_rev = et_invno_rev.getText().toString();
+        String gstin_ori = et_gstin_ori.getText().toString().trim().toUpperCase();
+        String gstin_ecom = et_gstin_ecom.getText().toString().trim().toUpperCase();
+        String invno_ori = et_invno_ori.getText().toString().trim();
+        String invno_rev = et_invno_rev.getText().toString().trim();
         String invdate_ori = et_invdate_ori.getText().toString();
         String invdate_rev = et_invdate_rev.getText().toString();
         String hsn = et_hsn.getText().toString();
@@ -393,19 +395,18 @@ void Reset()
 
         String supply = spnr_g_s.getSelectedItem().toString();
         try {
-        String value = String.format("%.2f",Float.parseFloat(et_value.getText().toString()));
-        String taxval = String.format("%.2f",Float.parseFloat(et_taxval.getText().toString()));
-        String igstrate = String.format("%.2f",Float.parseFloat(et_igstrate.getText().toString()));
-        String cgstrate = String.format("%.2f",Float.parseFloat(et_cgstrate.getText().toString()));
-        String sgstrate = String.format("%.2f",Float.parseFloat(et_sgstrate.getText().toString()));
-        String igstamt = String.format("%.2f",Float.parseFloat(et_igstamt.getText().toString()));
-        String cgstamt = String.format("%.2f",Float.parseFloat(et_cgstamt.getText().toString()));
-        String sgstamt = String.format("%.2f",Float.parseFloat(et_sgstamt.getText().toString()));
-        String cessamt = String.format("%.2f",Float.parseFloat(et_cessamt.getText().toString()));
+        String value = et_value.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_value.getText().toString()));
+        String taxval = et_taxval.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_taxval.getText().toString()));
+        String igstrate = et_igstrate.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_igstrate.getText().toString()));
+        String cgstrate = et_cgstrate.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_cgstrate.getText().toString()));
+        String sgstrate = et_sgstrate.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_sgstrate.getText().toString()));
+        String igstamt = et_igstamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_igstamt.getText().toString()));
+        String cgstamt = et_cgstamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_cgstamt.getText().toString()));
+        String sgstamt = et_sgstamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_sgstamt.getText().toString()));
+        String cessamt = et_cessamt.getText().toString().equals("")?"0.00":String.format("%.2f",Double.parseDouble(et_cessamt.getText().toString()));
 
         int count =listview_gstr2_amend.getCount()+1;
-
-
+            ValidationForAmendFields objectValidation = new ValidationForAmendFields(myContext);
 
         if (gstin_ori.equals("") || (invdate_ori.equals("")) || (invno_ori.equals(""))||
                 (invdate_rev.equals("")) || (invno_rev.equals(""))||
@@ -413,10 +414,10 @@ void Reset()
                 (igstrate.equals(""))|| (sgstrate.equals(""))||(cgstrate.equals("")) ||
                 (igstamt.equals(""))|| (sgstamt.equals(""))||(cgstamt.equals("")) || cessamt.equals(""))
         {
-            MsgBox.setTitle(" Error ")
-                    .setMessage(" Please fill all details ")
-                    .show();
-        }else {
+            MsgBox.Show(" Error "," Please fill all mandatory details ");
+        }else if (objectValidation.validationCheckpoints_GSTR1_B2B( gstin_ori ,gstin_ecom, taxval,igstrate,cgstrate,sgstrate,
+                    igstamt,cgstamt,sgstamt,cessamt))
+        {
 
                 GSTR2_B2B_Amend ammend = new GSTR2_B2B_Amend();
                 ammend.setSno(count);
@@ -458,7 +459,7 @@ void Reset()
                     }
                 }
 
-        }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             MsgBox.Show("Error",e.getMessage());
