@@ -1631,7 +1631,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                             {
                                 // Quantity
                                 EditText Qty = (EditText) Row.getChildAt(3);
-                                Qty.setSelectAllOnFocus(true);
+                                //Qty.setSelectAllOnFocus(true);
                                 strQty = Qty.getText().toString().equalsIgnoreCase("") ? "0" : Qty.getText().toString(); // Temp
 
                                 if (BillwithStock == 1)
@@ -1655,7 +1655,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
                                 // Amount
                                 EditText Rate = (EditText) Row.getChildAt(4);
-                                Rate.setSelectAllOnFocus(true);
+                                //Rate.setSelectAllOnFocus(true);
                                 TextView Amount = (TextView) Row.getChildAt(5);
                                 dRate = Double.parseDouble(Rate.getText().toString().equalsIgnoreCase("") ? "0" : Rate.getText().toString()); // Temp
 
@@ -1816,7 +1816,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     etQty.setWidth(mQuantityWidth); // 57px ~= 85dp
                     etQty.setTextSize(mDataMiniDeviceTextsize);
 
-                    etQty.setSelectAllOnFocus(true);
+                    //etQty.setSelectAllOnFocus(true);
                     etQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     // Read quantity from weighing scale if read from weigh
                     // scale is set in settings
@@ -1861,7 +1861,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     etRate.setWidth(mRateWidth); // 74px ~= 110dp
                     etRate.setTextSize(mDataMiniDeviceTextsize);
 
-                    etRate.setSelectAllOnFocus(true);
+                    //etRate.setSelectAllOnFocus(true);
                     etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     etRate.setText(String.format("%.2f", dRate));
@@ -2130,7 +2130,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                             } else {
                                 // Quantity
                                 EditText Qty = (EditText) Row.getChildAt(3);
-                                Qty.setSelectAllOnFocus(true);
+                                //Qty.setSelectAllOnFocus(true);
                                 strQty = Qty.getText().toString().equalsIgnoreCase("") ? "0" : Qty.getText().toString(); // Temp
 
                                 int BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
@@ -2150,7 +2150,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
 
                                 EditText Rate = (EditText) Row.getChildAt(4);
-                                Rate.setSelectAllOnFocus(true);
+                                //Rate.setSelectAllOnFocus(true);
 
                                 dRate = Double.parseDouble(
                                         Rate.getText().toString().equalsIgnoreCase("") ? "0" : Rate.getText().toString()); // Temp
@@ -2302,7 +2302,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     etQty = new EditText(myContext);
                     etQty.setWidth(55); // 57px ~= 85dp
                     etQty.setTextSize(11);
-                    etQty.setSelectAllOnFocus(true);
+                    //etQty.setSelectAllOnFocus(true);
                     etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                     etQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     // Read quantity from weighing scale if read from weigh
@@ -2346,7 +2346,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     etRate.setWidth(70); // 74px ~= 110dp
                     etRate.setTextSize(11);
                     etRate.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
-                    etRate.setSelectAllOnFocus(true);
+                    //etRate.setSelectAllOnFocus(true);
                     etRate.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     etRate.setText(String.format("%.2f", dRate));
                     etRate.setTag("QTY_RATE");
@@ -2645,7 +2645,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
                     // Quantity
                     EditText Qty = (EditText) Row.getChildAt(3);
-                    Qty.setSelectAllOnFocus(true);
+                    //Qty.setSelectAllOnFocus(true);
                     strQty = Double.parseDouble(
                             Qty.getText().toString().equalsIgnoreCase("") ? "0" : Qty.getText().toString()); // Temp
                     if (BillwithStock == 1) {
@@ -2670,7 +2670,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
                     // Amount
                     EditText Rate = (EditText) Row.getChildAt(4);
-                    Rate.setSelectAllOnFocus(true);
+                    //Rate.setSelectAllOnFocus(true);
                     TextView Amount = (TextView) Row.getChildAt(5);
                     dRate = Double.parseDouble(
                             Rate.getText().toString().equalsIgnoreCase("") ? "0" : Rate.getText().toString()); // Temp
@@ -3612,7 +3612,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     etQty.setEnabled(false);
                 }
                 etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
-                etQty.setSelectAllOnFocus(true);
+                //etQty.setSelectAllOnFocus(true);
                 etQty.setTag("QTY_RATE");
                 etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                 if(jBillingMode ==2 || jBillingMode ==3 || jBillingMode ==4)
@@ -3889,7 +3889,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     etQty.setEnabled(false);
                 }
                 etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
-                etQty.setSelectAllOnFocus(true);
+                //etQty.setSelectAllOnFocus(true);
                 etQty.setTag("QTY_RATE");
 
 
@@ -4187,7 +4187,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     etQty.setEnabled(false);
                 }
                 etQty.setText(String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Quantity"))));
-                etQty.setSelectAllOnFocus(true);
+                //etQty.setSelectAllOnFocus(true);
                 etQty.setTag("QTY_RATE");
                 etQty.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,1)});
                 if(jBillingMode ==2 || jBillingMode ==3 || jBillingMode ==4)
@@ -4827,7 +4827,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             if (RowBillItem.getChildAt(5) != null) {
                 TextView Amount = (TextView) RowBillItem.getChildAt(5);
                 objBillItem.setAmount(Float.parseFloat(Amount.getText().toString()));
-                Log.d("InsertBillItems", "Taxable Value:" + Amount.getText().toString());
+                Log.d("InsertBillItems", "Taxable Value or amount :" + Amount.getText().toString());
             }
 
             // Service Tax Percent
@@ -6483,6 +6483,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                         }
 
                         ArrayList<AddedItemsToOrderTableClass> orderList_recieved = data.getParcelableArrayListExtra("OrderList");
+                        double taxableValue =0.00;
                         for(int i =0;i<tblOrderItems.getChildCount();i++)
                         {
                             TableRow RowBillItem = (TableRow) tblOrderItems.getChildAt(i);
@@ -6518,15 +6519,25 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                                             TextView cessAmount = (TextView) RowBillItem.getChildAt(26);
                                             cessAmount.setText(String.format("%.2f",item.getCessAmt()));
                                         }
+                                        double quantity_dd =0.00;
+                                        if (RowBillItem.getChildAt(3) != null ) {
+                                            TextView qty = (TextView) RowBillItem.getChildAt(3);
+                                            quantity_dd = qty.getText().toString().trim().equals("")?0.00:
+                                                    Double.parseDouble(String.format("%.2f",Double.parseDouble(qty.getText().toString().trim())));
+                                            //System.out.println("Richa :  quantity "+quantity_dd);
+                                        }
                                         if (RowBillItem.getChildAt(5) != null) {
-                                            TextView TaxableValue = (TextView) RowBillItem.getChildAt(5);
-                                            TaxableValue.setText(String.format("%.2f",item.getTaxableValue()));
+                                            TextView Amount = (TextView) RowBillItem.getChildAt(5);
+                                            Amount.setText(String.format("%.2f",item.getTaxableValue()*quantity_dd));
+                                            //System.out.println("Richa :  amt "+(item.getTaxableValue()*quantity_dd));
+                                            taxableValue += item.getTaxableValue()*quantity_dd;
                                         }
                                     }
                                 }
                             }
                         }
                         //OverAllDiscount(dDiscPercent);
+                        tvSubTotal.setText(String.format("%.2f",taxableValue));
                     }
                     PrintBillPayment =0;
                     l(2, isPrintBill);
@@ -6739,12 +6750,17 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             //System.out.println(crsrTax.getCount());
             if (crsrTax.moveToFirst()) {
                 do {
-                    Double taxpercent = crsrTax.getDouble(crsrTax.getColumnIndex("CGSTRate")) +
-                            crsrTax.getDouble(crsrTax.getColumnIndex("SGSTRate"));
+                    Double taxpercent = Double.parseDouble(String.format("%.2f",(crsrTax.getDouble(crsrTax.getColumnIndex("CGSTRate")) +
+                            crsrTax.getDouble(crsrTax.getColumnIndex("SGSTRate")))));
 
-                    Double cgstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("CGSTAmount")));
-                    Double sgstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("SGSTAmount")));
-                    Double taxableValue  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxableValue")));
+                    Double cgstamt  = Double.parseDouble(String.format("%.2f",
+                            crsrTax.getDouble(crsrTax.getColumnIndex("CGSTAmount"))));
+                    Double sgstamt  = Double.parseDouble(String.format("%.2f",
+                            crsrTax.getDouble(crsrTax.getColumnIndex("SGSTAmount"))));
+                    Double taxableValue  = Double.parseDouble(String.format("%.2f",
+                            crsrTax.getDouble(crsrTax.getColumnIndex("TaxableValue"))));
+                    //String cc = crsrTax.getString(crsrTax.getColumnIndex("TaxableValue"));
+
                     if (taxpercent == 0)
                         continue;
                     BillTaxSlab taxItem = new BillTaxSlab("",taxpercent, 0.00,cgstamt,sgstamt, taxableValue,cgstamt+sgstamt);
@@ -6790,9 +6806,10 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             //System.out.println(crsrTax.getCount());
             if (crsrTax.moveToFirst()) {
                 do {
-                    Double taxpercent = crsrTax.getDouble(crsrTax.getColumnIndex("IGSTRate"));
-                    Double igstamt  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("IGSTAmount")));
-                    Double taxableValue  = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("TaxableValue")));
+                    Double taxpercent = Double.parseDouble(String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("IGSTRate"))));
+                    Double igstamt  = Double.parseDouble(String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("IGSTAmount"))));
+                    Double taxableValue  = Double.parseDouble(String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("TaxableValue"))));
+
                     if (taxpercent == 0)
                         continue;
                     BillTaxSlab taxItem = new BillTaxSlab("",taxpercent, igstamt,0.00,0.00, taxableValue,igstamt);
@@ -6836,8 +6853,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             if (crsrTax.moveToFirst()) {
                 do {
                     String taxname = "cess "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
-                    String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("cessRate"));
-                    Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("cessAmount")));
+                    String taxpercent = String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("cessRate")));
+                    Double taxvalue = Double.parseDouble(String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("cessAmount"))));
 
                     BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
                     billcessTaxItems.add(taxItem);
