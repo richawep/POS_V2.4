@@ -75,7 +75,7 @@ public class TabbedAmmendActivity extends WepBaseActivity {
         bundle1.putString("REPORT_TYPE", "1");
         Fragment_GSTR2_B2B_Amend reportFragment1 = new Fragment_GSTR2_B2B_Amend();
         reportFragment1.setArguments(bundle1);
-        adapter.addFragment(reportFragment1, "GSTR2_B2B ");
+        adapter.addFragment(reportFragment1, "GSTR2 ");
 
         Bundle bundle2=new Bundle();
         bundle2.putString("REPORT_TYPE", "2");
