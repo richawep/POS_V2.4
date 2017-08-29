@@ -70,7 +70,7 @@ public abstract class WepBaseActivity extends AppCompatActivity {
 
         if(email.equalsIgnoreCase(""))
         {
-            return false;
+            return true;
         }
         else {
             String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";

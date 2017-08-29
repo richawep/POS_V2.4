@@ -783,6 +783,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         pDialog.setCancelable(true);
         progressToken = new ProgressDialog(myContext);
         progressToken.setMessage("Getting Token ..");
+        progressToken.setIcon(R.drawable.ic_launcher);
         progressToken.setIndeterminate(false);
         progressToken.setMax(100);
         progressToken.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -1023,12 +1024,14 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         {
             //disMiss();
             MsgBox.setMessage("Please select Date")
+                    .setIcon(R.drawable.ic_launcher)
                     .setPositiveButton("OK", null)
                     .show();
         }
         else if (!token1[1].equals(token2[1]))
         {
             MsgBox.setMessage("Please select Date range for one month at a time")
+                    .setIcon(R.drawable.ic_launcher)
                     .setPositiveButton("OK", null)
                     .show();
         }
@@ -1073,19 +1076,19 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
 
                     Cursor User = (dbGSTLink.getUser(txtUser, txtPass));
                     if(User!=null) {
-                        if (User.getCount() > 0) {
                             if(User.moveToFirst()){
-                                // onLocalAuthCompleted(true,code,User.getString(User.getColumnIndex("Name")));
-                                promptGetToken(REQUESTED_API,User.getString(User.getColumnIndex("Name")));
+                                if (User.getInt(User.getColumnIndex("RoleId")) == 1) {
+                                    // onLocalAuthCompleted(true,code,User.getString(User.getColumnIndex("Name")));
+                                    promptGetToken(REQUESTED_API, User.getString(User.getColumnIndex("Name")));
+                                }else
+                                {Toast.makeText(myContext, "Unauthorized username & password", Toast.LENGTH_SHORT).show();}
 
-                            }
-
-                        }else {
+                            }}else {
                             Toast.makeText(myContext, "Invalid username & password", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
-            }
+
         })
         .show();
     }
@@ -1183,6 +1186,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         {
             disMiss();
             MsgBox.setMessage("Please select Date")
+                    .setIcon(R.drawable.ic_launcher)
                     .setPositiveButton("OK", null)
                     .show();
         }

@@ -19,14 +19,19 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" description="double strQty = 0;" line="1619" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
+    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="issue - enabling export for reports.&#10;2. putting gstin validation for supplier gstin">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/adapter_supplier_name.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTUploadFunctions.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTUploadFunctions.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemSupplierLinkageActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemSupplierLinkageActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedReportActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedReportActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_report.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_report.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_goods_inward_note.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_goods_inward_note.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_purchase_order.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_purchase_order.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/WepBaseActivity.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/WepBaseActivity.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -132,38 +137,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ReportFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java">
+      <file leaf-file-name="BillingDineInActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="432" column="37" selection-start-line="432" selection-start-column="37" selection-end-line="432" selection-end-column="37" />
+            <state relative-caret-position="103598">
+              <caret line="6225" column="74" selection-start-line="6225" selection-start-column="20" selection-end-line="6225" selection-end-column="74" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_report.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_report.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
+      <file leaf-file-name="FragmentGSTLink.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_tabbed_report.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_tabbed_report.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
-              <folding />
+            <state relative-caret-position="190">
+              <caret line="446" column="47" selection-start-line="446" selection-start-column="47" selection-end-line="446" selection-end-column="47" />
+              <folding>
+                <element signature="e#28121#28294#0" expanded="true" />
+                <element signature="e#28293#28294#0" expanded="true" />
+                <element signature="e#43640#45045#0" expanded="true" />
+                <element signature="e#45044#45045#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -6462,21 +6456,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_price.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_itemmaster.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_goods_inward_note.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_purchase_order.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_ingredient_management.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_convert_ingredients.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardItemActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerOrdersActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml" />
@@ -6485,7 +6473,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_supplier_details.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/SupplierAdapter.java" />
         <option value="$PROJECT_DIR$/gstAPI/src/main/java/com/wep/gstcall/api/util/Config.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/utils/ActionBarUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDepartment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedSettingsActivity.java" />
@@ -6504,15 +6491,22 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/CustomerDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/OwnerDetailsActivity.java" />
-        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/WepBaseActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java" />
-        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTUploadFunctions.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/ReportHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedReportActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_report.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemSupplierLinkageActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_purchase_order.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_goods_inward_note.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java" />
+        <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/WepBaseActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java" />
       </list>
     </option>
   </component>
@@ -6548,7 +6542,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -6567,54 +6561,12 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pos" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane />
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -6622,10 +6574,10 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../WepFnB_GST_BharatQR/wepfnb_gst" />
-    <property name="device.picker.selection" value="380116e355a25300" />
+    <property name="device.picker.selection" value="01234567890123456789" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPropertiesWindowManager-NlEditorPanel.SHOW" value="false" />
-    <property name="DEBUGGABLE_DEVICE" value="samsung-sm_t561-380116e355a25300" />
+    <property name="DEBUGGABLE_DEVICE" value="intel-twg10-01234567890123456789" />
     <property name="DEBUGGABLE_PROCESS" value="com.wepindia.pos201711" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="DEBUGGER_ID" value="Auto" />
@@ -6640,8 +6592,12 @@
     <property name="format" value="PNG" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\src\main\res\raw" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\FnbProjects\SamsungLayout_GST\wepfnb_gst\app\src\main\res\layout" />
+      <recent name="E:\FnbProjects\SamsungLayout_GST\wepfnb_gst\app\src\main\res\drawable" />
+      <recent name="E:\FnbProjects\SamsungLayout_GST\wepfnb_gst\app\src\main\res\drawable-xhdpi" />
+      <recent name="E:\FnbProjects\SamsungLayout_GST\wepfnb_gst\app\src\main\res\drawable-hdpi" />
+      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\src\main\res\drawable" />
     </key>
     <key name="android.template.packageName">
       <recent name="com.wepindia.pos" />
@@ -6649,12 +6605,8 @@
     <key name="android.template.parentActivityClass">
       <recent name="" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\FnbProjects\SamsungLayout_GST\wepfnb_gst\app\src\main\res\layout" />
-      <recent name="E:\FnbProjects\SamsungLayout_GST\wepfnb_gst\app\src\main\res\drawable" />
-      <recent name="E:\FnbProjects\SamsungLayout_GST\wepfnb_gst\app\src\main\res\drawable-xhdpi" />
-      <recent name="E:\FnbProjects\SamsungLayout_GST\wepfnb_gst\app\src\main\res\drawable-hdpi" />
-      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\src\main\res\drawable" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\src\main\res\raw" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
@@ -7092,13 +7044,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00079" summary="limiting hsn limit to 8 in amends modules&#10;">
-      <created>1498734493410</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1498734493410</updated>
-    </task>
     <task id="LOCAL-00080" summary="handling &quot;&quot; issue on changing quantity directly, in billing modules&#10;">
       <created>1498737680775</created>
       <option name="number" value="00080" />
@@ -7435,7 +7380,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503931471389</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="issue - enabling export for reports.&#10;2. putting gstin validation for supplier gstin">
+      <created>1503939901616</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1503939901617</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7452,13 +7404,12 @@
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32764506" sideWeight="0.4969743" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.66040957" sideWeight="0.4773071" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24914676" sideWeight="0.4773071" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2996965" sideWeight="0.5068259" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.8890785" sideWeight="0.2065053" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12286689" sideWeight="0.7934947" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33282444" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23037542" sideWeight="0.7934947" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.010238908" sideWeight="0.48184568" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30716723" sideWeight="0.49092284" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32423207" sideWeight="0.48487142" order="4" side_tool="false" content_ui="tabs" />
@@ -7470,7 +7421,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24886535" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32423207" sideWeight="0.48778626" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18941979" sideWeight="0.48778626" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -7483,6 +7434,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="93" y="100" width="1170" height="535" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33282444" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43515357" sideWeight="0.49694657" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -7516,7 +7468,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="issue - item and stock showing value in more than 2 digits after decimal." />
     <MESSAGE value="partial screen resolution  implementation" />
     <MESSAGE value="Barcode Integrated" />
     <MESSAGE value="Fixing bugs" />
@@ -7541,95 +7492,30 @@
     <MESSAGE value="issues - 1. dayend settings and other settings not getting updated , when coming to this screen via back button&#10;2. table booking updation not happening" />
     <MESSAGE value="issues - 1. accepting invalid GSTIN format&#10;2. Now displaying outward item master in ascending order of menu code" />
     <MESSAGE value="issue - email in ownersdetail is taking invalid format" />
-    <option name="LAST_COMMIT_MESSAGE" value="issue - email in ownersdetail is taking invalid format" />
+    <MESSAGE value="issue - enabling export for reports.&#10;2. putting gstin validation for supplier gstin" />
+    <option name="LAST_COMMIT_MESSAGE" value="issue - enabling export for reports.&#10;2. putting gstin validation for supplier gstin" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.42424244" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java</url>
-          <line>287</line>
-          <properties />
-          <option name="timeStamp" value="529" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java</url>
-          <line>290</line>
-          <properties />
-          <option name="timeStamp" value="531" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableBookingActivity.java</url>
-          <line>529</line>
-          <properties />
-          <option name="timeStamp" value="532" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableBookingActivity.java</url>
-          <line>640</line>
-          <properties />
-          <option name="timeStamp" value="534" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableBookingActivity.java</url>
-          <line>142</line>
-          <properties />
-          <option name="timeStamp" value="535" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</url>
-          <line>407</line>
-          <properties />
-          <option name="timeStamp" value="536" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/OwnerDetailsActivity.java</url>
-          <line>116</line>
-          <properties />
-          <option name="timeStamp" value="537" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/WepBaseActivity.java</url>
-          <line>70</line>
-          <properties />
-          <option name="timeStamp" value="538" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java</url>
-          <line>220</line>
-          <properties />
-          <option name="timeStamp" value="539" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java</url>
-          <line>891</line>
-          <properties />
-          <option name="timeStamp" value="540" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java</url>
-          <line>109</line>
-          <properties />
-          <option name="timeStamp" value="543" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/ReportFragment.java</url>
-          <line>431</line>
-          <properties />
-          <option name="timeStamp" value="544" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java</url>
           <line>289</line>
           <properties method="onClick" />
           <option name="timeStamp" value="530" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java</url>
+          <line>892</line>
+          <properties />
+          <option name="timeStamp" value="546" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="545" />
+      <option name="time" value="547" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
@@ -7638,58 +7524,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedSettingsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="235" column="5" selection-start-line="232" selection-start-column="4" selection-end-line="235" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedCreditDebitNote.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="140" column="5" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedAmmendActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/25.1.1/appcompat-v7-25.1.1-sources.jar!/android/support/v7/app/AppCompatActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="108" column="21" selection-start-line="108" selection-start-column="21" selection-end-line="108" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_file_picker.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/res/layout/toolbar_normal.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-24/android/app/Activity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -7754,6 +7588,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
           <caret line="5604" column="19" selection-start-line="5604" selection-start-column="19" selection-end-line="5604" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -7764,7 +7599,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="176" column="51" selection-start-line="176" selection-start-column="37" selection-end-line="176" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7792,14 +7626,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/RecyclerDirectory/TableBookingAdapter.java">
@@ -7827,7 +7661,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7835,7 +7668,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="904" column="9" selection-start-line="904" selection-start-column="9" selection-end-line="904" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7844,25 +7676,6 @@
         <state relative-caret-position="561">
           <caret line="87" column="21" selection-start-line="87" selection-start-column="21" selection-end-line="88" selection-end-column="14" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="7506" column="0" selection-start-line="7487" selection-start-column="4" selection-end-line="7506" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="428" column="21" selection-start-line="425" selection-start-column="21" selection-end-line="428" selection-end-column="21" />
-          <folding>
-            <marker date="1503928909026" expanded="false" signature="117389:117420" ph=" { " />
-            <marker date="1503928909026" expanded="false" signature="117436:117462" ph=" }" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -7880,7 +7693,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="373" column="55" selection-start-line="373" selection-start-column="41" selection-end-line="373" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7896,15 +7708,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="101">
           <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/WepBaseActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="78" column="19" selection-start-line="78" selection-start-column="19" selection-end-line="78" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7922,54 +7725,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="54" column="25" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_goods_inward_note.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="81" column="50" selection-start-line="81" selection-start-column="37" selection-end-line="81" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-54">
-          <caret line="1032" column="44" selection-start-line="1032" selection-start-column="44" selection-end-line="1032" selection-end-column="44" />
-          <folding>
-            <element signature="e#52727#52728#0" expanded="false" />
-            <element signature="e#52756#52757#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111945">
-          <caret line="6639" column="51" selection-start-line="6639" selection-start-column="18" selection-end-line="6639" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTUploadFunctions.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="109">
           <caret line="638" column="47" selection-start-line="638" selection-start-column="47" selection-end-line="638" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="892" column="0" selection-start-line="892" selection-start-column="0" selection-end-line="892" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -7978,16 +7737,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1122">
           <caret line="86" column="18" selection-start-line="86" selection-start-column="18" selection-end-line="86" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#6325#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2751#2752#0" expanded="false" />
-            <element signature="e#2788#2789#0" expanded="false" />
-            <element signature="e#5638#5639#0" expanded="false" />
-            <element signature="e#5665#5666#0" expanded="false" />
-            <element signature="e#6161#6162#0" expanded="false" />
-            <element signature="e#6192#6193#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -7995,21 +7744,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2369#2370#0" expanded="false" />
-            <element signature="e#2411#2412#0" expanded="false" />
-            <element signature="e#2629#2630#0" expanded="false" />
-            <element signature="e#2672#2673#0" expanded="false" />
-            <element signature="e#2893#2894#0" expanded="false" />
-            <element signature="e#2937#2938#0" expanded="false" />
-            <element signature="e#3158#3159#0" expanded="false" />
-            <element signature="e#3202#3203#0" expanded="false" />
-            <element signature="e#9052#9053#0" expanded="false" />
-            <element signature="e#9124#9125#0" expanded="false" />
-            <element signature="e#12699#12700#0" expanded="false" />
-            <element signature="e#12727#12728#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -8017,18 +7751,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="697">
           <caret line="91" column="31" selection-start-line="91" selection-start-column="17" selection-end-line="91" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#625#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#5986#5987#0" expanded="false" />
-            <element signature="e#6024#6025#0" expanded="false" />
-            <element signature="e#6223#6224#0" expanded="false" />
-            <element signature="e#6274#6275#0" expanded="false" />
-            <element signature="e#6535#6536#0" expanded="false" />
-            <element signature="e#6598#6599#0" expanded="false" />
-            <element signature="e#8880#8881#0" expanded="false" />
-            <element signature="e#8929#8930#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -8036,15 +7758,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="218" column="116" selection-start-line="218" selection-start-column="53" selection-end-line="218" selection-end-column="116" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8055,15 +7768,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="388">
           <caret line="325" column="51" selection-start-line="325" selection-start-column="51" selection-end-line="325" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="268" column="0" selection-start-line="268" selection-start-column="0" selection-end-line="268" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8071,7 +7775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
           <caret line="3021" column="29" selection-start-line="3021" selection-start-column="29" selection-end-line="3021" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8090,7 +7793,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="350">
           <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8101,7 +7803,145 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="337">
           <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/adapter_supplier_name.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_item_supplier_linkage.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="196" column="57" selection-start-line="196" selection-start-column="57" selection-end-line="196" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_purchase_order.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="334" column="57" selection-start-line="334" selection-start-column="57" selection-end-line="334" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_goods_inward_note.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="552" column="29" selection-start-line="552" selection-start-column="29" selection-end-line="552" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="1959" column="0" selection-start-line="1959" selection-start-column="0" selection-end-line="1959" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="1393" column="67" selection-start-line="1393" selection-start-column="67" selection-end-line="1393" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemSupplierLinkageActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="245" column="70" selection-start-line="241" selection-start-column="16" selection-end-line="245" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="6134" column="42" selection-start-line="6134" selection-start-column="42" selection-end-line="6134" selection-end-column="42" />
+          <folding>
+            <element signature="e#293330#293355#0" expanded="true" />
+            <element signature="e#293822#293838#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsMachine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-520">
+          <caret line="156" column="33" selection-start-line="156" selection-start-column="33" selection-end-line="156" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="58" column="53" selection-start-line="58" selection-start-column="53" selection-end-line="58" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/UserManagementActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="218" column="65" selection-start-line="218" selection-start-column="65" selection-end-line="218" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/WepBaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="70" column="38" selection-start-line="70" selection-start-column="38" selection-end-line="70" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="4340" column="46" selection-start-line="4340" selection-start-column="46" selection-end-line="4340" selection-end-column="46" />
+          <folding>
+            <marker date="1503928909026" expanded="false" signature="117389:117420" ph=" { " />
+            <marker date="1503928909026" expanded="false" signature="117436:117462" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="5915" column="37" selection-start-line="5915" selection-start-column="37" selection-end-line="5915" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103598">
+          <caret line="6225" column="74" selection-start-line="6225" selection-start-column="20" selection-end-line="6225" selection-end-column="74" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentGSTLink.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="446" column="47" selection-start-line="446" selection-start-column="47" selection-end-line="446" selection-end-column="47" />
+          <folding>
+            <element signature="e#28121#28294#0" expanded="true" />
+            <element signature="e#28293#28294#0" expanded="true" />
+            <element signature="e#43640#45045#0" expanded="true" />
+            <element signature="e#45044#45045#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
