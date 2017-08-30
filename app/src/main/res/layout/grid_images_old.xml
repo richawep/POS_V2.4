@@ -2,27 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:ignore="HardcodedText,UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/grid_item_image"
-        android:layout_width="@dimen/_90dp_720dp_85dp_600dp"
-        android:layout_height="@dimen/_75dp_720dp_70dp_600dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:contentDescription="Grid_Image"
         android:padding="2dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/img_noimage" />
+        android:src="@drawable/img_noimage"></ImageView>
 
     <TextView
         android:id="@+id/grid_item_label"
-        android:layout_width="@dimen/_90dp_720dp_85dp_600dp"
-        android:layout_height="@dimen/_35dp_720dp_30dp_600dp"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:text="12345678901234567890123456"
+        android:text="Grid Title"
         android:textColor="#000000"
-        android:textSize="@dimen/text_size_12sp_720dp_10sp_600dp" />
+        android:textSize="13dp"></TextView>
+
 
 </LinearLayout>

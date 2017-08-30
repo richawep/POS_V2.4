@@ -177,14 +177,14 @@
     <string name="quantity_invalid">Please Enter Quantity as decimal for Item Name  </string>
     <string name="uom_empty">UOM can not be empty for Item Name  </string>
     <string name="uom_invalid">Please Enter UOM as character for Item Name  </string>
-    <string name="header_value_empty">Please Enter Header Value  </string>
+    <string name="header_value_empty">Please include following headings in the csv file  </string>
     <string name="cgst_rate_empty">CGST Rate can not be empty for Item Name  </string>
     <string name="cgst_rate_invalid">Please Enter CGST Rate as decimal for Item Name  </string>
     <string name="sgst_rate_empty">SGST Rate can not be empty for Item Name  </string>
     <string name="sgst_rate_invalid">Please Enter SGST Rate as decimal for Item Name  </string>
     <string name="igst_rate_empty">IGST Rate can not be empty for Item Name  </string>
     <string name="igst_rate_invalid">Please Enter IGST Rate as decimal for Item Name  </string>
-    <string name="cess_rate_empty">CESS Rate can not be empty for Item Name  </string>
+    <string name="cess_rate_empty">cess Rate can not be empty for Item Name  </string>
     <string name="cess_rate_invalid">Please Enter CESS Rate as decimal for Item Name  </string>
     <string name="discount_empty">Discount can not be empty for Item Name  </string>
     <string name="discount_invalid">Please Enter Discount as decimal for Item Name  </string>

@@ -2,7 +2,6 @@ package com.wepindia.pos.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.picasso.Picasso;
-import com.wep.common.app.Database.DatabaseHandler;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.utils.AppUtils;
 import com.wepindia.pos.R;

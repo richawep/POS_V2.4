@@ -4631,15 +4631,9 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             final View v1 = v;
             AlertDialog.Builder AuthorizationDialog = new AlertDialog.Builder(myContext);
 
-            LayoutInflater UserAuthorization = (LayoutInflater) myContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View vwAuthorization = UserAuthorization.inflate(R.layout.deleteconfirmation, null);
-
-
             AuthorizationDialog
                     .setTitle("Confimation")
-                    .setView(vwAuthorization)
+                    .setIcon(R.drawable.ic_launcher)
                     .setNegativeButton("Cancel", null)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 

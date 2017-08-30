@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -66,6 +68,7 @@ import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.DecimalDigitsInputFilter;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.RecyclerDirectory.TestItemsAdapter;
 import com.wepindia.pos.adapters.CategoryAdapter;
 import com.wepindia.pos.adapters.DepartmentAdapter;
 import com.wepindia.pos.adapters.ItemsAdapter;
@@ -91,7 +94,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private ItemsAdapter itemsAdapter;
     private DepartmentAdapter departmentAdapter;
     private CategoryAdapter categoryAdapter;
-    private GridView gridViewItems;
+    //  private GridView gridViewItems;
     private ListView listViewDept,listViewCat;
     private MessageDialog messageDialog;
     Date d;
@@ -158,6 +161,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private TextView mAmountTextView;
     private TextView mDeleteTextView;
 
+    private RecyclerView mRecyclerGridView;
+    private TestItemsAdapter mTestItemsAdapter;
+    private GridLayoutManager mGridLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -195,7 +201,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     }
 
 
-        @Override
+    @Override
     public void onClick(View v)
     {
         super.onClick(v);
@@ -231,13 +237,17 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         {
             if(fastBillingMode.equals("3"))
                 listViewCat.setVisibility(View.INVISIBLE);
-            gridViewItems.setVisibility(View.INVISIBLE);
+
+            //  gridViewItems.setVisibility(View.INVISIBLE);
+            mRecyclerGridView.setVisibility(View.INVISIBLE);
             loadDepartments();
         }
         else if(id == R.id.btnLabel2)
         {
             listViewDept.setVisibility(View.INVISIBLE);
-            gridViewItems.setVisibility(View.INVISIBLE);
+
+            //  gridViewItems.setVisibility(View.INVISIBLE);
+            mRecyclerGridView.setVisibility(View.INVISIBLE);
             loadCategories(0);
         }
         else if(id == R.id.btnLabel3)
@@ -273,10 +283,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             @Override
             protected void onPostExecute(ArrayList<Items> list) {
                 super.onPostExecute(list);
-               // tvBillNumber.setText(String.valueOf(db.getNewBillNumber()));
+                // tvBillNumber.setText(String.valueOf(db.getNewBillNumber()));
                 if(list!=null)
                     setItemsAdapter(list);
-                gridViewItems.setVisibility(View.VISIBLE);
+                //   gridViewItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -303,7 +314,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 //tvBillNumber.setText(String.valueOf(db.getNewBillNumber()));
                 if(list!=null)
                     setItemsAdapter(list);
-                gridViewItems.setVisibility(View.VISIBLE);
+                //    gridViewItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -407,7 +419,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                                /* int length = gstin.length() -1;
                                 if(Integer.parseInt(String.valueOf(gstin.charAt(length))) ==  checksumGSTIN(gstin.substring(0,length)))*/
-                                    mFlag = true;
+                                mFlag = true;
                             } else {
                                 mFlag = false;
                             }
@@ -446,7 +458,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         }
         if(sum>9)
-             sum = checksumGSTIN(String.valueOf(sum));
+            sum = checksumGSTIN(String.valueOf(sum));
         return sum;
     }
 
@@ -640,8 +652,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             boxDept = (RelativeLayout) findViewById(R.id.boxDept);
             boxCat = (RelativeLayout) findViewById(R.id.boxCat);
             boxItem = (RelativeLayout) findViewById(R.id.boxItem);
-            gridViewItems = (GridView) findViewById(R.id.listViewFilter3);
-            gridViewItems.setOnItemClickListener(itemsClick);
+
+            //   gridViewItems = (GridView) findViewById(R.id.listViewFilter3);
+            //     gridViewItems.setOnItemClickListener(itemsClick);
+
+            mRecyclerGridView = (RecyclerView) findViewById(R.id.listViewFilter3);
+            mRecyclerGridView.setHasFixedSize(true);
+
             listViewDept = (ListView) findViewById(R.id.listViewFilter1);
             listViewDept.setOnItemClickListener(deptClick);
             listViewCat = (ListView) findViewById(R.id.listViewFilter2);
@@ -891,7 +908,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         } catch (Exception e){
             e.printStackTrace();
             messageDialog.Show("Error","An error occured");
-    }
+        }
 
 
     }
@@ -908,25 +925,25 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 if (editTextMobile.getText().toString().length() == 10) {
                     Cursor crsrCust = db.getFnbCustomer(editTextMobile.getText().toString());
                     if (crsrCust.moveToFirst()) {
-                            CUSTOMER_FOUND = 1;
-                            customerId = crsrCust.getString(crsrCust.getColumnIndex("CustId"));
-                            editTextName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
-                            editTextAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
-                            String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
-                            if (gstin == null)
-                                    etCustGSTIN.setText("");
-                            else
-                                etCustGSTIN.setText(gstin);
-                            ControlsSetEnabled();
-                            btn_DineInAddCustomer.setEnabled(false);
-                            btn_PrintBill.setEnabled(true);
-                            btn_PayBill.setEnabled(true);
-                            CUSTOMER_FOUND = 0;
-                        } else {
-                            messageDialog.Show("Note", "Customer is not Found, Please Add Customer before Order");
-                            btn_DineInAddCustomer.setVisibility(View.VISIBLE);
-                            btn_DineInAddCustomer.setEnabled(true);
-                       }
+                        CUSTOMER_FOUND = 1;
+                        customerId = crsrCust.getString(crsrCust.getColumnIndex("CustId"));
+                        editTextName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
+                        editTextAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
+                        String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
+                        if (gstin == null)
+                            etCustGSTIN.setText("");
+                        else
+                            etCustGSTIN.setText(gstin);
+                        ControlsSetEnabled();
+                        btn_DineInAddCustomer.setEnabled(false);
+                        btn_PrintBill.setEnabled(true);
+                        btn_PayBill.setEnabled(true);
+                        CUSTOMER_FOUND = 0;
+                    } else {
+                        messageDialog.Show("Note", "Customer is not Found, Please Add Customer before Order");
+                        btn_DineInAddCustomer.setVisibility(View.VISIBLE);
+                        btn_DineInAddCustomer.setEnabled(true);
+                    }
                 }else if (editTextMobile.getText().toString().trim().equals("")){
                     CUSTOMER_FOUND=1;
                     editTextName.setText("");
@@ -963,15 +980,30 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     fastBillingMode = "";
 
                 if (fastBillingMode.equalsIgnoreCase("1")) {
-                    gridViewItems.setNumColumns(6);
+
+                    //      gridViewItems.setNumColumns(6);
+
+                    mGridLayoutManager = new GridLayoutManager(BillingCounterSalesActivity.this, 6);
+                    mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
                     //GetItemDetails();
                     boxDept.setVisibility(View.GONE);
                     boxCat.setVisibility(View.GONE);
                 } else if (fastBillingMode.equalsIgnoreCase("2")) {
-                    gridViewItems.setNumColumns(4);
+
+                    //    gridViewItems.setNumColumns(4);
+
+                    mGridLayoutManager = new GridLayoutManager(BillingCounterSalesActivity.this, 4);
+                    mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
                     //GetItemDetailswithoutDeptCateg();
                     boxCat.setVisibility(View.GONE);
                 } else {
+
+                    mGridLayoutManager = new GridLayoutManager(BillingCounterSalesActivity.this, 2);
+                    mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
+
             /*GetItemDetailswithoutDeptCateg();
             lstvwDepartment.setAdapter(null);
             lstvwCategory.setAdapter(null);
@@ -1006,12 +1038,21 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     public void setItemsAdapter(ArrayList<Items> list)
     {
-        if(itemsAdapter==null){
-            itemsAdapter = new ItemsAdapter(this,list);
-            gridViewItems.setAdapter(itemsAdapter);
-        }
-        else
-            itemsAdapter.notifyDataSetChanged(list);
+        if (mTestItemsAdapter == null) {
+            mTestItemsAdapter = new TestItemsAdapter(this, list);
+
+            mTestItemsAdapter.setOnItemClickListener(new TestItemsAdapter.OnItemsImageClickListener() {
+                @Override
+                public void onItemClick(int position, int itemCode, View v) {
+                    Cursor cursor = db.getItemss(itemCode);
+                    btn_Clear.setEnabled(true);
+                    AddItemToOrderTable(cursor);
+                }
+            });
+            mRecyclerGridView.setAdapter(mTestItemsAdapter);
+
+        } else
+            mTestItemsAdapter.notifyDataSetChanged(list);
     }
 
 
@@ -1433,7 +1474,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     if(ItemwiseDiscountEnabled ==1 && crsrItem.getString(crsrItem.getColumnIndex("DiscountPercent"))!=null)  // 1->itemwise discount , 0-> billwise discount
                     {
                         dDiscPercent = Double.parseDouble(String.format("%.2f",
-                                                            crsrItem.getDouble(crsrItem.getColumnIndex("DiscountPercent"))));
+                                crsrItem.getDouble(crsrItem.getColumnIndex("DiscountPercent"))));
                     }
                     tvDiscPercent = new TextView(BillingCounterSalesActivity.this);
                     tvDiscPercent.setText(String.format("%.2f", dDiscPercent));
@@ -2146,10 +2187,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     public void ControlsSetEnabled() {
         btn_DineInAddCustomer.setVisibility(View.VISIBLE);
-       // textViewOtherCharges.setEnabled(true);
+        // textViewOtherCharges.setEnabled(true);
         listViewDept.setEnabled(true);
         listViewCat.setEnabled(true);
-        gridViewItems.setEnabled(true);
+
+        //    gridViewItems.setEnabled(true);
+        mRecyclerGridView.setEnabled(true);
+
         //btnSplitBill.setEnabled(true);
         //btnPayBill.setEnabled(true);
         //btnSaveKOT.setEnabled(true);
@@ -2185,7 +2229,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         //btn_item_fastBillingMode.setEnabled(false);
         listViewDept.setEnabled(false);
         listViewCat.setEnabled(false);
-        gridViewItems.setEnabled(false);
+        //   gridViewItems.setEnabled(false);
+        mRecyclerGridView.setEnabled(false);
+
         //btnSplitBill.setEnabled(false);
         btn_PayBill.setEnabled(false);
         //btnSaveKOT.setEnabled(false);
@@ -2335,7 +2381,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         igstAmt =  Double.parseDouble(String.format("%.2f",
                                 Double.parseDouble(iAmt.getText().toString())));
                     }
-
 
                 }else // CGST+SGST
                 {
@@ -3654,17 +3699,17 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         ArrayList<BillTaxItem> billTaxItems = new ArrayList<BillTaxItem>();
         try {
             Date date = new SimpleDateFormat("dd-MM-yyyy").parse(tvDate.getText().toString());
-        Cursor crsrTax = db.getItemsForIGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
-        if (crsrTax.moveToFirst()) {
-            do {
-                String taxname = "IGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
-                String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("IGSTRate"));
-                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("IGSTAmount")));
+            Cursor crsrTax = db.getItemsForIGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            if (crsrTax.moveToFirst()) {
+                do {
+                    String taxname = "IGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                    String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("IGSTRate"));
+                    Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("IGSTAmount")));
 
-                BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
-                billTaxItems.add(taxItem);
-            } while (crsrTax.moveToNext());
-        }
+                    BillTaxItem taxItem = new BillTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                    billTaxItems.add(taxItem);
+                } while (crsrTax.moveToNext());
+            }
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -3732,17 +3777,17 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         ArrayList<BillServiceTaxItem> billServiceTaxItems = new ArrayList<BillServiceTaxItem>();
         try {
             Date date = new SimpleDateFormat("dd-MM-yyyy").parse(tvDate.getText().toString());
-        Cursor crsrTax = db.getItemsForSGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
-        if (crsrTax.moveToFirst()) {
-            do {
-                String taxname = "SGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
-                String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("SGSTRate"));
-                Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("SGSTAmount")));
+            Cursor crsrTax = db.getItemsForSGSTTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            if (crsrTax.moveToFirst()) {
+                do {
+                    String taxname = "SGST "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                    String taxpercent = crsrTax.getString(crsrTax.getColumnIndex("SGSTRate"));
+                    Double taxvalue = Double.parseDouble(crsrTax.getString(crsrTax.getColumnIndex("SGSTAmount")));
 
-                BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
-                billServiceTaxItems.add(taxItem);
-            } while (crsrTax.moveToNext());
-        }
+                    BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                    billServiceTaxItems.add(taxItem);
+                } while (crsrTax.moveToNext());
+            }
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -3758,17 +3803,17 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         ArrayList<BillServiceTaxItem> billcessTaxItems = new ArrayList<BillServiceTaxItem>();
         try {
             Date date = new SimpleDateFormat("dd-MM-yyyy").parse(tvDate.getText().toString());
-        Cursor crsrTax = db.getItemsForcessTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
-        if (crsrTax.moveToFirst()) {
-            do {
-                String taxname = "cess "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
-                String taxpercent = String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("cessRate")));
-                Double taxvalue = Double.parseDouble(String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("cessAmount"))));
+            Cursor crsrTax = db.getItemsForcessTaxPrints(Integer.valueOf(tvBillNumber.getText().toString()), String.valueOf(date.getTime()));
+            if (crsrTax.moveToFirst()) {
+                do {
+                    String taxname = "cess "; //crsrTax.getString(crsrTax.getColumnIndex("TaxDescription"));
+                    String taxpercent = String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("cessRate")));
+                    Double taxvalue = Double.parseDouble(String.format("%.2f",crsrTax.getDouble(crsrTax.getColumnIndex("cessAmount"))));
 
-                BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
-                billcessTaxItems.add(taxItem);
-            } while (crsrTax.moveToNext());
-        }
+                    BillServiceTaxItem taxItem = new BillServiceTaxItem(taxname, Double.parseDouble(taxpercent), Double.parseDouble(String.format("%.2f", taxvalue)));
+                    billcessTaxItems.add(taxItem);
+                } while (crsrTax.moveToNext());
+            }
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -3791,10 +3836,10 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             if (crsrTax.moveToFirst()) {
                 do {
                     Double taxpercent = Double.parseDouble(String.format("%.2f",(crsrTax.getDouble(crsrTax.getColumnIndex("CGSTRate")) +
-                                                crsrTax.getDouble(crsrTax.getColumnIndex("SGSTRate")))));
+                            crsrTax.getDouble(crsrTax.getColumnIndex("SGSTRate")))));
 
                     Double cgstamt  = Double.parseDouble(String.format("%.2f",
-                                crsrTax.getDouble(crsrTax.getColumnIndex("CGSTAmount"))));
+                            crsrTax.getDouble(crsrTax.getColumnIndex("CGSTAmount"))));
                     Double sgstamt  = Double.parseDouble(String.format("%.2f",
                             crsrTax.getDouble(crsrTax.getColumnIndex("SGSTAmount"))));
                     Double taxableValue  = Double.parseDouble(String.format("%.2f",
@@ -4246,11 +4291,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         spnr_pos.setAdapter(POS_LIST);
 
         // barcode
-                List<String> labelsBarCode = db.getAllBarCodes();
-                ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                                labelsBarCode);
-                dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
-                autoCompleteTextViewSearchItemBarcode.setAdapter(dataAdapter11);
+        List<String> labelsBarCode = db.getAllBarCodes();
+        ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                labelsBarCode);
+        dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        autoCompleteTextViewSearchItemBarcode.setAdapter(dataAdapter11);
 
     }
 
@@ -4348,31 +4393,31 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                Cursor User = db.getUserr(txtUserId.getText().toString(),
-                        txtPassword.getText().toString());
-                if (User.moveToFirst()) {
-                    if (User.getInt(User.getColumnIndex("RoleId")) == 1) {
-                        //ReprintVoid(Byte.parseByte("2"));
-                        int result = db.makeBillVoids(invoiceno, Invoicedate);
-                        if(result >0)
-                        {
-                            Date dd = new Date(Long.parseLong(Invoicedate));
-                            String dd_str = new SimpleDateFormat("dd-MM-yyyy").format(dd);
-                            String msg = "Bill Number "+invoiceno+" , Dated : "+dd_str+" voided successfully";
-                            // MsgBox.Show("Warning", msg);
-                            Toast.makeText(BillingCounterSalesActivity.this, msg, Toast.LENGTH_SHORT).show();
-                            Log.d("VoidBill", msg);
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+                        Cursor User = db.getUserr(txtUserId.getText().toString(),
+                                txtPassword.getText().toString());
+                        if (User.moveToFirst()) {
+                            if (User.getInt(User.getColumnIndex("RoleId")) == 1) {
+                                //ReprintVoid(Byte.parseByte("2"));
+                                int result = db.makeBillVoids(invoiceno, Invoicedate);
+                                if(result >0)
+                                {
+                                    Date dd = new Date(Long.parseLong(Invoicedate));
+                                    String dd_str = new SimpleDateFormat("dd-MM-yyyy").format(dd);
+                                    String msg = "Bill Number "+invoiceno+" , Dated : "+dd_str+" voided successfully";
+                                    // MsgBox.Show("Warning", msg);
+                                    Toast.makeText(BillingCounterSalesActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                    Log.d("VoidBill", msg);
+                                }
+                            } else {
+                                messageDialog.Show("Warning", "Void Bill failed due to in sufficient access privilage");
+                            }
+                        } else {
+                            messageDialog.Show("Warning", "Void Bill failed due to wrong user id or password");
                         }
-                    } else {
-                        messageDialog.Show("Warning", "Void Bill failed due to in sufficient access privilage");
                     }
-                } else {
-                    messageDialog.Show("Warning", "Void Bill failed due to wrong user id or password");
-                }
-            }
-        }).show();
+                }).show();
     }
 
     /*************************************************************************************************************************************
@@ -4915,50 +4960,50 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         Toast.makeText(getApplicationContext(), "barcode--->>>" + Barcode, Toast.LENGTH_SHORT).show();
 
         Toast.makeText(myContext, "keyUp:"+keyCode+" : "+event.toString(), Toast.LENGTH_SHORT).show();*/
-                        long dd = event.getEventTime()-event.getDownTime();
+        long dd = event.getEventTime()-event.getDownTime();
                 /*long time1= System.currentTimeMillis();
         long time= SystemClock.uptimeMillis();*/
-                        //long dd = time - event.getEventTime();
+        //long dd = time - event.getEventTime();
                                 /*Log.d("TAG",String.valueOf(dd));
         Log.d("TAG1",String.valueOf(event.getEventTime()-event.getDownTime()));
         Log.d("TAG",String.valueOf(event));*/
-                                        if (dd<15 && dd >0 && CUSTOMER_FOUND==0)
+        if (dd<15 && dd >0 && CUSTOMER_FOUND==0)
+        {
+            View v = getCurrentFocus();
+            System.out.println(v);
+            EditText etbar = (EditText)findViewById(R.id.etItemBarcode);
+            //EditText ed = (WepEditText)findViewById(v.getId());
+            if (v.getId()!= R.id.aCTVSearchItemBarcode)
+            {
+                switch (v.getId())
+                {
+                    case R.id.aCTVSearchItem :autoCompleteTextViewSearchItem.setText(tx);
+                        break;
+                    case R.id.aCTVSearchMenuCode:  autoCompleteTextViewSearchMenuCode.setText(tx);
+                        break;
+
+                    case R.id.etCustGSTIN:
+                    case R.id.edtCustName:
+                    case R.id.edtCustPhoneNo: if (tx.equals(""))
                     {
-                                View v = getCurrentFocus();
-                    System.out.println(v);
-                    EditText etbar = (EditText)findViewById(R.id.etItemBarcode);
-                    //EditText ed = (WepEditText)findViewById(v.getId());
-                                                    if (v.getId()!= R.id.aCTVSearchItemBarcode)
-                        {
-                                    switch (v.getId())
-                        {
-                                    case R.id.aCTVSearchItem :autoCompleteTextViewSearchItem.setText(tx);
-                                break;
-                            case R.id.aCTVSearchMenuCode:  autoCompleteTextViewSearchMenuCode.setText(tx);
-                                break;
+                        Toast.makeText(this, "Please select customer for billing , if required", Toast.LENGTH_SHORT).show();
+                    }
+                    case R.id.edtCustAddress:
+                        EditText ed = (EditText)findViewById(v.getId());
+                        //String ed_str = ed.getText().toString();
+                        ed.setText(tx);
+                }
+                String bar_str = autoCompleteTextViewSearchItemBarcode.getText().toString();
+                bar_str += (char)event.getUnicodeChar();
+                autoCompleteTextViewSearchItemBarcode.setText(bar_str.trim());
+                autoCompleteTextViewSearchItemBarcode.showDropDown();
 
-                                    case R.id.etCustGSTIN:
-                            case R.id.edtCustName:
-                            case R.id.edtCustPhoneNo: if (tx.equals(""))
-                                                            {
-                                                                        Toast.makeText(this, "Please select customer for billing , if required", Toast.LENGTH_SHORT).show();
-                                                        }
-                            case R.id.edtCustAddress:
-                                EditText ed = (EditText)findViewById(v.getId());
-                                //String ed_str = ed.getText().toString();
-                                        ed.setText(tx);
-                        }
-                        String bar_str = autoCompleteTextViewSearchItemBarcode.getText().toString();
-                        bar_str += (char)event.getUnicodeChar();
-                        autoCompleteTextViewSearchItemBarcode.setText(bar_str.trim());
-                        autoCompleteTextViewSearchItemBarcode.showDropDown();
-
-                            }else if (v.getId()== R.id.aCTVSearchItemBarcode){
+            }else if (v.getId()== R.id.aCTVSearchItemBarcode){
                             /*tx = autoCompleteTextViewSearchMenuCode.getText().toString();
                 String bar_str = autoCompleteTextViewSearchItemBarcode.getText().toString().trim();*/
-                                    tx += (char)event.getUnicodeChar();
-                            autoCompleteTextViewSearchItemBarcode.setText(tx.trim());
-                            autoCompleteTextViewSearchItemBarcode.showDropDown();
+                tx += (char)event.getUnicodeChar();
+                autoCompleteTextViewSearchItemBarcode.setText(tx.trim());
+                autoCompleteTextViewSearchItemBarcode.showDropDown();
                             /*Toast.makeText(this, ""+bar_str+" : "+bar_str.length(), Toast.LENGTH_SHORT).show();
                 if(bar_str.length()>2)
                 {
@@ -4970,11 +5015,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
 
 
-                                                        }
-                }
+            }
+        }
                 /*Toast.makeText(myContext, "keyUp:"+keyCode+" : "+dd, Toast.LENGTH_SHORT).show();*/
 
 
-                                        return true;
-            }
+        return true;
+    }
 }

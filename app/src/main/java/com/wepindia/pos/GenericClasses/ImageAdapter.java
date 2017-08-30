@@ -66,7 +66,7 @@ public class ImageAdapter extends BaseAdapter{
 		//View gridView;
 		if (convertView == null)
 		{
-			convertView = inflater.inflate(R.layout.grid_images, null);
+			convertView = inflater.inflate(R.layout.grid_images_old, null);
 		}
 		TextView tvDisplayText = (TextView) convertView.findViewById(R.id.grid_item_label);
 		tvDisplayText.setText(DisplayText[position]);
