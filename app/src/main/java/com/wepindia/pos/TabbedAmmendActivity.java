@@ -158,8 +158,5 @@ public class TabbedAmmendActivity extends WepBaseActivity {
 
     }
 
-    public void onUserInteraction(){
-        //Log.d("Configuration","touched");
-       //hideKeyboard();
-    }
+
 }

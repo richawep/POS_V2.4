@@ -16,6 +16,7 @@
  ****************************************************************************/
 package com.wepindia.pos;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,6 +33,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -181,6 +183,7 @@ public class ConfigurationActivity extends WepBaseActivity{
 
                 @Override
                 public void onPageScrolled(final int i, final float v, final int i2) {
+                    hideKeyboard();
                 }
                 @Override
                 public void onPageSelected(final int i) {
@@ -256,8 +259,4 @@ public class ConfigurationActivity extends WepBaseActivity{
     }
 
 
-    public void onUserInteraction(){
-        //Log.d("Configuration","touched");
-        hideKeyboard();
-    }
 }

@@ -161,6 +161,7 @@
 
     <string name="menu_code_empty">Menu Code can not be empty for Item Name  </string>
     <string name="menu_code_invalid">Please Enter Menu Code as integer for Item Name  </string>
+    <string name="insufficient_information">Please all the required data  </string>
     <string name="item_name_empty">Item Name can not be empty for Menu Code  </string>
     <string name="item_name_invalid">Please Enter Item Name as character for Menu Code  </string>
     <string name="supply_type_empty">Supply Type can not be empty for Item Name  </string>

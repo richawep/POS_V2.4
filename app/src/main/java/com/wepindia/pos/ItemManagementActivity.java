@@ -927,7 +927,7 @@ protected void onPostExecute(Void aVoid) {
             mUserCSVInvalidValue = "";
         String checkUOMTypye = "Pk Lt Ml Gm Kg Bg Bx No Mt Dz Sa St Bt Pl Pc";
         String[] checkSupplyType = {"G", "S"};
-        String csvHeading = "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,CESS RATE,DISCOUNT PERCENTAGER,IMAGEURL";
+        String csvHeading = "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,cess RATE,DISCOUNT PERCENT";
         boolean flag;
         try {
         String line;
@@ -939,7 +939,7 @@ protected void onPostExecute(Void aVoid) {
         if (!flag) {
         mFlag = true;
         mUserCSVInvalidValue = getResources().getString(R.string.header_value_empty) + "\n"
-        + "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,CESS RATE,DISCOUNT PERCENT";
+        + "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,cess RATE,DISCOUNT PERCENT";
         return;
         }
 
@@ -951,6 +951,12 @@ protected void onPostExecute(Void aVoid) {
             final String[] colums = line.split(",");
             if(colums.length ==0)
                 continue;
+            else if (colums.length !=13)
+            {
+                mFlag = true;
+                mUserCSVInvalidValue = getResources().getString(R.string.insufficient_information);
+                break;
+            }
             if (colums[0] != null&& colums[0].trim().length() > 0  ) {
             mCheckCSVValueType = checkCSVTypeValue1(colums[0],"Int");
             if (mCheckCSVValueType == CHECK_INTEGER_VALUE) {
@@ -1160,7 +1166,12 @@ protected void onPostExecute(Void aVoid) {
             mUserCSVInvalidValue = getResources().getString(R.string.sgst_rate_empty) + colums[1];
             break;
             }
-
+            if (mCGSTRate+mSGSTRate <0 || mCGSTRate+mSGSTRate >99.99)
+            {
+                mFlag = true;
+                mUserCSVInvalidValue = "Please note sum of SGST Rate and CGST Rate should between 0 and 99.99 for item " + colums[1];
+                return;
+            }
             if (colums[10] != null && colums[10].length() > 0 && colums[10].trim().length() > 0) {
             mCheckCSVValueType = checkCSVTypeValue1(colums[10],"Double");
             int mCheckCSVValueType1 = checkCSVTypeValue1(colums[10],"Int");

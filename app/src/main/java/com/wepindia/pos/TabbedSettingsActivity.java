@@ -230,8 +230,5 @@ public class TabbedSettingsActivity extends WepBaseActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void onUserInteraction(){
-        //Log.d("Configuration","touched");
-        hideKeyboard();
-    }
+
 }

@@ -50,7 +50,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
     private ArrayList<String> allRoles;
     Cursor crsrRole;
     MessageDialog MsgBox;
-    Button btnClearRole,btnCloseRole, delete,update,addrole;
+    Button btnClearRole,btnCloseRole, delete, addrole;
     String strUserName = "";
     private Toolbar toolbar;
     ArrayList<String> listsAccess=null;
@@ -125,7 +125,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
         gridViewAccesses.setItemChecked(0, true);
         //displayRoleList();
         delete.setEnabled(false);
-        update.setEnabled(false);
+        btnupdate.setEnabled(false);
         addrole.setEnabled(true);
 
     }
@@ -150,7 +150,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
     {
         try {
              delete=(Button)findViewById(R.id.btnDeleteRole);
-            update=(Button)findViewById(R.id.btnGrantAccess);
+            btnupdate =(Button)findViewById(R.id.btnGrantAccess);
             addrole=(Button)findViewById(R.id.btnAddRole);
             btnCloseRole = (Button) findViewById(R.id.closeRole);
             editTextAddUser = (EditText) findViewById(R.id.editTextAddUser);
@@ -160,7 +160,6 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
             btnAddRole = (com.wep.common.app.views.WepButton) findViewById(R.id.btnAddRole);
             btnAddRole.setOnClickListener(this);
             btndelete = (Button) findViewById(R.id.btnDeleteRole);
-            btnupdate = (Button) findViewById(R.id.btnGrantAccess);
             btndelete.setEnabled(false);
             btnupdate.setEnabled(false);
             btnClose = (com.wep.common.app.views.WepButton) findViewById(R.id.closeRole);
@@ -286,7 +285,7 @@ public class AddRolesActivity extends WepBaseActivity implements View.OnClickLis
             gridViewAccesses.setItemChecked(0, true);
 
 
-        update.setOnClickListener(new View.OnClickListener() {
+        btnupdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View id) {
                 gridViewAccesses = (GridView) findViewById(R.id.gridViewAccesses);
                 int c=gridViewAccesses.getCheckedItemCount();

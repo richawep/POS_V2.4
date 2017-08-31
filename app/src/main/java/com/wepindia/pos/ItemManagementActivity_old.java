@@ -515,9 +515,9 @@ public class ItemManagementActivity_old extends WepBaseActivity  implements  Tex
                         if(invoiceno > 0)
                         {
                             // since already billing done for this businessdate, hence stock cannot be updated from here.
-                            // to update stock , goto Price & Stock module
-                            MsgBox.Show("Restriction", "You cannot update quantity after making bill for the day. \n\nTo update quantity , " +
-                                    "please goto Price & Stock module \n\n Or make Day End  to update from here ");
+                            // to btnupdate stock , goto Price & Stock module
+                            MsgBox.Show("Restriction", "You cannot btnupdate quantity after making bill for the day. \n\nTo btnupdate quantity , " +
+                                    "please goto Price & Stock module \n\n Or make Day End  to btnupdate from here ");
                             ResetItem();
                             return;
                         }

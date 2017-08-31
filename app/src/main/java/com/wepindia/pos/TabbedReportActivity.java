@@ -296,8 +296,5 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void onUserInteraction(){
-        //Log.d("Configuration","touched");
-        hideKeyboard();
-    }
+
 }
