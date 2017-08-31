@@ -837,7 +837,19 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                             if (String.valueOf(v.getTag()) == "TAG") {
                                 TableRow Row = (TableRow) v;
                                 TextView CouponValue = (TextView) Row.getChildAt(2);
-                                edtCoupon.setText(CouponValue.getText().toString());
+                                String couponVal_str = CouponValue.getText().toString();
+                                if(couponVal_str!= null && !couponVal_str.equals("")
+                                        && Double.parseDouble(String.format("%.2f",Double.parseDouble(couponVal_str))) <= dRoundoffTotal )
+                                {
+                                    edtCoupon.setText(CouponValue.getText().toString());
+                                }else
+                                {
+                                    edtCoupon.setText("0");
+                                    MsgBox.Show("Invalid","Coupons amount cannot be greater than total bill amount");
+                                    //Toast.makeText(myContext, "Discount is not applicable as bill amount is less than "+discAmt, Toast.LENGTH_LONG).show();
+                                    PayBillDialog.dismiss();
+                                    return;
+                                }
                                 TenderChange();
                                 PayBillDialog.dismiss();
                             }
@@ -922,7 +934,15 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
 
         }
 
-        edtCoupon.setText(String.format("%.2f",dCouponAmount));
+        if(dCouponAmount <= dRoundoffTotal )
+        {
+            edtCoupon.setText(String.format("%.2f",dCouponAmount));
+        }else
+        {
+            edtCoupon.setText("0");
+            MsgBox.Show("Invalid","Coupons amount cannot be greater than total bill amount");
+
+        }
     }
 
     public void showCreditCustomerDialog()

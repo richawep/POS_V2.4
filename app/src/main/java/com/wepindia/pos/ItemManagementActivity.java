@@ -2425,7 +2425,7 @@ private void ResetItem() {
         etRate.setText("0.00");
         etQuantity.setText("0.00");
         etItemDiscount.setText("0.00");
-        etHSN.setText("0");
+        etHSN.setText("");
         etGstTax.setText("0.00");
         itemName_beforeChange_in_update="";
         spnrMOU.setSelection(0);
