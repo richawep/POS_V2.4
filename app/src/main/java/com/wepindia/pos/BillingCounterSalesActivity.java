@@ -1514,7 +1514,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     tvServiceTaxPercent.setText(String.format("%.2f", dServiceTaxPercent));
 
 
-                    double dcessPercent = crsrItem.getDouble(crsrItem.getColumnIndex("cessRate"));
+                    double dcessPercent =0;
+                    if(crsrSettings!= null && crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)
+                        dcessPercent = crsrItem.getDouble(crsrItem.getColumnIndex("cessRate"));
                     TextView tvcess = new TextView(BillingCounterSalesActivity.this);
                     tvcess.setText(String.format("%.2f",dcessPercent));
 
