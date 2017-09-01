@@ -3628,7 +3628,7 @@ public class BillingScreenActivity_Unused extends WepPrinterBaseActivity {
             }
 
             // subtotal
-            float subtotal = objBillItem.getAmount() + objBillItem.getIGSTAmount() + objBillItem.getCGSTAmount() + objBillItem.getSGSTAmount();
+            double subtotal = objBillItem.getAmount() + objBillItem.getIGSTAmount() + objBillItem.getCGSTAmount() + objBillItem.getSGSTAmount();
             objBillItem.setSubTotal(subtotal);
             Log.d("InsertBillItems", "Sub Total :" + subtotal);
 

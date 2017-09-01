@@ -631,6 +631,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_Description = "Description";
     public static final String KEY_Price = "Price";
     public static final String KEY_UOM = "UOM";
+    public static final String KEY_IsReverseTaxEnabled = "IsReverseTaxEnable";
+    public static final String KEY_OriginalRate = "OriginalRate";
     public static final String KEY_DiscountRate = "DiscountRate";
     public static final String KEY_IGSTRate = "IGSTRate";
     public static final String KEY_CGSTRate = "CGSTRate";
@@ -828,8 +830,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "( " + KEY_GSTIN + " TEXT, " + KEY_CustName + " TEXT, " + KEY_CustStateCode + " TEXT, " + KEY_InvoiceNo + " TEXT, " +
             KEY_InvoiceDate + " TEXT, " + KEY_SupplyType + " TEXT, " +
             KEY_BusinessType + " TEXT, " + KEY_TaxationType + " TEXT, " + KEY_HSNCode + " TEXT, "
-            + KEY_ItemNumber + " NUMERIC, " + KEY_ItemName + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, " +
-            KEY_Value + " REAL, " + KEY_TaxableValue + " REAL, " + KEY_IGSTRate + " REAL," +
+            + KEY_ItemNumber + " NUMERIC, " + KEY_ItemName + " TEXT, " + KEY_Quantity + " REAL, " + KEY_UOM + " TEXT, "
+            +KEY_OriginalRate+" REAL, "+
+            KEY_Value + " REAL, " + KEY_TaxableValue + " REAL, " + KEY_Amount + " REAL, " +KEY_IsReverseTaxEnabled + " TEXT, " + KEY_IGSTRate + " REAL," +
             KEY_IGSTAmount + " REAL," + KEY_CGSTRate + " REAL," + KEY_CGSTAmount + " REAL, " + KEY_SGSTRate + " REAL," +
             KEY_SGSTAmount + " REAL," + KEY_cessRate + " REAL," + KEY_cessAmount + " REAL," +
             KEY_SubTotal + " REAl, " + KEY_BillingMode + " TEXT, " + KEY_ServiceTaxAmount + " REAL, " +
@@ -1124,7 +1127,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_Table_Split_No + " NUMERIC, "
             + KEY_SupplyType + " TEXT, "
             + KEY_POS + " TEXT, "
-            + KEY_UOM + " TEXT, " +
+            + KEY_UOM + " TEXT, "
+            + KEY_OriginalRate+ " REAL ,"+
             " PrintKOTStatus NUMERIC)";
 
     String QUERY_CREATE_TABLE_RIDERSETTLEMENT = "CREATE TABLE " + TBL_RIDERSETTLEMENT + " (" + KEY_DeliveryCharge +
@@ -4547,6 +4551,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("Quantity", objPendingKOT.getQuantity());
         cvDbValues.put("Rate", objPendingKOT.getRate());
         cvDbValues.put("Amount", objPendingKOT.getAmount());
+            cvDbValues.put(KEY_OriginalRate, objPendingKOT.getOriginalrate());
         cvDbValues.put("TaxPercent", objPendingKOT.getTaxPercent());
         cvDbValues.put("TaxAmount", objPendingKOT.getTaxAmount());
         cvDbValues.put("DiscountPercent", objPendingKOT.getDiscountPercent());
@@ -4595,7 +4600,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
     }
 
-    public long updateKOT_new(int ItemNo, float Qty, float Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus
+    public long updateKOT_new(int ItemNo, float Qty, double Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus
                     ,float IAmt, float cessAmt) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result =0;
@@ -8714,7 +8719,10 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put("Quantity", objBillItem.getQuantity());
             cvDbValues.put("Value", objBillItem.getValue());
             cvDbValues.put("ModifierAmount", objBillItem.getModifierAmount());
-            cvDbValues.put(KEY_TaxableValue, objBillItem.getAmount());
+            cvDbValues.put(KEY_TaxableValue, objBillItem.getTaxableValue());
+            cvDbValues.put(KEY_Amount, objBillItem.getAmount());
+            cvDbValues.put(KEY_OriginalRate, objBillItem.getOriginalRate());
+            cvDbValues.put(KEY_IsReverseTaxEnabled, objBillItem.getIsReverTaxEnabled());
             cvDbValues.put("DiscountAmount", objBillItem.getDiscountAmount());
             cvDbValues.put(KEY_DiscountPercent, objBillItem.getDiscountPercent());
             cvDbValues.put("ServiceTaxAmount", objBillItem.getServiceTaxAmount());

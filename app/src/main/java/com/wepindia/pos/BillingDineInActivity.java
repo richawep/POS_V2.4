@@ -5025,7 +5025,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             }
 
             // subtotal
-            float subtotal = objBillItem.getAmount() + objBillItem.getIGSTAmount() + objBillItem.getCGSTAmount() + objBillItem.getSGSTAmount();
+            double subtotal = objBillItem.getAmount() + objBillItem.getIGSTAmount() + objBillItem.getCGSTAmount() + objBillItem.getSGSTAmount();
             objBillItem.setSubTotal(subtotal);
             Log.d("InsertBillItems", "Sub Total :" + subtotal);
 
@@ -5179,14 +5179,14 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
 
 
         // Taxable Value
-        float taxval_f = Float.parseFloat(tvSubTotal.getText().toString());
+        double taxval_f = Double.parseDouble(tvSubTotal.getText().toString());
         objBillDetail.setAmount(String.valueOf(taxval_f));
         Log.d("InsertBillDetail", "Taxable Value:" + taxval_f);
 
 
 
 
-        float subtot_f = taxval_f + objBillDetail.getIGSTAmount() + objBillDetail.getCGSTAmount()+ objBillDetail.getSGSTAmount();
+        double subtot_f = taxval_f + objBillDetail.getIGSTAmount() + objBillDetail.getCGSTAmount()+ objBillDetail.getSGSTAmount();
         objBillDetail.setSubTotal(subtot_f);
         Log.d("InsertBillDetail", "Sub Total :" + subtot_f);
 

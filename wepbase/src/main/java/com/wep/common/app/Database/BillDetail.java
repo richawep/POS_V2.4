@@ -24,8 +24,9 @@ public class BillDetail {
 	String BillingMode, TableNo, TableSplitNo; // richa_2012
 	float fBillAmount, fCardPayment, fCashPayment, fCouponPayment, fPettyCashPayment, fPaidTotalPayment, fChangePayment, fWalletAmount,
 	fDeliveryCharge, fTotalDiscountPercentage,fTotalDiscountAmount, fTotalTaxAmount, fTotalServiceTaxAmount, IGSTAmount, CGSTAmount, SGSTAmount,
-            cessAmount,SubTotal;
+            cessAmount;
 
+	double SubTotal;
 
 	// Default Constructor
 	public BillDetail(){
@@ -185,11 +186,11 @@ public class BillDetail {
 		CustStateCode = custStateCode;
 	}
 
-	public float getSubTotal() {
+	public double getSubTotal() {
 		return SubTotal;
 	}
 
-	public void setSubTotal(float subTotal) {
+	public void setSubTotal(double subTotal) {
 		SubTotal = subTotal;
 	}
 

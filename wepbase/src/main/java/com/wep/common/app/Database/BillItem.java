@@ -23,26 +23,28 @@ public class BillItem {
 			SupplierPhone, SupplierName, SupplierAddress,SupplierGSTIN,
             GSTIN;
 	int  iItemNumber, iDeptCode, iCategCode, iKitchenCode, iTaxType;
-	float fAmount, fDiscountAmount, fDiscountPercent, fQuantity, fvalue,fTaxAmount, fTaxPercent, fServiceTaxPercent, fServiceTaxAmount, fModifierAmount,
+	float  fDiscountAmount, fDiscountPercent, fQuantity, fvalue,fTaxAmount, fTaxPercent, fServiceTaxPercent, fServiceTaxAmount, fModifierAmount,
 	IGSTRate, IGSTAmount, CGSTRate, CGSTAmount, SGSTRate, SGSTAmount;
 	String TaxationType,SupplierType ;
 	String InvoiceDate;
 	String BillingMode; // richa_2012
 	int isGoodInwarded, billStatus;
 	int Suppliercode, PurchaseOrderNo;
-    String additionalChargeName;
+    String additionalChargeName, isReverTaxEnabled;
     float additionalChargeAmount;
 
-	Float TaxableValue, SubTotal;
-	double cessRate, cessAmount;
+	double TaxableValue, originalRate;
+	double cessRate, cessAmount,fAmount, SubTotal;
 	// Default constructor
 	public BillItem(){
 		this.Suppliercode=-1;
         this.PurchaseOrderNo=0;
+		this.originalRate = 0.00;
         this.SupplierAddress = "";
         this.additionalChargeAmount = 0;
         this.additionalChargeName = "";
 		this.Uom="";
+		this.isReverTaxEnabled="";
 		this.CustStateCode="";
 		this.CustName="";
 		this.SupplierName="";
@@ -84,6 +86,22 @@ public class BillItem {
 		this.isGoodInwarded=0;
 		this.billStatus=0;
 		this.SupplierType="";
+	}
+
+	public double getOriginalRate() {
+		return originalRate;
+	}
+
+	public void setOriginalRate(double originalRate) {
+		this.originalRate = originalRate;
+	}
+
+	public String getIsReverTaxEnabled() {
+		return isReverTaxEnabled;
+	}
+
+	public void setIsReverTaxEnabled(String isReverTaxEnabled) {
+		this.isReverTaxEnabled = isReverTaxEnabled;
 	}
 
 	public int getBillStatus() {
@@ -267,19 +285,19 @@ public class BillItem {
 		TaxationType = taxationType;
 	}
 
-	public Float getSubTotal() {
+	public double getSubTotal() {
 		return SubTotal;
 	}
 
-	public void setSubTotal(Float subTotal) {
+	public void setSubTotal(double subTotal) {
 		SubTotal = subTotal;
 	}
 
-	public Float getTaxableValue() {
+	public double getTaxableValue() {
 		return TaxableValue;
 	}
 
-	public void setTaxableValue(Float taxableValue) {
+	public void setTaxableValue(double taxableValue) {
 		TaxableValue = taxableValue;
 	}
 
@@ -407,7 +425,7 @@ public class BillItem {
 	}
 				
 	// getting Amount
-	public float getAmount(){
+	public double getAmount(){
 		return this.fAmount;
 	}
 		
@@ -492,7 +510,7 @@ public class BillItem {
 	}
 					
 	// setting Amount
-	public void setAmount(float Amount){
+	public void setAmount(double Amount){
 		this.fAmount = Amount;
 	}
 			

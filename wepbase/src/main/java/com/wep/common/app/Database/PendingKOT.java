@@ -22,15 +22,17 @@ public class PendingKOT {
     String strItemName, strTime , HSNCode , POS , SupplyType,UOM;
     int iTokenNumber, iItemNumber, iTableNumber, iSubUdfNumber, iDeptCode, iTableSplitNo, iPrintKOTStatus,
             iCategCode, iKitchenCode, iEmployeeId, iCustId, iTaxType, iOrderMode, iIsCheckedOut;
-    float fQuantity, fRate, fAmount, fTaxPercent, fTaxAmount,
+    float fQuantity,  fTaxPercent, fTaxAmount,
             fDiscountPercent, fDiscountAmount, fModifierAmount, fServiceTaxAmount, fServiceTaxPercent;
     float cessRate, cessAmount,IGSTRate,IGSTAmount;
+    double  originalrate,fRate, fAmount;
 
     // Default constructor
     public PendingKOT() {
         this.SupplyType="";
         this.strItemName = "";
         this.strTime = "";
+        this.originalrate=0.00;
         this.iCategCode = 0;
         this.iCustId = 0;
         this.iDeptCode = 0;
@@ -98,6 +100,14 @@ public class PendingKOT {
         this.HSNCode = hsn;
         this.POS=pos;
         this.iPrintKOTStatus = PrintKOTStatus;
+    }
+
+    public double getOriginalrate() {
+        return originalrate;
+    }
+
+    public void setOriginalrate(double originalrate) {
+        this.originalrate = originalrate;
     }
 
     public String getUOM() {
@@ -228,12 +238,12 @@ public class PendingKOT {
     }
 
     // getting Rate
-    public float getRate() {
+    public double getRate() {
         return this.fRate;
     }
 
     // getting Amount
-    public float getAmount() {
+    public double getAmount() {
         return this.fAmount;
     }
 
@@ -353,12 +363,12 @@ public class PendingKOT {
     }
 
     // setting Rate
-    public void setRate(float Rate) {
+    public void setRate(double Rate) {
         this.fRate = Rate;
     }
 
     // setting Amount
-    public void setAmount(float Amount) {
+    public void setAmount(double Amount) {
         this.fAmount = Amount;
     }
 
