@@ -157,7 +157,6 @@ public class ItemManagementActivity extends WepBaseActivity  implements  TextWat
     private String mtaxationType = "";
 
 
-    private boolean mCSVHashCheckflag = false;
     //  private Map<CheckCSVResponse,ItemOutward> mHashMap= new HashMap<>();
     private Map<Integer, ItemOutward> mHashMapItemCode = new TreeMap<>();
     private Map<String, ItemOutward> mHashMapItemName = new LinkedHashMap<>();
@@ -901,16 +900,21 @@ protected Void doInBackground(Void... params) {
 protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         try {
-        ResetItem();
-        //ClearItemTable();
-        DisplayItemList();
-        if(!mCSVHashCheckflag && mUserCSVInvalidValue.equals(""))
-            Toast.makeText(getApplicationContext(), "Items Imported Successfully", Toast.LENGTH_LONG).show();
-        pd.dismiss();
-        } catch (Exception e) {
-        e.printStackTrace();
-        //Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+            if (mFlag) {
+                   MsgBox.Show("Note", mUserCSVInvalidValue);
+            }else if(mUserCSVInvalidValue.equals(""))
+            {
+                Toast.makeText(getApplicationContext(), "Items Imported Successfully", Toast.LENGTH_LONG).show();
+            }
+            DisplayItemList();
+            ResetItem();
+            //ClearItemTable();
+
+            pd.dismiss();
+            } catch (Exception e) {
+            e.printStackTrace();
+            //Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
         }.execute();
         }
@@ -929,19 +933,23 @@ protected void onPostExecute(Void aVoid) {
         String[] checkSupplyType = {"G", "S"};
         String csvHeading = "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,cess RATE,DISCOUNT PERCENT";
         boolean flag;
+            boolean   mCSVHashCheckflag = false;
         try {
         String line;
         String chechCSVHeaderLine;
         chechCSVHeaderLine = buffer.readLine();
 
-        flag = csvHeading.equals(chechCSVHeaderLine);
-        mFlag = false;
-        if (!flag) {
-        mFlag = true;
-        mUserCSVInvalidValue = getResources().getString(R.string.header_value_empty) + "\n"
-        + "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,cess RATE,DISCOUNT PERCENT";
-        return;
-        }
+
+            mFlag = false;
+
+            flag = csvHeading.equalsIgnoreCase(chechCSVHeaderLine);
+
+            if (!flag) {
+                mFlag = true;
+                mUserCSVInvalidValue = getResources().getString(R.string.header_value_empty) + "\n"
+                + "MENU CODE,ITEM NAME,SUPPLY TYPE,RATE 1,RATE 2,RATE 3,QUANTITY,UOM,CGST RATE,SGST RATE,IGST RATE,cess RATE,DISCOUNT PERCENT";
+                return;
+            }
 
         //dataList.clear();
         mHashMapItemCode.clear();
@@ -1238,7 +1246,7 @@ protected void onPostExecute(Void aVoid) {
             mDeptCode, mCategCode, mKitchenCode, mbarCode, mImageUri, mMenuCode,
             mCGSTRate, mSGSTRate, mIGSTRate, mCESSRate, mUOM, mHSN, mtaxationType, mSupplyType,mDiscount);
 
-                mCSVHashCheckflag = false;
+
             for (Map.Entry<Integer, ItemOutward> entry : mHashMapItemCode.entrySet()) {
             //  String key = entry.getKey();
             //  ItemOutward itemOutward = new ItemOutward()
@@ -1278,7 +1286,6 @@ protected void onPostExecute(Void aVoid) {
             mCSVHashCheckflag = true;
             exp.printStackTrace();
         }
-
         }
 
 
@@ -1585,9 +1592,7 @@ private void InitializeAdapters() {
         itemListAdapter.notifyNewDataAdded(dataList);
         }
 
-        if (mFlag) {
-        MsgBox.Show("Note", mUserCSVInvalidValue);
-        }
+
         }
 
 @SuppressWarnings("deprecation")
@@ -2263,7 +2268,7 @@ private void InsertItem(String LongName, String ShortName, float DineInPrice1, f
         Log.d("Item", "Row Id:" + String.valueOf(lRowId));
         }
 
-private void ReadData(int Type) {
+        private void ReadData(int Type) {
         String strMenuCode = "", strLongName = "", strShortName = "", strBarcode = "";
         int iDeptCode = 0, iCategCode = 0, iKitchenCode = 0, iSalesTaxId = 0, iAdditionalTaxId = 0, iOptionalTaxId1 = 0,
         iOptionalTaxId2 = 0, iDiscountId = 0, iPriceChange = 0, iDiscountEnable = 0, iBillWithStock = 0,iTaxType = 0;
@@ -2403,6 +2408,8 @@ private void ReadData(int Type) {
 
 private void ResetItem() {
         tx = "";
+        mFlag = false;
+        mUserCSVInvalidValue = "";
         strItemId = "";
         strImageUri = "";
         txtLongName.setText("");

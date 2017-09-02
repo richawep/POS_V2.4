@@ -69,13 +69,13 @@
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/rbGstinEnable"
+                                android:id="@+id/rbGstinEnable_in"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Enable" />
 
                             <RadioButton
-                                android:id="@+id/rbGstinDisable"
+                                android:id="@+id/rbGstinDisable_in"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Disable" />

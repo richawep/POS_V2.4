@@ -177,7 +177,7 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
         bundle1.putString("REPORT_TYPE", "1");
         ReportFragment reportFragment1 = new ReportFragment();
         reportFragment1.setArguments(bundle1);
-        adapter.addFragment(reportFragment1, reportTab1);
+        adapter.addFragment(reportFragment1, "Sales Report");
 
         Bundle bundle2=new Bundle();
         bundle2.putString("REPORT_TYPE", "2");

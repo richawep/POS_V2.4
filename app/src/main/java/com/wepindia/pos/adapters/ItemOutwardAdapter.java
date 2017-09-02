@@ -112,13 +112,14 @@ public class ItemOutwardAdapter extends BaseAdapter {
         TableRow.LayoutParams rowparams = new TableRow.LayoutParams(60, 40);
         rowparams.gravity = Gravity.CENTER;
         viewHolder.itemImg.setLayoutParams(rowparams);
-        viewHolder.itemImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        viewHolder.itemImg.setScaleType(ImageView.ScaleType.FIT_XY);
 
         String icon = AppUtils.getImagePath(itemOutward.getImageUri(),itemOutward.getItemName());
         Uri uri = Uri.fromFile(new File(icon));
         try{
             Picasso.with(activity)
                     .load(uri)
+                    .resize(200,200)
                     .placeholder(R.drawable.img_noimage) //this is optional the image to display while the url image is downloading
                     .error(R.drawable.img_noimage)         //this is also optional if some error has occurred in downloading the image this image would be displayed
                     .into(viewHolder.itemImg);

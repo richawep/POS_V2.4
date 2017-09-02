@@ -26,7 +26,7 @@ public class FragmentSettingsGST extends Fragment {
     MessageDialog MsgBox;// = new MessageDialog(DineInSettingsActivity.this);
 
     // View handlers
-    RadioButton rbGstinEnable , rbGstinDisable ,rbPosEnable , rbPosDisable ,rbHsnCodeEnable,  rbHsnCodeDisable ;
+    RadioButton rbGstinEnable_in, rbGstinDisable_in,rbPosEnable , rbPosDisable ,rbHsnCodeEnable,  rbHsnCodeDisable ;
     RadioButton rbReverseChargeEnable , rbReverseChargeDisable ,rbGstinEnable_out, rbGstinDisable_out ;
     RadioButton rbPosEnable_out,  rbPosDisable_out,  rbHsnCodeEnable_out,  rbHsnCodeDisable_out , rbReverseChargeEnable_out ,
             rbReverseChargeDisable_out ;
@@ -78,8 +78,8 @@ public class FragmentSettingsGST extends Fragment {
 
     private void InitializeViews(View view) {
 
-        rbGstinEnable = (RadioButton) view.findViewById(R.id.rbGstinEnable);
-        rbGstinDisable = (RadioButton) view.findViewById(R.id.rbGstinDisable);
+        rbGstinEnable_in = (RadioButton) view.findViewById(R.id.rbGstinEnable_in);
+        rbGstinDisable_in = (RadioButton) view.findViewById(R.id.rbGstinDisable_in);
 
         rbPosEnable = (RadioButton) view.findViewById(R.id.rbPosEnable);
         rbPosDisable = (RadioButton) view.findViewById(R.id.rbPosDisable);
@@ -128,10 +128,10 @@ public class FragmentSettingsGST extends Fragment {
 
         if (crsrBillSetting.moveToFirst()) {
 
-            if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("GSTIN")) == 1) {
-                rbGstinEnable.setChecked(true);
+            if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("GSTIN_In")) == 1) {
+                rbGstinEnable_in.setChecked(true);
             } else {
-                rbGstinDisable.setChecked(true);
+                rbGstinDisable_in.setChecked(true);
             }
 
 
@@ -192,14 +192,14 @@ public class FragmentSettingsGST extends Fragment {
     private void ReadGSTSettings() {
 
         // Local variables
-        int igstin, igstin_out, ipos, ipos_out, ihsncode, ihsncode_out , ireversecharge, ireversecharge_out,igst;
+        int igstin_in, igstin_out, ipos, ipos_out, ihsncode, ihsncode_out , ireversecharge, ireversecharge_out,igst;
 
         igst =1;
 
-        if (rbGstinEnable.isChecked() == true) {
-            igstin= 1;
+        if (rbGstinEnable_in.isChecked() == true) {
+            igstin_in= 1;
         } else {
-            igstin = 0;
+            igstin_in = 0;
         }
 
         // Price Change
@@ -251,7 +251,7 @@ public class FragmentSettingsGST extends Fragment {
 
         // Initialize all the settings variable
         objBillSettings.setLoginWith(0);
-        objBillSettings.setGSTIN(igstin);
+        objBillSettings.setGSTIN(igstin_in);
         objBillSettings.setPOS(ipos);
         objBillSettings.setHSNCode(ihsncode);
         objBillSettings.setReverseCharge(ireversecharge);

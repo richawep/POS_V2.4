@@ -174,7 +174,11 @@ public class KOTStatusActivity extends WepBaseActivity {
     public void SearchKOTStatus(View view)
     {
         //tblKOTStatus.removeAllViews();
-        ResetKOTStatus();
+		if (txtSearchTable.getText().toString() == null || txtSearchTable.getText().toString().equals(""))
+		{
+			MsgBox.Show("Note","Please enter table no");
+			return;
+		}
         Cursor crsrOccupiedTable = dbKOTStatus.getKOTStatusByTableNo(Integer.valueOf(txtSearchTable.getText().toString()));
 
         TableRow rowKOTStatus = null;
@@ -183,6 +187,7 @@ public class KOTStatusActivity extends WepBaseActivity {
         int i = 1;
 
         if (crsrOccupiedTable.moveToFirst()) {
+			ResetKOTStatus();
             do {
                 rowKOTStatus = new TableRow(myContext);
                 rowKOTStatus.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
@@ -251,7 +256,10 @@ public class KOTStatusActivity extends WepBaseActivity {
                         new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
                 i++;
             } while (crsrOccupiedTable.moveToNext());
-        }
+        }else
+		{
+			MsgBox.Show("Note","No KOT is present for table no : "+txtSearchTable.getText().toString());
+		}
     }
 
     public void CloseKOTStatus(View view)

@@ -883,6 +883,8 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         if(ConnectionDetector.isInternetConnection(myContext)) {
             progressDialog.show();
             String str[] = startDate_str.split("-");
+            if(str.length !=3)
+                return;
             GSTUploadFunctions handle = new GSTUploadFunctions(myContext,dbGSTLink,BillNoPrefix);
             ArrayList<GSTR1_B2B_Data> list_b2b = handle.getGSTR1B2BList(start_milli,end_milli);
             ArrayList<GSTR1_B2CL_Data> list_b2cl= handle.getGSTR1B2CLList(start_milli,end_milli);
@@ -893,7 +895,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
             ArrayList<GSTR1_B2CL_A_Data> list_b2cla= new ArrayList<>();// = dataController.getGSTR1B2CL_A_List(start_milli,end_milli);
             ArrayList<GSTR1B2CSAData> list_b2csA= new ArrayList<>();// = makeGSTR1B2CSA( start_milli,  end_milli);
             ArrayList<GSTR1_DOCS_Data> list_doc= handle.getGSTR1DOCData( start_milli,  end_milli);
-            GSTR1Data gstr1Data = new GSTR1Data( dbGSTLink.getGSTIN(),list_b2b, list_b2ba,list_b2cl,list_b2cla,list_b2cs, list_b2csA,
+            GSTR1Data gstr1Data = new GSTR1Data( dbGSTLink.getGSTIN(),str[1]+str[2],list_b2b, list_b2ba,list_b2cl,list_b2cla,list_b2cs, list_b2csA,
                     cdnList,hsnList,list_doc);
             GSTRData gstrData = new GSTRData(userName, dbGSTLink.getGSTIN(), gstr1Data);
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);

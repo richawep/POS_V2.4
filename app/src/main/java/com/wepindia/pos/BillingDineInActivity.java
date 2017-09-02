@@ -2892,7 +2892,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                 dServiceTaxAmt += Double.parseDouble(ColServiceTaxAmount.getText().toString());
                 dIGSTAmt += Double.parseDouble(ColIGSTAmount.getText().toString());
                 dcessAmt += Double.parseDouble(ColcessAmount.getText().toString());
-                dSubTotal += Double.parseDouble(ColAmount.getText().toString());
+                    dSubTotal += Double.parseDouble(ColAmount.getText().toString());
 
             }
         }
@@ -4137,13 +4137,13 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
             tvSubUdfValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("SubUdfNumber")));
 
             // Get Cust Id
-            edtCustId.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("CustId")));
-            Cursor crsrCustomer = db.getCustomerById(crsrBillItems.getInt(crsrBillItems.getColumnIndex("CustId")));
-            if (crsrCustomer.moveToFirst()) {
-                edtCustPhoneNo.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustContactNumber")));
-                edtCustName.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName")));
-                edtCustAddress.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustAddress")));
-            }
+                edtCustId.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("CustId")));
+                Cursor crsrCustomer = db.getCustomerById(crsrBillItems.getInt(crsrBillItems.getColumnIndex("CustId")));
+                if (crsrCustomer.moveToFirst()) {
+                    edtCustPhoneNo.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustContactNumber")));
+                    edtCustName.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustName")));
+                    edtCustAddress.setText(crsrCustomer.getString(crsrCustomer.getColumnIndex("CustAddress")));
+                }
 
             // Display items in table
             do {
@@ -4793,8 +4793,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     {
                         //String i = billsettingCursor.getString(billsettingCursor.getColumnIndex("BillwithStock"));
                         if (billsettingCursor.getInt(billsettingCursor.getColumnIndex("BillwithStock")) == 1) {
-                            UpdateItemStock(crsrUpdateItemStock, Float.parseFloat(Quantity.getText().toString()));
-                        }
+                        UpdateItemStock(crsrUpdateItemStock, Float.parseFloat(Quantity.getText().toString()));
+                    }
                     }
 
                 }
@@ -4822,7 +4822,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                 TextView Amount = (TextView) RowBillItem.getChildAt(5);
                 objBillItem.setAmount(Float.parseFloat(Amount.getText().toString()));
                 Log.d("InsertBillItems", "Taxable Value or amount :" + Amount.getText().toString());
-            }
+                }
 
             // Service Tax Percent
             float sgatTax = 0;

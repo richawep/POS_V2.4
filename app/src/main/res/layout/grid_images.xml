@@ -23,6 +23,7 @@
         android:gravity="center"
         android:text="12345678901234567890123456"
         android:textColor="#000000"
+        android:lines="2"
         android:textSize="@dimen/text_size_12sp_720dp_10sp_600dp" />
 
 </LinearLayout>

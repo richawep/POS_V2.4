@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -78,6 +79,8 @@ import com.wepindia.pos.utils.StockOutwardMaintain;
 import com.wepindia.printers.HeyDeyBaseActivity;
 import com.wepindia.printers.WepPrinterBaseActivity;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,6 +90,8 @@ import java.util.List;
 public class BillingCounterSalesActivity extends WepPrinterBaseActivity implements View.OnClickListener ,TextWatcher {
     String tx ="";
     int CUSTOMER_FOUND =0;
+
+    DecimalFormat df;
 
     private static final String TAG = BillingCounterSalesActivity.class.getSimpleName();
     private Toolbar toolbar;
@@ -183,6 +188,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
         initialiseViewVariables();
         onClickEvents();
         init();
+
+        df = new DecimalFormat("0.##");
+        df.setRoundingMode(RoundingMode.DOWN);
 
         com.wep.common.app.ActionBarUtils.setupToolbar(this,toolbar,getSupportActionBar(),CounterSalesCaption,userName," Date:"+s.toString());
 
@@ -1254,6 +1262,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 TextView IGSTAmt = (TextView) Row.getChildAt(24);
                                 TextView cessRate = (TextView) Row.getChildAt(25);
                                 TextView cessAmt = (TextView) Row.getChildAt(26);
+                                TextView tvTaxableValue = (TextView) Row.getChildAt(28);
 
 
                                 dTaxPercent = Double.parseDouble(TaxPer.getText().toString().equalsIgnoreCase("") ? "0"
@@ -1266,12 +1275,22 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                         : cessRate.getText().toString()); // Temp
                                 dDiscPercent = Double.parseDouble(DiscPer.getText().toString().equalsIgnoreCase("") ? "0"
                                         : DiscPer.getText().toString()); // Temp
+                                double dTaxableValue = Double.parseDouble(tvTaxableValue.getText().toString().equalsIgnoreCase("") ? "0"
+                                        : tvTaxableValue.getText().toString()); // Temp
 
                                 if (crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1) { // forward tax
                                     // Discount
                                     dDiscAmt = dRate * (dDiscPercent / 100);
                                     dTempAmt = dDiscAmt;
                                     dDiscAmt = dDiscAmt * Double.parseDouble(Qty.getText().toString());
+
+                                    // TaxableAmount
+                                    dTaxableValue = (dRate - dTempAmt) *  Double.parseDouble(Qty.getText().toString());
+                                    double AmountToPrint = (Double.parseDouble(Qty.getText().toString()) * (dRate-dTempAmt));
+
+                                   // RatetoPrint = Double.parseDouble(df.format(RatetoPrint));
+                                    AmountToPrint = Double.parseDouble(df.format(AmountToPrint));
+                                    dTaxableValue = Double.parseDouble(df.format(dTaxableValue));
 
                                     // Tax
                                     dTaxAmt = (dRate - dTempAmt) * (dTaxPercent / 100);
@@ -1291,7 +1310,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                     ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
                                     cessAmt.setText(String.format("%.2f", dcessAmt));
                                     IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
-                                    Amount.setText(String.format("%.2f", (Double.parseDouble(Qty.getText().toString()) * (dRate-dTempAmt))));
+                                    Amount.setText(String.format("%.2f", AmountToPrint));
+                                    tvTaxableValue.setText(String.format("%.2f", Double.parseDouble(df.format(dTaxableValue))));
 
                                 } else {// reverse tax
                                     int CounterSalesRate = crsrSettings.getInt(crsrSettings.getColumnIndex("CounterSalesRate"));
@@ -1311,11 +1331,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                     dDiscAmt = dTempAmt * Double.parseDouble(Qty.getText().toString());
 
                                     double amount = (dRate-dTempAmt) *Double.parseDouble(Qty.getText().toString());
-
-
                                     double dBasePrice = (dRate -dTempAmt)/ (1 + (dTaxPercent / 100)+(dServiceTaxPercent/100) + (dcessRate/100));
+                                    double taxableValue_new = dBasePrice*Double.parseDouble(Qty.getText().toString());
 
 
+                                    amount = Double.parseDouble(df.format(amount));
+                                    taxableValue_new = Double.parseDouble(df.format(taxableValue_new));
 
                                     // Tax
                                     dTaxAmt = (dBasePrice ) * (dTaxPercent / 100);
@@ -1336,14 +1357,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                     cessAmt.setText(String.format("%.2f", dcessAmt));
                                     IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
                                     Amount.setText(String.format("%.2f", amount));
+                                    tvTaxableValue.setText(String.format("%.2f", Double.parseDouble(df.format(taxableValue_new))));
                                 }
 
-
-                                // // delete
-                                // Delete.setText("Hi");
-
-                                // Clear all variables and set ItemExists to TRUE
-                                // and break from the loop
                                 dRate = 0;
                                 dTaxPercent = 0;
                                 dDiscPercent = 0;
@@ -1515,7 +1531,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
 
                     double dcessPercent =0;
-                    if(crsrSettings!= null && crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)
+                    if(crsrSettings!= null && crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1) // disabling cess in reverse tax
                         dcessPercent = crsrItem.getDouble(crsrItem.getColumnIndex("cessRate"));
                     TextView tvcess = new TextView(BillingCounterSalesActivity.this);
                     tvcess.setText(String.format("%.2f",dcessPercent));
@@ -1527,12 +1543,19 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                     double AmounttoPrint =0;
                     double RatetoPrint =0;
+                    double TaxableValueToPrint =0;
 
                     // Tax Amount
                     if (crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1) { // Forward
                         dDiscAmt = dRate * (dDiscPercent / 100);
                         RatetoPrint = dRate;
                         AmounttoPrint = dRate-dDiscAmt;
+                        TaxableValueToPrint = dRate -dDiscAmt;
+
+                        RatetoPrint = Double.parseDouble(df.format(RatetoPrint));
+                        AmounttoPrint = Double.parseDouble(df.format(AmounttoPrint));
+                        TaxableValueToPrint = Double.parseDouble(df.format(TaxableValueToPrint));
+
                         // Tax
                         dTaxAmt = (dRate - dDiscAmt) * (dTaxPercent / 100);
                         dServiceTaxAmt = (dRate - dDiscAmt) * (dServiceTaxPercent / 100);
@@ -1544,6 +1567,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         AmounttoPrint = dRate -dDiscAmt;
                         dBasePrice = (dRate -dDiscAmt)/ (1 + (dTaxPercent / 100)+(dServiceTaxPercent / 100)+ (dcessPercent/100));
                         RatetoPrint = dBasePrice;
+                        TaxableValueToPrint = dBasePrice;
+
+                        RatetoPrint = Double.parseDouble(df.format(RatetoPrint));
+                        AmounttoPrint = Double.parseDouble(df.format(AmounttoPrint));
+                        TaxableValueToPrint = Double.parseDouble(df.format(TaxableValueToPrint));
+
                         dTaxAmt = (dBasePrice) * (dTaxPercent / 100);
                         dServiceTaxAmt = (dBasePrice ) * (dServiceTaxPercent / 100);
                         dIGSTAmt = (dBasePrice) * (dIGSTPercent / 100);
@@ -1552,6 +1581,9 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                     etRate.setText(String.format("%.2f", RatetoPrint));
 
+                    // taxable Value
+                    TextView tvTaxableValue = new TextView(this);
+                    tvTaxableValue.setText(String.format("%.2f",(TaxableValueToPrint)));
                     // Amount
                     tvAmount = new TextView(BillingCounterSalesActivity.this);
 //                    tvAmount.setWidth(60); // 97px ~= 145dp
@@ -1677,6 +1709,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     rowItem.addView(tvcess);//25
                     rowItem.addView(tvcessAmt);//26
                     rowItem.addView(originalrate);//27
+                    rowItem.addView(tvTaxableValue);//28
 
                     tblOrderItems.addView(rowItem, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 }
@@ -1752,6 +1785,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     TextView IGSTAmt = (TextView) Row.getChildAt(24);
                     TextView cessRate = (TextView) Row.getChildAt(25);
                     TextView cessAmt = (TextView) Row.getChildAt(26);
+                    TextView tvTaxableValue = (TextView) Row.getChildAt(28);
 
                     dTaxPercent = Double.parseDouble(TaxPer.getText().toString().equalsIgnoreCase("") ? "0"
                             : TaxPer.getText().toString()); // Temp
@@ -1790,14 +1824,14 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         ServiceTaxAmt.setText(String.format("%.2f", dServiceTaxAmt));
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
-                        Amount.setText(
-                                String.format("%.2f", (strQty * (dRate-dTempAmt))));
+                        Amount.setText(String.format("%.2f", (strQty * (dRate-dTempAmt))));
+                        tvTaxableValue.setText(String.format("%.2f", (strQty * (dRate-dTempAmt))));
 
                     } else {// reverse tax
 
                         TextView originalRate = (TextView) Row.getChildAt(27);
                         dRate = Double.parseDouble(originalRate.getText().toString().equalsIgnoreCase("") ? "0"
-                                : originalRate.getText().toString());
+                                : originalRate.getText().toString()); //
                         // Discount
                         dDiscAmt = dRate * (dDiscPercent / 100);
                         dTempAmt = dDiscAmt;
@@ -1825,8 +1859,8 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                         DiscAmt.setText(String.format("%.2f", dDiscAmt));
                         cessAmt.setText(String.format("%.2f", dcessAmt));
                         IGSTAmt.setText(String.format("%.2f", dIGSTAmt));
-                        Amount.setText(
-                                String.format("%.2f", (strQty * (dRate-dTempAmt))));
+                        Amount.setText(String.format("%.2f", (strQty * (dRate-dTempAmt))));
+                        tvTaxableValue.setText(String.format("%.2f", (strQty * dBasePrice)));
                     }
                     // // delete
                     // Delete.setText("Hi");
@@ -2092,7 +2126,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
      ************************************************************************************************************************************/
     private void CalculateTotalAmount()
     {
-        double dSubTotal = 0, dTaxTotal = 0, dModifierAmt = 0, dServiceTaxAmt = 0, dOtherCharges = 0, dTaxAmt = 0, dSerTaxAmt = 0;
+        double dSubTotal = 0,dTaxTotal = 0, dModifierAmt = 0, dServiceTaxAmt = 0, dOtherCharges = 0, dTaxAmt = 0, dSerTaxAmt = 0;
         float dTaxPercent = 0, dSerTaxPercent = 0;
         double dTotalBillAmount_for_reverseTax =0;
         double dIGSTAmt =0, dcessAmt =0;
@@ -2112,6 +2146,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 TextView ColServiceTaxAmount = (TextView) RowItem.getChildAt(16);
                 TextView ColIGSTAmount = (TextView) RowItem.getChildAt(24);
                 TextView ColcessAmount = (TextView) RowItem.getChildAt(26);
+                TextView ColTaxValue = (TextView) RowItem.getChildAt(28);
                 dTaxTotal += Double.parseDouble(ColTax.getText().toString());
                 dServiceTaxAmt += Double.parseDouble(ColServiceTaxAmount.getText().toString());
                 dIGSTAmt += Double.parseDouble(ColIGSTAmount.getText().toString());
@@ -2881,30 +2916,34 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 Log.d("InsertBillItems", "Rate:" + Rate.getText().toString());
             }
 
-
-            //taxableValue
-            objBillItem.setTaxableValue(Double.parseDouble(String.format("%.2f",rate_d*qty_d)));
-            Log.d("InsertBillItems", "Taxable Value :" + objBillItem.getTaxableValue());
-
-
-            // Amount
-            if (RowBillItem.getChildAt(5) != null) {
-                TextView Amount = (TextView) RowBillItem.getChildAt(5);
-                objBillItem.setAmount(Double.parseDouble(Amount.getText().toString()));
-                String reverseTax = "";
-                if(!(String.format("%.2f",objBillItem.getTaxableValue()).equals(String.format("%.2f",objBillItem.getAmount())))) {
-                    reverseTax = " (Reverse Tax)";
-                    objBillItem.setIsReverTaxEnabled("YES");
-                }
-                Log.d("InsertBillItems", "Amount :" + objBillItem.getAmount()+reverseTax);
-            }
-
-            // oRIGINAL rate in case of reverse tax
             if (RowBillItem.getChildAt(27) != null) {
                 TextView originalRate = (TextView) RowBillItem.getChildAt(27);
                 objBillItem.setOriginalRate(Double.parseDouble(originalRate.getText().toString()));
                 Log.d("InsertBillItems", "Original Rate  :" + objBillItem.getOriginalRate());
             }
+            if (RowBillItem.getChildAt(28) != null) {
+                TextView TaxableValue = (TextView) RowBillItem.getChildAt(28);
+                objBillItem.setTaxableValue(Double.parseDouble(TaxableValue.getText().toString()));
+                Log.d("InsertBillItems", "TaxableValue  :" + objBillItem.getTaxableValue());
+            }
+
+                      // Amount
+            if (RowBillItem.getChildAt(5) != null) {
+                TextView Amount = (TextView) RowBillItem.getChildAt(5);
+                objBillItem.setAmount(Double.parseDouble(Amount.getText().toString()));
+                String reverseTax = "";
+                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // forward tax
+                    reverseTax = " (Reverse Tax)";
+                    objBillItem.setIsReverTaxEnabled("YES");
+                }else
+                {
+                    objBillItem.setIsReverTaxEnabled("NO");
+                }
+                Log.d("InsertBillItems", "Amount :" + objBillItem.getAmount()+reverseTax);
+            }
+
+            // oRIGINAL rate in case of reverse tax
+
 
             // Discount %
             if (RowBillItem.getChildAt(8) != null) {
@@ -2920,10 +2959,6 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 Log.d("InsertBillItems", "Disc Amt:" + DiscountAmount.getText().toString());
                 // fTotalDiscount += Float.parseFloat(DiscountAmount.getText().toString());
             }
-
-
-
-
 
             // Service Tax Percent
             float sgatTax = 0;

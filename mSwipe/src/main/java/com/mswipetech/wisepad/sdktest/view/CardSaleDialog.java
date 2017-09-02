@@ -116,6 +116,7 @@ public class CardSaleDialog extends Dialog implements android.view.View.OnClickL
 		btnPrint=(Button)findViewById(R.id.cardsalecustomdlg_BTN_print);
 		btnPrint.setTypeface(applicationData.fontbold);
 		btnPrint.setOnClickListener(this);
+		btnPrint.setVisibility(View.INVISIBLE);
 
 		TextView lblStatus =(TextView)findViewById(R.id.cardsalecustomdlg_LBL_TxStatus);
 		lblStatus.setTypeface(applicationData.font);

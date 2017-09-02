@@ -667,6 +667,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_PurchaseOrderNo = "PurchaseOrderNo";
 
     public static final String KEY_GSTIN_OUT = "GSTIN_Out";
+    public static final String KEY_GSTIN_IN = "GSTIN_In";
     public static final String KEY_GSTEnable = "GSTEnable";
     public static final String KEY_POS_OUT = "POS_Out";
     public static final String KEY_HSNCode_OUT = "HSNCode_Out";
@@ -1036,7 +1037,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_HomeTakeAwayCaption + " TEXT, "
             + KEY_HomeHomeDeliveryCaption + " TEXT, "
             + KEY_CummulativeHeadingEnable + " NUMERIC, " // richa_2012
-            + KEY_GSTIN + " TEXT," + KEY_GSTIN_OUT + " TEXT, " +
+            + KEY_GSTIN_IN + " TEXT," + KEY_GSTIN_OUT + " TEXT, " +
             KEY_POS + " TEXT, " + KEY_POS_OUT + " TEXT, " +
             KEY_HSNCode + " TEXT, " + KEY_HSNCode_OUT + " TEXT, " +
             KEY_ReverseCharge + " TEXT, " + KEY_ReverseCharge_OUT + " TEXT, " + KEY_GSTEnable + " TEXT, " +
@@ -1457,7 +1458,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HomeTakeAwayCaption, "Take Away");
         cvDbValues.put(KEY_HomeHomeDeliveryCaption, "Home Delivery");
         cvDbValues.put(KEY_CummulativeHeadingEnable, 1); // richa_2012
-        cvDbValues.put(KEY_GSTIN, 0);
+        cvDbValues.put(KEY_GSTIN_IN, 0);
         cvDbValues.put(KEY_POS, 0);
         cvDbValues.put(KEY_HSNCode, 1);
         cvDbValues.put(KEY_ReverseCharge, 0);
@@ -1465,7 +1466,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_POS_OUT, 1);
         cvDbValues.put(KEY_HSNCode_OUT, 1);
         cvDbValues.put(KEY_ReverseCharge_OUT, 0);
-        cvDbValues.put(KEY_GSTEnable, 0);
+        cvDbValues.put(KEY_GSTEnable, 1);
         cvDbValues.put(KEY_FastBillingMode, 1);
         cvDbValues.put(KEY_ItemNoReset, 0);
         cvDbValues.put(KEY_PrintPreview, 0);
@@ -2885,7 +2886,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int updateGSTSettings(BillSetting objBillSetting) {
         cvDbValues = new ContentValues();
 
-        cvDbValues.put(KEY_GSTIN, objBillSetting.getGSTIN());
+        cvDbValues.put(KEY_GSTIN_IN, objBillSetting.getGSTIN());
         cvDbValues.put(KEY_POS, objBillSetting.getPOS());
         cvDbValues.put(KEY_HSNCode, objBillSetting.getHSNCode());
         cvDbValues.put(KEY_ReverseCharge, objBillSetting.getReverseCharge());
@@ -7461,7 +7462,7 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_HomeTakeAwayCaption, "Take Away");
         cvDbValues.put(KEY_HomeHomeDeliveryCaption, "Home Delivery");
         cvDbValues.put(KEY_CummulativeHeadingEnable, 1);
-        cvDbValues.put(KEY_GSTIN, 0);
+        cvDbValues.put(KEY_GSTIN_IN, 0);
         cvDbValues.put(KEY_POS, 0);
         cvDbValues.put(KEY_HSNCode, 1);
         cvDbValues.put(KEY_ReverseCharge, 0);
@@ -7469,7 +7470,7 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_POS_OUT, 0);
         cvDbValues.put(KEY_HSNCode, 0);
         cvDbValues.put(KEY_ReverseCharge_OUT, 0);
-        cvDbValues.put(KEY_GSTEnable, 0);
+        cvDbValues.put(KEY_GSTEnable, 1);
         cvDbValues.put(KEY_FastBillingMode, 1);
         cvDbValues.put(KEY_ItemNoReset, 0);
         cvDbValues.put(KEY_PrintPreview, 0);

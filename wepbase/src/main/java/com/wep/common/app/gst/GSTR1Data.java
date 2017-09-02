@@ -32,8 +32,9 @@ public class GSTR1Data {
         this.cdnr = cdn;
     }
 
-    public GSTR1Data(String gstin,ArrayList<GSTR1_B2B_Data> b2b, ArrayList<GSTR1_B2B_A_Data> b2ba, ArrayList<GSTR1_B2CL_Data> b2cl, ArrayList<GSTR1_B2CL_A_Data> b2cla, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1_CDN_Data> cdnr, ArrayList<GSTR1_HSN_Data> hsn, ArrayList<GSTR1_DOCS_Data> doc_issue) {
+    public GSTR1Data(String gstin,String fp,ArrayList<GSTR1_B2B_Data> b2b, ArrayList<GSTR1_B2B_A_Data> b2ba, ArrayList<GSTR1_B2CL_Data> b2cl, ArrayList<GSTR1_B2CL_A_Data> b2cla, ArrayList<GSTR1B2CSData> b2cs, ArrayList<GSTR1B2CSAData> b2csa, ArrayList<GSTR1_CDN_Data> cdnr, ArrayList<GSTR1_HSN_Data> hsn, ArrayList<GSTR1_DOCS_Data> doc_issue) {
         this.gstin = gstin;
+        this.fp =fp;
         this.b2b = b2b;
         this.b2ba = b2ba;
         this.b2cl = b2cl;
