@@ -201,6 +201,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     public void onPrinterAvailable() {
         isPrinterAvailable = true;
     }
+    boolean REVERSETAX = false;
 
     /************************************************************************************************************************************/
     @Override
@@ -245,7 +246,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 HomeDeliveryCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeHomeDeliveryCaption"));
                 TakeAwayCaption = crsrSettings.getString(crsrSettings.getColumnIndex("HomeTakeAwayCaption"));
                 ownerPos = crsrSettings.getString(crsrSettings.getColumnIndex("POSNumber"));
-
+                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
+                    REVERSETAX = true;
+                }else
+                {
+                    REVERSETAX = false;
+                }
 
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
                 FASTBILLINGMODE = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
@@ -3722,7 +3728,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     tvHSn = new TextView(myContext);
                     tvHSn.setWidth(mHSNWidth); // 154px ~= 230dp
                     tvHSn.setTextSize(mDataMiniDeviceTextsize);
-
+                    tvHSn.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("HSNCode")));
                     //tvHSn.setWidth(67); // 154px ~= 230dp
                     // tvHSn.setTextSize(11);
                     if ( !HSNEnable_out.equals("1")) {
@@ -4367,7 +4373,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 TextView Amount = (TextView) RowBillItem.getChildAt(5);
                 objBillItem.setAmount(Double.parseDouble(Amount.getText().toString()));
                 String reverseTax = "";
-                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // forward tax
+                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
                     reverseTax = " (Reverse Tax)";
                     objBillItem.setIsReverTaxEnabled("YES");
                 }else
@@ -6080,6 +6086,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                 int Result = dbBillScreen
                                         .updateBillRepintCount(Integer.parseInt(txtReprintBillNo.getText().toString()));
                                 ClearAll();
+                                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
+                                    REVERSETAX = true;
+                                }else
+                                {
+                                    REVERSETAX = false;
+                                }
 
                             }catch(Exception e)
                             {
@@ -6726,8 +6738,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
             double originalRate = Double.parseDouble(
                     OriginalRate_tv.getText().toString().trim().equals("")?"0": OriginalRate_tv.getText().toString().trim());
-            //double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-            double amount = originalRate *qty;
+            double amount =0;
+            if(REVERSETAX)
+                amount = originalRate *qty;
+            else
+                amount = Double.parseDouble(itemAmount.getText().toString().trim());
+
             String taxIndex = " ";
             double TaxRate =0;
             if(chk_interstate.isChecked())
@@ -7542,6 +7558,13 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         ImageButton ImgDelete;
 
         if (crsrBillItems.moveToFirst()) {
+            if (crsrBillItems.getString(crsrBillItems.getColumnIndex("IsReverseTaxEnable")).equalsIgnoreCase("YES")) { // reverse tax
+                REVERSETAX = true;
+            }else
+            {
+                REVERSETAX = false;
+            }
+
             // Display items in table
             do {
                 rowItem = new TableRow(myContext);

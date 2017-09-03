@@ -191,6 +191,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
     public void onPrinterAvailable() {
         isPrinterAvailable = true;
     }
+    boolean REVERSETAX = false;
 
     /************************************************************************************************************************************/
     @Override
@@ -443,6 +444,13 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
             /*btndepart.setVisibility(View.INVISIBLE);
             btncateg.setVisibility(View.INVISIBLE);
             btnitem.setVisibility(View.INVISIBLE);*/
+            if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
+                REVERSETAX = true;
+            }else
+            {
+                REVERSETAX = false;
+            }
+
             String fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
             if(fastBillingMode == null)
             {
@@ -5822,6 +5830,12 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                                 int Result = dbBillScreen
                                         .updateBillRepintCount(Integer.parseInt(txtReprintBillNo.getText().toString()));
                                 ClearAll();
+                                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
+                                    REVERSETAX = true;
+                                }else
+                                {
+                                    REVERSETAX = false;
+                                }
 
                             }catch(Exception e)
                             {
@@ -6413,8 +6427,12 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             double rate = Double.parseDouble(itemRate.getText().toString().trim());
             double originalRate = Double.parseDouble(
                     OriginalRate_tv.getText().toString().trim().equals("")?"0": OriginalRate_tv.getText().toString().trim());
-            //double amount = Double.parseDouble(itemAmount.getText().toString().trim());
-            double amount = originalRate *qty;
+            double amount = 0;
+            if(REVERSETAX)
+                amount = originalRate *qty;
+            else
+                amount = Double.parseDouble(itemAmount.getText().toString().trim());
+
             String taxIndex = " ";
             double TaxRate =0;
             if(chk_interstate.isChecked())
@@ -7182,6 +7200,13 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         ImageButton ImgDelete;
 
         if (crsrBillItems.moveToFirst()) {
+            if (crsrBillItems.getString(crsrBillItems.getColumnIndex("IsReverseTaxEnable")).equalsIgnoreCase("YES")) { // reverse tax
+                REVERSETAX = true;
+            }else
+            {
+                REVERSETAX = false;
+            }
+
             // Display items in table
             do {
                 rowItem = new TableRow(myContext);
