@@ -3611,7 +3611,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         tvPrintKOTStatus.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("PrintKOTStatus")));
 
                     TextView tvTaxableValue = new TextView(this);
-                    tvTaxableValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxableValue")));
+                    tvTaxableValue.setText(String.format("%.2f",crsrBillItems.getDouble(crsrBillItems.getColumnIndex("TaxableValue"))));
 
 
 
@@ -3885,10 +3885,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     tvUOM.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("UOM")));
 
                     TextView tvOriginalRate = new TextView(this);
-                    tvOriginalRate.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("OriginalRate")));
+                    tvOriginalRate.setText(String.format("%.2f",crsrBillItems.getDouble(crsrBillItems.getColumnIndex("OriginalRate"))));
 
                     TextView tvTaxableValue = new TextView(this);
-                    tvTaxableValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxableValue")));
+                    tvTaxableValue.setText(String.format("%.2f",crsrBillItems.getDouble(crsrBillItems.getColumnIndex("TaxableValue"))));
 
 
                     // Add all text views and edit text to Item Row
@@ -7695,7 +7695,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 originalRate.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("OriginalRate")));
 
                 TextView taxableValue = new TextView(this);
-                taxableValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxableValue")));
+                taxableValue.setText(String.format("%.2f",crsrBillItems.getDouble(crsrBillItems.getColumnIndex("TaxableValue"))));
 
 
                 // Add all text views and edit text to Item Row

@@ -3013,7 +3013,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
             // Amount
             if (RowKOTItem.getChildAt(5) != null) {
-                objPendingKOT.setAmount(Float.parseFloat(Amount.getText().toString()));
+                objPendingKOT.setAmount(Double.parseDouble(Amount.getText().toString()));
             }
 
             // Sales Tax %
@@ -3102,6 +3102,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
             if(RowKOTItem.getChildAt(28)!=null)
             {
                 objPendingKOT.setTaxableValue(Double.parseDouble(TaxableValue.getText().toString()));
+                Log.d("","Richa : taxableVal:"+objPendingKOT.getTaxableValue());
             }
 
 
@@ -3312,6 +3313,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     tvAmount.setText(
                             String.format("%.2f", crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Amount"))));
 
+                    System.out.print("Amount: "+crsrBillItems.getDouble(crsrBillItems.getColumnIndex("Amount")));
                     // Sales Tax%
                     tvTaxPercent = new TextView(myContext);
                     tvTaxPercent.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxPercent")));
@@ -3394,10 +3396,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     tvcessAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("cessAmount")));
 
                     TextView tvOriginalRate = new TextView(BillingDineInActivity.this);
-                    tvOriginalRate.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("OriginalRate")));
+                    tvOriginalRate.setText(String.format("%.2f",crsrBillItems.getDouble(crsrBillItems.getColumnIndex("OriginalRate"))));
 
                     TextView tvTaxableValue = new TextView(BillingDineInActivity.this);
-                    tvTaxableValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxableValue")));
+                    tvTaxableValue.setText(String.format("%.2f",crsrBillItems.getDouble(crsrBillItems.getColumnIndex("TaxableValue"))));
 
 
                     TextView tvUOM = new TextView(BillingDineInActivity.this);
@@ -3973,7 +3975,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     tvOriginalRate.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("OriginalRate")));
 
                     TextView tvTaxableValue = new TextView(BillingDineInActivity.this);
-                    tvTaxableValue.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("TaxableValue")));
+                    tvTaxableValue.setText(String.format("%.2f",crsrBillItems.getDouble(crsrBillItems.getColumnIndex("TaxableValue"))));
 
 
                     TextView tvUOM = new TextView(BillingDineInActivity.this);
@@ -6478,7 +6480,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                             crsrTax.getDouble(crsrTax.getColumnIndex("SGSTAmount"))));
                     Double taxableValue  = Double.parseDouble(String.format("%.2f",
                             crsrTax.getDouble(crsrTax.getColumnIndex("TaxableValue"))));
-                    //String cc = crsrTax.getString(crsrTax.getColumnIndex("TaxableValue"));
+                    double cc = crsrTax.getDouble(crsrTax.getColumnIndex("TaxableValue"));
 
                     if (taxpercent == 0)
                         continue;
