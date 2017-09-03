@@ -49,7 +49,9 @@ import java.util.List;
 
 public class PurchaseOrderActivity extends WepBaseActivity {
 
-
+    private final int CHECK_INTEGER_VALUE = 0;
+    private final int CHECK_DOUBLE_VALUE = 1;
+    private final int CHECK_STRING_VALUE = 2;
     Context myContext;
     // DatabaseHandler_gst object
     DatabaseHandler dbPurchaseOrder;
@@ -1822,6 +1824,58 @@ void populate_old(int type)
     }
 
 
+    public static int checkDataypeValue(String value, String type) {
+        int flag =0;
+        try {
+            switch(type) {
+                case "Int":
+                    Integer.parseInt(value);
+                    flag = 0;
+                    break;
+                case "Double" : Double.parseDouble(value);
+                    flag = 1;
+                    break;
+                default : flag =2;
+            }
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            flag = -1;
+        }
+        return flag;
+    }
+
+    boolean checkgstinvalidity(String str)
+    {
+        boolean mFlag = true;
+        try {
+            if(str.trim().length() == 0)
+            {mFlag = true;}
+            else if (str.trim().length() > 0 && str.length() == 15) {
+                String[] part = str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
+
+                    mFlag = true;
+                } else {
+                    mFlag = false;
+                }
+            } else {
+                mFlag = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mFlag = false;
+        }
+        finally{
+            return mFlag;
+        }
+    }
+
     public void AddSupplier(View v)
     {
         //String suppliercode = et_supplier_code.getText().toString();
@@ -1858,7 +1912,7 @@ void populate_old(int type)
                         return;
                     }
                 }
-                String gstin = et_supplier_GSTIN.getText().toString();
+                String gstin = et_supplier_GSTIN.getText().toString().toUpperCase();
                 if(gstin!=null && !gstin.equals("") && labelsSupplierGSTIN.contains(gstin))
                 {
                     MsgBox.setTitle("Warning")
@@ -1868,10 +1922,20 @@ void populate_old(int type)
                             .show();
                     return;
                 }
-
+                if(!checkgstinvalidity(gstin))
+                {
+                    MsgBox.setTitle("Warning")
+                            .setIcon(R.drawable.ic_launcher)
+                            .setMessage("Invalid Supplier gstin")
+                            .setPositiveButton("OK", null)
+                            .show();
+                    return;
+                }
                 long l =0;
-                if(gstin!=null && !gstin.equals(""))
+                if(gstin!=null && !gstin.equals("")){
                     l = dbPurchaseOrder.saveSupplierDetails("Registered", gstin, suppliername, supplierphone, supplieradress);
+                    et_supplier_GSTIN.setText(gstin);
+                }
                 else
                     l = dbPurchaseOrder.saveSupplierDetails("UnRegistered", "", suppliername, supplierphone, supplieradress);
 
