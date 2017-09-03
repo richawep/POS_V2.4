@@ -147,6 +147,7 @@ public class InwardItemActivity extends WepBaseActivity {
             onClickActions();
             ResetItem();
             loadSpinnerData();
+            InitialDisplaySettings();
             count =1;
             DisplayItems(); // display all data
 
@@ -159,6 +160,17 @@ public class InwardItemActivity extends WepBaseActivity {
         }
     }
 
+    private void InitialDisplaySettings()
+    {
+        Cursor cursor_billsetting = dbInwardItem.getBillSetting();
+        if(cursor_billsetting!=null && cursor_billsetting.moveToFirst())
+        {
+            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("HSNCode")) !=1)
+            {
+                et_inw_HSNCode.setEnabled(false);
+            }
+        }
+    }
     void onClickActions()
     {
         try{

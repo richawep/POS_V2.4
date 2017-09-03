@@ -351,7 +351,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="2.5"
                             android:gravity="center"
-                            android:text="Stock"
+                            android:text="Stock*"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <EditText

@@ -25,6 +25,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -55,6 +56,7 @@ import java.util.Locale;
 
 public class GoodsInwardNoteActivity extends WepBaseActivity {
 
+    boolean HSNEnabled = true;
 
     private final int CHECK_INTEGER_VALUE = 0;
     private final int CHECK_DOUBLE_VALUE = 1;
@@ -66,6 +68,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
     public MessageDialog MsgBox;
     ArrayList<PurchaseOrder> dataList;
     PurchaseOrderAdapter purchaseOrderAdapter = null;
+    LinearLayout ll_POS;
     EditText et_inward_item_quantity, et_inward_sub_total,tx_inward_supply_invoice_number,et_inward_grand_total, et_inward_additionalchargename,
             et_inward_additionalchargeamount,et_supplier_address,et_supplier_phone,et_supplier_code,et_supplier_GSTIN;
 
@@ -121,7 +124,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
             dbGoodsInwardNote.CreateDatabase();
             dbGoodsInwardNote.OpenDatabase();
             reset_inward(0);
-
+            InitialDisplaySettings();
             autocompletetv_suppliername.setOnTouchListener(new View.OnTouchListener(){
                 @Override
                 public boolean onTouch(View v, MotionEvent event){
@@ -435,6 +438,29 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
         }
     }
 
+    void InitialDisplaySettings()
+    {
+        Cursor cursor_billsetting = dbGoodsInwardNote.getBillSetting();
+        if(cursor_billsetting!=null && cursor_billsetting.moveToFirst())
+        {
+            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("HSNCode")) !=1)
+            {
+                HSNEnabled = false;
+            }
+            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("GSTIN_In")) !=1)
+            {
+                et_supplier_GSTIN.setEnabled(false);
+            }
+            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("POS")) !=1)
+            {
+                //ll_POS.setEnabled(false);
+                for ( int i = 0; i < ll_POS.getChildCount();  i++ ){
+                    View view = ll_POS.getChildAt(i);
+                    view.setEnabled(false); // Or whatever you want to do with the view.
+                }
+            }
+        }
+    }
     void loadTableonPurchaseOrderSelected()
     {
         int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
@@ -1104,6 +1130,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
     void InitializeViews()
     {
+        ll_POS = (LinearLayout)findViewById(R.id.ll_POS);
         lv_inward_item_details = (ListView) findViewById(R.id.lv_inward_item_details);
         chk_interState = (CheckBox) findViewById(R.id.chk_interState);
         spnrSupplierStateCode = (Spinner) findViewById(R.id.spnrSupplierStateCode);
@@ -1377,7 +1404,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 set_list_spnr();
                 calculateSubTotal();
                 if (purchaseOrderAdapter == null) {
-                    purchaseOrderAdapter = new PurchaseOrderAdapter(GoodsInwardNoteActivity.this, dbGoodsInwardNote,dataList);
+                    purchaseOrderAdapter = new PurchaseOrderAdapter(GoodsInwardNoteActivity.this, dbGoodsInwardNote,dataList,HSNEnabled);
                     lv_inward_item_details.setAdapter(purchaseOrderAdapter);
                 } else {
                     purchaseOrderAdapter.notifyNewDataAdded(dataList);
@@ -1499,7 +1526,7 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 set_list_spnr();
                 calculateSubTotal();
                 if (purchaseOrderAdapter == null) {
-                    purchaseOrderAdapter = new PurchaseOrderAdapter(GoodsInwardNoteActivity.this, dbGoodsInwardNote,dataList);
+                    purchaseOrderAdapter = new PurchaseOrderAdapter(GoodsInwardNoteActivity.this, dbGoodsInwardNote,dataList,HSNEnabled);
                     lv_inward_item_details.setAdapter(purchaseOrderAdapter);
                 } else {
                     purchaseOrderAdapter.notifyNewDataAdded(dataList);

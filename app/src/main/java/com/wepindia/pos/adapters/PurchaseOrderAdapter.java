@@ -30,12 +30,14 @@ public class PurchaseOrderAdapter extends BaseAdapter{
     private Activity activity;
     private DatabaseHandler dbHandler;
     private ArrayList<PurchaseOrder> purchaseOrderList;
+    private boolean HSNEnabled;
 
-    public PurchaseOrderAdapter(Activity activity, DatabaseHandler dbHandler,ArrayList<PurchaseOrder> itemsList) {
+    public PurchaseOrderAdapter(Activity activity, DatabaseHandler dbHandler,ArrayList<PurchaseOrder> itemsList, boolean HSNEnabled) {
 
         this.activity = activity;
         this.dbHandler = dbHandler;
         this.purchaseOrderList = itemsList;
+        this.HSNEnabled = HSNEnabled;
     }
     @Override
     public int getCount() {
@@ -103,6 +105,8 @@ public class PurchaseOrderAdapter extends BaseAdapter{
         viewHolder.tv_Sn.setText(String.valueOf(position+1));
         //viewHolder.tv_g_s.setText(po.getSupplyType());
         viewHolder.tv_hsnCode.setText(po.getHSNCode());
+        if(!HSNEnabled)
+            viewHolder.tv_hsnCode.setVisibility(View.INVISIBLE);
         viewHolder.tv_itemName.setText(po.getItemName());
         viewHolder.tv_rate.setText(String.format("%.2f",po.getValue()));
         viewHolder.tv_qty.setText(String.format("%.2f",po.getQuantity()));

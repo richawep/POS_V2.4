@@ -24,8 +24,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,9 +52,12 @@ public class PurchaseOrderActivity extends WepBaseActivity {
     private final int CHECK_INTEGER_VALUE = 0;
     private final int CHECK_DOUBLE_VALUE = 1;
     private final int CHECK_STRING_VALUE = 2;
+
+    Boolean HSNEnabled = true;
     Context myContext;
     // DatabaseHandler_gst object
     DatabaseHandler dbPurchaseOrder;
+    LinearLayout ll_POS;
     ArrayList<PurchaseOrder> dataList;
     //Message dialog object
     public MessageDialog MsgBox;
@@ -112,6 +115,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
             dbPurchaseOrder.CreateDatabase();
             dbPurchaseOrder.OpenDatabase();
             reset_inward(0);
+            InitialDisplaySettings();
 
             autocompletetv_suppliername.setOnTouchListener(new View.OnTouchListener(){
                 @Override
@@ -341,6 +345,29 @@ public class PurchaseOrderActivity extends WepBaseActivity {
         }
     }
 
+    void InitialDisplaySettings()
+    {
+        Cursor cursor_billsetting = dbPurchaseOrder.getBillSetting();
+        if(cursor_billsetting!=null && cursor_billsetting.moveToFirst())
+        {
+            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("HSNCode")) !=1)
+            {
+                HSNEnabled = false;
+            }
+            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("GSTIN_In")) !=1)
+            {
+                et_supplier_GSTIN.setEnabled(false);
+            }
+            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("POS")) !=1)
+            {
+                //ll_POS.setEnabled(false);
+                for ( int i = 0; i < ll_POS.getChildCount();  i++ ){
+                    View view = ll_POS.getChildAt(i);
+                    view.setEnabled(false); // Or whatever you want to do with the view.
+                }
+            }
+        }
+    }
     void loadTableonPurchaseOrderSelected()
     {
         int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
@@ -743,6 +770,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
 
     void InitializeViews()
     {
+        ll_POS = (LinearLayout)findViewById(R.id.ll_POS);
         lv_inward_item_details = (ListView) findViewById(R.id.lv_inward_item_details);
         chk_interState = (CheckBox) findViewById(R.id.chk_interState);
         spnrSupplierStateCode = (Spinner) findViewById(R.id.spnrSupplierStateCode);
@@ -1040,7 +1068,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 set_list_spnr();
                 calculateSubTotal();
                 if (purchaseOrderAdapter == null) {
-                    purchaseOrderAdapter = new PurchaseOrderAdapter(PurchaseOrderActivity.this, dbPurchaseOrder,dataList);
+                    purchaseOrderAdapter = new PurchaseOrderAdapter(PurchaseOrderActivity.this, dbPurchaseOrder,dataList,HSNEnabled);
                     lv_inward_item_details.setAdapter(purchaseOrderAdapter);
                 } else {
                     purchaseOrderAdapter.notifyNewDataAdded(dataList);
@@ -1160,7 +1188,7 @@ public class PurchaseOrderActivity extends WepBaseActivity {
                 set_list_spnr();
                 calculateSubTotal();
                 if (purchaseOrderAdapter == null) {
-                    purchaseOrderAdapter = new PurchaseOrderAdapter(PurchaseOrderActivity.this, dbPurchaseOrder,dataList);
+                    purchaseOrderAdapter = new PurchaseOrderAdapter(PurchaseOrderActivity.this, dbPurchaseOrder,dataList, HSNEnabled);
                     lv_inward_item_details.setAdapter(purchaseOrderAdapter);
                 } else {
                     purchaseOrderAdapter.notifyNewDataAdded(dataList);
@@ -1692,6 +1720,7 @@ void populate_old(int type)
         AlertDialog.Builder msg = new AlertDialog.Builder(myContext);
         msg.setMessage(" Do you want to clear supplier details also")
                 .setNegativeButton("No", null)
+                .setIcon(R.drawable.ic_launcher)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 reset_inward(1);

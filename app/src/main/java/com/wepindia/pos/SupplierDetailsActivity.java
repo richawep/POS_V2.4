@@ -29,6 +29,8 @@ import com.wepindia.pos.adapters.SupplierAdapter;
 import com.wepindia.pos.adapters.SupplierSuggestionAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,6 +57,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
     private final int CHECK_DOUBLE_VALUE = 1;
     private final int CHECK_STRING_VALUE = 2;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +79,7 @@ public class SupplierDetailsActivity extends WepBaseActivity {
             InitialiseViewVariables();
             AssignClickActions();
             loadAutoCompleteSupplierName();
+            InitialDisplaySettings();
             Clear();
             Display();
 
@@ -89,6 +93,17 @@ public class SupplierDetailsActivity extends WepBaseActivity {
 
     }
 
+    private void InitialDisplaySettings()
+    {
+        Cursor cursor_billsetting = dbSupplierDetails.getBillSetting();
+        if(cursor_billsetting!=null && cursor_billsetting.moveToFirst())
+        {
+            if(cursor_billsetting.getInt(cursor_billsetting.getColumnIndex("GSTIN_In")) !=1)
+            {
+                edt_supplierGSTIN.setEnabled(false);
+            }
+        }
+    }
     private void InitialiseViewVariables()
     {
         lstSupplierDetails = (ListView) findViewById(R.id.lstSupplierDetails);
