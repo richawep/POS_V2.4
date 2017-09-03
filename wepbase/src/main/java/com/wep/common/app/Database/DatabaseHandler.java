@@ -1129,7 +1129,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_SupplyType + " TEXT, "
             + KEY_POS + " TEXT, "
             + KEY_UOM + " TEXT, "
-            + KEY_OriginalRate+ " REAL ,"+
+            + KEY_OriginalRate+ " REAL ,"
+            + KEY_TaxableValue+ " REAL ,"+
             " PrintKOTStatus NUMERIC)";
 
     String QUERY_CREATE_TABLE_RIDERSETTLEMENT = "CREATE TABLE " + TBL_RIDERSETTLEMENT + " (" + KEY_DeliveryCharge +
@@ -4505,6 +4506,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("ItemNumber", objPendingKOT.getItemNumber());
         cvDbValues.put("ItemName", objPendingKOT.getItemName());
         cvDbValues.put("Quantity", objPendingKOT.getQuantity());
+        cvDbValues.put(KEY_OriginalRate, objPendingKOT.getOriginalrate());
+        cvDbValues.put(KEY_TaxableValue, objPendingKOT.getTaxableValue());
         cvDbValues.put("Rate", objPendingKOT.getRate());
         cvDbValues.put("Amount", objPendingKOT.getAmount());
         cvDbValues.put("TaxPercent", objPendingKOT.getTaxPercent());
@@ -4589,8 +4592,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 }
 
-    public long updateKOT(int ItemNo, float Qty, float Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus
-                    ,float IAmt, float cessAmt) {
+    public long updateKOT(int ItemNo, float Qty, double Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus
+                    ,float IAmt, float cessAmt, double taxableValue) {
         cvDbValues = new ContentValues();
         cvDbValues.put("Quantity", Qty);
         cvDbValues.put("Amount", Amount);
@@ -4598,6 +4601,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("ServiceTaxAmount", SerTaxAmt);
         cvDbValues.put(KEY_IGSTAmount, IAmt);
         cvDbValues.put(KEY_cessAmount, cessAmt);
+        cvDbValues.put(KEY_TaxableValue, taxableValue);
         return dbFNB.update(TBL_PENDINGKOT, cvDbValues, "ItemNumber=" + ItemNo + " AND OrderMode=" + OrderMode, null);// AND PrintKOTStatus = " + PrintKOTStatus, null);
     }
 
@@ -5486,7 +5490,11 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put("Quantity", objBillItem.getQuantity());
         cvDbValues.put("Value", objBillItem.getValue());
         cvDbValues.put("ModifierAmount", objBillItem.getModifierAmount());
-        cvDbValues.put(KEY_TaxableValue, objBillItem.getAmount());
+        cvDbValues.put(KEY_TaxableValue, objBillItem.getTaxableValue());
+        cvDbValues.put(KEY_TaxableValue, objBillItem.getTaxableValue());
+        cvDbValues.put(KEY_Amount, objBillItem.getAmount());
+        cvDbValues.put(KEY_OriginalRate, objBillItem.getOriginalRate());
+        cvDbValues.put(KEY_IsReverseTaxEnabled, objBillItem.getIsReverTaxEnabled());
         cvDbValues.put("DiscountAmount", objBillItem.getDiscountAmount());
         cvDbValues.put("DiscountPercent", objBillItem.getDiscountPercent());
         cvDbValues.put("ServiceTaxAmount", objBillItem.getServiceTaxAmount());

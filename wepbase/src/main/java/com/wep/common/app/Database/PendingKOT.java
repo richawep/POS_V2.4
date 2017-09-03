@@ -25,7 +25,7 @@ public class PendingKOT {
     float fQuantity,  fTaxPercent, fTaxAmount,
             fDiscountPercent, fDiscountAmount, fModifierAmount, fServiceTaxAmount, fServiceTaxPercent;
     float cessRate, cessAmount,IGSTRate,IGSTAmount;
-    double  originalrate,fRate, fAmount;
+    double  originalrate,fRate, fAmount,taxableValue;
 
     // Default constructor
     public PendingKOT() {
@@ -48,6 +48,7 @@ public class PendingKOT {
         this.fQuantity = 0;
         this.fRate = 0;
         this.fTaxAmount = 0;
+        this.taxableValue = 0;
         this.fTaxPercent = 0;
         this.iTaxType = 0;
         this.fModifierAmount = 0;
@@ -100,6 +101,14 @@ public class PendingKOT {
         this.HSNCode = hsn;
         this.POS=pos;
         this.iPrintKOTStatus = PrintKOTStatus;
+    }
+
+    public double getTaxableValue() {
+        return taxableValue;
+    }
+
+    public void setTaxableValue(double taxableValue) {
+        this.taxableValue = taxableValue;
     }
 
     public double getOriginalrate() {

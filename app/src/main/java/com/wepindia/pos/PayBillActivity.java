@@ -316,6 +316,12 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             {
                 for(AddedItemsToOrderTableClass item : orderList_recieved) {
 
+                    double rate= item.getRate();
+                    double quantity = item.getQuantity();
+
+                    item.setTaxableValue(rate);// required to change beacuse of reverse tax implementation.
+                    //taxable value is calculated when activity returns.
+
                     totalIGSTAmount += item.getIgstAmt();
                     totalCGSTAmount += item.getCgstAmt();
                     totalSGSTAmount += item.getSgstAmt();
