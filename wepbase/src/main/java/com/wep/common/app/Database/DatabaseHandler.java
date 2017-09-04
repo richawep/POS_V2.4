@@ -7496,8 +7496,8 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_POS, 0);
         cvDbValues.put(KEY_HSNCode, 1);
         cvDbValues.put(KEY_ReverseCharge, 0);
-        cvDbValues.put(KEY_GSTIN_OUT, 0);
-        cvDbValues.put(KEY_POS_OUT, 0);
+        cvDbValues.put(KEY_GSTIN_OUT, 1);
+        cvDbValues.put(KEY_POS_OUT, 1);
         cvDbValues.put(KEY_HSNCode, 0);
         cvDbValues.put(KEY_ReverseCharge_OUT, 0);
         cvDbValues.put(KEY_GSTEnable, 1);

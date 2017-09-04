@@ -203,9 +203,9 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
         adapter.addFragment(reportFragment5, "GST Link");
         viewPager.setAdapter(adapter);
 
-        FragmentUpgradeSoftware reportFragment6 = new FragmentUpgradeSoftware();
+        /*FragmentUpgradeSoftware reportFragment6 = new FragmentUpgradeSoftware();
         adapter.addFragment(reportFragment6, "Upgrade Software");
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(adapter);*/
     }
 
     @Nullable
