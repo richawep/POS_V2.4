@@ -995,37 +995,11 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
 
     void goodsinward() {
+
         int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
         String purchaseorderno = autocompletetv_purchase_order.getText().toString();
         String invoiceno = tx_inward_supply_invoice_number.getText().toString();
         String invoicedate = tx_inward_invoice_date.getText().toString();
-
-        if (suppliercode == -1) {
-            MsgBox.Show(" Insufficent Information ", " Please fill Supplier Details ");
-            return;
-        }
-        if (purchaseorderno.equals(""))
-        {
-            MsgBox.Show(" Insufficent Information ", " Please Select/Add Purchase Order ");
-            return;
-        }else if(!purchaseorderno.equalsIgnoreCase("NA") && !isNumeric(purchaseorderno))
-        {
-            MsgBox.Show("Error ", " Please enter Purchase Order in numbers only");
-            return;
-        }
-        if(invoiceno.equals("")|| invoicedate.equals(""))
-        {
-            MsgBox.Show(" Insufficent Information ", " Please Enter Invoice Details ");
-            return;
-        }if(dataList== null || dataList.size()==0)
-        {
-            MsgBox.Show(" Insufficent Information ", " Please add item ");
-            return;
-        }if(chk_interState.isChecked() && spnrSupplierStateCode.getSelectedItem().toString().trim().equals(""))
-        {
-            MsgBox.Show(" Insufficent Information ", " Please select state for supplier ");
-            return;
-        }
 
         long l =0;
         try {
@@ -1125,7 +1099,71 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
 
     public  void GoodsInward(View v)
     {
-        goodsinward();
+        int suppliercode = Integer.parseInt(et_supplier_code.getText().toString());
+        String purchaseorderno = autocompletetv_purchase_order.getText().toString();
+        String invoiceno = tx_inward_supply_invoice_number.getText().toString();
+        String invoicedate = tx_inward_invoice_date.getText().toString();
+
+        if (suppliercode == -1) {
+            MsgBox.Show(" Insufficent Information ", " Please fill Supplier Details ");
+            return;
+        }
+        if (purchaseorderno.equals(""))
+        {
+            MsgBox.Show(" Insufficent Information ", " Please Select/Add Purchase Order ");
+            return;
+        }else if(!purchaseorderno.equalsIgnoreCase("NA") && !isNumeric(purchaseorderno))
+        {
+            MsgBox.Show("Error ", " Please enter Purchase Order in numbers only");
+            return;
+        }
+        if(invoiceno.equals("")|| invoicedate.equals(""))
+        {
+            MsgBox.Show(" Insufficent Information ", " Please Enter Invoice Details ");
+            return;
+        }if(dataList== null || dataList.size()==0)
+        {
+            MsgBox.Show(" Insufficent Information ", " Please add item ");
+            return;
+        }if(chk_interState.isChecked() && spnrSupplierStateCode.getSelectedItem().toString().trim().equals(""))
+        {
+            MsgBox.Show(" Insufficent Information ", " Please select state for supplier ");
+            return;
+        }
+
+        try{
+
+            Date date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(invoicedate);
+            long milliseconds = date.getTime();
+            String invodate = String.valueOf(milliseconds);
+
+            Cursor billAlreadyPresent_crsr = dbGoodsInwardNote.getPurchaseOrder_for_SupplierCode(invoiceno,invodate,String.valueOf(suppliercode));
+            if(billAlreadyPresent_crsr!=null && billAlreadyPresent_crsr.moveToFirst())
+            {
+                MsgBox.setIcon(R.drawable.ic_launcher)
+                        .setTitle("Duplicate")
+                        .setMessage("Please note, For this supplier, an invoice is already present with same invoice no and date." +
+                                "\nDo you want these item(s) to append in the invoice.")
+                        .setNegativeButton("Cancel",null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                goodsinward();
+                            }
+                        })
+                        .show();
+
+            }else
+            {
+                goodsinward();
+            }
+
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            MsgBox.Show("Oops","Some error came while processing ");
+            return ;
+        }
     }
 
     void InitializeViews()
