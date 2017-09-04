@@ -4410,6 +4410,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dbFNB.update(TBL_ITEM_Inward, cvDbValues, "MenuCode=" + objItem.getMenuCode(), null);
     }
 
+    public int updateInwardItemQuantity(String itemname_str , double qty_final) {
+
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_Quantity, qty_final);
+        return dbFNB.update(TBL_ITEM_Inward, cvDbValues, KEY_ItemName+" LIKE '" + itemname_str+"'", null);
+    }
+
+
     public int updateItem_Inw(int supplierCode, int menuCode, String itemName , float quantity, float rate ) {
         cvDbValues = new ContentValues();
         cvDbValues.put(KEY_Rate, rate);
@@ -6406,6 +6414,13 @@ public int makeBillVoid(int InvoiceNo ) {
         Cursor cursor = null;
         String selectQuery = "SELECT * FROM " + TBL_ITEM_Inward;
         cursor = dbFNB.rawQuery(selectQuery, null);
+        return cursor;
+    }
+    public Cursor getInwardItemDetails(String ItemName) {
+
+        Cursor cursor = null;
+        String selectQuery = "SELECT *  FROM " + TBL_ITEM_Inward+" WHERE "+KEY_ItemName+" LIKE '"+ItemName+"'";
+        cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArgument
         return cursor;
     }
 

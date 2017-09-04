@@ -1010,7 +1010,6 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                 double quantity_d = po.getQuantity();
                 String qty = String.format("%.2f",quantity_d);
                 float quantity_f = Float.parseFloat(qty);
-
                 String uom_str = po.getUOM();
 
                 Cursor item_present_crsr = dbGoodsInwardNote.getItem_GoodsInward(itemname_str);
@@ -1058,6 +1057,18 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                         stock_inward.addIngredientToStock_Inward(invoicedate,menuCode,itemname_str,
                                 Double.parseDouble(qty),po.getValue());
 
+                    }
+                }
+                // updating in inward item database
+                if(l>0)
+                {
+                    Cursor inwardItemcursor =  dbGoodsInwardNote.getInwardItemDetails(itemname_str);
+                    if(inwardItemcursor!=null && inwardItemcursor.moveToFirst())
+                    {
+                        double qty_prev = inwardItemcursor.getDouble(inwardItemcursor.getColumnIndex("Quantity"));
+                        double qty_final = qty_prev + Double.parseDouble(qty);
+                        int ll = dbGoodsInwardNote.updateInwardItemQuantity(itemname_str,qty_final);
+                        Log.d("GoodsInward","Quantity updated in inward item database for itemname "+itemname_str+" :"+qty_final);
                     }
                 }
                 // updating quantity in inward item stock
