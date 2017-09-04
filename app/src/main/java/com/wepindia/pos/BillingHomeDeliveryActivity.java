@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -37,7 +39,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -72,15 +73,13 @@ import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.DecimalDigitsInputFilter;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.RecyclerDirectory.TestItemsAdapter;
 import com.wepindia.pos.adapters.CategoryAdapter;
 import com.wepindia.pos.adapters.DepartmentAdapter;
-import com.wepindia.pos.adapters.ItemsAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.AddedItemsToOrderTableClass;
 import com.wepindia.pos.utils.StockOutwardMaintain;
 import com.wepindia.printers.WepPrinterBaseActivity;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,6 +92,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implements TextWatcher {
 
@@ -115,8 +115,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     private DepartmentAdapter departmentAdapter;
     private CategoryAdapter categoryAdapter;
     RelativeLayout boxDept, boxCat,boxItem;
-    private GridView gridViewItems;
-    private ItemsAdapter itemsAdapter;
+    //private GridView gridViewItems;
+    //private ItemsAdapter itemsAdapter;
     TableLayout tblOrderItems;
     TextView tvSalesTax;
     TextView tvServiceTax, tvDiscountAmount,  tvDiscountPercentage;
@@ -194,6 +194,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     private TextView mRateTextView;
     private TextView mAmountTextView;
     private TextView mDeleteTextView;
+
+    private RecyclerView mRecyclerGridView;
+    private TestItemsAdapter mTestItemsAdapter;
+    private GridLayoutManager mGridLayoutManager;
+
     public void onConfigurationRequired() {
 
     }
@@ -308,10 +313,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     // setting visibility of buttons
                     boxDept.setVisibility(View.GONE);
                     boxCat.setVisibility(View.GONE);
-                   // btnitem.setVisibility(View.VISIBLE);
+                    // btnitem.setVisibility(View.VISIBLE);
 
                     // setting visibility of grids/listviews
-                    gridViewItems.setNumColumns(6);
+                    //gridViewItems.setNumColumns(6);
+                    mGridLayoutManager = new GridLayoutManager(BillingHomeDeliveryActivity.this, 6);
+                    mRecyclerGridView.setLayoutManager(mGridLayoutManager);
                     loadItems(0);
                     /*tvdeptline.setVisibility(View.GONE);
                     tvcategline.setVisibility(View.GONE);*/
@@ -323,7 +330,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     boxCat.setVisibility(View.GONE);
                     //btnitem.setVisibility(View.VISIBLE);
 
-                    gridViewItems.setNumColumns(4);
+                    //gridViewItems.setNumColumns(4);
+                    mGridLayoutManager = new GridLayoutManager(BillingHomeDeliveryActivity.this, 4);
+                    mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
                     loadItems(0);
                     //tvcategline.setVisibility(View.GONE);
                     //listViewCateg.setVisibility(View.GONE);
@@ -331,6 +341,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 } else if (FASTBILLINGMODE.equalsIgnoreCase("3")) {
                     boxDept.setVisibility(View.VISIBLE);
                     boxCat.setVisibility(View.VISIBLE);
+
+                    mGridLayoutManager = new GridLayoutManager(BillingHomeDeliveryActivity.this, 2);
+                    mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
                     //btnitem.setVisibility(View.VISIBLE);
                     loadItems(0);
                 }
@@ -691,7 +705,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 super.onPostExecute(list);
                 if(list!=null)
                     setItemsAdapter(list);
-                gridViewItems.setVisibility(View.VISIBLE);
+                //  gridViewItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -717,7 +732,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 super.onPostExecute(list);
                 if(list!=null)
                     setItemsAdapter(list);
-                gridViewItems.setVisibility(View.VISIBLE);
+                //  gridViewItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -773,7 +789,25 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             }
         }.execute();
     }
-    public void setItemsAdapter(ArrayList<Items> list)
+
+    public void setItemsAdapter(ArrayList<Items> list) {
+        if (mTestItemsAdapter == null) {
+            mTestItemsAdapter = new TestItemsAdapter(this, list);
+
+            mTestItemsAdapter.setOnItemClickListener(new TestItemsAdapter.OnItemsImageClickListener() {
+                @Override
+                public void onItemClick(int position, int itemCode, View v) {
+                    Cursor cursor = db.getItemss(itemCode);
+                    btnClear.setEnabled(true);
+                    AddItemToOrderTable(cursor);
+                }
+            });
+            mRecyclerGridView.setAdapter(mTestItemsAdapter);
+
+        } else
+            mTestItemsAdapter.notifyDataSetChanged(list);
+    }
+    /*public void setItemsAdapter(ArrayList<Items> list)
     {
         if(itemsAdapter==null){
             itemsAdapter = new ItemsAdapter(this,list);
@@ -781,7 +815,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         }
         else
             itemsAdapter.notifyDataSetChanged(list);
-    }
+    }*/
 
 
     public void setDepartmentAdapter(ArrayList<Department> list)
@@ -805,7 +839,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     }
 
 
-    AdapterView.OnItemClickListener itemsClick = new AdapterView.OnItemClickListener() {
+   /* AdapterView.OnItemClickListener itemsClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Items items = (Items) itemsAdapter.getItem(position);
@@ -813,7 +847,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             btnClear.setEnabled(true);
             AddItemToOrderTable(cursor);
         }
-    };
+    };*/
 
     AdapterView.OnItemClickListener deptClick = new AdapterView.OnItemClickListener() {
         @Override
@@ -880,8 +914,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         listViewDept.setOnItemClickListener(deptClick);
         listViewCateg = (ListView) findViewById(R.id.lstCategoryNames);
         listViewCateg.setOnItemClickListener(catClick);
-        gridViewItems = (GridView) findViewById(R.id.gridItems);
-        gridViewItems.setOnItemClickListener(itemsClick);
+
+        //  gridViewItems = (GridView) findViewById(R.id.gridItems);
+        //   gridViewItems.setOnItemClickListener(itemsClick);
+
+        mRecyclerGridView = (RecyclerView) findViewById(R.id.gridItems);
+        mRecyclerGridView.setHasFixedSize(true);
 
         edtCustId = (EditText) findViewById(R.id.edtCustId);
         edtCustName = (EditText) findViewById(R.id.edtCustName);
@@ -976,12 +1014,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         autoCompleteTextViewSearchItemBarcode = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItemBarcode);
 
         etCustGSTIN.addTextChangedListener(this);
-                edtCustName.addTextChangedListener(this);
-                edtCustPhoneNo.addTextChangedListener(this);
-                edtCustAddress.addTextChangedListener(this);
-                aTViewSearchItem.addTextChangedListener(this);
-                aTViewSearchMenuCode.addTextChangedListener(this);
-                autoCompleteTextViewSearchItemBarcode.addTextChangedListener(this);
+        edtCustName.addTextChangedListener(this);
+        edtCustPhoneNo.addTextChangedListener(this);
+        edtCustAddress.addTextChangedListener(this);
+        aTViewSearchItem.addTextChangedListener(this);
+        aTViewSearchMenuCode.addTextChangedListener(this);
+        autoCompleteTextViewSearchItemBarcode.addTextChangedListener(this);
 
         autoCompleteTextViewSearchItemBarcode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -1076,9 +1114,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                             if(!CustomerDetailsFilled && cursor_KOT!=null  && cursor_KOT.moveToFirst())
                             {
                                 //if(jBillingMode==3)
-                                   // MsgBox.Show("Warning", " KOT is already present for this customer, please goto KOT status for modification  or billing");
+                                // MsgBox.Show("Warning", " KOT is already present for this customer, please goto KOT status for modification  or billing");
                                 //else if(jBillingMode==4)
-                                   // MsgBox.Show("Warning", " KOT is already present for this customer, please goto Delivery Status for modification  or billing");
+                                // MsgBox.Show("Warning", " KOT is already present for this customer, please goto Delivery Status for modification  or billing");
                                 return;
 //
 
@@ -1161,13 +1199,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         {
             if(FASTBILLINGMODE.equals("3"))
                 listViewCateg.setVisibility(View.INVISIBLE);
-            gridViewItems.setVisibility(View.INVISIBLE);
+            //  gridViewItems.setVisibility(View.INVISIBLE);
+            mRecyclerGridView.setVisibility(View.INVISIBLE);
             loadDepartments();
         }
         else if(id == R.id.btn_categ)
         {
             listViewDept.setVisibility(View.INVISIBLE);
-            gridViewItems.setVisibility(View.INVISIBLE);
+            //   gridViewItems.setVisibility(View.INVISIBLE);
+            mRecyclerGridView.setVisibility(View.INVISIBLE);
             loadCategories(0);
         }
         else if(id == R.id.btn_item)
@@ -1296,19 +1336,24 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     LoadCategories(Category);
                     GetItemDetailsByDept(Integer.valueOf(deptcode));
                     if (Name.length > 0) {
-                        gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
-                        gridViewItems.setVisibility(View.VISIBLE);
+                   //     gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                        mRecyclerGridView.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                     //   gridViewItems.setVisibility(View.VISIBLE);
+                        mRecyclerGridView.setVisibility(View.VISIBLE);
                     } else {
-                        gridViewItems.setVisibility(View.INVISIBLE);
+                        mRecyclerGridView.setVisibility(View.INVISIBLE);
                     }
                 } else {
                     listViewCateg.setAdapter(null);
                     GetItemDetailsByDept(Integer.valueOf(deptcode));//, Integer.valueOf(categdeptcode));
                     if (Name.length > 0) {
-                        gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
-                        gridViewItems.setVisibility(View.VISIBLE);
+                    //    gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                        mRecyclerGridView.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                   //     gridViewItems.setVisibility(View.VISIBLE);
+                        mRecyclerGridView.setVisibility(View.VISIBLE);
                     } else {
-                        gridViewItems.setVisibility(View.INVISIBLE);
+                      //  gridViewItems.setVisibility(View.INVISIBLE);
+                        mRecyclerGridView.setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -1330,10 +1375,13 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 listViewCateg.setAdapter(null);
                 GetItemDetailsByDept(Integer.valueOf(deptcode));
                 if (Name.length > 0) {
-                    gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
-                    gridViewItems.setVisibility(View.VISIBLE);
+                //    gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                    mRecyclerGridView.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                   // gridViewItems.setVisibility(View.VISIBLE);
+                    mRecyclerGridView.setVisibility(View.VISIBLE);
                 } else {
-                    gridViewItems.setVisibility(View.INVISIBLE);
+                 //   gridViewItems.setVisibility(View.INVISIBLE);
+                    mRecyclerGridView.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -1351,13 +1399,17 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
                 String categcode = ((TextView) view.findViewById(R.id.tvlstCategCode)).getText().toString();
                 //String categdeptcode = ((TextView) view.findViewById(R.id.tvlstCategDeptCode)).getText().toString();
-                gridViewItems.setVisibility(View.VISIBLE);
+        //        gridViewItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
                 GetItemDetails(Integer.valueOf(categcode));
                 if (Name.length > 0) {
-                    gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
-                    gridViewItems.setVisibility(View.VISIBLE);
+                  //  gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                    mRecyclerGridView.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                //    gridViewItems.setVisibility(View.VISIBLE);
+                    mRecyclerGridView.setVisibility(View.VISIBLE);
                 } else {
-                    gridViewItems.setVisibility(View.INVISIBLE);
+                  //  gridViewItems.setVisibility(View.INVISIBLE);
+                    mRecyclerGridView.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -1529,7 +1581,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                             {
                                 // Quantity
                                 EditText Qty = (EditText) Row.getChildAt(3);
-                               // Qty.setSelectAllOnFocus(true);
+                                // Qty.setSelectAllOnFocus(true);
                                 strQty = Qty.getText().toString().equalsIgnoreCase("") ? "0" : Qty.getText().toString(); // Temp
 
                                 if (BillwithStock == 1)
@@ -1826,7 +1878,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     // Check whether Price change is enabled for the item, if
                     // not set Rate text box click able property to false
                     if (crsrSettings.getInt(crsrSettings.getColumnIndex("PriceChange")) == 0  ||
-                                            !(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1 ) ) {
+                            !(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1 ) ) {
                         // disabling rate change for reverse tax
                         etRate.setEnabled(false);
                         etRate.setTextColor(getResources().getColor(R.color.black));
@@ -2080,7 +2132,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             Log.d("AddItemToOrderTable", "ItemNotFound Exception");
         }
     }
-    
+
     private void AddItemToOrderTable_old(Cursor crsrItem) {
 
         EditTextInputHandler etInputValidate = new EditTextInputHandler();
@@ -3947,7 +3999,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             MsgBox.Show("Oops","Some error occured while Modifying KOT ");
         }
     }
-    
+
     private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         EditTextInputHandler etInputValidate = new EditTextInputHandler();
         TableRow rowItem;
@@ -4443,12 +4495,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 float cgsttax = (Float.parseFloat(SalesTaxPercent.getText().toString()));
                 if (chk_interstate.isChecked()) {
                     //objBillItem.setIGSTRate(Float.parseFloat(String.format("%.2f", cgsttax + sgatTax)));
-                   // Log.d("InsertBillItems", " IGST Tax %: " + objBillItem.getIGSTRate());
+                    // Log.d("InsertBillItems", " IGST Tax %: " + objBillItem.getIGSTRate());
                     objBillItem.setCGSTRate(0.00f);
                     Log.d("InsertBillItems", " CGST Tax %: 0.00");
                 }else{
-                   // objBillItem.setIGSTRate(0.00f);
-                   // Log.d("InsertBillItems", " IGST Tax %: 0.00");
+                    // objBillItem.setIGSTRate(0.00f);
+                    // Log.d("InsertBillItems", " IGST Tax %: 0.00");
                     objBillItem.setCGSTRate(Float.parseFloat(String.format("%.2f",Float.parseFloat(SalesTaxPercent.getText().toString()))));
                     Log.d("InsertBillItems", " CGST Tax %: " + SalesTaxPercent.getText().toString());
                 }
@@ -4463,7 +4515,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     objBillItem.setCGSTAmount(0.00f);
                     Log.d("InsertBillItems", "CGST Amt: 0");
                 } else {
-                   // objBillItem.setIGSTAmount(0.00f);
+                    // objBillItem.setIGSTAmount(0.00f);
                     //Log.d("InsertBillItems", "IGST Amt: 0");
                     objBillItem.setCGSTAmount(Float.parseFloat(String.format("%.2f",
                             Float.parseFloat(SalesTaxAmount.getText().toString()))));
@@ -4725,8 +4777,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
         // Discount Amount
         // Discount Amount
-    //    if(ItemwiseDiscountEnabled ==1)
-            calculateDiscountAmount();
+        //    if(ItemwiseDiscountEnabled ==1)
+        calculateDiscountAmount();
         float discount = Float.parseFloat(tvDiscountAmount.getText().toString());
         objBillDetail.setTotalDiscountAmount(discount);
         Log.d("InsertBillDetail", "Total Discount:" + discount);
@@ -5425,12 +5477,15 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
             // in ImageAdapter class.
             if (Name.length > 0) {
                 // Assign item grid to image adapter
-                gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+           //     gridViewItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                mRecyclerGridView.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
                 // Make the item grid visible
-                gridViewItems.setVisibility(View.VISIBLE);
+              //  gridViewItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
             } else {
                 // Make the item grid invisible
-                gridViewItems.setVisibility(View.INVISIBLE);
+             //   gridViewItems.setVisibility(View.INVISIBLE);
+                mRecyclerGridView.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -6227,47 +6282,47 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     public int  SaveKOT() {
         int returnStatus =1;
         try{
-        if (jBillingMode== 3|| jBillingMode ==4) { // billingmode -> takeaway/delivery
-            String tempCustId = edtCustId.getText().toString();
-            if (tempCustId.equalsIgnoreCase("") || tempCustId.equalsIgnoreCase("0")) {
-                MsgBox.Show("Warning", "Please Select Customer for Billing");
-                returnStatus = 0;
-
-            } else {
-                if (tblOrderItems.getChildCount() < 1) {
-                    MsgBox.Show("Warning", "Add Item before Saving KOT");
+            if (jBillingMode== 3|| jBillingMode ==4) { // billingmode -> takeaway/delivery
+                String tempCustId = edtCustId.getText().toString();
+                if (tempCustId.equalsIgnoreCase("") || tempCustId.equalsIgnoreCase("0")) {
+                    MsgBox.Show("Warning", "Please Select Customer for Billing");
                     returnStatus = 0;
 
                 } else {
-                    int iResult = 0;
-                    Cursor crsrKOTNo = dbBillScreen.getKOTItems(Integer.valueOf(edtCustId.getText().toString()), String.valueOf(jBillingMode));
-                    if(crsrKOTNo.moveToFirst())
-                    {
-                        iKOTNo = crsrKOTNo.getInt(crsrKOTNo.getColumnIndex("TokenNumber"));
-                    } else {
-                        iKOTNo = dbBillScreen.getKOTNo();
-                        long iResult1 = dbBillScreen.updateKOTNo(iKOTNo);
-                    }
+                    if (tblOrderItems.getChildCount() < 1) {
+                        MsgBox.Show("Warning", "Add Item before Saving KOT");
+                        returnStatus = 0;
 
-                    // Delete the KOT items from Pending KOT if KOT is updated
-                    iResult = dbBillScreen.deleteKOTItems(Integer.valueOf(edtCustId.getText().toString()), String.valueOf(jBillingMode));
-                    Log.v("KOT Update", "Deleted rows:" + iResult);
-                    InsertKOTItems(iKOTNo);
-                    Toast.makeText(myContext, "KOT Saved Successfully", Toast.LENGTH_LONG).show();
-                    //PrintKOT();
-                    btnPrintBill.setEnabled(true);
-                    btnPayBill.setEnabled(true);
-                    //strPaymentStatus="";
-                    //ClearAll();
+                    } else {
+                        int iResult = 0;
+                        Cursor crsrKOTNo = dbBillScreen.getKOTItems(Integer.valueOf(edtCustId.getText().toString()), String.valueOf(jBillingMode));
+                        if(crsrKOTNo.moveToFirst())
+                        {
+                            iKOTNo = crsrKOTNo.getInt(crsrKOTNo.getColumnIndex("TokenNumber"));
+                        } else {
+                            iKOTNo = dbBillScreen.getKOTNo();
+                            long iResult1 = dbBillScreen.updateKOTNo(iKOTNo);
+                        }
+
+                        // Delete the KOT items from Pending KOT if KOT is updated
+                        iResult = dbBillScreen.deleteKOTItems(Integer.valueOf(edtCustId.getText().toString()), String.valueOf(jBillingMode));
+                        Log.v("KOT Update", "Deleted rows:" + iResult);
+                        InsertKOTItems(iKOTNo);
+                        Toast.makeText(myContext, "KOT Saved Successfully", Toast.LENGTH_LONG).show();
+                        //PrintKOT();
+                        btnPrintBill.setEnabled(true);
+                        btnPayBill.setEnabled(true);
+                        //strPaymentStatus="";
+                        //ClearAll();
 
                     /*if (jBillingMode == 4) {
                         btnPayBill.setEnabled(true);
                     }*/
-                    //Cursor crsrLoadItems = dbBillScreen.getKOTItems(Integer.valueOf(edtCustId.getText().toString()), String.valueOf(jBillingMode));
-                    //LoadKOTItems(crsrLoadItems);
+                        //Cursor crsrLoadItems = dbBillScreen.getKOTItems(Integer.valueOf(edtCustId.getText().toString()), String.valueOf(jBillingMode));
+                        //LoadKOTItems(crsrLoadItems);
+                    }
                 }
             }
-        }
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -6539,10 +6594,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                     String isPaid = data.getStringExtra("IS_PAID");
                                     if (isPaid != null && !isPaid.equals("YES")) {
                                         l(2, isPrintBill);
-    //                                    if(isPrintBill==true)
-    //                                    {
-    //                                        tvBillNumber.setText(String.valueOf(Integer.parseInt(tvBillNumber.getText().toString())-1));
-    //                                    }
+                                        //                                    if(isPrintBill==true)
+                                        //                                    {
+                                        //                                        tvBillNumber.setText(String.valueOf(Integer.parseInt(tvBillNumber.getText().toString())-1));
+                                        //                                    }
                                     }
                                 }
                             }
@@ -6672,11 +6727,11 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
         // barcode
 
-                        List<String> labelsBarCode = dbBillScreen.getAllBarCode_fnb();
-                ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                                labelsBarCode);
-                dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
-                autoCompleteTextViewSearchItemBarcode.setAdapter(dataAdapter11);
+        List<String> labelsBarCode = dbBillScreen.getAllBarCode_fnb();
+        ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                labelsBarCode);
+        dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        autoCompleteTextViewSearchItemBarcode.setAdapter(dataAdapter11);
 
     }
 
@@ -7062,7 +7117,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         }
         else if (jBillingMode==4 || jBillingMode==3)
         {
-             tempCustId = edtCustId.getText().toString();
+            tempCustId = edtCustId.getText().toString();
             if (tempCustId.equalsIgnoreCase("") || tempCustId.equalsIgnoreCase("0")) {
                 MsgBox.Show("Warning", "Please Select Customer for Billing");
                 proceed =0;
@@ -7224,7 +7279,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     //int iResult = dbBillScreen.deleteKOTItems(iCustId, String.valueOf(jBillingMode));
                     //Log.d("Pick Up:TenderActivity Result", "Items deleted from pending KOT:" + iResult);
                     ClearAll();
-                   // Close(null);
+                    // Close(null);
                 }
             }
         } else {
@@ -7254,7 +7309,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     tableId = 0;//Integer.parseInt(tvTableNumber.getText().toString().trim());
                     waiterId = 0;//Integer.parseInt(tvWaiterNumber.getText().toString().trim());
                     orderId = Integer.parseInt(tvBillNumber.getText().toString().trim());
-                   // ArrayList<BillKotItem> billKotItems = billPrint();
+                    // ArrayList<BillKotItem> billKotItems = billPrint();
                     ArrayList<BillTaxItem> billOtherChargesItems = otherChargesPrint();
                     ArrayList<BillTaxItem> billTaxItems ;
                     ArrayList<BillServiceTaxItem> billServiceTaxItems = new ArrayList<BillServiceTaxItem>();
@@ -7316,8 +7371,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     /*item.setDate(businessDate);
                     item.setTime(TimeUtil.getTime());*/
                     item.setdiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
-                //    if(ItemwiseDiscountEnabled ==1)
-                        calculateDiscountAmount();
+                    //    if(ItemwiseDiscountEnabled ==1)
+                    calculateDiscountAmount();
                     item.setFdiscount(fTotalDiscount);
 
                     item.setTotalsubTaxPercent(fTotalsubTaxPercent);
@@ -7867,7 +7922,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
         listViewDept.setEnabled(true);
         listViewCateg.setEnabled(true);
-        gridViewItems.setEnabled(true);
+        //  gridViewItems.setEnabled(true);
+        mRecyclerGridView.setEnabled(true);
 
         btnReprint.setEnabled(true);
         btnDeliveryStatus.setEnabled(true);

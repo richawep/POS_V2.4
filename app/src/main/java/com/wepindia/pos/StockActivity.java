@@ -19,6 +19,8 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -29,7 +31,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -42,9 +43,9 @@ import com.wep.common.app.WepBaseActivity;
 import com.wep.common.app.models.Items;
 import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.RecyclerDirectory.TestItemsAdapter;
 import com.wepindia.pos.adapters.CategoryAdapter;
 import com.wepindia.pos.adapters.DepartmentAdapter;
-import com.wepindia.pos.adapters.ItemsAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.StockOutwardMaintain;
 
@@ -68,10 +69,10 @@ public class StockActivity extends WepBaseActivity {
     EditText txtNewStock, txtRate1, txtRate2, txtRate3;
     WepButton btnUpdate,btnClearStock,btnCloseStock ;
 
-    private ItemsAdapter itemsAdapter;
+    //  private ItemsAdapter itemsAdapter;
     private DepartmentAdapter departmentAdapter;
     private CategoryAdapter categoryAdapter;
-    private GridView gridViewItems;
+    //private GridView gridViewItems;
     private ListView listViewDept,listViewCat;
 
     // Variables
@@ -84,6 +85,10 @@ public class StockActivity extends WepBaseActivity {
     Cursor crsrSettings = null;
     private Toolbar toolbar;
     String FASTBILLINGMODE = "1";
+
+    private RecyclerView mRecyclerGridView;
+    private TestItemsAdapter mTestItemsAdapter;
+    private GridLayoutManager mGridLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,7 +134,7 @@ public class StockActivity extends WepBaseActivity {
             btncateg.setVisibility(View.INVISIBLE);
             btnitem.setVisibility(View.INVISIBLE);*/
             if(crsrSettings.moveToFirst()) {
-                 FASTBILLINGMODE = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
+                FASTBILLINGMODE = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
                 if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("1")) {
                     btndepart.setVisibility(View.GONE);
                     btncateg.setVisibility(View.GONE);
@@ -139,7 +144,10 @@ public class StockActivity extends WepBaseActivity {
                     tvdeptline.setVisibility(View.GONE);
                     listViewCat.setVisibility(View.GONE);
                     tvcategline.setVisibility(View.GONE);
-                    gridViewItems.setNumColumns(6);
+                    //    gridViewItems.setNumColumns(6);
+                    mGridLayoutManager = new GridLayoutManager(StockActivity.this, 6);
+                    mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
                 } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2")) {
                     btndepart.setVisibility(View.VISIBLE);
                     btncateg.setVisibility(View.GONE);
@@ -147,21 +155,26 @@ public class StockActivity extends WepBaseActivity {
 
                     listViewCat.setVisibility(View.GONE);
                     tvcategline.setVisibility(View.GONE);
-                    gridViewItems.setNumColumns(4);
+                    //   gridViewItems.setNumColumns(4);
+                    mGridLayoutManager = new GridLayoutManager(StockActivity.this, 4);
+                    mRecyclerGridView.setLayoutManager(mGridLayoutManager);
 
                 } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("3")) {
                     btndepart.setVisibility(View.VISIBLE);
                     btncateg.setVisibility(View.VISIBLE);
                     btnitem.setVisibility(View.VISIBLE);
-                    gridViewItems.setNumColumns(2);
+                    //   gridViewItems.setNumColumns(2);
+                    mGridLayoutManager = new GridLayoutManager(StockActivity.this, 2);
+                    mRecyclerGridView.setLayoutManager(mGridLayoutManager);
 
                 }
 
                 btndepart.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View arg0) {
-                        if(FASTBILLINGMODE.equals("3"))
+                        if (FASTBILLINGMODE.equals("3"))
                             listViewCat.setVisibility(View.INVISIBLE);
-                        gridViewItems.setVisibility(View.INVISIBLE);
+                        //   gridViewItems.setVisibility(View.INVISIBLE);
+                        mRecyclerGridView.setVisibility(View.INVISIBLE);
                         loadDepartments();
                         ResetStock();
                     }
@@ -170,7 +183,8 @@ public class StockActivity extends WepBaseActivity {
                 btncateg.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View arg0) {
                         listViewDept.setVisibility(View.INVISIBLE);
-                        gridViewItems.setVisibility(View.INVISIBLE);
+                        //    gridViewItems.setVisibility(View.INVISIBLE);
+                        mRecyclerGridView.setVisibility(View.INVISIBLE);
                         loadCategories(0);
                         ResetStock();
                     }
@@ -189,7 +203,7 @@ public class StockActivity extends WepBaseActivity {
                 });
 
 
-           }
+            }
             loadItems(0);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -198,7 +212,7 @@ public class StockActivity extends WepBaseActivity {
         }
     }
 
-    private AdapterView.OnItemClickListener itemsClick = new AdapterView.OnItemClickListener() {
+    /*private AdapterView.OnItemClickListener itemsClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Items items = (Items) itemsAdapter.getItem(position);
@@ -218,7 +232,7 @@ public class StockActivity extends WepBaseActivity {
                 }
             }
         }
-    };
+    };*/
 
     private AdapterView.OnItemClickListener deptClick = new AdapterView.OnItemClickListener() {
         @Override
@@ -270,7 +284,8 @@ public class StockActivity extends WepBaseActivity {
                 super.onPostExecute(list);
                 if(list!=null)
                     setItemsAdapter(list);
-                gridViewItems.setVisibility(View.VISIBLE);
+                //   gridViewItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -297,7 +312,8 @@ public class StockActivity extends WepBaseActivity {
                 //editTextOrderNo.setText(String.valueOf(dbStock.getNewBillNumber()));
                 if(list!=null)
                     setItemsAdapter(list);
-                gridViewItems.setVisibility(View.VISIBLE);
+                // gridViewItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
             }
         }.execute();
     }
@@ -354,7 +370,7 @@ public class StockActivity extends WepBaseActivity {
         }.execute();
     }
 
-    public void setItemsAdapter(ArrayList<Items> list)
+   /* public void setItemsAdapter(ArrayList<Items> list)
     {
         if(itemsAdapter==null){
             itemsAdapter = new ItemsAdapter(this,list);
@@ -362,8 +378,39 @@ public class StockActivity extends WepBaseActivity {
         }
         else
             itemsAdapter.notifyDataSetChanged(list);
-    }
+    }*/
 
+    public void setItemsAdapter(ArrayList<Items> list) {
+        if (mTestItemsAdapter == null) {
+            mTestItemsAdapter = new TestItemsAdapter(this, list);
+
+            mTestItemsAdapter.setOnItemClickListener(new TestItemsAdapter.OnItemsImageClickListener() {
+                @Override
+                public void onItemClick(int position, int itemCode, View v) {
+
+                    //    Items items = (Items) itemsAdapter.getItem(position);
+                    //Cursor cursor = dbStock.getItemss(items.getItemCode());
+                    Cursor Item = null;
+                    //if (v.getTag() != null) {
+                        Item = dbStock.getItemss(itemCode);
+                        if (Item.moveToNext()) {
+                            strMenuCode = Item.getString(Item.getColumnIndex("MenuCode"));
+                            ItemLongName.setText(Item.getString(Item.getColumnIndex("ItemName")));
+                            tvExistingStock.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("Quantity"))));
+                            txtRate1.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("DineInPrice1"))));
+                            txtRate2.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("DineInPrice2"))));
+                            txtRate3.setText(String.format("%.2f", Item.getDouble(Item.getColumnIndex("DineInPrice3"))));
+                            txtNewStock.setText("0");
+                            btnUpdate.setEnabled(true);
+                        }
+                   // }
+                }
+            });
+            mRecyclerGridView.setAdapter(mTestItemsAdapter);
+
+        } else
+            mTestItemsAdapter.notifyDataSetChanged(list);
+    }
 
     public void setDepartmentAdapter(ArrayList<Department> list)
     {
@@ -415,8 +462,14 @@ public class StockActivity extends WepBaseActivity {
                 CloseStock(v);
             }
         });
+
+        mRecyclerGridView = (RecyclerView) findViewById(R.id.listViewFilter3);
+        mRecyclerGridView.setHasFixedSize(true);
+
+    /*
         gridViewItems = (GridView) findViewById(R.id.listViewFilter3);
-        gridViewItems.setOnItemClickListener(itemsClick);
+        gridViewItems.setOnItemClickListener(itemsClick);*/
+
         listViewDept = (ListView) findViewById(R.id.listViewFilter1);
         listViewDept.setOnItemClickListener(deptClick);
         listViewCat = (ListView) findViewById(R.id.listViewFilter2);
@@ -480,7 +533,7 @@ public class StockActivity extends WepBaseActivity {
         else if(Double.parseDouble(strRate3) >0)
             rate = Double.parseDouble(String.format("%.2f",Float.parseFloat(strRate3)));
 
-            Cursor date_cursor = dbStock.getCurrentDate();
+        Cursor date_cursor = dbStock.getCurrentDate();
         String currentdate = "";
         if(date_cursor.moveToNext())
             currentdate = date_cursor.getString(date_cursor.getColumnIndex("BusinessDate"));
@@ -603,7 +656,7 @@ public class StockActivity extends WepBaseActivity {
 //
 //            }
 //        });
-       // LoadItemsForAllDepartment();
+        // LoadItemsForAllDepartment();
     }
 
     void LoadItemsForAllDepartment()

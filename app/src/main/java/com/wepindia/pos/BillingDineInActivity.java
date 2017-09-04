@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -39,7 +41,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -70,8 +71,9 @@ import com.wep.common.app.views.WepButton;
 import com.wepindia.pos.GenericClasses.DateTime;
 import com.wepindia.pos.GenericClasses.DecimalDigitsInputFilter;
 import com.wepindia.pos.GenericClasses.EditTextInputHandler;
-import com.wepindia.pos.GenericClasses.ImageAdapter;
 import com.wepindia.pos.GenericClasses.MessageDialog;
+import com.wepindia.pos.RecyclerDirectory.TestItemsAdapter;
+import com.wepindia.pos.adapters.TestImageAdapter;
 import com.wepindia.pos.utils.ActionBarUtils;
 import com.wepindia.pos.utils.AddedItemsToOrderTableClass;
 import com.wepindia.pos.utils.StockOutwardMaintain;
@@ -94,9 +96,9 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BillingDineInActivity extends WepPrinterBaseActivity implements TextWatcher {
+public class BillingDineInActivity extends WepPrinterBaseActivity implements TextWatcher , TestImageAdapter.OnItemsImageClickListener {
 
-            String tx ="";
+    String tx ="";
     int CUSTOMER_FOUND =0;
     DecimalFormat df_2, df_3;
     Pattern p = Pattern.compile("^(-?[0-9]+[\\.\\,][0-9]{1,2})?[0-9]*$");
@@ -108,7 +110,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
     MessageDialog MsgBox;
     EditText txtSearchItemBarcode,  tvWaiterNumber, tvTableNumber, tvTableSplitNo, tvBillNumber;
     ListView lstvwDepartment, lstvwCategory, lstvwKOTModifiers;
-    GridView grdItems;
+    //  GridView grdItems;
     TableLayout tblOrderItems;
     TextView tvSalesTax, tvServiceTax;
     WepButton  btnShiftTable, btnMergeTable, btn_ReprintKOT,btnModifier, btnSaveKOT, btnPayBill, btnLoadKOT, btnDeleteKOT,btnDeleteBill, btnKOTStatus, btnPrintKOT, btnPrintBill, btnClear, btnReprint;
@@ -183,6 +185,9 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
     private TextView mAmountTextView;
     private TextView mDeleteTextView;
 
+    private RecyclerView mRecyclerGridView;
+    private GridLayoutManager mGridLayoutManager;
+    private TestImageAdapter mTestImageAdapter;
 
     public void onConfigurationRequired() {
 
@@ -237,7 +242,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                 BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
                 ItemwiseDiscountEnabled = crsrSettings.getInt(crsrSettings.getColumnIndex("DiscountType"));
-				tableSplit = crsrSettings.getInt(crsrSettings.getColumnIndex("TableSpliting"));
+                tableSplit = crsrSettings.getInt(crsrSettings.getColumnIndex("TableSpliting"));
 
                 // GSt
                 HSNEnable_out = crsrSettings.getString(crsrSettings.getColumnIndex("HSNCode_Out"));
@@ -484,7 +489,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                         LoadDepartmentsItems(Departments);
                     }
                     lstvwCategory.setAdapter(null);
-                    grdItems.setAdapter(null);
+                    //  grdItems.setAdapter(null);
+                    mRecyclerGridView.setAdapter(null);
                 }
             });
 
@@ -500,7 +506,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     // Load Category to Category List
                     LoadCategories(Category);
                     lstvwDepartment.setAdapter(null);
-                    grdItems.setAdapter(null);
+                    //   grdItems.setAdapter(null);
+                    mRecyclerGridView.setAdapter(null);
 
                 }
             });
@@ -508,10 +515,13 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
             btnitem.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
                     // TODO Auto-generated method stub
-                    grdItems.setVisibility(View.VISIBLE);
+                    //  grdItems.setVisibility(View.VISIBLE);
+                    mRecyclerGridView.setVisibility(View.VISIBLE);
                     // Get Department items detail
                     if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("1")) {
-                        grdItems.setNumColumns(6);
+                        //   grdItems.setNumColumns(6);
+                        mGridLayoutManager = new GridLayoutManager(BillingDineInActivity.this, 6);
+                        mRecyclerGridView.setLayoutManager(mGridLayoutManager);
                         GetItemDetails();
                     } else {
                         //GetItemDetailswithoutDeptCateg();
@@ -521,12 +531,18 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     // in ImageAdapter class.
                     if (Name.length > 0) {
                         // Assign item grid to image adapter
-                        grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                        //   grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                        mTestImageAdapter = new TestImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1"));
+                        mRecyclerGridView.setAdapter(mTestImageAdapter);
+                        mTestImageAdapter.setOnItemClickListener(BillingDineInActivity.this);
+                        mTestImageAdapter.notifyDataSetChanged();
                         // Make the item grid visible
                         // grdItems.setVisibility(View.VISIBLE);
+                        // mRecyclerGridView.setVisibility(View.VISIBLE);
                     } else {
                         // Make the item grid invisible
-                        grdItems.setVisibility(View.INVISIBLE);
+                        //   grdItems.setVisibility(View.INVISIBLE);
+                        mRecyclerGridView.setVisibility(View.INVISIBLE);
                     }
                     lstvwDepartment.setAdapter(null);
                     lstvwCategory.setAdapter(null);
@@ -535,7 +551,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
             // Load Items without Dept and Categ
             if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("1")) {
-                grdItems.setNumColumns(6);
+                // grdItems.setNumColumns(6);
+
+                mGridLayoutManager = new GridLayoutManager(BillingDineInActivity.this, 6);
+                mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
                 GetItemDetails();
                 //tvdeptline.setVisibility(View.GONE);
                 //tvcategline.setVisibility(View.GONE);
@@ -544,24 +564,36 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
 
             } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2")) {
-                grdItems.setNumColumns(4);
+                //  grdItems.setNumColumns(4);
+
+                mGridLayoutManager = new GridLayoutManager(BillingDineInActivity.this, 4);
+                mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
                 //GetItemDetailswithoutDeptCateg();
                 GetItemDetails();
                 //tvcategline.setVisibility(View.GONE);
                 boxCat.setVisibility(View.GONE);
             } else {
                 //GetItemDetailswithoutDeptCateg();
+                mGridLayoutManager = new GridLayoutManager(BillingDineInActivity.this, 2);
+                mRecyclerGridView.setLayoutManager(mGridLayoutManager);
                 GetItemDetails();
             }
 
             if (Name.length > 0) {
                 // Assign item grid to image adapter
-                grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                //   grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                mTestImageAdapter = new TestImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1"));
+                mRecyclerGridView.setAdapter(mTestImageAdapter);
+                mTestImageAdapter.setOnItemClickListener(BillingDineInActivity.this);
+                mTestImageAdapter.notifyDataSetChanged();
                 // Make the item grid visible
-                grdItems.setVisibility(View.VISIBLE);
+                //    grdItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
             } else {
                 // Make the item grid invisible
-                grdItems.setVisibility(View.INVISIBLE);
+                //    grdItems.setVisibility(View.INVISIBLE);
+                mRecyclerGridView.setVisibility(View.INVISIBLE);
             }
 
             // DINE IN BILLING
@@ -672,7 +704,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     e.printStackTrace();
                 }
             }
-    }
+        }
     }
     /*************************************************************************************************************************************
      * Initializes all view handlers present in the billing screen with
@@ -789,8 +821,14 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
         lstvwDepartment = (ListView) findViewById(R.id.lstDepartmentNames);
         lstvwCategory = (ListView) findViewById(R.id.lstCategoryNames);
+
+    /*
         grdItems = (GridView) findViewById(R.id.gridItems);
-        grdItems.setOnItemClickListener(GridItemImageClick);
+        grdItems.setOnItemClickListener(GridItemImageClick);*/
+
+
+        mRecyclerGridView = (RecyclerView) findViewById(R.id.gridItems);
+        mRecyclerGridView.setHasFixedSize(true);
 
         //btnPayCash = (Button) findViewById(R.id.btn_PayCash);
 
@@ -988,129 +1026,129 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         });
 
         autoCompleteTextViewSearchItemBarcode = (AutoCompleteTextView) findViewById(R.id.aCTVSearchItemBarcode);
-                autoCompleteTextViewSearchItemBarcode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        autoCompleteTextViewSearchItemBarcode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                try {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
                                         /*Toast.makeText(BillingScreenActivity.this, aTViewSearchMenuCode.getText().toString(),
                             Toast.LENGTH_SHORT).show();*/
-                                                if ((autoCompleteTextViewSearchItemBarcode.getText().toString().equals(""))) {
-                                                MsgBox.Show("Warning", "Scan BarCode");
-                                            } else {
-                                                Cursor BarcodeItem = db
-                                                                .getItemssbyBarCode((autoCompleteTextViewSearchItemBarcode.getText().toString().trim()));
-                                                int i =0, added =0;
-                                                while (BarcodeItem.moveToNext()) {
-                                                        if(i!=position)
-                                                            {
-                                                                        i++;
-                                                            continue;
-                                                        }
-                                                        added =1;
-                                                        btnClear.setEnabled(true);
-                                                        AddItemToOrderTable(BarcodeItem);
-                                                        autoCompleteTextViewSearchItemBarcode.setText("");
-                                                        // ((EditText)v).setText("");
-                                                            } if(added==0) {
-                                                        MsgBox.Show("Warning", "Item not found for Selected BarCode");
-                                                    }
-                                           }
-                                    } catch (Exception ex) {
-                                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
+                    if ((autoCompleteTextViewSearchItemBarcode.getText().toString().equals(""))) {
+                        MsgBox.Show("Warning", "Scan BarCode");
+                    } else {
+                        Cursor BarcodeItem = db
+                                .getItemssbyBarCode((autoCompleteTextViewSearchItemBarcode.getText().toString().trim()));
+                        int i =0, added =0;
+                        while (BarcodeItem.moveToNext()) {
+                            if(i!=position)
+                            {
+                                i++;
+                                continue;
                             }
+                            added =1;
+                            btnClear.setEnabled(true);
+                            AddItemToOrderTable(BarcodeItem);
+                            autoCompleteTextViewSearchItemBarcode.setText("");
+                            // ((EditText)v).setText("");
+                        } if(added==0) {
+                            MsgBox.Show("Warning", "Item not found for Selected BarCode");
+                        }
+                    }
+                } catch (Exception ex) {
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
         });
 
 
-                                etCustGSTIN.addTextChangedListener(this);
-                edtCustName.addTextChangedListener(this);
-                edtCustDineInPhoneNo.addTextChangedListener(this);
-                edtCustAddress.addTextChangedListener(this);
-                aTViewSearchItem.addTextChangedListener(this);
-                aTViewSearchMenuCode.addTextChangedListener(this);
-                autoCompleteTextViewSearchItemBarcode.addTextChangedListener(this);
+        etCustGSTIN.addTextChangedListener(this);
+        edtCustName.addTextChangedListener(this);
+        edtCustDineInPhoneNo.addTextChangedListener(this);
+        edtCustAddress.addTextChangedListener(this);
+        aTViewSearchItem.addTextChangedListener(this);
+        aTViewSearchMenuCode.addTextChangedListener(this);
+        autoCompleteTextViewSearchItemBarcode.addTextChangedListener(this);
 
 
     }
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String str = charSequence.toString();
-                View view = getCurrentFocus();
-                if(view== null)
-                        return;
-                switch(view.getId()){
-                        case R.id.etCustGSTIN:
-                                tx = etCustGSTIN.getText().toString();
-                                break;
-                        case R.id.edtCustName:
-                                tx = edtCustName.getText().toString();
-                                break;
-                        case R.id.edtCustDineInPhoneNo:
-                                tx = edtCustDineInPhoneNo.getText().toString();
-                                break;
-                        case R.id.edtCustAddress:
-                                tx = edtCustAddress.getText().toString();
-                                break;
-                        case R.id.aCTVSearchItem:
-                                tx = aTViewSearchItem.getText().toString();
-                                break;
-                        case R.id.aCTVSearchMenuCode:
-                                tx = aTViewSearchMenuCode.getText().toString();
-                                break;
-                        case R.id.aCTVSearchItemBarcode:
-                                tx = autoCompleteTextViewSearchItemBarcode.getText().toString();
-                                break;
+        String str = charSequence.toString();
+        View view = getCurrentFocus();
+        if(view== null)
+            return;
+        switch(view.getId()){
+            case R.id.etCustGSTIN:
+                tx = etCustGSTIN.getText().toString();
+                break;
+            case R.id.edtCustName:
+                tx = edtCustName.getText().toString();
+                break;
+            case R.id.edtCustDineInPhoneNo:
+                tx = edtCustDineInPhoneNo.getText().toString();
+                break;
+            case R.id.edtCustAddress:
+                tx = edtCustAddress.getText().toString();
+                break;
+            case R.id.aCTVSearchItem:
+                tx = aTViewSearchItem.getText().toString();
+                break;
+            case R.id.aCTVSearchMenuCode:
+                tx = aTViewSearchMenuCode.getText().toString();
+                break;
+            case R.id.aCTVSearchItemBarcode:
+                tx = autoCompleteTextViewSearchItemBarcode.getText().toString();
+                break;
 
-                            }
+        }
 
 
     }
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-            public void afterTextChanged(Editable s) {
+    public void afterTextChanged(Editable s) {
+        try {
+            View view = getCurrentFocus();
+            if(view== null  || CUSTOMER_FOUND==1)
+                return;
+            if(view.getId() == R.id.edtCustPhoneNo){
                 try {
-                        View view = getCurrentFocus();
-                        if(view== null  || CUSTOMER_FOUND==1)
-                                return;
-                        if(view.getId() == R.id.edtCustPhoneNo){
-                                try {
-                                        if (edtCustDineInPhoneNo.getText().toString().length() == 10) {
-                                                Cursor crsrCust = dbBillScreen.getCustomer(edtCustDineInPhoneNo.getText().toString());
-                                                if (crsrCust.moveToFirst()) {
-                                                        CUSTOMER_FOUND=1;
-                                                        //if(crsrCust.getString(crsrCust.getColumnIndex("CustContactNumber")) == edtCustPhoneNo.getText().toString()) {
-                                                                edtCustId.setText(crsrCust.getString(crsrCust.getColumnIndex("CustId")));
-                                                        edtCustName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
-                                                        //edtCustPhoneNo.setText(crsrCust.getString(crsrCust.getColumnIndex("CustContactNumber")));
-                                                                edtCustAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
-                                                        String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
-                                                        if (gstin==null)
-                                                                etCustGSTIN.setText("");
-                                                        else
-                                                            etCustGSTIN.setText(gstin);
-                                                        Toast.makeText(myContext, "Customer Fetched Successfully", Toast.LENGTH_LONG).show();
-                                                        //}
-                                                            } else {
-                                                        MsgBox.Show("Note ", "Customer is not Found, Please Add Customer before Order");
-                                                    }
-                                            } else if (edtCustPhoneNo.getText().toString().trim().equals("")){
-                                                CUSTOMER_FOUND=1;
-                                                edtCustName.setText("");
-                                                edtCustId.setText("0");
-                                                edtCustAddress.setText("");
-                                                etCustGSTIN.setText("");
-                                                CUSTOMER_FOUND=0;
+                    if (edtCustDineInPhoneNo.getText().toString().length() == 10) {
+                        Cursor crsrCust = dbBillScreen.getCustomer(edtCustDineInPhoneNo.getText().toString());
+                        if (crsrCust.moveToFirst()) {
+                            CUSTOMER_FOUND=1;
+                            //if(crsrCust.getString(crsrCust.getColumnIndex("CustContactNumber")) == edtCustPhoneNo.getText().toString()) {
+                            edtCustId.setText(crsrCust.getString(crsrCust.getColumnIndex("CustId")));
+                            edtCustName.setText(crsrCust.getString(crsrCust.getColumnIndex("CustName")));
+                            //edtCustPhoneNo.setText(crsrCust.getString(crsrCust.getColumnIndex("CustContactNumber")));
+                            edtCustAddress.setText(crsrCust.getString(crsrCust.getColumnIndex("CustAddress")));
+                            String gstin = crsrCust.getString(crsrCust.getColumnIndex("GSTIN"));
+                            if (gstin==null)
+                                etCustGSTIN.setText("");
+                            else
+                                etCustGSTIN.setText(gstin);
+                            Toast.makeText(myContext, "Customer Fetched Successfully", Toast.LENGTH_LONG).show();
+                            //}
+                        } else {
+                            MsgBox.Show("Note ", "Customer is not Found, Please Add Customer before Order");
+                        }
+                    } else if (edtCustPhoneNo.getText().toString().trim().equals("")){
+                        CUSTOMER_FOUND=1;
+                        edtCustName.setText("");
+                        edtCustId.setText("0");
+                        edtCustAddress.setText("");
+                        etCustGSTIN.setText("");
+                        CUSTOMER_FOUND=0;
 
-                                                    }
-                                    } catch (Exception ex) {
-                                        MsgBox.Show("Error", ex.getMessage());
-                                        ex.printStackTrace();
-                                    }
-                            }
-                    }catch (Exception ex) {
-                        MsgBox.Show("Error " + ex.toString(), ex.getMessage());
-
-                            }
+                    }
+                } catch (Exception ex) {
+                    MsgBox.Show("Error", ex.getMessage());
+                    ex.printStackTrace();
+                }
             }
+        }catch (Exception ex) {
+            MsgBox.Show("Error " + ex.toString(), ex.getMessage());
+
+        }
+    }
 
 
     /*************************************************************************************************************************************
@@ -1142,24 +1180,30 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 //            // in ImageAdapter class.
 //            if (Name.length > 0) {
 //                // Assign item grid to image adapter
-//                grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+//             //   grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+//                mTestImageAdapter = new TestImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1"));
+//                        mRecyclerGridView.setAdapter(mTestImageAdapter);
+//                        mTestImageAdapter.setOnItemClickListener(BillingDineInActivity.this);
+    // mTestImageAdapter.notifyDataSetChanged();
 //                // Make the item grid visible
-//                grdItems.setVisibility(View.VISIBLE);
+//             //   grdItems.setVisibility(View.VISIBLE);
+//                mRecyclerGridView.setVisibility(View.VISIBLE);
 //            } else {
 //                // Make the item grid invisible
-//                grdItems.setVisibility(View.INVISIBLE);
+//              //  grdItems.setVisibility(View.INVISIBLE);
+//                mRecyclerGridView.setVisibility(View.INVISIBLE);
 //            }
 //        }
 //
 //    };
 
-    /*************************************************************************************************************************************
+   /* *//*************************************************************************************************************************************
      * Item grid image click listener which loads the item to billing grid if
      * selected item is not present otherwise increments the quantity by one
-     *************************************************************************************************************************************/
+     *************************************************************************************************************************************//*
     AdapterView.OnItemClickListener GridItemImageClick = new AdapterView.OnItemClickListener() {
 
-        public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
+        public void onItemClick(AdapterView<?> adapter, View v, int position1, long id1) {
             Cursor Item = null;
             if (v.getTag() != null)
             {
@@ -1192,7 +1236,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
             }
         }
-    };
+    };*/
 
     /*************************************************************************************************************************************
      * Modifier list click listener which adds the modifier amount to selected
@@ -1374,15 +1418,22 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     lstvwCategory.setVisibility(View.VISIBLE);
                     LoadCategories(Category);
                     //grdItems.setAdapter(null);
+                    //mRecyclerGridView.setAdapter(null);
                     GetItemDetailsByDept(Integer.valueOf(deptcode));
                     if (Name.length > 0) {
                         // Assign item grid to image adapter
-                        grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                        // grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                        mTestImageAdapter = new TestImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1"));
+                        mRecyclerGridView.setAdapter(mTestImageAdapter);
+                        mTestImageAdapter.setOnItemClickListener(BillingDineInActivity.this);
+                        mTestImageAdapter.notifyDataSetChanged();
                         // Make the item grid visible
-                        grdItems.setVisibility(View.VISIBLE);
+                        // grdItems.setVisibility(View.VISIBLE);
+                        mRecyclerGridView.setVisibility(View.VISIBLE);
                     } else {
                         // Make the item grid invisible
-                        grdItems.setVisibility(View.INVISIBLE);
+                        // grdItems.setVisibility(View.INVISIBLE);
+                        mRecyclerGridView.setVisibility(View.INVISIBLE);
                     }
                 } else {
                     lstvwCategory.setAdapter(null);
@@ -1392,12 +1443,18 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     // in ImageAdapter class.
                     if (Name.length > 0) {
                         // Assign item grid to image adapter
-                        grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                        //   grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                        mTestImageAdapter = new TestImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1"));
+                        mRecyclerGridView.setAdapter(mTestImageAdapter);
+                        mTestImageAdapter.setOnItemClickListener(BillingDineInActivity.this);
+                        mTestImageAdapter.notifyDataSetChanged();
                         // Make the item grid visible
-                        grdItems.setVisibility(View.VISIBLE);
+                        //      grdItems.setVisibility(View.VISIBLE);
+                        mRecyclerGridView.setVisibility(View.VISIBLE);
                     } else {
                         // Make the item grid invisible
-                        grdItems.setVisibility(View.INVISIBLE);
+                        //     grdItems.setVisibility(View.INVISIBLE);
+                        mRecyclerGridView.setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -1425,12 +1482,18 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                 // in ImageAdapter class.
                 if (Name.length > 0) {
                     // Assign item grid to image adapter
-                    grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                    //     grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                    mTestImageAdapter = new TestImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1"));
+                    mRecyclerGridView.setAdapter(mTestImageAdapter);
+                    mTestImageAdapter.setOnItemClickListener(BillingDineInActivity.this);
+                    mTestImageAdapter.notifyDataSetChanged();
                     // Make the item grid visible
-                    grdItems.setVisibility(View.VISIBLE);
+                    // grdItems.setVisibility(View.VISIBLE);
+                    mRecyclerGridView.setVisibility(View.VISIBLE);
                 } else {
                     // Make the item grid invisible
-                    grdItems.setVisibility(View.INVISIBLE);
+                    //    grdItems.setVisibility(View.INVISIBLE);
+                    mRecyclerGridView.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -1454,18 +1517,25 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                 String categdeptcode = ((TextView) view.findViewById(R.id.tvlstCategDeptCode)).getText().toString();
 
 //                Toast.makeText(myContext, message, Toast.LENGTH_LONG).show();
-                grdItems.setVisibility(View.VISIBLE);
+                //   grdItems.setVisibility(View.VISIBLE);
+                mRecyclerGridView.setVisibility(View.VISIBLE);
                 GetItemDetails(Integer.valueOf(categcode));//, Integer.valueOf(categdeptcode));
                 // This condition is to avoid NullReferenceException in getCount()
                 // in ImageAdapter class.
                 if (Name.length > 0) {
                     // Assign item grid to image adapter
-                    grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                    //   grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+                    mTestImageAdapter = new TestImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1"));
+                    mRecyclerGridView.setAdapter(mTestImageAdapter);
+                    mTestImageAdapter.setOnItemClickListener(BillingDineInActivity.this);
+                    mTestImageAdapter.notifyDataSetChanged();
                     // Make the item grid visible
-                    grdItems.setVisibility(View.VISIBLE);
+                    //     grdItems.setVisibility(View.VISIBLE);
+                    mRecyclerGridView.setVisibility(View.VISIBLE);
                 } else {
                     // Make the item grid invisible
-                    grdItems.setVisibility(View.INVISIBLE);
+                    //   grdItems.setVisibility(View.INVISIBLE);
+                    mRecyclerGridView.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -2196,7 +2266,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
             Log.d("AddItemToOrderTable", "ItemNotFound Exception");
         }
     }
-    
+
 
 
 
@@ -2791,12 +2861,18 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         // ImageAdapter class.
         /*if (Name.length > 0) {
             // Assign item grid to image adapter
-            grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+         //   grdItems.setAdapter(new ImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1")));
+             mTestImageAdapter = new TestImageAdapter(myContext, Name, MenuCode, ImageUri, Byte.parseByte("1"));
+                    mRecyclerGridView.setAdapter(mTestImageAdapter);
+                    mTestImageAdapter.setOnItemClickListener(BillingDineInActivity.this);
+                    mTestImageAdapter.notifyDataSetChanged();
             // Make the item grid visible
-            grdItems.setVisibility(View.VISIBLE);
+          //  grdItems.setVisibility(View.VISIBLE);
+            mRecyclerGridView.setVisibility(View.VISIBLE);
         } else {
             // Make the item grid invisible
-            grdItems.setVisibility(View.INVISIBLE);
+         //   grdItems.setVisibility(View.INVISIBLE);
+            mRecyclerGridView.setVisibility(View.INVISIBLE);
         }*/
         setInvoiceDate();
         fTotalDiscount =0;
@@ -3134,7 +3210,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                 float IAmt = Float.valueOf(IGSTAmt.getText().toString()) + Float.valueOf(crsrItemsUpdate.getString(crsrItemsUpdate.getColumnIndex("IGSTAmount")));
                 float cessAmount = Float.valueOf(cessAmt.getText().toString()) + Float.valueOf(crsrItemsUpdate.getString(crsrItemsUpdate.getColumnIndex("cessAmount")));
                 double  taxableValue = Double.valueOf(TaxableValue.getText().toString()) +
-                                            Double.valueOf(crsrItemsUpdate.getString(crsrItemsUpdate.getColumnIndex("TaxableValue")));
+                        Double.valueOf(crsrItemsUpdate.getString(crsrItemsUpdate.getColumnIndex("TaxableValue")));
 
                 lResult = dbBillScreen.updateKOT(itemno, Qty, Amt, TaxAmt, SerTaxAmt, jBillingMode, Status,IAmt,cessAmount,taxableValue);
                 Log.d("UpdateKOT", "KOT item updated at position:" + lResult);
@@ -3907,7 +3983,8 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
                     tvDiscAmt = new TextView(myContext);
                     tvDiscAmt.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("DiscountAmount")));
 
-                    // Dept Code
+
+// Dept Code
                     tvDeptCode = new TextView(myContext);
                     tvDeptCode.setText(crsrBillItems.getString(crsrBillItems.getColumnIndex("DeptCode")));
 
@@ -4468,8 +4545,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     {
                         //String i = billsettingCursor.getString(billsettingCursor.getColumnIndex("BillwithStock"));
                         if (billsettingCursor.getInt(billsettingCursor.getColumnIndex("BillwithStock")) == 1) {
-                        UpdateItemStock(crsrUpdateItemStock, Float.parseFloat(Quantity.getText().toString()));
-                    }
+                            UpdateItemStock(crsrUpdateItemStock, Float.parseFloat(Quantity.getText().toString()));
+                        }
                     }
 
                 }
@@ -4563,8 +4640,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     objBillItem.setCGSTRate(0.00f);
                     Log.d("InsertBillItems", " CGST Tax %: 0.00");
                 }else{
-                   // objBillItem.setIGSTRate(0.00f);
-                   // Log.d("InsertBillItems", " IGST Tax %: 0.00");
+                    // objBillItem.setIGSTRate(0.00f);
+                    // Log.d("InsertBillItems", " IGST Tax %: 0.00");
                     objBillItem.setCGSTRate(Float.parseFloat(String.format("%.2f",Float.parseFloat(SalesTaxPercent.getText().toString()))));
                     Log.d("InsertBillItems", " CGST Tax %: " + SalesTaxPercent.getText().toString());
                 }
@@ -4579,7 +4656,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     objBillItem.setCGSTAmount(0.00f);
                     Log.d("InsertBillItems", "CGST Amt: 0");
                 } else {
-                   // objBillItem.setIGSTAmount(0.00f);
+                    // objBillItem.setIGSTAmount(0.00f);
                     //Log.d("InsertBillItems", "IGST Amt: 0");
                     objBillItem.setCGSTAmount(Float.parseFloat(String.format("%.2f",
                             Float.parseFloat(SalesTaxAmount.getText().toString()))));
@@ -4848,8 +4925,8 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         Log.d("InsertBillDetail", "Discount Percentage:" + objBillDetail.getTotalDiscountPercentage());
 
         // Discount Amount
-       // if(ItemwiseDiscountEnabled ==1)
-            calculateDiscountAmount();
+        // if(ItemwiseDiscountEnabled ==1)
+        calculateDiscountAmount();
         float discount = Float.parseFloat(tvDiscountAmount.getText().toString());
         objBillDetail.setTotalDiscountAmount(discount);
         Log.d("InsertBillDetail", "Total Discount:" + discount);
@@ -5016,14 +5093,14 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
 
         // Bill Status
 
-            objBillDetail.setBillStatus(1);
-            Log.d("InsertBillDetail", "Bill Status:1");
+        objBillDetail.setBillStatus(1);
+        Log.d("InsertBillDetail", "Bill Status:1");
 
 
         // Employee Id (Waiter / Rider)
 
-            objBillDetail.setEmployeeId(Integer.parseInt(tvWaiterNumber.getText().toString()));
-            Log.d("InsertBillDetail", "EmployeeId:" + tvWaiterNumber.getText().toString());
+        objBillDetail.setEmployeeId(Integer.parseInt(tvWaiterNumber.getText().toString()));
+        Log.d("InsertBillDetail", "EmployeeId:" + tvWaiterNumber.getText().toString());
 
 
         // Customer Id
@@ -5264,20 +5341,31 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         btnPrintBill.setEnabled(false);
 
         if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("1")) {
-            grdItems.setNumColumns(6);
+            //    grdItems.setNumColumns(6);
+            mGridLayoutManager = new GridLayoutManager(BillingDineInActivity.this, 6);
+            mRecyclerGridView.setLayoutManager(mGridLayoutManager);
             GetItemDetails();
 
         } else if (crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode")).equalsIgnoreCase("2")) {
-            grdItems.setNumColumns(4);
+            //     grdItems.setNumColumns(4);
+            mGridLayoutManager = new GridLayoutManager(BillingDineInActivity.this, 4);
+            mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
             GetItemDetailswithoutDeptCateg();
             lstvwDepartment.setAdapter(null);
-            grdItems.setAdapter(null);
+            // grdItems.setAdapter(null);
+            mRecyclerGridView.setAdapter(null);
         } else {
+
+            mGridLayoutManager = new GridLayoutManager(BillingDineInActivity.this, 2);
+            mRecyclerGridView.setLayoutManager(mGridLayoutManager);
+
             GetItemDetailswithoutDeptCateg();
 
             lstvwDepartment.setAdapter(null);
             lstvwCategory.setAdapter(null);
-            grdItems.setAdapter(null);
+            //      grdItems.setAdapter(null);
+            mRecyclerGridView.setAdapter(null);
         }
     }
 
@@ -5695,20 +5783,20 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                                         VoidBill(InvoiceNo,String.valueOf(date.getTime()));
                                     } else {
 
-                                       // Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
+                                        // Toast.makeText(myContext, "Bill is already voided", Toast.LENGTH_SHORT).show();
                                         String msg = "Bill Number "+InvoiceNo+ " is already voided";
                                         MsgBox.Show("Note",msg);
                                         Log.d("VoidBill",msg);
                                     }
                                 } else {
-                                   // Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(myContext, "No bill found with bill number " + InvoiceNo, Toast.LENGTH_SHORT).show();
                                     String msg = "No bill found with bill number " + InvoiceNo;
                                     MsgBox.Show("Note",msg);
                                     Log.d("VoidBill",msg);
                                 }
                                 ClearAll();
 
-                        }catch (Exception e)
+                            }catch (Exception e)
                             {
                                 e.printStackTrace();
                             }
@@ -5772,7 +5860,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                                 tvDate.setText(date_reprint);
                                 Date date = new SimpleDateFormat("dd-MM-yyyy").parse(date_reprint);
                                 Cursor LoadItemForReprint = dbBillScreen.getItemsFromBillItem_new(
-                                                                            billNo, String.valueOf(date.getTime()));
+                                        billNo, String.valueOf(date.getTime()));
                                 if (LoadItemForReprint.moveToFirst())
                                 {
                                     Cursor cursor = dbBillScreen.getBillDetail(billNo,String.valueOf(date.getTime()));
@@ -5789,7 +5877,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                                             chk_interstate.setChecked(true);
                                             int index = getIndex_pos(custStateCode);
                                             spnr_pos.setSelection(index);
-                                           // System.out.println("reprint : InterState");
+                                            // System.out.println("reprint : InterState");
                                         } else {
                                             chk_interstate.setChecked(false);
                                             spnr_pos.setSelection(0);
@@ -5842,7 +5930,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                             }catch(Exception e)
                             {
                                 e.printStackTrace();
-                        }
+                            }
                         }
                     }
                 }).show();
@@ -6080,7 +6168,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             MsgBox.Show("Opps","Some error occured while saving KOT");
             returnStatus = 0;
         }finally{
-        return returnStatus;}
+            return returnStatus;}
     }
 
     private void updateOutwardStock()
@@ -6363,11 +6451,11 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
 
         // barcode
 
-                        List<String> labelsBarCode = dbBillScreen.getAllBarCode_fnb();
-               ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                                labelsBarCode);
-                dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
-                autoCompleteTextViewSearchItemBarcode.setAdapter(dataAdapter11);
+        List<String> labelsBarCode = dbBillScreen.getAllBarCode_fnb();
+        ArrayAdapter<String> dataAdapter11 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                labelsBarCode);
+        dataAdapter11.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        autoCompleteTextViewSearchItemBarcode.setAdapter(dataAdapter11);
 
     }
 
@@ -6971,7 +7059,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
 
                     item.setdiscountPercentage(Float.parseFloat(tvDiscountPercentage.getText().toString()));
                     //if(ItemwiseDiscountEnabled ==1)
-                        calculateDiscountAmount();
+                    calculateDiscountAmount();
                     item.setFdiscount(fTotalDiscount);
 
                     item.setTotalsubTaxPercent(fTotalsubTaxPercent);
@@ -7486,7 +7574,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         btn_item_fastBillingMode.setEnabled(true);
         lstvwDepartment.setEnabled(true);
         lstvwCategory.setEnabled(true);
-        grdItems.setEnabled(true);
+        //grdItems.setEnabled(true);
         //btnPayBill.setEnabled(true);
         btnSaveKOT.setEnabled(true);
         //btnDeliveryStatus.setEnabled(true);
@@ -7525,7 +7613,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         btn_item_fastBillingMode.setEnabled(false);
         lstvwDepartment.setEnabled(false);
         lstvwCategory.setEnabled(false);
-        grdItems.setEnabled(false);
+        //grdItems.setEnabled(false);
         btnPayBill.setEnabled(false);
         btnSaveKOT.setEnabled(false);
         //btnDeliveryStatus.setEnabled(false);
@@ -7567,7 +7655,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                           db.close();
+                            db.close();
                             dbBillScreen.CloseDatabase();
                             finish();
                         }
@@ -7585,50 +7673,50 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
         Toast.makeText(getApplicationContext(), "barcode--->>>" + Barcode, Toast.LENGTH_SHORT).show();
 
         Toast.makeText(myContext, "keyUp:"+keyCode+" : "+event.toString(), Toast.LENGTH_SHORT).show();*/
-                        long dd = event.getEventTime()-event.getDownTime();
+        long dd = event.getEventTime()-event.getDownTime();
                 /*long time1= System.currentTimeMillis();
         long time= SystemClock.uptimeMillis();*/
-                        //long dd = time - event.getEventTime();
+        //long dd = time - event.getEventTime();
                                 /*Log.d("TAG",String.valueOf(dd));
         Log.d("TAG1",String.valueOf(event.getEventTime()-event.getDownTime()));
         Log.d("TAG",String.valueOf(event));*/
-                                        if (dd<15 && dd >0 && CUSTOMER_FOUND==0)
-                    {
-                                View v = getCurrentFocus();
-                    //System.out.println(v);
-                            //EditText etbar = (EditText)findViewById(R.id.etItemBarcode);
-                                   //EditText ed = (WepEditText)findViewById(v.getId());
+        if (dd<15 && dd >0 && CUSTOMER_FOUND==0)
+        {
+            View v = getCurrentFocus();
+            //System.out.println(v);
+            //EditText etbar = (EditText)findViewById(R.id.etItemBarcode);
+            //EditText ed = (WepEditText)findViewById(v.getId());
 
-                                                    if (v.getId()!= R.id.aCTVSearchItemBarcode)
-                        {
-                                    switch (v.getId())
-                        {
-                                    case R.id.aCTVSearchItem :aTViewSearchItem.setText(tx);
-                               break;
-                            case R.id.aCTVSearchMenuCode:  aTViewSearchMenuCode.setText(tx);
-                                break;
+            if (v.getId()!= R.id.aCTVSearchItemBarcode)
+            {
+                switch (v.getId())
+                {
+                    case R.id.aCTVSearchItem :aTViewSearchItem.setText(tx);
+                        break;
+                    case R.id.aCTVSearchMenuCode:  aTViewSearchMenuCode.setText(tx);
+                        break;
 
-                                    case R.id.etCustGSTIN:
-                            case R.id.edtCustName:
-                           case R.id.edtCustDineInPhoneNo:
-                            case R.id.edtCustAddress:
-                                EditText ed = (EditText)findViewById(v.getId());
-                                ed.setText(tx);
-                       }
-                        String bar_str = autoCompleteTextViewSearchItemBarcode.getText().toString();
-                        bar_str += (char)event.getUnicodeChar();
-                        autoCompleteTextViewSearchItemBarcode.setText(bar_str.trim());
-                        autoCompleteTextViewSearchItemBarcode.showDropDown();
-
-                            }else if (v.getId()== R.id.aCTVSearchItemBarcode){
-                            tx += (char)event.getUnicodeChar();
-                            autoCompleteTextViewSearchItemBarcode.setText(tx.trim());
-                            autoCompleteTextViewSearchItemBarcode.showDropDown();
-                        }
+                    case R.id.etCustGSTIN:
+                    case R.id.edtCustName:
+                    case R.id.edtCustDineInPhoneNo:
+                    case R.id.edtCustAddress:
+                        EditText ed = (EditText)findViewById(v.getId());
+                        ed.setText(tx);
                 }
+                String bar_str = autoCompleteTextViewSearchItemBarcode.getText().toString();
+                bar_str += (char)event.getUnicodeChar();
+                autoCompleteTextViewSearchItemBarcode.setText(bar_str.trim());
+                autoCompleteTextViewSearchItemBarcode.showDropDown();
 
-                        return true;
+            }else if (v.getId()== R.id.aCTVSearchItemBarcode){
+                tx += (char)event.getUnicodeChar();
+                autoCompleteTextViewSearchItemBarcode.setText(tx.trim());
+                autoCompleteTextViewSearchItemBarcode.showDropDown();
             }
+        }
+
+        return true;
+    }
 
     @Nullable
     @Override
@@ -7666,6 +7754,39 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             com.wep.common.app.ActionBarUtils.takeScreenshot(this,findViewById(android.R.id.content).getRootView());
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /*************************************************************************************************************************************
+     * Item grid image click listener which loads the item to billing grid if
+     * selected item is not present otherwise increments the quantity by one
+     *************************************************************************************************************************************/
+    @Override
+    public void onItemClick(int position, View v) {
+
+        Cursor Item = null;
+        if (jBillingMode == Byte.parseByte("1")) {
+            if (tvTableNumber.getText().toString().equalsIgnoreCase("")
+                    || tvWaiterNumber.getText().toString().equalsIgnoreCase("")
+                    || tvTableNumber.getText().toString().equalsIgnoreCase("0")
+                    || tvWaiterNumber.getText().toString().equalsIgnoreCase("0")) {
+                Toast.makeText(myContext, "Select waiter and table before adding item to bill", Toast.LENGTH_LONG).show();
+
+                //Table_Waiter(null);
+                Intent intentDineIn = new Intent(myContext, TableActivity.class);
+                intentDineIn.putExtra("BILLING_MODE", String.valueOf(jBillingMode));
+                intentDineIn.putExtra("USER_ID", strUserId);//spUser.getString("USER_ID", "GHOST"));
+                intentDineIn.putExtra("USER_NAME", strUserName);//spUser.getString("USER_NAME", "GHOST"));
+                intentDineIn.putExtra("CUST_ID", 0);
+                startActivity(intentDineIn);
+                finish();
+                return;
+            } else {
+                Item = dbBillScreen.getItem(position + 1);
+                btnClear.setEnabled(true);
+                AddItemToOrderTable(Item);
+            }
+        }
     }
 }
 
