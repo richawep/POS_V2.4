@@ -311,14 +311,17 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         }
 
         if (suppliername_str.equals("") || supplieraddress_str.equals("") || supplierphn_str.equals("")) {
-            MsgBox.Show("Incomplete Details","Please fill all details of Supplier");
+            MsgBox.Show("Incomplete Details","Please fill all mandatory details of Supplier");
             return false;
 
         } else if (!mFlag)
         {
             MsgBox.Show("Invalid Information","Please fill valid gstin");
             return false;
-        }else {
+        }else if(supplierphn_str.length()!=10){
+            MsgBox.Show("Invalid Information","Phone no. cannot be less than 10 digits");
+            return false;
+        } else{
             l = dbSupplierDetails.updateSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
                     supplierphn_str, supplieraddress_str, Integer.parseInt(tv_suppliercode.getText().toString()));
             if (l > 0) {
@@ -434,6 +437,9 @@ public class SupplierDetailsActivity extends WepBaseActivity {
         } else if (!mFlag)
         {
             MsgBox.Show("Insufficient Information","Please fill valid gstin");
+            return false;
+        }else if(supplierphn_str.length()!=10){
+            MsgBox.Show("Invalid Information","Phone no. cannot be less than 10 digits");
             return false;
         }else {
             l = dbSupplierDetails.saveSupplierDetails(supplierType_str, suppliergstin_str, suppliername_str,
