@@ -20,8 +20,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" afterPath="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -130,8 +128,8 @@
       <file leaf-file-name="GoodsInwardNoteActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="1139" column="131" selection-start-line="1139" selection-start-column="131" selection-end-line="1139" selection-end-column="131" />
+            <state relative-caret-position="297">
+              <caret line="1153" column="32" selection-start-line="1153" selection-start-column="32" selection-end-line="1153" selection-end-column="32" />
               <folding>
                 <element signature="e#55889#56159#0" expanded="true" />
                 <element signature="e#56158#56159#0" expanded="true" />
@@ -7241,13 +7239,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00071" summary="Renaming inward module on master screen">
-      <created>1498215649924</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1498215649925</updated>
-    </task>
     <task id="LOCAL-00072" summary="removing hsn from bill due to allignment issue">
       <created>1498215798235</created>
       <option name="number" value="00072" />
@@ -7584,7 +7575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504466367566</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="GoodsInward taking entry for same invoice no &amp; date without any notification">
+      <created>1504497227446</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1504497227446</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -7700,7 +7698,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1. adjusting cessAmt width  gor GSTR1-B2CL report&#10;" />
     <MESSAGE value="1. integrating cess and fixing issues in ammendment module&#10;" />
     <MESSAGE value="1. Tax coming as 0 when discount in amount is applied&#10;2. correcting heading of TAX report in display&#10;" />
     <MESSAGE value="changes as per new bill format&#10;" />
@@ -7725,7 +7722,8 @@
     <MESSAGE value="issue - taxable value not printing proper for large values (qty = 9999 &amp; rate = 9999)" />
     <MESSAGE value="Goodsinward and PurchaseOrder activity taking invalid gstin" />
     <MESSAGE value="GSTIN,POS and HSNCode was accessible in Inward Module, despite of disabling in settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="GSTIN,POS and HSNCode was accessible in Inward Module, despite of disabling in settings" />
+    <MESSAGE value="GoodsInward taking entry for same invoice no &amp; date without any notification" />
+    <option name="LAST_COMMIT_MESSAGE" value="GoodsInward taking entry for same invoice no &amp; date without any notification" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -8281,8 +8279,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="1139" column="131" selection-start-line="1139" selection-start-column="131" selection-end-line="1139" selection-end-column="131" />
+        <state relative-caret-position="297">
+          <caret line="1153" column="32" selection-start-line="1153" selection-start-column="32" selection-end-line="1153" selection-end-column="32" />
           <folding>
             <element signature="e#55889#56159#0" expanded="true" />
             <element signature="e#56158#56159#0" expanded="true" />
