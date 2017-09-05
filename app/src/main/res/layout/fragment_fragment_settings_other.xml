@@ -320,6 +320,37 @@
                             </RadioGroup>
 
                             <TextView
+                                android:id="@+id/tvEnvrionment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="Environment" />
+
+                            <RadioGroup
+                                android:id="@+id/rgEnvironment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/rbEnvironment_Production"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Production" />
+
+                                <RadioButton
+                                    android:id="@+id/rbEnvironment_Demo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Demo" />
+                                <RadioButton
+                                    android:id="@+id/rbEnvironment_Testing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Testing" />
+                            </RadioGroup>
+
+                            <TextView
                                 android:id="@+id/tvPrintPreview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

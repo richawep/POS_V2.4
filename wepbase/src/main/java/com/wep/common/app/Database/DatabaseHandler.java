@@ -105,7 +105,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TBL_GOODSINWARD = "GoodsInward";
     private static final String TBL_INGREDIENTS = "Ingredients";
     private static final String TBL_SupplierItemLinkage= "SupplierItemLinkage";
-
+    private static final String TBL_PaymentModeConfiguration = "PaymentModeConfiguration";
 
     // Column Names for the tables
     private static final String KEY_ServiceTaxPercent = "ServiceTaxPercent";
@@ -677,6 +677,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_POS_OUT = "POS_Out";
     public static final String KEY_HSNCode_OUT = "HSNCode_Out";
     public static final String KEY_ReverseCharge_OUT = "ReverseCharge_Out";
+    // payment mode configuration
+    public static final String KEY_RAZORPAY_KEYID = "RazorPay_KeyId";
+    public static final String KEY_RAZORPAY_SECRETKEY = "RazorPay_SecretKey";
+
+    String QUERY_CREATE_TABLE_PAYMENT_MODE_CONFIGURATION = "CREATE TABLE " +
+            TBL_PaymentModeConfiguration + " ( " +
+            KEY_RAZORPAY_KEYID + " TEXT, " +
+            KEY_RAZORPAY_SECRETKEY + " TEXT)";
 
 
     String QUERY_CREATE_TABLE_OWNER_DETAILS = "CREATE TABLE " + TBL_OWNER_DETAILS + " ( " +
@@ -1243,6 +1251,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.execSQL(QUERY_CREATE_TBL_TRANSACTIONS);
             db.execSQL(QUERY_CREATE_TABLE_Stock_Outward);
             db.execSQL(QUERY_CREATE_TABLE_Stock_Inward);
+            db.execSQL(QUERY_CREATE_TABLE_PAYMENT_MODE_CONFIGURATION);
             setDefaultTableValues(db);
         } catch (Exception ex) {
             Toast.makeText(myContext, "OnCreate : " + ex.getMessage(), Toast.LENGTH_LONG).show();
@@ -1294,11 +1303,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TBL_ITEM_Outward);
         //db.execSQL("DROP TABLE IF EXISTS " + TBL_OWNER_DETAILS);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Inward);
-        db.execSQL("DROP TABLE IF EXIXTS " + TBL_CreditDebit_Outward);
-        db.execSQL("DROP TABLE IF EXIXTS " + TBL_PURCHASEORDER);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_CreditDebit_Outward);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_PURCHASEORDER);
         //db.execSQL("DROP TABLE IF EXIXTS " + TBL_GOODSINWARD);
-        db.execSQL("DROP TABLE IF EXIXTS " + TBL_INGREDIENTS);
-        db.execSQL("DROP TABLE IF EXIXTS " + TBL_TRANSACTIONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_INGREDIENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_TRANSACTIONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_PaymentModeConfiguration);
         //db.execSQL("DROP TABLE IF EXIXTS " + TBL_StockOutward);
         //db.execSQL("DROP TABLE IF EXIXTS " + TBL_StockInward);
         onCreate(db);
@@ -1482,6 +1492,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_PrintPreview, 0);
         cvDbValues.put(KEY_TableSpliting, 0);
         cvDbValues.put(KEY_UTGSTEnabled, 0); // disabling
+        cvDbValues.put(KEY_Environment, 1); // Production
 
         status = 0;
         try {
@@ -2889,6 +2900,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put("ItemNoReset", objBillSetting.getItemNoReset());
         cvDbValues.put("PrintPreview", objBillSetting.getPrintPreview());
         cvDbValues.put("TableSpliting", objBillSetting.getTableSpliting());
+        cvDbValues.put(KEY_Environment, objBillSetting.getEnvironment());
         cvDbValues.put(KEY_CummulativeHeadingEnable, objBillSetting.getCummulativeHeadingEnable()); // richa_2012
 
         return dbFNB.update(TBL_BILLSETTING, cvDbValues, null, null);
@@ -7517,6 +7529,7 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_PrintPreview, 0);
         cvDbValues.put(KEY_TableSpliting, 0);
         cvDbValues.put(KEY_UTGSTEnabled, 0); // disabling
+        cvDbValues.put(KEY_Environment, 1); // Production
 
         long result1 = dbFNB.insert(TBL_BILLSETTING, null, cvDbValues);
     }
@@ -9147,6 +9160,75 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             //db.close();
         }
         return del;
+    }
+
+    public int updatePaymentModeDetails(String keyId, String secretKey) {
+        int result = 0;
+        try {
+            cvDbValues = new ContentValues();
+            cvDbValues.put(KEY_RAZORPAY_KEYID, keyId);
+            cvDbValues.put(KEY_RAZORPAY_SECRETKEY, secretKey);
+
+            result = dbFNB.update(TBL_PaymentModeConfiguration, cvDbValues, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = 0;
+        } finally {
+            //db.close();
+            return result;
+        }
+    }
+
+    public Cursor getPaymentModeConfiguration(String paymentModeId, String paymentModeSecretKey) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TBL_PaymentModeConfiguration, new String[]{"*"}, KEY_RAZORPAY_KEYID+" LIKE'"
+                            + paymentModeId + "' AND "+KEY_RAZORPAY_SECRETKEY+" LIKE'" + paymentModeSecretKey + "'",
+                    null, null, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            cursor = null;
+        } finally {
+            //db.close();
+            return cursor;
+        }
+    }
+
+    public Cursor getPaymentModeConfiguration() {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = dbFNB.rawQuery("SELECT * FROM " + TBL_PaymentModeConfiguration, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            cursor = null;
+        } finally {
+            //db.close();
+            return cursor;
+        }
+
+    }
+
+    public int getEnvironmentSetting() {
+        int result =0;
+        Cursor cursor = null;
+        try {
+             cursor = dbFNB.rawQuery("SELECT * FROM " + TBL_BILLSETTING, null);
+            if(cursor!=null && cursor.moveToFirst())
+            {
+                result = cursor.getInt(cursor.getColumnIndex(KEY_Environment));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            cursor = null;
+            result = 0;
+
+        } finally {
+            //db.close();
+            return result;
+        }
+
     }
 
 }

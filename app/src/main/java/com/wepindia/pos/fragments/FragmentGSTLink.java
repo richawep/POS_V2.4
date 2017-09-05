@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -80,13 +81,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         // Required empty public constructor
     }
 
-    String HeaderAuthorizationData_POST_APIS ="Ocp-Apim-Subscription-Key@07cde031cc1646efae45746a8c844974"+
-            ",SOURCE_TYPE@POS";
-
-    private static final String Header_TokenAuth ="Ocp-Apim-Subscription-Key@07cde031cc1646efae45746a8c844974," +
-            "client_id@e03001c6-59b7-4bbb-919a-778108e643b9,client_secret@nOViR/b/Q7L/iwQkzWIDG19DzcqbaiC82yNVFF3J9qc=";
-
-    String strJson1 = "\"gstValue\": {\n" +
+        String strJson1 = "\"gstValue\": {\n" +
             "\"gstin\": \"27AHQPA7588L1ZJ\",\n" +
             "\"fp\": \"122016\",\n" +
             "\"gt\": 3782969.01,\n" +
@@ -616,6 +611,25 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
     private static final int REQUEST_GET_GSTR2A = 1008;
     private static final int REQUEST_GET_GSTR2_Reconcile = 1010;
     private static final int REQUEST_SAVE_GSTR1A = 11;
+
+    private static final int PRODUCTION_ENVIRONMENT = 1;
+    private static final int DEMO_ENVIRONMENT = 2;
+    private static final int TEST_ENVIRONMENT = 3;
+    private static  int ENVIRONMENT = 0;
+    private static String BASE_URL="";
+    private static String BASE_URL_TOKEN ="";
+    private static String Header_TokenAuth="";
+    private static String HeaderAuthorizationData_POST_APIS="";
+    private static String POST_GSTR1="";
+    private static String POST_GSTR2="";
+    private static String GET_GSTR1 = "";
+    private static String GET_GSTR1A = "";
+    private static String GET_GSTR1_SUMMARY = "";
+    private static String GET_GSTR2A = "";
+    private static String GET_GSTR2_RECONCILED = "";
+    private static String GET_GSTR3 = "";
+
+
     private String strDate = "";
     private EditText etReportDateStart,etReportDateEnd;
     Button btn_ReportDateFrom,btn_ReportDateTo;
@@ -654,6 +668,51 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
         myContext = getContext();
         init(view);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(dbGSTLink!=null)
+        {
+            try {
+                BASE_URL_TOKEN = Config.Base_URL_Azure;
+                Header_TokenAuth = Config.Header_TokenAuth;
+                ENVIRONMENT = dbGSTLink.getEnvironmentSetting();
+                switch (ENVIRONMENT)
+                {
+                    case PRODUCTION_ENVIRONMENT : BASE_URL = Config.Base_URL_Azure;
+                                    HeaderAuthorizationData_POST_APIS = Config.HeaderAuthorizationData_POST_APIS_PRODUCTION;
+                                    POST_GSTR1 = Config.POST_GSTR1_PRODUCTION;
+                                    POST_GSTR2 = Config.POST_GSTR2_PRODUCTION;
+                                    GET_GSTR1 = Config.GET_GSTR1_PRODUCTION;
+                                    GET_GSTR1A = Config.GET_GSTR1A_PRODUCTION;
+                                    GET_GSTR1_SUMMARY = Config.GET_GSTR1_SUMMARY_PRODUCTION;
+                                    GET_GSTR2A = Config.GET_GSTR2A_PRODUCTION;
+                                    GET_GSTR2_RECONCILED = Config.GET_GSTR2_RECONCILED_PRODUCTION;
+                                    GET_GSTR3 = Config.GET_GSTR3_PRODUCTION;
+                            break;
+                    case TEST_ENVIRONMENT :
+                    case DEMO_ENVIRONMENT : BASE_URL = Config.Base_URL_Azure;
+                                    HeaderAuthorizationData_POST_APIS = Config.HeaderAuthorizationData_POST_APIS_PRODUCTION;
+                                    POST_GSTR1 = Config.POST_GSTR1_DEMO;
+                                    POST_GSTR2 = Config.POST_GSTR2_DEMO;
+                                    GET_GSTR1 = Config.GET_GSTR1_DEMO;
+                                    GET_GSTR1A = Config.GET_GSTR1A_DEMO;
+                                    GET_GSTR1_SUMMARY = Config.GET_GSTR1_SUMMARY_DEMO;
+                                    GET_GSTR2A = Config.GET_GSTR2A_PRODUCTION;
+                                    GET_GSTR2_RECONCILED = Config.GET_GSTR2_RECONCILED_PRODUCTION;
+                                    GET_GSTR3 = Config.GET_GSTR3_PRODUCTION;
+                        break;
+                    default:
+
+
+                }
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void getGSTR3() {
@@ -924,7 +983,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                 e.printStackTrace();
             }
 
-            String URL = Config.Base_URL_Azure+Config.GSTR1_SAVE_AZURE_API;
+            String URL = BASE_URL+POST_GSTR1;
             new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST, strJson, REQUEST_SAVE_GSTR1, URL, HeaderAuthorizationData_POST_APIS).execute();
 
         }
@@ -990,7 +1049,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                     e.printStackTrace();
                 }
 
-                String URL = Config.Base_URL_Azure+Config.GSTR2_SAVE_AZURE_API;
+                String URL = BASE_URL+POST_GSTR2;
 
                 new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST, strJson, REQUEST_SAVE_GSTR2, URL,HeaderAuthorizationData_POST_APIS).execute();
             } else {
@@ -1102,7 +1161,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
     private void promptGetToken(int REQUESTED_API, String userName)
     {
         progressToken.show();
-        String URL= Config.Base_URL_Azure+Config.GET_TOKEN_API;
+        String URL= BASE_URL_TOKEN+Config.GET_TOKEN_API;
         new TokenAsync_Frag(this, TokenAsync_Frag.HTTP_GET_TOKEN,userName,REQUESTED_API, URL, Header_TokenAuth).execute();
     }
 

@@ -27,6 +27,7 @@ public class FragmentSettingsOther extends Fragment {
     RadioButton rbBillwithStockEnable, rbBillwithStockDisable;
     RadioButton rbTaxForward, rbTaxReverse, rbTaxTypeItemwise, rbTaxTypeBillwise,rbDiscountItemwise,rbDiscountBillwise;
     RadioButton rbFastBillingItems, rbFastBillingDeptItems, rbFastBillingDeptCategItems;
+    RadioButton rbEnvironment_Production, rbEnvironment_Demo, rbEnvironment_Testing;
     RadioButton rbBillNoResetEnable, rbBillNoResetDisable;
     RadioButton rbItemNoResetAuto, rbItemNoResetManual;
     RadioButton rbPrintPreviewEnable, rbPrintPreviewDisable;
@@ -128,6 +129,10 @@ public class FragmentSettingsOther extends Fragment {
         //richa_2012
         rbCummulativeHeadingEnable = (RadioButton) view.findViewById(R.id.rbCummulativeHeadingEnable);
         rbCummulativeHeadingDisable = (RadioButton) view.findViewById(R.id.rbCummulativeHeadingDisable);
+
+        rbEnvironment_Production = (RadioButton) view.findViewById(R.id.rbEnvironment_Production);
+        rbEnvironment_Demo = (RadioButton) view.findViewById(R.id.rbEnvironment_Demo);
+        rbEnvironment_Testing = (RadioButton) view.findViewById(R.id.rbEnvironment_Testing);
     }
 
     @Override
@@ -236,6 +241,17 @@ public class FragmentSettingsOther extends Fragment {
                 rbCummulativeHeadingDisable.setChecked(true);
             }
 
+            // Fast Billing Mode
+            if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("Environment")) == 1) {
+                rbEnvironment_Production.setChecked(true);
+            } else if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("FastBillingMode")) == 2) {
+                rbEnvironment_Demo.setChecked(true);
+            } else {
+                rbEnvironment_Testing.setChecked(true);
+            }
+
+
+
         } else {
             Log.d("OtherSettings", "No data in BillSettings table");
         }
@@ -250,6 +266,7 @@ public class FragmentSettingsOther extends Fragment {
         int iOtherChargesItemwise = 0, iOtherChargesBillwise = 0, iRestoreDefault = 0;
         int fastBillingMode = 0, iItemNoReset = 0, iPrintPreview = 0, iTableSpliting = 0;
         int CummulativeHeadingEnable = 0; //richa_2012
+        int environment =1;
 
         // Date And Time
         if (rbDateTimeAuto.isChecked() == true) {
@@ -331,6 +348,14 @@ public class FragmentSettingsOther extends Fragment {
         } else {
             CummulativeHeadingEnable = 0;
         }
+        // Fast Billing Mode
+        if (rbEnvironment_Production.isChecked() == true) {
+            environment = 1;
+        } else if (rbEnvironment_Demo.isChecked() == true) {
+            environment = 2;
+        } else {
+            environment = 3; // TEST
+        }
 
         // Initialize all the settings variable
         objBillSettings.setLoginWith(0);
@@ -353,6 +378,7 @@ public class FragmentSettingsOther extends Fragment {
         objBillSettings.setPrintPreview(iPrintPreview);
         objBillSettings.setTableSpliting(iTableSpliting);
         objBillSettings.setCummulativeHeadingEnable(CummulativeHeadingEnable); // richa_2012
+        objBillSettings.setEnvironment(environment);
     }
 
     private void SaveOtherSettings() {

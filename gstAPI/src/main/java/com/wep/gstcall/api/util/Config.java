@@ -10,7 +10,7 @@ public class Config {
 
     public static final String FILE_PATH = Environment.getExternalStorageDirectory().toString();
 
-    public static final String BASE_URL = "http://103.230.84.67";
+    /*public static final String BASE_URL = "http://103.230.84.67";
 
     public static final String GSTR1_URL = "http://13.71.118.152/AndroWeb/API/GSTR1Save/SendGSTR1Save";
 
@@ -30,16 +30,36 @@ public class Config {
 
     public static final String GSTR2_DAY= BASE_URL+"/API/API/Inward?";
 
-    public static final String GSTR1_DAY= BASE_URL+"/API/API/Outward?";
+    public static final String GSTR1_DAY= BASE_URL+"/API/API/Outward?";*/
 
 
     public static final String Upload_No_of_Invoices = "http://metering.wepaspservices.com/api/Device/addBillCount?";
-    //public static final String Base_URL_Azure = "https://wepgspapi.azure-api.net";
-    public static final String GET_TOKEN_API = "/api/token/getToken";
-    //public static final String GSTR1_SAVE_AZURE_API = "/sendGstr1Save/SendGstr1Save";
-    //public static final String GSTR2_SAVE_AZURE_API = "/gstr2SaveData/SendGstr2Save";
+
+    public static final String HeaderAuthorizationData_POST_APIS_DEMO_TESTING ="Ocp-Apim-Subscription-Key@07cde031cc1646efae45746a8c844974"+
+            ",SOURCE_TYPE@POS";
+
+    public static final String HeaderAuthorizationData_POST_APIS_PRODUCTION ="Ocp-Apim-Subscription-Key@42eef4feafa44d988877b51a827db058"+
+            ",SOURCE_TYPE@POS";
+
+    public static final String Header_TokenAuth ="Ocp-Apim-Subscription-Key@07cde031cc1646efae45746a8c844974," +
+            "client_id@e03001c6-59b7-4bbb-919a-778108e643b9,client_secret@nOViR/b/Q7L/iwQkzWIDG19DzcqbaiC82yNVFF3J9qc=";
+
     public static final String Base_URL_Azure = "https://api.wepgst.com";
+    public static final String GET_TOKEN_API = "/wepapis/api/token/get";
+    public static final String POST_GSTR1_PRODUCTION = "/v1/gstr1/savegstr1";
+    public static final String POST_GSTR2_PRODUCTION = "/v1/gstr2/savegstr2";
+    public static final String GET_GSTR1_PRODUCTION = "/v1/gstr1/download/gstr1csv";
+    public static final String GET_GSTR1A_PRODUCTION = "/v1/gstr1a/download/gstr1acsv";
+    public static final String GET_GSTR1_SUMMARY_PRODUCTION = "/v1/gstr1/download/gstr1summarycsv";
+    public static final String GET_GSTR2A_PRODUCTION = "/v1/gstr2a/download/gstr2acsv";
+    public static final String GET_GSTR2_RECONCILED_PRODUCTION = "/v1/gstr2/download/reconciledcsv";
+    public static final String GET_GSTR3_PRODUCTION = "/v1/gstr3/download/gstr3csv";
+
+
     public static final String GSTR1_SAVE_AZURE_API = "/asp/gstr1/save";
     public static final String GSTR2_SAVE_AZURE_API = "/asp/gstr2/save";
+
+
+
 
 }

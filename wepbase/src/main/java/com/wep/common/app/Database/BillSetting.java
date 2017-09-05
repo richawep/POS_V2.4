@@ -35,7 +35,7 @@ public class BillSetting {
 	int CummulativeHeadingEnable ; // richa_2012
 	int iTableSpliting;
 	int GSTIN, GSTIN_out, POS, POS_out, HSNCode, HSNCode_out, ReverseCharge, ReverseCharge_out;
-    int UTGSTEnabled_out;
+    int UTGSTEnabled_out , Environment, HSNPrintenabled_out;
 	// Default constructor
 	public BillSetting() {
 
@@ -90,6 +90,8 @@ public class BillSetting {
 
 		// GST
 		this.UTGSTEnabled_out = 0;
+		this.Environment = 0;
+		this.HSNPrintenabled_out = 0;
 		this.GSTIN = 0;
 		this.POS = 0;
 		this.HSNCode =0;
@@ -196,6 +198,22 @@ public class BillSetting {
     public void setCummulativeHeadingEnable(int CummulativeHeadingEnable) {
         this.CummulativeHeadingEnable = CummulativeHeadingEnable;
     }
+
+	public int getEnvironment() {
+		return Environment;
+	}
+
+	public void setEnvironment(int environment) {
+		Environment = environment;
+	}
+
+	public int getHSNPrintenabled_out() {
+		return HSNPrintenabled_out;
+	}
+
+	public void setHSNPrintenabled_out(int HSNPrintenabled_out) {
+		this.HSNPrintenabled_out = HSNPrintenabled_out;
+	}
 
 	public int getUTGSTEnabled_out() {
 		return UTGSTEnabled_out;
