@@ -1721,6 +1721,7 @@ void populate_old(int type)
         msg.setMessage(" Do you want to clear supplier details also")
                 .setNegativeButton("No", null)
                 .setIcon(R.drawable.ic_launcher)
+                .setTitle("Note")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 reset_inward(1);
@@ -1960,6 +1961,11 @@ void populate_old(int type)
                             .show();
                     return;
                 }
+                else if(supplierphone.length()!=10){
+                    MsgBox.Show("Invalid Information","Phone no. cannot be less than 10 digits");
+                    return ;
+                }
+
                 long l =0;
                 if(gstin!=null && !gstin.equals("")){
                     l = dbPurchaseOrder.saveSupplierDetails("Registered", gstin, suppliername, supplierphone, supplieradress);

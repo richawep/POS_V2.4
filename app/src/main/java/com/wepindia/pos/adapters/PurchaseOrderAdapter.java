@@ -149,6 +149,7 @@ public class PurchaseOrderAdapter extends BaseAdapter{
 
             AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                     .setTitle("Delete")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Are you sure you want to Delete "+itemname+" of quantity "+quantity)
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

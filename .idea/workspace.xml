@@ -21,13 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/PurchaseOrderAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/PurchaseOrderAdapter.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -184,11 +180,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GoodsInwardNoteActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GoodsInwardNoteActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="1961" column="5" selection-start-line="1961" selection-start-column="5" selection-end-line="1961" selection-end-column="5" />
+            <state relative-caret-position="65">
+              <caret line="2100" column="13" selection-start-line="2100" selection-start-column="13" selection-end-line="2100" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PurchaseOrderActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="167">
+              <caret line="38" column="47" selection-start-line="38" selection-start-column="47" selection-end-line="38" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PurchaseOrderAdapter.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/PurchaseOrderAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="143" column="38" selection-start-line="143" selection-start-column="38" selection-end-line="143" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SupplierDetailsActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="323" column="9" selection-start-line="320" selection-start-column="9" selection-end-line="323" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -6534,7 +6560,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_supplier_details.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/fragments/ValidationForAmendFields.java" />
@@ -6543,7 +6568,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedAmmendActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/SupplierAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemSupplierLinkageActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" />
         <option value="$PROJECT_DIR$/printers/libs/gprinter-2.1.2.jar!/com/gprinter/command/GpCom.class" />
         <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity.java" />
         <option value="$PROJECT_DIR$/printers/src/main/java/com/wepindia/printers/HeyDeyBaseActivity_debug.java" />
@@ -6565,7 +6589,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsGST.java" />
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillSetting.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java" />
@@ -6585,6 +6608,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/PurchaseOrderAdapter.java" />
       </list>
     </option>
   </component>
@@ -7261,13 +7287,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00072" summary="removing hsn from bill due to allignment issue">
-      <created>1498215798235</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1498215798235</updated>
-    </task>
     <task id="LOCAL-00073" summary="adjusting screen orientation to landscape">
       <created>1498216085786</created>
       <option name="number" value="00073" />
@@ -7604,7 +7623,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504534866307</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="removing discount amount from forward tax">
+      <created>1504590537140</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1504590537140</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -7720,7 +7746,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1. Tax coming as 0 when discount in amount is applied&#10;2. correcting heading of TAX report in display&#10;" />
     <MESSAGE value="changes as per new bill format&#10;" />
     <MESSAGE value="1. making bill format as per new design - BP machine for GST&#10;2. including wep logo in message whereever missing&#10;" />
     <MESSAGE value="bug fixing &#10;1. text alignment in Item Outward&#10;2. back button missing in Table booking page&#10;3. text misallignment in take for customer details when entered in multiple lines.&#10;4. keyboard freezes if back button on toolbar is clicked&#10;5. changing background of Employee details" />
@@ -7745,7 +7770,8 @@
     <MESSAGE value="issue - items getting disappeared which scrolling frequently in all billing screens" />
     <MESSAGE value="issue - table not getting with split enabled . Table 3-1 was not getting shifted to 3-2" />
     <MESSAGE value="making suplier's phone no length mandatory to 10 digit" />
-    <option name="LAST_COMMIT_MESSAGE" value="making suplier's phone no length mandatory to 10 digit" />
+    <MESSAGE value="removing discount amount from forward tax" />
+    <option name="LAST_COMMIT_MESSAGE" value="removing discount amount from forward tax" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -7823,20 +7849,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTUploadFunctions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="593" column="31" selection-start-line="593" selection-start-column="31" selection-end-line="593" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTR1B2CSData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/gst/GSTRData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -8210,14 +8222,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="325" column="38" selection-start-line="325" selection-start-column="38" selection-end-line="325" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-242">
@@ -8301,10 +8305,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="323" column="9" selection-start-line="320" selection-start-column="9" selection-end-line="323" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="1961" column="5" selection-start-line="1961" selection-start-column="5" selection-end-line="1961" selection-end-column="5" />
+        <state relative-caret-position="65">
+          <caret line="2100" column="13" selection-start-line="2100" selection-start-column="13" selection-end-line="2100" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="38" column="47" selection-start-line="38" selection-start-column="47" selection-end-line="38" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/PurchaseOrderAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="143" column="38" selection-start-line="143" selection-start-column="38" selection-end-line="143" selection-end-column="38" />
           <folding />
         </state>
       </provider>

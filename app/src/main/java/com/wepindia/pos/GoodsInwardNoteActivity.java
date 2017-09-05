@@ -2013,6 +2013,11 @@ public class GoodsInwardNoteActivity extends WepBaseActivity {
                             .show();
                     return;
                 }
+                else if(supplierphone.length()!=10){
+                    MsgBox.Show("Invalid Information","Phone no. cannot be less than 10 digits");
+                    return ;
+                }
+
                 long l=0;
                 if(gstin!=null && !gstin.equals("")) {
                     l = dbGoodsInwardNote.saveSupplierDetails("Registered", gstin, suppliername, supplierphone, supplieradress);
