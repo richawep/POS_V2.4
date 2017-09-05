@@ -43,6 +43,7 @@ public class PrintKotBillItem implements Serializable {
     private String isInterState = "";
     private String isDuplicate = "";
 
+    private int UTGSTEnabled = 0;
 
     public PrintKotBillItem() {
     }
@@ -87,6 +88,14 @@ public class PrintKotBillItem implements Serializable {
 
     public void setBillTaxSlabs(ArrayList<BillTaxSlab> billTaxSlabs) {
         this.billTaxSlabs = billTaxSlabs;
+    }
+
+    public int getUTGSTEnabled() {
+        return UTGSTEnabled;
+    }
+
+    public void setUTGSTEnabled(int UTGSTEnabled) {
+        this.UTGSTEnabled = UTGSTEnabled;
     }
 
     public String getIsDuplicate() {

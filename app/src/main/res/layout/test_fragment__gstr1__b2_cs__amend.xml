@@ -301,7 +301,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="SGST Rate(%)" />
+                        android:text="UTGST / SGST Rate(%)" />
 
                     <EditText
                         android:id="@+id/et_sgstrate"
@@ -397,7 +397,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="SGST Amount" />
+                        android:text="UTGST / SGST Amount" />
 
                     <EditText
                         android:id="@+id/et_sgstamt"
@@ -593,7 +593,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/pinkborder"
                     android:gravity="center"
-                    android:text="SGST Amt"
+                    android:text="UTGST / SGST Amt"
                     android:textAllCaps="false"
                     android:textColor="@color/txtColorAccent"
                     android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp" />

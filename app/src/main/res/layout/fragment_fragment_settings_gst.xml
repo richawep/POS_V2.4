@@ -138,11 +138,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
+                            android:visibility="gone"
                             android:text="Reverse Charge (Choose One)" />
 
                         <RadioGroup
                             android:id="@+id/rgReverseCharge"
                             android:layout_width="wrap_content"
+                            android:visibility="gone"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
@@ -278,16 +280,44 @@
                         </RadioGroup>
 
                         <TextView
+                            android:id="@+id/tvUTGSTEnabled"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="UTGST (Choose One)" />
+
+                        <RadioGroup
+                            android:id="@+id/rgUTGSTEnabled_out"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbUTGSTEnabled_out"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Enable" />
+
+                            <RadioButton
+                                android:id="@+id/rbUTGSTDisable_out"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Disable" />
+                        </RadioGroup>
+
+                        <TextView
                             android:id="@+id/tvReverseCharge_out"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
+                            android:visibility="gone"
                             android:text="Reverse Charge (Choose One)" />
 
                         <RadioGroup
                             android:id="@+id/rgReverseCharge_out"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <RadioButton

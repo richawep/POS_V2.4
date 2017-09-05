@@ -105,6 +105,9 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     private final int CHECK_DOUBLE_VALUE = 1;
     private final int CHECK_STRING_VALUE = 2;
 
+    private TextView tvServiceTax_text;
+    private int UTGSTENABLED = 0;
+
     private static final String TAG = BillingHomeDeliveryActivity.class.getSimpleName();
     Context myContext;
     DatabaseHandler dbBillScreen = new DatabaseHandler(BillingHomeDeliveryActivity.this);
@@ -158,6 +161,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     Date strDate_date;
     float fTotalsubTaxPercent = 0;
     Button btndepart, btncateg, btnitem;
+
     TextView tvdeptline, tvcategline;
     String HomeDeliveryCaption="", TakeAwayCaption="", DineInCaption = "", CounterSalesCaption = "";
     int iKOTNo = -1;
@@ -260,6 +264,12 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
                 FASTBILLINGMODE = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
+                UTGSTENABLED = crsrSettings.getInt(crsrSettings.getColumnIndex("UTGSTEnabled"));
+                if(UTGSTENABLED ==1)
+                    tvServiceTax_text.setText("UTGST-Tax :");
+                else
+                    tvServiceTax_text.setText("SGST-Tax :");
+
                 BillwithStock = crsrSettings.getInt(crsrSettings.getColumnIndex("BillwithStock"));
                 businessDate = crsrSettings.getString(crsrSettings.getColumnIndex("BusinessDate"));
                 ItemwiseDiscountEnabled = crsrSettings.getInt(crsrSettings.getColumnIndex("DiscountType"));
@@ -938,6 +948,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
         txtOthercharges = (TextView) findViewById(R.id.txtOthercharges);
         tvDiscountPercentage = (TextView) findViewById(R.id.tvDiscountPercentage);
         tvDiscountAmount = (TextView) findViewById(R.id.tvDiscountAmount);
+
+        tvServiceTax_text = (TextView) findViewById(R.id.tvServiceTax);
 
         btnDeleteBill = (WepButton) findViewById(R.id.btn_DeleteBill);
         btnPayBill = (WepButton) findViewById(R.id.btn_PayBill);
@@ -7359,6 +7371,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     //Log.d("netTotal",String.valueOf(item.getNetTotal()) );
                     item.setTableNo(String.valueOf(tableId));
                     item.setWaiterNo(waiterId);
+                    item.setUTGSTEnabled(UTGSTENABLED);
                     String billNoPrefix  = db.getBillNoPrefix();
                     item.setBillNo(billNoPrefix+String.valueOf(orderId));
                     item.setOrderBy(strUserName);

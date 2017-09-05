@@ -535,7 +535,10 @@ public class PrinterUtil {
             {
                 esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
                 esc.addText("================================================"+"\n");
-                esc.addText("Tax(%)   TaxableVal   CGSTAmt  SGSTAmt    TaxAmt"+"\n");
+                if(item.getUTGSTEnabled() ==0) // disabled
+                    esc.addText("Tax(%)   TaxableVal   CGSTAmt  SGSTAmt    TaxAmt"+"\n");
+                else
+                    esc.addText("Tax(%)   TaxableVal   CGSTAmt  UTGSTAmt    TaxAmt"+"\n");
                 esc.addText("================================================"+"\n");
                 esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
                 do

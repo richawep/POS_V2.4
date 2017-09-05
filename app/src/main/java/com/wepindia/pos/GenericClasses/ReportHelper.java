@@ -149,7 +149,7 @@ public class ReportHelper{
 			ServiceTax.setWidth(100);
 			ServiceTax.setTextSize(15);
 			ServiceTax.setTextColor(Color.WHITE);
-			ServiceTax.setText("SGST Amt");
+			ServiceTax.setText("UTGST/SGST Amt");
 
 			TextView cessTax = new TextView(activityContext);
 			cessTax.setWidth(100);
@@ -646,7 +646,7 @@ public class ReportHelper{
 			ServiceTax.setWidth(100);
 			ServiceTax.setTextSize(15);
 			ServiceTax.setTextColor(Color.WHITE);
-			ServiceTax.setText("SGST Amt");
+			ServiceTax.setText("UTGST/SGST Amt");
 
 			TextView cessTax = new TextView(activityContext);
 			cessTax.setWidth(100);
@@ -1143,7 +1143,7 @@ public class ReportHelper{
             SAmt.setGravity(Gravity.CENTER);
             SAmt.setTextSize(15);
             SAmt.setTextColor(Color.WHITE);
-            SAmt.setText("SGST Amt");
+            SAmt.setText("UTGST/SGST Amt");
 
             TextView cessAmt = new TextView(activityContext);
             cessAmt.setWidth(65);
@@ -1258,7 +1258,7 @@ public class ReportHelper{
 			SAMT.setWidth(65);
 			SAMT.setTextSize(15);
 			SAMT.setTextColor(Color.WHITE);
-			SAMT.setText("SGST   Amount");
+			SAMT.setText("UTGST/SGST   Amount");
 
             TextView Subtotal = new TextView(activityContext);
             Subtotal.setWidth(100);
@@ -1377,13 +1377,13 @@ public class ReportHelper{
 			SGSTRate.setWidth(65);
 			SGSTRate.setTextSize(15);
 			SGSTRate.setTextColor(Color.WHITE);
-			SGSTRate.setText("SGST Rate");
+			SGSTRate.setText("UTGST/SGST Rate");
 
 			TextView SGSTAmt = new TextView(activityContext);
 			SGSTAmt.setWidth(65);
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setTextColor(Color.WHITE);
-			SGSTAmt.setText("SGST Amt");
+			SGSTAmt.setText("UTGST/SGST Amt");
 
             TextView cessAmt = new TextView(activityContext);
             cessAmt.setWidth(65);
@@ -1529,14 +1529,14 @@ public class ReportHelper{
 			SGSTRate.setWidth(65);
 			SGSTRate.setTextSize(15);
 			SGSTRate.setTextColor(Color.WHITE);
-			SGSTRate.setText("SGST Rate");*/
+			SGSTRate.setText("UTGST/SGST Rate");*/
 
 			TextView SGSTAmt = new TextView(activityContext);
 			SGSTAmt.setWidth(75);
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setTextColor(Color.WHITE);
 			SGSTAmt.setGravity(Gravity.CENTER);
-			SGSTAmt.setText("SGST      Amt");
+			SGSTAmt.setText("UTGST/SGST      Amt");
 			
 			TextView cessAmt = new TextView(activityContext);
 			cessAmt.setWidth(75);
@@ -1618,7 +1618,7 @@ public class ReportHelper{
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setTextColor(Color.WHITE);
 			SGSTAmt.setGravity(Gravity.END);
-			SGSTAmt.setText("SGST Amt");
+			SGSTAmt.setText("UTGST/SGST Amt");
 
 			TextView cessAmt = new TextView(activityContext);
 			cessAmt.setWidth(10);
@@ -1727,14 +1727,14 @@ public class ReportHelper{
 			SGSTRate.setWidth(65);
 			SGSTRate.setTextSize(15);
 			SGSTRate.setTextColor(Color.WHITE);
-			SGSTRate.setText("SGST Rate");*/
+			SGSTRate.setText("UTGST/SGST Rate");*/
 
 			TextView SGSTAmt = new TextView(activityContext);
 			SGSTAmt.setWidth(75);
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setTextColor(Color.WHITE);
 			SGSTAmt.setGravity(Gravity.CENTER);
-			SGSTAmt.setText("SGST      Amt");
+			SGSTAmt.setText("UTGST/SGST      Amt");
 
 			TextView cessAmt = new TextView(activityContext);
 			cessAmt.setWidth(75);
@@ -1994,14 +1994,14 @@ public class ReportHelper{
 			SGSTRate.setWidth(70);
 			SGSTRate.setTextSize(15);
 			SGSTRate.setTextColor(Color.WHITE);
-			SGSTRate.setText("SGST Rate");
+			SGSTRate.setText("UTGST/SGST Rate");
 
 			TextView SGSTAmt = new TextView(activityContext);
 			SGSTAmt.setWidth(170);
 			SGSTAmt.setGravity(Gravity.CENTER);
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setTextColor(Color.WHITE);
-			SGSTAmt.setText("SGST Amt");
+			SGSTAmt.setText("UTGST/SGST Amt");
 
 			TextView cessAmt = new TextView(activityContext);
 			cessAmt.setWidth(170);
@@ -2119,13 +2119,13 @@ public class ReportHelper{
 			SGSTRate.setWidth(70);
 			SGSTRate.setTextSize(15);
 			SGSTRate.setTextColor(Color.WHITE);
-			SGSTRate.setText("SGST Rate");
+			SGSTRate.setText("UTGST/SGST Rate");
 
 			TextView SGSTAmt = new TextView(activityContext);
 			SGSTAmt.setWidth(75);
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setTextColor(Color.WHITE);
-			SGSTAmt.setText("SGST    Amt");
+			SGSTAmt.setText("UTGST/SGST    Amt");
 
 			TextView SubTotal = new TextView(activityContext);
 			SubTotal.setWidth(110);
@@ -2370,13 +2370,13 @@ public class ReportHelper{
 			SGSTRate.setWidth(65);
 			SGSTRate.setTextSize(15);
 			SGSTRate.setTextColor(Color.WHITE);
-			SGSTRate.setText("SGST Rate");*/
+			SGSTRate.setText("UTGST/SGST Rate");*/
 
 			TextView SGSTAmt = new TextView(activityContext);
 			SGSTAmt.setWidth(80);
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setTextColor(Color.WHITE);
-			SGSTAmt.setText("SGST Amt");
+			SGSTAmt.setText("UTGST/SGST Amt");
 
             TextView cessAmt = new TextView(activityContext);
             cessAmt.setWidth(80);
@@ -2695,14 +2695,14 @@ public class ReportHelper{
 			SGSTRate.setWidth(70);
 			SGSTRate.setTextSize(15);
 			SGSTRate.setTextColor(Color.WHITE);
-			SGSTRate.setText("SGST Rate");
+			SGSTRate.setText("UTGST/SGST Rate");
 
 			TextView SGSTAmt = new TextView(activityContext);
 			SGSTAmt.setWidth(75);
 			SGSTAmt.setTextSize(15);
 			SGSTAmt.setGravity(Gravity.CENTER);
 			SGSTAmt.setTextColor(Color.WHITE);
-			SGSTAmt.setText("SGST    Amt");
+			SGSTAmt.setText("UTGST/SGST    Amt");
 
             TextView cessAmt = new TextView(activityContext);
             cessAmt.setWidth(75);
@@ -2825,14 +2825,14 @@ public class ReportHelper{
             SGSTRate.setWidth(70);
             SGSTRate.setTextSize(15);
             SGSTRate.setTextColor(Color.WHITE);
-            SGSTRate.setText("SGST Rate");
+            SGSTRate.setText("UTGST/SGST Rate");
 
             TextView SGSTAmt = new TextView(activityContext);
             SGSTAmt.setWidth(170);
             SGSTAmt.setGravity(Gravity.CENTER);
             SGSTAmt.setTextSize(15);
             SGSTAmt.setTextColor(Color.WHITE);
-            SGSTAmt.setText("SGST Amt");
+            SGSTAmt.setText("UTGST/SGST Amt");
 
             TextView cessAmt = new TextView(activityContext);
             cessAmt.setWidth(170);

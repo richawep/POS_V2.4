@@ -866,7 +866,7 @@
                             android:layout_marginLeft="15dp"
                             android:layout_weight="1"
                             android:gravity="left|center_vertical"
-                            android:text="SGST Tax(%)"
+                            android:text="UTGST / SGST Tax(%)"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
 

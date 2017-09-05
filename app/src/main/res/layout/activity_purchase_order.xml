@@ -686,7 +686,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:layout_weight="6">
+                android:layout_weight="5">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -803,7 +803,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/heading_border"
                     android:gravity="center"
-                    android:text="SGST Amt"
+                    android:text="UTGST / SGST Amt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/white"
                     android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"

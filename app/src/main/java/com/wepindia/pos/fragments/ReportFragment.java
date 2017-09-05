@@ -2231,8 +2231,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
         TextView ServiceTax = new TextView(myContext);
         ServiceTax.setWidth(100);
         ServiceTax.setTextSize(15);
+        ServiceTax.setGravity(Gravity.CENTER);
         ServiceTax.setTextColor(Color.WHITE);
-        ServiceTax.setText("SGST Amt");
+        ServiceTax.setText("UTGST/SGST Amt");
 
         TextView cessTax = new TextView(myContext);
         cessTax.setWidth(100);
@@ -2600,12 +2601,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
             TextView ServiceTax = new TextView(myContext);
             ServiceTax.setWidth(100);
             ServiceTax.setTextSize(15);
+            ServiceTax.setGravity(Gravity.CENTER);
             ServiceTax.setTextColor(Color.WHITE);
-            ServiceTax.setText("SGST Amt");
+            ServiceTax.setText("UTGST / SGST Amt");
 
             TextView cessTax = new TextView(myContext);
             cessTax.setWidth(100);
             cessTax.setTextSize(15);
+            cessTax.setGravity(Gravity.CENTER);
             cessTax.setTextColor(Color.WHITE);
             cessTax.setText("cess Amt");
 
@@ -3101,7 +3104,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
 
 
                     Description = new TextView(myContext);
-                    Description.setText(TaxPercentName);
+                    if(TaxPercentName.equals("SGSTRate"))
+                        Description.setText("UTGST/SGSTRate");
+                    else
+                        Description.setText(TaxPercentName);
 
                     TaxAmount = new TextView(myContext);
                     TaxAmount.setText(String.format("%.2f",Float.parseFloat(Report.getString(Report

@@ -35,7 +35,7 @@ public class BillSetting {
 	int CummulativeHeadingEnable ; // richa_2012
 	int iTableSpliting;
 	int GSTIN, GSTIN_out, POS, POS_out, HSNCode, HSNCode_out, ReverseCharge, ReverseCharge_out;
-
+    int UTGSTEnabled_out;
 	// Default constructor
 	public BillSetting() {
 
@@ -89,6 +89,7 @@ public class BillSetting {
 		this.ihomedelivery = 0;
 
 		// GST
+		this.UTGSTEnabled_out = 0;
 		this.GSTIN = 0;
 		this.POS = 0;
 		this.HSNCode =0;
@@ -196,8 +197,15 @@ public class BillSetting {
         this.CummulativeHeadingEnable = CummulativeHeadingEnable;
     }
 
+	public int getUTGSTEnabled_out() {
+		return UTGSTEnabled_out;
+	}
 
-    // richa_2012 ends
+	public void setUTGSTEnabled_out(int UTGSTEnabled_out) {
+		this.UTGSTEnabled_out = UTGSTEnabled_out;
+	}
+
+// richa_2012 ends
 
 	public String getDineInCaption() {
 		return DineInCaption;

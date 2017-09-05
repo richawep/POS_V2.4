@@ -111,6 +111,10 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
     EditText txtSearchItemBarcode,  tvWaiterNumber, tvTableNumber, tvTableSplitNo, tvBillNumber;
     ListView lstvwDepartment, lstvwCategory, lstvwKOTModifiers;
     //  GridView grdItems;
+
+    private TextView tvServiceTax_text;
+    private int UTGSTENABLED = 0;
+
     TableLayout tblOrderItems;
     TextView tvSalesTax, tvServiceTax;
     WepButton  btnShiftTable, btnMergeTable, btn_ReprintKOT,btnModifier, btnSaveKOT, btnPayBill, btnLoadKOT, btnDeleteKOT,btnDeleteBill, btnKOTStatus, btnPrintKOT, btnPrintBill, btnClear, btnReprint;
@@ -455,6 +459,11 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
             {
                 REVERSETAX = false;
             }
+            UTGSTENABLED = crsrSettings.getInt(crsrSettings.getColumnIndex("UTGSTEnabled"));
+            if(UTGSTENABLED ==1)
+                tvServiceTax_text.setText("UTGST-Tax :");
+            else
+                tvServiceTax_text.setText("SGST-Tax :");
 
             String fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
             if(fastBillingMode == null)
@@ -798,6 +807,7 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
         relative_Interstate = (LinearLayout) findViewById(R.id.relative_interstate);
         relative_pos = (LinearLayout) findViewById(R.id.relative_pos);
 
+        tvServiceTax_text = (TextView) findViewById(R.id.tvServiceTax);
 
         tVLabelTableNo.setPaintFlags(tVLabelTableNo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tVLabelWaiterNo.setPaintFlags(tVLabelWaiterNo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -7047,6 +7057,7 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
                     }
                     item.setTableNo(tablemsg);
                     item.setWaiterNo(waiterId);
+                    item.setUTGSTEnabled(UTGSTENABLED);
                     String billNoPrefix  = db.getBillNoPrefix();
                     item.setBillNo(billNoPrefix+String.valueOf(orderId));
                     item.setOrderBy(strUserName);

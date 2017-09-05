@@ -655,6 +655,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_OriginalInvoiceDate = "OriginalInvoiceDate";
     public static final String KEY_BusinessType = "BusinessType";
     public static final String KEY_ReverseCharge = "ReverseCharge";
+
+    public static final String KEY_Environment = "Environment";
+    public static final String KEY_UTGSTEnabled = "UTGSTEnabled";
+    public static final String KEY_HSNPrintEnabled = "HSNPrintEnabled";
+
     public static final String KEY_ProvisionalAssess = "ProvisionalAssess";
     public static final String KEY_LineNumber = "LineNumber";
     public static final String KEY_Ecom_GSTIN = "EcommerceGSTIN";
@@ -1041,7 +1046,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_POS + " TEXT, " + KEY_POS_OUT + " TEXT, " +
             KEY_HSNCode + " TEXT, " + KEY_HSNCode_OUT + " TEXT, " +
             KEY_ReverseCharge + " TEXT, " + KEY_ReverseCharge_OUT + " TEXT, " + KEY_GSTEnable + " TEXT, " +
-            KEY_ItemNoReset + " NUMERIC , " + KEY_PrintPreview + " NUMERIC , " + KEY_TableSpliting + " NUMERIC )";
+            KEY_ItemNoReset + " NUMERIC , " + KEY_PrintPreview + " NUMERIC , "
+            +KEY_Environment +" NUMERIC, "
+            +KEY_UTGSTEnabled +" NUMERIC, "
+            +KEY_HSNPrintEnabled +" NUMERIC, "
+            +KEY_TableSpliting + " NUMERIC )";
 
     String QUERY_CREATE_TABLE_BILLNO_RESET = "CREATE TABLE " + TBL_BILLNORESETCONFIG + "( " + KEY_BillNoReset_InvoiceNo +
             " NUMERIC, " + KEY_BillNoReset_Period + " TEXT," + KEY_BillNoReset_PeriodDate + " TEXT, KOTNo NUMERIC)";
@@ -1459,11 +1468,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HomeTakeAwayCaption, "Take Away");
         cvDbValues.put(KEY_HomeHomeDeliveryCaption, "Home Delivery");
         cvDbValues.put(KEY_CummulativeHeadingEnable, 1); // richa_2012
-        cvDbValues.put(KEY_GSTIN_IN, 0);
-        cvDbValues.put(KEY_POS, 0);
+        cvDbValues.put(KEY_GSTIN_IN, 1);
+        cvDbValues.put(KEY_POS, 1);
         cvDbValues.put(KEY_HSNCode, 1);
         cvDbValues.put(KEY_ReverseCharge, 0);
-        cvDbValues.put(KEY_GSTIN_OUT, 0);
+        cvDbValues.put(KEY_GSTIN_OUT, 1);
         cvDbValues.put(KEY_POS_OUT, 1);
         cvDbValues.put(KEY_HSNCode_OUT, 1);
         cvDbValues.put(KEY_ReverseCharge_OUT, 0);
@@ -1472,6 +1481,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_ItemNoReset, 0);
         cvDbValues.put(KEY_PrintPreview, 0);
         cvDbValues.put(KEY_TableSpliting, 0);
+        cvDbValues.put(KEY_UTGSTEnabled, 0); // disabling
 
         status = 0;
         try {
@@ -2896,6 +2906,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HSNCode_OUT, objBillSetting.getHSNCode_out());
         cvDbValues.put(KEY_ReverseCharge_OUT, objBillSetting.getReverseCharge_out());
         cvDbValues.put(KEY_GSTEnable, objBillSetting.getGSTEnable());
+        cvDbValues.put(KEY_UTGSTEnabled, objBillSetting.getUTGSTEnabled_out());
         return dbFNB.update(TBL_BILLSETTING, cvDbValues, null, null);
     }
 
@@ -7493,18 +7504,20 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_HomeHomeDeliveryCaption, "Home Delivery");
         cvDbValues.put(KEY_CummulativeHeadingEnable, 1);
         cvDbValues.put(KEY_GSTIN_IN, 0);
-        cvDbValues.put(KEY_POS, 0);
+        cvDbValues.put(KEY_POS, 1);
         cvDbValues.put(KEY_HSNCode, 1);
         cvDbValues.put(KEY_ReverseCharge, 0);
         cvDbValues.put(KEY_GSTIN_OUT, 1);
         cvDbValues.put(KEY_POS_OUT, 1);
-        cvDbValues.put(KEY_HSNCode, 0);
+        cvDbValues.put(KEY_HSNCode, 1);
         cvDbValues.put(KEY_ReverseCharge_OUT, 0);
         cvDbValues.put(KEY_GSTEnable, 1);
         cvDbValues.put(KEY_FastBillingMode, 1);
         cvDbValues.put(KEY_ItemNoReset, 0);
         cvDbValues.put(KEY_PrintPreview, 0);
         cvDbValues.put(KEY_TableSpliting, 0);
+        cvDbValues.put(KEY_UTGSTEnabled, 0); // disabling
+
         long result1 = dbFNB.insert(TBL_BILLSETTING, null, cvDbValues);
     }
 

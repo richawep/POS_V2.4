@@ -86,13 +86,6 @@ public class TabbedSettingsActivity extends WepBaseActivity{
         reportFragment3.setArguments(bundle3);*/
         //adapter.addFragment(reportFragment3, "Miscellaneous");
         //
-        Bundle bundle3=new Bundle();
-        bundle3.putString("REPORT_TYPE", "3");
-        FragmentSettingsDisplayOwnerDetail reportFragment3 = new FragmentSettingsDisplayOwnerDetail();
-        reportFragment3.setArguments(bundle3);
-        adapter.addFragment(reportFragment3, "Owner Detail");
-
-
 
         Bundle bundle4=new Bundle();
         bundle4.putString("REPORT_TYPE", "4");
@@ -105,6 +98,12 @@ public class TabbedSettingsActivity extends WepBaseActivity{
         FragmentSettingsGST reportFragment5 = new FragmentSettingsGST();
         reportFragment5.setArguments(bundle5);
         adapter.addFragment(reportFragment5, "GST");
+
+        Bundle bundle3=new Bundle();
+        bundle3.putString("REPORT_TYPE", "3");
+        FragmentSettingsDisplayOwnerDetail reportFragment3 = new FragmentSettingsDisplayOwnerDetail();
+        reportFragment3.setArguments(bundle3);
+        adapter.addFragment(reportFragment3, "Owner Detail");
 
         Bundle bundle6=new Bundle();
         bundle6.putString("REPORT_TYPE", "6");

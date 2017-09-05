@@ -29,7 +29,7 @@ public class FragmentSettingsGST extends Fragment {
     RadioButton rbGstinEnable_in, rbGstinDisable_in,rbPosEnable , rbPosDisable ,rbHsnCodeEnable,  rbHsnCodeDisable ;
     RadioButton rbReverseChargeEnable , rbReverseChargeDisable ,rbGstinEnable_out, rbGstinDisable_out ;
     RadioButton rbPosEnable_out,  rbPosDisable_out,  rbHsnCodeEnable_out,  rbHsnCodeDisable_out , rbReverseChargeEnable_out ,
-            rbReverseChargeDisable_out ;
+            rbReverseChargeDisable_out ,rbUTGSTEnabled_out,rbUTGSTDisable_out;
 
     Button btnApply, btnClose;
     BillSetting objBillSettings ;
@@ -68,7 +68,7 @@ public class FragmentSettingsGST extends Fragment {
             dbGSTSettings.CloseDatabase();
             dbGSTSettings.CreateDatabase();
             dbGSTSettings.OpenDatabase();
-            DisplaySettings();
+           // DisplaySettings();
         } catch (Exception exp) {
             exp.printStackTrace();
             MsgBox.Show("Exception", exp.getMessage());
@@ -101,6 +101,9 @@ public class FragmentSettingsGST extends Fragment {
 
         rbReverseChargeEnable_out = (RadioButton) view.findViewById(R.id.rbReverseChargeEnable_out);
         rbReverseChargeDisable_out = (RadioButton) view.findViewById(R.id.rbReverseChargeDisable_out);
+
+        rbUTGSTEnabled_out = (RadioButton) view.findViewById(R.id.rbUTGSTEnabled_out);
+        rbUTGSTDisable_out = (RadioButton) view.findViewById(R.id.rbUTGSTDisable_out);
 
         btnApply = (Button) view.findViewById(R.id.btnApplyOtherSettings);
         btnClose = (Button) view.findViewById(R.id.btnCloseOtherSettings);
@@ -182,6 +185,14 @@ public class FragmentSettingsGST extends Fragment {
             else {
                 rbReverseChargeDisable_out.setChecked(true);
             }
+
+
+            if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("UTGSTEnabled")) == 1) {
+                rbUTGSTEnabled_out.setChecked(true);
+            } else {
+                rbUTGSTDisable_out.setChecked(true);
+            }
+
         }
 
         else {
@@ -189,10 +200,17 @@ public class FragmentSettingsGST extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        DisplaySettings();
+    }
+
     private void ReadGSTSettings() {
 
         // Local variables
         int igstin_in, igstin_out, ipos, ipos_out, ihsncode, ihsncode_out , ireversecharge, ireversecharge_out,igst;
+        int urgst_out =0;
 
         igst =1;
 
@@ -248,6 +266,12 @@ public class FragmentSettingsGST extends Fragment {
         } else {
             ireversecharge_out = 0;
         }
+        // UTGST
+        if (rbUTGSTEnabled_out.isChecked() == true) {
+            urgst_out = 1;
+        } else {
+            urgst_out = 0;
+        }
 
         // Initialize all the settings variable
         objBillSettings.setLoginWith(0);
@@ -260,6 +284,7 @@ public class FragmentSettingsGST extends Fragment {
         objBillSettings.setHSNCode_out(ihsncode_out);
         objBillSettings.setReverseCharge_out(ireversecharge_out);
         objBillSettings.setGSTEnable(igst);
+        objBillSettings.setUTGSTEnabled_out(urgst_out);
     }
 
     private void SaveGSTSettings() {

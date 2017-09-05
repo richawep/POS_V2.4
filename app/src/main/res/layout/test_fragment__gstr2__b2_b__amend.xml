@@ -411,7 +411,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="SGST Rate(%)" />
+                        android:text="UTGST / SGST Rate(%)" />
 
                     <EditText
                         android:id="@+id/et_sgstrate"
@@ -516,7 +516,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="SGST Amount" />
+                        android:text="UTGST / SGST Amount" />
 
                     <EditText
                         android:id="@+id/et_sgstamt"
@@ -555,7 +555,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.6"
+            android:layout_weight="1.5"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
@@ -640,7 +640,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/pinkborder"
                     android:gravity="center"
-                    android:text="SGST"
+                    android:text="UTGST / SGST"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/txtColorAccent"
                     android:textSize="@dimen/table_text_heading_16sp_720dp_14sp_600dp"  />

@@ -89,7 +89,7 @@ import java.util.regex.Pattern;
 public class BillingCounterSalesActivity extends WepPrinterBaseActivity implements View.OnClickListener ,TextWatcher {
     String tx ="";
     int CUSTOMER_FOUND =0;
-   // boolean REVERSETAX = false;
+    boolean REVERSETAX = false;
     DecimalFormat df_2, df_3;
     Pattern p = Pattern.compile("^(-?[0-9]+[\\.\\,][0-9]{1,2})?[0-9]*$");
 
@@ -122,9 +122,11 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
     private Cursor crsrSettings = null;
     TextView tvHSNCode_out;
     private TextView textViewOtherCharges,tvIGSTValue,tvcessValue,tvTaxTotal,tvServiceTaxTotal,tvSubTotal,tvBillAmount,tvDate, tvDiscountAmount, tvDiscountPercentage;
+    private TextView tvServiceTax_text;
     LinearLayout relative_Interstate;
     CheckBox chk_interstate = null;
     private String fastBillingMode = "1";
+    private int UTGSTENABLED = 0;
     private String customerId = "0";
     public boolean isPrinterAvailable = false;
     private String strPaymentStatus;
@@ -687,6 +689,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             tvBillNumber = (EditText) findViewById(R.id.tvBillNumberValue);
             tblOrderItems = (TableLayout) findViewById(R.id.tblOrderItems);
             tvHSNCode_out = (TextView) findViewById(R.id.tvColHSN);
+            tvServiceTax_text = (TextView) findViewById(R.id.tvServiceTax);
 
 
             textViewOtherCharges = (TextView) findViewById(R.id.txtOthercharges);
@@ -986,13 +989,19 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                 ItemwiseDiscountEnabled = crsrSettings.getInt(crsrSettings.getColumnIndex("DiscountType"));
 
                 fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
+                UTGSTENABLED = crsrSettings.getInt(crsrSettings.getColumnIndex("UTGSTEnabled"));
+                if(UTGSTENABLED ==1)
+                    tvServiceTax_text.setText("UTGST-Tax :");
+                else
+                    tvServiceTax_text.setText("SGST-Tax :");
 
-                /*if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
+
+                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
                     REVERSETAX = true;
                 }else
                 {
                     REVERSETAX = false;
-                }*/
+                }
 
                 // Handling Null pointer Exception
                 if (fastBillingMode == null)
@@ -3605,6 +3614,7 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                     item.setNetTotal(Double.parseDouble(tvBillAmount.getText().toString().trim()));
                     item.setTableNo(tableId);
                     item.setWaiterNo(waiterId);
+                    item.setUTGSTEnabled(UTGSTENABLED);
                     String billNoPrefix  = db.getBillNoPrefix();
                     item.setBillNo(billNoPrefix+String.valueOf(orderId));
                     item.setOrderBy(userName);
@@ -4720,13 +4730,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 int Result = db
                                         .updateBillRepintCounts(Integer.parseInt(txtReprintBillNo.getText().toString()));
                                 ClearAll();
-                                /*if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
+                                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
                                     REVERSETAX = true;
                                 }else
                                 {
                                     REVERSETAX = false;
                                 }
-*/
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -4805,12 +4814,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         if (crsrBillItems.moveToFirst()) {
 
-            /*if (crsrBillItems.getString(crsrBillItems.getColumnIndex("IsReverseTaxEnable")).equalsIgnoreCase("YES")) { // reverse tax
+            if (crsrBillItems.getString(crsrBillItems.getColumnIndex("IsReverseTaxEnable")).equalsIgnoreCase("YES")) { // reverse tax
                 REVERSETAX = true;
             }else
             {
                 REVERSETAX = false;
-            }*/
+            }
 
             // Display items in table
             do {

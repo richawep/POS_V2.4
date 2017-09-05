@@ -63,7 +63,7 @@ public class FragmentSettingsOther extends Fragment {
             dbOtherSettings.CloseDatabase();
             dbOtherSettings.CreateDatabase();
             dbOtherSettings.OpenDatabase();
-            DisplaySettings();
+            //DisplaySettings();
         } catch (Exception exp) {
             exp.printStackTrace();
             MsgBox.Show("Exception", exp.getMessage());
