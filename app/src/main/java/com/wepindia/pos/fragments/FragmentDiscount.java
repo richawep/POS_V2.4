@@ -145,7 +145,7 @@ public class FragmentDiscount extends Fragment {
                 tvDiscAmount.setTextSize(18);
                 tvDiscAmount.setGravity(1);
                 tvDiscAmount.setText(crsrDiscConfig.getString(3));
-                rowDiscountConfig.addView(tvDiscAmount);
+                //rowDiscountConfig.addView(tvDiscAmount);
 
                 // Delete
                 int res = getResources().getIdentifier("delete", "drawable", getActivity().getPackageName());

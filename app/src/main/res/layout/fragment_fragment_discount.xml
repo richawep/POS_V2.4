@@ -73,6 +73,7 @@
         android:layout_alignEnd="@id/scrlDiscountTable"
         android:layout_below="@+id/rowDiscPercent"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         android:layout_marginTop="10dp">
 
         <TextView
@@ -166,6 +167,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Amount"
+                    android:visibility="gone"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#ffffff"

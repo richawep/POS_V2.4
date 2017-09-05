@@ -89,7 +89,7 @@ import java.util.regex.Pattern;
 public class BillingCounterSalesActivity extends WepPrinterBaseActivity implements View.OnClickListener ,TextWatcher {
     String tx ="";
     int CUSTOMER_FOUND =0;
-    boolean REVERSETAX = false;
+   // boolean REVERSETAX = false;
     DecimalFormat df_2, df_3;
     Pattern p = Pattern.compile("^(-?[0-9]+[\\.\\,][0-9]{1,2})?[0-9]*$");
 
@@ -987,12 +987,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                 fastBillingMode = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
 
-                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
+                /*if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
                     REVERSETAX = true;
                 }else
                 {
                     REVERSETAX = false;
-                }
+                }*/
 
                 // Handling Null pointer Exception
                 if (fastBillingMode == null)
@@ -3819,11 +3819,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
             double originalRate = Double.parseDouble(
                     OriginalRate_tv.getText().toString().trim().equals("")?"0": OriginalRate_tv.getText().toString().trim());
             double amount = 0;
-            if(REVERSETAX)
+            /*if(REVERSETAX)
                 amount = originalRate *qty;
             else
-                amount = Double.parseDouble(itemAmount.getText().toString().trim());
+                amount = Double.parseDouble(itemAmount.getText().toString().trim());*/
 
+            amount = originalRate *qty;
             String taxIndex = " ";
             double TaxRate =0;
             if(chk_interstate.isChecked())
@@ -4719,13 +4720,13 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
                                 int Result = db
                                         .updateBillRepintCounts(Integer.parseInt(txtReprintBillNo.getText().toString()));
                                 ClearAll();
-                                if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
+                                /*if (!(crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1)) { // reverse tax
                                     REVERSETAX = true;
                                 }else
                                 {
                                     REVERSETAX = false;
                                 }
-
+*/
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -4804,12 +4805,12 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
         if (crsrBillItems.moveToFirst()) {
 
-            if (crsrBillItems.getString(crsrBillItems.getColumnIndex("IsReverseTaxEnable")).equalsIgnoreCase("YES")) { // reverse tax
+            /*if (crsrBillItems.getString(crsrBillItems.getColumnIndex("IsReverseTaxEnable")).equalsIgnoreCase("YES")) { // reverse tax
                 REVERSETAX = true;
             }else
             {
                 REVERSETAX = false;
-            }
+            }*/
 
             // Display items in table
             do {

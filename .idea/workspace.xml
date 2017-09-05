@@ -16,12 +16,18 @@
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" line="3990" />
+    <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" line="3991" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -130,125 +136,8 @@
       <file leaf-file-name="BillingCounterSalesActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="3594" column="42" selection-start-line="3594" selection-start-column="42" selection-end-line="3594" selection-end-column="42" />
-              <folding>
-                <element signature="e#167407#167427#0" expanded="true" />
-                <element signature="e#167601#167621#0" expanded="true" />
-                <element signature="e#167696#167709#0" expanded="true" />
-                <element signature="e#180404#180417#0" expanded="true" />
-                <element signature="e#183166#183179#0" expanded="true" />
-                <element signature="e#184405#184418#0" expanded="true" />
-                <element signature="e#185657#185670#0" expanded="true" />
-                <element signature="e#187533#187553#0" expanded="true" />
-                <element signature="e#188278#188298#0" expanded="true" />
-                <element signature="e#189582#189602#0" expanded="true" />
-                <element signature="e#190914#190927#0" expanded="true" />
-                <element signature="e#193706#193719#0" expanded="true" />
-                <element signature="e#195980#195996#0" expanded="true" />
-                <element signature="e#214168#214176#0" expanded="true" />
-                <element signature="e#214703#214711#0" expanded="true" />
-                <element signature="e#215343#215351#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FragmentSettingsGST.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsGST.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1929">
-              <caret line="265" column="24" selection-start-line="265" selection-start-column="24" selection-end-line="265" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FragmentSettingsMachine.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsMachine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="209" column="48" selection-start-line="209" selection-start-column="48" selection-end-line="209" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DatabaseHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3176">
-              <caret line="7500" column="38" selection-start-line="7500" selection-start-column="38" selection-end-line="7500" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_tableshiftmerge.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_tableshiftmerge.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="281" column="45" selection-start-line="281" selection-start-column="45" selection-end-line="281" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TableSplitShfitResponse.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/TableSplitShfitResponse.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="67" selection-start-line="10" selection-start-column="67" selection-end-line="10" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TableShiftMergeActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableShiftMergeActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="197" column="16" selection-start-line="197" selection-start-column="16" selection-end-line="197" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#492#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-                <element signature="e#7511#7543#0" expanded="true" />
-                <element signature="e#9421#11923#0" expanded="true" />
-                <element signature="e#11922#11923#0" expanded="true" />
-                <element signature="e#12405#14009#0" expanded="true" />
-                <element signature="e#14008#14009#0" expanded="true" />
-                <element signature="e#15656#16093#0" expanded="true" />
-                <element signature="e#16092#16093#0" expanded="true" />
-                <element signature="e#16143#16526#0" expanded="true" />
-                <element signature="e#16525#16526#0" expanded="true" />
-                <element signature="e#19854#19886#0" expanded="true" />
-                <element signature="e#26490#26941#0" expanded="true" />
-                <element signature="e#26940#26941#0" expanded="true" />
-                <element signature="e#27048#27049#0" expanded="true" />
-                <element signature="e#27088#27089#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SupplierDetailsActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="313" column="71" selection-start-line="313" selection-start-column="71" selection-end-line="313" selection-end-column="71" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrintKotBillItem.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/print/PrintKotBillItem.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
+            <state relative-caret-position="-242">
+              <caret line="4980" column="19" selection-start-line="4980" selection-start-column="19" selection-end-line="4980" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -257,130 +146,87 @@
       <file leaf-file-name="BillingDineInActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="829" column="65" selection-start-line="829" selection-start-column="65" selection-end-line="829" selection-end-column="65" />
+            <state relative-caret-position="286">
+              <caret line="6523" column="86" selection-start-line="6520" selection-start-column="11" selection-end-line="6523" selection-end-column="86" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7780#7781#0" expanded="true" />
-                <element signature="e#7821#7822#0" expanded="true" />
-                <element signature="e#16581#19058#0" expanded="true" />
-                <element signature="e#19057#19058#0" expanded="true" />
-                <element signature="e#19145#19697#0" expanded="true" />
-                <element signature="e#19696#19697#0" expanded="true" />
-                <element signature="e#19747#20299#0" expanded="true" />
-                <element signature="e#20298#20299#0" expanded="true" />
-                <element signature="e#21680#22663#0" expanded="true" />
-                <element signature="e#22662#22663#0" expanded="true" />
-                <element signature="e#22707#23471#0" expanded="true" />
-                <element signature="e#23470#23471#0" expanded="true" />
-                <element signature="e#23514#25676#0" expanded="true" />
-                <element signature="e#25675#25676#0" expanded="true" />
-                <element signature="e#40637#40781#0" expanded="true" />
-                <element signature="e#40780#40781#0" expanded="true" />
-                <element signature="e#40823#40969#0" expanded="true" />
-                <element signature="e#40968#40969#0" expanded="true" />
-                <element signature="e#41014#41161#0" expanded="true" />
-                <element signature="e#41160#41161#0" expanded="true" />
-                <element signature="e#41204#41348#0" expanded="true" />
-                <element signature="e#41347#41348#0" expanded="true" />
-                <element signature="e#41392#41539#0" expanded="true" />
-                <element signature="e#41538#41539#0" expanded="true" />
-                <element signature="e#41583#41730#0" expanded="true" />
-                <element signature="e#41729#41730#0" expanded="true" />
-                <element signature="e#41771#41915#0" expanded="true" />
-                <element signature="e#41914#41915#0" expanded="true" />
-                <element signature="e#41957#42102#0" expanded="true" />
-                <element signature="e#42101#42102#0" expanded="true" />
-                <element signature="e#42145#42291#0" expanded="true" />
-                <element signature="e#42290#42291#0" expanded="true" />
-                <element signature="e#42332#42475#0" expanded="true" />
-                <element signature="e#42474#42475#0" expanded="true" />
-                <element signature="e#42514#42656#0" expanded="true" />
-                <element signature="e#42655#42656#0" expanded="true" />
-                <element signature="e#42700#42847#0" expanded="true" />
-                <element signature="e#42846#42847#0" expanded="true" />
-                <element signature="e#42888#43036#0" expanded="true" />
-                <element signature="e#43035#43036#0" expanded="true" />
-                <element signature="e#43079#43225#0" expanded="true" />
-                <element signature="e#43224#43225#0" expanded="true" />
-                <element signature="e#43364#45762#0" expanded="true" />
-                <element signature="e#45761#45762#0" expanded="true" />
-                <element signature="e#45970#48435#0" expanded="true" />
-                <element signature="e#48434#48435#0" expanded="true" />
-                <element signature="e#48621#50271#0" expanded="true" />
-                <element signature="e#50270#50271#0" expanded="true" />
-                <element signature="e#59603#59947#0" expanded="true" />
-                <element signature="e#59946#59947#0" expanded="true" />
-                <element signature="e#64122#65345#0" expanded="true" />
-                <element signature="e#65344#65345#0" expanded="true" />
-                <element signature="e#65783#65990#0" expanded="true" />
-                <element signature="e#65989#65990#0" expanded="true" />
-                <element signature="e#66380#67096#0" expanded="true" />
-                <element signature="e#67095#67096#0" expanded="true" />
-                <element signature="e#68013#71234#0" expanded="true" />
-                <element signature="e#71233#71234#0" expanded="true" />
-                <element signature="e#71699#73351#0" expanded="true" />
-                <element signature="e#73350#73351#0" expanded="true" />
-                <element signature="e#73836#75663#0" expanded="true" />
-                <element signature="e#75662#75663#0" expanded="true" />
-                <element signature="e#99977#99978#0" expanded="true" />
-                <element signature="e#100048#100049#0" expanded="true" />
-                <element signature="e#102308#102309#0" expanded="true" />
-                <element signature="e#102387#102388#0" expanded="true" />
-                <element signature="e#110872#112448#0" expanded="true" />
-                <element signature="e#111792#112391#0" expanded="true" />
-                <element signature="e#112390#112391#0" expanded="true" />
-                <element signature="e#112447#112448#0" expanded="true" />
-                <element signature="e#147758#149466#0" expanded="true" />
-                <element signature="e#149465#149466#0" expanded="true" />
-                <element signature="e#149496#150861#0" expanded="true" />
-                <element signature="e#150860#150861#0" expanded="true" />
-                <element signature="e#169303#169304#0" expanded="true" />
-                <element signature="e#169374#169375#0" expanded="true" />
-                <element signature="e#220278#223440#0" expanded="true" />
-                <element signature="e#220814#222259#0" expanded="true" />
-                <element signature="e#222258#222259#0" expanded="true" />
-                <element signature="e#223439#223440#0" expanded="true" />
-                <element signature="e#263839#263840#0" expanded="true" />
-                <element signature="e#263867#263868#0" expanded="true" />
-                <element signature="e#269690#271291#0" expanded="true" />
-                <element signature="e#271290#271291#0" expanded="true" />
-                <element signature="e#284363#284523#0" expanded="true" />
-                <element signature="e#284522#284523#0" expanded="true" />
-                <element signature="e#284766#287362#0" expanded="true" />
-                <element signature="e#287361#287362#0" expanded="true" />
-                <element signature="e#288626#288786#0" expanded="true" />
-                <element signature="e#288785#288786#0" expanded="true" />
-                <element signature="e#289014#295411#0" expanded="true" />
-                <element signature="e#295410#295411#0" expanded="true" />
-                <element signature="e#297455#297688#0" expanded="true" />
-                <element signature="e#297687#297688#0" expanded="true" />
-                <element signature="e#299022#300469#0" expanded="true" />
-                <element signature="e#300468#300469#0" expanded="true" />
                 <element signature="e#322075#322083#0" expanded="true" />
                 <element signature="e#322605#322613#0" expanded="true" />
                 <element signature="e#323245#323253#0" expanded="true" />
                 <element signature="e#323601#323614#0" expanded="true" />
                 <element signature="e#325309#325322#0" expanded="true" />
-                <element signature="e#328088#328101#0" expanded="true" />
-                <element signature="e#330877#330890#0" expanded="true" />
-                <element signature="e#333161#333181#0" expanded="true" />
-                <element signature="e#334478#334491#0" expanded="true" />
-                <element signature="e#335716#335729#0" expanded="true" />
-                <element signature="e#336966#336979#0" expanded="true" />
-                <element signature="e#338771#338791#0" expanded="true" />
-                <element signature="e#339514#339530#0" expanded="true" />
-                <element signature="e#340527#340547#0" expanded="true" />
-                <element signature="e#350597#350617#0" expanded="true" />
-                <element signature="e#350692#350705#0" expanded="true" />
-                <element signature="e#363661#365320#0" expanded="true" />
-                <element signature="e#365319#365320#0" expanded="true" />
-                <element signature="e#383186#383490#0" expanded="true" />
-                <element signature="e#383489#383490#0" expanded="true" />
-                <element signature="e#386555#386556#0" expanded="true" />
-                <element signature="e#386604#386605#0" expanded="true" />
+                <element signature="e#328132#328145#0" expanded="true" />
+                <element signature="e#330921#330934#0" expanded="true" />
+                <element signature="e#333205#333225#0" expanded="true" />
+                <element signature="e#334522#334535#0" expanded="true" />
+                <element signature="e#335760#335773#0" expanded="true" />
+                <element signature="e#337010#337023#0" expanded="true" />
+                <element signature="e#338815#338835#0" expanded="true" />
+                <element signature="e#339558#339574#0" expanded="true" />
+                <element signature="e#340571#340591#0" expanded="true" />
+                <element signature="e#350641#350661#0" expanded="true" />
+                <element signature="e#350736#350749#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PayBillActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="618" column="41" selection-start-line="618" selection-start-column="41" selection-end-line="618" selection-end-column="41" />
+              <folding>
+                <element signature="e#28258#31258#0" expanded="true" />
+                <element signature="e#31257#31258#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GoodsInwardNoteActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="1961" column="5" selection-start-line="1961" selection-start-column="5" selection-end-line="1961" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FragmentDiscount.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="415">
+              <caret line="124" column="26" selection-start-line="124" selection-start-column="26" selection-end-line="124" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fragment_fragment_discount.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="65">
+              <caret line="157" column="42" selection-start-line="157" selection-start-column="42" selection-end-line="157" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="paybill_tablelist.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/paybill_tablelist.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="66" column="38" selection-start-line="66" selection-start-column="38" selection-end-line="66" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
@@ -6688,8 +6534,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_owner_details.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/OwnerDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/AddRolesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_supplier_details.xml" />
@@ -6697,7 +6541,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/test_fragment__gstr2__b2_b__amend.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/fragments/Fragment_GSTR2_B2B_Amend.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TabbedAmmendActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/SupplierAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemSupplierLinkageActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java" />
@@ -6721,15 +6564,12 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_gst.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsGST.java" />
         <option value="$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillSetting.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/StockActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/TestImageAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/grid_images.xml" />
         <option value="$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/payment/MSwipePaymentActivity.java" />
@@ -6739,6 +6579,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/TableSplitShfitResponse.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/TableShiftMergeActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java" />
       </list>
     </option>
   </component>
@@ -6773,6 +6619,11 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView">
+        <subPane />
+      </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -6864,62 +6715,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -6958,41 +6753,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="GenericClasses" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adapters" />
+              <option name="myItemId" value="fragments" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -7023,11 +6784,6 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="AndroidView">
-        <subPane />
       </pane>
     </panes>
   </component>
@@ -7069,134 +6825,6 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\src\main\res\raw" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/app.iml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingScreenActivity_Unused.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardItemActivity.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PurchaseOrderActivity.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/PurchaseOrderAdapter.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/res/layout/activity_goods_inward_note.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/res/layout/activity_inward_item.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/res/layout/activity_purchase_order.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/DatabaseHandler.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/PendingKOT.java</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunManager" selected="Android App.app">
     <configuration default="false" name="wepfnb_gst:app [signingReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -7633,13 +7261,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00071" summary="Renaming inward module on master screen">
-      <created>1498215649924</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1498215649925</updated>
-    </task>
     <task id="LOCAL-00072" summary="removing hsn from bill due to allignment issue">
       <created>1498215798235</created>
       <option name="number" value="00072" />
@@ -7976,7 +7597,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504533883191</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="making suplier's phone no length mandatory to 10 digit">
+      <created>1504534866307</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1504534866307</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -7998,8 +7626,8 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43515357" sideWeight="0.5060514" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30375427" sideWeight="0.8022901" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2579425" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.75938565" sideWeight="0.8022901" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25718608" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.010238908" sideWeight="0.48473284" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24061434" sideWeight="0.49389312" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32423207" sideWeight="0.48778626" order="4" side_tool="false" content_ui="tabs" />
@@ -8007,12 +7635,11 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32423207" sideWeight="0.51221377" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3290469" sideWeight="0.49317408" order="7" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43515357" sideWeight="0.49394855" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34795764" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928678" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20819113" sideWeight="0.48778626" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2901024" sideWeight="0.48778626" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -8025,6 +7652,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="93" y="100" width="1170" height="535" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43515357" sideWeight="0.49394855" order="7" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -8092,7 +7720,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1. integrating cess and fixing issues in ammendment module&#10;" />
     <MESSAGE value="1. Tax coming as 0 when discount in amount is applied&#10;2. correcting heading of TAX report in display&#10;" />
     <MESSAGE value="changes as per new bill format&#10;" />
     <MESSAGE value="1. making bill format as per new design - BP machine for GST&#10;2. including wep logo in message whereever missing&#10;" />
@@ -8117,14 +7744,15 @@
     <MESSAGE value="updating inward item stock" />
     <MESSAGE value="issue - items getting disappeared which scrolling frequently in all billing screens" />
     <MESSAGE value="issue - table not getting with split enabled . Table 3-1 was not getting shifted to 3-2" />
-    <option name="LAST_COMMIT_MESSAGE" value="issue - table not getting with split enabled . Table 3-1 was not getting shifted to 3-2" />
+    <MESSAGE value="making suplier's phone no length mandatory to 10 digit" />
+    <option name="LAST_COMMIT_MESSAGE" value="making suplier's phone no length mandatory to 10 digit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
-          <line>1537</line>
+          <line>1541</line>
           <properties />
           <option name="timeStamp" value="539" />
         </line-breakpoint>
@@ -8170,11 +7798,23 @@
           <properties />
           <option name="timeStamp" value="557" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
+          <line>623</line>
+          <properties />
+          <option name="timeStamp" value="558" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java</url>
+          <line>579</line>
+          <properties />
+          <option name="timeStamp" value="559" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="558" />
+      <option name="time" value="560" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
@@ -8183,21 +7823,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/sdktest/view/CardSaleDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mSwipe/src/main/java/com/mswipetech/wisepad/payment/PaymentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="98" column="59" selection-start-line="98" selection-start-column="59" selection-end-line="98" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GST/controlers/GSTUploadFunctions.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -8238,7 +7863,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="70" column="34" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8246,26 +7870,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="36" column="20" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/row_outwarditem.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="68" column="36" selection-start-line="68" selection-start-column="36" selection-end-line="68" selection-end-column="36" />
-          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/ItemOutwardAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="121" column="36" selection-start-line="121" selection-start-column="36" selection-end-line="121" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8286,21 +7907,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_grid_waiter.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
-          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/adapters/WaiterAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
           <caret line="68" column="80" selection-start-line="68" selection-start-column="80" selection-end-line="68" selection-end-column="80" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8308,37 +7927,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_counter_sales.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
           <caret line="368" column="37" selection-start-line="368" selection-start-column="37" selection-end-line="368" selection-end-column="37" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_gst.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_settings_gst.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
           <caret line="78" column="52" selection-start-line="78" selection-start-column="52" selection-end-line="78" selection-end-column="52" />
-          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wepbase/src/main/java/com/wep/common/app/Database/BillSetting.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="39" column="26" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8346,19 +7962,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="1452" column="28" selection-start-line="1452" selection-start-column="28" selection-end-line="1452" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
           <caret line="77" column="19" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
-          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardItemActivity.java">
@@ -8369,14 +7983,6 @@
             <element signature="e#5706#5871#0" expanded="false" />
             <element signature="e#5870#5871#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="1078" column="100" selection-start-line="1078" selection-start-column="100" selection-end-line="1078" selection-end-column="100" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8392,73 +7998,45 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="49" column="32" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_home_delivery.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="173" column="58" selection-start-line="173" selection-start-column="58" selection-end-line="173" selection-end-column="58" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/order_page_content_homedelivery.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="388">
           <caret line="797" column="15" selection-start-line="797" selection-start-column="15" selection-end-line="797" selection-end-column="15" />
-          <folding>
-            <element signature="e#18231#18284#0" expanded="true" />
-            <element signature="e#19028#19081#0" expanded="true" />
-            <element signature="e#20423#20476#0" expanded="true" />
-            <element signature="e#21224#21277#0" expanded="true" />
-            <element signature="e#22623#22676#0" expanded="true" />
-            <element signature="e#23426#23479#0" expanded="true" />
-            <element signature="e#24198#24251#0" expanded="true" />
-            <element signature="e#25028#25081#0" expanded="true" />
-            <element signature="e#26552#26605#0" expanded="true" />
-            <element signature="e#27297#27350#0" expanded="true" />
-            <element signature="e#29016#29069#0" expanded="true" />
-            <element signature="e#29817#29870#0" expanded="true" />
-            <element signature="e#31148#31201#0" expanded="true" />
-            <element signature="e#31945#31998#0" expanded="true" />
-            <element signature="e#33354#33407#0" expanded="true" />
-            <element signature="e#34157#34210#0" expanded="true" />
-            <element signature="e#35550#35603#0" expanded="true" />
-            <element signature="e#36352#36405#0" expanded="true" />
-            <element signature="e#36764#36793#0" expanded="true" />
-            <element signature="e#38497#38526#0" expanded="true" />
-            <element signature="e#40140#40169#0" expanded="true" />
-            <element signature="e#41776#41805#0" expanded="true" />
-          </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_stock.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="160" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-24/android/os/AsyncTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
           <caret line="631" column="0" selection-start-line="631" selection-start-column="0" selection-end-line="631" selection-end-column="0" />
-          <folding>
-            <element signature="e#25285#25286#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -8509,59 +8087,30 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_dinein.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
           <caret line="1136" column="0" selection-start-line="1136" selection-start-column="0" selection-end-line="1136" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/grid_images.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/grid_images.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
           <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="jar://$PROJECT_DIR$/mSwipe/libs/MswipeWisepadDRDSDKAPIVer2.5.4.jar!/com/mswipetech/wisepad/sdk/MswipeWisepadController.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/paybill_tablelist.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="63" column="33" selection-start-line="63" selection-start-column="33" selection-end-line="63" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3151">
-          <caret line="1459" column="34" selection-start-line="1459" selection-start-column="34" selection-end-line="1459" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="1904" column="23" selection-start-line="1904" selection-start-column="23" selection-end-line="1904" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8585,135 +8134,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-340">
           <caret line="227" column="0" selection-start-line="227" selection-start-column="0" selection-end-line="227" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="829" column="65" selection-start-line="829" selection-start-column="65" selection-end-line="829" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#7780#7781#0" expanded="true" />
-            <element signature="e#7821#7822#0" expanded="true" />
-            <element signature="e#16581#19058#0" expanded="true" />
-            <element signature="e#19057#19058#0" expanded="true" />
-            <element signature="e#19145#19697#0" expanded="true" />
-            <element signature="e#19696#19697#0" expanded="true" />
-            <element signature="e#19747#20299#0" expanded="true" />
-            <element signature="e#20298#20299#0" expanded="true" />
-            <element signature="e#21680#22663#0" expanded="true" />
-            <element signature="e#22662#22663#0" expanded="true" />
-            <element signature="e#22707#23471#0" expanded="true" />
-            <element signature="e#23470#23471#0" expanded="true" />
-            <element signature="e#23514#25676#0" expanded="true" />
-            <element signature="e#25675#25676#0" expanded="true" />
-            <element signature="e#40637#40781#0" expanded="true" />
-            <element signature="e#40780#40781#0" expanded="true" />
-            <element signature="e#40823#40969#0" expanded="true" />
-            <element signature="e#40968#40969#0" expanded="true" />
-            <element signature="e#41014#41161#0" expanded="true" />
-            <element signature="e#41160#41161#0" expanded="true" />
-            <element signature="e#41204#41348#0" expanded="true" />
-            <element signature="e#41347#41348#0" expanded="true" />
-            <element signature="e#41392#41539#0" expanded="true" />
-            <element signature="e#41538#41539#0" expanded="true" />
-            <element signature="e#41583#41730#0" expanded="true" />
-            <element signature="e#41729#41730#0" expanded="true" />
-            <element signature="e#41771#41915#0" expanded="true" />
-            <element signature="e#41914#41915#0" expanded="true" />
-            <element signature="e#41957#42102#0" expanded="true" />
-            <element signature="e#42101#42102#0" expanded="true" />
-            <element signature="e#42145#42291#0" expanded="true" />
-            <element signature="e#42290#42291#0" expanded="true" />
-            <element signature="e#42332#42475#0" expanded="true" />
-            <element signature="e#42474#42475#0" expanded="true" />
-            <element signature="e#42514#42656#0" expanded="true" />
-            <element signature="e#42655#42656#0" expanded="true" />
-            <element signature="e#42700#42847#0" expanded="true" />
-            <element signature="e#42846#42847#0" expanded="true" />
-            <element signature="e#42888#43036#0" expanded="true" />
-            <element signature="e#43035#43036#0" expanded="true" />
-            <element signature="e#43079#43225#0" expanded="true" />
-            <element signature="e#43224#43225#0" expanded="true" />
-            <element signature="e#43364#45762#0" expanded="true" />
-            <element signature="e#45761#45762#0" expanded="true" />
-            <element signature="e#45970#48435#0" expanded="true" />
-            <element signature="e#48434#48435#0" expanded="true" />
-            <element signature="e#48621#50271#0" expanded="true" />
-            <element signature="e#50270#50271#0" expanded="true" />
-            <element signature="e#59603#59947#0" expanded="true" />
-            <element signature="e#59946#59947#0" expanded="true" />
-            <element signature="e#64122#65345#0" expanded="true" />
-            <element signature="e#65344#65345#0" expanded="true" />
-            <element signature="e#65783#65990#0" expanded="true" />
-            <element signature="e#65989#65990#0" expanded="true" />
-            <element signature="e#66380#67096#0" expanded="true" />
-            <element signature="e#67095#67096#0" expanded="true" />
-            <element signature="e#68013#71234#0" expanded="true" />
-            <element signature="e#71233#71234#0" expanded="true" />
-            <element signature="e#71699#73351#0" expanded="true" />
-            <element signature="e#73350#73351#0" expanded="true" />
-            <element signature="e#73836#75663#0" expanded="true" />
-            <element signature="e#75662#75663#0" expanded="true" />
-            <element signature="e#99977#99978#0" expanded="true" />
-            <element signature="e#100048#100049#0" expanded="true" />
-            <element signature="e#102308#102309#0" expanded="true" />
-            <element signature="e#102387#102388#0" expanded="true" />
-            <element signature="e#110872#112448#0" expanded="true" />
-            <element signature="e#111792#112391#0" expanded="true" />
-            <element signature="e#112390#112391#0" expanded="true" />
-            <element signature="e#112447#112448#0" expanded="true" />
-            <element signature="e#147758#149466#0" expanded="true" />
-            <element signature="e#149465#149466#0" expanded="true" />
-            <element signature="e#149496#150861#0" expanded="true" />
-            <element signature="e#150860#150861#0" expanded="true" />
-            <element signature="e#169303#169304#0" expanded="true" />
-            <element signature="e#169374#169375#0" expanded="true" />
-            <element signature="e#220278#223440#0" expanded="true" />
-            <element signature="e#220814#222259#0" expanded="true" />
-            <element signature="e#222258#222259#0" expanded="true" />
-            <element signature="e#223439#223440#0" expanded="true" />
-            <element signature="e#263839#263840#0" expanded="true" />
-            <element signature="e#263867#263868#0" expanded="true" />
-            <element signature="e#269690#271291#0" expanded="true" />
-            <element signature="e#271290#271291#0" expanded="true" />
-            <element signature="e#284363#284523#0" expanded="true" />
-            <element signature="e#284522#284523#0" expanded="true" />
-            <element signature="e#284766#287362#0" expanded="true" />
-            <element signature="e#287361#287362#0" expanded="true" />
-            <element signature="e#288626#288786#0" expanded="true" />
-            <element signature="e#288785#288786#0" expanded="true" />
-            <element signature="e#289014#295411#0" expanded="true" />
-            <element signature="e#295410#295411#0" expanded="true" />
-            <element signature="e#297455#297688#0" expanded="true" />
-            <element signature="e#297687#297688#0" expanded="true" />
-            <element signature="e#299022#300469#0" expanded="true" />
-            <element signature="e#300468#300469#0" expanded="true" />
-            <element signature="e#322075#322083#0" expanded="true" />
-            <element signature="e#322605#322613#0" expanded="true" />
-            <element signature="e#323245#323253#0" expanded="true" />
-            <element signature="e#323601#323614#0" expanded="true" />
-            <element signature="e#325309#325322#0" expanded="true" />
-            <element signature="e#328088#328101#0" expanded="true" />
-            <element signature="e#330877#330890#0" expanded="true" />
-            <element signature="e#333161#333181#0" expanded="true" />
-            <element signature="e#334478#334491#0" expanded="true" />
-            <element signature="e#335716#335729#0" expanded="true" />
-            <element signature="e#336966#336979#0" expanded="true" />
-            <element signature="e#338771#338791#0" expanded="true" />
-            <element signature="e#339514#339530#0" expanded="true" />
-            <element signature="e#340527#340547#0" expanded="true" />
-            <element signature="e#350597#350617#0" expanded="true" />
-            <element signature="e#350692#350705#0" expanded="true" />
-            <element signature="e#363661#365320#0" expanded="true" />
-            <element signature="e#365319#365320#0" expanded="true" />
-            <element signature="e#383186#383490#0" expanded="true" />
-            <element signature="e#383489#383490#0" expanded="true" />
-            <element signature="e#386555#386556#0" expanded="true" />
-            <element signature="e#386604#386605#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -8725,36 +8145,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="3594" column="42" selection-start-line="3594" selection-start-column="42" selection-end-line="3594" selection-end-column="42" />
-          <folding>
-            <element signature="e#167407#167427#0" expanded="true" />
-            <element signature="e#167601#167621#0" expanded="true" />
-            <element signature="e#167696#167709#0" expanded="true" />
-            <element signature="e#180404#180417#0" expanded="true" />
-            <element signature="e#183166#183179#0" expanded="true" />
-            <element signature="e#184405#184418#0" expanded="true" />
-            <element signature="e#185657#185670#0" expanded="true" />
-            <element signature="e#187533#187553#0" expanded="true" />
-            <element signature="e#188278#188298#0" expanded="true" />
-            <element signature="e#189582#189602#0" expanded="true" />
-            <element signature="e#190914#190927#0" expanded="true" />
-            <element signature="e#193706#193719#0" expanded="true" />
-            <element signature="e#195980#195996#0" expanded="true" />
-            <element signature="e#214168#214176#0" expanded="true" />
-            <element signature="e#214703#214711#0" expanded="true" />
-            <element signature="e#215343#215351#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentSettingsGST.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1929">
           <caret line="265" column="24" selection-start-line="265" selection-start-column="24" selection-end-line="265" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8762,7 +8156,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
           <caret line="209" column="48" selection-start-line="209" selection-start-column="48" selection-end-line="209" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8775,21 +8168,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_tableshiftmerge.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
           <caret line="281" column="45" selection-start-line="281" selection-start-column="45" selection-end-line="281" selection-end-column="45" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GenericClasses/TableSplitShfitResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="67" selection-start-line="10" selection-start-column="67" selection-end-line="10" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8798,30 +8190,121 @@
         <state relative-caret-position="244">
           <caret line="197" column="16" selection-start-line="197" selection-start-column="16" selection-end-line="197" selection-end-column="16" />
           <folding>
-            <element signature="e#0#492#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#7511#7543#0" expanded="true" />
-            <element signature="e#9421#11923#0" expanded="true" />
-            <element signature="e#11922#11923#0" expanded="true" />
-            <element signature="e#12405#14009#0" expanded="true" />
-            <element signature="e#14008#14009#0" expanded="true" />
-            <element signature="e#15656#16093#0" expanded="true" />
-            <element signature="e#16092#16093#0" expanded="true" />
-            <element signature="e#16143#16526#0" expanded="true" />
-            <element signature="e#16525#16526#0" expanded="true" />
-            <element signature="e#19854#19886#0" expanded="true" />
-            <element signature="e#26490#26941#0" expanded="true" />
-            <element signature="e#26940#26941#0" expanded="true" />
-            <element signature="e#27048#27049#0" expanded="true" />
-            <element signature="e#27088#27089#0" expanded="true" />
+            <element signature="e#0#492#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#7511#7543#0" expanded="false" />
+            <element signature="e#9421#11923#0" expanded="false" />
+            <element signature="e#11922#11923#0" expanded="false" />
+            <element signature="e#12405#14009#0" expanded="false" />
+            <element signature="e#14008#14009#0" expanded="false" />
+            <element signature="e#15656#16093#0" expanded="false" />
+            <element signature="e#16092#16093#0" expanded="false" />
+            <element signature="e#16143#16526#0" expanded="false" />
+            <element signature="e#16525#16526#0" expanded="false" />
+            <element signature="e#19854#19886#0" expanded="false" />
+            <element signature="e#26490#26941#0" expanded="false" />
+            <element signature="e#26940#26941#0" expanded="false" />
+            <element signature="e#27048#27049#0" expanded="false" />
+            <element signature="e#27088#27089#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/SupplierDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="313" column="71" selection-start-line="313" selection-start-column="71" selection-end-line="313" selection-end-column="71" />
+        <state relative-caret-position="388">
+          <caret line="325" column="38" selection-start-line="325" selection-start-column="38" selection-end-line="325" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-242">
+          <caret line="4980" column="19" selection-start-line="4980" selection-start-column="19" selection-end-line="4980" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="6523" column="86" selection-start-line="6520" selection-start-column="11" selection-end-line="6523" selection-end-column="86" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#322075#322083#0" expanded="true" />
+            <element signature="e#322605#322613#0" expanded="true" />
+            <element signature="e#323245#323253#0" expanded="true" />
+            <element signature="e#323601#323614#0" expanded="true" />
+            <element signature="e#325309#325322#0" expanded="true" />
+            <element signature="e#328132#328145#0" expanded="true" />
+            <element signature="e#330921#330934#0" expanded="true" />
+            <element signature="e#333205#333225#0" expanded="true" />
+            <element signature="e#334522#334535#0" expanded="true" />
+            <element signature="e#335760#335773#0" expanded="true" />
+            <element signature="e#337010#337023#0" expanded="true" />
+            <element signature="e#338815#338835#0" expanded="true" />
+            <element signature="e#339558#339574#0" expanded="true" />
+            <element signature="e#340571#340591#0" expanded="true" />
+            <element signature="e#350641#350661#0" expanded="true" />
+            <element signature="e#350736#350749#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="6796" column="28" selection-start-line="6796" selection-start-column="28" selection-end-line="6796" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/paybill_tablelist.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="66" column="38" selection-start-line="66" selection-start-column="38" selection-end-line="66" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/fragments/FragmentDiscount.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="124" column="26" selection-start-line="124" selection-start-column="26" selection-end-line="124" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="157" column="42" selection-start-line="157" selection-start-column="42" selection-end-line="157" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/PayBillActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="618" column="41" selection-start-line="618" selection-start-column="41" selection-end-line="618" selection-end-column="41" />
+          <folding>
+            <element signature="e#28258#31258#0" expanded="true" />
+            <element signature="e#31257#31258#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/GoodsInwardNoteActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="1961" column="5" selection-start-line="1961" selection-start-column="5" selection-end-line="1961" selection-end-column="5" />
           <folding />
         </state>
       </provider>

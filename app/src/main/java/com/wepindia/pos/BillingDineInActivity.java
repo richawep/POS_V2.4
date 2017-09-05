@@ -6518,11 +6518,12 @@ private void LoadModifyKOTItems_old(Cursor crsrBillItems) {
             double originalRate = Double.parseDouble(
                     OriginalRate_tv.getText().toString().trim().equals("")?"0": OriginalRate_tv.getText().toString().trim());
             double amount = 0;
-            if(REVERSETAX)
+           /* if(REVERSETAX)
                 amount = originalRate *qty;
             else
-                amount = Double.parseDouble(itemAmount.getText().toString().trim());
+                amount = Double.parseDouble(itemAmount.getText().toString().trim());*/
 
+            amount = originalRate *qty;
             String taxIndex = " ";
             double TaxRate =0;
             if(chk_interstate.isChecked())

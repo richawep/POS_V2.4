@@ -602,7 +602,9 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         final RadioGroup rgDiscPerAmt = (RadioGroup) PayBillDialog.findViewById(R.id.rgDiscPerAmt);
         final RadioButton rbDiscPercent = (RadioButton) PayBillDialog.findViewById(R.id.rbDiscPercent);
         final RadioButton rbDiscAmount = (RadioButton) PayBillDialog.findViewById(R.id.rbDiscAmount);
+        rbDiscAmount.setVisibility(View.INVISIBLE);
         rgDiscPerAmt.setVisibility(View.VISIBLE);
+        rbDiscPercent.setChecked(true);
 
         // set the custom dialog components - text, image and button
         tblPayBill = (TableLayout) PayBillDialog.findViewById(R.id.tblPayBill);
@@ -610,6 +612,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         TextView tvCaptionPaybillAmount = (TextView) PayBillDialog.findViewById(R.id.tvCaptionPaybillAmount);
         tvCaptionPaybillValue.setText("Percent");
         tvCaptionPaybillAmount.setText("Amount");
+        tvCaptionPaybillAmount.setVisibility(View.INVISIBLE);
 
         Cursor crsrDiscount = dbPayBill.getPayBillDiscount();
 
@@ -652,7 +655,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                     tvAmount.setTextSize(20);
                     tvAmount.setTextColor(Color.parseColor("#000000"));
                     tvAmount.setText(crsrDiscount.getString(3));
-                    rowPayBill.addView(tvAmount);
+                   // rowPayBill.addView(tvAmount);
 
                     rowPayBill.setOnClickListener(new View.OnClickListener() {
 
@@ -696,7 +699,8 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
                                     TenderChange();
                                     PayBillDialog.dismiss();
                                 } else {
-                                    MsgBox.Show("Warning", "Please select Percent / Amount");
+                                    //MsgBox.Show("Warning", "Please select Percent / Amount");
+                                    MsgBox.Show("Warning", "Please select Percent");
                                 }
                             }
                         }
