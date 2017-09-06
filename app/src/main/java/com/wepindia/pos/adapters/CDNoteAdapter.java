@@ -121,7 +121,7 @@ public class CDNoteAdapter extends BaseAdapter {
         viewHolder.IGSTAmount.setText(String.format("%.2f",itemOutward.getIamt()));
         //viewHolder.CGSTRate.setText(String.format("%.2f",itemOutward.getCrt()));
         viewHolder.CGSTAmount.setText(String.format("%.2f",itemOutward.getCamt()));
-       // viewHolder.SGSTRate.setText(String.format("%.2f",itemOutward.getSrt()));
+        // viewHolder.SGSTRate.setText(String.format("%.2f",itemOutward.getSrt()));
         viewHolder.SGSTAmount.setText(String.format("%.2f",itemOutward.getSamt()));
         viewHolder.cessAmount.setText(String.format("%.2f",itemOutward.getCsamt()));
 
@@ -142,10 +142,13 @@ public class CDNoteAdapter extends BaseAdapter {
             //String ItemName = obj.getItemName();
             AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                     .setTitle("Delete")
+                    .setIcon(R.drawable.ic_launcher)
                     .setMessage("Are you sure you want to Delete this note")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             try{
+                                int sno = obj.getSno();
+                                int uid = obj.getUid();
                                 String noteNo = String.valueOf(obj.getNt_num());
                                 String noteDate = (obj.getNt_dt());
                                 Date date_note = (new SimpleDateFormat("dd-MM-yyyy")).parse(noteDate);
@@ -154,14 +157,14 @@ public class CDNoteAdapter extends BaseAdapter {
                                 String notyType = obj.getNtty();
                                 int lResult =0;
                                 if(GSTR_type.equalsIgnoreCase("Outward"))
-                                    lResult = handler.DeleteOutwardNote(invoiceNo, invoiceDate,noteNo,String.valueOf(date_note.getTime()),notyType);
+                                    lResult = handler.DeleteOutwardNote(uid, invoiceNo, invoiceDate,noteNo,String.valueOf(date_note.getTime()),notyType);
                                 else
                                     lResult = handler.DeleteInwardNote(invoiceNo, invoiceDate,noteNo,String.valueOf(date_note.getTime()),notyType);
-                            if(lResult>0)
-                            {
-                                creditdebitArrayList.remove(i);
-                                notifyDataSetChanged();
-                            }
+                                if(lResult>0)
+                                {
+                                    creditdebitArrayList.remove(i);
+                                    notifyDataSetChanged();
+                                }
                             }catch (Exception e)
                             {
                                 e.printStackTrace();

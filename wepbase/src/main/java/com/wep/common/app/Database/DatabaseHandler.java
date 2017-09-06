@@ -598,6 +598,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String KEY_CustName = "CustName";
     public static final String KEY_InvoiceNo = "InvoiceNo";
     public static final String KEY_CustStateCode = "CustStateCode";
+    public static final String KEY_UID = "UID";
     public static final String KEY_InvoiceDate = "InvoiceDate";
     public static final String KEY_Value = "Value";
     public static final String KEY_HSNCode = "HSNCode";
@@ -868,11 +869,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_TaxableValue + " TEXT, "
             + KEY_SubTotal + " REAl, "
             + KEY_BillStatus + " NUMERIC,"
-           // + KEY_IGSTRate + " REAL,"
+            // + KEY_IGSTRate + " REAL,"
             + KEY_IGSTAmount + " REAL,"
-           // + KEY_CGSTRate + " REAL,"
+            // + KEY_CGSTRate + " REAL,"
             + KEY_CGSTAmount + " REAL, "
-           // + KEY_SGSTRate + " REAL,"
+            // + KEY_SGSTRate + " REAL,"
             + KEY_SGSTAmount + " REAL,"
             + KEY_cessAmount + " REAL,"
             + KEY_GrandTotal + " REAL, "
@@ -920,11 +921,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_Ecom_GSTIN + "  TEXT )";
 
     String QUERY_CREATE_TABLE_CREDITDEBIT_OUTWARD = " CREATE TABLE " + TBL_CreditDebit_Outward + " (" +
-            KEY_GSTIN + "  TEXT, " + KEY_CustName + " TEXT, " + KEY_NoteType + " TEXT, " + KEY_NoteNo + " TEXT, " +
-            KEY_NoteDate + " TEXT, " + KEY_InvoiceNo + " TEXT , " + KEY_InvoiceDate + " TEXT , " +
-            KEY_AttractsReverseCharge + " TEXT, " + KEY_Reason+" TEXT, "+ KEY_DifferentialValue + " TEXT, " + KEY_CGSTRate + " REAL," +
-            KEY_CGSTAmount + " REAL," + KEY_SGSTRate + " REAL, " + KEY_SGSTAmount + " REAL, " +KEY_cessRate + " REAL, " +
-            KEY_cessAmount + " REAL, " + KEY_IGSTRate + " REAL, " +KEY_IGSTAmount + " REAL )";
+            KEY_UID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            KEY_GSTIN + "  TEXT, " +
+            KEY_CustName + " TEXT, " +
+            KEY_NoteType + " TEXT, " +
+            KEY_NoteNo + " TEXT, " +
+            KEY_NoteDate + " TEXT, " +
+            KEY_InvoiceNo + " TEXT , " +
+            KEY_InvoiceDate + " TEXT , " +
+            KEY_AttractsReverseCharge + " TEXT, " +
+            KEY_Reason+" TEXT, "+
+            KEY_DifferentialValue + " TEXT, " +
+            KEY_CGSTRate + " REAL," +
+            KEY_CGSTAmount + " REAL," +
+            KEY_SGSTRate + " REAL, " +
+            KEY_SGSTAmount + " REAL, " +
+            KEY_cessRate + " REAL, " +
+            KEY_cessAmount + " REAL, " +
+            KEY_IGSTRate + " REAL, " +
+            KEY_IGSTAmount + " REAL )";
+
 
     String QUERY_CREATE_TABLE_CREDITDEBIT_Inward = " CREATE TABLE " + TBL_CreditDebit_Inward + " (" +
             KEY_GSTIN + "  TEXT, " + KEY_CustName + " TEXT, " + KEY_NoteType + " TEXT, " + KEY_NoteNo + " TEXT, " +
@@ -1928,6 +1944,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor result = dbFNB.rawQuery(selectQuery, null);
         return result;
     }
+    public int DeleteOutwardNote(int uid, String invoiceNo, String invoiceDate,String creditNo, String creditDate, String noteType) {
+
+        String deleteQuery = KEY_UID + " = '" + uid + "' AND " + KEY_InvoiceDate + " LIKE '" + invoiceDate +"' AND "+KEY_InvoiceNo+" LIKE '"+invoiceNo+
+                "' AND "+KEY_NoteNo+" LIKE '"+creditNo+"' AND "+KEY_NoteDate+" LIKE '"+creditDate+"' AND "+KEY_NoteType+" LIKE '"+noteType+"'";
+        return dbFNB.delete(TBL_CreditDebit_Outward, deleteQuery, null);
+    }
+
 
     public int DeleteOutwardNote(String invoiceNo, String invoiceDate,String creditNo, String creditDate, String noteType) {
 
@@ -2229,7 +2252,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put(KEY_OriginalInvoiceDate, d.getTime());
             contentValues.put(KEY_GSTIN, ammend.getGstin_rev());
             contentValues.put(KEY_InvoiceNo, ammend.getInvoiceNo_rev());
-             d = new SimpleDateFormat("dd-MM-yyyy").parse(ammend.getInvoiceDate_rev());
+            d = new SimpleDateFormat("dd-MM-yyyy").parse(ammend.getInvoiceDate_rev());
             contentValues.put(KEY_InvoiceDate, d.getTime());
             contentValues.put(KEY_HSNCode, ammend.getHSn());
             contentValues.put(KEY_SupplyType, ammend.getType());
@@ -2247,7 +2270,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             //contentValues.put(KEY_BusinessType,bussinessType);
 
 
-             result = dbFNB.insert(TBL_GSTR2_AMEND, null, contentValues);
+            result = dbFNB.insert(TBL_GSTR2_AMEND, null, contentValues);
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -2476,7 +2499,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         int result=0;
         try{
-             result = db.delete(TBL_OWNER_DETAILS, null, null);
+            result = db.delete(TBL_OWNER_DETAILS, null, null);
             return result;
         }catch (Exception e){
             e.printStackTrace();
@@ -4577,58 +4600,58 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         long result =0;
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-        cvDbValues = new ContentValues();
+            cvDbValues = new ContentValues();
 
-        cvDbValues.put("TokenNumber", objPendingKOT.getTokenNumber());
-        cvDbValues.put("TableNumber", objPendingKOT.getTableNumber());
-        cvDbValues.put("SubUdfNumber", objPendingKOT.getSubUdfNumber());
-        cvDbValues.put("EmployeeId", objPendingKOT.getEmployeeId());
-        cvDbValues.put("CustId", objPendingKOT.getCusId());
-        cvDbValues.put("Time", objPendingKOT.getTime());
-        cvDbValues.put("ItemNumber", objPendingKOT.getItemNumber());
-        cvDbValues.put("ItemName", objPendingKOT.getItemName());
-        cvDbValues.put("Quantity", objPendingKOT.getQuantity());
-        cvDbValues.put("Rate", objPendingKOT.getRate());
-        cvDbValues.put("Amount", objPendingKOT.getAmount());
+            cvDbValues.put("TokenNumber", objPendingKOT.getTokenNumber());
+            cvDbValues.put("TableNumber", objPendingKOT.getTableNumber());
+            cvDbValues.put("SubUdfNumber", objPendingKOT.getSubUdfNumber());
+            cvDbValues.put("EmployeeId", objPendingKOT.getEmployeeId());
+            cvDbValues.put("CustId", objPendingKOT.getCusId());
+            cvDbValues.put("Time", objPendingKOT.getTime());
+            cvDbValues.put("ItemNumber", objPendingKOT.getItemNumber());
+            cvDbValues.put("ItemName", objPendingKOT.getItemName());
+            cvDbValues.put("Quantity", objPendingKOT.getQuantity());
+            cvDbValues.put("Rate", objPendingKOT.getRate());
+            cvDbValues.put("Amount", objPendingKOT.getAmount());
             cvDbValues.put(KEY_OriginalRate, objPendingKOT.getOriginalrate());
-        cvDbValues.put("TaxPercent", objPendingKOT.getTaxPercent());
-        cvDbValues.put("TaxAmount", objPendingKOT.getTaxAmount());
-        cvDbValues.put("DiscountPercent", objPendingKOT.getDiscountPercent());
-        cvDbValues.put("DiscountAmount", objPendingKOT.getDiscountAmount());
-        cvDbValues.put("ModifierAmount", objPendingKOT.getModifierAmount());
-        cvDbValues.put("ServiceTaxPercent", objPendingKOT.getServiceTaxPercent());
-        cvDbValues.put("ServiceTaxAmount", objPendingKOT.getServiceTaxAmount());
-        cvDbValues.put("TaxType", objPendingKOT.getTaxType());
-        cvDbValues.put("DeptCode", objPendingKOT.getDeptCode());
-        cvDbValues.put("CategCode", objPendingKOT.getCategCode());
-        cvDbValues.put("KitchenCode", objPendingKOT.getKitchenCode());
-        cvDbValues.put("OrderMode", objPendingKOT.getOrderMode());
-        cvDbValues.put("IsCheckedOut", objPendingKOT.getIsCheckedOut());
-        cvDbValues.put("TableSplitNo", objPendingKOT.getTableSplitNo());
-        cvDbValues.put("PrintKOTStatus", objPendingKOT.getPrintKOTStatus());
-        cvDbValues.put(KEY_HSNCode, objPendingKOT.getHSNCode());
-        cvDbValues.put(KEY_UOM, objPendingKOT.getUOM());
-        cvDbValues.put(KEY_POS, objPendingKOT.getPOS());
-        cvDbValues.put(KEY_SupplyType, objPendingKOT.getSupplyType());
-        cvDbValues.put(KEY_IGSTRate, objPendingKOT.getIGSTRate());
-        cvDbValues.put(KEY_IGSTAmount, objPendingKOT.getIGSTAmount());
-        cvDbValues.put(KEY_cessRate, objPendingKOT.getCessRate());
-        cvDbValues.put(KEY_cessAmount, objPendingKOT.getCessAmount());
+            cvDbValues.put("TaxPercent", objPendingKOT.getTaxPercent());
+            cvDbValues.put("TaxAmount", objPendingKOT.getTaxAmount());
+            cvDbValues.put("DiscountPercent", objPendingKOT.getDiscountPercent());
+            cvDbValues.put("DiscountAmount", objPendingKOT.getDiscountAmount());
+            cvDbValues.put("ModifierAmount", objPendingKOT.getModifierAmount());
+            cvDbValues.put("ServiceTaxPercent", objPendingKOT.getServiceTaxPercent());
+            cvDbValues.put("ServiceTaxAmount", objPendingKOT.getServiceTaxAmount());
+            cvDbValues.put("TaxType", objPendingKOT.getTaxType());
+            cvDbValues.put("DeptCode", objPendingKOT.getDeptCode());
+            cvDbValues.put("CategCode", objPendingKOT.getCategCode());
+            cvDbValues.put("KitchenCode", objPendingKOT.getKitchenCode());
+            cvDbValues.put("OrderMode", objPendingKOT.getOrderMode());
+            cvDbValues.put("IsCheckedOut", objPendingKOT.getIsCheckedOut());
+            cvDbValues.put("TableSplitNo", objPendingKOT.getTableSplitNo());
+            cvDbValues.put("PrintKOTStatus", objPendingKOT.getPrintKOTStatus());
+            cvDbValues.put(KEY_HSNCode, objPendingKOT.getHSNCode());
+            cvDbValues.put(KEY_UOM, objPendingKOT.getUOM());
+            cvDbValues.put(KEY_POS, objPendingKOT.getPOS());
+            cvDbValues.put(KEY_SupplyType, objPendingKOT.getSupplyType());
+            cvDbValues.put(KEY_IGSTRate, objPendingKOT.getIGSTRate());
+            cvDbValues.put(KEY_IGSTAmount, objPendingKOT.getIGSTAmount());
+            cvDbValues.put(KEY_cessRate, objPendingKOT.getCessRate());
+            cvDbValues.put(KEY_cessAmount, objPendingKOT.getCessAmount());
 
-        result = db.insert(TBL_PENDINGKOT, null, cvDbValues);
-    }catch(Exception e )
-    {
-        result = 0;
-        e.printStackTrace();
-    }finally
+            result = db.insert(TBL_PENDINGKOT, null, cvDbValues);
+        }catch(Exception e )
+        {
+            result = 0;
+            e.printStackTrace();
+        }finally
 
-    {
-        return result;
+        {
+            return result;
+        }
     }
-}
 
     public long updateKOT(int ItemNo, float Qty, double Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus
-                    ,float IAmt, float cessAmt, double taxableValue) {
+            ,float IAmt, float cessAmt, double taxableValue) {
         cvDbValues = new ContentValues();
         cvDbValues.put("Quantity", Qty);
         cvDbValues.put("Amount", Amount);
@@ -4641,7 +4664,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public long updateKOT_new(int ItemNo, float Qty, double Amount, float TaxAmt, float SerTaxAmt, int OrderMode, int PrintKOTStatus
-                    ,float IAmt, float cessAmt) {
+            ,float IAmt, float cessAmt) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result =0;
         try
@@ -4865,19 +4888,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return dbFNB.delete(TBL_PENDINGKOT, "ItemNumber=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND SubUdfNumber=" + SubUdfNumber, null);
     }
- public int deleteKOTItemsByItemToken_new(String ItemNumber, int TokenNumber, int SubUdfNumber) {
+    public int deleteKOTItemsByItemToken_new(String ItemNumber, int TokenNumber, int SubUdfNumber) {
 
-     SQLiteDatabase db = this.getWritableDatabase();
-     int result =0;
-     try {
-         result = db.delete(TBL_PENDINGKOT, "ItemNumber=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND SubUdfNumber=" + SubUdfNumber, null);
-     }catch (Exception e)
-     {
-         e.printStackTrace();
-         result =0;
-     }finally {
-         return result;
-     }
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result =0;
+        try {
+            result = db.delete(TBL_PENDINGKOT, "ItemNumber=" + ItemNumber + " AND TokenNumber=" + TokenNumber + " AND SubUdfNumber=" + SubUdfNumber, null);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            result =0;
+        }finally {
+            return result;
+        }
 
     }
 
@@ -4991,28 +5014,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return dbFNB.insert(TBL_DELETEDKOT, null, cvDbValues);
     }
-public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
-    SQLiteDatabase db = this.getWritableDatabase();
-    long result =0;
-    try {
-        cvDbValues = new ContentValues();
+    public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result =0;
+        try {
+            cvDbValues = new ContentValues();
 
-        cvDbValues.put("Reason", objDeletedKOT.getReason());
-        cvDbValues.put("EmployeeId", objDeletedKOT.getEmployeeId());
-        cvDbValues.put("SubUdfNumber", objDeletedKOT.getSubudfNumber());
-        cvDbValues.put("TableNumber", objDeletedKOT.getTableNumber());
-        cvDbValues.put("Time", objDeletedKOT.getTime());
-        cvDbValues.put("TokenNumber", objDeletedKOT.getTokenNumber());
+            cvDbValues.put("Reason", objDeletedKOT.getReason());
+            cvDbValues.put("EmployeeId", objDeletedKOT.getEmployeeId());
+            cvDbValues.put("SubUdfNumber", objDeletedKOT.getSubudfNumber());
+            cvDbValues.put("TableNumber", objDeletedKOT.getTableNumber());
+            cvDbValues.put("Time", objDeletedKOT.getTime());
+            cvDbValues.put("TokenNumber", objDeletedKOT.getTokenNumber());
 
-        result = db.insert(TBL_DELETEDKOT, null, cvDbValues);
-    }catch (Exception e)
-    {
-        result =0;
-        e.printStackTrace();
-    }
-    finally {
-        return result;
-    }
+            result = db.insert(TBL_DELETEDKOT, null, cvDbValues);
+        }catch (Exception e)
+        {
+            result =0;
+            e.printStackTrace();
+        }
+        finally {
+            return result;
+        }
     }
 
     // -----Delete all KOT items from Pending KOT table-----
@@ -5220,7 +5243,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     public Cursor getBillDetail_counter(int InvoiceNumber) {
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null)
-        return db.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber, null, null, null, null);
+            return db.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber, null, null, null, null);
         else
             return null;
     }
@@ -5233,7 +5256,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null)
             return db.query(TBL_BILLDETAIL, new String[]{"*"}, KEY_InvoiceNo + "=" + InvoiceNumber+
-                " AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null, null, null, null);
+                    " AND "+KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null, null, null, null);
         else
             return null;
     }
@@ -5269,44 +5292,44 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
     }
 
     public Cursor getItemssbyBarCode(String Barcode) {
-                SQLiteDatabase db = getWritableDatabase();
-                Cursor cursor = null;
-                try{
-                        cursor = db.query(TBL_ITEM_Outward, new String[]{"*"}, KEY_ItemBarcode+" LIKE '" + Barcode+"'", null, null, null, null);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        cursor = null;
-                    }finally {
-                        //db.close();
-                            }
-                return cursor;
-            }
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = null;
+        try{
+            cursor = db.query(TBL_ITEM_Outward, new String[]{"*"}, KEY_ItemBarcode+" LIKE '" + Barcode+"'", null, null, null, null);
+        }catch (Exception e){
+            e.printStackTrace();
+            cursor = null;
+        }finally {
+            //db.close();
+        }
+        return cursor;
+    }
     public List<String> getAllBarCode_fnb() {
-                List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<String>();
 
-                       try{
-                        // Select All Query
-                                String selectQuery = "SELECT  ItemBarcode FROM " + TBL_ITEM_Outward;
-                        Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArguments
-                        // looping through all rows and adding to list
-                                if (cursor.moveToFirst()) {
-                               do {
-                                        String br = cursor.getString(cursor.getColumnIndex("ItemBarcode"));
-                                        if(br!=null &&  !br.equals("") && !list.contains(br))
-                                                list.add(br);// adding
-                                        // 2nd
-                                                // column
-                                                        // data
-                                                            } while (cursor.moveToNext());
-                            }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        list = null;
-                    }finally {
-                        //db.close();
-                            }
-                return list;
+        try{
+            // Select All Query
+            String selectQuery = "SELECT  ItemBarcode FROM " + TBL_ITEM_Outward;
+            Cursor cursor = dbFNB.rawQuery(selectQuery, null);// selectQuery,selectedArguments
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    String br = cursor.getString(cursor.getColumnIndex("ItemBarcode"));
+                    if(br!=null &&  !br.equals("") && !list.contains(br))
+                        list.add(br);// adding
+                    // 2nd
+                    // column
+                    // data
+                } while (cursor.moveToNext());
             }
+        }catch (Exception e){
+            e.printStackTrace();
+            list = null;
+        }finally {
+            //db.close();
+        }
+        return list;
+    }
 
     // -----Retrieve single bill details by Customer Id-----
     public Cursor getBillDetailByCustomer(int CustId, int BillStatus, float BillAmount) {
@@ -5373,7 +5396,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
                 paid =cursor.getInt(cursor.getColumnIndex(KEY_InvoiceNo));
 
         }*/
-   // }
+    // }
 
 //    public Cursor getBillDetailByCustomerWithTime1(int CustId, int BillStatus, float BillAmount ,String time) {
 //
@@ -5395,8 +5418,8 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
             {
                 double billamount = cursor.getDouble(cursor.getColumnIndex(KEY_BillAmount));
                 float ff = Float.parseFloat(String.format("%.2f",billamount));
-               double roundedAmount_database = Math.ceil(ff);
-               double roundedAmount_received = Math.ceil(BillAmount);
+                double roundedAmount_database = Math.ceil(ff);
+                double roundedAmount_received = Math.ceil(BillAmount);
                 //Log.d("roundedAmount_database",String.valueOf(roundedAmount_database));
                 //Log.d("roundedAmount_received",String.valueOf(roundedAmount_received));
                 if(roundedAmount_database ==roundedAmount_received )
@@ -5419,7 +5442,7 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
         Cursor cursor =null;
         SQLiteDatabase db = this.getReadableDatabase();
         try {
-             cursor = db.query(TBL_BILLDETAIL, new String[]{"*"}, "CustId= '" + CustId + "' AND BillStatus = '" + BillStatus +
+            cursor = db.query(TBL_BILLDETAIL, new String[]{"*"}, "CustId= '" + CustId + "' AND BillStatus = '" + BillStatus +
                     "'  AND " + KEY_Time + " LIKE '" + time + "' AND "+KEY_BillingMode+" = "+billingMode, null, null, null, null);
 
         } catch (Exception e) {
@@ -5442,15 +5465,15 @@ public long addDeletedKOT_new(DeletedKOT objDeletedKOT) {
                     KEY_InvoiceDate+" LIKE '"+InvoiceDate+"'", null);
         }catch (Exception e)
         {
-           e.printStackTrace();
+            e.printStackTrace();
             result =0;
         }
         finally {
-             return result;
+            return result;
         }
 
     }
-public int makeBillVoid(int InvoiceNo ) {
+    public int makeBillVoid(int InvoiceNo ) {
         SQLiteDatabase db ;
         int result = 0;
         try
@@ -5461,11 +5484,11 @@ public int makeBillVoid(int InvoiceNo ) {
             result =db.update(TBL_BILLDETAIL, cvDbValues, KEY_InvoiceNo + "=" + InvoiceNo, null);
         }catch (Exception e)
         {
-           e.printStackTrace();
+            e.printStackTrace();
             result =0;
         }
         finally {
-             return result;
+            return result;
         }
 
     }
@@ -5776,7 +5799,7 @@ public int makeBillVoid(int InvoiceNo ) {
 
     }
     public int clearOutwardStock(String currentdate) {
-       int del =0;
+        int del =0;
         del =  dbFNB.delete(TBL_StockOutward, KEY_BusinessDate+" LIKE '"+currentdate+"' ",null);
         return del;
     }
@@ -6136,7 +6159,7 @@ public int makeBillVoid(int InvoiceNo ) {
         return l;
     }
     public long updateSupplierDetails(String supplierType_str, String suppliergstin_str, String suppliername_str,
-                                    String supplierphn_str, String supplieraddress_str, int suppliercode) {
+                                      String supplierphn_str, String supplieraddress_str, int suppliercode) {
         long l = 0;
         String whereclause = KEY_SupplierCode+"="+suppliercode;
         ContentValues cvdbValues = new ContentValues();
@@ -6627,7 +6650,7 @@ public int makeBillVoid(int InvoiceNo ) {
         return dbFNB.delete(TBL_PURCHASEORDER, KEY_SupplierCode + "=" + suppliercode + " AND " + KEY_PurchaseOrderNo + " = " + purchaseorder, null);
     }
     public long deletePurchaseOrderEntry(String puchaseOrderNo, String supplierCode,String itemname,
-                                        double rate, double quantity) {
+                                         double rate, double quantity) {
 
         String deleteClause = KEY_SupplierCode + " Like '" + supplierCode + "' AND " +KEY_PurchaseOrderNo +
                 " LIKE '" + puchaseOrderNo+"' AND "+KEY_ItemName+" LIKE '"+itemname+"' AND "+KEY_Rate+"="+rate+
@@ -6876,7 +6899,7 @@ public int makeBillVoid(int InvoiceNo ) {
         return result;
     }
     public Cursor getGSTR2_b2bA_ammends_for_gstin_registered(String invoiceNo,String invoiceDate,String gstin,String invoiceNo_ori,
-                                                  String invoicedate_ori)
+                                                             String invoicedate_ori)
     {
         Cursor result = null;
         String queryString = "Select * FROM " + TBL_GSTR2_AMEND + " WHERE " + KEY_GSTIN + " Like '" + gstin + "' AND " +
@@ -9220,7 +9243,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         int result =0;
         Cursor cursor = null;
         try {
-             cursor = dbFNB.rawQuery("SELECT * FROM " + TBL_BILLSETTING, null);
+            cursor = dbFNB.rawQuery("SELECT * FROM " + TBL_BILLSETTING, null);
             if(cursor!=null && cursor.moveToFirst())
             {
                 result = cursor.getInt(cursor.getColumnIndex(KEY_Environment));

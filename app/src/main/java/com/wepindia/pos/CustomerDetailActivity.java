@@ -874,54 +874,52 @@ public class CustomerDetailActivity extends WepBaseActivity {
                 MsgBox.Show("Error", name+" already registered with Phn : "+Phone );
                 return;
             }
-        }else
-        {
-            if (GSTIN == null) {
-                GSTIN = "";
-            }
-            boolean mFlag = false;
-            try {
-                if(GSTIN.trim().length() == 0)
-                {mFlag = true;}
-                else if (GSTIN.trim().length() > 0 && GSTIN.length() == 15) {
-                    String[] part = GSTIN.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                    if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
-                            && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
-                            && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
-                            && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
-                            && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
-                            && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
-                            && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
-                        mFlag = true;
-                    } else {
-                        mFlag = false;
-                    }
+        }
+        if (GSTIN == null) {
+            GSTIN = "";
+        }
+        boolean mFlag = false;
+        try {
+            if(GSTIN.trim().length() == 0)
+            {mFlag = true;}
+            else if (GSTIN.trim().length() > 0 && GSTIN.length() == 15) {
+                String[] part = GSTIN.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                if (CHECK_INTEGER_VALUE == checkDataypeValue(part[0], "Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[1],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[2],"Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[3],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[4],"Int")
+                        && CHECK_STRING_VALUE == checkDataypeValue(part[5],"String")
+                        && CHECK_INTEGER_VALUE == checkDataypeValue(part[6],"Int")) {
+                    mFlag = true;
                 } else {
                     mFlag = false;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
                 mFlag = false;
             }
-            if (mFlag)
-            {
-                Log.d("Customer Selection", "Id: " + Id + " Name: " + Name + " Phone:" + Phone + " Address:" + Address
-                        + " Last Transn.:" + LastTransaction + " Total Transan.:" + TotalTransaction+" GSTIN : "+GSTIN);
-                int iResult = dbCustomer.updateCustomer(Address, Phone, Name, Integer.parseInt(Id),
-                        Float.parseFloat(LastTransaction), Float.parseFloat(TotalTransaction), Float.parseFloat(CreditAmount), GSTIN);
-                Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
-                Toast.makeText(myContext, "Customer Updated Successfully", Toast.LENGTH_LONG).show();
-                ResetCustomer();
-                if (iResult > 0) {
-                    ClearCustomerTable();
-                    DisplayCustomer();
-                } else {
-                    MsgBox.Show("Warning", "Update failed");
-                }
-            }else
-            {
-                MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mFlag = false;
+        }
+        if (mFlag)
+        {
+            Log.d("Customer Selection", "Id: " + Id + " Name: " + Name + " Phone:" + Phone + " Address:" + Address
+                    + " Last Transn.:" + LastTransaction + " Total Transan.:" + TotalTransaction+" GSTIN : "+GSTIN);
+            int iResult = dbCustomer.updateCustomer(Address, Phone, Name, Integer.parseInt(Id),
+                    Float.parseFloat(LastTransaction), Float.parseFloat(TotalTransaction), Float.parseFloat(CreditAmount), GSTIN);
+            Log.d("updateCustomer", "Updated Rows: " + String.valueOf(iResult));
+            Toast.makeText(myContext, "Customer Updated Successfully", Toast.LENGTH_LONG).show();
+            ResetCustomer();
+            if (iResult > 0) {
+                ClearCustomerTable();
+                DisplayCustomer();
+            } else {
+                MsgBox.Show("Warning", "Update failed");
             }
+        }else
+        {
+            MsgBox.Show("Invalid Information","Please enter valid GSTIN for customer");
         }
 
 

@@ -52,6 +52,17 @@
         <item>UnRegistered</item>
     </string-array>
 
+    <string-array name="CNR_Reason">
+        <item> </item>
+        <item>Sales Return</item>
+        <item>Post Sale Discount</item>
+        <item>Deficiency in service</item>
+        <item>Correction in invoice</item>
+        <item>Change in POS</item>
+        <item>Finalization of provisional assessment</item>
+        <item>Others</item>
+    </string-array>
+
     <string-array name="poscode">
         <item> </item>
         <item>Andaman and Nicobar Islands 35</item>

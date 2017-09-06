@@ -51,6 +51,20 @@
             android:padding="@dimen/_5dp_720dp_4dp_600dp">
 
             <com.wep.common.app.views.WepButton
+                android:id="@+id/btnLoadCredit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_btn"
+                android:text="Load"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin" />
+
+            <com.wep.common.app.views.WepButton
                 android:id="@+id/btnAddCredit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,20 +73,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/background_btn"
                 android:text="Add"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
-                android:theme="@style/WepButtonWithMarigin" />
-
-            <com.wep.common.app.views.WepButton
-                android:id="@+id/btnEditCredit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_btn"
-                android:text="Update"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="1.4"
                         android:gravity="center_vertical"
                         android:text="Number"
                         android:textAllCaps="false"
@@ -183,7 +183,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="1.4"
                         android:gravity="bottom"
                         android:text="Date"
                         android:textAllCaps="false"
@@ -217,31 +217,34 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginTop="20dp">
 
                     <TextView
                         android:id="@+id/textView13"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.4"
                         android:gravity="center_vertical"
                         android:text="Reason"
                         android:textAllCaps="false"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="@dimen/main_text_heading_17sp_720dp_15sp_600dp" />
 
-                    <EditText
-                        android:id="@+id/edt_reason"
+                    <Spinner
+                        android:id="@+id/spn_reason"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:layout_marginTop="20dp">
 
                     <com.wep.common.app.views.WepButton
                         android:id="@+id/btnCreditOk"
@@ -383,7 +386,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="SGST"
+                        android:text="UTGST/SGST"
                         android:textAllCaps="false"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="@dimen/main_text_heading_17sp_720dp_15sp_600dp" />
@@ -570,7 +573,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp">
                     <!--<TextView
                         android:id="@+id/tv_totalIGSTVal"
                         android:layout_width="wrap_content"
@@ -669,7 +673,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryLight"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="Note No"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -681,7 +685,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryLight"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="Diff.Value"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -693,7 +697,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryLight"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="GST Rate"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -705,7 +709,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryLight"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="IGST Amount"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -730,7 +734,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryLight"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="CGST Amount"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -755,8 +759,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryLight"
-                    android:gravity="center_vertical"
-                    android:text="SGST Amount"
+                    android:gravity="center"
+                    android:text="UTGST/SGST Amount"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/txtColorAccent"
@@ -767,8 +771,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/colorPrimaryLight"
-                    android:gravity="center_vertical"
-                    android:text="CESS Amount"
+                    android:gravity="center"
+                    android:text="cess Amount"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/txtColorAccent"
@@ -792,8 +796,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tablerow"
-
-                />
+                android:listSelector="@android:color/transparent"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:padding="5dp" />
         </RelativeLayout>
     </RelativeLayout>
 

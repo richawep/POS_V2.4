@@ -704,7 +704,7 @@ public class GSTDataController {
                     str +=pos;
 
                     if(ammendRecords!=null && !(ammendRecords.contains(str)))
-                       ammendRecords.add(str);
+                        ammendRecords.add(str);
                     else
                         continue;
 
@@ -972,8 +972,8 @@ public class GSTDataController {
                                 String prs  =cursor.getString(cursor.getColumnIndex("ProvisionalAssess"));
                                 if(rchrg==null)
                                     rchrg = "N";
-                                 if(prs==null)
-                                     prs = "N";
+                                if(prs==null)
+                                    prs = "N";
                                 String inv_typ = "R";
                                 String date_str = cursor.getString(cursor.getColumnIndex("InvoiceDate"));
                                 Date newD = new Date(Long.parseLong(date_str));
@@ -1060,14 +1060,14 @@ public class GSTDataController {
                                 eType,
                                 Orderno,
                                 OrderDate
-                                );
+                        );
                         list.add(gstr1B2CSAData);
                     } while (cursor.moveToNext()) ;
                 }
             }
         }
         catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
             list = null;
         }
         return list;
@@ -1100,6 +1100,7 @@ public class GSTDataController {
                     String dd_inv_str =  new SimpleDateFormat("dd-MM-yyyy").format(dd_inv);
                     GSTR1_CDN_Details nt_det = new GSTR1_CDN_Details(
                             cursor.getString(cursor.getColumnIndex("NoteType")),
+                            cursor.getInt(cursor.getColumnIndex("UID")),
                             cursor.getInt(cursor.getColumnIndex("NoteNo")),
                             dd_note_str,
                             reason,
@@ -1116,7 +1117,7 @@ public class GSTDataController {
                             cessamt,
                             cursor.getDouble(cursor.getColumnIndex("cessAmount")),
                             etin
-                             );
+                    );
                     notelist.add(nt_det);
                 }while(cursor.moveToNext());
                 if(notelist!=null && notelist.size()>0)
@@ -1279,7 +1280,7 @@ public class GSTDataController {
 
                     record_list.add(str);
                     Cursor cursor_item = dbReport.getGSTR2_b2bA_ammends_for_gstin_registered(invoiceNo,invoiceDate,gstin,
-                                                    invoiceNo_ori,invoiceDate_ori);
+                            invoiceNo_ori,invoiceDate_ori);
                     int i=1;
                     double totval = 0;
                     ArrayList<GSTR2_B2B_items> itms_list = new ArrayList<>();

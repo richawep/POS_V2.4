@@ -34,6 +34,7 @@ import com.wepindia.pos.adapters.CDNoteAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -42,12 +43,13 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
 
 
     EditText edt_IGSTRate,edt_IGSTAmount,edt_CGSTRate,edt_CGSTAmount,edt_SGSTRate,edt_SGSTAmount,edt_Value;
-    EditText edt_InvoiceNo,edt_reason,edt_cessAmount;
+    EditText edt_InvoiceNo,edt_cessAmount;
     TextView tv_InvoiceDate,tv_recipientName,tv_billamount,tv_reverseCharge,tv_totalIGSTVal,tv_totalCGSTVal,tv_totalSGSTVal,
             tv_note_no,tv_note_date;
     ImageButton imgButton_cal_Invoice;
+    Spinner spn_reason;
     ListView listview_credit;
-    WepButton btnAddCredit,btnEditCredit,btnClearCredit,btnPrintCredit,btnCloseCredit,btnCreditOk;
+    WepButton btnAddCredit,btnLoadCredit,btnClearCredit,btnPrintCredit,btnCloseCredit,btnCreditOk;
     LinearLayout linear_tax,linear_recipient;
     RelativeLayout rl_creditDisplay;
 
@@ -111,7 +113,6 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         edt_cessAmount = (EditText) v.findViewById(R.id.edt_cessAmount);
         edt_Value = (EditText) v.findViewById(R.id.edt_Value);
         edt_InvoiceNo = (EditText) v.findViewById(R.id.edt_InvoiceNo);
-        edt_reason = (EditText) v.findViewById(R.id.edt_reason);
 
         tv_InvoiceDate = (TextView) v.findViewById(R.id.tv_InvoiceDate);
         tv_recipientName = (TextView) v.findViewById(R.id.tv_recipientName);
@@ -124,14 +125,22 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         tv_note_date = (TextView) v.findViewById(R.id.tv_note_date);
 
         spnrNote = (Spinner) v.findViewById(R.id.spnrNote);
-        List<String> list = new ArrayList<String>();
-        list.add("");
-        list.add("Credit");
-        list.add("Debit");
+        spn_reason = (Spinner) v.findViewById(R.id.spn_reason);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(myContext,android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnrNote.setAdapter(dataAdapter);
+        List<String> list_reasons = Arrays.asList(getResources().getStringArray(R.array.CNR_Reason));
+
+        List<String> list_note = new ArrayList<String>();
+        list_note.add("");
+        list_note.add("Credit");
+        list_note.add("Debit");
+
+        ArrayAdapter<String> reason_dataAdapter = new ArrayAdapter<String>(myContext,android.R.layout.simple_spinner_item, list_reasons);
+        reason_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_reason.setAdapter(reason_dataAdapter);
+
+        ArrayAdapter<String> note_dataAdapter = new ArrayAdapter<String>(myContext,android.R.layout.simple_spinner_item, list_note);
+        note_dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnrNote.setAdapter(note_dataAdapter);
 
         imgButton_cal_Invoice = (ImageButton) v.findViewById(R.id.imgButton_cal_Invoice) ;
         imgButton_cal_Invoice.setOnClickListener(new View.OnClickListener() {
@@ -141,14 +150,14 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             }
         });
         listview_credit = (ListView) v.findViewById(R.id.listview_credit) ;
-        listview_credit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listViewItemClickEvent(noteAdapter.getItems(position));
-            }
-        });
+//        listview_credit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                listViewItemClickEvent(noteAdapter.getItems(position));
+//            }
+//        });
         btnAddCredit = (WepButton) v.findViewById(R.id.btnAddCredit) ;
-        btnEditCredit = (WepButton) v.findViewById(R.id.btnEditCredit) ;
+        btnLoadCredit = (WepButton) v.findViewById(R.id.btnLoadCredit) ;
         btnClearCredit = (WepButton) v.findViewById(R.id.btnClearCredit) ;
         btnPrintCredit = (WepButton) v.findViewById(R.id.btnPrintCredit) ;
         btnCloseCredit = (WepButton) v.findViewById(R.id.btnCloseCredit) ;
@@ -164,12 +173,36 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                 }
             }
         });
-        btnEditCredit.setOnClickListener(new View.OnClickListener() {
+        btnLoadCredit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditCredit();
-                ClearNoteData();
-                loadCredits(edt_InvoiceNo.getText().toString(), tv_InvoiceDate.getText().toString());
+                String invoiceNo = edt_InvoiceNo.getText().toString().trim();
+                String invoiceDate = tv_InvoiceDate.getText().toString().trim();
+                if (!(invoiceNo != null && invoiceDate != null && !invoiceNo.equals("") && !invoiceDate.equals(""))) {
+                    MsgBox.Show("Error", "Please enter invoice no and date for which  note is to be issued");
+                } else {
+                    try {
+                        Date date = new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate);
+                        Cursor cursor = dbCredit.getBillDetail(Integer.parseInt(invoiceNo), String.valueOf(date.getTime()));
+                        if (cursor != null && cursor.moveToFirst()) {
+                            int result = fillData(cursor);
+                            if(result ==1)
+                            {
+                                removeOpacityOnLoad();
+                                loadCredits(invoiceNo, invoiceDate);
+                            }
+
+                        } else {
+                            MsgBox.Show("Error", "This invoice is not present");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+//                EditCredit();
+//                ClearNoteData();
+//                loadCredits(edt_InvoiceNo.getText().toString(), tv_InvoiceDate.getText().toString());
             }
         });
 
@@ -239,14 +272,15 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             edt_SGSTAmount.setText(String.format("%.2f",note.getSamt()));
             edt_cessAmount.setText(String.format("%.2f",note.getCsamt()));
             edt_Value.setText(String.format("%.2f",note.getVal()));
-            edt_reason.setText(note.getRsn());
+//            edt_reason.setText(note.getRsn());
+            spn_reason.setSelection(getIndexReason(note.getRsn()));
             tv_note_no.setText(String.valueOf(note.getNt_num()));
             String notetype = note.getNtty();
             spnrNote.setSelection(getIndexNote(notetype));
             Date date_note = (new SimpleDateFormat("dd-MM-yyyy")).parse(note.getNt_dt());
             tv_note_date.setText(String.valueOf(date_note.getTime()));
             btnAddCredit.setEnabled(false);
-            btnEditCredit.setEnabled(true);
+//            btnEditCredit.setEnabled(true);
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -266,7 +300,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             }
         }
         tv_recipientName.setText(name);
-        tv_billamount.setText(String.format("%.2f",cursor.getFloat(cursor.getColumnIndex("GrandTotal"))));
+        tv_billamount.setText(String.format("%.2f",cursor.getDouble(cursor.getColumnIndex("GrandTotal"))));
         String reverseCharge = cursor.getString(cursor.getColumnIndex("ReverseCharge"));
         if(reverseCharge== null || reverseCharge.equalsIgnoreCase("No")|| reverseCharge.equalsIgnoreCase("N")|| reverseCharge.equals(""))
         { tv_reverseCharge.setText("N");
@@ -284,6 +318,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             int count = 1;
             noteList = new ArrayList<GSTR1_CDN_Details>();
             String date_str = String.valueOf((new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate)).getTime());
+            String reason = spn_reason.getSelectedItem().toString();
             String notety = spnrNote.getSelectedItem().toString();
             String custgstin = tv_recipientName.getText().toString();
             //Cursor cursor = null;
@@ -296,6 +331,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                     Date date=new Date(milli_note);
                     String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
                     note.setSno(count++);
+                    note.setUid(cursor.getInt(cursor.getColumnIndex("UID")));
                     note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
                     note.setNt_num(cursor.getInt(cursor.getColumnIndex("NoteNo")));
                     note.setNt_dt(date_str1);
@@ -319,6 +355,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                     Date date=new Date(milli_note);
                     String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
                     note.setSno(count++);
+                    note.setUid(cursor.getInt(cursor.getColumnIndex("UID")));
                     note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
                     note.setNt_num(cursor.getInt(cursor.getColumnIndex("NoteNo")));
                     note.setNt_dt(date_str1);
@@ -345,6 +382,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
                     Date date=new Date(milli_note);
                     String date_str1 = String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(date));
                     note.setSno(count++);
+                    note.setUid(cursor.getInt(cursor.getColumnIndex("UID")));
                     note.setNtty(cursor.getString(cursor.getColumnIndex("NoteType")));
                     note.setNt_num(cursor.getInt(cursor.getColumnIndex("NoteNo")));
                     note.setNt_dt(date_str1);
@@ -383,9 +421,10 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             ClearAll();
             return 0;
         }
-        if(edt_reason.getText().toString() == null)
-            edt_reason.setText("");
-
+        if(spn_reason.getSelectedItem().toString().equals("")) {
+            MsgBox.Show("Error", "Please select a reason");
+            return 0;
+        }
         if(edt_IGSTRate.getText().toString().equals("") || edt_IGSTAmount.getText().toString().equals(""))
         {
             MsgBox.Show("Error", "Please fill IGST Rate and Amount. If IGST is not applicable, then fill IGST Rate and Amount as zero");
@@ -396,10 +435,10 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             MsgBox.Show("Error", "Please fill CGST Rate and Amount. If CGST is not applicable, then fill CGST Rate and Amount as zero");
             return 0;
         }if(edt_SGSTRate.getText().toString().equals("") || edt_SGSTAmount.getText().toString().equals(""))
-        {
-            MsgBox.Show("Error", "Please fill SGST Rate and Amount. If SGST is not applicable, then fill SGST Rate and Amount as zero");
-            return 0;
-        }
+    {
+        MsgBox.Show("Error", "Please fill SGST Rate and Amount. If SGST is not applicable, then fill SGST Rate and Amount as zero");
+        return 0;
+    }
         if(spnrNote.getSelectedItem().toString().equals(""))
         {
             MsgBox.Show("Error", "Please Select Note type as Credit or Debit");
@@ -441,6 +480,17 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             return 0;
         }
 
+        if(Double.parseDouble(edt_IGSTRate.getText().toString())< 0 || Double.parseDouble(edt_IGSTRate.getText().toString()) > 99.99) //   Double.parseDouble(edt_IGSTRate.getText().toString())
+        {
+            MsgBox.Show("Error", "Please enter IGST Rate between 0 and 99.99");
+            return 0;
+        }
+        if((Double.parseDouble(edt_CGSTRate.getText().toString()) + Double.parseDouble(edt_SGSTRate.getText().toString())) > 99.99)
+        {
+            MsgBox.Show("Error", "Sum of CGST and SGST should be in between 0 and 99.99");
+            return 0;
+        }
+
         return 1;
     }
     private int AddCredit()
@@ -456,7 +506,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             Date date_inv = (new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate));
             int notenum = dbCredit.getCreditNoteNo(edt_InvoiceNo.getText().toString(),String.valueOf(date_inv.getTime()));
             String name  = tv_recipientName.getText().toString();
-            String reason = edt_reason.getText().toString();
+            String reason = spn_reason.getSelectedItem().toString();
             String reverseCharge = tv_reverseCharge.getText().toString();
 
             note.setSno(listview_credit.getCount());
@@ -466,16 +516,16 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
             note.setNt_dt(String.valueOf(milii));
             note.setInum(edt_InvoiceNo.getText().toString());
             note.setIdt(String.valueOf(date_inv.getTime()));
-            note.setVal(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_Value.getText().toString()))));
-            note.setIrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_IGSTRate.getText().toString()))));
-            note.setIamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_IGSTAmount.getText().toString()))));
-            note.setCrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_CGSTRate.getText().toString()))));
-            note.setCamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_CGSTAmount.getText().toString()))));
-            note.setSrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTRate.getText().toString()))));
-            note.setSamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTAmount.getText().toString()))));
+            note.setVal(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_Value.getText().toString()))));
+            note.setIrt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_IGSTRate.getText().toString()))));
+            note.setIamt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_IGSTAmount.getText().toString()))));
+            note.setCrt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_CGSTRate.getText().toString()))));
+            note.setCamt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_CGSTAmount.getText().toString()))));
+            note.setSrt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_SGSTRate.getText().toString()))));
+            note.setSamt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_SGSTAmount.getText().toString()))));
             //note.setCsrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_cessRate.getText().toString()))));
             note.setCsrt(0);
-            note.setCsamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_cessAmount.getText().toString()))));
+            note.setCsamt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_cessAmount.getText().toString()))));
 
             long lResult = dbCredit.addCredit(note, name,reason, reverseCharge);
             if(lResult>0) {
@@ -509,6 +559,21 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         }
         return 0;
     }
+
+    public int getIndexReason(String item)
+    {
+        List<String> pos = Arrays.asList(getResources().getStringArray(R.array.CNR_Reason));
+
+        int count =0;
+        for (String pos_temp : pos)
+        {
+            if(pos_temp.contains(item))
+                return count;
+            count++;
+        }
+        return 0;
+    }
+
     private void EditCredit()
     {
         try {
@@ -518,20 +583,20 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
 
             String invoiceDate = tv_InvoiceDate.getText().toString();
             Date date_inv = (new SimpleDateFormat("dd-MM-yyyy").parse(invoiceDate));
-            String reason = edt_reason.getText().toString();
+            String reason = spn_reason.getSelectedItem().toString();
 
             note.setNt_num(Integer.parseInt(tv_note_no.getText().toString()));
             note.setNt_dt(tv_note_date.getText().toString());
             note.setInum(edt_InvoiceNo.getText().toString());
             note.setIdt(String.valueOf(date_inv.getTime()));
-            note.setVal(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_Value.getText().toString()))));
-            note.setIrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_IGSTRate.getText().toString()))));
-            note.setIamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_IGSTAmount.getText().toString()))));
-            note.setCrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_CGSTRate.getText().toString()))));
-            note.setCamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_CGSTAmount.getText().toString()))));
-            note.setSrt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTRate.getText().toString()))));
-            note.setSamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_SGSTAmount.getText().toString()))));
-            note.setCsamt(Float.parseFloat(String.format("%.2f", Float.parseFloat(edt_cessAmount.getText().toString()))));
+            note.setVal(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_Value.getText().toString()))));
+            note.setIrt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_IGSTRate.getText().toString()))));
+            note.setIamt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_IGSTAmount.getText().toString()))));
+            note.setCrt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_CGSTRate.getText().toString()))));
+            note.setCamt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_CGSTAmount.getText().toString()))));
+            note.setSrt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_SGSTRate.getText().toString()))));
+            note.setSamt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_SGSTAmount.getText().toString()))));
+            note.setCsamt(Double.parseDouble(String.format("%.2f", Double.parseDouble(edt_cessAmount.getText().toString()))));
             note.setCrt(0);
 
             long lResult = dbCredit.editCredit(note, reason);
@@ -559,7 +624,8 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         edt_SGSTAmount.setText("0.00");
         edt_cessAmount.setText("0.00");
         edt_Value.setText("0.00");
-        edt_reason.setText("");
+//        edt_reason.setText("");
+        spn_reason.setSelection(0);
         tv_note_no.setText("");
         tv_note_date.setText("");
         spnrNote.setSelection(0);
@@ -572,7 +638,7 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         listview_credit.setAdapter(noteAdapter);
 
         btnAddCredit.setEnabled(true);
-        btnEditCredit.setEnabled(false);
+//        btnEditCredit.setEnabled(false);
         btnPrintCredit.setEnabled(false);
 
     }
@@ -587,7 +653,8 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         edt_cessAmount.setText("0.00");
         edt_Value.setText("0.00");
         edt_InvoiceNo.setText("");
-        edt_reason.setText("");
+//        edt_reason.setText("");
+        spn_reason.setSelection(0);
         tv_note_no.setText("");
         tv_note_date.setText("");
 
@@ -604,11 +671,11 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         listview_credit.setAdapter(noteAdapter);
 
         btnAddCredit.setEnabled(false);
-        btnEditCredit.setEnabled(false);
+//        btnEditCredit.setEnabled(false);
         //btnClearCredit.setEnabled(false);
         btnPrintCredit.setEnabled(false);
 
-        rl_creditDisplay.setAlpha(0.4f);
+//        rl_creditDisplay.setAlpha(0.4f);
         linear_tax.setAlpha(0.4f);
         linear_tax.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         linear_recipient.setAlpha(0.4f);
@@ -625,56 +692,67 @@ public class Fragment_Outward_Credit_Debit_Note extends Fragment {
         //btnEditCredit.setEnabled(true);
         //btnPrintCredit.setEnabled(true);
     }
-    public void dateSelection(View v){
-    try {
-        AlertDialog.Builder dlgReportDate = new AlertDialog.Builder(myContext);
-        final DatePicker dateReportDate = new DatePicker(myContext);
-        Date d = new Date();
-        CharSequence currentdate = DateFormat.format("yyyy-MM-dd", d.getTime());
-        DateTime objDate = new DateTime(currentdate.toString());
-        dateReportDate.updateDate(objDate.getYear(), objDate.getMonth(), objDate.getDay());
+    void removeOpacityOnLoad()
+    {
+        rl_creditDisplay.setAlpha(1);
+//        linear_tax.setAlpha(1);
+//        linear_tax.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+//        linear_recipient.setAlpha(1);
 
-
-        dlgReportDate
-                .setIcon(R.drawable.ic_launcher)
-                .setTitle("Date Selection")
-                .setMessage("Please select Invoice date")
-                .setView(dateReportDate)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        // richa date format change
-
-                        String strDate = "";
-                        if (dateReportDate.getDayOfMonth() < 10) {
-                            strDate = "0" + String.valueOf(dateReportDate.getDayOfMonth())+"-";
-                        } else {
-                            strDate = String.valueOf(dateReportDate.getDayOfMonth())+"-";
-                        }
-                        if (dateReportDate.getMonth() < 9) {
-                            strDate += "0" + String.valueOf(dateReportDate.getMonth() + 1) + "-";
-                        } else {
-                            strDate += String.valueOf(dateReportDate.getMonth() + 1) + "-";
-                        }
-
-                        strDate += String.valueOf(dateReportDate.getYear());
-                        tv_InvoiceDate.setText(strDate);
-                        Log.d("ReportDate", "Selected Date:" + strDate);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-
-                    }
-                })
-                .show();
-    } catch (Exception e) {
-        e.printStackTrace();
+        btnAddCredit.setEnabled(true);
+        //btnEditCredit.setEnabled(true);
+        //btnPrintCredit.setEnabled(true);
     }
-}
+    public void dateSelection(View v){
+        try {
+            AlertDialog.Builder dlgReportDate = new AlertDialog.Builder(myContext);
+            final DatePicker dateReportDate = new DatePicker(myContext);
+            Date d = new Date();
+            CharSequence currentdate = DateFormat.format("yyyy-MM-dd", d.getTime());
+            DateTime objDate = new DateTime(currentdate.toString());
+            dateReportDate.updateDate(objDate.getYear(), objDate.getMonth(), objDate.getDay());
+
+
+            dlgReportDate
+                    .setIcon(R.drawable.ic_launcher)
+                    .setTitle("Date Selection")
+                    .setMessage("Please select Invoice date")
+                    .setView(dateReportDate)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+                            // richa date format change
+
+                            String strDate = "";
+                            if (dateReportDate.getDayOfMonth() < 10) {
+                                strDate = "0" + String.valueOf(dateReportDate.getDayOfMonth())+"-";
+                            } else {
+                                strDate = String.valueOf(dateReportDate.getDayOfMonth())+"-";
+                            }
+                            if (dateReportDate.getMonth() < 9) {
+                                strDate += "0" + String.valueOf(dateReportDate.getMonth() + 1) + "-";
+                            } else {
+                                strDate += String.valueOf(dateReportDate.getMonth() + 1) + "-";
+                            }
+
+                            strDate += String.valueOf(dateReportDate.getYear());
+                            tv_InvoiceDate.setText(strDate);
+                            Log.d("ReportDate", "Selected Date:" + strDate);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+
+                        }
+                    })
+                    .show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void CloseCredit()
     {
         dbCredit.CloseDatabase();

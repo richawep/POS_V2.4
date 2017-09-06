@@ -2,11 +2,10 @@ package com.wep.common.app.gst;
 
 import java.util.ArrayList;
 
-/**
- * Created by PriyabratP on 01-12-2016.
- */
+
 public class GSTR1_CDN_Details {
     private int sno;
+    private int uid;
     private String ntty;
     private int nt_num;
     private String nt_dt;
@@ -49,6 +48,7 @@ public class GSTR1_CDN_Details {
         this.etin="";
         this.p_gst="N";
         this.sno = 0;
+        this.uid = 0;
 
     }
 
@@ -73,10 +73,11 @@ public class GSTR1_CDN_Details {
         this.sno = 0;
     }
 
-    public GSTR1_CDN_Details(String ntty, int nt_num, String nt_dt, String rsn, String inum, String idt,
+    public GSTR1_CDN_Details(String ntty, int uid, int nt_num, String nt_dt, String rsn, String inum, String idt,
                              String rchrg, double val, double irt, double iamt, double crt, double camt, double srt,
                              double samt, double csrt, double csamt, String etin) {
         this.sno = 0;
+        this.uid = uid;
         this.ntty = ntty;
         this.nt_num = nt_num;
         this.nt_dt = nt_dt;
@@ -99,7 +100,7 @@ public class GSTR1_CDN_Details {
 
     public GSTR1_CDN_Details(String ntty, int nt_num, String nt_dt, String p_gst,String rsn, String inum,
                              String idt,double val, ArrayList<GSTR1_CDN_Items> items
-                             ) {
+    ) {
 
         this.ntty = ntty;
         this.nt_num = nt_num;
@@ -111,6 +112,14 @@ public class GSTR1_CDN_Details {
         this.val = val;
         this.itms = items;
 
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public double getCessamt() {
