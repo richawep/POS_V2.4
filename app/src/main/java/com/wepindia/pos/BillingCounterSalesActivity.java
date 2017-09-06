@@ -1315,16 +1315,16 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
                                     // Tax
                                     dTaxAmt = (dTaxableValue) * (dTaxPercent / 100);
-                                    dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
+                                    //dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
 
                                     dServiceTaxAmt = (dTaxableValue) * (dServiceTaxPercent / 100);
-                                    dServiceTaxAmt = dServiceTaxAmt * Double.parseDouble(Qty.getText().toString());
+                                    //dServiceTaxAmt = dServiceTaxAmt * Double.parseDouble(Qty.getText().toString());
 
                                     dIGSTAmt = (dTaxableValue) * (dIGSTRate / 100);
-                                    dIGSTAmt = dIGSTAmt * Double.parseDouble(Qty.getText().toString());
+                                    //dIGSTAmt = dIGSTAmt * Double.parseDouble(Qty.getText().toString());
 
                                     dcessAmt = (dTaxableValue) * (dcessRate / 100);
-                                    dcessAmt = dcessAmt * Double.parseDouble(Qty.getText().toString());
+                                   // dcessAmt = dcessAmt * Double.parseDouble(Qty.getText().toString());
 
 
                                     dDiscAmt = Double.parseDouble(df_2.format(dDiscAmt));

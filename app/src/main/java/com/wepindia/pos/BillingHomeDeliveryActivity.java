@@ -1652,6 +1652,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                         : tvTaxableValue.getText().toString()); // Temp
 
 
+
                                 if (crsrSettings.getInt(crsrSettings.getColumnIndex("Tax")) == 1) { // forward tax
                                     // Discount
                                     dDiscAmt = dRate * (dDiscPercent / 100);
@@ -1669,16 +1670,16 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
                                     // Tax
                                     dTaxAmt = (dTaxableValue) * (dTaxPercent / 100);
-                                    dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
+                                    //dTaxAmt = dTaxAmt * Double.parseDouble(Qty.getText().toString());
 
                                     dServiceTaxAmt = (dTaxableValue) * (dServiceTaxPercent / 100);
-                                    dServiceTaxAmt = dServiceTaxAmt * Double.parseDouble(Qty.getText().toString());
+                                    //dServiceTaxAmt = dServiceTaxAmt * Double.parseDouble(Qty.getText().toString());
 
                                     dIGSTAmt = (dTaxableValue) * (dIGSTRate / 100);
-                                    dIGSTAmt = dIGSTAmt * Double.parseDouble(Qty.getText().toString());
+                                    //dIGSTAmt = dIGSTAmt * Double.parseDouble(Qty.getText().toString());
 
                                     dcessAmt = (dTaxableValue) * (dcessRate / 100);
-                                    dcessAmt = dcessAmt * Double.parseDouble(Qty.getText().toString());
+                                    //dcessAmt = dcessAmt * Double.parseDouble(Qty.getText().toString());
 
                                     dDiscAmt = Double.parseDouble(df_2.format(dDiscAmt));
                                     dTaxAmt = Double.parseDouble(df_2.format(dTaxAmt));
@@ -1747,7 +1748,6 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                     Amount.setText(String.format("%.2f", amount));
                                     tvTaxableValue.setText(String.format("%.2f", Double.parseDouble(df_2.format(taxableValue_new))));
                                 }
-
 
 
                                 // // delete
