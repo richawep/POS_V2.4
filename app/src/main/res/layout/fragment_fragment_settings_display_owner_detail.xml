@@ -8,8 +8,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="119dp"
+        android:layout_above="@+id/tvHorizontalLine"
+        android:layout_centerHorizontal="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,56 +54,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2.5"
-                android:text="GSTIN"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/ownerGstin"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="enter GSTIN"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin1"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-            android:layout_marginRight="@dimen/activity_horizontal_margin1"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2.5"
-                android:text="Reference No"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/ownerReferenceNo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="reference no"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin1"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
-            android:layout_marginRight="@dimen/activity_horizontal_margin1"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2.5"
                 android:text="PHONE*"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -108,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="Enter Contact Number"
+                android:hint="+91"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -135,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="Enter e-mail"
+                android:hint="abc@xyz.com"
                 android:inputType="textEmailAddress"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
@@ -221,15 +175,67 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin1"
             android:layout_marginRight="@dimen/activity_horizontal_margin1"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:text="GSTIN"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/ownerGstin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="enter GSTIN"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:text="Reference No"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/ownerReferenceNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="BillNo Prefix*"
-                android:textSize="25sp" />
+                android:hint="reference no"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:text="BillNo Prefix"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
 
             <EditText
                 android:id="@+id/ownerBillPrefix"
@@ -237,6 +243,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="ABCD"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:inputType="text"
                 android:maxLength="8" />
         </LinearLayout>
@@ -319,7 +326,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/button_14sp_720dp_12sp_600dp"
             android:theme="@style/WepButtonWithMarigin"
-            android:visibility="gone" />
+            />
 
         <Button
             android:id="@+id/btnClose"

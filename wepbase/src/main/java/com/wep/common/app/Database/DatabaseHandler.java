@@ -7877,12 +7877,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public int updateOwnerDetails(String BillNoPrefix)
+    public int updateOwnerDetails(String BillNoPrefix,String gstin, String referenceNo)
     {
         int result =0;
         try{
             cvDbValues = new ContentValues();
             cvDbValues.put(KEY_BillNoPrefix, BillNoPrefix);
+            cvDbValues.put(KEY_GSTIN, gstin);
+            cvDbValues.put(KEY_REFERENCE_NO, referenceNo);
             result= dbFNB.update(TBL_OWNER_DETAILS, cvDbValues, null, null);
         }catch (Exception e){
             e.printStackTrace();

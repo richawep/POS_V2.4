@@ -19,8 +19,8 @@ import com.wepindia.pos.R;
 
 public class FragmentSettingsDisplayOwnerDetail extends Fragment {
 
-    private TextView Name,Gstin,Phone,Email,Address,RefernceNo, POS, IsMainOffice;
-    private EditText mId, appId, BillNoPrefix;
+    private TextView Name,Phone,Email,Address, POS, IsMainOffice;
+    private EditText mId, appId, BillNoPrefix,RefernceNo,Gstin;
     private DatabaseHandler dbHelper;
     Spinner spinner1, spinner2;
     Context myContext;
@@ -60,8 +60,8 @@ public class FragmentSettingsDisplayOwnerDetail extends Fragment {
             }
         });
         Name=(TextView)view.findViewById(R.id.ownerName);
-        Gstin=(TextView)view.findViewById(R.id.ownerGstin);
-        RefernceNo=(TextView)view.findViewById(R.id.ownerReferenceNo);
+        Gstin=(EditText) view.findViewById(R.id.ownerGstin);
+        RefernceNo=(EditText) view.findViewById(R.id.ownerReferenceNo);
         Phone=(TextView)view.findViewById(R.id.ownerContact);
         Email=(TextView)view.findViewById(R.id.ownerEmail);
         POS=(TextView) view.findViewById(R.id.ownerPos);
@@ -104,11 +104,7 @@ public class FragmentSettingsDisplayOwnerDetail extends Fragment {
             BillNoPrefix.setText(BillNoPrefix_str);
             POS.setText(pos);
             IsMainOffice.setText(mainOffice);
-            /*spinner1.setSelection(getIndex_pos(pos));
-            if(mainOffice.equalsIgnoreCase("yes"))
-                spinner2.setSelection(1);
-            else
-                spinner2.setSelection(2);*/
+
         }
         // dbHelper.close();
     }
@@ -134,9 +130,11 @@ public class FragmentSettingsDisplayOwnerDetail extends Fragment {
     private void apply(View v)
     {
         String billPrefix = BillNoPrefix.getText().toString();
+        String gstin = Gstin.getText().toString();
+        String referenceNo = RefernceNo.getText().toString();
         dbHelper.CreateDatabase();
         dbHelper.OpenDatabase();
-        int ll = dbHelper.updateOwnerDetails(billPrefix);
+        int ll = dbHelper.updateOwnerDetails(billPrefix,gstin,referenceNo);
         if(ll>0)
             Toast.makeText(myContext, "Details updated successfully", Toast.LENGTH_SHORT).show();
     }
