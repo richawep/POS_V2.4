@@ -44,6 +44,8 @@ public class PrintKotBillItem implements Serializable {
     private String isDuplicate = "";
 
     private int UTGSTEnabled = 0;
+    private int HSNPrintEnabled_out = 0;
+    private float roundOff = 0;
 
     public PrintKotBillItem() {
     }
@@ -88,6 +90,22 @@ public class PrintKotBillItem implements Serializable {
 
     public void setBillTaxSlabs(ArrayList<BillTaxSlab> billTaxSlabs) {
         this.billTaxSlabs = billTaxSlabs;
+    }
+
+    public int getHSNPrintEnabled_out() {
+        return HSNPrintEnabled_out;
+    }
+
+    public void setHSNPrintEnabled_out(int HSNPrintEnabled_out) {
+        this.HSNPrintEnabled_out = HSNPrintEnabled_out;
+    }
+
+    public float getRoundOff() {
+        return roundOff;
+    }
+
+    public void setRoundOff(float roundOff) {
+        this.roundOff = roundOff;
     }
 
     public int getUTGSTEnabled() {

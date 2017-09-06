@@ -160,6 +160,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_PettyCashPayment = "PettyCashPayment";
     private static final String KEY_PaidTotalPayment = "PaidTotalPayment";
     private static final String KEY_ChangePayment = "ChangePayment";
+    private static final String KEY_RoundOff = "RoundOff";
 
     // BillItem
     private static final String KEY_TaxAmount = "TaxAmount";
@@ -658,7 +659,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public static final String KEY_Environment = "Environment";
     public static final String KEY_UTGSTEnabled = "UTGSTEnabled";
-    public static final String KEY_HSNPrintEnabled = "HSNPrintEnabled";
+    public static final String KEY_HSNPrintEnabled_out = "HSNPrintEnabled_out";
 
     public static final String KEY_ProvisionalAssess = "ProvisionalAssess";
     public static final String KEY_LineNumber = "LineNumber";
@@ -897,6 +898,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_PettyCashPayment + " REAL, "
             + KEY_PaidTotalPayment + " REAL, "
             + KEY_ChangePayment + " REAL, "
+            + KEY_RoundOff + " REAL, "
             + KEY_TableNo +" TEXT, "
             + KEY_Table_Split_No+" TEXT "
             +")";
@@ -1057,7 +1059,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             KEY_ItemNoReset + " NUMERIC , " + KEY_PrintPreview + " NUMERIC , "
             +KEY_Environment +" NUMERIC, "
             +KEY_UTGSTEnabled +" NUMERIC, "
-            +KEY_HSNPrintEnabled +" NUMERIC, "
+            + KEY_HSNPrintEnabled_out +" NUMERIC, "
             +KEY_TableSpliting + " NUMERIC )";
 
     String QUERY_CREATE_TABLE_BILLNO_RESET = "CREATE TABLE " + TBL_BILLNORESETCONFIG + "( " + KEY_BillNoReset_InvoiceNo +
@@ -1493,6 +1495,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_TableSpliting, 0);
         cvDbValues.put(KEY_UTGSTEnabled, 0); // disabling
         cvDbValues.put(KEY_Environment, 1); // Production
+        cvDbValues.put(KEY_HSNPrintEnabled_out, 0); // Disabled
 
         status = 0;
         try {
@@ -2919,6 +2922,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_ReverseCharge_OUT, objBillSetting.getReverseCharge_out());
         cvDbValues.put(KEY_GSTEnable, objBillSetting.getGSTEnable());
         cvDbValues.put(KEY_UTGSTEnabled, objBillSetting.getUTGSTEnabled_out());
+        cvDbValues.put(KEY_HSNPrintEnabled_out, objBillSetting.getHSNPrintenabled_out());
         return dbFNB.update(TBL_BILLSETTING, cvDbValues, null, null);
     }
 
@@ -3975,7 +3979,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // -----Update Customer table-----
-    public int updateCustomerTransaction(int iCustId, float fLastTransaction, float fTotalTransaction, float fCreditAmount) {
+    public int updateCustomerTransaction(int iCustId, float fLastTransaction, float fTotalTransaction, double fCreditAmount) {
         SQLiteDatabase db = getWritableDatabase();
         int result = 0;
         try {
@@ -7530,6 +7534,7 @@ public int makeBillVoid(int InvoiceNo ) {
         cvDbValues.put(KEY_TableSpliting, 0);
         cvDbValues.put(KEY_UTGSTEnabled, 0); // disabling
         cvDbValues.put(KEY_Environment, 1); // Production
+        cvDbValues.put(KEY_HSNPrintEnabled_out, 0); // disabled
 
         long result1 = dbFNB.insert(TBL_BILLSETTING, null, cvDbValues);
     }
@@ -8852,6 +8857,7 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
             cvDbValues.put("CustId", objBillDetail.getCustId());
             cvDbValues.put("PettyCashPayment", objBillDetail.getPettyCashPayment());
             cvDbValues.put(KEY_WalletPayment, objBillDetail.getWalletAmount());
+            cvDbValues.put(KEY_RoundOff, objBillDetail.getfRoundOff());
             cvDbValues.put("PaidTotalPayment", objBillDetail.getPaidTotalPayment());
             cvDbValues.put("ChangePayment", objBillDetail.getChangePayment());
             cvDbValues.put(KEY_CustName, objBillDetail.getCustname());

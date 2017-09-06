@@ -693,20 +693,18 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                                     GET_GSTR3 = Config.GET_GSTR3_PRODUCTION;
                             break;
                     case TEST_ENVIRONMENT :
-                    case DEMO_ENVIRONMENT : BASE_URL = Config.Base_URL_Azure;
-                                    HeaderAuthorizationData_POST_APIS = Config.HeaderAuthorizationData_POST_APIS_PRODUCTION;
+                    case DEMO_ENVIRONMENT : BASE_URL = Config.Base_URL_DEMO;
+                                    HeaderAuthorizationData_POST_APIS = Config.HeaderAuthorizationData_POST_APIS_DEMO_TESTING;
                                     POST_GSTR1 = Config.POST_GSTR1_DEMO;
                                     POST_GSTR2 = Config.POST_GSTR2_DEMO;
                                     GET_GSTR1 = Config.GET_GSTR1_DEMO;
                                     GET_GSTR1A = Config.GET_GSTR1A_DEMO;
                                     GET_GSTR1_SUMMARY = Config.GET_GSTR1_SUMMARY_DEMO;
-                                    GET_GSTR2A = Config.GET_GSTR2A_PRODUCTION;
-                                    GET_GSTR2_RECONCILED = Config.GET_GSTR2_RECONCILED_PRODUCTION;
-                                    GET_GSTR3 = Config.GET_GSTR3_PRODUCTION;
+                                    GET_GSTR2A = Config.GET_GSTR2A_DEMO;
+                                    GET_GSTR2_RECONCILED = Config.GET_GSTR2_RECONCILED_DEMO;
+                                    GET_GSTR3 = Config.GET_GSTR3_DEMO;
                         break;
-                    default:
-
-
+                    default: Log.d("GSTLINK","No URLS configured: environment = "+ENVIRONMENT);
                 }
             }catch (Exception e)
             {
@@ -717,12 +715,12 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
 
     private void getGSTR3() {
         progressDialog.show();
-        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR3, Config.GSTR3_GET,"").execute();
+        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR3, GET_GSTR3,"").execute();
     }
 
     private void getGSTR1AllSummery() {
         progressDialog.show();
-        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMERY, Config.GSTR1_SUMMERY_GET_API,"").execute();
+        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMERY, GET_GSTR1_SUMMARY,"").execute();
     }
     // After Tab UI Completes Put All codes below
 
@@ -1002,7 +1000,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
 
     public void onClickDownloadGSTR2A(View view) {
         pDialog.show();
-        new DownloadFileFromURL(myActivity,pDialog,"B2B", Config.GSTR_GET_API).execute();
+        new DownloadFileFromURL(myActivity,pDialog,"B2B", GET_GSTR2_RECONCILED).execute();
     }
 
 
@@ -1222,7 +1220,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
             GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1AData);
             progressDialog.show();
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
-            new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1A, Config.GSTR1A_URL,"").execute();
+            //new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1A, Config.GSTR1A_URL,"").execute();
         }
         else
         {
@@ -1239,18 +1237,29 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
 
     public void onClickGetGstr2B2B(View view) {
         progressDialog.show();
-        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR2_B2B, Config.GSTR2_B2B_GET_API,"").execute();
+        new HTTPAsyncTask_Frag(this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR2_B2B, GET_GSTR2A,"").execute();
     }
 
     public void onClickPostGstr2(View view) {
         /*String startDate = DateUtil.getDateForDatePicker(etReportDateStart.getText().toString()) ;
         String endDate = DateUtil.getDateForDatePicker(etReportDateEnd.getText().toString()) ;*/
-        String startDate = (etReportDateStart.getText().toString()) ;
-        String endDate = (etReportDateEnd.getText().toString()) ;
+        String startDate = etReportDateStart.getText().toString() ;
+        String endDate = etReportDateEnd.getText().toString() ;
+        String token1[] = startDate.split("-");
+        String token2[] = endDate.split("-");
         if(startDate.equalsIgnoreCase("") || endDate.equalsIgnoreCase(""))
         {
-            disMiss();
+            //disMiss();
             MsgBox.setMessage("Please select Date")
+                    .setTitle("Invalid Date")
+                    .setIcon(R.drawable.ic_launcher)
+                    .setPositiveButton("OK", null)
+                    .show();
+        }
+        else if (!token1[1].equals(token2[1]))
+        {
+            MsgBox.setMessage("Please select Date range for one month at a time")
+                    .setTitle("Invalid Date")
                     .setIcon(R.drawable.ic_launcher)
                     .setPositiveButton("OK", null)
                     .show();
@@ -1343,33 +1352,56 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                         requestCode == REQUEST_GET_GSTR2A|| requestCode == REQUEST_GET_GSTR2_Reconcile ||
                          requestCode == REQUEST_GET_GSTR3)
                 {
+                    String startDate = etReportDateStart.getText().toString() ;
+                    String endDate = etReportDateEnd.getText().toString() ;
+                    String token1[] = startDate.split("-");
+                    String token2[] = endDate.split("-");
+                    if(startDate.equalsIgnoreCase("") || endDate.equalsIgnoreCase(""))
+                    {
+                        //disMiss();
+                        MsgBox.setMessage("Please select Date")
+                                .setTitle("Invalid Date")
+                                .setIcon(R.drawable.ic_launcher)
+                                .setPositiveButton("OK", null)
+                                .show();
+                    }
+                    else if (!token1[1].equals(token2[1]))
+                    {
+                        MsgBox.setMessage("Please select Date range for one month at a time")
+                                .setTitle("Invalid Date")
+                                .setIcon(R.drawable.ic_launcher)
+                                .setPositiveButton("OK", null)
+                                .show();
+                    }
+
                     String URL = "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx";
                     String Filename = "sample.xlsx";
                     String gstin = dbGSTLink.getGSTIN();
+                    String fp = token1[1]+token1[2];
 
                     switch (requestCode) {
                         case REQUEST_GET_GSTR1_SUMMARY:
-                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR1CSV?gstin="+gstin+"&fp=052017";
+                            URL = GET_GSTR1_SUMMARY+"?gstin="+gstin+"&fp="+fp;
                             Filename = "GSTR1Summary.xlsx";
                             break;
                         case REQUEST_GET_GSTR1:
-                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR1CSV?gstin="+gstin+"&fp=052017";
+                            URL = GET_GSTR1+"?gstin="+gstin+"&fp="+fp;
                             Filename = "GSTR1.xlsx";
                             break;
                         case REQUEST_GET_GSTR1A:
-                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR1ACSV?gstin="+gstin+"&fp=052017";
+                            URL = GET_GSTR1A+"?gstin="+gstin+"&fp="+fp;
                             Filename = "GSTR1A.xlsx";
                             break;
                         case REQUEST_GET_GSTR3:
-                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR3CSV?gstin="+gstin+"&fp=052017";
+                            URL = GET_GSTR3+"?gstin="+gstin+"&fp="+fp;
                             Filename = "GSTR3.xlsx";
                             break;
                         case REQUEST_GET_GSTR2A:
-                            URL = "http://13.71.118.152/AndroWeb/API/GetGSTR2ACSV?gstin="+gstin+"&fp=052017";
+                            URL = GET_GSTR2A+"?gstin="+gstin+"&fp="+fp;
                             Filename = "GSTR2A.xlsx";
                             break;
                         case REQUEST_GET_GSTR2_Reconcile:
-                            URL = "http://13.71.118.152/AndroWeb/API/GetReconciledCSV?gstin="+gstin;
+                            URL = GET_GSTR2_RECONCILED+"?gstin="+gstin+"&fp="+fp;
                             Filename = "GSTR2_Reconcile.xlsx";
                             break;
                     }
@@ -1412,13 +1444,6 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                                             .getColumnIndex(DownloadManager.COLUMN_STATUS);
                                     if (DownloadManager.STATUS_SUCCESSFUL == c
                                             .getInt(columnIndex)) {
-
-
-                            /*ImageView view = (ImageView) findViewById(R.id.imageView1);
-                            String uriString = c
-                                    .getString(c
-                                            .getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-                            view.setImageURI(Uri.parse(uriString));*/
                                     }
                                 }
                             }
@@ -1427,85 +1452,10 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
 
                 }
 
-
-               /* else if(requestCode == REQUEST_GET_GSTR2_B2B) // REQUEST_GET_GSTR2_B2B
-                {
-                    //GetGSTR2B2BFinal getGSTR2B2BFinal = null;
-                    ArrayList<GetGSTR2B2BFinal> finalsList = new ArrayList<GetGSTR2B2BFinal>();
-                    data = data.replaceAll("\\\\", "");
-                    data = data.substring(1,data.length()-1);
-                    if(data.equalsIgnoreCase(""))
-                    {
-                        Toast.makeText(myContext, "Error due to empty response", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        try {
-                            JSONObject jsonObject = new JSONObject(data);
-                            JSONArray jsonArray = jsonObject.getJSONArray("b2b");
-                            for(int i=0;i<jsonArray.length();i++)
-                            {
-                                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                                GetGSTR2B2BFinal getGSTR2B2BFinal = new GetGSTR2B2BFinal();
-                                getGSTR2B2BFinal.setCtin(jsonObject1.getString("ctin"));
-                                JSONArray jsonArrayInv = jsonObject1.getJSONArray("inv");
-                                ArrayList<GetGSTR2B2BInvoice> getGSTR2B2BInvoicesList = new ArrayList<GetGSTR2B2BInvoice>();
-                                for(int j=0;j<jsonArrayInv.length();j++)
-                                {
-                                    GetGSTR2B2BInvoice getGSTR2B2BInvoice = new GetGSTR2B2BInvoice();
-                                    JSONObject jsonObjectInv = jsonArrayInv.getJSONObject(j);
-                                    ArrayList<GetGSTR2B2BItem> itemsLis = new ArrayList<GetGSTR2B2BItem>();
-                                    //some items like inum, idt
-                                    getGSTR2B2BInvoice.setInum(jsonObjectInv.getString("inum"));
-                                    getGSTR2B2BInvoice.setIdt(jsonObjectInv.getString("idt"));
-                                    getGSTR2B2BInvoice.setVal(jsonObjectInv.getDouble("val"));
-                                    getGSTR2B2BInvoice.setPos(jsonObjectInv.getString("pos"));
-                                    getGSTR2B2BInvoice.setRchrg(jsonObjectInv.getString("rchrg"));
-                                    getGSTR2B2BInvoice.setPro_ass(jsonObjectInv.getString("pro_ass"));
-
-                                    JSONArray jsonArrayBillItems = jsonObjectInv.getJSONArray("itms");
-                                    for(int k=0;k<jsonArrayBillItems.length();k++)
-                                    {
-                                        JSONObject jsonObjectItem = jsonArrayBillItems.getJSONObject(k);
-                                        int lineNum = jsonObjectItem.getInt("num");
-                                        JSONObject jsonObjectitm_det = jsonObjectItem.getJSONObject("itm_det");
-                                        GetGSTR2B2BItem item = new GetGSTR2B2BItem(
-                                                lineNum,
-                                                jsonObjectitm_det.getString("ty"),
-                                                jsonObjectitm_det.getString("hsn_sc"),
-                                                jsonObjectitm_det.getDouble("txval"),
-                                                jsonObjectitm_det.getDouble("irt"),
-                                                jsonObjectitm_det.getDouble("iamt"),
-                                                jsonObjectitm_det.getDouble("crt"),
-                                                jsonObjectitm_det.getDouble("camt"),
-                                                jsonObjectitm_det.getDouble("srt"),
-                                                jsonObjectitm_det.getDouble("samt")
-                                        );
-                                        itemsLis.add(item);
-                                    }
-                                    getGSTR2B2BInvoice.setItems(itemsLis);
-                                    getGSTR2B2BInvoicesList.add(getGSTR2B2BInvoice);
-                                }
-                                getGSTR2B2BFinal.setInvoicesList(getGSTR2B2BInvoicesList);
-                                finalsList.add(getGSTR2B2BFinal);
-                            }
-                        } catch (Exception e) {
-                            Toast.makeText(myContext, "Error due to "+e, Toast.LENGTH_SHORT).show();
-                            finalsList = null;
-                            e.printStackTrace();
-                        }
-                        // Add to db
-                        dbGSTLink.addGSTR2B2BItems(finalsList);
-                        Toast.makeText(myContext, "Data loaded successfully", Toast.LENGTH_SHORT).show();
-                        if(progressDialog.isShowing())
-                            progressDialog.dismiss();
-                    }
-                }*/
             }else
             {
                 Toast.makeText(myContext, "Error", Toast.LENGTH_SHORT).show();
             }
         }
-    //}
 
 }

@@ -106,7 +106,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     private final int CHECK_STRING_VALUE = 2;
 
     private TextView tvServiceTax_text;
-    private int UTGSTENABLED = 0;
+    private int UTGSTENABLED = 0,HSNPRINTENABLED=0;
 
     private static final String TAG = BillingHomeDeliveryActivity.class.getSimpleName();
     Context myContext;
@@ -145,8 +145,10 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
     byte jBillingMode = 0, jWeighScale = 0;
     int iTaxType = 0, iTotalItems = 0, iCustId = 0, iTokenNumber = 0;
     float fTotalDiscount = 0, fCashPayment = 0, fCardPayment = 0, fCouponPayment = 0, fPettCashPayment = 0, fPaidTotalPayment = 0;
-    float fChangePayment = 0,dDiscPercent = 0;
+    float dDiscPercent = 0;
     float fWalletPayment = 0;
+    float fChangePayment = 0, fRoundOfValue =0;
+    double dFinalBillValue=0;
     double dServiceTaxPercent = 0, dOtherChrgs = 0;
     String strPaymentStatus = "", strMakeOrder = "";
     boolean strOrderDelivered= false;
@@ -264,6 +266,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
                 iTaxType = crsrSettings.getInt(crsrSettings.getColumnIndex("TaxType"));
                 FASTBILLINGMODE = crsrSettings.getString(crsrSettings.getColumnIndex("FastBillingMode"));
+                HSNPRINTENABLED = crsrSettings.getInt(crsrSettings.getColumnIndex("HSNPrintEnabled_out"));
                 UTGSTENABLED = crsrSettings.getInt(crsrSettings.getColumnIndex("UTGSTEnabled"));
                 if(UTGSTENABLED ==1)
                     tvServiceTax_text.setText("UTGST-Tax :");
@@ -4900,9 +4903,13 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
             // PaidTotal Payment
             objBillDetail.setPaidTotalPayment(fPaidTotalPayment);
+            Log.d("InsertBillDetail", "PaidTotalPayment:" + fPaidTotalPayment);
 
             // Change Payment
             objBillDetail.setChangePayment(fChangePayment);
+            Log.d("InsertBillDetail", "ChangePayment:" + fChangePayment);
+            objBillDetail.setfRoundOff(fRoundOfValue);
+            Log.d("InsertBillDetail", "RoundOfValue:" + fRoundOfValue);
 
         } else if (TenderType == 2) {
 
@@ -4928,10 +4935,14 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                 Log.d("InsertBillDetail", "Wallet:" + fWalletPayment);
 
                 // PaidTotal Payment
-                objBillDetail.setPaidTotalPayment(Float.parseFloat(tvBillAmount.getText().toString()));
+                objBillDetail.setPaidTotalPayment(fPaidTotalPayment);
+                Log.d("InsertBillDetail", "PaidTotalPayment:" + fPaidTotalPayment);
 
                 // Change Payment
                 objBillDetail.setChangePayment(fChangePayment);
+                Log.d("InsertBillDetail", "ChangePayment:" + fChangePayment);
+                objBillDetail.setfRoundOff(fRoundOfValue);
+                Log.d("InsertBillDetail", "RoundOfValue:" + fRoundOfValue);
             } else {
                 // Cash Payment
                 objBillDetail.setCashPayment(fCashPayment);
@@ -4955,9 +4966,13 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
 
                 // PaidTotal Payment
                 objBillDetail.setPaidTotalPayment(fPaidTotalPayment);
+                Log.d("InsertBillDetail", "PaidTotalPayment:" + fPaidTotalPayment);
 
                 // Change Payment
                 objBillDetail.setChangePayment(fChangePayment);
+                Log.d("InsertBillDetail", "ChangePayment:" + fChangePayment);
+                objBillDetail.setfRoundOff(fRoundOfValue);
+                Log.d("InsertBillDetail", "RoundOfValue:" + fRoundOfValue);
             }
         }
 
@@ -6422,6 +6437,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                         fPaidTotalPayment = data.getFloatExtra(PayBillActivity.TENDER_PAIDTOTAL_VALUE, 0);
                         fWalletPayment = data.getFloatExtra(PayBillActivity.TENDER_WALLET_VALUE, 0);
                         fChangePayment = data.getFloatExtra(PayBillActivity.TENDER_CHANGE_AMOUNT, 0);
+                        fRoundOfValue = data.getFloatExtra(PayBillActivity.TENDER_ROUNDOFF, 0);
+                        dFinalBillValue = data.getDoubleExtra(PayBillActivity.TENDER_FINALBILL_VALUE, 0);
 
                         iCustId = data.getIntExtra("CUST_ID", 1);
 
@@ -6534,6 +6551,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                 //LoadKOTItems(BillItems);
                                 LoadModifyKOTItems(BillItems);
                         }}*/
+                        tvBillAmount.setText(String.format("%.2f",dFinalBillValue));
                         PrintBillPayment= 0;
                         l(2, isPrintBill);
                         Toast.makeText(myContext, "Bill saved Successfully", Toast.LENGTH_SHORT).show();
@@ -7372,6 +7390,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     item.setTableNo(String.valueOf(tableId));
                     item.setWaiterNo(waiterId);
                     item.setUTGSTEnabled(UTGSTENABLED);
+                    item.setHSNPrintEnabled_out(HSNPRINTENABLED);
                     String billNoPrefix  = db.getBillNoPrefix();
                     item.setBillNo(billNoPrefix+String.valueOf(orderId));
                     item.setOrderBy(strUserName);
@@ -7391,7 +7410,7 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                     item.setTotalsubTaxPercent(fTotalsubTaxPercent);
                     item.setTotalSalesTaxAmount(tvTaxTotal.getText().toString());
                     item.setTotalServiceTaxAmount(tvServiceTaxTotal.getText().toString());
-
+                    item.setRoundOff(fRoundOfValue);
                     if(reprintBillingMode == 0) {
                         if (jBillingMode == 4)
                             item.setStrBillingModeName(HomeDeliveryCaption);
@@ -7435,6 +7454,8 @@ public class BillingHomeDeliveryActivity extends WepPrinterBaseActivity implemen
                                 String time = c.getString(c.getColumnIndex("Time"));
                                 item.setTime(time);
                                 item.setDate(tvDate.getText().toString());
+                                float round = c.getString(c.getColumnIndex("RoundOff")).equals(null)?0:c.getFloat(c.getColumnIndex("RoundOff"));
+                                item.setRoundOff(Float.parseFloat(String.format("%.2f",round)));
 
                                 if(reprintBillingMode==1)
                                 {

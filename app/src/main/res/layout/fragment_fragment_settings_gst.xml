@@ -306,6 +306,32 @@
                         </RadioGroup>
 
                         <TextView
+                            android:id="@+id/tvHSNPrintEnabled_out"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Print HSN in Bill (Choose One)" />
+
+                        <RadioGroup
+                            android:id="@+id/rgHSNPrintEnabled_out"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbHSNPrintEnabled_out"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Enable" />
+
+                            <RadioButton
+                                android:id="@+id/rbHSNPrintDisabled_out"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Disable" />
+                        </RadioGroup>
+
+                        <TextView
                             android:id="@+id/tvReverseCharge_out"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

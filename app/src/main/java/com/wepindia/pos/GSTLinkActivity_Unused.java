@@ -88,12 +88,12 @@ public class GSTLinkActivity_Unused extends Activity implements HTTPAsyncTask.On
 
     private void getGSTR3All() {
         progressDialog.show();
-        new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR3, Config.GSTR3_GET).execute();
+        //new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR3, Config.GSTR3_GET).execute();
     }
 
     private void getGSTR1AllSummery() {
         progressDialog.show();
-        new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMERY, Config.GSTR1_SUMMERY_GET_API).execute();
+        //new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1_SUMMERY, Config.GSTR1_SUMMERY_GET_API).execute();
     }
     // After Tab UI Completes Put All codes below
 
@@ -465,7 +465,7 @@ public class GSTLinkActivity_Unused extends Activity implements HTTPAsyncTask.On
             GSTR1Data gstr1Data = new GSTR1Data(dbGSTLink.getGSTIN(),str[2]+str[0],gt,list,b2CSADataArrayList,cdnList);
             GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1Data);
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
-            new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1, Config.GSTR1_URL).execute();
+           // new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1, Config.GSTR1_URL).execute();
         }
         else
         {
@@ -475,7 +475,7 @@ public class GSTLinkActivity_Unused extends Activity implements HTTPAsyncTask.On
 
     public void onClickDownloadGSTR2A(View view) {
         pDialog.show();
-        new DownloadFileFromURL(GSTLinkActivity_Unused.this,pDialog,"B2B", Config.GSTR_GET_API).execute();
+        //new DownloadFileFromURL(GSTLinkActivity_Unused.this,pDialog,"B2B", Config.GSTR_GET_API).execute();
     }
 
     public void onFileDownloadComplete(boolean status, String filePath) {
@@ -559,7 +559,7 @@ public class GSTLinkActivity_Unused extends Activity implements HTTPAsyncTask.On
 
     public void onClickGetGstr1ASummary(View view) {
         progressDialog.show();
-        new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1A_SUMMARY, Config.GSTR1A_SUMMERY_GET_API).execute();
+        //new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR1A_SUMMARY, Config.GSTR1A_SUMMERY_GET_API).execute();
     }
 
     public void onClickSaveGstr1(View view) {
@@ -614,7 +614,7 @@ public class GSTLinkActivity_Unused extends Activity implements HTTPAsyncTask.On
             GSTRData gstrData = new GSTRData(userName,dbGSTLink.getGSTIN(),gstr1AData);
             progressDialog.show();
             String strJson = GstJsonEncoder.getGSTRJsonEncode(gstrData);
-            new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1A, Config.GSTR1A_URL).execute();
+           // new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_POST,strJson,REQUEST_SAVE_GSTR1A, Config.GSTR1A_URL).execute();
         }
         else
         {
@@ -632,7 +632,7 @@ public class GSTLinkActivity_Unused extends Activity implements HTTPAsyncTask.On
 
     public void onClickGetGstr2B2B(View view) {
         progressDialog.show();
-        new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR2_B2B, Config.GSTR2_B2B_GET_API).execute();
+     //   new HTTPAsyncTask(GSTLinkActivity_Unused.this, HTTPAsyncTask.HTTP_GET,"",REQUEST_GET_GSTR2_B2B, Config.GSTR2_B2B_GET_API).execute();
     }
 
     public void onClickSaveGstr2(View view) {

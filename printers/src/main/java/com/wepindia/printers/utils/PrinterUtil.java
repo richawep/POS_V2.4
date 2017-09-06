@@ -470,6 +470,10 @@ public class PrinterUtil {
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
         esc.addText("================================================"+"\n");
         esc.addText("SI  ITEM NAME       QTY     RATE       AMOUNT "+"\n");
+        if(item.getHSNPrintEnabled_out()== 1)
+        {
+            esc.addText("HSN"+"\n");
+        }
         esc.addText("================================================"+"\n");
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);
         ArrayList<BillKotItem> billKotItems = item.getBillKotItems();
@@ -491,6 +495,9 @@ public class PrinterUtil {
                                                                                                 +billKotItem.getTaxIndex(),14,1),14,1);
             String pre = preId+preName+/*HSN+*/preQty+preRate+preAmount;
             esc.addText(pre+"\n");
+            if(item.getHSNPrintEnabled_out() == 1) {
+                esc.addText(HSN+"\n");
+            }
             totalitemtypes++;
             totalquantitycount += billKotItem.getQty();
             subtotal += billKotItem.getAmount();
@@ -613,7 +620,11 @@ public class PrinterUtil {
         esc.addText("================================================"+"\n");
         esc.addText(getSpaceFormater("TOTAL",String.format("%.2f",item.getNetTotal()),48,1)+"\n");
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
-        esc.addText("================================================\n");
+        if(item.getRoundOff()>0){
+            esc.addText("------------------------------------------------\n");
+            esc.addText(getSpaceFormater("Total Roundoff  ",String.format("%.2f",item.getRoundOff()),48,1)+"\n");
+        }
+        esc.addText("================================================"+"\n");
         if(!item.getFooterLine().equals(""))
             esc.addText(item.getFooterLine()+"\n");
         esc.addPrintAndFeedLines((byte)3);

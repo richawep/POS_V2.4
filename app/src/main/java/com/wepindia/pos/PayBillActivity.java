@@ -72,7 +72,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     String strTotal, strCustId = "0";
     float baseValue_recieved =0;
     int taxType_recieved =0;
-    double dRoundoffTotal;
+    double dRoundoffTotal =0;
     float dWalletPayment =0;
     int RESETCALLED =0;
     float discPercent =0;
@@ -101,7 +101,9 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     public static final String TENDER_PETTYCASH_VALUE = "pettycash_value";
     public static final String TENDER_PAIDTOTAL_VALUE = "paidtotal_value";
     public static final String TENDER_CHANGE_VALUE = "change_value";
+    public static final String TENDER_ROUNDOFF = "round_off";
     public static final String TENDER_WALLET_VALUE = "wallet_value";
+    public static final String TENDER_FINALBILL_VALUE = "FINALBILL_VALUE";
     public static final String ORDER_DELIVERED = "ORDER_DELIVERED";
     boolean strOrderDelivered = false;
     String txt;
@@ -548,8 +550,10 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
         intentResult.putExtra(TENDER_PETTYCASH_VALUE, (float) getPettyCash());
         intentResult.putExtra(TENDER_PAIDTOTAL_VALUE, Float.parseFloat(edtTenderTotalValue.getText().toString()));
         intentResult.putExtra(TENDER_CHANGE_VALUE, Float.parseFloat(edtChange.getText().toString()));
+        intentResult.putExtra(TENDER_ROUNDOFF, Float.parseFloat(edtRoundOff.getText().toString()));
         intentResult.putExtra(TENDER_WALLET_VALUE, dWalletPayment);
-        intentResult.putExtra(ORDER_DELIVERED, strOrderDelivered);
+        intentResult.putExtra(TENDER_FINALBILL_VALUE, dRoundoffTotal);
+        intentResult.putExtra(ORDER_DELIVERED, dRoundoffTotal);
         intentResult.putExtra("CUST_ID", Integer.parseInt(tvCustId.getText().toString()));
         intentResult.putParcelableArrayListExtra("OrderList", orderList_recieved);
         intentResult.putExtra("TotalBillAmount", totalBillAmount);

@@ -24,7 +24,8 @@ public class BillDetail {
 	String BillingMode, TableNo, TableSplitNo; // richa_2012
 	float fBillAmount, fCardPayment, fCashPayment, fCouponPayment, fPettyCashPayment, fPaidTotalPayment, fChangePayment, fWalletAmount,
 	fDeliveryCharge, fTotalDiscountPercentage,fTotalDiscountAmount, fTotalTaxAmount, fTotalServiceTaxAmount, IGSTAmount, CGSTAmount, SGSTAmount,
-            cessAmount;
+		 cessAmount;
+	float fRoundOff;
 
 	double SubTotal;
 
@@ -55,6 +56,7 @@ public class BillDetail {
 		this.iUserId = 0;
 		this.fBillAmount = 0;
 		this.fCardPayment = 0;
+		this.fRoundOff = 0;
 		this.fCashPayment = 0;
 		this.fCouponPayment = 0;
 		this.fDeliveryCharge = 0;
@@ -109,7 +111,15 @@ public class BillDetail {
         this.cessAmount = cessAmount;
 	}
 
-    public float getCessAmount() {
+	public float getfRoundOff() {
+		return fRoundOff;
+	}
+
+	public void setfRoundOff(float fRoundOff) {
+		this.fRoundOff = fRoundOff;
+	}
+
+	public float getCessAmount() {
         return cessAmount;
     }
 

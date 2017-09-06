@@ -131,6 +131,11 @@ public class OwnerDetailsActivity extends WepBaseActivity {
                         if (!isValidEmailAddress(Email.getText().toString().trim()))
                         {
                             MsgBox.Show("Invalid Information","Please Enter Valid Email id");
+                            return;
+                        }else if(Phone.getText().toString().trim().length() !=10)
+                        {
+                            MsgBox.Show("Invalid Information","Phone no cannot be less than 10 digits.");
+                            return;
                         }
                         else if (mFlag) {
                             dbHelper.CreateDatabase();
