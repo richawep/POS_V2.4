@@ -244,7 +244,7 @@ public class FragmentSettingsOther extends Fragment {
             // Fast Billing Mode
             if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("Environment")) == 1) {
                 rbEnvironment_Production.setChecked(true);
-            } else if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("FastBillingMode")) == 2) {
+            } else if (crsrBillSetting.getInt(crsrBillSetting.getColumnIndex("Environment")) == 2) {
                 rbEnvironment_Demo.setChecked(true);
             } else {
                 rbEnvironment_Testing.setChecked(true);

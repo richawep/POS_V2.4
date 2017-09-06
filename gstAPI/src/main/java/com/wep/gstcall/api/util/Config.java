@@ -47,7 +47,7 @@ public class Config {
 
     public static final String Base_URL_Azure = "https://api.wepgst.com";
 
-    public static final String GET_TOKEN_API = "/wepapis/api/token/get";
+    public static final String GET_TOKEN_API = "/wepapis/auth/token/get";
     public static final String POST_GSTR1_PRODUCTION = "/v1/gstr1/savegstr1";
     public static final String POST_GSTR2_PRODUCTION = "/v1/gstr2/savegstr2";
 

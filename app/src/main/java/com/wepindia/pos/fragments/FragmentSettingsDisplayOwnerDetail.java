@@ -129,9 +129,9 @@ public class FragmentSettingsDisplayOwnerDetail extends Fragment {
     }
     private void apply(View v)
     {
-        String billPrefix = BillNoPrefix.getText().toString();
-        String gstin = Gstin.getText().toString();
-        String referenceNo = RefernceNo.getText().toString();
+        String billPrefix = BillNoPrefix.getText().toString().trim();
+        String gstin = Gstin.getText().toString().trim().toUpperCase();
+        String referenceNo = RefernceNo.getText().toString().trim();
         dbHelper.CreateDatabase();
         dbHelper.OpenDatabase();
         int ll = dbHelper.updateOwnerDetails(billPrefix,gstin,referenceNo);
