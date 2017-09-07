@@ -21,11 +21,8 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" line="3835" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
+    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="issue - forward tax without discount giving wrong tax values">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingCounterSalesActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -161,8 +158,8 @@
       <file leaf-file-name="BillingHomeDeliveryActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="1687" column="24" selection-start-line="1687" selection-start-column="24" selection-end-line="1687" selection-end-column="24" />
+            <state relative-caret-position="269">
+              <caret line="1691" column="31" selection-start-line="1691" selection-start-column="31" selection-end-line="1691" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -6665,112 +6662,6 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GST" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GST" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controlers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fragments" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wepfnb_gst" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -6798,8 +6689,12 @@
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-hdpi" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\src\main\res\raw" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\src\main\res\drawable" />
+      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\src\main\res\drawable-hdpi" />
+      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\src\main\java\com\wepindia\pos" />
+      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\src\main\res\layout" />
+      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst" />
     </key>
     <key name="android.template.packageName">
       <recent name="com.wepindia.pos" />
@@ -6807,12 +6702,8 @@
     <key name="android.template.parentActivityClass">
       <recent name="" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\src\main\res\drawable" />
-      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\src\main\res\drawable-hdpi" />
-      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\src\main\java\com\wepindia\pos" />
-      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\app\src\main\res\layout" />
-      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\FnbProjects\WepFnB_GST\WepFnB_GST_5May\wepfnb_gst\printers\src\main\res\raw" />
     </key>
   </component>
   <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
@@ -7597,13 +7488,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00053" summary="1. qty not taken in decimal in printing bill">
-      <created>1495190445212</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1495190445212</updated>
-    </task>
     <task id="LOCAL-00054" summary="date &amp; time format in printKOT was not same as print bill.&#10;-- issue reported&#10;">
       <created>1495430221553</created>
       <option name="number" value="00054" />
@@ -7940,7 +7824,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504711798918</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="issue - forward tax without discount giving wrong tax values">
+      <created>1504715315471</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1504715315471</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TodoView">
@@ -8056,7 +7947,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="GSTR data upload&#10;clearing default data in amend" />
     <MESSAGE value="GSTR2 data upload&#10;Renaming CINTIN as GSTIN in miscellaneous settings&#10;" />
     <MESSAGE value="updating printer not configured message in billing screens&#10;&#10;" />
     <MESSAGE value="adding time(current) in report printing" />
@@ -8081,7 +7971,8 @@
     <MESSAGE value="itemwise discount" />
     <MESSAGE value="1 . adding dropdown reasons for CDN &#10;2. Customer phone no not getting updated&#10;3. Changing product name in about button" />
     <MESSAGE value="making owner details configurable" />
-    <option name="LAST_COMMIT_MESSAGE" value="making owner details configurable" />
+    <MESSAGE value="issue - forward tax without discount giving wrong tax values" />
+    <option name="LAST_COMMIT_MESSAGE" value="issue - forward tax without discount giving wrong tax values" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -8637,8 +8528,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingHomeDeliveryActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="1687" column="24" selection-start-line="1687" selection-start-column="24" selection-end-line="1687" selection-end-column="24" />
+        <state relative-caret-position="269">
+          <caret line="1691" column="31" selection-start-line="1691" selection-start-column="31" selection-end-line="1691" selection-end-column="31" />
           <folding />
         </state>
       </provider>
