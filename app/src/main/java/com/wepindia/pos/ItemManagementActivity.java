@@ -1201,6 +1201,12 @@ protected void onPostExecute(Void aVoid) {
             break;
             }
 
+            if (mCGSTRate+mSGSTRate !=mIGSTRate)
+            {
+                mFlag = true;
+                mUserCSVInvalidValue = "Please note sum of SGST Rate and CGST Rate should between equal to IGST Rate for item " + colums[1];
+                return;
+            }
             if (colums[11] != null && colums[11].length() > 0 && colums[11].trim().length() > 0) {
             mCheckCSVValueType = checkCSVTypeValue1(colums[11],"Double");
             int mCheckCSVValueType1 = checkCSVTypeValue1(colums[11],"Int");

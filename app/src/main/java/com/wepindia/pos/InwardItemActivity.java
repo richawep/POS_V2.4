@@ -663,6 +663,7 @@ public class InwardItemActivity extends WepBaseActivity {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 try {
+                    pd.dismiss();
                     ResetItem();
                     if(mFlag== true){
                         MsgBox1.Show("Error",mUserCSVInvalidValue );
