@@ -21,11 +21,8 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/BillingDineInActivity.java" line="3835" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="issue - forward tax without discount giving wrong tax values">
+    <list default="true" id="2b3634b2-61eb-4eec-9c17-c4e6f231d0c0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardItemActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/InwardItemActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/wepindia/pos/ItemManagementActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment_discount.xml" />
     </list>
     <ignored path="wepfnb_datamini.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -7440,13 +7437,6 @@
       <option name="presentableId" value="Default" />
       <updated>1490860409349</updated>
     </task>
-    <task id="LOCAL-00055" summary="1. including Invoicedate in reprint bill&#10;2. including invoicedate in normal/first printbill&#10;&#10;- issue reported -&gt; when daily billno reset is done, taxes are not coming proper in first bill / reprint bill&#10;">
-      <created>1495450168899</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1495450168900</updated>
-    </task>
     <task id="LOCAL-00056" summary="1. including Invoicedate in delete bill&#10;">
       <created>1495454795641</created>
       <option name="number" value="00056" />
@@ -7783,7 +7773,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504751213957</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="UI issue in InwardItem &amp; DiscountConfiguration&#10;Item outward - putting checkpoint on sum of CGST+SGST = IGST">
+      <created>1504766488921</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1504766488921</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TodoView">
@@ -7899,7 +7896,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="GSTR2 data upload&#10;Renaming CINTIN as GSTIN in miscellaneous settings&#10;" />
     <MESSAGE value="updating printer not configured message in billing screens&#10;&#10;" />
     <MESSAGE value="adding time(current) in report printing" />
     <MESSAGE value="limiting hsn limit to 8 in amends modules&#10;" />
@@ -7924,7 +7920,8 @@
     <MESSAGE value="1 . adding dropdown reasons for CDN &#10;2. Customer phone no not getting updated&#10;3. Changing product name in about button" />
     <MESSAGE value="making owner details configurable" />
     <MESSAGE value="issue - forward tax without discount giving wrong tax values" />
-    <option name="LAST_COMMIT_MESSAGE" value="issue - forward tax without discount giving wrong tax values" />
+    <MESSAGE value="UI issue in InwardItem &amp; DiscountConfiguration&#10;Item outward - putting checkpoint on sum of CGST+SGST = IGST" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI issue in InwardItem &amp; DiscountConfiguration&#10;Item outward - putting checkpoint on sum of CGST+SGST = IGST" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
