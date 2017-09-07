@@ -7605,7 +7605,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String> getAllUsersforReport() {
         List<String> list = new ArrayList<String>();
 
-        Cursor cursor = dbFNB.rawQuery("SELECT  UserId as _id, Name FROM Users where RoleId not in ('3','4')", null);// selectQuery,selectedArguments
+       // Cursor cursor = dbFNB.rawQuery("SELECT  UserId as _id, Name FROM Users where RoleId not in ('3','4')", null);// selectQuery,selectedArguments
+        Cursor cursor = dbFNB.rawQuery("SELECT  UserId as _id, Name FROM Users ", null);// selectQuery,selectedArguments
 
         list.add("Select");
         // looping through all rows and adding to list

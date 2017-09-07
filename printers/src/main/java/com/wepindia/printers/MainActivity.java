@@ -19,10 +19,17 @@ public class MainActivity extends WepPrinterBaseActivity {
         Toast.makeText(MainActivity.this, "Not Configured", Toast.LENGTH_SHORT).show();
     }
 
+    //@Override
+    //public void onPrinterAvailable(boolean flag) {
+    //   isPrinterAvailable = true;
+    //}
     @Override
-    public void onPrinterAvailable() {
-        isPrinterAvailable = true;
+    public void onPrinterAvailable(int flag) {
+        if(flag == 5)
+            isPrinterAvailable = true;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

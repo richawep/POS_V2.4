@@ -20,9 +20,14 @@ public class PaymentSuccessFailActivity extends WepPrinterBaseActivity {
 
     }
 
+    //@Override
+    // public void onPrinterAvailable(boolean flag) {
+    //    isPrinterAvailable = true;
+    //}
     @Override
-    public void onPrinterAvailable() {
-        isPrinterAvailable = true;
+    public void onPrinterAvailable(int flag) {
+        if(flag == 5)
+            isPrinterAvailable = true;
     }
 
     @Override

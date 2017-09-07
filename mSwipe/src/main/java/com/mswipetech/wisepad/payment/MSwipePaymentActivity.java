@@ -172,7 +172,7 @@ public class MSwipePaymentActivity extends WepPrinterBaseActivity implements Car
     }
 
     @Override
-    public void onPrinterAvailable() {
+    public void onPrinterAvailable(int flag) {
 
     }
 

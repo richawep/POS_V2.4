@@ -161,7 +161,7 @@ public class BillingScreenActivity_Unused extends WepPrinterBaseActivity {
 
     }
 
-    public void onPrinterAvailable() {
+    public void onPrinterAvailable(int flag ) {
         isPrinterAvailable = true;
     }
 

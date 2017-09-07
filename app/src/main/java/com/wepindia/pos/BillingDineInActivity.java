@@ -198,8 +198,38 @@ public class BillingDineInActivity extends WepPrinterBaseActivity implements Tex
 
     }
 
-    public void onPrinterAvailable() {
-        isPrinterAvailable = true;
+    public void onPrinterAvailable(int flag) {
+
+        //Toast.makeText(BillingCounterSalesActivity.this, "Bill Printer Status : " + flag, Toast.LENGTH_SHORT).show();
+        //isPrinterAvailable = flag;
+        if(flag == 2)
+        {
+            btnPrintBill.setEnabled(false);
+            btnReprint.setEnabled(false);
+            btnPrintKOT.setEnabled(false);
+            SetPrinterAvailable(false);
+        }
+        else if(flag == 5)
+        {
+            btnPrintBill.setEnabled(true);
+            btnReprint.setEnabled(true);
+            btnPrintKOT.setEnabled(true);
+            SetPrinterAvailable(true);
+        }
+        else if(flag == 0)
+        {
+            btnPrintBill.setEnabled(true);
+            btnReprint.setEnabled(true);
+            btnPrintKOT.setEnabled(true);
+            SetPrinterAvailable(false);
+        }
+    }
+    public void SetPrinterAvailable(boolean flag) {
+
+        Toast.makeText(this, "Bill Printer Status : " + flag, Toast.LENGTH_SHORT).show();
+        isPrinterAvailable = flag;
+        //btn_PrintBill.setEnabled(true);
+        //btn_Reprint.setEnabled(true);
     }
     boolean REVERSETAX = false;
 

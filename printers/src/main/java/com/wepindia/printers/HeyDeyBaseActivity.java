@@ -66,7 +66,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
 
     public abstract void onConfigurationRequired();
 
-    public abstract void onPrinterAvailable();
+    public abstract void onPrinterAvailable(int flag);
 
     class PrinterServiceConnection implements ServiceConnection {
         @Override
@@ -257,7 +257,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
                 if (isErrorCorrection && status == 0) {
                     printReceiptPrint();
                 }
-                //Toast.makeText(this, "printer：" + printerNum + " status：" + str, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "printerï¼š" + printerNum + " statusï¼š" + str, Toast.LENGTH_SHORT).show();
             } catch (RemoteException e1) {
                 Toast.makeText(this, "exception", Toast.LENGTH_SHORT).show();
                 e1.printStackTrace();
@@ -295,9 +295,10 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
                 int type = intent.getIntExtra(GpPrintService.CONNECT_STATUS, 0);
                 int id = intent.getIntExtra(GpPrintService.PRINTER_ID, 0);
                 Log.d(DEBUG_TAG, "connect status " + type);
+                onPrinterAvailable(type);
                 if (type == GpDevice.STATE_CONNECTING) {
                     //btnConfig.setText("Connecting...");
-
+                    //onPrinterAvailable(type);
                 } else if (type == GpDevice.STATE_NONE) {
                     //btnConfig.setText("Connect");
                     //btnConnect.setVisibility(View.GONE);
@@ -306,12 +307,13 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
                     }catch (DeadObjectException e){
 
                     }*/
+                    //onPrinterAvailable(type);
                 } else if (type == GpDevice.STATE_VALID_PRINTER) {
                     //btnConfig.setText("Disconnect");
                     //btnConnect.setVisibility(View.VISIBLE);
                     //connectOrDisConnectToDevice();
                     //setResultt();
-                    onPrinterAvailable();
+                    //onPrinterAvailable(type);
 
                 } else if (type == GpDevice.STATE_INVALID_PRINTER) {
                     messageBox("Please use Gprinter!");
@@ -463,7 +465,7 @@ public abstract class HeyDeyBaseActivity extends WepBaseActivity implements View
         esc.addText("Print text\n");
         esc.addText("Welcome to use Gprinter!\n");
 
-        String message = Util.SimToTra("佳博票据打印机\n");
+        String message = Util.SimToTra("ä½³åšç¥¨æ®æ‰“å°æœº\n");
         esc.addText(message, "GB2312");
         esc.addPrintAndLineFeed();
 

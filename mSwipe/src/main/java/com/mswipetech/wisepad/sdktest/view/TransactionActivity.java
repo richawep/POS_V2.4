@@ -19,9 +19,9 @@ public class TransactionActivity extends WepPrinterBaseActivity {
     }
 
     @Override
-    public void onPrinterAvailable() {
+    public void onPrinterAvailable(int flag) {
         isPrinterAvailable = true;
-        Toast.makeText(getApplicationContext(), "hguyg", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "hguyg", Toast.LENGTH_SHORT).show();
     }
 
     @Override

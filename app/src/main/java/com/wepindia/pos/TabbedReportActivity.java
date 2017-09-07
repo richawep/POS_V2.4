@@ -25,6 +25,7 @@ import android.view.View;
 
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wep.common.app.Database.DatabaseHandler;
 import com.wepindia.pos.GenericClasses.MessageDialog;
@@ -64,8 +65,32 @@ public class TabbedReportActivity extends WepPrinterBaseActivity {
 
     }
 
-    public void onPrinterAvailable() {
-        isPrinterAvailable = true;
+    public void onPrinterAvailable(int flag) {
+
+        //Toast.makeText(BillingCounterSalesActivity.this, "Bill Printer Status : " + flag, Toast.LENGTH_SHORT).show();
+        //isPrinterAvailable = flag;
+        if(flag == 2)
+        {
+            (ReportFragment.getPrintButton()).setEnabled(false);
+            SetPrinterAvailable(false);
+        }
+        else if(flag == 5)
+        {
+            (ReportFragment.getPrintButton()).setEnabled(true);
+            SetPrinterAvailable(true);
+        }
+        else if(flag == 0)
+        {
+            (ReportFragment.getPrintButton()).setEnabled(true);
+            SetPrinterAvailable(false);
+        }
+    }
+    public void SetPrinterAvailable(boolean flag) {
+
+        Toast.makeText(this, "Bill Printer Status : " + flag, Toast.LENGTH_SHORT).show();
+        isPrinterAvailable = flag;
+        //btn_PrintBill.setEnabled(true);
+        //btn_Reprint.setEnabled(true);
     }
 
 

@@ -74,8 +74,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     Cursor billsettingcursor = null;
     private View view;
 
+    public static Button btn_ReportPrint;
     private Button btn_ReportDateFrom,btn_ReportDateTo,
-            btn_ReportPrint,btn_ReportExport,btn_ReportView,btn_ReportClose;
+            btn_ReportExport,btn_ReportView,btn_ReportClose;
 
     private TextView lblName;
 
@@ -83,6 +84,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener {
     public ReportFragment() {
     }
 
+    public static  Button getPrintButton(){
+        Button b = btn_ReportPrint;
+        return b;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_report, container, false);

@@ -1118,11 +1118,43 @@ public class BillingCounterSalesActivity extends WepPrinterBaseActivity implemen
 
     }
 
-    public void onPrinterAvailable() {
+   /* public void onPrinterAvailable() {
         isPrinterAvailable = true;
         btn_PrintBill.setEnabled(true);
         btn_Reprint.setEnabled(true);
     }
+*/
+   public void onPrinterAvailable(int flag) {
+
+       //Toast.makeText(BillingCounterSalesActivity.this, "Bill Printer Status : " + flag, Toast.LENGTH_SHORT).show();
+       //isPrinterAvailable = flag;
+       if(flag == 2)
+       {
+           btn_PrintBill.setEnabled(false);
+           btn_Reprint.setEnabled(false);
+           SetPrinterAvailable(false);
+       }
+       else if(flag == 5)
+       {
+           btn_PrintBill.setEnabled(true);
+           btn_Reprint.setEnabled(true);
+           SetPrinterAvailable(true);
+       }
+       else if(flag == 0)
+       {
+           btn_PrintBill.setEnabled(true);
+           btn_Reprint.setEnabled(true);
+           SetPrinterAvailable(false);
+       }
+   }
+    public void SetPrinterAvailable(boolean flag) {
+
+        Toast.makeText(BillingCounterSalesActivity.this, "Bill Printer Status : " + flag, Toast.LENGTH_SHORT).show();
+        isPrinterAvailable = flag;
+        //btn_PrintBill.setEnabled(true);
+        //btn_Reprint.setEnabled(true);
+    }
+
 
     @Override
     public void onHomePressed() {

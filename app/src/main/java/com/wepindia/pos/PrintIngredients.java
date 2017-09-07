@@ -136,9 +136,32 @@ public class PrintIngredients extends WepPrinterBaseActivity {
         this.finish();
     }
 
-    public void onPrinterAvailable() {
-        isPrinterAvailable = true;
+    public void onPrinterAvailable(int flag) {
 
+        //Toast.makeText(BillingCounterSalesActivity.this, "Bill Printer Status : " + flag, Toast.LENGTH_SHORT).show();
+        //isPrinterAvailable = flag;
+        if(flag == 2)
+        {
+            btn_Print.setEnabled(false);
+            SetPrinterAvailable(false);
+        }
+        else if(flag == 5)
+        {
+            btn_Print.setEnabled(true);
+            SetPrinterAvailable(true);
+        }
+        else if(flag == 0)
+        {
+            btn_Print.setEnabled(true);
+            SetPrinterAvailable(false);
+        }
+    }
+    public void SetPrinterAvailable(boolean flag) {
+
+        Toast.makeText(this, "Bill Printer Status : " + flag, Toast.LENGTH_SHORT).show();
+        isPrinterAvailable = flag;
+        //btn_PrintBill.setEnabled(true);
+        //btn_Reprint.setEnabled(true);
     }
 
 
