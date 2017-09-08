@@ -114,12 +114,13 @@
                             android:id="@+id/imgConfigurations"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
                             android:background="@drawable/gradient_button"
                             android:contentDescription="Configurations"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/img_configurations" />
+                            android:src="@drawable/img_configurations"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
 
                         <TextView
                             android:id="@+id/tvConfigurationOption"
@@ -234,7 +235,7 @@
                             android:contentDescription="PaymentMode"
                             android:onClick="LaunchActivity"
                             android:padding="3dp"
-                            android:src="@drawable/img_configurations" />
+                            android:src="@drawable/paymentmodeconfiguration" />
 
                         <TextView
                             android:id="@+id/tvPaymentMode"
