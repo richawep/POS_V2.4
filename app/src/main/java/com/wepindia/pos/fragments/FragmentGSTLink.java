@@ -1354,8 +1354,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                 {
                     String startDate = etReportDateStart.getText().toString() ;
                     String endDate = etReportDateEnd.getText().toString() ;
-                    String token1[] = startDate.split("-");
-                    String token2[] = endDate.split("-");
+
                     if(startDate.equalsIgnoreCase("") || endDate.equalsIgnoreCase(""))
                     {
                         //disMiss();
@@ -1364,14 +1363,18 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                                 .setIcon(R.drawable.ic_launcher)
                                 .setPositiveButton("OK", null)
                                 .show();
+                        return;
                     }
-                    else if (!token1[1].equals(token2[1]))
+                    String token1[] = startDate.split("-");
+                    String token2[] = endDate.split("-");
+                    if (!token1[1].equals(token2[1]))
                     {
                         MsgBox.setMessage("Please select Date range for one month at a time")
                                 .setTitle("Invalid Date")
                                 .setIcon(R.drawable.ic_launcher)
                                 .setPositiveButton("OK", null)
                                 .show();
+                        return;
                     }
 
                     String URL = "https://tcd.blackboard.com/webapps/dur-browserCheck-BBLEARN/samples/sample.xlsx";
@@ -1405,6 +1408,7 @@ public class FragmentGSTLink extends Fragment   implements HTTPAsyncTask_Frag.On
                             Filename = "GSTR2_Reconcile.xlsx";
                             break;
                     }
+                    URL = BASE_URL+URL;
                     File direct1 = new File(Environment.getExternalStorageDirectory()
                             + "/WeP_DownloadReports");
 
