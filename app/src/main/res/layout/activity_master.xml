@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/MasterParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -103,12 +102,12 @@
                     android:layout_marginRight="@dimen/right_margin_220dp"
                     android:layout_marginStart="@dimen/left_margin_220dp"
                     android:orientation="horizontal"
-                    android:weightSum="4">
+                    android:weightSum="5">
 
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
@@ -137,7 +136,7 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
@@ -165,7 +164,7 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
@@ -194,7 +193,7 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_margin="@dimen/menu_box_marigin"
                         android:layout_weight="1">
 
                         <ImageButton
@@ -220,6 +219,34 @@
 
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/menu_box_marigin"
+                        android:layout_weight="1">
+
+                        <ImageButton
+                            android:id="@+id/imgPaymentMode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/gradient_button"
+                            android:contentDescription="PaymentMode"
+                            android:onClick="LaunchActivity"
+                            android:padding="3dp"
+                            android:src="@drawable/img_configurations" />
+
+                        <TextView
+                            android:id="@+id/tvPaymentMode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imgPaymentMode"
+                            android:gravity="center"
+                            android:text="Payment Mode Configuration"
+                            android:textSize="@dimen/menu_box_font_size"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 

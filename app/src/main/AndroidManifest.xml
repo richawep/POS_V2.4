@@ -367,6 +367,12 @@
             android:theme="@style/AppThemeWep"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
+            android:name=".PaymentModeConfigurationActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppThemeWep"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
             android:name=".TabbedSupplierItemLinkage"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="sensorLandscape"

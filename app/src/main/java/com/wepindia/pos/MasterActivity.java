@@ -159,7 +159,13 @@ public class MasterActivity extends WepBaseActivity {
             startActivity(intentSettings);
 //			startActivity(new Intent(myContext,SettingsActivity.class));
 
-        } else {
+        }  else if(v.getContentDescription().toString().equalsIgnoreCase("PaymentMode")){
+            // Launch Payment mode configuration activity
+            Intent intentPaymentMode = new Intent(myContext,PaymentModeConfigurationActivity.class);
+            intentPaymentMode.putExtra("USER_NAME", strUserName);
+            startActivity(intentPaymentMode);
+        }
+            else {
             // Close master options window and get back to Home screen
             Intent returnIntent =new Intent();
             setResult(Activity.RESULT_OK,returnIntent);

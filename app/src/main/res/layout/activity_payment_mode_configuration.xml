@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_wep" />
+
+    <RelativeLayout
+        android:id="@+id/lnrPaymentReceipt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/_15dp_720dp_10dp_600dp"
+                android:layout_marginStart="@dimen/_50dp_720dp_45dp_600dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/row_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp_720dp_15dp_600dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/check_box_razorpay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tv_razorpay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_25dp_720dp_20dp_600dp"
+                        android:text="@string/razor_pay"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="32sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/row_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/row_first"
+                    android:layout_marginTop="@dimen/_10dp_720dp_7dp_600dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_keyid"
+                        android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/key_id"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp" />
+
+                    <EditText
+                        android:id="@+id/et_keyid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:layout_marginStart="@dimen/_10dp_720dp_7dp_600dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/row_third"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/row_second"
+                    android:layout_marginTop="@dimen/_10dp_720dp_7dp_600dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_secretrkey"
+                        android:layout_width="@dimen/_105dp_720dp_100dp_600dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/secret_key"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/counter_sale_text_size_20sp_720dp_18sp_600dp" />
+
+                    <EditText
+                        android:id="@+id/et_secretkey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10dp_720dp_7dp_600dp"
+                        android:enabled="false"
+                        android:maxLength="6" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/boxButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/tvHorizontalLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2dp_720dp_2dp_600dp"
+            android:layout_marginBottom="@dimen/_2dp_720dp_2dp_600dp"
+            android:background="#000000" />
+
+        <LinearLayout
+            android:id="@+id/boxSubBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/_5dp_720dp_4dp_600dp">
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_payment_update"
+                android:layout_width="@dimen/_150dp_720dp_135dp_600dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10dp_720dp_7dp_600dp"
+                android:background="@drawable/background_btn"
+                android:text="@string/update"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin" />
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_payment_clear"
+                android:layout_width="@dimen/_150dp_720dp_135dp_600dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10dp_720dp_7dp_600dp"
+                android:background="@drawable/background_btn"
+                android:text="@string/clear"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin" />
+
+            <com.wep.common.app.views.WepButton
+                android:id="@+id/btn_payment_close"
+                android:layout_width="@dimen/_150dp_720dp_135dp_600dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_btn"
+                android:text="@string/close"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_14sp_720dp_12sp_600dp"
+                android:theme="@style/WepButtonWithMarigin" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

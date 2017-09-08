@@ -1447,6 +1447,19 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
          * You need to pass current activity in order to let Razorpay create CheckoutActivity
          */
         final Activity activity = this;
+        Cursor paymentDetails = dbPayBill.getPaymentModeConfiguration();
+        if(!(paymentDetails!=null && paymentDetails.moveToFirst()))
+        {
+            MsgBox.Show("Invalid Credentials"," Please configure key id for razor pay in payment mode configuration module");
+            return;
+        }
+
+        String keyid = paymentDetails.getString(paymentDetails.getColumnIndex("RazorPay_KeyId")).trim();
+        if(keyid == null || keyid.equals(""))
+        {
+            MsgBox.Show("Invalid Credentials"," Please configure key id for razor pay in payment mode configuration module");
+            return;
+        }
 
         final Checkout co = new Checkout();
 
@@ -1464,6 +1477,7 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
             preFill.put("contact", phone);
             options.put("prefill", preFill);
             co.open(activity, options);
+            co.setKeyID(keyid);
         } catch (Exception e) {
             Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -1527,6 +1541,9 @@ public class PayBillActivity extends FragmentActivity implements FragmentLogin.O
     @SuppressWarnings("unused")
     @Override
     public void onPaymentError(int code, String response) {
+        /*if(response.equals("net::ERR_NAME_NOT_RESOLVED"))
+            Toast.makeText(getApplicationContext(), "Payment Failed : Invalid RazorPay KeyId", Toast.LENGTH_SHORT).show();
+        else*/
         Toast.makeText(getApplicationContext(), "Payment Failed", Toast.LENGTH_SHORT).show();
         try {
             Payment payment = new Payment();

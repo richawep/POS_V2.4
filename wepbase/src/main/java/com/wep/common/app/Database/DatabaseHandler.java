@@ -1523,6 +1523,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Toast.makeText(myContext, e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_RAZORPAY_KEYID, "xx");
+        cvDbValues.put(KEY_RAZORPAY_SECRETKEY, "xx"); // Production
+        db.insert(TBL_PaymentModeConfiguration, null, cvDbValues);
+
         // Bill No Reset Configuration
         cvDbValues = new ContentValues();
         cvDbValues.put("InvoiceNo", 0);
@@ -7560,6 +7565,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cvDbValues.put(KEY_HSNPrintEnabled_out, 0); // disabled
 
         long result1 = dbFNB.insert(TBL_BILLSETTING, null, cvDbValues);
+
+        cvDbValues = new ContentValues();
+        cvDbValues.put(KEY_RAZORPAY_KEYID, "xx");
+        cvDbValues.put(KEY_RAZORPAY_SECRETKEY, "xx"); // Production
+        result1 = dbFNB.insert(TBL_PaymentModeConfiguration, null, cvDbValues);
     }
 
     public int getUsersIdByName(String name) {
@@ -9227,11 +9237,12 @@ public Cursor getGSTR1B2CL_invoices_ammend(String InvoiceNo, String InvoiceDate,
         }
     }
 
+
     public Cursor getPaymentModeConfiguration() {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = null;
         try {
-            cursor = dbFNB.rawQuery("SELECT * FROM " + TBL_PaymentModeConfiguration, null);
+            cursor = db.rawQuery("SELECT * FROM " + TBL_PaymentModeConfiguration, null);
         } catch (Exception e) {
             e.printStackTrace();
             cursor = null;

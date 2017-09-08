@@ -598,6 +598,8 @@ public class IngredientManagementActivity extends WepBaseActivity {
             for (final String item : itemlist_submit)
             {
                 TableRow row = new TableRow(myContext);
+                row.setLayoutParams(new ViewGroup.LayoutParams
+                    (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                 TextView sn = new TextView(myContext);
                 sn.setWidth(95);

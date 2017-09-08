@@ -233,4 +233,9 @@
     <string name="table_no">Table No</string>
     <string name="mobile_no">Mobile No</string>
 
+
+    //payment mode configuration
+    <string name="secret_key">Secret Key</string>
+    <string name="key_id">Key Id</string>
+    <string name="razor_pay">Razor Pay</string>
 </resources>
