@@ -41,6 +41,7 @@ import java.util.List;
 public class Fragment_Inward_Credit_Debit_Note extends Fragment {
 
 
+
     EditText edt_IGSTRate,edt_IGSTAmount,edt_CGSTRate,edt_CGSTAmount,edt_SGSTRate,edt_SGSTAmount,edt_Value;
     EditText edt_InvoiceNo,edt_reason;
     TextView tv_InvoiceDate,tv_recipientName,tv_billamount,tv_reverseCharge,tv_totalIGSTVal,tv_totalCGSTVal,tv_totalSGSTVal,
